@@ -1,0 +1,9 @@
+*.class
+bin/*
+
+local.properties
+.classpath
+
+log/*
+!log/.keepme
+nbproject/*
