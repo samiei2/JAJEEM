@@ -1,6 +1,6 @@
 package com.jajeem.command.handler;
 
-public class AttendCommandHanlder implements ICommandHandler{
+public class AttendCommandHanlder implements ICommandHandler {
 
 	@Override
 	public void run() {

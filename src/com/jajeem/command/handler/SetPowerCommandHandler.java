@@ -1,8 +1,10 @@
 package com.jajeem.command.handler;
 
-public class SetPowerCommandHandler {
+public class SetPowerCommandHandler implements ICommandHandler {
 	
-	public SetPowerCommandHandler() {
-		System.out.println("Power!");
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }

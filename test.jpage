@@ -2,11 +2,10 @@ ServerService test = new ServerService("228.5.6.7", 9090, 100, 2000, "power");
 test.start();
 
 
-
 ClientService test1 = new ClientService("228.5.6.7", 9090);
-test1.start();An exception occurred during evaluation:  java.lang.IllegalArgumentException
+test1.start();
 
-
+
 Config conf = new Config();
 conf.load("conf/conf.properties");
 System.out.println(conf.getParam("port"));
