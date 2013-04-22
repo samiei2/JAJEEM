@@ -1,9 +1,15 @@
 package com.jajeem.survey.dao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.jajeem.survey.model.Run;
+
+
 public interface IRunDAO {
 	
-	void create();
-	void update();
-	void get();
-	void list();
+	void create(Run run) throws SQLException;
+	void update(Run run) throws SQLException;
+	Run get(int id) throws SQLException;
+	ArrayList<Run> list() throws SQLException;
 }
