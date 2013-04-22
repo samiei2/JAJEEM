@@ -1,10 +1,13 @@
 package com.jajeem.core.dao;
 
+import com.jajeem.core.model.Student;
+
 public interface IStudentDAO extends IUserDAO {
 
-	void create();
-	void update();
-	void delete();
-	void get();
+	Student authenticate(String user, String pass);
+	Student create(Student student);
 	void list();
+	Student get(Student student);
+	boolean delete(Student student);
+	boolean update(Student student);
 }
