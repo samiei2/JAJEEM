@@ -1,6 +1,8 @@
 package com.jajeem.room.dao;
 
-public interface IClassDAO {
+import java.sql.SQLException;
+
+public interface IRoomDAO {
 	
 	void create();
 	void update();

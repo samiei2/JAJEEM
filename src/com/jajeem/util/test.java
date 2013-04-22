@@ -2,10 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.com.jajeem.util;
+package com.jajeem.util;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;

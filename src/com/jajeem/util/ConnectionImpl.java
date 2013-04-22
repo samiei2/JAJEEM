@@ -2,16 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.com.jajeem.util;
+package com.jajeem.util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 /**
  *
