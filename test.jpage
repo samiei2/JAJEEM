@@ -12,4 +12,6 @@ System.out.println(conf.getParam("port"));
 
 
 StudentDAO t = new StudentDAO();
-t.authenticate("mohammad", "ddd");An exception occurred during evaluation:  java.lang.Error
+Student s = new Student();
+s.setFirstName("mohammad");
+t.create(s);
