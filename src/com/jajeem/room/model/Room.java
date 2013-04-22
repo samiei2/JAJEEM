@@ -32,12 +32,12 @@ public class Room {
 	public void setAttendanceType(byte attendanceType) {
 		this.attendanceType = attendanceType;
 	}
-	public short getSeatSize() {
+	public int getSeatSize() {
 		return seatSize;
 	}
-	public void setSeatSize(short seatSize) {
+	public void setSeatSize(int seatSize) {
 		this.seatSize = seatSize;
 	}
 	private byte attendanceType;
-	private short seatSize;
+	private int seatSize;
 }

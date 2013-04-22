@@ -25,9 +25,26 @@ public class test {
      * @param args the command line arguments
      */
     
-    public void run() throws ClassNotFoundException, IOException {
+    public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
             HSQLDBConnectionImpl db = new HSQLDBConnectionImpl();
+            Connection con = db.getConnection();
+    		String query = "";
+    		query += "CREATE TABLE sample_table ( id INTEGER IDENTITY, str_col VARCHAR(256), num_col INTEGER);";
+    		
+    		
+    		try(Statement statement = con.createStatement()){
+    			query = "CREATE TABLE sample_table ( id INTEGER IDENTITY, str_col VARCHAR(256), num_col INTEGER);";
+    			statement.executeUpdate(query);
+    			query = "insert INTO sample_table(str_col,num_col) VALUES('Ford', 100);";
+    			statement.executeUpdate(query);
+    			query = "select * from sample_table;";
+    			ResultSet rs = statement.executeQuery(query);
+    			while(rs.next()){
+    				System.out.println(rs.getString("str_col"));
+    				
+    			}
+    		}
             //db.ExecuteUpdate("drop table if exists person");
             //db.ExecuteUpdate("create table person (id integer, name varchar(100))");
             //db.ExecuteUpdate("insert into person values(1, 'leo')");
