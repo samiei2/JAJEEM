@@ -1,10 +1,12 @@
 package com.jajeem.message.dao;
 
+import com.jajeem.message.model.Message;
+
 public interface IMessageDAO {
 	
-	void create();
-	void update();
-	void delete();
-	void get();
+	Message create(Message message);
+	boolean update(Message message);
+	boolean delete(Message message);
+	Message get(Message message);
 	void list();
 }

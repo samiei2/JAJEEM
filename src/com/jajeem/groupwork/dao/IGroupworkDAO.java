@@ -1,10 +1,12 @@
 package com.jajeem.groupwork.dao;
 
+import com.jajeem.groupwork.model.Groupwork;
+
 public interface IGroupworkDAO {
 
-	void create();
-	void update();
-	void delete();
-	void get();
+	Groupwork create(Groupwork groupwork);
+	boolean update(Groupwork groupwork);
+	boolean delete(Groupwork groupwork);
+	Groupwork get(Groupwork groupwork);
 	void list();
 }
