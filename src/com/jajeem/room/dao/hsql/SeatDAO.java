@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.jajeem.room.dao.ISeatDAO;
-import com.jajeem.room.model.Room;
 import com.jajeem.room.model.Seat;
 import com.jajeem.util.HSQLDBConnectionImpl;
 
