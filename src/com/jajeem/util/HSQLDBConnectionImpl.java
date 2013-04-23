@@ -13,6 +13,6 @@ import javax.swing.plaf.basic.BasicScrollPaneUI;
 public class HSQLDBConnectionImpl extends ConnectionImpl{
     public HSQLDBConnectionImpl(){
         conman.connectDriver = "org.hsqldb.jdbc.JDBCDriver";
-        conman.connectURI="jdbc:hsqldb:file:enrolments";
+        conman.connectURI="jdbc:hsqldb:file:jajeem.db";
     }
 }

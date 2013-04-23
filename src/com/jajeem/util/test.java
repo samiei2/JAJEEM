@@ -4,15 +4,16 @@
  */
 package com.jajeem.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.jajeem.room.dao.hsql.AttandantDAO;
+import com.jajeem.room.model.Attendant;
+import com.jajeem.survey.dao.hsql.QuestionDAO;
+
 
 
 /**
@@ -27,23 +28,23 @@ public class test {
     
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
+        	
             HSQLDBConnectionImpl db = new HSQLDBConnectionImpl();
             Connection con = db.getConnection();
     		String query = "";
-    		query += "CREATE TABLE sample_table ( id INTEGER IDENTITY, str_col VARCHAR(256), num_col INTEGER);";
+    		query += "CREATE TABLE quizes ( id INTEGER IDENTITY, title VARCHAR(256), category varchar(256),description varchar(256),instructor integer);";
     		
     		
     		try(Statement statement = con.createStatement()){
-    			query = "CREATE TABLE sample_table ( id INTEGER IDENTITY, str_col VARCHAR(256), num_col INTEGER);";
-    			statement.executeUpdate(query);
-    			query = "insert INTO sample_table(str_col,num_col) VALUES('Ford', 100);";
-    			statement.executeUpdate(query);
-    			query = "select * from sample_table;";
-    			ResultSet rs = statement.executeQuery(query);
-    			while(rs.next()){
-    				System.out.println(rs.getString("str_col"));
-    				
-    			}
+    			//statement.executeUpdate(query);
+    			AttandantDAO qdao = new AttandantDAO();
+            	Attendant q = new Attendant();
+            	q.setId(1);
+            	q.setSeatId(2);
+            	q.setSessionId(3);
+            	q.setStatus(Short.MIN_VALUE);
+            	q.setStudentId(412);
+            	qdao.create(q);
     		}
             //db.ExecuteUpdate("drop table if exists person");
             //db.ExecuteUpdate("create table person (id integer, name varchar(100))");

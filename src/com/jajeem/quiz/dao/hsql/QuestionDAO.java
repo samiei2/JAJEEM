@@ -15,10 +15,11 @@ public class QuestionDAO implements IQuestionDAO{
 	HSQLDBConnectionImpl conn = new HSQLDBConnectionImpl();
 
 	@Override
-	public void create(Quiz survey) throws SQLException {
+	public void create(Quiz quiz) throws SQLException {
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "insert into surveys (id,title,category,description,instructor) values (+"+survey.getId()+","+survey.getTitle()+","+survey.getCategory()+","+survey.getDescription()+","+survey.getInstructorId()+");";
+		query += "insert into quizes (id,title,category,description,instructor) values ("+quiz.getId()+",'"+quiz.getTitle()
+				+"','"+quiz.getCategory()+"','"+quiz.getDescription()+"',"+quiz.getInstructorId()+");";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -30,8 +31,8 @@ public class QuestionDAO implements IQuestionDAO{
 	public void update(Quiz survey) throws SQLException {
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "update surveys set title = "+survey.getTitle()+",category = "+survey.getCategory()+",description = "+survey.getDescription()+",instructorid = "+survey.getInstructorId()
-				+"where surveys.id="+survey.getId()+";";
+		query += "update quizes set title = "+survey.getTitle()+",category = "+survey.getCategory()+",description = "+survey.getDescription()+",instructorid = "+survey.getInstructorId()
+				+"where quizes.id="+survey.getId()+";";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -43,8 +44,8 @@ public class QuestionDAO implements IQuestionDAO{
 	public Quiz get(int id) throws SQLException {
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "select * from surveys "
-				+"where surveys.id="+id+";";
+		query += "select * from quizes "
+				+"where quizes.id="+id+";";
 		Quiz result = null;
 		try(Statement statement = con.createStatement()){
 			ResultSet rs = statement.executeQuery(query);
@@ -65,7 +66,7 @@ public class QuestionDAO implements IQuestionDAO{
 	public ArrayList<Quiz> list() throws SQLException {
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "select * from surveys;";
+		query += "select * from quizes;";
 		
 		ArrayList<Quiz> allSurveys = new ArrayList<>();
 		try(Statement statement = con.createStatement()){
