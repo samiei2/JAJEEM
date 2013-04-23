@@ -45,7 +45,7 @@ public class ConnectionManagerImpl implements IConnectionManager {
     public Connection getConnection() throws SQLException {
         if(dataSource == null) 
             try {
-            StartConnectionPool();
+            	StartConnectionPool();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ConnectionManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
