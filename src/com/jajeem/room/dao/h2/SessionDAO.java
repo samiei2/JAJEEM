@@ -1,4 +1,4 @@
-package com.jajeem.room.dao.hsql;
+package com.jajeem.room.dao.h2;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,16 +8,18 @@ import java.util.ArrayList;
 
 import com.jajeem.room.dao.ISessionDAO;
 import com.jajeem.room.model.Session;
+import com.jajeem.util.H2ConnectionImpl;
 import com.jajeem.util.HSQLDBConnectionImpl;
 
 public class SessionDAO implements ISessionDAO{
-	HSQLDBConnectionImpl conn = new HSQLDBConnectionImpl();
+	
 
 	@Override
 	public void create(Session session) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "insert into sessions (id,instructorid,start,end,classid) values (+"+session.getId()+","+session.getInstructorId()+","+session.getStart()+","+session.getEnd()+","+session.getClassId()+");";
+		query += "insert into sessions (id,instructorid,start,end,classid) values ("+session.getId()+","+session.getInstructorId()+","+session.getStart()+","+session.getEnd()+","+session.getClassId()+");";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -27,6 +29,7 @@ public class SessionDAO implements ISessionDAO{
 
 	@Override
 	public void update(Session session) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "update sessions set instructorid = "+session.getInstructorId()+",start = "+session.getStart()+",end = "+session.getEnd()
@@ -40,10 +43,11 @@ public class SessionDAO implements ISessionDAO{
 
 	@Override
 	public void delete(Session session) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "delete from sessions "
-				+"where sessions.id="+session.getId()+" and sessions.classid="+session.getClassId()+";";
+				+"where sessions.id="+session.getId()+";";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -53,6 +57,7 @@ public class SessionDAO implements ISessionDAO{
 
 	@Override
 	public Session get(int id) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from sessions "
@@ -75,6 +80,7 @@ public class SessionDAO implements ISessionDAO{
 
 	@Override
 	public ArrayList<Session> list() throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from sessions;";

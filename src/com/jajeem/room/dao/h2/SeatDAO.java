@@ -1,4 +1,4 @@
-package com.jajeem.room.dao.hsql;
+package com.jajeem.room.dao.h2;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class SeatDAO implements ISeatDAO{
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "create table if not exists seats (id int,name varchar(100),row int,col int,classid int);"+
+		query += 
 		"insert into seats (id,name,row,col,classid) values ("+seat.getId()+",'"+seat.getName()+"',"+seat.getRow()+","+seat.getColumn()+","+seat.getClassId()+");";
 		
 		try(Statement statement = con.createStatement()){

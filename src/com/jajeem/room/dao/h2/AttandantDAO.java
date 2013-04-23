@@ -1,4 +1,4 @@
-package com.jajeem.room.dao.hsql;
+package com.jajeem.room.dao.h2;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,16 +9,18 @@ import java.util.ArrayList;
 import com.jajeem.room.dao.IAttendantDAO;
 import com.jajeem.room.model.Attendant;
 import com.jajeem.room.model.Seat;
+import com.jajeem.util.H2ConnectionImpl;
 import com.jajeem.util.HSQLDBConnectionImpl;
 
 public class AttandantDAO implements IAttendantDAO{
-	HSQLDBConnectionImpl conn = new HSQLDBConnectionImpl();
 	
 	@Override
 	public void create(Attendant attendant) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "insert into attendants (id,sessionid,studentid,seatid,status) values (+"+attendant.getId()+","+attendant.getSessionId()+","+attendant.getStudentId()+","+attendant.getSeatId()+","+attendant.getStatus()+");";
+		query += "insert into attendants (id,sessionid,studentid,seatid,status) values ("
+		+attendant.getId()+","+attendant.getSessionId()+","+attendant.getStudentId()+","+attendant.getSeatId()+","+attendant.getStatus()+");";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -28,10 +30,11 @@ public class AttandantDAO implements IAttendantDAO{
 
 	@Override
 	public void update(Attendant attendant) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "update attendants set status = "+attendant.getStatus()
-				+" where attendants.id="+attendant.getId()+" and attendants.sessionid="+attendant.getSessionId()+";";
+				+" where attendants.id="+attendant.getId()+";";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -41,10 +44,11 @@ public class AttandantDAO implements IAttendantDAO{
 
 	@Override
 	public void delete(Attendant attendant) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "delete from attendants "
-				+"where attendants.id="+attendant.getId()+" and attendants.sessionid="+attendant.getSessionId()+";";
+				+"where attendants.id="+attendant.getId()+";";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -54,6 +58,7 @@ public class AttandantDAO implements IAttendantDAO{
 
 	@Override
 	public Attendant get(int id) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from attendants "
@@ -76,6 +81,7 @@ public class AttandantDAO implements IAttendantDAO{
 
 	@Override
 	public ArrayList<Attendant> list() throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from attendants;";

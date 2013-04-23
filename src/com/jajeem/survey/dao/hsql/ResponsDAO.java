@@ -9,17 +9,20 @@ import java.util.ArrayList;
 import com.jajeem.room.model.Seat;
 import com.jajeem.survey.dao.IResponseDAO;
 import com.jajeem.survey.model.Response;
+import com.jajeem.util.H2ConnectionImpl;
 import com.jajeem.util.HSQLDBConnectionImpl;
 
 public class ResponsDAO implements IResponseDAO{
-	HSQLDBConnectionImpl conn = new HSQLDBConnectionImpl();
+	
 
 	@Override
 	public void create(Response respons) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "insert into responses (id,runid,studentid,ans1,ans2,ans3,ans4,ans5) values (+"+
-		respons.getId()+","+respons.getRunId()+","+respons.getStudentId()+","+respons.getAnswer1()+","+respons.getAnswer2()+","+respons.getAnswer3()+","+respons.getAnswer4()+","+respons.getAnswer5()+");";
+		query += "insert into responses (id,runid,studentid,ans1,ans2,ans3,ans4,ans5) values ("+
+		respons.getId()+","+respons.getRunId()+","+respons.getStudentId()+",'"+respons.getAnswer1()+"','"+respons.getAnswer2()+"','"+respons.getAnswer3()+"','"
+				+respons.getAnswer4()+"','"+respons.getAnswer5()+"');";
 		
 		try(Statement statement = con.createStatement()){
 			statement.executeUpdate(query);
@@ -29,9 +32,11 @@ public class ResponsDAO implements IResponseDAO{
 
 	@Override
 	public void update(Response respons) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "update responses set answer1 = "+respons.getAnswer1()+",answer2 = "+respons.getAnswer2()+",answer3 = "+respons.getAnswer3()+",answer4 = "+respons.getAnswer4()+",answer5 ="+respons.getAnswer5()
+		query += "update responses set answer1 = '"+respons.getAnswer1()+"',answer2 = '"+respons.getAnswer2()
+				+"',answer3 = '"+respons.getAnswer3()+"',answer4 = '"+respons.getAnswer4()+"',answer5 ='"+respons.getAnswer5()+"' "
 				+"where responses.id="+respons.getId()+" and responses.runid="+respons.getRunId()+" and responses.studentid="+ respons.getStudentId() +";";
 		
 		try(Statement statement = con.createStatement()){
@@ -42,6 +47,7 @@ public class ResponsDAO implements IResponseDAO{
 
 	@Override
 	public Response get(int id) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from responses "
@@ -67,6 +73,7 @@ public class ResponsDAO implements IResponseDAO{
 
 	@Override
 	public ArrayList<Response> list() throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from responses;";
