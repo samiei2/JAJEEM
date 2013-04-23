@@ -29,14 +29,14 @@ public class test {
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
         	
-            HSQLDBConnectionImpl db = new HSQLDBConnectionImpl();
+            H2ConnectionImpl db = new H2ConnectionImpl();
             Connection con = db.getConnection();
     		String query = "";
     		query += "CREATE TABLE quizes ( id INTEGER IDENTITY, title VARCHAR(256), category varchar(256),description varchar(256),instructor integer);";
     		
     		
     		try(Statement statement = con.createStatement()){
-    			//statement.executeUpdate(query);
+    			statement.executeUpdate(query);
     			AttandantDAO qdao = new AttandantDAO();
             	Attendant q = new Attendant();
             	q.setId(1);
