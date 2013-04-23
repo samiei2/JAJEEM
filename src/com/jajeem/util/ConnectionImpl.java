@@ -11,11 +11,11 @@ import java.sql.SQLException;
  * @author Armin
  */
 public class ConnectionImpl implements IConnection {
-    protected static ConnectionManagerImpl conman;
+    protected ConnectionManagerImpl conman;
     private java.sql.Connection connection;
     int queryTimeOut = 30;
     
-    static{
+    public ConnectionImpl(){
         conman = new ConnectionManagerImpl();
     }
     

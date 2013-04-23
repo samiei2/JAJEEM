@@ -1,4 +1,4 @@
-package com.jajeem.quiz.dao.hsql;
+package com.jajeem.survey.dao.hsql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,17 +9,19 @@ import java.util.ArrayList;
 import com.jajeem.room.model.Seat;
 import com.jajeem.survey.dao.IRunDAO;
 import com.jajeem.survey.model.Run;
+import com.jajeem.util.H2ConnectionImpl;
 import com.jajeem.util.HSQLDBConnectionImpl;
 
 
 public class RunDAO implements IRunDAO{
-	HSQLDBConnectionImpl conn = new HSQLDBConnectionImpl();
+	
 
 	@Override
 	public void create(Run run) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
-		query += "insert into runs (id,instructorid,sessionid,surveyid,start,end) values (+"+run.getId()+","+run.getInstructorId()
+		query += "insert into runs (id,instructorid,sessionid,surveyid,start,end) values ("+run.getId()+","+run.getInstructorId()
 				+","+run.getSessionId()+","+run.getSurveyId()+","+run.getStart()+","+run.getEnd()+");";
 		
 		try(Statement statement = con.createStatement()){
@@ -30,6 +32,7 @@ public class RunDAO implements IRunDAO{
 
 	@Override
 	public void update(Run run) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "update runs set start = "+run.getStart()+",end = "+run.getEnd()
@@ -43,6 +46,7 @@ public class RunDAO implements IRunDAO{
 
 	@Override
 	public Run get(int id) throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from runs "
@@ -66,6 +70,7 @@ public class RunDAO implements IRunDAO{
 
 	@Override
 	public ArrayList<Run> list() throws SQLException {
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		String query = "";
 		query += "select * from runs;";
