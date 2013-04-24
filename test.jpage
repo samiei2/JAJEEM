@@ -17,4 +17,3 @@ Instructor i = new Instructor();
 
 i.setUsername("Armin");
 t.create(i);
-

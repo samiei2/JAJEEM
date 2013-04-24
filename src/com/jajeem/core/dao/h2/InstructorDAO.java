@@ -13,7 +13,6 @@ import com.jajeem.core.model.*;
 
 public class InstructorDAO implements IInstructorDAO {
 
-	H2ConnectionImpl conn = new H2ConnectionImpl();
 	Logger logger = Logger.getLogger(InstructorDAO.class);
 
 	public InstructorDAO() {
@@ -26,6 +25,7 @@ public class InstructorDAO implements IInstructorDAO {
 
 		String query = "SELECT * FROM Instructor WHERE Instructor.username = '%s';";
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		ResultSet rs = null;
 		Instructor instructor = new Instructor();
@@ -84,12 +84,23 @@ public class InstructorDAO implements IInstructorDAO {
 						instructor.getLastName(), instructor.getUsername(),
 						instructor.getPassword(), instructor.getLanguage());
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		int rs = 0;
 
 		try (Statement statement = con.createStatement()) {
 			rs = statement.executeUpdate(query);
-			// need to add id to instructor obj
+			
+			// get last id
+			
+			ResultSet maxId = null;
+			maxId = statement.getGeneratedKeys();
+			if (maxId.next()) {
+				instructor.setId(maxId.getInt(1));
+			} else {
+				instructor.setId(0);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
@@ -97,6 +108,8 @@ public class InstructorDAO implements IInstructorDAO {
 			try {
 				if (rs == 1) {
 
+				} else {
+					instructor.setId(-1);
 				}
 			} catch (Exception e) {
 			}
@@ -127,6 +140,7 @@ public class InstructorDAO implements IInstructorDAO {
 						instructor.getPassword(), instructor.getLanguage(),
 						instructor.getId());
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		int rs = 0;
 
@@ -166,6 +180,7 @@ public class InstructorDAO implements IInstructorDAO {
 				"DELETE FROM Instructor WHERE Instructor.id = '%d';",
 				instructor.getId());
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		int rs = 0;
 
@@ -203,6 +218,7 @@ public class InstructorDAO implements IInstructorDAO {
 	public Instructor get(Instructor instructor) throws SQLException {
 		String query = String.format("SELECT * FROM Instructor WHERE Instructor.id = %d;", instructor.getId());
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		ResultSet rs = null;
 
@@ -248,6 +264,7 @@ public class InstructorDAO implements IInstructorDAO {
 		String query = "SELECT * FROM Instructor";
 		ArrayList<Instructor> allInstructors = new ArrayList<>();
 
+		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		ResultSet rs = null;
 
