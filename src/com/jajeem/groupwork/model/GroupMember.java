@@ -6,6 +6,7 @@ public class GroupMember {
 	private int id;
 	private int groupId;
 	private int seatId;
+	private String leader;
 	
 	//getter & setters
 	public int getId() {
@@ -32,6 +33,4 @@ public class GroupMember {
 	public void setLeader(String leader) {
 		this.leader = leader;
 	}
-	private String leader;
-
 }

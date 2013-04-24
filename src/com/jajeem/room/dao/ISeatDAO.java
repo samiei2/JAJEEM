@@ -7,9 +7,9 @@ import com.jajeem.room.model.Seat;
 
 public interface ISeatDAO {
 	
-	void create(Seat seat) throws SQLException;
-	void update(Seat seat) throws SQLException;
-	void delete(Seat seat) throws SQLException;
-	Seat get(int id) throws SQLException;
+	Seat create(Seat seat) throws SQLException;
+	Seat get(Seat seat) throws SQLException;
+	boolean update(Seat seat) throws SQLException;
+	boolean delete(Seat seat) throws SQLException;
 	ArrayList<Seat> list() throws SQLException;
 }

@@ -1,93 +1,259 @@
-package com.jajeem.survey.dao.hsql;
+package com.jajeem.survey.dao.h2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import com.jajeem.room.model.Seat;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.jajeem.util.H2ConnectionImpl;
+
 import com.jajeem.survey.dao.ISurveyDAO;
 import com.jajeem.survey.model.Survey;
-import com.jajeem.util.H2ConnectionImpl;
-import com.jajeem.util.HSQLDBConnectionImpl;
 
-public class SurveyDAO implements ISurveyDAO{
-	
+public class SurveyDAO implements ISurveyDAO {
 
-	@Override
-	public void create(Survey survey) throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "insert into surveys (id,instructorid,title,category,description) values ("
-		+survey.getId()+","+survey.getInstructorId()+",'"+survey.getTitle()+"','"+survey.getCategory()+"','"+survey.getDescription()+"');";
-		
-		try(Statement statement = con.createStatement()){
-			statement.executeUpdate(query);
-		}
-		con.close();
+	Logger logger = Logger.getLogger(SurveyDAO.class);
+
+	public SurveyDAO() {
+		PropertyConfigurator.configure("conf/log4j.conf");
 	}
 
 	@Override
-	public void update(Survey survey) throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "update surveys set title = '"+survey.getTitle()+"',category = '"+survey.getCategory()+"',description = '"+survey.getDescription()+"' "
-				+"where surveys.id="+survey.getId()+" and surveys.instructorid="+survey.getInstructorId()+";";
-		
-		try(Statement statement = con.createStatement()){
-			statement.executeUpdate(query);
-		}
-		con.close();
-	}
+	public Survey create(Survey survey) throws SQLException {
 
-	@Override
-	public Survey get(int id) throws SQLException {
+		PreparedStatement ps = null;
+		int rs = 0;
+
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		String query = "";
-		query += "select * from surveys "
-				+"where surveys.id="+id+";";
-		Survey result = null;
-		try(Statement statement = con.createStatement()){
-			ResultSet rs = statement.executeQuery(query);
-			if(rs.next()){
-				result = new Survey();
-				result.setId(id);
-				result.setTitle(rs.getString("title"));
-				result.setCategory(rs.getString("category"));
-				result.setDescription(rs.getString("description"));
-				result.setInstructorId(rs.getInt("instructorid"));
+
+		ps = con.prepareStatement("INSERT INTO Survey (instructorId, title, category, description) "
+				+ " VALUES (?, ?, ?, ?);");
+		ps.setInt(1, survey.getInstructorId());
+		ps.setString(2, survey.getTitle());
+		ps.setString(3, survey.getCategory());
+		ps.setString(4, survey.getDescription());
+
+		try {
+			rs = ps.executeUpdate();
+
+			// get last id
+			ResultSet maxId = null;
+			maxId = ps.getGeneratedKeys();
+			if (maxId.next()) {
+				survey.setId(maxId.getInt(1));
+			} else {
+				survey.setId(0);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			survey.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+
+				} else {
+					survey.setId(-1);
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
 			}
 		}
-		con.close();
-		return result;
+
+		return survey;
+	}
+
+	@Override
+	public Survey get(Survey survey) throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.id = ?;");
+		ps.setInt(1, survey.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				survey.setInstructorId(rs.getInt("instructorId"));
+				survey.setTitle(rs.getString("title"));
+				survey.setCategory(rs.getString("category"));
+				survey.setDescription(rs.getString("description"));
+
+			} else {
+				survey.setId(0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			survey.setId(-1);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return survey;
+	}
+
+	@Override
+	public boolean update(Survey survey) throws SQLException {
+
+		PreparedStatement ps = null;
+		int rs = 0;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+
+		ps = con.prepareStatement("UPDATE Survey SET instructorId = ?, title = ?, category = ?, description = ? WHERE id = ?");
+
+		ps.setInt(1, survey.getInstructorId());
+		ps.setString(2, survey.getTitle());
+		ps.setString(3, survey.getCategory());
+		ps.setString(4, survey.getDescription());
+		ps.setInt(5, survey.getId());
+
+		try {
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			survey.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean delete(Survey survey) throws SQLException {
+
+		PreparedStatement ps = null;
+		int rs = 0;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+
+		ps = con.prepareStatement("DELETE FROM Survey WHERE Survey.id = ?;");
+		ps.setInt(1, survey.getId());
+
+		try {
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			survey.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
 	}
 
 	@Override
 	public ArrayList<Survey> list() throws SQLException {
+
+		ArrayList<Survey> allSurveys = new ArrayList<>();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		String query = "";
-		query += "select * from surveys;";
-		
-		ArrayList<Survey> allSurveys = new ArrayList<>();
-		try(Statement statement = con.createStatement()){
-			ResultSet rs = statement.executeQuery(query);
-			while(rs.next()){
+
+		ps = con.prepareStatement("SELECT * FROM Survey");
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
 				Survey survey = new Survey();
+
 				survey.setId(rs.getInt("id"));
-				survey.setInstructorId(rs.getInt("instructorid"));
+				survey.setInstructorId(rs.getInt("instructorId"));
 				survey.setTitle(rs.getString("title"));
 				survey.setCategory(rs.getString("category"));
 				survey.setDescription(rs.getString("description"));
-				
+
 				allSurveys.add(survey);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
 		}
-		con.close();
+
 		return allSurveys;
 	}
 

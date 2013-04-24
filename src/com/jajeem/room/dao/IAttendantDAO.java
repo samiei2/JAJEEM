@@ -7,9 +7,9 @@ import com.jajeem.room.model.Attendant;
 
 
 public interface IAttendantDAO {
-	void create(Attendant attendant) throws SQLException;
-	void update(Attendant attendant) throws SQLException;
-	void delete(Attendant attendant) throws SQLException;
-	Attendant get(int id) throws SQLException;
+	Attendant create(Attendant attendant) throws SQLException;
+	Attendant get(Attendant attendant) throws SQLException;
+	boolean update(Attendant attendant) throws SQLException;
+	boolean delete(Attendant attendant) throws SQLException;
 	ArrayList<Attendant> list() throws SQLException;
 }

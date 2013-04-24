@@ -3,12 +3,13 @@ package com.jajeem.quiz.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.jajeem.quiz.model.Quiz;;
+import com.jajeem.quiz.model.Question;
 
 public interface IQuestionDAO {
-	
-	void create(Quiz survey) throws SQLException;
-	void update(Quiz survey) throws SQLException;
-	Quiz get(int id) throws SQLException;
-	ArrayList<Quiz> list() throws SQLException;
+
+	Question create(Question question) throws SQLException;
+	Question get(Question question) throws SQLException;
+	boolean update(Question question) throws SQLException;
+	boolean delete(Question question) throws SQLException;
+	ArrayList<Question> list() throws SQLException;
 }

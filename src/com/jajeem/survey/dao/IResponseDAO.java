@@ -7,8 +7,9 @@ import com.jajeem.survey.model.Response;
 
 public interface IResponseDAO {
 	
-	void create(Response respons) throws SQLException;
-	void update(Response respons) throws SQLException;
-	Response get(int id) throws SQLException;
+	Response create(Response respons) throws SQLException;
+	boolean update(Response respons) throws SQLException;
+	Response get(Response response) throws SQLException;
+	boolean delete(Response response) throws SQLException;
 	ArrayList<Response> list() throws SQLException;
 }

@@ -6,6 +6,8 @@ public class Room {
 	private int id;
 	private String name;
 	private byte signInType;
+	private byte attendanceType;
+	private int seatSize;
 	
 	//getter & setters
 	public int getId() {
@@ -38,6 +40,4 @@ public class Room {
 	public void setSeatSize(int seatSize) {
 		this.seatSize = seatSize;
 	}
-	private byte attendanceType;
-	private int seatSize;
 }

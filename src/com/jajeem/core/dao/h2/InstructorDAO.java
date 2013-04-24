@@ -23,13 +23,14 @@ public class InstructorDAO implements IInstructorDAO {
 	public boolean authenticate(String username, String password)
 			throws SQLException {
 
-		String query = String.format(
-				"SELECT * FROM Instructor WHERE Instructor.username = '%s';",
-				username);
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		ResultSet rs = null;
+
+		ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.username = ?;");
+		ps.setString(1, username);
 
 		// checking...
 		if (username.length() == 0) {
@@ -42,8 +43,8 @@ public class InstructorDAO implements IInstructorDAO {
 			return false;
 		}
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeQuery(query);
+		try {
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				if (password.compareTo(rs.getString("password")) == 0) {
 					return true;
@@ -63,6 +64,16 @@ public class InstructorDAO implements IInstructorDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
@@ -73,25 +84,28 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public Instructor create(Instructor instructor) throws SQLException {
-
-		String query = String
-				.format("INSERT INTO Instructor (firstName, middleName, lastName, username, password, language)"
-						+ " VALUES ('%s', '%s', '%s', '%s', '%s', '%s');",
-						instructor.getFirstName(), instructor.getMiddleName(),
-						instructor.getLastName(), instructor.getUsername(),
-						instructor.getPassword(), instructor.getLanguage());
+		
+		PreparedStatement ps = null;
+		int rs = 0;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		int rs = 0;
+		
+		ps = con.prepareStatement("INSERT INTO Instructor (firstName, middleName, lastName, username, password, language) " +
+				" VALUES (?, ?, ?, ?, ?, ?);");
+		ps.setString(1, instructor.getFirstName());
+		ps.setString(2, instructor.getMiddleName());
+		ps.setString(3, instructor.getLastName());
+		ps.setString(4, instructor.getUsername());
+		ps.setString(5, instructor.getPassword());
+		ps.setString(6, instructor.getLanguage());		
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeUpdate(query);
+		try {
+			rs = ps.executeUpdate();
 
 			// get last id
-
 			ResultSet maxId = null;
-			maxId = statement.getGeneratedKeys();
+			maxId = ps.getGeneratedKeys();
 			if (maxId.next()) {
 				instructor.setId(maxId.getInt(1));
 			} else {
@@ -111,16 +125,15 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
 			}
-		}
-
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
 		}
 
 		return instructor;
@@ -128,16 +141,18 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public Instructor get(Instructor instructor) throws SQLException {
-		String query = String.format(
-				"SELECT * FROM Instructor WHERE Instructor.id = %d;",
-				instructor.getId());
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		ResultSet rs = null;
+		
+		ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.id = ?;");
+		ps.setInt(1, instructor.getId());
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeQuery(query);
+		try {
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				instructor.setFirstName(rs.getString("firstName"));
 				instructor.setMiddleName(rs.getString("middleName"));
@@ -158,16 +173,15 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
 			}
-		}
-
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
 		}
 
 		return instructor;
@@ -175,21 +189,25 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public boolean update(Instructor instructor) throws SQLException {
-
-		String query = String
-				.format("UPDATE Instructor SET firstName='%s', middleName='%s', lastName='%s', "
-						+ " username='%s', password='%s', language='%s' WHERE id = '%d'",
-						instructor.getFirstName(), instructor.getMiddleName(),
-						instructor.getLastName(), instructor.getUsername(),
-						instructor.getPassword(), instructor.getLanguage(),
-						instructor.getId());
+		
+		PreparedStatement ps = null;
+		int rs = 0;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		int rs = 0;
+		
+		ps = con.prepareStatement("UPDATE Instructor SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
+		
+		ps.setString(1, instructor.getFirstName());
+		ps.setString(2, instructor.getMiddleName());
+		ps.setString(3, instructor.getLastName());
+		ps.setString(4, instructor.getUsername());
+		ps.setString(5, instructor.getPassword());
+		ps.setString(6, instructor.getLanguage());
+		ps.setInt(7, instructor.getId());
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeUpdate(query);
+		try {
+			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
@@ -203,16 +221,15 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
 			}
-		}
-
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
 		}
 
 		return false;
@@ -220,16 +237,18 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public boolean delete(Instructor instructor) throws SQLException {
-		String query = String.format(
-				"DELETE FROM Instructor WHERE Instructor.id = '%d';",
-				instructor.getId());
+		
+		PreparedStatement ps = null;
+		int rs = 0;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		int rs = 0;
+		
+		ps = con.prepareStatement("DELETE FROM Instructor WHERE Instructor.id = ?;");
+		ps.setInt(1, instructor.getId());
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeUpdate(query);
+		try {
+			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
@@ -243,16 +262,15 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
 			}
-		}
-
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
 		}
 
 		return false;
@@ -260,15 +278,19 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public ArrayList<Instructor> list() throws SQLException {
-		String query = "SELECT * FROM Instructor";
+		
 		ArrayList<Instructor> allInstructors = new ArrayList<>();
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		ResultSet rs = null;
+		
+		ps = con.prepareStatement("SELECT * FROM Instructor");
 
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeQuery(query);
+		try {
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				Instructor instructor = new Instructor();
 
@@ -279,8 +301,6 @@ public class InstructorDAO implements IInstructorDAO {
 				instructor.setUsername(rs.getString("username"));
 				instructor.setPassword(rs.getString("password"));
 				instructor.setLanguage(rs.getString("language"));
-				logger.info(instructor.getUsername() + "   "
-						+ instructor.getId());
 
 				allInstructors.add(instructor);
 			}
@@ -293,16 +313,15 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
 			}
-		}
-
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
 		}
 
 		return allInstructors;

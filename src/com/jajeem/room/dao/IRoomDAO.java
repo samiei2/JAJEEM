@@ -7,9 +7,9 @@ import com.jajeem.room.model.Room;
 
 public interface IRoomDAO {
 	
-	void update(Room room) throws SQLException;
-	void delete(Room room) throws SQLException;
-	Room get(int id) throws SQLException;
+	Room create(Room room) throws SQLException;
+	Room get(Room room) throws SQLException;
+	boolean update(Room room) throws SQLException;
+	boolean delete(Room room) throws SQLException;
 	ArrayList<Room> list() throws SQLException;
-	void create(Room room) throws SQLException;
 }

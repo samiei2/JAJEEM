@@ -13,7 +13,7 @@ public class Quiz {
 	private int time;
 	private byte shuffle;
 	
-	//gettte & setters
+	//getter & setters
 	public int getId() {
 		return id;
 	}

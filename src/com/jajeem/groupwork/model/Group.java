@@ -6,7 +6,7 @@ public class Group {
 	private int id;
 	private int groupworkId;
 	private String name;
-	private String color;
+	private int color;
 	
 	//getter & setters
 	public int getId() {
@@ -27,10 +27,10 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getColor() {
+	public int getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(int color) {
 		this.color = color;
 	}
 

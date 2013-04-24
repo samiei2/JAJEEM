@@ -7,9 +7,9 @@ import com.jajeem.room.model.Session;
 
 public interface ISessionDAO {
 	
-	void create(Session session) throws SQLException;
-	void update(Session session) throws SQLException;
-	void delete(Session session) throws SQLException;
-	Session get(int id) throws SQLException;
+	Session create(Session session) throws SQLException;
+	Session get(Session session) throws SQLException;
+	boolean update(Session session) throws SQLException;
+	boolean delete(Session session) throws SQLException;
 	ArrayList<Session> list() throws SQLException;
 }

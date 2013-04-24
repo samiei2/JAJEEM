@@ -301,7 +301,6 @@ public class StudentDAO implements IStudentDAO {
 				student.setUsername(rs.getString("username"));
 				student.setPassword(rs.getString("password"));
 				student.setLanguage(rs.getString("language"));
-				logger.info(student.getUsername() + "   " + student.getId());
 
 				allStudents.add(student);
 			}

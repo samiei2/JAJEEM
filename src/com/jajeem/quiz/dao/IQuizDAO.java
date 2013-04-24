@@ -7,8 +7,9 @@ import com.jajeem.quiz.model.Quiz;
 
 public interface IQuizDAO {
 	
-	void create(Quiz respons) throws SQLException;
-	void update(Quiz respons) throws SQLException;
-	Quiz get(int id) throws SQLException;
+	Quiz create(Quiz respons) throws SQLException;
+	Quiz get(Quiz quiz) throws SQLException;
+	boolean update(Quiz respons) throws SQLException;
+	boolean delete(Quiz quiz) throws SQLException;
 	ArrayList<Quiz> list() throws SQLException;
 }

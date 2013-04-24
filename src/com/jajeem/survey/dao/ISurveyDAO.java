@@ -7,8 +7,9 @@ import com.jajeem.survey.model.Survey;
 
 public interface ISurveyDAO {
 	
-	void create(Survey survey) throws SQLException;
-	void update(Survey survey) throws SQLException;
-	Survey get(int id) throws SQLException;
+	Survey create(Survey survey) throws SQLException;
+	boolean update(Survey survey) throws SQLException;
+	Survey get(Survey survey) throws SQLException;
+	boolean delete(Survey survey) throws SQLException;
 	ArrayList<Survey> list() throws SQLException;
 }

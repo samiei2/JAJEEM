@@ -1,106 +1,259 @@
 package com.jajeem.room.dao.h2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.jajeem.util.H2ConnectionImpl;
 
 import com.jajeem.room.dao.ISessionDAO;
 import com.jajeem.room.model.Session;
-import com.jajeem.util.H2ConnectionImpl;
-import com.jajeem.util.HSQLDBConnectionImpl;
 
-public class SessionDAO implements ISessionDAO{
-	
+public class SessionDAO implements ISessionDAO {
 
-	@Override
-	public void create(Session session) throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "insert into sessions (id,instructorid,start,end,classid) values ("+session.getId()+","+session.getInstructorId()+","+session.getStart()+","+session.getEnd()+","+session.getClassId()+");";
-		
-		try(Statement statement = con.createStatement()){
-			statement.executeUpdate(query);
-		}
-		con.close();
+	Logger logger = Logger.getLogger(SessionDAO.class);
+
+	public SessionDAO() {
+		PropertyConfigurator.configure("conf/log4j.conf");
 	}
 
 	@Override
-	public void update(Session session) throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "update sessions set instructorid = "+session.getInstructorId()+",start = "+session.getStart()+",end = "+session.getEnd()
-				+"where sessions.id="+session.getId()+" and sessions.classid="+session.getClassId()+";";
+	public Session create(Session session) throws SQLException {
 		
-		try(Statement statement = con.createStatement()){
-			statement.executeUpdate(query);
-		}
-		con.close();
-	}
+		PreparedStatement ps = null;
+		int rs = 0;
 
-	@Override
-	public void delete(Session session) throws SQLException {
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
-		String query = "";
-		query += "delete from sessions "
-				+"where sessions.id="+session.getId()+";";
-		
-		try(Statement statement = con.createStatement()){
-			statement.executeUpdate(query);
-		}
-		con.close();
-	}
 
-	@Override
-	public Session get(int id) throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "select * from sessions "
-				+"where sessions.id="+id+";";
-		Session result = null;
-		try(Statement statement = con.createStatement()){
-			ResultSet rs = statement.executeQuery(query);
-			if(rs.next()){
-				result = new Session();
-				result.setId(id);
-				result.setInstructorId(rs.getInt("instructorid"));
-				result.setStart(rs.getInt("start"));
-				result.setEnd(rs.getInt("end"));
-				result.setClassId(rs.getInt("classid"));
+		ps = con.prepareStatement("INSERT INTO Session (classId, instructorId, start, end) " +
+				" VALUES (?, ?, ? , ?);");
+		ps.setInt(1, session.getClassId());
+		ps.setInt(2, session.getInstructorId());
+		ps.setInt(3, session.getStart());
+		ps.setInt(4, session.getEnd());
+
+		try {
+			rs = ps.executeUpdate();
+
+			// get last id
+			ResultSet maxId = null;
+			maxId = ps.getGeneratedKeys();
+			if (maxId.next()) {
+				session.setId(maxId.getInt(1));
+			} else {
+				session.setId(0);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			session.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+
+				} else {
+					session.setId(-1);
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
 			}
 		}
-		con.close();
-		return result;
+
+		return session;
+	}
+
+	@Override
+	public Session get(Session session) throws SQLException {
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+		
+		ps = con.prepareStatement("SELECT * FROM Session WHERE Session.id = ?;");
+		ps.setInt(1, session.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				session.setClassId(rs.getInt("classId"));
+				session.setInstructorId(rs.getInt("instructorId"));
+				session.setStart(rs.getInt("start"));
+				session.setEnd(rs.getInt("end"));
+			} else {
+				session.setId(0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			session.setId(-1);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return session;
+	}
+
+	@Override
+	public boolean update(Session session) throws SQLException {
+		
+		PreparedStatement ps = null;
+		int rs = 0;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+		
+		ps = con.prepareStatement("UPDATE Session SET classId=?, instructorId=?, start=?, end=? WHERE id = ?");
+		
+		ps.setInt(1, session.getClassId());
+		ps.setInt(2, session.getInstructorId());
+		ps.setInt(3, session.getStart());
+		ps.setInt(4, session.getEnd());
+		ps.setInt(5, session.getId());
+
+		try {
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			session.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean delete(Session session) throws SQLException {
+		
+		PreparedStatement ps = null;
+		int rs = 0;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+		
+		ps = con.prepareStatement("DELETE FROM Session WHERE Session.id = ?;");
+		ps.setInt(1, session.getId());
+
+		try {
+			rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			session.setId(-1);
+		} finally {
+			try {
+				if (rs == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
 	}
 
 	@Override
 	public ArrayList<Session> list() throws SQLException {
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		String query = "";
-		query += "select * from sessions;";
 		
 		ArrayList<Session> allSessions = new ArrayList<>();
-		try(Statement statement = con.createStatement()){
-			ResultSet rs = statement.executeQuery(query);
-			while(rs.next()){
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+		
+		ps = con.prepareStatement("SELECT * FROM Session");
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
 				Session session = new Session();
+
 				session.setId(rs.getInt("id"));
-				session.setInstructorId(rs.getInt("instructorid"));
+				session.setClassId(rs.getInt("classId"));
+				session.setInstructorId(rs.getInt("instructorId"));
 				session.setStart(rs.getInt("start"));
 				session.setEnd(rs.getInt("end"));
-				session.setClassId(rs.getInt("classid"));
+
 				allSessions.add(session);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
 		}
-		con.close();
+
 		return allSessions;
 	}
-
 
 }
