@@ -12,9 +12,9 @@ System.out.println(conf.getParam("port"));
 
 
 InstructorDAO t = new InstructorDAO();
-t.list();
+
 Instructor i = new Instructor();
-i.setId(33);
-i.setUsername("dddd");
-t.update(i);
+
+i.setUsername("Armin");
+t.create(i);
 
