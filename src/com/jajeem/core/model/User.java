@@ -8,7 +8,7 @@ public class User {
 	private String lastName;
 	private String username;
 	private String password;
-	private String langauge;
+	private String language;
 	
 	// setter & getters
 	public int getId() {
@@ -47,10 +47,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getLangauge() {
-		return langauge;
+	public String getLanguage() {
+		return language;
 	}
-	public void setLangauge(String langauge) {
-		this.langauge = langauge;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }
