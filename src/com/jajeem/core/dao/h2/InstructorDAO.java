@@ -90,9 +90,9 @@ public class InstructorDAO implements IInstructorDAO {
 
 		try (Statement statement = con.createStatement()) {
 			rs = statement.executeUpdate(query);
-			
+
 			// get last id
-			
+
 			ResultSet maxId = null;
 			maxId = statement.getGeneratedKeys();
 			if (maxId.next()) {
@@ -100,7 +100,7 @@ public class InstructorDAO implements IInstructorDAO {
 			} else {
 				instructor.setId(0);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
@@ -119,13 +119,60 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		try {
 			if (con != null)
 				con.close();
 		} catch (Exception e) {
 		}
-		
+
+		return instructor;
+	}
+
+	@Override
+	public Instructor get(Instructor instructor) throws SQLException {
+		String query = String.format(
+				"SELECT * FROM Instructor WHERE Instructor.id = %d;",
+				instructor.getId());
+
+		H2ConnectionImpl conn = new H2ConnectionImpl();
+		Connection con = conn.getConnection();
+		ResultSet rs = null;
+
+		try (Statement statement = con.createStatement()) {
+			rs = statement.executeQuery(query);
+			if (rs.next()) {
+				instructor.setFirstName(rs.getString("firstName"));
+				instructor.setMiddleName(rs.getString("middleName"));
+				instructor.setLastName(rs.getString("lastName"));
+				instructor.setUsername(rs.getString("username"));
+				instructor.setPassword(rs.getString("password"));
+				instructor.setLanguage(rs.getString("language"));
+			} else {
+				instructor.setId(0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			instructor.setId(-1);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+			}
+		}
+
+		try {
+			if (con != null)
+				con.close();
+		} catch (Exception e) {
+		}
+
 		return instructor;
 	}
 
@@ -170,7 +217,7 @@ public class InstructorDAO implements IInstructorDAO {
 				con.close();
 		} catch (Exception e) {
 		}
-		
+
 		return false;
 	}
 
@@ -204,7 +251,7 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		try {
 			if (con != null)
 				con.close();
@@ -212,51 +259,6 @@ public class InstructorDAO implements IInstructorDAO {
 		}
 
 		return false;
-	}
-
-	@Override
-	public Instructor get(Instructor instructor) throws SQLException {
-		String query = String.format("SELECT * FROM Instructor WHERE Instructor.id = %d;", instructor.getId());
-
-		H2ConnectionImpl conn = new H2ConnectionImpl();
-		Connection con = conn.getConnection();
-		ResultSet rs = null;
-
-		try (Statement statement = con.createStatement()) {
-			rs = statement.executeQuery(query);
-			if (rs.next()) {
-				instructor.setFirstName(rs.getString("firstName"));
-				instructor.setMiddleName(rs.getString("middleName"));
-				instructor.setLastName(rs.getString("lastName"));
-				instructor.setUsername(rs.getString("username"));
-				instructor.setPassword(rs.getString("password"));
-				instructor.setLanguage(rs.getString("language"));
-			} else {
-				instructor.setId(0);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			instructor.setId(-1);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-			}
-		}
-		
-		try {
-			if (con != null)
-				con.close();
-		} catch (Exception e) {
-		}
-
-		return instructor;
 	}
 
 	@Override
@@ -297,13 +299,13 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		try {
 			if (con != null)
 				con.close();
 		} catch (Exception e) {
 		}
-		
+
 		return allInstructors;
 	}
 
