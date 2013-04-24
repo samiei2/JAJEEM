@@ -20,50 +20,47 @@ public class InstructorDAO implements IInstructorDAO {
 	}
 
 	@Override
-	public Instructor authenticate(String username, String password)
+	public boolean authenticate(String username, String password)
 			throws SQLException {
 
-		String query = "SELECT * FROM Instructor WHERE Instructor.username = '%s';";
+		String query = String.format(
+				"SELECT * FROM Instructor WHERE Instructor.username = '%s';",
+				username);
 
 		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		ResultSet rs = null;
-		Instructor instructor = new Instructor();
 
 		// checking...
 		if (username.length() == 0) {
 			logger.error("authenticate: failed ... invalid username");
-			return instructor;
+			return false;
 		}
 
 		if (password.length() == 0) {
 			logger.error("authenticate: failed ... invalid password");
-			return instructor;
+			return false;
 		}
-
-		String.format(query, username);
 
 		try (Statement statement = con.createStatement()) {
 			rs = statement.executeQuery(query);
 			if (rs.next()) {
-				if (rs.getString(2).compareTo(rs.getString(3)) == 0) {
-					logger.debug("authenticate: matched instructor's password [instructor no="
-							+ username + "]");
-					instructor.setId(rs.getInt(1));
+				if (password.compareTo(rs.getString("password")) == 0) {
+					return true;
 				} else {
 					logger.debug("authenticate: didn't match instructor's password [instructor no="
 							+ username + "]");
-					instructor.setId(0);
+					return false;
 				}
 			} else {
 				logger.debug("authenticate: didn't match instructor no ... [instructor no="
 						+ username + "]");
+				return false;
 			}
 		} catch (SQLException e) {
 			logger.error("authenticate: throwed an exception: "
 					+ e.getMessage());
 			e.printStackTrace();
-			instructor.setId(-1);
 		} finally {
 			try {
 				if (con != null)
@@ -71,7 +68,7 @@ public class InstructorDAO implements IInstructorDAO {
 			} catch (Exception e) {
 			}
 		}
-		return instructor;
+		return false;
 	}
 
 	@Override
@@ -282,6 +279,8 @@ public class InstructorDAO implements IInstructorDAO {
 				instructor.setUsername(rs.getString("username"));
 				instructor.setPassword(rs.getString("password"));
 				instructor.setLanguage(rs.getString("language"));
+				logger.info(instructor.getUsername() + "   "
+						+ instructor.getId());
 
 				allInstructors.add(instructor);
 			}

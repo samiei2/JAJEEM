@@ -27,7 +27,7 @@ public class test {
             Connection con = db.getConnection();
             
     		String query = "";
-  		query += "drop table if exists Instructor;CREATE TABLE Instructor ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
+  		query += "drop table if exists Student;CREATE TABLE Student ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
   				"lastName varchar(100),username varchar(100),password varchar(100),language varchar(100));";
 //    		
     		

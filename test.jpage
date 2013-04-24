@@ -11,9 +11,14 @@ conf.load("conf/conf.properties");
 System.out.println(conf.getParam("port"));
 
 
-InstructorDAO t = new InstructorDAO();
+StudentDAO t = new StudentDAO();
+t.list();
 
-Instructor i = new Instructor();
-
-i.setUsername("Armin");
+Student i = new Student();
+i.setUsername("dddd");
 t.create(i);
+
+System.out.println(t.delete(i));
+
+
+
