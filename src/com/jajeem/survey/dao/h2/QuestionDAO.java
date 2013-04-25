@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.survey.dao.IQuestionDAO;
@@ -25,8 +26,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyQuestion (instructorId, title, type, imagePath, url," +
 				" answer1, answer2, answer3, answer4, answer5) "
@@ -87,8 +87,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM SurveyQuestion WHERE Question.id = ?;");
 		ps.setInt(1, question.getId());
@@ -140,9 +139,8 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
-
+		Connection con = BaseDAO.getConnection();
+		
 		ps = con.prepareStatement("UPDATE SurveyQuestion SET instructorId = ?, title = ?, type = ?, imagePath = ?" +
 				", url, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ? WHERE id = ?");
 
@@ -193,8 +191,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM SurveyQuestion WHERE Question.id = ?;");
 		ps.setInt(1, question.getId());
@@ -236,8 +233,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM SurveyQuestion");
 

@@ -9,7 +9,6 @@ import java.sql.SQLException;
  */
 public class Connection implements IConnection {
     protected ConnectionManager conman;
-    private java.sql.Connection connection;
     int queryTimeOut = 30;
     
     public Connection(){
@@ -17,9 +16,7 @@ public class Connection implements IConnection {
     }
     
     public java.sql.Connection getConnection() throws SQLException{
-        if(connection == null)
-            connection = conman.getConnection();
-        return connection;
+    	return conman.getConnection();
     }
     
 }

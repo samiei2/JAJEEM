@@ -12,11 +12,9 @@ import com.jajeem.util.H2Connection;
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.*;
 
-public class StudentDAO extends BaseDAO implements IStudentDAO {
+public class StudentDAO implements IStudentDAO {
 
 	Logger logger = Logger.getLogger(StudentDAO.class);
-	H2Connection conn = BaseDAO.getH2Connection();
-	
 
 	public StudentDAO() {
 		PropertyConfigurator.configure("conf/log4j.conf");
@@ -29,7 +27,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.username = ?;");
 		ps.setString(1, username);
@@ -90,7 +88,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO Student (firstName, middleName, lastName, username, password, language) " +
 				" VALUES (?, ?, ?, ?, ?, ?);");
@@ -146,7 +144,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.id = ?;");
 		ps.setInt(1, student.getId());
@@ -193,7 +191,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Student SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
 		
@@ -240,7 +238,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Student WHERE Student.id = ?;");
 		ps.setInt(1, student.getId());
@@ -282,7 +280,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Student");
 

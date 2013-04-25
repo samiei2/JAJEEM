@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.quiz.dao.IQuizDAO;
@@ -25,8 +26,7 @@ public class QuizDAO implements IQuizDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle) "
 				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
@@ -84,8 +84,7 @@ public class QuizDAO implements IQuizDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Quiz WHERE Quiz.id = ?;");
 		ps.setInt(1, quiz.getId());
@@ -135,8 +134,7 @@ public class QuizDAO implements IQuizDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE Quiz SET instructorId = ?, title = ?, category = ?, description = ?, "
 				+ "points = ?, pointing = ?, time = ?, shuffle = ? WHERE id = ?");
@@ -186,8 +184,7 @@ public class QuizDAO implements IQuizDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM Quiz WHERE Quiz.id = ?;");
 		ps.setInt(1, quiz.getId());
@@ -229,8 +226,7 @@ public class QuizDAO implements IQuizDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Quiz");
 
