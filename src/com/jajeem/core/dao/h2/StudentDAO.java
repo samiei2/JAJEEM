@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.*;
 
-public class StudentDAO implements IStudentDAO {
+public class StudentDAO extends BaseDAO implements IStudentDAO {
 
 	Logger logger = Logger.getLogger(StudentDAO.class);
-	H2Connection conn = new H2Connection();
+	H2Connection conn = BaseDAO.getH2Connection();
+	
 
 	public StudentDAO() {
 		PropertyConfigurator.configure("conf/log4j.conf");
