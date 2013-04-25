@@ -1,10 +1,15 @@
 package com.jajeem.exception;
 
-public class JajeemSqlException extends JajeemExcetion{
-	
-	@Override
-	public void ExceptionHandler() {
-		
+public class JajeemSqlExceptionHandler extends JajeemExcetionHandler{
+
+	public JajeemSqlExceptionHandler(Exception e) {
+		super(e);
 	}
+
+	@Override
+	public void ExceptionHandler(Exception e) {
+		logger.error(e.getMessage(), e);
+	}
+	
 
 }
