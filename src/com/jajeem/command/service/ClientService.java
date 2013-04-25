@@ -100,7 +100,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				switch (msg.getType()) {
 					case "power":
-						new SetPowerCommandHandler();
+						SetPowerCommandHandler powerHandler = new SetPowerCommandHandler();
+						powerHandler.run(msg.getType());
 						break;
 					default:
 						System.out.println("Unknown message, message is: " + msg.getType());
