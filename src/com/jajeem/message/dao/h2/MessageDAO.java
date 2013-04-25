@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.message.dao.IMessageDAO;
@@ -25,8 +26,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Message (fromId, toId, content, date, type, anonymous) " +
 				" VALUES (?, ?, ?, ?, ?, ?);");
@@ -82,8 +82,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Message WHERE Message.id = ?;");
 		ps.setInt(1, message.getId());
@@ -130,8 +129,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Message SET fromId=?, toId=?, content=?, date=?, type=?, anonymous=? WHERE id = ?");
 		
@@ -178,8 +176,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Message WHERE Message.id = ?;");
 		ps.setInt(1, message.getId());
@@ -221,8 +218,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Message");
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.groupwork.dao.IGroupMemberDAO;
@@ -25,8 +26,7 @@ public class GroupMemberDAO implements IGroupMemberDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO GroupMember (groupId, seatId, leader) " +
 				" VALUES (?, ?, ?);");
@@ -79,8 +79,7 @@ public class GroupMemberDAO implements IGroupMemberDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM GroupMember WHERE GroupMember.id = ?;");
 		ps.setInt(1, groupMember.getId());
@@ -124,8 +123,7 @@ public class GroupMemberDAO implements IGroupMemberDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE GroupMember SET groupId = ?, seatId = ?, " +
 				"leader = ? WHERE id = ?");
@@ -169,8 +167,7 @@ public class GroupMemberDAO implements IGroupMemberDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM GroupMember WHERE GroupMember.id = ?;");
 		ps.setInt(1, groupMember.getId());
@@ -212,8 +209,7 @@ public class GroupMemberDAO implements IGroupMemberDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM GroupMember");
 

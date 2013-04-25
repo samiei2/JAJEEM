@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.survey.dao.ISurveyDAO;
@@ -25,8 +26,7 @@ public class SurveyDAO implements ISurveyDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Survey (instructorId, title, category, description) "
 				+ " VALUES (?, ?, ?, ?);");
@@ -80,8 +80,7 @@ public class SurveyDAO implements ISurveyDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.id = ?;");
 		ps.setInt(1, survey.getId());
@@ -127,8 +126,7 @@ public class SurveyDAO implements ISurveyDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE Survey SET instructorId = ?, title = ?, category = ?, description = ? WHERE id = ?");
 
@@ -173,8 +171,7 @@ public class SurveyDAO implements ISurveyDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM Survey WHERE Survey.id = ?;");
 		ps.setInt(1, survey.getId());
@@ -216,8 +213,7 @@ public class SurveyDAO implements ISurveyDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Survey");
 

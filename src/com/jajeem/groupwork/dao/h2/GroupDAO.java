@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 
@@ -26,8 +27,7 @@ public class GroupDAO implements IGroupDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO Group (groupworkId, name, color) VALUES (?, ?, ?);");
 		ps.setInt(1, group.getGroupworkId());
@@ -79,8 +79,7 @@ public class GroupDAO implements IGroupDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Group WHERE Group.id = ?;");
 		ps.setInt(1, group.getId());
@@ -124,8 +123,7 @@ public class GroupDAO implements IGroupDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Group SET groupworkId=?, name=?, color=? WHERE id = ?");
 		ps.setInt(1, group.getGroupworkId());
@@ -168,8 +166,7 @@ public class GroupDAO implements IGroupDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Group WHERE Group.id = ?;");
 		ps.setInt(1, group.getId());
@@ -211,8 +208,7 @@ public class GroupDAO implements IGroupDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Group");
 

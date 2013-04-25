@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 import com.jajeem.room.dao.ISessionDAO;
@@ -25,8 +26,7 @@ public class SessionDAO implements ISessionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Session (classId, instructorId, start, end) " +
 				" VALUES (?, ?, ? , ?);");
@@ -80,8 +80,7 @@ public class SessionDAO implements ISessionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Session WHERE Session.id = ?;");
 		ps.setInt(1, session.getId());
@@ -126,8 +125,7 @@ public class SessionDAO implements ISessionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Session SET classId=?, instructorId=?, start=?, end=? WHERE id = ?");
 		
@@ -172,8 +170,7 @@ public class SessionDAO implements ISessionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Session WHERE Session.id = ?;");
 		ps.setInt(1, session.getId());
@@ -215,8 +212,7 @@ public class SessionDAO implements ISessionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2Connection conn = new H2Connection();
-		Connection con = conn.getConnection();
+		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Session");
 

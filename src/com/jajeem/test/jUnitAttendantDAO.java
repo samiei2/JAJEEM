@@ -11,14 +11,14 @@ import org.junit.Test;
 
 import com.jajeem.room.dao.h2.AttendantDAO;
 import com.jajeem.room.model.Attendant;
+import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
 public class jUnitAttendantDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+        Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists Attendant;CREATE TABLE Attendant ( id INT auto_increment, sessionId INT,seatId INT, studentId INT,status SMALLINT );";
@@ -28,8 +28,7 @@ public class jUnitAttendantDAO {
 	
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+        Connection con = BaseDAO.getConnection();
         
         AttendantDAO dao = new AttendantDAO();
 		Attendant s = new Attendant();
