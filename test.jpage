@@ -10,12 +10,8 @@ Config conf = new Config();
 conf.load("conf/conf.properties");
 System.out.println(conf.getParam("port"));
 
-StartUp ss = new StartUp();
-StudentDAO t = new StudentDAO();
+StartUp ss = new StartUp();Student i = new Student();
+StudentDAO t = new StudentDAO();
 t.list();
-
-i = new Student();
 i.setUsername("dddd");
-t.create(i);
-
-
+t.create(i);
