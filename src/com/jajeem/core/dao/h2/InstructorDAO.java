@@ -11,6 +11,7 @@ import com.jajeem.util.H2Connection;
 
 import com.jajeem.core.dao.IInstructorDAO;
 import com.jajeem.core.model.*;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class InstructorDAO implements IInstructorDAO {
 
@@ -62,21 +63,25 @@ public class InstructorDAO implements IInstructorDAO {
 			logger.error("authenticate: throwed an exception: "
 					+ e.getMessage());
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 		return false;
@@ -114,6 +119,7 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -122,16 +128,19 @@ public class InstructorDAO implements IInstructorDAO {
 					instructor.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -164,21 +173,25 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -208,6 +221,7 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -216,16 +230,19 @@ public class InstructorDAO implements IInstructorDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -248,6 +265,7 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			instructor.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -256,16 +274,19 @@ public class InstructorDAO implements IInstructorDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -301,21 +322,25 @@ public class InstructorDAO implements IInstructorDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
