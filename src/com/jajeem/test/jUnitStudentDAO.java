@@ -10,15 +10,18 @@ import org.junit.Test;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.core.model.Student;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitStudentDAO {
 
 	@Test
 	public void test() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
-	
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
+		
 		String query = "";
 		query += "drop table if exists Student;CREATE TABLE Student ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
   				"lastName varchar(100),username varchar(100),password varchar(100),language varchar(100));";

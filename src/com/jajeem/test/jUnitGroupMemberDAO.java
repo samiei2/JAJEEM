@@ -11,15 +11,18 @@ import org.junit.Test;
 
 import com.jajeem.groupwork.dao.h2.GroupMemberDAO;
 import com.jajeem.groupwork.model.GroupMember;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitGroupMemberDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+        @SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
         
+		Connection con = BaseDAO.getConnection();
+
 		String query = "";
 		query += "drop table if exists GroupMember;CREATE TABLE GroupMember ( id INT auto_increment, groupId INT,Leader varchar(100), seatId INT);";
 		Statement statement = con.createStatement();
@@ -28,9 +31,8 @@ public class jUnitGroupMemberDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
-        
+		Connection con = BaseDAO.getConnection();
+		
         GroupMemberDAO dao = new GroupMemberDAO();
 		GroupMember s = new GroupMember();
 		s.setGroupId(12);

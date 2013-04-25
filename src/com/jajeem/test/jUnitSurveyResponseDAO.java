@@ -10,15 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jajeem.survey.dao.h2.ResponseDAO;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitSurveyResponseDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
         
+		Connection con = BaseDAO.getConnection();
+		
 		String query = "";
 		query += "drop table if exists SurveyResponse;CREATE TABLE SurveyResponse ( id INT auto_increment, runId INT, studentId INT" +
 				",answer1 varchar(100),answer2 varchar(100),answer3 varchar(100),answer4 varchar(100),answer5 varchar(100));";
@@ -28,9 +31,8 @@ public class jUnitSurveyResponseDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
-        
+		Connection con = BaseDAO.getConnection();
+		
         ResponseDAO dao = new ResponseDAO();
 		com.jajeem.survey.model.Response s = new com.jajeem.survey.model.Response();
 		s.setRunId(12);

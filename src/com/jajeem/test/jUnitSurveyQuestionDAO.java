@@ -11,14 +11,17 @@ import org.junit.Test;
 
 import com.jajeem.survey.dao.h2.QuestionDAO;
 import com.jajeem.survey.model.Question;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitSurveyQuestionDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists SurveyQuestion;CREATE TABLE SurveyQuestion ( id INT auto_increment, instructorid INT,title varchar(100)" +
@@ -29,8 +32,7 @@ public class jUnitSurveyQuestionDAO {
 
 	@Test(expected = SQLException.class)
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		Connection con = BaseDAO.getConnection();
         
         QuestionDAO dao = new QuestionDAO();
 		Question s = new Question();

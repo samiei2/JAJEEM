@@ -11,7 +11,8 @@ import org.junit.Test;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.core.model.Student;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitInstructorDAO {
 
@@ -20,8 +21,10 @@ public class jUnitInstructorDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists Instructor;CREATE TABLE Instructor ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
@@ -32,8 +35,7 @@ public class jUnitInstructorDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		Connection con = BaseDAO.getConnection();
         
         StudentDAO dao = new StudentDAO();
 		Student s = new Student();

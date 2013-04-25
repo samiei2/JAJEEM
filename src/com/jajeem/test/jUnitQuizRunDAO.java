@@ -11,14 +11,17 @@ import org.junit.Test;
 
 import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Run;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitQuizRunDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists QuizRun;CREATE TABLE QuizRun ( id INT auto_increment, instructorId INT, sessionId INT" +
@@ -29,8 +32,7 @@ public class jUnitQuizRunDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		Connection con = BaseDAO.getConnection();
         
         RunDAO dao = new RunDAO();
 		Run s = new Run();

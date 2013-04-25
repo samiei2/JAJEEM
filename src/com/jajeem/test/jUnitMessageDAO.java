@@ -11,14 +11,17 @@ import org.junit.Test;
 
 import com.jajeem.message.dao.h2.MessageDAO;
 import com.jajeem.message.model.Message;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitMessageDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists Message;CREATE TABLE Message ( id INT auto_increment, fromId INT,toId INT,content varchar(100), date varchar(100),type smallint,anonymous tinyint);";
@@ -28,8 +31,7 @@ public class jUnitMessageDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		Connection con = BaseDAO.getConnection();
         
         MessageDAO dao = new MessageDAO();
 		Message s = new Message();

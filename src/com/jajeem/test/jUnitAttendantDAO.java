@@ -12,12 +12,16 @@ import org.junit.Test;
 import com.jajeem.room.dao.h2.AttendantDAO;
 import com.jajeem.room.model.Attendant;
 import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitAttendantDAO {
 
 	@Before
 	public void setUp() throws Exception {
-        Connection con = BaseDAO.getConnection();
+        @SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists Attendant;CREATE TABLE Attendant ( id INT auto_increment, sessionId INT,seatId INT, studentId INT,status SMALLINT );";

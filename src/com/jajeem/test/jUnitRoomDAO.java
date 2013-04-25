@@ -11,14 +11,17 @@ import org.junit.Test;
 
 import com.jajeem.room.dao.h2.RoomDAO;
 import com.jajeem.room.model.Room;
-import com.jajeem.util.H2Connection;
+import com.jajeem.util.BaseDAO;
+import com.jajeem.util.StartUp;
 
 public class jUnitRoomDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		@SuppressWarnings("unused")
+		StartUp startUp = new StartUp();
+        
+		Connection con = BaseDAO.getConnection();
         
 		String query = "";
 		query += "drop table if exists room;CREATE TABLE room ( id INT auto_increment, seatSize INT,name varchar(100), attendanceType TINYINT,signInType TINYINT);";
@@ -28,8 +31,7 @@ public class jUnitRoomDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2Connection db = new H2Connection();
-        Connection con = db.getConnection();
+		Connection con = BaseDAO.getConnection();
         
         RoomDAO dao = new RoomDAO();
 		Room s = new Room();
