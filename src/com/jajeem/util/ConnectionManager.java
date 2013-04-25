@@ -17,7 +17,6 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  */
 public class ConnectionManager implements IConnectionManager {
     
-    private GenericObjectPool connectionPool;
     private PoolingDataSource dataSource;
     public String connectURI;
     public String connectDriver;

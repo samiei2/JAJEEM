@@ -5,6 +5,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.groupwork.dao.h2.GroupDAO;
 
+@SuppressWarnings("serial")
 public class JajeemExcetionHandler extends Exception{
 	Logger logger = Logger.getLogger(GroupDAO.class);
 	public JajeemExcetionHandler(Exception e){ 

@@ -7,8 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
-
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.message.dao.IMessageDAO;
 import com.jajeem.message.model.Message;
 
@@ -52,6 +51,7 @@ public class MessageDAO implements IMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			message.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -60,16 +60,19 @@ public class MessageDAO implements IMessageDAO {
 					message.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -102,21 +105,25 @@ public class MessageDAO implements IMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			message.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -146,6 +153,7 @@ public class MessageDAO implements IMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			message.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -154,16 +162,19 @@ public class MessageDAO implements IMessageDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -186,6 +197,7 @@ public class MessageDAO implements IMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			message.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -194,16 +206,19 @@ public class MessageDAO implements IMessageDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -239,21 +254,25 @@ public class MessageDAO implements IMessageDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 

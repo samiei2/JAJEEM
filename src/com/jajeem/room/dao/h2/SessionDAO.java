@@ -7,8 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
-
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.dao.ISessionDAO;
 import com.jajeem.room.model.Session;
 
@@ -50,6 +49,7 @@ public class SessionDAO implements ISessionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			session.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -58,16 +58,19 @@ public class SessionDAO implements ISessionDAO {
 					session.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -98,21 +101,25 @@ public class SessionDAO implements ISessionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			session.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -140,6 +147,7 @@ public class SessionDAO implements ISessionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			session.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -148,16 +156,19 @@ public class SessionDAO implements ISessionDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -180,6 +191,7 @@ public class SessionDAO implements ISessionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			session.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -188,16 +200,19 @@ public class SessionDAO implements ISessionDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -231,21 +246,25 @@ public class SessionDAO implements ISessionDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 

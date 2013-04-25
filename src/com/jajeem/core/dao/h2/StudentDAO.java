@@ -7,8 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
-
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.*;
 import com.jajeem.exception.JajeemExcetionHandler;

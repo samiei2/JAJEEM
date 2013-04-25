@@ -12,7 +12,6 @@ import org.junit.Test;
 import com.jajeem.room.dao.h2.AttendantDAO;
 import com.jajeem.room.model.Attendant;
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
 
 public class jUnitAttendantDAO {
 

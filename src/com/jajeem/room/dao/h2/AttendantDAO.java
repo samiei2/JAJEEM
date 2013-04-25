@@ -1,16 +1,18 @@
 package com.jajeem.room.dao.h2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
-
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.dao.IAttendantDAO;
 import com.jajeem.room.model.Attendant;
+import com.jajeem.util.BaseDAO;
 
 public class AttendantDAO implements IAttendantDAO {
 
@@ -50,6 +52,7 @@ public class AttendantDAO implements IAttendantDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			attendant.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -58,16 +61,19 @@ public class AttendantDAO implements IAttendantDAO {
 					attendant.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -98,21 +104,25 @@ public class AttendantDAO implements IAttendantDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			attendant.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -140,6 +150,7 @@ public class AttendantDAO implements IAttendantDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			attendant.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -148,16 +159,19 @@ public class AttendantDAO implements IAttendantDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -180,6 +194,7 @@ public class AttendantDAO implements IAttendantDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			attendant.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -188,16 +203,19 @@ public class AttendantDAO implements IAttendantDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -231,21 +249,25 @@ public class AttendantDAO implements IAttendantDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 

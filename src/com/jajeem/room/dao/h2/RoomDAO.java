@@ -7,8 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
-
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.dao.IRoomDAO;
 import com.jajeem.room.model.Room;
 
@@ -50,6 +49,7 @@ public class RoomDAO implements IRoomDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			room.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -58,16 +58,19 @@ public class RoomDAO implements IRoomDAO {
 					room.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -98,21 +101,25 @@ public class RoomDAO implements IRoomDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			room.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -141,6 +148,7 @@ public class RoomDAO implements IRoomDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			room.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -149,16 +157,19 @@ public class RoomDAO implements IRoomDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -181,6 +192,7 @@ public class RoomDAO implements IRoomDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			room.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -189,16 +201,19 @@ public class RoomDAO implements IRoomDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -232,21 +247,25 @@ public class RoomDAO implements IRoomDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 

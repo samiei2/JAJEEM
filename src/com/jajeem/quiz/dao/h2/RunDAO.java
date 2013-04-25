@@ -9,6 +9,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
 
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IRunDAO;
 import com.jajeem.quiz.model.Run;
 
@@ -51,6 +52,7 @@ public class RunDAO implements IRunDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -59,16 +61,19 @@ public class RunDAO implements IRunDAO {
 					run.setId(-1);
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -102,21 +107,25 @@ public class RunDAO implements IRunDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -146,6 +155,7 @@ public class RunDAO implements IRunDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -154,16 +164,19 @@ public class RunDAO implements IRunDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -186,6 +199,7 @@ public class RunDAO implements IRunDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(-1);
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -194,16 +208,19 @@ public class RunDAO implements IRunDAO {
 					return false;
 				}
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
@@ -238,21 +255,25 @@ public class RunDAO implements IRunDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
 			}
 		}
 
