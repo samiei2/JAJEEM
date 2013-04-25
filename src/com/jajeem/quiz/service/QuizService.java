@@ -4,13 +4,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.jajeem.core.model.Student;
+import com.jajeem.quiz.dao.h2.QuestionDAO;
 import com.jajeem.quiz.dao.h2.QuizDAO;
+import com.jajeem.quiz.dao.h2.ResponseDAO;
+import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Response;
 
 public class QuizService implements IQuizService{
 	private QuizDAO quizDAO;
+	private QuestionDAO questionDAO;
+	private ResponseDAO responseDAO;
+	private RunDAO runDAO;
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
@@ -77,6 +83,30 @@ public class QuizService implements IQuizService{
 
 	public void setQuizDAO(QuizDAO quizDAO) {
 		this.quizDAO = quizDAO;
+	}
+
+	public ResponseDAO getResponseDAO() {
+		return responseDAO;
+	}
+
+	public void setResponseDAO(ResponseDAO responseDAO) {
+		this.responseDAO = responseDAO;
+	}
+
+	public QuestionDAO getQuestionDAO() {
+		return questionDAO;
+	}
+
+	public void setQuestionDAO(QuestionDAO questionDAO) {
+		this.questionDAO = questionDAO;
+	}
+
+	public RunDAO getRunDAO() {
+		return runDAO;
+	}
+
+	public void setRunDAO(RunDAO runDAO) {
+		this.runDAO = runDAO;
 	}
 
 }

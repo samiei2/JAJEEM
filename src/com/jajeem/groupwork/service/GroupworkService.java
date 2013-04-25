@@ -3,11 +3,15 @@ package com.jajeem.groupwork.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.jajeem.groupwork.dao.h2.GroupDAO;
+import com.jajeem.groupwork.dao.h2.GroupMemberDAO;
 import com.jajeem.groupwork.dao.h2.GroupworkDAO;
 import com.jajeem.groupwork.model.Groupwork;
 
 public class GroupworkService implements IGroupworkService{
 	private GroupworkDAO groupworkDAO;
+	private GroupMemberDAO groupmemeberDAO;
+	private GroupDAO groupDAO;
 	@Override
 	public Groupwork create(Groupwork groupwork) throws SQLException {
 		if(groupworkDAO != null)
@@ -49,6 +53,22 @@ public class GroupworkService implements IGroupworkService{
 
 	public void setGroupworkDAO(GroupworkDAO groupworkDAO) {
 		this.groupworkDAO = groupworkDAO;
+	}
+
+	public GroupMemberDAO getGroupmemeberDAO() {
+		return groupmemeberDAO;
+	}
+
+	public void setGroupmemeberDAO(GroupMemberDAO groupmemeberDAO) {
+		this.groupmemeberDAO = groupmemeberDAO;
+	}
+
+	public GroupDAO getGroupDAO() {
+		return groupDAO;
+	}
+
+	public void setGroupDAO(GroupDAO groupDAO) {
+		this.groupDAO = groupDAO;
 	}
 
 }

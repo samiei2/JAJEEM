@@ -12,6 +12,7 @@ public class Quiz {
 	private int pointing;
 	private int time;
 	private byte shuffle;
+	private Response response;
 	
 	//getter & setters
 	public int getId() {
@@ -67,5 +68,11 @@ public class Quiz {
 	}
 	public void setShuffle(byte shuffle) {
 		this.shuffle = shuffle;
+	}
+	public Response getResponse() {
+		return response;
+	}
+	public void setResponse(Response response) {
+		this.response = response;
 	}
 }
