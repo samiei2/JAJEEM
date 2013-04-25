@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.groupwork.dao.IGroupworkDAO;
 import com.jajeem.groupwork.model.Groupwork;
@@ -25,7 +25,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO Groupwork (classId, name) " +
@@ -78,7 +78,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Groupwork WHERE Groupwork.id = ?;");
@@ -122,7 +122,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Groupwork SET classId=?, name=? WHERE id = ?");
@@ -165,7 +165,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Groupwork WHERE Groupwork.id = ?;");
@@ -208,7 +208,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Groupwork");

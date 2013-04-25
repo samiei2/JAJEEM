@@ -10,8 +10,10 @@ Config conf = new Config();
 conf.load("conf/conf.properties");
 System.out.println(conf.getParam("port"));
 
+t = new StudentDAO();
 
-GroupDAO t = new GroupDAO();
-Group i = new Group();
-i.setName("dddd");
-t.create(i);An exception occurred during evaluation:  org.h2.jdbc.JdbcSQLExceptionAn exception occurred during evaluation:  org.h2.jdbc.JdbcSQLException
+i = new Student();
+i.setUsername("dddd");
+t.create(i);
+t.list();
+

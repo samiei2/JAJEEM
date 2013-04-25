@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.quiz.dao.IRunDAO;
 import com.jajeem.quiz.model.Run;
@@ -25,7 +25,7 @@ public class RunDAO implements IRunDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, start, end) "
@@ -81,7 +81,7 @@ public class RunDAO implements IRunDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM QuizRun WHERE QuizRun.id = ?;");
@@ -129,7 +129,7 @@ public class RunDAO implements IRunDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizRun SET instructorId = ?, sessionId = ?, "
@@ -177,7 +177,7 @@ public class RunDAO implements IRunDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM QuizRun WHERE QuizRun.id = ?;");
@@ -220,7 +220,7 @@ public class RunDAO implements IRunDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM QuizRun");

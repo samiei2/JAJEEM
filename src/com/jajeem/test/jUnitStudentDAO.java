@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.core.model.Student;
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 public class jUnitStudentDAO {
 
 	@Test
 	public void test() throws SQLException {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
 	
 		String query = "";

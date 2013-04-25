@@ -11,13 +11,13 @@ import org.junit.Test;
 
 import com.jajeem.room.dao.h2.RoomDAO;
 import com.jajeem.room.model.Room;
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 public class jUnitRoomDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
 		String query = "";
@@ -28,7 +28,7 @@ public class jUnitRoomDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
         RoomDAO dao = new RoomDAO();

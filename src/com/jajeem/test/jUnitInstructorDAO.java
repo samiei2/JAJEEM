@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.core.model.Student;
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 public class jUnitInstructorDAO {
 
@@ -20,7 +20,7 @@ public class jUnitInstructorDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
 		String query = "";
@@ -32,7 +32,7 @@ public class jUnitInstructorDAO {
 
 	@Test
 	public void testAuthenticate() throws SQLException {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
         StudentDAO dao = new StudentDAO();

@@ -11,13 +11,13 @@ import org.junit.Test;
 
 import com.jajeem.groupwork.dao.h2.GroupDAO;
 import com.jajeem.groupwork.model.Group;
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 public class jUnitGroupDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
 		String query = "";
@@ -28,7 +28,7 @@ public class jUnitGroupDAO {
 
 	@Test(expected = SQLException.class)
 	public void testAuthenticate() throws SQLException {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
         GroupDAO dao = new GroupDAO();

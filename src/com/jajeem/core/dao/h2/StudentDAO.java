@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.*;
@@ -14,6 +14,7 @@ import com.jajeem.core.model.*;
 public class StudentDAO implements IStudentDAO {
 
 	Logger logger = Logger.getLogger(StudentDAO.class);
+	H2Connection conn = new H2Connection();
 
 	public StudentDAO() {
 		PropertyConfigurator.configure("conf/log4j.conf");
@@ -26,7 +27,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.username = ?;");
@@ -88,7 +88,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO Student (firstName, middleName, lastName, username, password, language) " +
@@ -145,7 +144,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.id = ?;");
@@ -193,7 +191,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Student SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
@@ -241,7 +238,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Student WHERE Student.id = ?;");
@@ -284,7 +280,6 @@ public class StudentDAO implements IStudentDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Student");
@@ -301,6 +296,7 @@ public class StudentDAO implements IStudentDAO {
 				student.setUsername(rs.getString("username"));
 				student.setPassword(rs.getString("password"));
 				student.setLanguage(rs.getString("language"));
+				logger.info(student.getUsername());
 
 				allStudents.add(student);
 			}

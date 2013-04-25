@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.jajeem.util;
 
 import java.sql.SQLException;
@@ -10,13 +7,13 @@ import java.sql.SQLException;
  *
  * @author Armin
  */
-public class ConnectionImpl implements IConnection {
-    protected ConnectionManagerImpl conman;
+public class Connection implements IConnection {
+    protected ConnectionManager conman;
     private java.sql.Connection connection;
     int queryTimeOut = 30;
     
-    public ConnectionImpl(){
-        conman = new ConnectionManagerImpl();
+    public Connection(){
+        conman = new ConnectionManager();
     }
     
     public java.sql.Connection getConnection() throws SQLException{

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.survey.dao.IResponseDAO;
 import com.jajeem.survey.model.Response;
@@ -25,7 +25,7 @@ public class ResponseDAO implements IResponseDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer1, answer2, answer3, answer4, answer5) "
@@ -83,7 +83,7 @@ public class ResponseDAO implements IResponseDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM SurveyResponse WHERE SurveyResponse.id = ?;");
@@ -133,7 +133,7 @@ public class ResponseDAO implements IResponseDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("UPDATE SurveyResponse SET runId = ?, studentId = ?, " +
@@ -183,7 +183,7 @@ public class ResponseDAO implements IResponseDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM SurveyResponse WHERE SurveyResponse.id = ?;");
@@ -226,7 +226,7 @@ public class ResponseDAO implements IResponseDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM SurveyResponse");

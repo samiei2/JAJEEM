@@ -11,13 +11,13 @@ import org.junit.Test;
 
 import com.jajeem.quiz.dao.h2.QuestionDAO;
 import com.jajeem.quiz.model.Question;
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 public class jUnitQuizQuestionDAO {
 
 	@Before
 	public void setUp() throws Exception {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
 		String query = "";
@@ -29,7 +29,7 @@ public class jUnitQuizQuestionDAO {
 
 	@Test(expected = SQLException.class)
 	public void testAuthenticate() throws SQLException {
-		H2ConnectionImpl db = new H2ConnectionImpl();
+		H2Connection db = new H2Connection();
         Connection con = db.getConnection();
         
         QuestionDAO dao = new QuestionDAO();

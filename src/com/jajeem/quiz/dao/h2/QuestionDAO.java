@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.quiz.dao.IQuestionDAO;
 import com.jajeem.quiz.model.Question;
@@ -25,7 +25,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
@@ -89,7 +89,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE Question.id = ?;");
@@ -144,7 +144,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizQuestion SET instructorId = ?, title = ?, quizId = ?, type = ?, point = ?, imagePath = ?" +
@@ -199,7 +199,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM QuizQuestion WHERE Question.id = ?;");
@@ -242,7 +242,7 @@ public class QuestionDAO implements IQuestionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM QuizQuestion");

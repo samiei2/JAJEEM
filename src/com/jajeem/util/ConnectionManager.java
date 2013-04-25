@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.jajeem.util;
 
 import java.sql.Connection;
@@ -14,17 +11,16 @@ import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
-
 /**
  *
  * @author Armin
  */
-public class ConnectionManagerImpl implements IConnectionManager {
+public class ConnectionManager implements IConnectionManager {
     
     private GenericObjectPool connectionPool;
     private PoolingDataSource dataSource;
-    public String connectURI; // e.g. jdbc:oracle:thin:@192.168.1.87:1521:acportal
-    public String connectDriver; // e.g. oracle.jdbc.OracleDriver
+    public String connectURI;
+    public String connectDriver;
     public String username;
     public String passwd;
     
@@ -47,7 +43,7 @@ public class ConnectionManagerImpl implements IConnectionManager {
             try {
             	StartConnectionPool();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ConnectionManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         
        return dataSource.getConnection();

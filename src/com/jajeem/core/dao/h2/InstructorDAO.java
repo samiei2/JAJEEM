@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.core.dao.IInstructorDAO;
 import com.jajeem.core.model.*;
@@ -26,7 +26,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.username = ?;");
@@ -88,7 +88,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("INSERT INTO Instructor (firstName, middleName, lastName, username, password, language) " +
@@ -145,7 +145,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.id = ?;");
@@ -193,7 +193,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Instructor SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
@@ -241,7 +241,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Instructor WHERE Instructor.id = ?;");
@@ -284,7 +284,7 @@ public class InstructorDAO implements IInstructorDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Instructor");

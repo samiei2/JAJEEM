@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.message.dao.IMessageDAO;
 import com.jajeem.message.model.Message;
@@ -25,7 +25,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Message (fromId, toId, content, date, type, anonymous) " +
@@ -82,7 +82,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Message WHERE Message.id = ?;");
@@ -130,7 +130,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Message SET fromId=?, toId=?, content=?, date=?, type=?, anonymous=? WHERE id = ?");
@@ -178,7 +178,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Message WHERE Message.id = ?;");
@@ -221,7 +221,7 @@ public class MessageDAO implements IMessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Message");

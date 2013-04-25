@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.H2ConnectionImpl;
+import com.jajeem.util.H2Connection;
 
 import com.jajeem.room.dao.IAttendantDAO;
 import com.jajeem.room.model.Attendant;
@@ -25,7 +25,7 @@ public class AttendantDAO implements IAttendantDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO Attendant (sessionId, studentId, seatId, status) " +
@@ -80,7 +80,7 @@ public class AttendantDAO implements IAttendantDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Attendant WHERE Attendant.id = ?;");
@@ -126,7 +126,7 @@ public class AttendantDAO implements IAttendantDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("UPDATE Attendant SET sessionId=?, StudentId=?, seatId=?, status=? WHERE id = ?");
@@ -172,7 +172,7 @@ public class AttendantDAO implements IAttendantDAO {
 		PreparedStatement ps = null;
 		int rs = 0;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("DELETE FROM Attendant WHERE Attendant.id = ?;");
@@ -215,7 +215,7 @@ public class AttendantDAO implements IAttendantDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		H2ConnectionImpl conn = new H2ConnectionImpl();
+		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 		
 		ps = con.prepareStatement("SELECT * FROM Attendant");
