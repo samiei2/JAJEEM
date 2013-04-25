@@ -10,7 +10,7 @@ import com.jajeem.groupwork.model.Groupwork;
 
 public class GroupworkService implements IGroupworkService{
 	private GroupworkDAO groupworkDAO;
-	private GroupMemberDAO groupmemeberDAO;
+	private GroupMemberDAO groupMemberDAO;
 	private GroupDAO groupDAO;
 	@Override
 	public Groupwork create(Groupwork groupwork) throws SQLException {
@@ -56,11 +56,11 @@ public class GroupworkService implements IGroupworkService{
 	}
 
 	public GroupMemberDAO getGroupmemeberDAO() {
-		return groupmemeberDAO;
+		return groupMemberDAO;
 	}
 
-	public void setGroupmemeberDAO(GroupMemberDAO groupmemeberDAO) {
-		this.groupmemeberDAO = groupmemeberDAO;
+	public void setGroupMemberDAO(GroupMemberDAO groupMemberDAO) {
+		this.groupMemberDAO = groupMemberDAO;
 	}
 
 	public GroupDAO getGroupDAO() {

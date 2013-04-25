@@ -6,10 +6,13 @@ import com.jajeem.core.service.StudentService;
 import com.jajeem.groupwork.dao.h2.*;
 import com.jajeem.groupwork.service.GroupworkService;
 import com.jajeem.message.dao.h2.MessageDAO;
+import com.jajeem.message.service.MessageService;
 import com.jajeem.quiz.dao.h2.QuizDAO;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.room.dao.h2.*;
+import com.jajeem.room.service.RoomService;
 import com.jajeem.survey.dao.h2.SurveyDAO;
+import com.jajeem.survey.service.SurveyService;
 
 public class initServices {
 
@@ -75,11 +78,11 @@ public class initServices {
 		
 		groupworkService = new GroupworkService();
 		groupworkService.setGroupworkDAO(groupworkDAO);
-		groupworkService.serGroupDAO(groupDAO);
+		groupworkService.setGroupDAO(groupDAO);
 		groupworkService.setGroupMemberDAO(groupMemberDAO);
 		
 		messageService = new MessageService();
-		messageService.set(messageDAO);
+		messageService.setMessageDAO(messageDAO);
 		
 		quizService = new QuizService();
 		quizService.setQuizDAO(quizDAO);
