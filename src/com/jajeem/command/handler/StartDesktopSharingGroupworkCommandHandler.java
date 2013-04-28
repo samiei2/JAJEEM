@@ -9,4 +9,10 @@ public class StartDesktopSharingGroupworkCommandHandler implements
 
 	}
 
+	@Override
+	public void run(String cmd) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

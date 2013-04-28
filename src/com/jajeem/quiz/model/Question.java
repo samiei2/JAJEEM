@@ -3,12 +3,12 @@ package com.jajeem.quiz.model;
 public class Question {
 	
 	//properties
-	private int id;
-	private int instructorId;
+	private Integer id;
+	private Integer instructorId;
 	private String title;
-	private int quizId;
-	private byte type;
-	private int point;
+	private Integer quizId;
+	private Byte type;
+	private Integer point;
 	private String imagePath;
 	private String url;
 	private String answer1;
@@ -17,6 +17,12 @@ public class Question {
 	private String answer4;
 	private String answer5;
 	
+	public Question(int id2) {
+		this.id = id2;
+	}
+	public Question() {
+		
+	}
 	//getter & setters
 	public int getId() {
 		return id;
@@ -96,4 +102,5 @@ public class Question {
 	public void setAnswer5(String answer5) {
 		this.answer5 = answer5;
 	}
+	
 }

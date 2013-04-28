@@ -1,5 +1,7 @@
 package com.jajeem.quiz.model;
 
+import java.util.ArrayList;
+
 public class Quiz {
 	
 	//properties
@@ -13,6 +15,7 @@ public class Quiz {
 	private int time;
 	private byte shuffle;
 	private Response response;
+	private ArrayList<Question> questions = new ArrayList<>();
 	
 	//getter & setters
 	public int getId() {
@@ -74,5 +77,11 @@ public class Quiz {
 	}
 	public void setResponse(Response response) {
 		this.response = response;
+	}
+	public void addQuestion(Question question) {
+		this.questions.add(question);
+	}
+	public ArrayList<Question> getQuestionList() {
+		return questions;
 	}
 }
