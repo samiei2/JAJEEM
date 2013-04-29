@@ -3,12 +3,12 @@ package com.jajeem.quiz.model;
 public class Question {
 	
 	//properties
-	private Integer id;
-	private Integer instructorId;
+	private int id;
+	private int instructorId;
 	private String title;
-	private Integer quizId;
-	private Byte type;
-	private Integer point;
+	private int quizId;
+	private byte type;
+	private int point;
 	private String imagePath;
 	private String url;
 	private String answer1;
@@ -16,6 +16,8 @@ public class Question {
 	private String answer3;
 	private String answer4;
 	private String answer5;
+	private boolean[] correctAnswer; //its a map.for example : false,true,false,false,false means ,1:wrong,2:right,....
+	
 	
 	public Question(int id2) {
 		this.id = id2;
@@ -102,5 +104,10 @@ public class Question {
 	public void setAnswer5(String answer5) {
 		this.answer5 = answer5;
 	}
-	
+	public boolean[] getCorrectAnswer() {
+		return correctAnswer;
+	}
+	public void setCorrectAnswer(boolean[] correctAnswer) {
+		this.correctAnswer = correctAnswer;
+	}
 }
