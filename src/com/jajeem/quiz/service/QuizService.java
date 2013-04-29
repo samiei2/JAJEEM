@@ -109,4 +109,8 @@ public class QuizService implements IQuizService{
 		this.runDAO = runDAO;
 	}
 
+	public void Run(com.jajeem.quiz.model.Quiz currentQuiz) {
+		
+	}
+
 }
