@@ -6,6 +6,14 @@ import java.io.*;
 public class Config {
 
 	private static Properties props = new Properties();
+	
+	public Config () {
+		try {
+			Config.load("conf/conf.properties");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Loads configuration file into props

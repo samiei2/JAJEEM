@@ -8,10 +8,10 @@ public interface IConnectorSevice {
 
 	void stop();
 
-	void send();
-
 	void broadcast();
 	
 	void process(DataInputStream d);
+
+	void send(int destination);
 
 }

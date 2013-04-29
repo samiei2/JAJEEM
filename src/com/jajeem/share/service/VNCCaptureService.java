@@ -1,17 +1,30 @@
 package com.jajeem.share.service;
 
+import jrdesktop.server.*;
+import jrdesktop.viewer.ConnectionDialog;
+
 public class VNCCaptureService implements ICaptureService {
 
 	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-
+	public void startServer() {
+		Server.Start();
+		
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
+	public void stopServer() {
+		Server.Stop();
+		
+	}
 
+	@Override
+	public void startClient() {
+		ConnectionDialog.showOptions();		
+	}
+
+	@Override
+	public void stopClient() {
+		
 	}
 
 }
