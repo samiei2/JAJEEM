@@ -42,7 +42,7 @@ import javax.swing.table.DefaultTableModel;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.service.QuizService;
 
-public class Quiz {
+public class QuizTeacher {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -51,11 +51,11 @@ public class Quiz {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	@SuppressWarnings("rawtypes")
-	private JComboBox comboBox;
+	private JComboBox comboBoxShowResults;
 	@SuppressWarnings("rawtypes")
-	private JComboBox comboBox_1;
+	private JComboBox comboBoxQuestionType;
 	@SuppressWarnings("rawtypes")
-	private JComboBox comboBox_2;
+	private JComboBox comboBoxQuizes;
 	private JTextArea textArea;
 	private DefaultTableModel tablemodel;
 	
@@ -97,7 +97,7 @@ public class Quiz {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Quiz window = new Quiz();
+					QuizTeacher window = new QuizTeacher();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,7 +109,7 @@ public class Quiz {
 	/**
 	 * Create the application.
 	 */
-	public Quiz() {
+	public QuizTeacher() {
 		initialize();
 	}
 
@@ -137,6 +137,7 @@ public class Quiz {
 				}
 				quizList.add(new com.jajeem.quiz.model.Quiz());
                 currentQuiz = quizList.get(0);
+                
                 
 //                JTableBinding tb = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE, currentQuiz.getQuestionList(), table);
 //        		// define the properties to be used for the columns
@@ -189,17 +190,16 @@ public class Quiz {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 228, 181));
 		
-		JButton button = new JButton("Copy");
-		button.addActionListener(new ActionListener() {
+		JButton btnCopy = new JButton("Copy");
+		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				//model.addRow(model.getDataVector());
 			}
 		});
 		
-		JButton button_1 = new JButton("Add");
-		button_1.addActionListener(new ActionListener() {
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
             	System.out.println(table.getModel().getClass());
@@ -220,7 +220,7 @@ public class Quiz {
                 textField_7.setText("");
                 textField_8.setText("");
                 textField_9.setText("");
-                comboBox_1.setSelectedIndex(0);
+                comboBoxQuestionType.setSelectedIndex(0);
                 radioButton.setSelected(false);
                 radioButton_1.setSelected(false);
                 radioButton_2.setSelected(false);
@@ -235,8 +235,8 @@ public class Quiz {
 			}
 		});
 		
-		JButton button_2 = new JButton("Delete");
-		button_2.addActionListener(new ActionListener() {
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() == -1)
 					return;
@@ -254,8 +254,8 @@ public class Quiz {
 		JLabel label = new JLabel("Question List");
 		
 		
-		JButton moveup_button = new JButton("New button");
-		moveup_button.addActionListener(new ActionListener() {
+		JButton btnUp = new JButton("New button");
+		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = table.getSelectedRow();
 				if(currentIndex == 0)
@@ -269,8 +269,8 @@ public class Quiz {
 			}
 		});
 		
-		JButton movedown_button = new JButton("New button");
-		movedown_button.addActionListener(new ActionListener() {
+		JButton btnDown = new JButton("New button");
+		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = table.getSelectedRow();
 				if(currentIndex == table.getRowCount()-1)
@@ -292,11 +292,11 @@ public class Quiz {
 					.addContainerGap()
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel_3.createSequentialGroup()
-							.addComponent(button, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnCopy, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
 							.addGap(48))
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addComponent(label)
@@ -305,8 +305,8 @@ public class Quiz {
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(moveup_button, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-								.addComponent(movedown_button, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnDown, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
@@ -320,14 +320,14 @@ public class Quiz {
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-								.addComponent(button)
-								.addComponent(button_1)
-								.addComponent(button_2)))
+								.addComponent(btnCopy)
+								.addComponent(btnAdd)
+								.addComponent(btnDelete)))
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addGap(185)
-							.addComponent(moveup_button)
+							.addComponent(btnUp)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(movedown_button)))
+							.addComponent(btnDown)))
 					.addContainerGap())
 		);
 		
@@ -365,8 +365,8 @@ public class Quiz {
 		
 		JLabel label_2 = new JLabel("Question Type ");
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.addItemListener(new ItemListener() {
+		comboBoxQuestionType = new JComboBox();
+		comboBoxQuestionType.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				CardLayout cl = (CardLayout)(panel_5.getLayout());
 		        cl.show(panel_5, (String)evt.getItem());
@@ -381,12 +381,12 @@ public class Quiz {
 		        checkBox_3.setSelected(false);
 		        checkBox_4.setSelected(false);
 		        if(table.getSelectedRow() != -1 && eventsEnabled){
-		        	tablemodel.setValueAt(comboBox_1.getSelectedItem().toString(),table.getSelectedRow(), 1);
-		        	currentQuiz.getQuestionList().get(table.getSelectedRow()).setType((byte) comboBox_1.getSelectedIndex());
+		        	tablemodel.setValueAt(comboBoxQuestionType.getSelectedItem().toString(),table.getSelectedRow(), 1);
+		        	currentQuiz.getQuestionList().get(table.getSelectedRow()).setType((byte) comboBoxQuestionType.getSelectedIndex());
 		        }
 			}
 		});
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Multiple Choice(single)", "Multiple Choice", "Key in answer"}));
+		comboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Multiple Choice(single)", "Multiple Choice", "Key in answer"}));
 		
 		JLabel label_4 = new JLabel("Points");
 		
@@ -417,14 +417,14 @@ public class Quiz {
 		});
 		textField_8.setColumns(10);
 		
-		JButton button_5 = new JButton("Next");
-		button_5.addActionListener(new ActionListener() {
+		JButton btnNext = new JButton("Next");
+		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				///Create the question with current parameters
 				eventsEnabled = false;
                 if(currentQuestion == null)
                 	currentQuestion = new Question();
-                if(comboBox_1.getSelectedIndex()==0) {
+                if(comboBoxQuestionType.getSelectedIndex()==0) {
                 	if(!radioButton.isSelected()
                 			&& !radioButton_1.isSelected()
                 			&& !radioButton_2.isSelected()
@@ -434,7 +434,7 @@ public class Quiz {
                 		return;
                 	}
                 }
-                else if(comboBox_1.getSelectedIndex()==1){
+                else if(comboBoxQuestionType.getSelectedIndex()==1){
                 	if(!checkBox.isSelected() 
                 			&& !radioButton_1.isSelected()
                 			&& !radioButton_2.isSelected()
@@ -458,7 +458,7 @@ public class Quiz {
 					;
 				}
 				try{
-					if(comboBox_1.getSelectedIndex() == 0){
+					if(comboBoxQuestionType.getSelectedIndex() == 0){
 						currentQuestion.setType(Byte.parseByte("0"));
 						currentQuestion.setCorrectAnswer(
 								new boolean[]{
@@ -468,7 +468,7 @@ public class Quiz {
 										radioButton_3.isSelected(),
 										radioButton_4.isSelected()});
 					}
-					else if(comboBox_1.getSelectedIndex() == 1){
+					else if(comboBoxQuestionType.getSelectedIndex() == 1){
 						currentQuestion.setType(Byte.parseByte("1"));
 						currentQuestion.setCorrectAnswer(
 								new boolean[]{
@@ -478,7 +478,7 @@ public class Quiz {
 										checkBox_3.isSelected(),
 										checkBox_4.isSelected()});
 					}
-					else if(comboBox_1.getSelectedIndex() == 2){
+					else if(comboBoxQuestionType.getSelectedIndex() == 2){
 						currentQuestion.setType(Byte.parseByte("2"));
 						
 					}
@@ -492,7 +492,7 @@ public class Quiz {
 				/// Add the question to the current quiz and question list
 				if(table.getSelectedRow() == -1){ // meaning no question is selected so the changes are made to a new question not an existing one
 					currentQuiz.addQuestion(currentQuestion);
-					tablemodel.addRow(new Object[]{table.getRowCount() + 1,comboBox_1.getSelectedItem().toString(),currentQuestion.getPoint(),currentQuestion.getTitle()});
+					tablemodel.addRow(new Object[]{table.getRowCount() + 1,comboBoxQuestionType.getSelectedItem().toString(),currentQuestion.getPoint(),currentQuestion.getTitle()});
 				}
 				else{ //changes are made to an existing question because a question is already selected
 					
@@ -520,7 +520,7 @@ public class Quiz {
 				eventsEnabled = true;
 				//currentQuestion = new Question();
 				currentQuiz.addQuestion(new Question());
-				tablemodel.addRow(new Object[]{table.getRowCount(),comboBox_1.getSelectedItem().toString(),0,""});
+				tablemodel.addRow(new Object[]{table.getRowCount(),comboBoxQuestionType.getSelectedItem().toString(),0,""});
 				ListSelectionModel m_modelSelection = table.getSelectionModel();
 				m_modelSelection.setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
 				
@@ -534,8 +534,8 @@ public class Quiz {
 		
 		JTextPane textPane = new JTextPane();
 		
-		JButton button_6 = new JButton("+Image");
-		button_6.addActionListener(new ActionListener() {
+		JButton btnImage = new JButton("+Image");
+		btnImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
@@ -701,7 +701,7 @@ public class Quiz {
 								.addGroup(gl_panel_4.createSequentialGroup()
 									.addComponent(label_2)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+									.addComponent(comboBoxQuestionType, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
 									.addComponent(label_4)
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -709,7 +709,7 @@ public class Quiz {
 						.addGroup(gl_panel_4.createSequentialGroup()
 							.addComponent(btnPrevious)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_5, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnNext, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_4.createSequentialGroup()
 							.addGap(90)
 							.addComponent(label_5)
@@ -718,7 +718,7 @@ public class Quiz {
 								.addGroup(gl_panel_4.createSequentialGroup()
 									.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(button_6, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+									.addComponent(btnImage, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
 								.addComponent(textField_9, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)))
 						.addGroup(gl_panel_4.createSequentialGroup()
 							.addGap(3)
@@ -742,7 +742,7 @@ public class Quiz {
 					.addComponent(label_1)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBoxQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField_8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_4)
 						.addComponent(label_2))
@@ -769,14 +769,14 @@ public class Quiz {
 					.addGap(11)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.TRAILING)
 						.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_6))
+						.addComponent(btnImage))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_9, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_5))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
-						.addComponent(button_5)
+						.addComponent(btnNext)
 						.addComponent(btnPrevious))
 					.addGap(13))
 		);
@@ -807,11 +807,12 @@ public class Quiz {
 		
 		JCheckBox chckbxShuffle = new JCheckBox("Shuffle");
 		
-		JButton btnNewButton_7 = new JButton("Start");
-		btnNewButton_7.addActionListener(new ActionListener() {
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				QuizService qs = new QuizService();
-				qs.Run(currentQuiz);
+				//QuizService qs = new QuizService();
+				//qs.Run(currentQuiz);
+				QuizStudent qs = new QuizStudent(currentQuiz);
 			}
 		});
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
@@ -827,7 +828,7 @@ public class Quiz {
 					.addPreferredGap(ComponentPlacement.RELATED, 397, Short.MAX_VALUE)
 					.addComponent(chckbxShuffle)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnNewButton_7)
+					.addComponent(btnStart)
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
@@ -840,7 +841,7 @@ public class Quiz {
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(29)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewButton_7)
+								.addComponent(btnStart)
 								.addComponent(chckbxShuffle)))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addContainerGap()
@@ -861,8 +862,8 @@ public class Quiz {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		
-		JButton btnNewButton_3 = new JButton("New");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnNew = new JButton("New");
+		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				quizList.add(new com.jajeem.quiz.model.Quiz());
 				currentQuiz = quizList.get(quizList.size()-1);
@@ -883,6 +884,7 @@ public class Quiz {
 				checkBox_4.setSelected(false);
 				
 				textArea.setText("");
+				textField.setText("");
 				textField_3.setText("");
 				textField_4.setText("");
 				textField_5.setText("");
@@ -895,7 +897,12 @@ public class Quiz {
 			}
 		});
 		
-		JButton btnNewButton_4 = new JButton("Open");
+		JButton btnOpen = new JButton("Open");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		
 		JCheckBox chckbxAuto = new JCheckBox("Auto");
 		
@@ -906,16 +913,16 @@ public class Quiz {
 		
 		JLabel lblShowResults = new JLabel("Show Results");
 		
-		comboBox = new JComboBox();
+		comboBoxShowResults = new JComboBox();
 		
-		JButton btnNewButton_5 = new JButton("Save As");
+		JButton btnSaveas = new JButton("Save As");
 		
-		JButton btnNewButton_6 = new JButton("Save");
+		JButton btnSave = new JButton("Save");
 		
-		comboBox_2 = new JComboBox();
-		comboBox_2.addActionListener(new ActionListener() {
+		comboBoxQuizes = new JComboBox();
+		comboBoxQuizes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentQuiz = quizList.get(comboBox_2.getSelectedIndex());
+				currentQuiz = quizList.get(comboBoxQuizes.getSelectedIndex());
 				LoadQuiz(currentQuiz);
 			}
 
@@ -948,24 +955,24 @@ public class Quiz {
 							.addGap(18)
 							.addComponent(lblShowResults)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+							.addComponent(comboBoxShowResults, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(btnNewButton_3)
+							.addComponent(btnNew)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_4)
+							.addComponent(btnOpen)
 							.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
 							.addComponent(lblQuiz)))
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(48)
-							.addComponent(btnNewButton_6, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_5, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnSaveas, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_2, 0, 97, Short.MAX_VALUE)))
+							.addComponent(comboBoxQuizes, 0, 97, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -975,9 +982,9 @@ public class Quiz {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDirections)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_3)
-						.addComponent(btnNewButton_4)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNew)
+						.addComponent(btnOpen)
+						.addComponent(comboBoxQuizes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblQuiz))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
@@ -986,10 +993,10 @@ public class Quiz {
 						.addComponent(lblTimeLimit)
 						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblShowResults)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_5)
+						.addComponent(comboBoxShowResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSaveas)
 						.addComponent(lblPoints)
-						.addComponent(btnNewButton_6))
+						.addComponent(btnSave))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
@@ -1008,13 +1015,13 @@ public class Quiz {
 		 textField_8.setText(String.valueOf(currentQuestion2.getPoint()));
 		 textField_9.setText(currentQuestion2.getUrl());
 		 if(currentQuestion2.getType() == 0){
-			 comboBox_1.setSelectedIndex(0);
+			 comboBoxQuestionType.setSelectedIndex(0);
 		 }
 		 else if(currentQuestion2.getType() == 1){
-			 comboBox_1.setSelectedIndex(1);
+			 comboBoxQuestionType.setSelectedIndex(1);
 		 }
 		 else if(currentQuestion2.getType() == 2){
-			 comboBox_1.setSelectedIndex(2);
+			 comboBoxQuestionType.setSelectedIndex(2);
 		 }
 		 eventsEnabled = true;
 	}
