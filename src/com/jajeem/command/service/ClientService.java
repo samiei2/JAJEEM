@@ -18,10 +18,14 @@ public class ClientService implements IConnectorSevice, Runnable {
 	protected InetAddress group;
 	protected int port;
 	protected Thread thread;
+	
+	private boolean stopped;
 
 	public ClientService(String group, int port) throws UnknownHostException,
 			IOException {
 
+		stopped = false;
+		
 		this.port = port;
 		this.group = InetAddress.getByName(group);
 
@@ -43,10 +47,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 	@Override
 	public void stop() {
+		stopped = true;
 	}
 
 	@Override
-	public void send() {
+	public void send(int destination) {
 	}
 
 	@Override
@@ -97,11 +102,15 @@ public class ClientService implements IConnectorSevice, Runnable {
 					throw new ClassNotFoundException("Object is not a message");
 
 				Command msg = (Command) o;
-
+				System.out.println(msg.getType());
 				switch (msg.getType()) {
 					case "power":
 						SetPowerCommandHandler powerHandler = new SetPowerCommandHandler();
 						powerHandler.run(msg.getType());
+						break;
+					case "startVNC":
+						StartCaptureCommandHandler captureHandler = new StartCaptureCommandHandler();
+						captureHandler.run(msg.getType());
 						break;
 					default:
 						System.out.println("Unknown message, message is: " + msg.getType());
@@ -115,6 +124,10 @@ public class ClientService implements IConnectorSevice, Runnable {
 			ex.printStackTrace();
 		}
 
+	}
+	
+	public boolean isStopped() {
+		return stopped;
 	}
 
 }

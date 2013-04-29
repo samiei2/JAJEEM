@@ -1,6 +1,6 @@
 package com.jajeem.command.handler;
 
-public class StopCaptureCommandHadler implements ICommandHandler {
+public class StopCaptureCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run() {

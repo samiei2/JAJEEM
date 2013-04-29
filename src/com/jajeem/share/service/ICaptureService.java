@@ -2,6 +2,8 @@ package com.jajeem.share.service;
 
 public interface ICaptureService {
 
-	void start();
-	void stop();
+	void startServer();
+	void stopServer();
+	void startClient();
+	void stopClient();
 }

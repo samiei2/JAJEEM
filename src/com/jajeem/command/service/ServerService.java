@@ -8,14 +8,13 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.log4j.*;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.command.model.*;
+import com.jajeem.util.Config;
 
 public class ServerService extends TimerTask implements IConnectorSevice {
 
@@ -28,12 +27,18 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	protected String host;
 	protected String type;
 	
+	private boolean stopped;
+	
 	static Logger logger = Logger.getLogger("ServerService.class");
 	
-	public ServerService(String group, int port, int ttl, int interval,
-			String type) throws UnknownHostException, IOException {
+	public ServerService(String group, int ttl, int interval,
+			String type) throws NumberFormatException, Exception {
 
-		this.port = port;
+		PropertyConfigurator.configure("conf/log4j.conf");
+			
+		stopped = false;
+		
+		this.port = Integer.parseInt(Config.getParam("port"));
 		this.group = InetAddress.getByName(group);
 		this.host = group;
 		this.ttl = ttl;
@@ -43,8 +48,6 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
 		timer = new Timer();
-		PropertyConfigurator.configure("conf/log4j.conf");
-		logger.info("First LOG!");
 	}
 
 	@Override
@@ -56,12 +59,27 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	public void stop() {
 		timer.cancel();
 		timer.purge();
+		stopped = true;
 	}
 
 	@Override
-	public void send() {
-		// TODO Auto-generated method stub
+	public void send(int destination) {
+		byte[] b = null;
 
+		b = constructMessage();
+		DatagramPacket packet = new DatagramPacket(b, b.length, group, port);
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			System.err.println(e);
+			try {
+				System.out.println("Message Size: " + b.length);
+				System.out.println("SendBufferSize: "
+						+ socket.getSendBufferSize());
+			} catch (SocketException se) {
+				System.err.println(se);
+			}
+		}
 	}
 
 	@Override
@@ -114,5 +132,9 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	public void process(DataInputStream d) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public boolean isStopped() {
+		return stopped;
 	}
 }
