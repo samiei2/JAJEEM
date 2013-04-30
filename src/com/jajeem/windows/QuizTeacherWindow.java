@@ -212,7 +212,7 @@ public class QuizTeacherWindow {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-					if(checkBoxAuto.isSelected()){
+					if(checkBoxAuto.isSelected() && currentQuiz.getQuestionList().size()!=0){
 		                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
 						for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
 							currentQuiz.getQuestionList().get(i).setPoint(point);
@@ -236,7 +236,7 @@ public class QuizTeacherWindow {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-					if(checkBoxAuto.isSelected()){
+					if(checkBoxAuto.isSelected() && currentQuiz.getQuestionList().size()!=0){
 		                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
 						for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
 							currentQuiz.getQuestionList().get(i).setPoint(point);
@@ -457,14 +457,22 @@ public class QuizTeacherWindow {
 			public void actionPerformed(ActionEvent e) {
             	System.out.println(table.getModel().getClass());
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				
-                Object[] obj = new Object[]{
+				Object[] obj;
+                if(table.getRowCount() != 0)
+                	obj = new Object[]{
                 		Integer.parseInt(String.valueOf(tablemodel.getValueAt(table.getRowCount()-1, 0)))+1,
+                        "MultiChoice(Single)",
+                        0,
+                        ""};
+                else
+                	obj = new Object[]{
+                		1,
                         "MultiChoice(Single)",
                         0,
                         ""};
 				model.addRow(obj);
                 currentQuiz.addQuestion(new Question());
+                table.getSelectionModel().setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
                 textArea.setText("");
                 textField_3.setText("");
                 textField_4.setText("");
@@ -486,7 +494,7 @@ public class QuizTeacherWindow {
                 checkBox_4.setSelected(false);
                 System.out.println(model.getDataVector().get(0));
                 
-                if(checkBoxAuto.isSelected()){
+                if(checkBoxAuto.isSelected() && currentQuiz.getQuestionList().size()!=0){
 	                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
 					for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
 						currentQuiz.getQuestionList().get(i).setPoint(point);
@@ -509,13 +517,14 @@ public class QuizTeacherWindow {
 					return;
 				
 				DefaultTableModel model = (DefaultTableModel)table.getModel();
-				model.removeRow(table.getSelectedRow());
-				currentQuiz.getQuestionList().remove(table.getSelectedRow());
+				int index = table.getSelectedRow();
+				model.removeRow(index);
+				currentQuiz.getQuestionList().remove(index);
 				if(table.getRowCount() != 0){
 					ListSelectionModel m_modelSelection = table.getSelectionModel();
 					m_modelSelection.setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
 				}
-				if(checkBoxAuto.isSelected()){
+				if(checkBoxAuto.isSelected() && currentQuiz.getQuestionList().size()!=0){
 	                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
 					for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
 						currentQuiz.getQuestionList().get(i).setPoint(point);
@@ -786,13 +795,11 @@ public class QuizTeacherWindow {
 				checkBox_3.setSelected(false);
 				checkBox_4.setSelected(false);
 				
-				eventsEnabled = true;
-				//currentQuestion = new Question();
 				currentQuiz.addQuestion(new Question());
 				tablemodel.addRow(new Object[]{table.getRowCount(),comboBoxQuestionType.getSelectedItem().toString(),0,""});
 				ListSelectionModel m_modelSelection = table.getSelectionModel();
 				m_modelSelection.setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
-				
+				eventsEnabled = true;
 			}
 		});
 		
@@ -1089,8 +1096,31 @@ public class QuizTeacherWindow {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-                            if(table.getSelectedRow() == -1)
+                            if(table.getSelectedRow() == -1){
+                            	eventsEnabled = false;
+                            	currentQuestion = null;
+                            	textField_3.setText("");
+                            	textField_4.setText("");
+                            	textField_5.setText("");
+                            	textField_6.setText("");
+                            	textField_7.setText("");
+                            	textField_8.setText("");
+                            	textField_9.setText("");
+                            	comboBoxQuestionType.setSelectedIndex(0);
+                            	radioButton.setSelected(false);
+                            	radioButton_1.setSelected(false);
+                            	radioButton_2.setSelected(false);
+                            	radioButton_3.setSelected(false);
+                            	radioButton_4.setSelected(false);
+                            	checkBox.setSelected(false);
+                            	checkBox_1.setSelected(false);
+                            	checkBox_2.setSelected(false);
+                            	checkBox_3.setSelected(false);
+                            	checkBox_4.setSelected(false);
+                            	
+                            	eventsEnabled = true;
                                 return;
+                            }
                             //int i = table.getSelectedRow();
                             //ArrayList<Question> q = currentQuiz.getQuestionList();
                             currentQuestion = currentQuiz.getQuestionList().get(table.getSelectedRow());
