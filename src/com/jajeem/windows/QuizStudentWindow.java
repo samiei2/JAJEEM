@@ -33,6 +33,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class QuizStudentWindow {
 
 	private JFrame frame;
@@ -70,7 +76,10 @@ public class QuizStudentWindow {
 	
 	private Quiz currentQuiz;
 	protected Question currentQuestion;
-	private JLabel lblNewLabel;
+	private JLabel lbltimer;
+	
+	private java.util.Timer timer;
+	private JLabel lbltime;
 
 	/**
 	 * Launch the application.
@@ -126,6 +135,10 @@ public class QuizStudentWindow {
 				}
 				
 				list.setSelectedIndex(0);
+				
+				/////Setting the timer
+				lbltimer.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
+				lbltime.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			}
 		});
 		frame.setBounds(100, 100, 650, 690);
@@ -379,7 +392,7 @@ public class QuizStudentWindow {
 		panel_1.setLayout(gl_panel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(153, 255, 153));
+		panel_2.setBackground(new Color(153, 204, 153));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -410,9 +423,9 @@ public class QuizStudentWindow {
 		textField_1.setEnabled(false);
 		textField_1.setColumns(10);
 		
-		JLabel lbltime = new JLabel("?Current Time?");
+		lbltime = new JLabel("?Current Time?");
 		
-		lblNewLabel = new JLabel("?Time Limit?");
+		lbltimer = new JLabel("?Time Limit?");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -427,7 +440,7 @@ public class QuizStudentWindow {
 						.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel)
+						.addComponent(lbltimer)
 						.addComponent(lbltime))
 					.addContainerGap())
 		);
@@ -444,7 +457,7 @@ public class QuizStudentWindow {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDirections)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel))
+						.addComponent(lbltimer))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -732,4 +745,21 @@ public class QuizStudentWindow {
 	public void setCurrentQuiz(Quiz currentQuiz) {
 		this.currentQuiz = currentQuiz;
 	}
+	
+	class Timer{
+		public void Start(){
+
+			timer = new java.util.Timer();
+	        class RemindTask extends TimerTask {
+		        public void run() {
+		            JOptionPane.showMessageDialog(null, "Times Up!");
+		            timer.cancel(); //Terminate the timer thread
+		            frame.dispose();
+		        }
+	        }
+	        timer.schedule(new RemindTask(), currentQuiz.getTime()*60*1000);
+		}
+	}
 }
+
+

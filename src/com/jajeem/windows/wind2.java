@@ -15,17 +15,32 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
+
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class wind2 extends JPanel {
 	private JTextField textField_4;
 	private JTable table;
 	private DefaultTableModel resulttablemodel;
+	private JTextArea textArea;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTextField textField_3;
+	private JComboBox comboBox;
+	
+	private Question currentQuestion;
+	private Quiz currentQuiz;
 
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("rawtypes")
 	public wind2() {
 		
 		JSeparator separator = new JSeparator();
@@ -39,40 +54,37 @@ public class wind2 extends JPanel {
 		JLabel label_1 = new JLabel("Points");
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setColumns(10);
 		
 		JLabel label_2 = new JLabel("( 0)");
 		
-		JCheckBox checkBox = new JCheckBox("Auto");
-		checkBox.setSelected(true);
-		
 		JLabel label_3 = new JLabel("Time Limit");
 		
 		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
 		textField_1.setColumns(10);
 		
 		JLabel label_5 = new JLabel("Show Results");
 		
-		JComboBox comboBox_1 = new JComboBox();
-		
 		textField_2 = new JTextField();
+		textField_2.setEnabled(false);
 		textField_2.setColumns(10);
 		
-		JButton button = new JButton("New");
+		textField_3 = new JTextField();
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
+		textField_3.setColumns(10);
 		
-		JButton button_1 = new JButton("Open");
-		
-		JLabel label_6 = new JLabel("Quiz");
-		
-		JButton button_2 = new JButton("Save");
-		
-		JButton button_3 = new JButton("Save As");
-		
-		JComboBox comboBox_2 = new JComboBox();
+		JButton btnShowResults = new JButton("Show Results");
+		btnShowResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 893, Short.MAX_VALUE)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -84,79 +96,59 @@ public class wind2 extends JPanel {
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(label_2)
-							.addPreferredGap(ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-							.addComponent(checkBox)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
 							.addComponent(label_3)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(56)
-							.addComponent(label_5)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(button)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_1)
-							.addPreferredGap(ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-							.addComponent(label_6)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(48)
-							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_2, 0, 205, Short.MAX_VALUE)))
+							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+					.addGap(56)
+					.addComponent(label_5)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+					.addGap(134)
+					.addComponent(btnShowResults)
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 79, Short.MAX_VALUE)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button)
-						.addComponent(button_1)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(label_6))
+						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_5)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_3)
 						.addComponent(label_1)
-						.addComponent(button_2)
-						.addComponent(checkBox)
 						.addComponent(label_3)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(label_2))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(label_2)
+						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(22, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(52, Short.MAX_VALUE)
+					.addComponent(btnShowResults)
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 777, Short.MAX_VALUE))
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE))
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 6, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
@@ -165,16 +157,35 @@ public class wind2 extends JPanel {
 		
 		JLabel lblQuestionNumber = new JLabel("Question Number");
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				currentQuestion = currentQuiz.getQuestionList().get(comboBox.getSelectedIndex());
+				if(currentQuestion.getType() == 0)
+					textField_4.setText("MultiChoice (Single)");
+				else if(currentQuestion.getType() == 1)
+					textField_4.setText("MultiChoice");
+				else if(currentQuestion.getType() == 2)
+					textField_4.setText("Key In Answer");
+					
+				textArea.setText(currentQuestion.getTitle());
+				
+				//update Results Table
+				
+			}
+		});
 		
 		JLabel lblQuestionType = new JLabel("Question Type");
 		
 		textField_4 = new JTextField();
+		textField_4.setEditable(false);
+		textField_4.setEnabled(false);
 		textField_4.setColumns(10);
 		
 		JLabel lblQuestion = new JLabel("Question");
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
 		
 		JLabel lblResults = new JLabel("Results");
 		
@@ -283,10 +294,22 @@ public class wind2 extends JPanel {
 		table.getColumnModel().getColumn(5).setPreferredWidth(80);
 		scrollPane_1.setViewportView(table);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setEnabled(false);
 		scrollPane.setViewportView(textArea);
 		panel_1.setLayout(gl_panel_1);
 		setLayout(groupLayout);
-
+		
+		
+		//Afterinit 
+		if(currentQuiz!=null){
+			textField.setText(String.valueOf(currentQuiz.getPoints()));
+			for(int i=1;i<=currentQuiz.getQuestionList().size();i++){
+				comboBox.addItem("Question "+i);
+			}
+		}
+		
+		
 	}
 }

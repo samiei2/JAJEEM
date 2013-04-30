@@ -77,7 +77,7 @@ public class QuizTeacherWindow {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_5;
-	private JCheckBox checkBox_5;
+	private JCheckBox checkBoxAuto;
 	private boolean eventsEnabled;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -212,6 +212,19 @@ public class QuizTeacherWindow {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
+					if(checkBoxAuto.isSelected()){
+		                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
+						for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
+							currentQuiz.getQuestionList().get(i).setPoint(point);
+							tablemodel.setValueAt(point, i, 2);
+						}
+						int remainder = (currentQuiz.getPoints() - currentQuiz.getQuestionList().size() * point);
+						if(remainder!=0){
+							currentQuiz.getQuestionList().get(currentQuiz.getQuestionList().size()-1).setPoint(point+remainder);
+							tablemodel.setValueAt(point+remainder, table.getRowCount()-1, 2);
+						}
+						textField_8.setText(String.valueOf(tablemodel.getValueAt(table.getSelectedRow(), 2)));
+					}
 				}
 			}
 			
@@ -222,6 +235,19 @@ public class QuizTeacherWindow {
 						currentQuiz.setPoints(Integer.parseInt(textField.getText()));
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+					if(checkBoxAuto.isSelected()){
+		                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
+						for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
+							currentQuiz.getQuestionList().get(i).setPoint(point);
+							tablemodel.setValueAt(point, i, 2);
+						}
+						int remainder = (currentQuiz.getPoints() - currentQuiz.getQuestionList().size() * point);
+						if(remainder!=0){
+							currentQuiz.getQuestionList().get(currentQuiz.getQuestionList().size()-1).setPoint(point+remainder);
+							tablemodel.setValueAt(point+remainder, table.getRowCount()-1, 2);
+						}
+						textField_8.setText(String.valueOf(tablemodel.getValueAt(table.getSelectedRow(), 2)));
 					}
 				}
 			}
@@ -234,11 +260,11 @@ public class QuizTeacherWindow {
 		});
 		textField.setColumns(10);
 		
-		checkBox_5 = new JCheckBox("Auto");
-		checkBox_5.setSelected(true);
-		checkBox_5.addItemListener(new ItemListener() {
+		checkBoxAuto = new JCheckBox("Auto");
+		checkBoxAuto.setSelected(true);
+		checkBoxAuto.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				textField_8.setEnabled(!checkBox_5.isSelected());
+				textField_8.setEnabled(!checkBoxAuto.isSelected());
 				
 			}
 		});
@@ -356,7 +382,7 @@ public class QuizTeacherWindow {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(label_10)
 							.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-							.addComponent(checkBox_5)
+							.addComponent(checkBoxAuto)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(label_7)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -403,7 +429,7 @@ public class QuizTeacherWindow {
 						.addComponent(button_3)
 						.addComponent(label_6)
 						.addComponent(button_2)
-						.addComponent(checkBox_5)
+						.addComponent(checkBoxAuto)
 						.addComponent(label_7)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_10))
@@ -431,14 +457,14 @@ public class QuizTeacherWindow {
 			public void actionPerformed(ActionEvent e) {
             	System.out.println(table.getModel().getClass());
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				Question question = new Question();
+				
                 Object[] obj = new Object[]{
-                		table.getRowCount(),
+                		Integer.parseInt(String.valueOf(tablemodel.getValueAt(table.getRowCount()-1, 0)))+1,
                         "MultiChoice(Single)",
                         0,
                         ""};
 				model.addRow(obj);
-                currentQuiz.addQuestion(question);
+                currentQuiz.addQuestion(new Question());
                 textArea.setText("");
                 textField_3.setText("");
                 textField_4.setText("");
@@ -459,6 +485,20 @@ public class QuizTeacherWindow {
                 checkBox_3.setSelected(false);
                 checkBox_4.setSelected(false);
                 System.out.println(model.getDataVector().get(0));
+                
+                if(checkBoxAuto.isSelected()){
+	                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
+					for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
+						currentQuiz.getQuestionList().get(i).setPoint(point);
+						tablemodel.setValueAt(point, i, 2);
+					}
+					int remainder = (currentQuiz.getPoints() - currentQuiz.getQuestionList().size() * point);
+					if(remainder!=0){
+						currentQuiz.getQuestionList().get(currentQuiz.getQuestionList().size()-1).setPoint(point+remainder);
+						tablemodel.setValueAt(point+remainder, table.getRowCount()-1, 2);
+					}
+					textField_8.setText(String.valueOf(tablemodel.getValueAt(table.getSelectedRow(), 2)));
+				}
 			}
 		});
 		
@@ -474,6 +514,19 @@ public class QuizTeacherWindow {
 				if(table.getRowCount() != 0){
 					ListSelectionModel m_modelSelection = table.getSelectionModel();
 					m_modelSelection.setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
+				}
+				if(checkBoxAuto.isSelected()){
+	                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
+					for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
+						currentQuiz.getQuestionList().get(i).setPoint(point);
+						tablemodel.setValueAt(point, i, 2);
+					}
+					int remainder = (currentQuiz.getPoints() - currentQuiz.getQuestionList().size() * point);
+					if(remainder!=0){
+						currentQuiz.getQuestionList().get(currentQuiz.getQuestionList().size()-1).setPoint(point+remainder);
+						tablemodel.setValueAt(point+remainder, table.getRowCount()-1, 2);
+					}
+					textField_8.setText(String.valueOf(tablemodel.getValueAt(table.getSelectedRow(), 2)));
 				}
 			}
 		});
@@ -1092,6 +1145,7 @@ public class QuizTeacherWindow {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(mainPanel.getLayout());
 		        cl.show(mainPanel, "page2");
+		        
 			}
 		});
 		
