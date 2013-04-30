@@ -40,22 +40,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 
-public class QuizTeacher {
+public class QuizTeacherWindow {
 
-	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JFrame frmQuiz;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	@SuppressWarnings("rawtypes")
-	private JComboBox comboBoxShowResults;
-	@SuppressWarnings("rawtypes")
 	private JComboBox comboBoxQuestionType;
-	@SuppressWarnings("rawtypes")
-	private JComboBox comboBoxQuizes;
 	private JTextArea textArea;
 	private DefaultTableModel tablemodel;
 	
@@ -80,11 +74,14 @@ public class QuizTeacher {
 	private JCheckBox checkBox_2;
 	private JCheckBox checkBox_3;
 	private JCheckBox checkBox_4;
-	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_5;
+	private JCheckBox checkBox_5;
 	private boolean eventsEnabled;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	@SuppressWarnings("unused")
 	private enum QuestionTypes{
 		MultipleChoicesingle,Multichoice,essay
@@ -97,8 +94,8 @@ public class QuizTeacher {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuizTeacher window = new QuizTeacher();
-					window.frame.setVisible(true);
+					QuizTeacherWindow window = new QuizTeacherWindow();
+					window.frmQuiz.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -109,7 +106,7 @@ public class QuizTeacher {
 	/**
 	 * Create the application.
 	 */
-	public QuizTeacher() {
+	public QuizTeacherWindow() {
 		initialize();
 	}
 
@@ -118,8 +115,9 @@ public class QuizTeacher {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
-		frame = new JFrame();
-		frame.addWindowListener(new WindowAdapter() {
+		frmQuiz = new JFrame();
+		frmQuiz.setTitle("Quiz");
+		frmQuiz.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				LoadQuizes();
@@ -138,6 +136,11 @@ public class QuizTeacher {
 				quizList.add(new com.jajeem.quiz.model.Quiz());
                 currentQuiz = quizList.get(0);
                 
+                currentQuiz.addQuestion(new Question());
+                tablemodel.addRow(new Object[]{1,"MultiChoice(Single)",0,""});
+                ListSelectionModel m_modelSelection = table.getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0);
+                
                 
 //                JTableBinding tb = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE, currentQuiz.getQuestionList(), table);
 //        		// define the properties to be used for the columns
@@ -155,24 +158,31 @@ public class QuizTeacher {
 //        	    tb.bind();
 			}
 		});
-		frame.setBounds(100, 100, 919, 638);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmQuiz.setBounds(100, 100, 919, 638);
+		frmQuiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		panel = new JPanel();
+		final JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new CardLayout());
+		frmQuiz.getContentPane().add(mainPanel);
 		
 		panel_1 = new JPanel();
 		
-		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 228, 181));
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		JPanel panelcard1 = new JPanel();
+		wind2 panelcard2 = new wind2();
+		wind3 panelcard3 = new wind3();
+		
+		mainPanel.add(panelcard1,"page1");
+		mainPanel.add(panelcard2,"page2");
+		mainPanel.add(panelcard3,"page3");
+		
+		GroupLayout groupLayout = new GroupLayout(frmQuiz.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 850, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, 883, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -181,11 +191,228 @@ public class QuizTeacher {
 					.addContainerGap()
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 424, Short.MAX_VALUE)
+					.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, 508, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		
+		JPanel panel_6 = new JPanel();
+		
+		JLabel label_3 = new JLabel("Directions");
+		
+		JLabel label_6 = new JLabel("Points");
+		
+		textField = new JTextField();
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				if(currentQuiz!=null && eventsEnabled){
+					try {
+						currentQuiz.setPoints(Integer.parseInt(textField.getText()));
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				if(currentQuiz!=null && eventsEnabled){
+					try {
+						currentQuiz.setPoints(Integer.parseInt(textField.getText()));
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		textField.setColumns(10);
+		
+		checkBox_5 = new JCheckBox("Auto");
+		checkBox_5.setSelected(true);
+		checkBox_5.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				textField_8.setEnabled(!checkBox_5.isSelected());
+				
+			}
+		});
+		
+		JLabel label_7 = new JLabel("Time Limit");
+		
+		textField_1 = new JTextField();
+		textField_1.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				if(currentQuiz != null && eventsEnabled){
+					try{
+						currentQuiz.setTime(Integer.parseInt(textField_1.getText()));
+					}
+					catch(Exception ex){
+						JOptionPane.showMessageDialog(null, ex.getMessage());
+					}
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				if(currentQuiz != null && eventsEnabled){
+					try{
+						currentQuiz.setTime(Integer.parseInt(textField_1.getText()));
+					}
+					catch(Exception ex){
+						JOptionPane.showMessageDialog(null, ex.getMessage());
+					}
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		textField_1.setColumns(10);
+		
+		JLabel label_8 = new JLabel("Show Results");
+		
+		JComboBox comboBox = new JComboBox();
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		
+		JButton button = new JButton("New");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventsEnabled = false;
+				textField_2.setText("");
+				textField_1.setText("");
+				
+				quizList.add(new Quiz());
+				currentQuiz = quizList.get(quizList.size()-1);
+				
+				for (int i = 0; i < table.getRowCount(); i++) {
+					tablemodel.removeRow(i);
+				}
+				
+				textArea.setText("");
+				textField.setText("");
+				textField_4.setText("");
+				textField_5.setText("");
+				textField_6.setText("");
+				textField_7.setText("");
+				textField_8.setText("");
+				textField_9.setText("");
+				radioButton.setSelected(false);
+				radioButton_1.setSelected(false);
+				radioButton_2.setSelected(false);
+				radioButton_3.setSelected(false);
+				radioButton_4.setSelected(false);
+				checkBox.setSelected(false);
+				checkBox_1.setSelected(false);
+				checkBox_2.setSelected(false);
+				checkBox_3.setSelected(false);
+				checkBox_4.setSelected(false);
+				comboBoxQuestionType.setSelectedIndex(0);
+				
+				currentQuiz.addQuestion(new Question());
+                tablemodel.addRow(new Object[]{1,"MultiChoice(Single)",0,""});
+                ListSelectionModel m_modelSelection = table.getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0); 
+				
+				eventsEnabled = true;
+			}
+		});
+		
+		JButton button_1 = new JButton("Open");
+		
+		JLabel label_9 = new JLabel("Quiz");
+		
+		JButton button_2 = new JButton("Save");
+		
+		JButton button_3 = new JButton("Save As");
+		
+		JComboBox comboBox_1 = new JComboBox();
+		
+		JLabel label_10 = new JLabel("( 0)");
+		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
+		gl_panel_6.setHorizontalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.TRAILING)
+						.addComponent(label_3)
+						.addComponent(label_6))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(label_10)
+							.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+							.addComponent(checkBox_5)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(label_7)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(56)
+							.addComponent(label_8)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(button)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_1)
+							.addPreferredGap(ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+							.addComponent(label_9)))
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addGap(48)
+							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox_1, 0, 205, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		gl_panel_6.setVerticalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label_3)
+						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button)
+						.addComponent(button_1)
+						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_9))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_8)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_3)
+						.addComponent(label_6)
+						.addComponent(button_2)
+						.addComponent(checkBox_5)
+						.addComponent(label_7)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_10))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_6.setLayout(gl_panel_6);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 228, 181));
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 228, 181));
@@ -207,7 +434,7 @@ public class QuizTeacher {
 				Question question = new Question();
                 Object[] obj = new Object[]{
                 		table.getRowCount(),
-                        "MultiChoice (Single)",
+                        "MultiChoice(Single)",
                         0,
                         ""};
 				model.addRow(obj);
@@ -254,7 +481,7 @@ public class QuizTeacher {
 		JLabel label = new JLabel("Question List");
 		
 		
-		JButton btnUp = new JButton("New button");
+		JButton btnUp = new JButton("Up");
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = table.getSelectedRow();
@@ -269,7 +496,7 @@ public class QuizTeacher {
 			}
 		});
 		
-		JButton btnDown = new JButton("New button");
+		JButton btnDown = new JButton("Down");
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = table.getSelectedRow();
@@ -330,28 +557,16 @@ public class QuizTeacher {
 							.addComponent(btnDown)))
 					.addContainerGap())
 		);
-		
-		table = new JTable();
 		tablemodel = new DefaultTableModel(
 				new Object[][] {
 				},
 				new String[] {
 					"Number", "Type", "Points", "Content"
 				});
+		
+		table = new JTable();
 		table.setModel(tablemodel);
 		ListSelectionModel m_modelSelection = table.getSelectionModel();
-		m_modelSelection.addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-                            if(table.getSelectedRow() == -1)
-                                return;
-                            //int i = table.getSelectedRow();
-                            //ArrayList<Question> q = currentQuiz.getQuestionList();
-                            currentQuestion = currentQuiz.getQuestionList().get(table.getSelectedRow());
-                            LoadQuestion(currentQuestion);
-			}
-		});
 		table.getColumnModel().getColumn(3).setMinWidth(20);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFillsViewportHeight(true);
@@ -391,6 +606,7 @@ public class QuizTeacher {
 		JLabel label_4 = new JLabel("Points");
 		
 		textField_8 = new JTextField();
+		textField_8.setEnabled(false);
 		textField_8.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
@@ -785,25 +1001,107 @@ public class QuizTeacher {
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 383, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
 						.addComponent(panel_4, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
 						.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
-					.addContainerGap(3, Short.MAX_VALUE))
+					.addGap(0))
 		);
 		panel_2.setLayout(gl_panel_2);
+		GroupLayout gl_panel = new GroupLayout(panelcard1);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_6, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(0))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+		);
+		panelcard1.setLayout(gl_panel);
+		
+		m_modelSelection.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+                            if(table.getSelectedRow() == -1)
+                                return;
+                            //int i = table.getSelectedRow();
+                            //ArrayList<Question> q = currentQuiz.getQuestionList();
+                            currentQuestion = currentQuiz.getQuestionList().get(table.getSelectedRow());
+                            eventsEnabled = false;
+	                   		textArea.setText(currentQuestion.getTitle());
+	                   		textField_3.setText(currentQuestion.getAnswer1());
+	                   		textField_4.setText(currentQuestion.getAnswer2());
+	                   		textField_5.setText(currentQuestion.getAnswer3());
+	                   		textField_6.setText(currentQuestion.getAnswer4());
+	                   		textField_7.setText(currentQuestion.getAnswer5());
+	                   		textField_8.setText(String.valueOf(currentQuestion.getPoint()));
+	                   		textField_9.setText(currentQuestion.getUrl());
+	                   		if(currentQuestion.getType() == 0){
+	                   			comboBoxQuestionType.setSelectedIndex(0);
+	                   			boolean[] answers = currentQuestion.getCorrectAnswer();
+	                   			if(answers != null){
+		                   			radioButton.setSelected(answers[0]);
+		                   			radioButton_1.setSelected(answers[1]);
+		                   			radioButton_2.setSelected(answers[2]);
+		                   			radioButton_3.setSelected(answers[3]);
+		                   			radioButton_4.setSelected(answers[4]);
+	                   			}
+	                   		}
+	                   		else if(currentQuestion.getType() == 1){
+	                   			comboBoxQuestionType.setSelectedIndex(1);
+	                   			boolean[] answers = currentQuestion.getCorrectAnswer();
+	                   			if(answers != null){
+	                   				checkBox.setSelected(answers[0]);
+	                   				checkBox_1.setSelected(answers[1]);
+	                   				checkBox_2.setSelected(answers[2]);
+	                   				checkBox_3.setSelected(answers[3]);
+	                   				checkBox_4.setSelected(answers[4]);
+	                   			}
+	                   		}
+	                   		else if(currentQuestion.getType() == 2){
+	                   			comboBoxQuestionType.setSelectedIndex(2);
+	                   		}
+	                   		eventsEnabled = true;
+			}
+		});
 		
 		JButton btnNewButton_1 = new JButton("Content");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(mainPanel.getLayout());
+		        cl.show(mainPanel, "page1");
+			}
+		});
 		
 		JButton btnNewButton = new JButton("Response");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(mainPanel.getLayout());
+		        cl.show(mainPanel, "page2");
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Reports");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(mainPanel.getLayout());
+		        cl.show(mainPanel, "page3");
+			}
+		});
 		
 		JCheckBox chckbxShuffle = new JCheckBox("Shuffle");
 		
@@ -812,7 +1110,7 @@ public class QuizTeacher {
 			public void actionPerformed(ActionEvent e) {
 				//QuizService qs = new QuizService();
 				//qs.Run(currentQuiz);
-				QuizStudent qs = new QuizStudent(currentQuiz);
+				QuizStudentWindow qs = new QuizStudentWindow(currentQuiz);
 			}
 		});
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
@@ -851,179 +1149,12 @@ public class QuizTeacher {
 					.addGap(11))
 		);
 		panel_1.setLayout(gl_panel_1);
-		
-		JLabel lblDirections = new JLabel("Directions");
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
-		JLabel lblPoints = new JLabel("Points");
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		
-		JButton btnNew = new JButton("New");
-		btnNew.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				quizList.add(new com.jajeem.quiz.model.Quiz());
-				currentQuiz = quizList.get(quizList.size()-1);
-				eventsEnabled = false;
-				for (int i = 0; i < table.getRowCount(); i++) {
-					tablemodel.removeRow(i);
-				}
-				
-				radioButton.setSelected(false);
-				radioButton_1.setSelected(false);
-				radioButton_2.setSelected(false);
-				radioButton_3.setSelected(false);
-				radioButton_4.setSelected(false);
-				checkBox.setSelected(false);
-				checkBox_1.setSelected(false);
-				checkBox_2.setSelected(false);
-				checkBox_3.setSelected(false);
-				checkBox_4.setSelected(false);
-				
-				textArea.setText("");
-				textField.setText("");
-				textField_3.setText("");
-				textField_4.setText("");
-				textField_5.setText("");
-				textField_6.setText("");
-				textField_7.setText("");
-				textField_8.setText("");
-				textField_9.setText("");
-				
-				eventsEnabled = true;
-			}
-		});
-		
-		JButton btnOpen = new JButton("Open");
-		btnOpen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		
-		JCheckBox chckbxAuto = new JCheckBox("Auto");
-		
-		JLabel lblTimeLimit = new JLabel("Time Limit");
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		
-		JLabel lblShowResults = new JLabel("Show Results");
-		
-		comboBoxShowResults = new JComboBox();
-		
-		JButton btnSaveas = new JButton("Save As");
-		
-		JButton btnSave = new JButton("Save");
-		
-		comboBoxQuizes = new JComboBox();
-		comboBoxQuizes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				currentQuiz = quizList.get(comboBoxQuizes.getSelectedIndex());
-				LoadQuiz(currentQuiz);
-			}
-
-			private void LoadQuiz(com.jajeem.quiz.model.Quiz currentQuiz) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				
-			}
-		});
-		
-		
-		JLabel lblQuiz = new JLabel("Quiz");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblDirections)
-						.addComponent(lblPoints))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-							.addComponent(chckbxAuto)
-							.addGap(10)
-							.addComponent(lblTimeLimit)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblShowResults)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBoxShowResults, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnNew)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnOpen)
-							.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-							.addComponent(lblQuiz)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(48)
-							.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSaveas, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBoxQuizes, 0, 97, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDirections)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNew)
-						.addComponent(btnOpen)
-						.addComponent(comboBoxQuizes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblQuiz))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(chckbxAuto)
-						.addComponent(lblTimeLimit)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblShowResults)
-						.addComponent(comboBoxShowResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSaveas)
-						.addComponent(lblPoints)
-						.addComponent(btnSave))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
-		frame.getContentPane().setLayout(groupLayout);
+		frmQuiz.getContentPane().setLayout(groupLayout);
 		initDataBindings();
 	}
 
 	private void LoadQuestion(Question currentQuestion2) {
-		 eventsEnabled = false;
-		 textArea.setText(currentQuestion2.getTitle());
-		 textField_3.setText(currentQuestion2.getAnswer1());
-		 textField_4.setText(currentQuestion2.getAnswer2());
-		 textField_5.setText(currentQuestion2.getAnswer3());
-		 textField_6.setText(currentQuestion2.getAnswer4());
-		 textField_7.setText(currentQuestion2.getAnswer5());
-		 textField_8.setText(String.valueOf(currentQuestion2.getPoint()));
-		 textField_9.setText(currentQuestion2.getUrl());
-		 if(currentQuestion2.getType() == 0){
-			 comboBoxQuestionType.setSelectedIndex(0);
-		 }
-		 else if(currentQuestion2.getType() == 1){
-			 comboBoxQuestionType.setSelectedIndex(1);
-		 }
-		 else if(currentQuestion2.getType() == 2){
-			 comboBoxQuestionType.setSelectedIndex(2);
-		 }
-		 eventsEnabled = true;
+		 
 	}
 
 	private int getInstructorId() {

@@ -17,7 +17,8 @@ public class Question {
 	private String answer4;
 	private String answer5;
 	private boolean[] correctAnswer; //its a map.for example : false,true,false,false,false means ,1:wrong,2:right,....
-	
+	private boolean[] studentAnswer;
+	private String studentTextAnswer;
 	
 	public Question(int id2) {
 		this.id = id2;
@@ -109,5 +110,17 @@ public class Question {
 	}
 	public void setCorrectAnswer(boolean[] correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+	public void setStudentAnswer(boolean[] bs) {
+		studentAnswer = bs;
+	}
+	public void setStudentAnswer(String text) {
+		studentTextAnswer = text;
+	}
+	public boolean[] getStudentAnswer() {
+		return studentAnswer;
+	}
+	public String getStudentTextAnswer() {
+		return studentTextAnswer;
 	}
 }

@@ -30,12 +30,6 @@ public class main extends JFrame {
          * so that, each one of them can be added to the JPanel 
          * having CardLayout. 
          */
-        window1 win1 = new window1();
-        contentPane.add(win1, "");
-        window2 win2 = new window2();
-        contentPane.add(win2, "");
-        window3 win3 = new window3();
-        contentPane.add(win3, "");
 
         /* We need two JButtons to go to the next Card
          * or come back to the previous Card, as and when
