@@ -363,7 +363,8 @@ public class TeacherQuizWindow {
 		JButton btnOpen = new JButton("Open");
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				OpenDialog open = new OpenDialog();
+				currentQuiz = open.getValue();
 			}
 		});
 		
@@ -455,8 +456,43 @@ public class TeacherQuizWindow {
 		JButton btnCopy = new JButton("Copy");
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				eventsEnabled = false;
+				if(currentQuiz.getQuestionList().size() != 0 && table.getRowCount() != 0){
+					Question toCopy = currentQuiz.getQuestionList().get(table.getSelectedRow());
+					currentQuiz.addQuestion(toCopy);
+					String type = "";
+					if(toCopy.getType()==0){
+						type = "MultiChoice(Single)";
+					}
+					else if(toCopy.getType()==1){
+						type = "MultiChoice";
+					}
+					else if(toCopy.getType()==2){
+						type = "Key in answer";
+					}
+					tablemodel.addRow(new Object[]{
+						Integer.parseInt(String.valueOf(tablemodel.getValueAt(table.getRowCount()-1, 0)))+1,
+						type,
+						toCopy.getPoint(),
+						toCopy.getTitle()
+					});
+					table.getSelectionModel().setSelectionInterval(table.getRowCount()-1, table.getRowCount()-1);
+					
+					if(checkBoxAuto.isSelected() && currentQuiz.getQuestionList().size()!=0){
+		                int point = currentQuiz.getPoints()/currentQuiz.getQuestionList().size();
+						for (int i=0;i<currentQuiz.getQuestionList().size();i++) {
+							currentQuiz.getQuestionList().get(i).setPoint(point);
+							tablemodel.setValueAt(point, i, 2);
+						}
+						int remainder = (currentQuiz.getPoints() - currentQuiz.getQuestionList().size() * point);
+						if(remainder!=0){
+							currentQuiz.getQuestionList().get(currentQuiz.getQuestionList().size()-1).setPoint(point+remainder);
+							tablemodel.setValueAt(point+remainder, table.getRowCount()-1, 2);
+						}
+						textField_8.setText(String.valueOf(tablemodel.getValueAt(table.getSelectedRow(), 2)));
+					}
+				}
+				eventsEnabled = true;
 			}
 		});
 		
@@ -1201,8 +1237,8 @@ public class TeacherQuizWindow {
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//QuizService qs = new QuizService();
-				//qs.Run(currentQuiz);
+				CardLayout cl = (CardLayout)(mainPanel.getLayout());
+		        cl.show(mainPanel, "page2");
 				StudentQuizWindow qs = new StudentQuizWindow(currentQuiz);
 			}
 		});

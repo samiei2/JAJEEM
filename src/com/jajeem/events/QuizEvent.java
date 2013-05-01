@@ -18,7 +18,7 @@ public class QuizEvent {
     public void removeEventListener(QuizEventListener listener) {
         listenerList.remove(QuizEventListener.class, listener);
     }
-    void fireEvent(QuizAction evt) {
+    public void fireEvent(QuizAction evt) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
             if (listeners[i] == QuizEventListener.class) {

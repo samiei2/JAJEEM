@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\QuizStudentWindow.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\QuizTeacherWindow.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\wind2.java" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\events\QuizActionEvent.java" afterPath="$PROJECT_DIR$/src/com/jajeem/events/QuizEventListener.java" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\CreateCategoryWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/CreateCategoryWindow.java" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\SaveWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/SaveWindow.java" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\main.java" afterPath="$PROJECT_DIR$/src/com/jajeem/windows/quiz/main.java" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\test.java" afterPath="$PROJECT_DIR$/src/com/jajeem/windows/quiz/test.java" />
-      <change type="MOVED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\windows\wind3.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/wind3.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/events/QuizAction.java" afterPath="$PROJECT_DIR$/src/com/jajeem/events/QuizAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" afterPath="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/StudentQuizWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/StudentQuizWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/TeacherQuizWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/TeacherQuizWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/wind2.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/wind2.java" />
     </list>
     <ignored path="jajeem.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -20,6 +13,8 @@
     <file path="/QuizEvent.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367404538828" ignored="false" />
     <file path="/QuizEventListener.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367404494196" ignored="false" />
     <file path="/QuizTeacherWindow.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367405384970" ignored="false" />
+    <file path="/a.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367408860230" ignored="false" />
+    <file path="/sample.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367408860871" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,29 +158,33 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="187" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="216" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="209" />
-    <property name="MemberChooser.sorted" value="false" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="209" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="217" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="884" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="891" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="884" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="210" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="208" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Java" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -291,6 +290,23 @@
       <AnalysisUIOptions />
     </option>
   </component>
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="" />
@@ -300,7 +316,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="916" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -388,6 +404,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/jajeem/events/QuizAction.java">

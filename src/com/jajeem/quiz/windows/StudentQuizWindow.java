@@ -18,6 +18,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizEvent;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -135,19 +137,7 @@ public class StudentQuizWindow {
 				/////Setting the timer
 				if(currentQuiz.getTime() != 0){
 					lbltimer.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
-					new Runnable() {
-						
-						@Override
-						public void run() {
-							JOptionPane.showMessageDialog(null, "hey");
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}.run();
+					
 				}
 				else{
 					lbltimer.setText("");
@@ -320,7 +310,14 @@ public class StudentQuizWindow {
 						currentQuestion.setStudentAnswer(textField33.getText());
 					}
 					
-					
+					//TODO clean up this code
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							new QuizEvent().fireEvent(new QuizAction(currentQuestion));
+						}
+					}).start();
 				}
 				//Load Next Question
 				currentQuestion = currentQuiz.getQuestionList().get(list.getSelectedIndex());

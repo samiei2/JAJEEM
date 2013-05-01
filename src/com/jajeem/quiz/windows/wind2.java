@@ -51,12 +51,8 @@ public class wind2 extends JPanel {
 			
 			@Override
 			public void eventOccured(QuizAction e) {
-				setCurrentQuiz(e.getQuiz());
-				UpdateGUI();
-			}
-
-			private synchronized void UpdateGUI() {
-				tablemodel.addRow(new Object[]{});
+				Question temp = (Question) e.getSource();
+				
 			}
 		});
 	}
@@ -334,6 +330,7 @@ public class wind2 extends JPanel {
 			for(int i=1;i<=getCurrentQuiz().getQuestionList().size();i++){
 				comboBox.addItem("Question "+i);
 			}
+			
 		}
 	}
 	
