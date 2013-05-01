@@ -1,17 +1,2 @@
-Config config = new Config();ServerService test = new ServerService("192.168.0.115", 100, 2000, "power");
-test.start();
-
-
-ClientService test1 = new ClientService("228.5.6.7", 9090);
-test1.start();
-
-
-Config conf = new Config();
-conf.load("conf/conf.properties");
-System.out.println(conf.getParam("port"));
-
-StartUp ss = new StartUp();Student i = new Student();
-StudentDAO t = new StudentDAO();
-t.list();
-i.setUsername("dddd");
-t.create(i);VNCCaptureService vnc = new VNCCaptureService();vnc.startClient();vnc.startServer();
+com.jajeem.util.Config config = new com.jajeem.util.Config();String[] ss = {"192.168.0.16"};ConversationService cs = new ConversationService();cs.create("192.168.0.15",ss, 1099);StartCaptureCommand cmd = new StartCaptureCommand("192.168.0.15", 9090);ServerService test = new ServerService();
+test.send(cmd);jrdesktop.Config con = new jrdesktop.Config(false, "", "192.168.0.15", 1099, "admin", "admin", false, false);VNCCaptureService vnc2 = new VNCCaptureService();vnc2.startClient(con);

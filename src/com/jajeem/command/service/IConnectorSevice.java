@@ -2,6 +2,8 @@ package com.jajeem.command.service;
 
 import java.io.DataInputStream;
 
+import com.jajeem.command.model.Command;
+
 public interface IConnectorSevice {
 
 	void start();
@@ -12,6 +14,6 @@ public interface IConnectorSevice {
 	
 	void process(DataInputStream d);
 
-	void send(int destination);
+	void send(Command cmd);
 
 }

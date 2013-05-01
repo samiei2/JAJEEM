@@ -7,10 +7,13 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.UnknownHostException;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.command.handler.*;
 import com.jajeem.command.model.*;
+import com.jajeem.util.Config;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -20,13 +23,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 	protected Thread thread;
 	
 	private boolean stopped;
+	
+	static Logger logger = Logger.getLogger("ServerService.class");
 
-	public ClientService(String group, int port) throws UnknownHostException,
-			IOException {
+	public ClientService(String group) throws NumberFormatException, Exception {
 
 		stopped = false;
 		
-		this.port = port;
+		PropertyConfigurator.configure("conf/log4j.conf");
+				
+		this.port = Integer.parseInt(Config.getParam("port"));
 		this.group = InetAddress.getByName(group);
 
 		/* setup the multicast control channel */
@@ -51,10 +57,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 	}
 
 	@Override
-	public void send(int destination) {
-	}
-
-	@Override
 	public void broadcast() {
 	}
 
@@ -67,7 +69,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 		socket.receive(packet);
 
 		return packet.getData();
-
 	}
 
 	@Override
@@ -95,26 +96,24 @@ public class ClientService implements IConnectorSevice, Runnable {
 			ObjectInputStream oi = new ObjectInputStream(d);
 
 			try {
-
 				Object o = oi.readObject();
 
 				if (!(o instanceof Command))
 					throw new ClassNotFoundException("Object is not a message");
 
-				Command msg = (Command) o;
-				System.out.println(msg.getType());
-				switch (msg.getType()) {
-					case "power":
-						SetPowerCommandHandler powerHandler = new SetPowerCommandHandler();
-						powerHandler.run(msg.getType());
-						break;
-					case "startVNC":
-						StartCaptureCommandHandler captureHandler = new StartCaptureCommandHandler();
-						captureHandler.run(msg.getType());
-						break;
-					default:
-						System.out.println("Unknown message, message is: " + msg.getType());
+				Command cmd = (Command) o;
+				
+				if (cmd instanceof StartCaptureCommand) {
+					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
+					startCaptureHandler.run(cmd);
+				} else if (cmd instanceof StopCaptureCommand) {
+					StopCaptureCommandHandler stopCaptureHandler = new StopCaptureCommandHandler();
+					stopCaptureHandler.run(cmd);
+				} else if (cmd instanceof StartViewerCommand) {
+					StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
+					startViewerHandler.run(cmd);
 				}
+				
 
 			} catch (ClassNotFoundException ex) {
 				System.err.println("Unknown message:" + ex.toString());
@@ -128,6 +127,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 	
 	public boolean isStopped() {
 		return stopped;
+	}
+
+	@Override
+	public void send(Command cmd) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

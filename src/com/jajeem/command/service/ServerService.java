@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +32,21 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	
 	static Logger logger = Logger.getLogger("ServerService.class");
 	
+	public ServerService() throws NumberFormatException, Exception {
+
+		PropertyConfigurator.configure("conf/log4j.conf");
+			
+		stopped = false;
+				
+		this.port = Integer.parseInt(Config.getParam("port"));
+		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
+		this.interval = Integer.parseInt(Config.getParam("interval"));;
+
+		socket = new MulticastSocket();
+		socket.setTimeToLive(ttl);
+		timer = new Timer();
+	}
+	
 	public ServerService(String group, int ttl, int interval,
 			String type) throws NumberFormatException, Exception {
 
@@ -41,9 +57,9 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		this.port = Integer.parseInt(Config.getParam("port"));
 		this.group = InetAddress.getByName(group);
 		this.host = group;
-		this.ttl = ttl;
+		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
 		this.type = type;
-		this.interval = interval;
+		this.interval = Integer.parseInt(Config.getParam("interval"));;
 
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
@@ -63,11 +79,19 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	}
 
 	@Override
-	public void send(int destination) {
+	public void send(Command cmd) {
 		byte[] b = null;
-
-		b = constructMessage();
+		InetAddress group = null;
+		
+		try {
+			group = InetAddress.getByName(cmd.getHost());
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+		b = constructMessage(cmd);
+		
 		DatagramPacket packet = new DatagramPacket(b, b.length, group, port);
+		
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
@@ -87,11 +111,11 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		// TODO Auto-generated method stub
 
 	}
-
+/*
 	public void run() {
 		byte[] b = null;
 
-		b = constructMessage();
+		b = constructMessage(Command cmd);
 		DatagramPacket packet = new DatagramPacket(b, b.length, group, port);
 		try {
 			socket.send(packet);
@@ -108,15 +132,14 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		
 		System.out.println("Server started...");
 	}
+	*/
 
-	private byte[] constructMessage() {
+	private byte[] constructMessage(Command cmd) {
 		try {
 			ByteArrayOutputStream b = new ByteArrayOutputStream();
 			ObjectOutputStream o = new ObjectOutputStream(b);
 
-			Command msg = new Command(host, port, type);
-
-			o.writeObject(msg);
+			o.writeObject(cmd);
 			o.flush();
 			b.flush();
 
@@ -136,5 +159,11 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	
 	public boolean isStopped() {
 		return stopped;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }
