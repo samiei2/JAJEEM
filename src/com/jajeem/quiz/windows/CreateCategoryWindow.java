@@ -1,6 +1,5 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;

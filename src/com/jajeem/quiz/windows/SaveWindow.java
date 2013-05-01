@@ -1,6 +1,5 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -115,6 +114,8 @@ public class SaveWindow extends JFrame {
 		JLabel lblQuestion = new JLabel("Question Title");
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setEditable(false);
 		textField.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();

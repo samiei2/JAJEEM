@@ -1,4 +1,4 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
 import javax.swing.JPanel;
 
