@@ -1,4 +1,4 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizEventListener;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -26,7 +29,7 @@ import java.awt.event.ActionEvent;
 public class wind2 extends JPanel {
 	private JTextField textField_4;
 	private JTable table;
-	private DefaultTableModel resulttablemodel;
+	private DefaultTableModel tablemodel;
 	private JTextArea textArea;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -36,13 +39,33 @@ public class wind2 extends JPanel {
 	
 	private Question currentQuestion;
 	private Quiz currentQuiz;
+	private QuizEvent responseRecieved;
 
 	/**
 	 * Create the panel.
 	 */
-	@SuppressWarnings("rawtypes")
 	public wind2() {
-		
+		init();
+		responseRecieved = new QuizEvent();
+        responseRecieved.addEventListener(new QuizEventListener() {
+			
+			@Override
+			public void eventOccured(QuizAction e) {
+				Question temp = (Question) e.getSource();
+				
+			}
+		});
+	}
+
+	public Quiz getCurrentQuiz() {
+		return currentQuiz;
+	}
+
+	public void setCurrentQuiz(Quiz currentQuiz) {
+		this.currentQuiz = currentQuiz;
+	}
+
+	public void init() {
 		JSeparator separator = new JSeparator();
 		
 		JPanel panel_1 = new JPanel();
@@ -160,7 +183,7 @@ public class wind2 extends JPanel {
 		comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				currentQuestion = currentQuiz.getQuestionList().get(comboBox.getSelectedIndex());
+				currentQuestion = getCurrentQuiz().getQuestionList().get(comboBox.getSelectedIndex());
 				if(currentQuestion.getType() == 0)
 					textField_4.setText("MultiChoice (Single)");
 				else if(currentQuestion.getType() == 1)
@@ -277,7 +300,7 @@ public class wind2 extends JPanel {
 					.addContainerGap())
 		);
 		
-		resulttablemodel = new DefaultTableModel(
+		tablemodel = new DefaultTableModel(
 				new Object[][] {
 				},
 				new String[] {
@@ -301,15 +324,15 @@ public class wind2 extends JPanel {
 		panel_1.setLayout(gl_panel_1);
 		setLayout(groupLayout);
 		
-		
-		//Afterinit 
-		if(currentQuiz!=null){
-			textField.setText(String.valueOf(currentQuiz.getPoints()));
-			for(int i=1;i<=currentQuiz.getQuestionList().size();i++){
+		////////After Init
+		if(getCurrentQuiz()!=null){
+			textField.setText(String.valueOf(getCurrentQuiz().getPoints()));
+			for(int i=1;i<=getCurrentQuiz().getQuestionList().size();i++){
 				comboBox.addItem("Question "+i);
 			}
+			
 		}
-		
-		
 	}
+	
+	
 }

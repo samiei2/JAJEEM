@@ -1,6 +1,5 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,13 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Color;
 
-public class CreateCategoryWindow extends JFrame {
+public class NewCategoryWindow extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -26,7 +26,7 @@ public class CreateCategoryWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateCategoryWindow frame = new CreateCategoryWindow();
+					NewCategoryWindow frame = new NewCategoryWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,8 @@ public class CreateCategoryWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateCategoryWindow() {
+	public NewCategoryWindow() {
+		setModal(true);
 		setBackground(new Color(255, 250, 240));
 		setTitle("Add Category");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

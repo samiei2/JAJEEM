@@ -1,4 +1,4 @@
-package com.jajeem.windows;
+package com.jajeem.quiz.windows;
 
 import java.awt.CardLayout;
 import java.awt.EventQueue;
@@ -17,11 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ListModel;
 
+import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizEvent;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -35,11 +35,9 @@ import java.awt.event.ActionEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 
-public class QuizStudentWindow {
+public class StudentQuizWindow {
 
 	private JFrame frame;
 	private JTextArea textArea;
@@ -88,7 +86,7 @@ public class QuizStudentWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuizStudentWindow window = new QuizStudentWindow();
+					StudentQuizWindow window = new StudentQuizWindow();
 					Quiz q = new Quiz();
 					q.addQuestion(new Question());
 					q.addQuestion(new Question());
@@ -107,11 +105,11 @@ public class QuizStudentWindow {
 	/**
 	 * Create the application.
 	 */
-	public QuizStudentWindow() {
+	public StudentQuizWindow() {
 		initialize();
 	}
 
-	public QuizStudentWindow(Quiz quiz){
+	public StudentQuizWindow(Quiz quiz){
 		setCurrentQuiz(quiz);
 		initialize();
 	}
@@ -137,7 +135,13 @@ public class QuizStudentWindow {
 				list.setSelectedIndex(0);
 				
 				/////Setting the timer
-				lbltimer.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
+				if(currentQuiz.getTime() != 0){
+					lbltimer.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
+					
+				}
+				else{
+					lbltimer.setText("");
+				}
 				lbltime.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			}
 		});
@@ -306,7 +310,14 @@ public class QuizStudentWindow {
 						currentQuestion.setStudentAnswer(textField33.getText());
 					}
 					
-					
+					//TODO clean up this code
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							new QuizEvent().fireEvent(new QuizAction(currentQuestion));
+						}
+					}).start();
 				}
 				//Load Next Question
 				currentQuestion = currentQuiz.getQuestionList().get(list.getSelectedIndex());
@@ -746,20 +757,6 @@ public class QuizStudentWindow {
 		this.currentQuiz = currentQuiz;
 	}
 	
-	class Timer{
-		public void Start(){
-
-			timer = new java.util.Timer();
-	        class RemindTask extends TimerTask {
-		        public void run() {
-		            JOptionPane.showMessageDialog(null, "Times Up!");
-		            timer.cancel(); //Terminate the timer thread
-		            frame.dispose();
-		        }
-	        }
-	        timer.schedule(new RemindTask(), currentQuiz.getTime()*60*1000);
-		}
-	}
 }
 
 
