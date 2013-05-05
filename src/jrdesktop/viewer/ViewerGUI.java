@@ -5,6 +5,11 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
+import com.alee.laf.desktoppane.WebInternalFrame;
+import com.alee.laf.panel.WebPanel;
 
 import jrdesktop.Commons;
 import jrdesktop.HostProperties;
@@ -24,14 +29,17 @@ public class ViewerGUI extends javax.swing.JFrame {
     /** Creates new form MainFrame */
     public ViewerGUI(Recorder recorder) {
         this.recorder = recorder;
-        initComponents();
-        jScrollPane1.setViewportView(recorder.screenPlayer);        
-        setVisible(true);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1.setViewportView(recorder.screenPlayer);
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         main.activeConnection++;
     }  
   
-    public void Start() {
-        jBtnStartStopActionPerformed(null);  
+    public void Start(WebInternalFrame panel) {
+    	recorder.Start();
+    	panel.add(jScrollPane1);
+        //jBtnStartStopActionPerformed(null);  
     }
     
     /** This method is called from within the constructor to

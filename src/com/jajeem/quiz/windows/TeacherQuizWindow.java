@@ -40,6 +40,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.alee.laf.WebLookAndFeel;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
@@ -122,7 +123,7 @@ public class TeacherQuizWindow {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		try {
-            UIManager.setLookAndFeel(com.seaglasslookandfeel.SeaGlassLookAndFeel.class.getName());
+            UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
         } catch (Exception e) {
             e.printStackTrace();
         }

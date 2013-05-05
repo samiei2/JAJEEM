@@ -35,9 +35,6 @@ import javax.swing.ListSelectionModel;
 import java.awt.Color;
 import javax.swing.JButton;
 
-import org.jdesktop.beansbinding.Converter;
-
-import sun.security.util.DisabledAlgorithmConstraints;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
