@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" afterPath="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/StudentQuizWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/StudentQuizWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/TeacherQuizWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/TeacherQuizWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/wind2.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/windows/wind2.java" />
-    </list>
+    <list default="true" id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="" />
     <ignored path="jajeem.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367392093641" ignored="false" />

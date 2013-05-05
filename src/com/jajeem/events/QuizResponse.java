@@ -5,9 +5,9 @@ import java.util.EventObject;
 import com.jajeem.quiz.model.Quiz;
 
 @SuppressWarnings("serial")
-public class QuizAction extends EventObject{
+public class QuizResponse extends EventObject{
 	private Quiz quiz;
-	public QuizAction(Object source) {
+	public QuizResponse(Object source) {
 	    super(source);
 	}
 	public Quiz getQuiz() {

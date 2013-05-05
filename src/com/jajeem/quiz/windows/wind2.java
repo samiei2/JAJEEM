@@ -15,9 +15,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -50,8 +51,14 @@ public class wind2 extends JPanel {
         responseRecieved.addEventListener(new QuizEventListener() {
 			
 			@Override
-			public void eventOccured(QuizAction e) {
+			public void questionAnswered(QuizResponse e) {
 				Question temp = (Question) e.getSource();
+				
+			}
+
+			@Override
+			public void quizStoped(QuizStop e) {
+				// TODO Auto-generated method stub
 				
 			}
 		});

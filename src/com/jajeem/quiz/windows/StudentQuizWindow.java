@@ -17,9 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
-import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -27,17 +30,24 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.text.NumberFormatter;
 import javax.swing.ListSelectionModel;
 import java.awt.Color;
 import javax.swing.JButton;
+
+import org.jdesktop.beansbinding.Converter;
+
+import sun.security.util.DisabledAlgorithmConstraints;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimerTask;
 
-public class StudentQuizWindow {
+public class StudentQuizWindow  extends JFrame{
 
 	private JFrame frame;
 	private JTextArea textArea;
@@ -76,8 +86,16 @@ public class StudentQuizWindow {
 	protected Question currentQuestion;
 	private JLabel lbltimer;
 	
-	private java.util.Timer timer;
 	private JLabel lbltime;
+	
+	private QuizEvent quizEvent;
+	long remaining; // How many milliseconds remain in the countdown.
+
+	long lastUpdate; // When count was last updated
+	
+	Timer timer; // Updates the count every second
+
+	NumberFormat format; // Format minutes:seconds with leading zeros
 
 	/**
 	 * Launch the application.
@@ -135,8 +153,20 @@ public class StudentQuizWindow {
 				list.setSelectedIndex(0);
 				
 				/////Setting the timer
+				ActionListener taskPerformer = new ActionListener() {
+				      public void actionPerformed(ActionEvent evt) {
+				    	  updateDisplay();
+				      }
+				  };
+				  
+				
 				if(currentQuiz.getTime() != 0){
 					lbltimer.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
+					remaining = currentQuiz.getTime()*60000;
+					timer = new Timer(1000,taskPerformer);
+				    timer.setInitialDelay(0);
+				    lastUpdate = System.currentTimeMillis();
+				    timer.start();
 					
 				}
 				else{
@@ -315,7 +345,7 @@ public class StudentQuizWindow {
 						
 						@Override
 						public void run() {
-							new QuizEvent().fireEvent(new QuizAction(currentQuestion));
+							new QuizEvent().fireResponseEvent(new QuizResponse(currentQuestion));
 						}
 					}).start();
 				}
@@ -747,6 +777,22 @@ public class StudentQuizWindow {
 		panel_6.add(window3,"2");
 		
 		frame.setVisible(true);
+		
+		quizEvent = new QuizEvent();
+		quizEvent.addEventListener(new QuizEventListener() {
+			
+			@Override
+			public void quizStoped(QuizStop e) {
+				JOptionPane.showMessageDialog(null, "Quiz stopped by the teacher!");
+				dispose();
+			}
+			
+			@Override
+			public void questionAnswered(QuizResponse e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	public Quiz getCurrentQuiz() {
@@ -757,6 +803,31 @@ public class StudentQuizWindow {
 		this.currentQuiz = currentQuiz;
 	}
 	
+	  // Update the displayed time. This method is called from actionPerformed()
+	  // which is itself invoked by the timer.
+	  void updateDisplay() {
+		  NumberFormat format = NumberFormat.getInstance();
+		  
+	      long now = System.currentTimeMillis(); // current time in ms
+	      long elapsed = now - lastUpdate; // ms elapsed since last update
+	      remaining -= elapsed; // adjust remaining time
+	      lastUpdate = now; // remember this update time
+
+	      // Convert remaining milliseconds to mm:ss format and display
+	      if (remaining < 0)
+	          remaining = 0;
+	      int minutes = (int) (remaining / 60000);
+	      int seconds = (int) ((remaining % 60000) / 1000);
+	      lbltimer.setText(format.format(minutes) + ":" + format.format(seconds));
+
+	    // If we've completed the countdown beep and display new page
+	      if (remaining == 0) {
+	      // Stop updating now.
+	    	  JOptionPane.showMessageDialog(null, "Times Up!");
+	          timer.stop();
+	          dispose();
+	    }
+	  }
 }
 
 

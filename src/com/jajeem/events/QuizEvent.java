@@ -10,7 +10,7 @@ import javax.swing.event.EventListenerList;
  * To change this template use File | Settings | File Templates.
  */
 public class QuizEvent {
-    protected EventListenerList listenerList = new EventListenerList();
+    protected static EventListenerList listenerList = new EventListenerList();
 
     public void addEventListener(QuizEventListener listener) {
         listenerList.add(QuizEventListener.class, listener);
@@ -18,11 +18,19 @@ public class QuizEvent {
     public void removeEventListener(QuizEventListener listener) {
         listenerList.remove(QuizEventListener.class, listener);
     }
-    public void fireEvent(QuizAction evt) {
+    public void fireResponseEvent(QuizResponse evt) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
             if (listeners[i] == QuizEventListener.class) {
-                ((QuizEventListener) listeners[i+1]).eventOccured(evt);
+                ((QuizEventListener) listeners[i+1]).questionAnswered(evt);
+            }
+        }
+    }
+    public void fireStopEvent(QuizStop evt) {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i = i+2) {
+            if (listeners[i] == QuizEventListener.class) {
+                ((QuizEventListener) listeners[i+1]).quizStoped(evt);
             }
         }
     }

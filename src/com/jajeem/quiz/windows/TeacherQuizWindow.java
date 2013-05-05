@@ -33,15 +33,17 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.jajeem.events.QuizAction;
+import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
@@ -85,7 +87,7 @@ public class TeacherQuizWindow {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-    private QuizEvent responseRecieved;
+    private QuizEvent quizEvent;
 	@SuppressWarnings("unused")
 	private enum QuestionTypes{
 		MultipleChoicesingle,Multichoice,essay
@@ -119,6 +121,11 @@ public class TeacherQuizWindow {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
+		try {
+            UIManager.setLookAndFeel(com.seaglasslookandfeel.SeaGlassLookAndFeel.class.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		frmQuiz = new JFrame();
 		frmQuiz.setTitle("Quiz");
 		frmQuiz.addWindowListener(new WindowAdapter() {
@@ -145,24 +152,9 @@ public class TeacherQuizWindow {
                 ListSelectionModel m_modelSelection = table.getSelectionModel();
 				m_modelSelection.setSelectionInterval(0,0);
                 
-                
-//                JTableBinding tb = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ_WRITE, currentQuiz.getQuestionList(), table);
-//        		// define the properties to be used for the columns
-//        	    BeanProperty id = BeanProperty.create("id");
-//        	    BeanProperty type = BeanProperty.create("type");
-//        	    BeanProperty point = BeanProperty.create("point");
-//        	    BeanProperty title = BeanProperty.create("title");
-//        	    // configure how the properties map to columns
-//        	    tb.addColumnBinding(id).setColumnName("Id");
-//        	    tb.addColumnBinding(type).setColumnName("Type").setColumnClass(boolean.class);
-//        	    tb.addColumnBinding(point).setColumnName("Point").setColumnClass(Integer.class);
-//        	    tb.addColumnBinding(title).setColumnName("Content").setColumnClass(String.class);
-//
-//        	    // realize the binding
-//        	    tb.bind();
 			}
 		});
-		frmQuiz.setBounds(100, 100, 919, 638);
+		frmQuiz.setBounds(100, 100, 948, 660);
 		frmQuiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		final JPanel mainPanel = new JPanel();
@@ -391,7 +383,7 @@ public class TeacherQuizWindow {
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(label_10)
-							.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(checkBoxAuto)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(label_7)
@@ -402,12 +394,12 @@ public class TeacherQuizWindow {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_6.createSequentialGroup()
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
 							.addGap(18)
 							.addComponent(button)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnOpen)
-							.addPreferredGap(ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+							.addGap(70)
 							.addComponent(label_9)))
 					.addGroup(gl_panel_6.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel_6.createSequentialGroup()
@@ -417,8 +409,8 @@ public class TeacherQuizWindow {
 							.addComponent(button_3, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_6.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox_1, 0, 205, Short.MAX_VALUE)))
-					.addContainerGap())
+							.addComponent(comboBox_1, 0, 194, Short.MAX_VALUE)))
+					.addGap(11))
 		);
 		gl_panel_6.setVerticalGroup(
 			gl_panel_6.createParallelGroup(Alignment.LEADING)
@@ -634,9 +626,9 @@ public class TeacherQuizWindow {
 							.addGap(48))
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addComponent(label)
-							.addPreferredGap(ComponentPlacement.RELATED, 311, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 296, Short.MAX_VALUE))
 						.addGroup(gl_panel_3.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
@@ -651,8 +643,8 @@ public class TeacherQuizWindow {
 							.addContainerGap()
 							.addComponent(label)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+							.addGap(7)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnCopy)
 								.addComponent(btnAdd)
@@ -1023,7 +1015,7 @@ public class TeacherQuizWindow {
 									.addComponent(label_2)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(comboBoxQuestionType, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
 									.addComponent(label_4)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(textField_8, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))))
@@ -1040,14 +1032,14 @@ public class TeacherQuizWindow {
 									.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnImage, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-								.addComponent(textField_9, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)))
+								.addComponent(textField_9, GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)))
 						.addGroup(gl_panel_4.createSequentialGroup()
-							.addGap(3)
+							.addGap(31)
 							.addGroup(gl_panel_4.createParallelGroup(Alignment.TRAILING)
 								.addComponent(lblQuestion)
 								.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_4.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_panel_4.createParallelGroup(Alignment.LEADING)
 								.addComponent(textField_3)
 								.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
 								.addComponent(textField_4)
@@ -1073,10 +1065,10 @@ public class TeacherQuizWindow {
 							.addComponent(lblQuestion))
 						.addGroup(gl_panel_4.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_4.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_panel_4.createSequentialGroup()
+					.addGroup(gl_panel_4.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_4.createSequentialGroup()
 							.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -1086,7 +1078,7 @@ public class TeacherQuizWindow {
 							.addComponent(textField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
 							.addComponent(textField_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_5, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+						.addComponent(panel_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(11)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.TRAILING)
 						.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
@@ -1099,7 +1091,7 @@ public class TeacherQuizWindow {
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNext)
 						.addComponent(btnPrevious))
-					.addGap(13))
+					.addGap(1))
 		);
 		panel_4.setLayout(gl_panel_4);
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
@@ -1121,19 +1113,20 @@ public class TeacherQuizWindow {
 		panel_2.setLayout(gl_panel_2);
 		GroupLayout gl_panel = new GroupLayout(panelcard1);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_6, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
 					.addGap(0))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
+			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+					.addGap(10))
 		);
 		panelcard1.setLayout(gl_panel);
 		
@@ -1166,8 +1159,6 @@ public class TeacherQuizWindow {
                             	eventsEnabled = true;
                                 return;
                             }
-                            //int i = table.getSelectedRow();
-                            //ArrayList<Question> q = currentQuiz.getQuestionList();
                             currentQuestion = currentQuiz.getQuestionList().get(table.getSelectedRow());
                             eventsEnabled = false;
 	                   		textArea.setText(currentQuestion.getTitle());
@@ -1234,49 +1225,57 @@ public class TeacherQuizWindow {
 		
 		JCheckBox chckbxShuffle = new JCheckBox("Shuffle");
 		
-		JButton btnStart = new JButton("Start");
+		final JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(mainPanel.getLayout());
-		        cl.show(mainPanel, "page2");
-				StudentQuizWindow qs = new StudentQuizWindow(currentQuiz);
+				if(btnStart.getText() == "Start"){
+					btnStart.setText("Stop");
+					CardLayout cl = (CardLayout)(mainPanel.getLayout());
+			        cl.show(mainPanel, "page2");
+					StudentQuizWindow qs = new StudentQuizWindow(currentQuiz);
+				}
+				else{
+					btnStart.setText("Start");
+					quizEvent.fireStopEvent(new QuizStop(this));
+				}
+				
 			}
 		});
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
-                gl_panel_1.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel_1.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnNewButton_1)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(btnNewButton)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(btnNewButton_2)
-                                .addPreferredGap(ComponentPlacement.RELATED, 397, Short.MAX_VALUE)
-                                .addComponent(chckbxShuffle)
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addComponent(btnStart)
-                                .addContainerGap())
-        );
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnNewButton_1)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton_2)
+					.addPreferredGap(ComponentPlacement.RELATED, 508, Short.MAX_VALUE)
+					.addComponent(chckbxShuffle)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnStart)
+					.addContainerGap())
+		);
 		gl_panel_1.setVerticalGroup(
-                gl_panel_1.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel_1.createSequentialGroup()
-                                .addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(gl_panel_1.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(gl_panel_1.createSequentialGroup()
-                                                .addGap(29)
-                                                .addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(btnStart)
-                                                        .addComponent(chckbxShuffle)))
-                                        .addGroup(gl_panel_1.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(btnNewButton_2, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                                                        .addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))))
-                                .addGap(11))
-        );
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(29)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnStart)
+								.addComponent(chckbxShuffle)))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))))
+					.addGap(11))
+		);
 		panel_1.setLayout(gl_panel_1);
 		frmQuiz.getContentPane().setLayout(groupLayout);
 		
