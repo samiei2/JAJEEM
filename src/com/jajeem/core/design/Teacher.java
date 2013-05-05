@@ -5,16 +5,23 @@ import info.clearthought.layout.TableLayout;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.net.InetAddress;
 
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
+import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.extended.label.WebVerticalLabel;
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
+import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.service.ClientService;
+import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Config;
 
 public class Teacher implements SwingConstants {
 
@@ -38,15 +45,22 @@ public class Teacher implements SwingConstants {
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	public Teacher() {
+	public Teacher() throws NumberFormatException, Exception {
 		try {
 			// Setting up WebLookAndFeel style
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+			
+			new Config();
+			PropertyConfigurator.configure("conf/log4j.conf");
+			
 		} catch (Throwable e) {
-			// Something went wrong
 		}
+		
 		initialize();
+		networkSetup();
 	}
 
 	/**
@@ -62,6 +76,18 @@ public class Teacher implements SwingConstants {
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
+		frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	}
+	
+	private void networkSetup() throws NumberFormatException, Exception {
+		int port = Integer.parseInt(Config.getParam("port"));
+		String broadcastingIp = Config.getParam("broadcastingIp");
+		ServerService serverService = new ServerService();
+		StartUpCommand cmd = new StartUpCommand(broadcastingIp, port, InetAddress.getLocalHost().getHostAddress());
+		serverService.send(cmd);
+		
+		ClientService clientService = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("serverPort")));
+		clientService.start();
 	}
 
 	private WebPanel createPanel() {

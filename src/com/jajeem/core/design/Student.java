@@ -11,10 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import org.apache.log4j.PropertyConfigurator;
+
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
+import com.jajeem.command.service.ClientService;
+import com.jajeem.util.Config;
 
 public class Student {
 
@@ -38,16 +42,23 @@ public class Student {
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	public Student() {
+	public Student() throws NumberFormatException, Exception {
 		try {
 			// Setting up WebLookAndFeel style
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+			
+			new Config();
+			PropertyConfigurator.configure("conf/log4j.conf");
+			
 		} catch (Throwable e) {
 			// Something went wrong
 		}
 		
 		initialize();
+		networkSetup();
 	}
 
 	/**
@@ -70,6 +81,11 @@ public class Student {
 		frmJajeemProject.getContentPane().add(panel);
 		
 		frmJajeemProject.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private void networkSetup() throws NumberFormatException, Exception {
+		ClientService clientService = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+		clientService.start();
 	}
 
 	private WebPanel createPanel() {

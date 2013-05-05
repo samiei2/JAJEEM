@@ -13,7 +13,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.command.handler.*;
 import com.jajeem.command.model.*;
-import com.jajeem.util.Config;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -26,13 +25,13 @@ public class ClientService implements IConnectorSevice, Runnable {
 	
 	static Logger logger = Logger.getLogger("ServerService.class");
 
-	public ClientService(String group) throws NumberFormatException, Exception {
+	public ClientService(String group, int port) throws NumberFormatException, Exception {
 
 		stopped = false;
 		
 		PropertyConfigurator.configure("conf/log4j.conf");
 				
-		this.port = Integer.parseInt(Config.getParam("port"));
+		this.port = port;
 		this.group = InetAddress.getByName(group);
 
 		/* setup the multicast control channel */
@@ -112,10 +111,13 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof StartViewerCommand) {
 					StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
 					startViewerHandler.run(cmd);
+				} else if (cmd instanceof StartUpCommand) {
+					StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
+					startUpHandler.run(cmd);
 				}
 				
 
-			} catch (ClassNotFoundException ex) {
+			} catch (Exception ex) {
 				System.err.println("Unknown message:" + ex.toString());
 			}
 

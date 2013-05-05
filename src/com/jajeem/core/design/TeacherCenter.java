@@ -15,17 +15,17 @@ public class TeacherCenter {
 	public static WebPanel createPanel(WebPanel panel) {
         desktopPane.setOpaque ( false );
         panel.add(desktopPane);
-        createFrame(desktopPane);
+        
 		return panel;
 	}
 	
-	public static WebInternalFrame createFrame(final WebDesktopPane desktopPane) {
+	public static WebInternalFrame createFrame(final WebDesktopPane desktopPane, String host) {
 		final WebInternalFrame internalFrame = new WebInternalFrame(
-				"Mohammad", false, false, false, true);
+				host, false, false, false, true);
 		
 		internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
 
-		jrdesktop.Config con = new jrdesktop.Config(false, "", "192.168.0.15", 1099, "admin", "admin", false, false);
+		jrdesktop.Config con = new jrdesktop.Config(false, "", host, 1099, "admin", "admin", false, false);
 		Viewer vnc = new Viewer(con);
  		vnc.Start(internalFrame);
 
@@ -33,7 +33,9 @@ public class TeacherCenter {
 		internalFrame.setVisible(true);
 		desktopPane.add(internalFrame);
 
-		internalFrame.setBounds(25 + 100 + 50, 50, 200, 200);
+		internalFrame.setBounds(0 + (desktopPane.getComponentCount() *200), 0, 200, 200);
+		internalFrame.validate();
+		desktopPane.validate();
 		
 		return internalFrame;
 	}
