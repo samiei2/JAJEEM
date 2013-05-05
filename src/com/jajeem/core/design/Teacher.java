@@ -76,7 +76,7 @@ public class Teacher implements SwingConstants {
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
-		frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	}
 	
 	private void networkSetup() throws NumberFormatException, Exception {
