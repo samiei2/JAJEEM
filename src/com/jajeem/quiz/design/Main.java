@@ -79,7 +79,7 @@ public class Main extends JFrame {
                 setCurrentQuiz(quizList.get(0));
                 
                 getCurrentQuiz().addQuestion(new Question());
-                getTablemodel().addRow(new Object[]{1,"MultiChoice(Single)",0,""});
+                getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
                 ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
 				m_modelSelection.setSelectionInterval(0,0);
 			}
@@ -171,6 +171,12 @@ public class Main extends JFrame {
 		wbtnResponse.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		WebButton wbtnOpen = new WebButton();
+		wbtnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				OpenDialog open = new OpenDialog();
+				currentQuiz = open.getValue();
+			}
+		});
 		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnOpen.setVerticalAlignment(SwingConstants.TOP);
 		wbtnOpen.setText("Open");
@@ -282,5 +288,10 @@ public class Main extends JFrame {
 
 	public void setCurrentQuestion(Question currentQuestion) {
 		this.currentQuestion = currentQuestion;
+	}
+
+	public int getInstructorId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
