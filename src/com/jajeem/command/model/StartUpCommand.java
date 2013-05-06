@@ -1,8 +1,11 @@
 package com.jajeem.command.model;
 
-@SuppressWarnings("serial")
 public class StartUpCommand extends Command {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2287770406725442741L;
 	private String sender;
 	
 	public StartUpCommand(String host, int port, String sender) {
