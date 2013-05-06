@@ -11,6 +11,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import com.alee.laf.desktoppane.WebInternalFrame;
+import com.alee.laf.panel.WebPanel;
+
 import jrdesktop.Commons;
 import jrdesktop.Config;
 import jrdesktop.HostProperties;
@@ -55,11 +58,12 @@ public class Viewer extends Thread {
         return connected;
     }
     
-    public void Start() { 
+    public void Start(WebInternalFrame panel) { 
         connect();
         if (connected) { 
-            recorder = new Recorder(this, client.clientConfig);            
-            recorder.viewerGUI.Start();
+            recorder = new Recorder(this, client.clientConfig);
+            recorder.screenPlayer.thumb = true;
+            recorder.viewerGUI.Start(panel);
         }        
         else Stop();
     }

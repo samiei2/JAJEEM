@@ -42,7 +42,7 @@ public class Recorder extends Thread {
         screenPlayer = new ScreenPlayer(this);
         eventsListener = new EventsListener(this);
         viewerGUI = new ViewerGUI(this);
-        viewerGUI.Start();
+//        viewerGUI.Start();
     }
     
     public Recorder(Viewer viewer, Config config) {

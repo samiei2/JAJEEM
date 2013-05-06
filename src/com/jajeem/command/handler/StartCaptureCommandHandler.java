@@ -9,8 +9,11 @@ public class StartCaptureCommandHandler implements ICommandHandler {
 	@Override
 	public void run(Command cmd) {
 		
-		VNCCaptureService vnc = new VNCCaptureService();
-		vnc.startServer();
+		if (!jrdesktop.server.Server.isRunning()) {
+			VNCCaptureService vnc = new VNCCaptureService();
+			vnc.startServer();
+		}
+		
 	}
 
 }

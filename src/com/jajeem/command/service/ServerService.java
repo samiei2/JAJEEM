@@ -38,7 +38,6 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 			
 		stopped = false;
 				
-		this.port = Integer.parseInt(Config.getParam("port"));
 		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
 		this.interval = Integer.parseInt(Config.getParam("interval"));;
 
@@ -54,7 +53,6 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 			
 		stopped = false;
 		
-		this.port = Integer.parseInt(Config.getParam("port"));
 		this.group = InetAddress.getByName(group);
 		this.host = group;
 		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
@@ -90,7 +88,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		}
 		b = constructMessage(cmd);
 		
-		DatagramPacket packet = new DatagramPacket(b, b.length, group, port);
+		DatagramPacket packet = new DatagramPacket(b, b.length, group, cmd.getPort());
 		
 		try {
 			socket.send(packet);
