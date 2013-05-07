@@ -32,6 +32,7 @@ public class Panel_Bottom_1 extends WebPanel {
 	private WebCheckBox webCheckBox;
 	private QuestionDesignPanel questionDesignPanel;
 	private WebTextField webTextField_2;
+	private WebCheckBox webCheckBox_1;
 	/**
 	 * Create the panel.
 	 * @param main 
@@ -175,13 +176,13 @@ public class Panel_Bottom_1 extends WebPanel {
                 	obj = new Object[]{
                 		Integer.parseInt(String.valueOf(model.getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,
                         "Single Choice",
-                        0,
+                        "",
                         ""};
                 else
                 	obj = new Object[]{
                 		1,
                         "Single Choice",
-                        0,
+                        "",
                         ""};
 				model.addRow(obj);
                 getParentPanel().getCurrentQuiz().addQuestion(new Question());
@@ -303,7 +304,7 @@ public class Panel_Bottom_1 extends WebPanel {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-					if(getQuestionDesignPanel().getWebCheckBox().isSelected() && parentPanel.getCurrentQuiz().getQuestionList().size()!=0){
+					if(webCheckBox.isSelected() && parentPanel.getCurrentQuiz().getQuestionList().size()!=0){
 		                int point = parentPanel.getCurrentQuiz().getPoints()/parentPanel.getCurrentQuiz().getQuestionList().size();
 						for (int i=0;i<parentPanel.getCurrentQuiz().getQuestionList().size();i++) {
 							parentPanel.getCurrentQuiz().getQuestionList().get(i).setPoint(point);
@@ -327,7 +328,7 @@ public class Panel_Bottom_1 extends WebPanel {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-					if(getQuestionDesignPanel().getWebCheckBox().isSelected() && parentPanel.getCurrentQuiz().getQuestionList().size()!=0){
+					if(webCheckBox.isSelected() && parentPanel.getCurrentQuiz().getQuestionList().size()!=0){
 		                int point = parentPanel.getCurrentQuiz().getPoints()/parentPanel.getCurrentQuiz().getQuestionList().size();
 						for (int i=0;i<parentPanel.getCurrentQuiz().getQuestionList().size();i++) {
 							parentPanel.getCurrentQuiz().getQuestionList().get(i).setPoint(point);
@@ -351,6 +352,7 @@ public class Panel_Bottom_1 extends WebPanel {
 		});
 		
 		webCheckBox = new WebCheckBox();
+		webCheckBox.setSelected(true);
 		webCheckBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				getQuestionDesignPanel().getWebTextField_6().setEnabled(!webCheckBox.isSelected());
@@ -358,7 +360,7 @@ public class Panel_Bottom_1 extends WebPanel {
 		});
 		webCheckBox.setText("Auto");
 		
-		WebCheckBox webCheckBox_1 = new WebCheckBox();
+		webCheckBox_1 = new WebCheckBox();
 		webCheckBox_1.setText("Shuffle");
 		
 		WebLabel webLabel_2 = new WebLabel();

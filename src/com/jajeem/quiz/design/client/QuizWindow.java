@@ -30,6 +30,7 @@ import java.awt.Component;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.radiobutton.WebRadioButton;
 import com.alee.laf.button.WebButton;
+import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizResponse;
@@ -116,7 +117,7 @@ public class QuizWindow extends WebFrame {
 				
 				
 				for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
-					model.addElement("Question"+i);
+					model.addElement("Question "+i);
 				}
 				
 				webList.setSelectedIndex(0);
@@ -141,7 +142,8 @@ public class QuizWindow extends WebFrame {
 				else{
 					webTextField_1.setText("");
 				}
-				webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
+				
+				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,7 +162,7 @@ public class QuizWindow extends WebFrame {
 		
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		
-		WebPanel mainPanel = new WebPanel(new CardLayout());
+		final WebPanel mainPanel = new WebPanel(new CardLayout());
 		final WebPanel webPanel_1 = new WebPanel();
 		WebPanel webPanel_2 = new WebPanel();
 		WebPanel webPanel_3 = new WebPanel();
@@ -434,7 +436,8 @@ public class QuizWindow extends WebFrame {
 		final WebTextArea webTextArea = new WebTextArea();
 		webScrollPane_1.setViewportView(webTextArea);
 		
-		webList = new WebList();
+		model = new DefaultListModel();
+		webList = new WebList(model);
 		ListSelectionModel listSelectionModel = webList.getSelectionModel();
 		listSelectionModel.addListSelectionListener(new ListSelectionListener() {
 			
@@ -459,7 +462,13 @@ public class QuizWindow extends WebFrame {
 						
 						@Override
 						public void run() {
-							new QuizEvent().fireResponseEvent(new QuizResponse(currentQuestion));
+							QuizResponse resp = new QuizResponse(currentQuestion);
+							resp.setStudent(getStudent());
+							new QuizEvent().fireResponseEvent(resp);
+						}
+
+						private Student getStudent() {
+							return new Student();//TODO correct this code
 						}
 					}).start();
 				}
@@ -469,8 +478,8 @@ public class QuizWindow extends WebFrame {
 				webTextArea.setText(currentQuestion.getTitle());
 				
 				if(currentQuestion.getType() == 0){
-					CardLayout cl = (CardLayout)(webPanel_1.getLayout());
-			        cl.show(webPanel_1, "0");
+					CardLayout cl = (CardLayout)(mainPanel.getLayout());
+			        cl.show(mainPanel, "0");
 			        //lblInputAnswer.setText("Select an answer");
 			        webTextField_2.setText(currentQuestion.getAnswer1());
 			        webTextField_3.setText(currentQuestion.getAnswer2());
@@ -600,6 +609,7 @@ public class QuizWindow extends WebFrame {
 		);
 		webPanel.setLayout(gl_webPanel);
 		contentPane.setLayout(gl_contentPane);
+		setVisible(true);
 		
 		quizEvent = new QuizEvent();
 		quizEvent.addEventListener(new QuizEventListener() {
@@ -641,4 +651,8 @@ public class QuizWindow extends WebFrame {
 	          dispose();
 	    }
 	  }
+
+	public void setQuiz(Quiz currentQuiz2) {
+		currentQuiz = currentQuiz2;
+	}
 }

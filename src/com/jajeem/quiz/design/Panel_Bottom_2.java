@@ -1,38 +1,93 @@
 package com.jajeem.quiz.design;
 
-import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.combobox.WebComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import com.alee.laf.text.WebTextField;
-import com.alee.laf.scroll.WebScrollPane;
-import java.awt.Component;
-import com.alee.laf.text.WebTextArea;
-import com.alee.laf.panel.WebPanel;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
-import javax.swing.JTable;
-import com.alee.laf.table.WebTable;
 import javax.swing.table.DefaultTableModel;
+
+import com.alee.laf.combobox.WebComboBox;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
+import com.alee.laf.text.WebTextArea;
+import com.alee.laf.text.WebTextField;
+import com.jajeem.core.model.Student;
+import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizResponse;
+import com.jajeem.events.QuizStop;
+import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
 
 public class Panel_Bottom_2 extends WebPanel {
 
+	private Question currentQuestion;
+	private Quiz currentQuiz;
+	private QuizEvent responseRecieved;
+	private ArrayList<ArrayList<QuizResponse>> quizResponse;
+	private WebTextField webTextField;
+	private WebTextArea webTextArea;
+	private WebTable webTable;
+	private WebComboBox webComboBox;
+	private WebTextField webTextField_1;
+	private WebTextField webTextField_2;
+	private Timer timer; // Updates the count every second
+	private long remaining; // How many milliseconds remain in the countdown.
+	private long lastUpdate; // When count was last updated
+	
 	/**
 	 * Create the panel.
 	 */
 	public Panel_Bottom_2() {
-		
+		quizResponse = new ArrayList<>();
 		WebLabel wblblQuestionNumber = new WebLabel();
 		wblblQuestionNumber.setText("Question Number");
 		
-		WebComboBox webComboBox = new WebComboBox();
+		webComboBox = new WebComboBox();
+		webComboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				currentQuestion = currentQuiz.getQuestionList().get(webComboBox.getSelectedIndex());
+				webTextArea.setText(currentQuestion.getTitle());
+				if(currentQuestion.getType() == 0){
+					webTextField.setText("Single Choice");
+				} 
+				else if(currentQuestion.getType() == 1){
+					webTextField.setText("Multiple Choice");
+				}
+				else {
+					webTextField.setText("Essay");
+				}
+				
+				DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+				for (int i = 0; i < webTable.getRowCount(); i++) {
+					model.removeRow(i);
+				}
+				
+				for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
+					AddResponse(quizResponse.get(webComboBox.getSelectedIndex()).get(i));
+				}
+			}
+		});
 		
 		WebLabel wblblQuestionType = new WebLabel();
 		wblblQuestionType.setText("Question Type");
 		
-		WebTextField webTextField = new WebTextField();
+		webTextField = new WebTextField();
 		webTextField.setEnabled(false);
 		webTextField.setEditable(false);
 		
@@ -168,7 +223,7 @@ public class Panel_Bottom_2 extends WebPanel {
 					.addContainerGap())
 		);
 		
-		WebTable webTable = new WebTable();
+		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -185,14 +240,14 @@ public class Panel_Bottom_2 extends WebPanel {
 		WebLabel wblblDirection = new WebLabel();
 		wblblDirection.setText("Direction ");
 		
-		WebTextField webTextField_1 = new WebTextField();
+		webTextField_1 = new WebTextField();
 		webTextField_1.setEditable(false);
 		webTextField_1.setEnabled(false);
 		
 		WebLabel wblblTime = new WebLabel();
 		wblblTime.setText("Time Left");
 		
-		WebTextField webTextField_2 = new WebTextField();
+		webTextField_2 = new WebTextField();
 		webTextField_2.setEditable(false);
 		webTextField_2.setEnabled(false);
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
@@ -229,12 +284,142 @@ public class Panel_Bottom_2 extends WebPanel {
 		);
 		webPanel.setLayout(gl_webPanel);
 		
-		WebTextArea webTextArea = new WebTextArea();
+		webTextArea = new WebTextArea();
 		webTextArea.setEnabled(false);
 		webTextArea.setEditable(false);
 		webScrollPane.setViewportView(webTextArea);
 		setLayout(groupLayout);
 		
+		responseRecieved = new QuizEvent();
+        responseRecieved.addEventListener(new QuizEventListener() {
+			
+			@Override
+			public void questionAnswered(QuizResponse e) {
+				Question temp = (Question) e.getSource();
+				Student student = e.getStudent();
+				if(currentQuestion != null && temp != null && student != null){
+					if(currentQuestion.getId() == temp.getId()){
+						AddResponse(e);
+					}
+					else{
+						quizResponse.get(webComboBox.getSelectedIndex()).add(e);
+					}
+				}
+			}
 
+			@Override
+			public void quizStoped(QuizStop e) {
+				
+			}
+		});
+	}
+	
+	private void AddResponse(QuizResponse e) {
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+		Question temp = (Question) e.getSource();
+		Student student = e.getStudent();
+		if(currentQuestion.getType() == 0 || currentQuestion.getType() == 1){
+			if(webTable.getRowCount() != 0){
+				model.addRow(new Object[]{
+						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
+						student.getId(),
+						student.getFirstName() + student.getLastName(),
+						"",
+						currentQuestion.getCorrectAnswer(),
+						temp.getStudentAnswer()
+				});
+			}
+			else{
+				model.addRow(new Object[]{
+						1,
+						student.getId(),
+						student.getFirstName() + student.getLastName(),
+						"",
+						currentQuestion.getCorrectAnswer(),
+						temp.getStudentTextAnswer()
+				});
+			}
+		}
+		else{
+			if(webTable.getRowCount() != 0){
+				model.addRow(new Object[]{
+						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
+						student.getId(),
+						student.getFirstName() + student.getLastName(),
+						"",
+						currentQuestion.getCorrectAnswer(),
+						temp.getStudentAnswer()
+				});
+			}
+			else{
+				model.addRow(new Object[]{
+						1,
+						student.getId(),
+						student.getFirstName() + student.getLastName(),
+						"",
+						currentQuestion.getCorrectAnswer(),
+						temp.getStudentTextAnswer()
+				});
+			}
+		}
+	}
+	
+	public void LoadQuiz(Quiz quiz){
+		currentQuiz = quiz;
+		if(currentQuiz != null){
+			webTextField_1.setText(currentQuiz.getTitle());
+			webTextField_2.setText(String.valueOf(currentQuiz.getTime()));
+			
+			/////Setting the timer
+			ActionListener taskPerformer = new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					updateDisplay();
+				}
+
+				private void updateDisplay() {
+					NumberFormat format = NumberFormat.getInstance();
+					  
+				    long now = System.currentTimeMillis(); // current time in ms
+				    long elapsed = now - lastUpdate; // ms elapsed since last update
+				    remaining -= elapsed; // adjust remaining time
+				    lastUpdate = now; // remember this update time
+			      // Convert remaining milliseconds to mm:ss format and display
+				    if (remaining < 0)
+				        remaining = 0;
+				    int minutes = (int) (remaining / 60000);
+				    int seconds = (int) ((remaining % 60000) / 1000);
+				    webTextField_2.setText(format.format(minutes) + ":" + format.format(seconds));
+
+				    // If we've completed the countdown beep and display new page
+				    if (remaining == 0) {
+				    // Stop updating now.
+				        timer.stop();
+				        //TODO broadCast QuizStop
+				    }
+				}
+			};
+						  
+						
+			if(currentQuiz.getTime() != 0){
+				webTextField_2.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
+				remaining = currentQuiz.getTime()*60000;
+				timer = new Timer(1000,taskPerformer);
+				timer.setInitialDelay(0);
+				lastUpdate = System.currentTimeMillis();
+				timer.start();
+			}
+			else{
+				webTextField_2.setText("");
+			}
+			//webTextField_2.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
+			
+			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
+				quizResponse.add(new ArrayList<QuizResponse>());
+				webComboBox.addItem("Question " + i);
+			}
+			
+			webComboBox.setSelectedIndex(0);
+			
+		}
 	}
 }

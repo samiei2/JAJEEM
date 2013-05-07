@@ -60,5 +60,5 @@ public class Response {
 	}
 	public void setAnswer5(String answer5) {
 		this.answer5 = answer5;
-	}	
+	}
 }

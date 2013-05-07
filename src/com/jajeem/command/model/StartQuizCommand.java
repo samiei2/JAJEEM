@@ -7,4 +7,8 @@ public class StartQuizCommand extends Command {
 		
 	}
 
+	public StartQuizCommand() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

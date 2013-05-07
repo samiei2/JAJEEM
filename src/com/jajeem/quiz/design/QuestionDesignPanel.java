@@ -110,7 +110,12 @@ public class QuestionDesignPanel extends WebPanel {
 			public void removeUpdate(DocumentEvent e) {
 				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
 					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextField_6.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 2);
-					parentPanel.getParentPanel().getCurrentQuestion().setTitle(webTextField_6.getText());
+					try{
+						parentPanel.getParentPanel().getCurrentQuestion().setPoint(Integer.parseInt(webTextField_6.getText()));
+					}
+					catch(Exception ex){
+						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
+					}
 				}
 			}
 			
@@ -118,7 +123,12 @@ public class QuestionDesignPanel extends WebPanel {
 			public void insertUpdate(DocumentEvent e) {
 				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
 					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextField_6.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 2);
-					parentPanel.getParentPanel().getCurrentQuestion().setTitle(webTextField_6.getText());
+					try{
+						parentPanel.getParentPanel().getCurrentQuestion().setPoint(Integer.parseInt(webTextField_6.getText()));
+					}
+					catch(Exception ex){
+						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
+					}
 				}
 			}
 			
@@ -607,7 +617,7 @@ public class QuestionDesignPanel extends WebPanel {
 	}
 	
 	public WebTextField getWebTextField_6() {
-		return webTextField_4;
+		return webTextField_6;
 	}
 
 

@@ -42,6 +42,7 @@ public class Main extends JFrame {
 	private Panel_Bottom_1 panel_bottom_1;
 	private Panel_Bottom_2 panel_bottom_2;
 	private WebPanel panel_bottom_3;
+	private WebButton wbtnStart;
 
 	/**
 	 * Launch the application.
@@ -192,6 +193,16 @@ public class Main extends JFrame {
 		wbtnSave.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/document-save-as.png")));
 		
 		final WebButton wbtnContent = new WebButton();
+		wbtnContent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(cards.getLayout());
+		        cl.show(cards, "Page 1");
+				wbtnContent.setEnabled(false);
+				wbtnStart.setText("Start");
+				wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+				//TODO BroadCast Stop Quiz
+			}
+		});
 		wbtnContent.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/content.png")));
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setVerticalAlignment(SwingConstants.TOP);
@@ -199,15 +210,18 @@ public class Main extends JFrame {
 		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnContent.setEnabled(false);
 		
-		final WebButton wbtnStart = new WebButton();
+		wbtnStart = new WebButton();
 		wbtnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(wbtnStart.getText() == "Start"){
 					wbtnStart.setText("Stop");
+					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
-					//StudentQuizWindow qs = new StudentQuizWindow(null);//TODO change this line
+			        panel_bottom_2.LoadQuiz(currentQuiz);
+					com.jajeem.quiz.design.client.QuizWindow qs = new com.jajeem.quiz.design.client.QuizWindow();//TODO change this line
+					qs.setQuiz(currentQuiz);
 				}
 				else{
 					wbtnStart.setText("Start");
