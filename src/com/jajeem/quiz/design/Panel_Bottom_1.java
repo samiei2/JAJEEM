@@ -247,13 +247,13 @@ public class Panel_Bottom_1 extends WebPanel {
 					parentPanel.getCurrentQuiz().addQuestion(toCopy);
 					String type = "";
 					if(toCopy.getType()==0){
-						type = "MultiChoice(Single)";
+						type = "Single Choice";
 					}
 					else if(toCopy.getType()==1){
-						type = "MultiChoice";
+						type = "Multiple Choice";
 					}
 					else if(toCopy.getType()==2){
-						type = "Key in answer";
+						type = "Essay";
 					}
 					parentPanel.getTablemodel().addRow(new Object[]{
 						Integer.parseInt(String.valueOf(parentPanel.getTablemodel().getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,

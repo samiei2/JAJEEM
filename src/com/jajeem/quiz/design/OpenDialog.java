@@ -135,12 +135,7 @@ public class OpenDialog extends JDialog {
 		webPanel.setLayout(gl_webPanel);
 		
 	}
-
-	public Quiz getValue() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public Quiz getValue() {
 		// TODO Auto-generated method stub
 		return null;
