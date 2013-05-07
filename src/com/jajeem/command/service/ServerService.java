@@ -44,6 +44,11 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
 		timer = new Timer();
+		
+		//TODO erase these codes
+		ClientService clientService = new ClientService(Config.getParam("broadcastingIp"), 9092);
+		clientService.start();
+		///////////////////////
 	}
 	
 	public ServerService(String group, int ttl, int interval,

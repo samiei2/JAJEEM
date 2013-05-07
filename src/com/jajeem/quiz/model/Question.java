@@ -1,6 +1,8 @@
 package com.jajeem.quiz.model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 	
 	//properties
 	private int id;

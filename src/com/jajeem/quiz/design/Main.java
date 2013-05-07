@@ -21,9 +21,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
+import com.jajeem.command.handler.StartQuizCommandHandler;
+import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.service.ServerService;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.service.QuizService;
+import com.jajeem.util.Config;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -220,8 +224,22 @@ public class Main extends JFrame {
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
 			        panel_bottom_2.LoadQuiz(currentQuiz);
-					com.jajeem.quiz.design.client.QuizWindow qs = new com.jajeem.quiz.design.client.QuizWindow();//TODO change this line
-					qs.setQuiz(currentQuiz);
+			        //TODO Code must be changed
+			        try {
+			        	new Config();
+						ServerService serv = new ServerService();
+						StartQuizCommand cmd = new StartQuizCommand("192.168.0.15", 9090);
+						cmd.setQuiz(currentQuiz);
+						serv.send(cmd);
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
 				}
 				else{
 					wbtnStart.setText("Start");

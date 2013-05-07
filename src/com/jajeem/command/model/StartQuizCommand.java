@@ -1,14 +1,22 @@
 package com.jajeem.command.model;
 
-public class StartQuizCommand extends Command {
+import com.jajeem.quiz.model.Quiz;
 
-	public StartQuizCommand(String host, int port2, String type) {
-		super(host, port2, type);
+public class StartQuizCommand extends Command {
+	private Quiz quiz;
+	public StartQuizCommand(String host, int port2) {
+		super(host, port2);
 		
 	}
 
-	public StartQuizCommand() {
-		// TODO Auto-generated constructor stub
+	public void setQuiz(Quiz currentQuiz) {
+		quiz = currentQuiz;
 	}
+	
+	public Quiz getQuiz(){
+		return quiz;
+	}
+	
+	
 
 }

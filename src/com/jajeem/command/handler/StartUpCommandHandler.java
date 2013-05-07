@@ -30,9 +30,6 @@ public class StartUpCommandHandler implements ICommandHandler {
 		} else if(Integer.parseInt(Config.getParam("server")) == 1 && cmd.getPort() == Integer.parseInt(Config.getParam("serverPort"))){
 			TeacherCenter.createFrame(TeacherCenter.desktopPane, ((StartUpCommand) cmd).getSender());
 		}
-		
-		
-//		Student.main(null);		
 	}
 
 }

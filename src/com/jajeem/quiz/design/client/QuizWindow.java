@@ -30,6 +30,9 @@ import java.awt.Component;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.radiobutton.WebRadioButton;
 import com.alee.laf.button.WebButton;
+import com.jajeem.command.model.SendQuizResponseCommand;
+import com.jajeem.command.service.ClientService;
+import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
@@ -93,8 +96,8 @@ public class QuizWindow extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuizWindow frame = new QuizWindow();
-					frame.setVisible(true);
+//					QuizWindow frame = new QuizWindow();
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -105,7 +108,8 @@ public class QuizWindow extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizWindow() {
+	public QuizWindow(Quiz quiz) {
+		currentQuiz = quiz;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -463,8 +467,20 @@ public class QuizWindow extends WebFrame {
 						@Override
 						public void run() {
 							QuizResponse resp = new QuizResponse(currentQuestion);
+							resp.setQuestion(currentQuestion);
 							resp.setStudent(getStudent());
-							new QuizEvent().fireResponseEvent(resp);
+							SendQuizResponseCommand cmd = new SendQuizResponseCommand("192.168.0.234", 9092);
+							cmd.setEvent(resp);
+							try {
+								ServerService service = new ServerService();
+								service.send(cmd);
+							} catch (NumberFormatException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 
 						private Student getStudent() {

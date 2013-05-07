@@ -1,10 +1,21 @@
 package com.jajeem.command.model;
 
-public class SendQuizResponseCommand extends Command {
+import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizResponse;
 
-	public SendQuizResponseCommand(String host, int port2, String type) {
-		super(host, port2, type);
+public class SendQuizResponseCommand extends Command {
+	QuizResponse event;
+	public SendQuizResponseCommand(String host, int port2) {
+		super(host, port2);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setEvent(QuizResponse evt){
+		event = evt;
+	}
+
+	public QuizResponse getEvent() {
+		return event;
 	}
 
 }

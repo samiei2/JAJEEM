@@ -295,7 +295,7 @@ public class Panel_Bottom_2 extends WebPanel {
 			
 			@Override
 			public void questionAnswered(QuizResponse e) {
-				Question temp = (Question) e.getSource();
+				Question temp = e.getQuestion();
 				Student student = e.getStudent();
 				if(currentQuestion != null && temp != null && student != null){
 					if(currentQuestion.getId() == temp.getId()){
@@ -316,7 +316,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	
 	private void AddResponse(QuizResponse e) {
 		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
-		Question temp = (Question) e.getSource();
+		Question temp = e.getQuestion();
 		Student student = e.getStudent();
 		if(currentQuestion.getType() == 0 || currentQuestion.getType() == 1){
 			if(webTable.getRowCount() != 0){

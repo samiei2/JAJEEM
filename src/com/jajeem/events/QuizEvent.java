@@ -1,5 +1,7 @@
 package com.jajeem.events;
 
+import java.io.Serializable;
+
 import javax.swing.event.EventListenerList;
 
 /**
@@ -9,7 +11,7 @@ import javax.swing.event.EventListenerList;
  * Time: 3:03 PM
  * To change this template use File | Settings | File Templates.
  */
-public class QuizEvent {
+public class QuizEvent implements Serializable{
     protected static EventListenerList listenerList = new EventListenerList();
 
     public void addEventListener(QuizEventListener listener) {

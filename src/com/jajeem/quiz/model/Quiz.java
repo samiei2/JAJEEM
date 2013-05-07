@@ -1,8 +1,9 @@
 package com.jajeem.quiz.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Quiz {
+public class Quiz implements Serializable{
 	
 	//properties
 	private int id;
