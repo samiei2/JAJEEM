@@ -2,9 +2,32 @@ package com.jajeem.command.model;
 
 public class WhiteBlackAppCommand extends Command {
 
-	public WhiteBlackAppCommand(String host, int port2, String type) {
-		super(host, port2, type);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5292913947835977475L;
+	private String appName;
+	private boolean black;
+
+	public WhiteBlackAppCommand(String host, int port2, String appName, boolean black) {
+		super(host, port2);
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+	public boolean isBlack() {
+		return black;
+	}
+
+	public void setBlack(boolean black) {
+		this.black = black;
 	}
 
 }

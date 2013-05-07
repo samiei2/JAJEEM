@@ -23,7 +23,8 @@ public class ConnectionManager implements IConnectionManager {
     public String username;
     public String passwd;
     
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void StartConnectionPool() throws SQLException, ClassNotFoundException{
         Class.forName(connectDriver);
         
