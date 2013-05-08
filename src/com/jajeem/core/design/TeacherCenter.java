@@ -1,8 +1,5 @@
 package com.jajeem.core.design;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.event.InternalFrameEvent;
@@ -29,6 +26,8 @@ public class TeacherCenter {
 			final WebDesktopPane desktopPane, String host) {
 		final WebInternalFrame internalFrame = new WebInternalFrame(host,
 				false, false, false, true);
+		
+		internalFrame.putClientProperty("ip", host);
 
 		internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
 
@@ -65,8 +64,6 @@ public class TeacherCenter {
 			
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -83,7 +80,6 @@ public class TeacherCenter {
 			
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 		});

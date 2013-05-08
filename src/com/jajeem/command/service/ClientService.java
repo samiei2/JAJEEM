@@ -36,7 +36,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		/* setup the multicast control channel */
 		socket = new MulticastSocket(port);
-		System.out.println("Port: " + socket.getLocalPort());
+		System.out.println("Client listening on port: " + socket.getLocalPort());
 
 		// socket.connect(this.group,port);
 		socket.joinGroup(this.group);
@@ -125,6 +125,9 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof WhiteBlackAppCommand) {
 					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
 					setWhiteBlackAppCommandHandler.run(cmd);
+				} else if (cmd instanceof BlackoutCommand) {
+					SetBlackoutCommandHandler setBlackoutCommandHandler = new SetBlackoutCommandHandler();
+					setBlackoutCommandHandler.run(cmd);
 				}
 				
 
