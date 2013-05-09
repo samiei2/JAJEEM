@@ -2,8 +2,6 @@ package com.jajeem.core.design;
 
 
 import javax.swing.ImageIcon;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 
 import jrdesktop.viewer.Viewer;
 
@@ -42,49 +40,6 @@ public class TeacherCenter {
 		internalFrame.setBounds(0 + (desktopPane.getComponentCount() * 200), 0,
 				200, 200);
 		
-		internalFrame.addInternalFrameListener(new InternalFrameListener() {
-			
-			@Override
-			public void internalFrameOpened(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void internalFrameIconified(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void internalFrameDeiconified(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-			}
-			
-			@Override
-			public void internalFrameClosing(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void internalFrameClosed(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void internalFrameActivated(InternalFrameEvent arg0) {
-				
-			}
-		});
-
-
 		return internalFrame;
 	}
 }
