@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class BaseDAO {
 	
-	private static H2Connection h2Connection;
+	private static H2Connection h2Connection = new H2Connection();//TODO remove new h2..
 
 	public static H2Connection getH2Connection() {
 		return h2Connection;

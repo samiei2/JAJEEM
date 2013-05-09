@@ -2,42 +2,38 @@ package com.jajeem.quiz.dao.h2;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.util.BaseDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.quiz.dao.IQuizDAO;
+import com.jajeem.quiz.dao.ICategoryDAO;
+import com.jajeem.quiz.dao.IQuestionDAO;
+import com.jajeem.quiz.model.Category;
 import com.jajeem.quiz.model.Question;
-import com.jajeem.quiz.model.Quiz;
 
-public class QuizDAO implements IQuizDAO {
+public class CategoryDAO implements ICategoryDAO {
 
-	Logger logger = Logger.getLogger(QuizDAO.class);
+	Logger logger = Logger.getLogger(QuestionDAO.class);
 
-	public QuizDAO() {
+	public CategoryDAO() {
 		PropertyConfigurator.configure("conf/log4j.conf");
 	}
 
 	@Override
-	public Quiz create(Quiz quiz) throws SQLException {
+	public Category create(Category category) throws SQLException {
 
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
-		ps.setInt(1, quiz.getInstructorId());
-		ps.setString(2, quiz.getTitle());
-		ps.setString(3, quiz.getCategory());
-		ps.setString(4, quiz.getDescription());
-		ps.setInt(5, quiz.getPoints());
-		ps.setInt(6, quiz.getPointing());
-		ps.setInt(7, quiz.getTime());
-		ps.setInt(8, quiz.getShuffle());
+		ps = con.prepareStatement("INSERT INTO QuizCategory (id, name) "
+				+ " VALUES (?, ?);");
+		ps.setInt(1, category.getId());
+		ps.setString(2, category.getName());
 
 		try {
 			rs = ps.executeUpdate();
@@ -46,21 +42,21 @@ public class QuizDAO implements IQuizDAO {
 			ResultSet maxId = null;
 			maxId = ps.getGeneratedKeys();
 			if (maxId.next()) {
-				quiz.setId(maxId.getInt(1));
+				category.setId(maxId.getInt(1));
 			} else {
-				quiz.setId(0);
+				category.setId(0);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			quiz.setId(-1);
+			category.setId(-1);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
 
 				} else {
-					quiz.setId(-1);
+					category.setId(-1);
 				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
@@ -78,49 +74,32 @@ public class QuizDAO implements IQuizDAO {
 				new JajeemExcetionHandler(e);
 			}
 		}
-		
-		try{
-			QuestionDAO qdao = new QuestionDAO();
-			ArrayList<Question> list = quiz.getQuestionList();
-			for (int i = 0; i < list.size(); i++) {
-				qdao.create(list.get(i));
-			}
-		}catch(Exception e){
-			
-		}
 
-		return quiz;
+		return category;
 	}
 
-	@Override
-	public Quiz get(Quiz quiz) throws SQLException {
+	public Category get(Category category) throws SQLException {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM Quiz WHERE Quiz.id = ?;");
-		ps.setInt(1, quiz.getId());
+		ps = con.prepareStatement("SELECT * FROM QuizCategory WHERE Question.id = ?;");
+		ps.setInt(1, category.getId());
 
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				quiz.setInstructorId(rs.getInt("instructorId"));
-				quiz.setTitle(rs.getString("title"));
-				quiz.setCategory(rs.getString("category"));
-				quiz.setDescription(rs.getString("description"));
-				quiz.setPoints(rs.getInt("points"));
-				quiz.setPointing(rs.getInt("pointing"));
-				quiz.setTime(rs.getInt("time"));
-				quiz.setShuffle(rs.getByte("shuffle"));
+				category.setId(rs.getInt("id"));
+				category.setName(rs.getString("name"));
 
 			} else {
-				quiz.setId(0);
+				category.setId(0);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			quiz.setId(-1);
+			category.setId(-1);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -142,44 +121,28 @@ public class QuizDAO implements IQuizDAO {
 				new JajeemExcetionHandler(e);
 			}
 		}
-		
-		try {
-			QuestionDAO qdao = new QuestionDAO();
-			quiz.getQuestionList().addAll(qdao.list(quiz.getId()));
-			
-		} catch(Exception ex){
-			
-		}
 
-		return quiz;
+		return category;
 	}
 
 	@Override
-	public boolean update(Quiz quiz) throws SQLException {
+	public boolean update(Category category) throws SQLException {
 
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE Quiz SET instructorId = ?, title = ?, category = ?, description = ?, "
-				+ "points = ?, pointing = ?, time = ?, shuffle = ? WHERE id = ?");
+		ps = con.prepareStatement("UPDATE QuizCategory SET name = ? WHERE id = ?");
 
-		ps.setInt(1, quiz.getInstructorId());
-		ps.setString(2, quiz.getTitle());
-		ps.setString(3, quiz.getCategory());
-		ps.setString(4, quiz.getDescription());
-		ps.setInt(5, quiz.getPoints());
-		ps.setInt(6, quiz.getPointing());
-		ps.setInt(7, quiz.getTime());
-		ps.setInt(8, quiz.getShuffle());
-		ps.setInt(9, quiz.getId());
+		ps.setString(1, category.getName());
+		ps.setInt(2, category.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			quiz.setId(-1);
+			category.setId(-1);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -209,21 +172,21 @@ public class QuizDAO implements IQuizDAO {
 	}
 
 	@Override
-	public boolean delete(Quiz quiz) throws SQLException {
+	public boolean delete(Category category) throws SQLException {
 
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM Quiz WHERE Quiz.id = ?;");
-		ps.setInt(1, quiz.getId());
+		ps = con.prepareStatement("DELETE FROM QuizCategory WHERE Question.id = ?;");
+		ps.setInt(1, category.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			quiz.setId(-1);
+			category.setId(-1);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -253,33 +216,26 @@ public class QuizDAO implements IQuizDAO {
 	}
 
 	@Override
-	public ArrayList<Quiz> list() throws SQLException {
+	public ArrayList<Category> list() throws SQLException {
 
-		ArrayList<Quiz> allQuizs = new ArrayList<>();
+		ArrayList<Category> allQuestions = new ArrayList<>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM Quiz");
+		ps = con.prepareStatement("SELECT * FROM QuizCategory");
 
 		try {
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Quiz quiz = new Quiz();
+				Category category = new Category();
 
-				quiz.setId(rs.getInt("id"));
-				quiz.setInstructorId(rs.getInt("instructorId"));
-				quiz.setTitle(rs.getString("title"));
-				quiz.setCategory(rs.getString("category"));
-				quiz.setDescription(rs.getString("description"));
-				quiz.setPoints(rs.getInt("points"));
-				quiz.setPointing(rs.getInt("pointing"));
-				quiz.setTime(rs.getInt("time"));
-				quiz.setShuffle(rs.getByte("shuffle"));
+				category.setId(rs.getInt("id"));
+				category.setName(rs.getString("name"));
 
-				allQuizs.add(quiz);
+				allQuestions.add(category);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -304,19 +260,7 @@ public class QuizDAO implements IQuizDAO {
 				new JajeemExcetionHandler(e);
 			}
 		}
-		
-		try {
-			QuestionDAO qdao = new QuestionDAO();
-			for (int i = 0; i < allQuizs.size(); i++) {
-				Quiz q = allQuizs.get(i);
-				q.getQuestionList().addAll(qdao.list(q.getId()));
-			}
-		} catch(Exception ex){
-			
-		}
 
-		return allQuizs;
+		return allQuestions;
 	}
-
-
 }

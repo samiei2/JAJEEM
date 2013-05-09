@@ -12,6 +12,7 @@ import com.alee.laf.panel.WebPanel;
 import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.quiz.design.Main;
 import com.jajeem.util.Config;
 
 public class TeacherEast {
@@ -44,6 +45,15 @@ public class TeacherEast {
 		ImageIcon imgQuiz = new ImageIcon("icons/applications/quiz.png");
 		WebButton quizButton = new WebButton("Quiz", new ImageIcon(imgQuiz.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
 		panel.add(quizButton);
+		
+		quizButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Main quiz = new Main();
+				quiz.setVisible(true);
+			}
+		});
 		
 		ImageIcon imgSurvey = new ImageIcon("icons/applications/survey.png");
 		WebButton surveyButton = new WebButton("Survey", new ImageIcon(imgSurvey.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));

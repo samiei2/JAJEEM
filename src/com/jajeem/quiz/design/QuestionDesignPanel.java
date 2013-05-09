@@ -54,6 +54,7 @@ public class QuestionDesignPanel extends WebPanel {
 	private Panel_Bottom_1 parentPanel;
 	private WebPanel webPanelOptions;
 	private WebLabel wblblUrl;
+	private WebLabel wblblQuestion;
 
 
 	/**
@@ -61,8 +62,8 @@ public class QuestionDesignPanel extends WebPanel {
 	 */
 	public QuestionDesignPanel(Panel_Bottom_1 panel) {
 		this.parentPanel = panel;
-		WebLabel wblblQuestion = new WebLabel();
-		wblblQuestion.setText("Question ?");
+		setWblblQuestion(new WebLabel());
+		getWblblQuestion().setText("Question ?");
 		
 		WebLabel wblblQuestionType = new WebLabel();
 		wblblQuestionType.setText("Question Type");
@@ -154,7 +155,7 @@ public class QuestionDesignPanel extends WebPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(getWblblQuestion(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -185,7 +186,7 @@ public class QuestionDesignPanel extends WebPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(getWblblQuestion(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(22)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
@@ -623,5 +624,15 @@ public class QuestionDesignPanel extends WebPanel {
 
 	public void setWebTextField_6(WebTextField webTextField_6) {
 		this.webTextField_6 = webTextField_6;
+	}
+
+
+	public WebLabel getWblblQuestion() {
+		return wblblQuestion;
+	}
+
+
+	public void setWblblQuestion(WebLabel wblblQuestion) {
+		this.wblblQuestion = wblblQuestion;
 	}
 }
