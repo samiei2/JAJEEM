@@ -35,7 +35,10 @@ public class Teacher implements SwingConstants {
 			public void run() {
 				try {
 					Teacher window = new Teacher();
+//					window.frmJajeemProject.setUndecorated(true);
+//					window.frmJajeemProject.pack();
 					window.frmJajeemProject.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

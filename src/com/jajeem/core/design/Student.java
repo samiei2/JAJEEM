@@ -1,5 +1,6 @@
 package com.jajeem.core.design;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -33,6 +35,7 @@ public class Student {
 				try {
 					Student window = new Student();
 					window.frmJajeemProject.setVisible(true);
+					window.frmJajeemProject.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -89,23 +92,36 @@ public class Student {
 	}
 
 	private WebPanel createPanel() {
+		
+		new Config();
+		
 		WebPanel panel = new WebPanel();
 		panel.setUndecorated(false);
 		panel.setWebColored(false);
 
 		WebPanel trailingPanel = new WebPanel();
 		trailingPanel.setDrawSides(false, true, true, false);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		
+
 		GridLayout grid = new GridLayout(0, 1);
-		trailingPanel.setLayout(grid);
-		trailingPanel.add(new WebButton("Share"));
-		trailingPanel.add(new WebButton("Audio"));
-		trailingPanel.add(new WebButton("Intercom"));
-		trailingPanel.add(new WebButton("Chat"));
+		panel.setLayout(grid);
+
+		ImageIcon imgMonitor = new ImageIcon("icons/applications/monitor.png");
+		WebButton monitorButton = new WebButton("Monitor", new ImageIcon(imgMonitor.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		panel.add(monitorButton);
 		
-		panel.add(trailingPanel);
+		ImageIcon imgIntercom = new ImageIcon("icons/applications/intercom.png");
+		WebButton intercomButton = new WebButton("Intercom", new ImageIcon(imgIntercom.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		panel.add(intercomButton);
+		
+		ImageIcon imgMessage = new ImageIcon("icons/applications/message.png");
+		WebButton messageButton = new WebButton("Message", new ImageIcon(imgMessage.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		panel.add(messageButton);
+
+		
+		WebPanel panel2 = new WebPanel();
+		panel2.setLayout(new BorderLayout());
+		panel2.add(panel, BorderLayout.NORTH);
 		
 		
 		WebPanel southPanel = new WebPanel();
@@ -115,10 +131,11 @@ public class Student {
 		webLabel.setToolTipText("Teanab Institute: English Advance 4, Prof. Samiei, Tuesdays 17-19");
 		webLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		webLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		southPanel.add(webLabel);
-		panel.add(southPanel);
+		panel2.add(southPanel);
 
-		return panel;
+		return panel2;
 	}
 
 }

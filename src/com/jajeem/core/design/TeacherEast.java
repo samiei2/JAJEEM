@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.jajeem.command.model.BlackoutCommand;
+import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 
@@ -25,19 +26,19 @@ public class TeacherEast {
 		panel.setLayout(grid);
 
 		ImageIcon imgMonitor = new ImageIcon("icons/applications/monitor.png");
-		WebButton monitorButton = new WebButton("Monitor", new ImageIcon(imgMonitor.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		WebButton monitorButton = new WebButton("Monitor", new ImageIcon(imgMonitor.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
 		panel.add(monitorButton);
 		
 		ImageIcon imgIntercom = new ImageIcon("icons/applications/intercom.png");
-		WebButton intercomButton = new WebButton("Intercom", new ImageIcon(imgIntercom.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
+		WebButton intercomButton = new WebButton("Intercom", new ImageIcon(imgIntercom.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
 		panel.add(intercomButton);
 		
-		ImageIcon imgGroup = new ImageIcon("icons/applications/group.png");
-		WebButton groupButton = new WebButton("Group", new ImageIcon(imgGroup.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
-		panel.add(groupButton);
+		ImageIcon imgStopInternet = new ImageIcon("icons/applications/stopInternet.png");
+		WebButton stopInternetButton = new WebButton("Stop Internet", new ImageIcon(imgStopInternet.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		panel.add(stopInternetButton);
 		
-		ImageIcon imgBlackout = new ImageIcon("icons/applications/blackout.png");
-		WebButton blackoutButton = new WebButton("Blackout", new ImageIcon(imgBlackout.getImage().getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)));
+		ImageIcon imgBlackout = new ImageIcon("icons/applications/blackout_text.png");
+		WebButton blackoutButton = new WebButton("", imgBlackout);
 		panel.add(blackoutButton);
 		
 		ImageIcon imgQuiz = new ImageIcon("icons/applications/quiz.png");
@@ -59,6 +60,26 @@ public class TeacherEast {
 						ServerService ss = new ServerService();
 						BlackoutCommand bc = new BlackoutCommand(selectedStudent,Integer.parseInt(Config.getParam("port")));
 						ss.send(bc);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			}
+		});
+		
+		stopInternetButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) throws NumberFormatException {
+				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) TeacherCenter.desktopPane.getSelectedFrame().getClientProperty("ip");
+					try {
+						ServerService ss = new ServerService();
+						InternetCommand ic = new InternetCommand(selectedStudent,Integer.parseInt(Config.getParam("port")));
+						ss.send(ic);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

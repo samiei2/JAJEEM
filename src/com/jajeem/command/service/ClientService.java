@@ -20,23 +20,25 @@ public class ClientService implements IConnectorSevice, Runnable {
 	protected InetAddress group;
 	protected int port;
 	protected Thread thread;
-	
+
 	private boolean stopped;
-	
+
 	static Logger logger = Logger.getLogger("ServerService.class");
 
-	public ClientService(String group, int port) throws NumberFormatException, Exception {
+	public ClientService(String group, int port) throws NumberFormatException,
+			Exception {
 
 		stopped = false;
-		
+
 		PropertyConfigurator.configure("conf/log4j.conf");
-				
+
 		this.port = port;
 		this.group = InetAddress.getByName(group);
 
 		/* setup the multicast control channel */
 		socket = new MulticastSocket(port);
-		System.out.println("Client listening on port: " + socket.getLocalPort());
+		System.out
+				.println("Client listening on port: " + socket.getLocalPort());
 
 		// socket.connect(this.group,port);
 		socket.joinGroup(this.group);
@@ -101,7 +103,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					throw new ClassNotFoundException("Object is not a message");
 
 				Command cmd = (Command) o;
-				
+
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
 					startCaptureHandler.run(cmd);
@@ -114,12 +116,10 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof StartUpCommand) {
 					StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
 					startUpHandler.run(cmd);
-				}
-				else if(cmd instanceof StartQuizCommand) {
+				} else if (cmd instanceof StartQuizCommand) {
 					StartQuizCommandHandler startQuizHandler = new StartQuizCommandHandler();
 					startQuizHandler.run(cmd);
-				}
-				else if(cmd instanceof SendQuizResponseCommand) {
+				} else if (cmd instanceof SendQuizResponseCommand) {
 					SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
 					sendquizresponse.run(cmd);
 				} else if (cmd instanceof WhiteBlackAppCommand) {
@@ -128,8 +128,10 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof BlackoutCommand) {
 					SetBlackoutCommandHandler setBlackoutCommandHandler = new SetBlackoutCommandHandler();
 					setBlackoutCommandHandler.run(cmd);
+				} else if (cmd instanceof InternetCommand) {
+					SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
+					setInternetCommandHandler.run(cmd);
 				}
-				
 
 			} catch (Exception ex) {
 				System.err.println("Unknown message:" + ex.toString());
@@ -140,7 +142,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 		}
 
 	}
-	
+
 	public boolean isStopped() {
 		return stopped;
 	}
@@ -148,7 +150,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 	@Override
 	public void send(Command cmd) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
