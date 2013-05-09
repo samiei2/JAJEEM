@@ -2,6 +2,7 @@ package com.jajeem.quiz.dao.h2;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -257,6 +258,65 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM QuizQuestion");
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Question question = new Question();
+
+				question.setId(rs.getInt("id"));
+				question.setInstructorId(rs.getInt("instructorId"));
+				question.setTitle(rs.getString("title"));
+				question.setQuizId(rs.getInt("quizId"));
+				question.setType(rs.getByte("type"));
+				question.setPoint(rs.getInt("quizId"));
+				question.setImagePath(rs.getString("imagePath"));
+				question.setUrl(rs.getString("url"));
+				question.setAnswer1(rs.getString("answer1"));
+				question.setAnswer2(rs.getString("answer2"));
+				question.setAnswer3(rs.getString("answer3"));
+				question.setAnswer4(rs.getString("answer4"));
+				question.setAnswer5(rs.getString("answer5"));
+
+				allQuestions.add(question);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return allQuestions;
+	}
+
+	public Collection<? extends Question> list(int id) throws SQLException {
+		ArrayList<Question> allQuestions = new ArrayList<>();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM QuizQuestion where quizId = ?");
+		ps.setInt(0, id);
 
 		try {
 			rs = ps.executeQuery();

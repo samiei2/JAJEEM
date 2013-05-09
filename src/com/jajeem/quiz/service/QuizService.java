@@ -19,6 +19,7 @@ public class QuizService implements IQuizService{
 	private RunDAO runDAO;
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
+		quizDAO = new QuizDAO();//TODO remove this line
 		if(quizDAO != null)
 			quizDAO.create(quiz);
 		return null;

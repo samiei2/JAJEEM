@@ -12,6 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -189,7 +190,25 @@ public class Main extends JFrame {
 		wbtnOpen.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
 		WebButton wbtnSave = new WebButton();
-		wbtnSave.setEnabled(false);
+		wbtnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current quiz?");
+				QuizService qs = new QuizService();
+				if (i == 0){
+					try {
+						qs.create(currentQuiz);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				else if (i == 1){
+					//TODO dispose currentquiz
+				}
+				else{
+					
+				}
+			}
+		});
 		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnSave.setText("Save");
 		wbtnSave.setVerticalAlignment(SwingConstants.TOP);

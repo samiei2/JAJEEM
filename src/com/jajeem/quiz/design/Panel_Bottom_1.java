@@ -76,6 +76,8 @@ public class Panel_Bottom_1 extends WebPanel {
                 		return;
                 	}
                 }
+                parentPanel.getCurrentQuestion().setQuizId(parentPanel.getCurrentQuiz().getId());
+                parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getInstructorId());
 				parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());
 				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_1().getText());
 				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_2().getText());
@@ -185,7 +187,10 @@ public class Panel_Bottom_1 extends WebPanel {
                         "",
                         ""};
 				model.addRow(obj);
-                getParentPanel().getCurrentQuiz().addQuestion(new Question());
+				Question q = new Question();
+				q.setQuizId(parentPanel.getCurrentQuiz().getId());
+				q.setInstructorId(parentPanel.getInstructorId());
+                getParentPanel().getCurrentQuiz().addQuestion(q);
                 questionListPanel.getWebTable().getSelectionModel().setSelectionInterval(questionListPanel.getWebTable().getRowCount()-1, questionListPanel.getWebTable().getRowCount()-1);
                 getQuestionDesignPanel().clear();
                 

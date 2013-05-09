@@ -21,6 +21,7 @@ public class QuestionListPanel extends WebPanel {
 	 * Create the panel.
 	 * @param panel_Bottom_1 
 	 */
+	@SuppressWarnings("serial")
 	public QuestionListPanel(Panel_Bottom_1 panel_Bottom_1) {
 		this.parentPanel = panel_Bottom_1;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
@@ -41,7 +42,14 @@ public class QuestionListPanel extends WebPanel {
 			new String[] {
 				"#", "Type", "Point", "Content"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		webScrollPane.setViewportView(getWebTable());
 		setLayout(groupLayout);
 		
@@ -54,10 +62,13 @@ public class QuestionListPanel extends WebPanel {
                 	parentPanel.getParentPanel().setEventsEnabled(false);
                 	parentPanel.getParentPanel().setCurrentQuestion(null);
                 	parentPanel.getQuestionDesignPanel().clear();
+                	parentPanel.getQuestionDesignPanel().getWblblQuestion().setText("Question ?");
                 	
                 	parentPanel.getParentPanel().setEventsEnabled(true);
                     return;
                 }
+				//com.jajeem.quiz.model.Question q = parentPanel.getParentPanel().getCurrentQuestion();
+				parentPanel.getQuestionDesignPanel().getWblblQuestion().setText("Question "+(webTable.getSelectedRow()+1));
 				parentPanel.getParentPanel().setCurrentQuestion(parentPanel.getParentPanel().getCurrentQuiz().getQuestionList().get(webTable.getSelectedRow()));
 				parentPanel.getParentPanel().setEventsEnabled(false);
 				parentPanel.getQuestionDesignPanel().getWebTextArea().setText(parentPanel.getParentPanel().getCurrentQuestion().getTitle());

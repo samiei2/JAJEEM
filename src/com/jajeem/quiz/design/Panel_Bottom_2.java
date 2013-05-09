@@ -325,8 +325,16 @@ public class Panel_Bottom_2 extends WebPanel {
 						student.getId(),
 						student.getFirstName() + student.getLastName(),
 						"",
-						currentQuestion.getCorrectAnswer(),
-						temp.getStudentAnswer()
+						(currentQuestion.getCorrectAnswer()[0] + "," + 
+							currentQuestion.getCorrectAnswer()[1] + "," + 
+							currentQuestion.getCorrectAnswer()[2] + "," + 
+							currentQuestion.getCorrectAnswer()[3] + "," + 
+							currentQuestion.getCorrectAnswer()[4]),
+						(temp.getStudentAnswer()[0] + "," +
+							temp.getStudentAnswer()[1] + "," + 
+							temp.getStudentAnswer()[2] + "," + 
+							temp.getStudentAnswer()[3] + "," + 
+							temp.getStudentAnswer()[4])
 				});
 			}
 			else{
@@ -335,8 +343,16 @@ public class Panel_Bottom_2 extends WebPanel {
 						student.getId(),
 						student.getFirstName() + student.getLastName(),
 						"",
-						currentQuestion.getCorrectAnswer(),
-						temp.getStudentTextAnswer()
+						(currentQuestion.getCorrectAnswer()[0] + "," + 
+								currentQuestion.getCorrectAnswer()[1] + "," + 
+								currentQuestion.getCorrectAnswer()[2] + "," + 
+								currentQuestion.getCorrectAnswer()[3] + "," + 
+								currentQuestion.getCorrectAnswer()[4]),
+						(temp.getStudentAnswer()[0] + "," +
+								temp.getStudentAnswer()[1] + "," + 
+								temp.getStudentAnswer()[2] + "," + 
+								temp.getStudentAnswer()[3] + "," + 
+								temp.getStudentAnswer()[4])
 				});
 			}
 		}
@@ -347,8 +363,8 @@ public class Panel_Bottom_2 extends WebPanel {
 						student.getId(),
 						student.getFirstName() + student.getLastName(),
 						"",
-						currentQuestion.getCorrectAnswer(),
-						temp.getStudentAnswer()
+						"N/A",
+						temp.getStudentTextAnswer()
 				});
 			}
 			else{
@@ -357,7 +373,7 @@ public class Panel_Bottom_2 extends WebPanel {
 						student.getId(),
 						student.getFirstName() + student.getLastName(),
 						"",
-						currentQuestion.getCorrectAnswer(),
+						"N/A",
 						temp.getStudentTextAnswer()
 				});
 			}

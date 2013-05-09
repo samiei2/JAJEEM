@@ -1,37 +1,38 @@
 package com.jajeem.quiz.design.client;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-
-import com.alee.laf.rootpane.WebFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.checkbox.WebCheckBox;
-import com.alee.laf.label.WebLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import com.alee.laf.text.WebTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.alee.laf.button.WebButton;
+import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
-import com.alee.laf.scroll.WebScrollPane;
-import java.awt.Component;
-import com.alee.laf.text.WebTextArea;
+import com.alee.laf.panel.WebPanel;
 import com.alee.laf.radiobutton.WebRadioButton;
-import com.alee.laf.button.WebButton;
+import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.text.WebTextArea;
+import com.alee.laf.text.WebTextField;
 import com.jajeem.command.model.SendQuizResponseCommand;
-import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
@@ -41,14 +42,7 @@ import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
+@SuppressWarnings("serial")
 public class QuizWindow extends WebFrame {
 
 	private WebPanel contentPane;
