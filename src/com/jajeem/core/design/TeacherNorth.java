@@ -9,16 +9,16 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.managers.hotkey.Hotkey;
 
 public class TeacherNorth {
-	
-	public static WebPanel createPanel (WebPanel panel) {
+
+	public static WebPanel createPanel(WebPanel panel) {
 		WebMenuBar menuBar = new WebMenuBar();
 		menuBar.setUndecorated(true);
 		setupMenuBar(menuBar);
 		panel.add(menuBar);
-		
+
 		return panel;
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static void setupMenuBar(WebMenuBar menuBar) {
 		menuBar.add(new WebMenu("Setting", new ImageIcon(

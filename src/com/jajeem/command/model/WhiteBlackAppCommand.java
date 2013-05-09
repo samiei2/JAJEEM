@@ -11,7 +11,8 @@ public class WhiteBlackAppCommand extends Command {
 
 	public WhiteBlackAppCommand(String host, int port2, String appName, boolean black) {
 		super(host, port2);
-		// TODO Auto-generated constructor stub
+		this.black = black;
+		this.appName = appName;
 	}
 
 	public String getAppName() {
