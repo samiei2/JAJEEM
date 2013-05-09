@@ -45,6 +45,20 @@ public class Teacher implements SwingConstants {
 			}
 		});
 	}
+	
+	
+
+	public JFrame getFrmJajeemProject() {
+		return frmJajeemProject;
+	}
+
+
+
+	public void setFrmJajeemProject(JFrame frmJajeemProject) {
+		this.frmJajeemProject = frmJajeemProject;
+	}
+
+
 
 	/**
 	 * Create the application.
