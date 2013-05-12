@@ -38,6 +38,5 @@ public class SetVolumeCommandHandler implements ICommandHandler {
 		default:
 			break;
 		}
-
 	}
 }
