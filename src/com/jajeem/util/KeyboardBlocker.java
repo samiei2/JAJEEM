@@ -41,7 +41,7 @@ public class KeyboardBlocker {
         }
     };
 
-    public static void start() {
+    public void start() {
         
         HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
         keyboardHook = new LowLevelKeyboardProc() {
