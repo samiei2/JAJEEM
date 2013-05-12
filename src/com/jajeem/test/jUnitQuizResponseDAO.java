@@ -38,18 +38,18 @@ public class jUnitQuizResponseDAO {
 		s.setRunId(2);
 		s.setStudentId(12);
 		s.setId(1);
-		s.setAnswer1("Test");
+		s.setAnswer("Test");
 		
 		assertEquals(s, dao.create(s));
 		
-		assertEquals("Test", dao.get(s).getAnswer1());
+		assertEquals("Test", dao.get(s).getAnswer());
 		assertEquals(1, dao.get(s).getId());
 		assertEquals(2, dao.get(s).getRunId());
 		assertEquals(12, dao.get(s).getStudentId());
 		
-		s.setAnswer1("Test modified");
+		s.setAnswer("Test modified");
 		assertEquals(true, dao.update(s));
-		assertEquals("Test modified", dao.get(s).getAnswer1());
+		assertEquals("Test modified", dao.get(s).getAnswer());
 		
 		assertEquals(true, dao.delete(s));
 		
