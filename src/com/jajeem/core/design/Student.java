@@ -7,7 +7,11 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -16,8 +20,11 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
+import com.alee.managers.tooltip.TooltipManager;
+import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.util.Config;
 
@@ -65,8 +72,9 @@ public class Student {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
 		frmJajeemProject.setResizable(false);
@@ -88,7 +96,7 @@ public class Student {
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
 
-		frmJajeemProject.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		 frmJajeemProject.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
@@ -98,7 +106,7 @@ public class Student {
 		clientService.start();
 	}
 
-	private WebPanel createPanel() {
+	private WebPanel createPanel() throws IOException {
 
 		new Config();
 
@@ -113,7 +121,7 @@ public class Student {
 		panel.setLayout(grid);
 
 		ImageIcon imgMessage = new ImageIcon(
-				"icons/applications/message_text.png");
+				"icons/applications_style1/message_text.png");
 		WebButton messageButton = new WebButton(imgMessage);
 		panel.add(messageButton);
 
@@ -123,8 +131,20 @@ public class Student {
 
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
+		
+		ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+		TooltipManager.setDefaultDelay(1000);
 
-		panel2.add(southPanel);
+		BufferedImage myPicture = ImageIO.read(new File("icons/buttom.jpg"));
+		WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
+		TooltipManager
+				.setTooltip(
+						picLabel,
+						imgToolTip,
+						"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.",
+						TooltipWay.up);
+		southPanel.add(picLabel);
+		panel2.add(southPanel, BorderLayout.SOUTH);
 
 		return panel2;
 	}

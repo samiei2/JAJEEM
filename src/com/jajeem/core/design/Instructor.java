@@ -29,7 +29,6 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Clock;
 import com.jajeem.util.Config;
 
 public class Instructor implements SwingConstants {
@@ -193,7 +192,6 @@ public class Instructor implements SwingConstants {
 			TooltipManager.setTooltip(picLabel, imgToolTip,
 					"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.", TooltipWay.up);
 			picLabel.setOpaque(false);
-			panel.add(new Clock());
 			panel.add(picLabel);
 
 			break;
@@ -207,7 +205,7 @@ public class Instructor implements SwingConstants {
 		}
 
 		case EAST: {
-			InstructorRight.iconsPath = "icons/applications_style";
+			InstructorRight.iconsPath = "icons/applications_style1";
 			panel = InstructorRight.createPanel(panel);
 
 			break;
