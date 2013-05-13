@@ -24,7 +24,17 @@ public class Recorder extends Thread {
     private boolean hold = false;
     private boolean side = Commons.viewerSide;
     
-    public Config config;
+    private boolean thumbs = false;
+    
+    public boolean isThumbs() {
+		return thumbs;
+	}
+
+	public void setThumbs(boolean thumbs) {
+		this.thumbs = thumbs;
+	}
+
+	public Config config;
     public Server server;
     public Viewer viewer;    
     public ViewerGUI viewerGUI;
@@ -43,12 +53,14 @@ public class Recorder extends Thread {
         screenPlayer = new ScreenPlayer(this);
         eventsListener = new EventsListener(this);
         viewerGUI = new ViewerGUI(this);
-        viewerGUI.Start(); // should be commented!
+        if(!isThumbs())
+        	viewerGUI.Start();
     }
     
-    public Recorder(Viewer viewer, Config config) {
+    public Recorder(Viewer viewer, Config config, boolean thum) {
         this.viewer = viewer;   
-        this.config = config;        
+        this.config = config;
+        this.setThumbs(thum);
         side = Commons.viewerSide;
         
         init(); 
@@ -58,7 +70,10 @@ public class Recorder extends Thread {
         
         screenPlayer = new ScreenPlayer(this);
         eventsListener = new EventsListener(this);
-        viewerGUI = new ViewerGUI(this);        
+        if(!isThumbs())
+        	viewerGUI = new ViewerGUI(this);
+        else
+        	viewerGUIThumbs = new ViewerGUIThumbs(this);        
     }
     
     public Recorder(Server server, Config config) {

@@ -136,10 +136,10 @@ public class ViewerGUIThumbs extends javax.swing.JFrame {
                 jMenuItemAboutActionPerformed(evt);
             }
         });
-        jPopupMenuHelp.add(jMenuItemAbout);
+//        jPopupMenuHelp.add(jMenuItemAbout);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle(" jrdesktop Viewer");
+        setTitle(" JaJeem Viewer");
         setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -418,9 +418,9 @@ public class ViewerGUIThumbs extends javax.swing.JFrame {
         if (recorder.isRecording()) {                       
             setIconImage(new ImageIcon(Commons.ALIVE_ICON).getImage());
             jBtnStartStop.setIcon(new ImageIcon(Commons.STOP_ICON));
-            setTitle("jrdesktop Viewer [" + recorder.config.server_address + "]");
+            setTitle("JaJeem Viewer [" + recorder.config.server_address + "]");
         } else {
-            setTitle("jrdesktop Viewer");
+            setTitle("JaJeem Viewer");
             setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
             jBtnStartStop.setIcon(new ImageIcon(Commons.START_ICON));
             jToggleBtnPauseResume.setSelected(false);
