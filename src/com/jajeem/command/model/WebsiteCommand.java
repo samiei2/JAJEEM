@@ -10,6 +10,7 @@ public class WebsiteCommand extends Command {
 	
 	public WebsiteCommand(String host, int port2, String URL) {
 		super(host, port2);
+		this.URL = URL;
 	}
 
 	public String getURL() {
