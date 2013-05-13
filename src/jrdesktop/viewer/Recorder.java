@@ -28,6 +28,7 @@ public class Recorder extends Thread {
     public Server server;
     public Viewer viewer;    
     public ViewerGUI viewerGUI;
+    public ViewerGUIThumbs viewerGUIThumbs;
     public ScreenPlayer screenPlayer;
     public EventsListener eventsListener;
     public ClipbrdUtility clipbrdUtility;
@@ -42,7 +43,7 @@ public class Recorder extends Thread {
         screenPlayer = new ScreenPlayer(this);
         eventsListener = new EventsListener(this);
         viewerGUI = new ViewerGUI(this);
-//        viewerGUI.Start();
+        viewerGUI.Start(); // should be commented!
     }
     
     public Recorder(Viewer viewer, Config config) {

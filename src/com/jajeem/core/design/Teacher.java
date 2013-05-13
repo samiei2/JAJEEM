@@ -125,7 +125,9 @@ public class Teacher implements SwingConstants {
 		panel.add(southPanel, "1,2,2,2");
 
 		/*
-		 * West panel for now not shown. WebPanel leadingPanel = new WebPanel();
+		 * West panel for now not shown.
+		 * 
+		 * WebPanel leadingPanel = new WebPanel();
 		 * leadingPanel.setDrawSides(true, false, false, true);
 		 * leadingPanel.setRound(0); setupPanel(leadingPanel, WEST);
 		 * panel.add(leadingPanel, "0,1,0,2");

@@ -32,7 +32,7 @@ public class TeacherCenter {
 		jrdesktop.Config con = new jrdesktop.Config(false, "", host, 1099,
 				"admin", "admin", false, false);
 		Viewer vnc = new Viewer(con);
-		vnc.Start(internalFrame);
+		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
 		desktopPane.add(internalFrame);
