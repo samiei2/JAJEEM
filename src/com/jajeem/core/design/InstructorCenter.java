@@ -9,7 +9,7 @@ import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.panel.WebPanel;
 
-public class TeacherCenter {
+public class InstructorCenter {
 
 	public static WebDesktopPane desktopPane = new WebDesktopPane();
 

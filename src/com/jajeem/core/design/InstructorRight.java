@@ -35,7 +35,7 @@ import com.jajeem.quiz.design.Main;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
-public class TeacherEast {
+public class InstructorRight {
 
 	public static WebPanel createPanel(WebPanel panel2) throws Exception {
 
@@ -125,7 +125,7 @@ public class TeacherEast {
 		ImageIcon imgPower = new ImageIcon("icons/applications/power_text.png");
 		final WebButton powerButton = new WebButton(imgPower);
 		powerButton.setRound(0);
-		TooltipManager.setTooltip(messageButton, imgToolTip,
+		TooltipManager.setTooltip(powerButton, imgToolTip,
 				"Turn off, Log off, Restart student's computer",
 				TooltipWay.left);
 		panel.add(powerButton);
@@ -136,9 +136,9 @@ public class TeacherEast {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
-				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) TeacherCenter.desktopPane
+					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 					try {
 						ServerService ss = new ServerService();
@@ -161,9 +161,9 @@ public class TeacherEast {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
-				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) TeacherCenter.desktopPane
+					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 					try {
 						ServerService ss = new ServerService();
@@ -237,9 +237,9 @@ public class TeacherEast {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
-				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) TeacherCenter.desktopPane
+					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 					jrdesktop.Config conf = null;
 					try {
@@ -269,13 +269,12 @@ public class TeacherEast {
 				try {
 					powerCommand = new PowerCommand("", Integer.parseInt(Config.getParam("port")), "");
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 
-					selectedStudent = (String) TeacherCenter.desktopPane
+					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 
 					powerCommand.setHost(selectedStudent);
@@ -369,9 +368,9 @@ public class TeacherEast {
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
-						if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+						if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 							String selectedStudent = "";
-							selectedStudent = (String) TeacherCenter.desktopPane
+							selectedStudent = (String) InstructorCenter.desktopPane
 									.getSelectedFrame().getClientProperty("ip");
 							try {
 								ServerService ss = new ServerService();
@@ -395,9 +394,9 @@ public class TeacherEast {
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
-						if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+						if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 							String selectedStudent = "";
-							selectedStudent = (String) TeacherCenter.desktopPane
+							selectedStudent = (String) InstructorCenter.desktopPane
 									.getSelectedFrame().getClientProperty("ip");
 							try {
 								ServerService ss = new ServerService();

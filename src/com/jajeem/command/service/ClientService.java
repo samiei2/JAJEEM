@@ -155,6 +155,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 					SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
 					setPowerCommandHandler.run(cmd);
 				}
+				
+				else if (cmd instanceof VolumeCommand) {
+					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
+					setVolumeCommandHandler.run(cmd);
+				}
 
 			} catch (Exception ex) {
 				System.err.println("Unknown message:" + ex.toString());

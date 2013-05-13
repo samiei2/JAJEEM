@@ -5,10 +5,14 @@ import info.clearthought.layout.TableLayout;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.InetAddress;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -16,16 +20,19 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
+import com.alee.managers.tooltip.TooltipManager;
+import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Clock;
 import com.jajeem.util.Config;
 
-public class Teacher implements SwingConstants {
+public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
 
@@ -36,7 +43,7 @@ public class Teacher implements SwingConstants {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Teacher window = new Teacher();
+					Instructor window = new Instructor();
 					// window.frmJajeemProject.setUndecorated(true);
 					// window.frmJajeemProject.pack();
 					window.frmJajeemProject.setVisible(true);
@@ -54,7 +61,7 @@ public class Teacher implements SwingConstants {
 	 * @throws Exception
 	 * @throws NumberFormatException
 	 */
-	public Teacher() throws NumberFormatException, Exception {
+	public Instructor() throws NumberFormatException, Exception {
 		try {
 			// Setting up WebLookAndFeel style
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -71,7 +78,8 @@ public class Teacher implements SwingConstants {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	private void initialize() throws Exception {
 		WebLookAndFeel.setDecorateFrames(true);
@@ -79,13 +87,13 @@ public class Teacher implements SwingConstants {
 		frmJajeemProject.setRound(0);
 		frmJajeemProject.setTitle("JaJeem Project");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Teacher.class.getResource("/menubar/jajeem.jpg")));
-		frmJajeemProject.setBounds(250, 150, 850, 500);
+				Instructor.class.getResource("/menubar/jajeem.jpg")));
+		frmJajeemProject.setBounds(200, 100, 850, 600);
 		frmJajeemProject.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
-//		 frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
@@ -139,6 +147,8 @@ public class Teacher implements SwingConstants {
 		trailingPanel.setRound(0);
 		setupPanel(trailingPanel, EAST);
 		WebScrollPane webScrollPane = new WebScrollPane(trailingPanel, false);
+		webScrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
 				webScrollPane);
 		rPanel.setCollapseIcon(new ImageIcon("icons/angle-right.png"));
@@ -164,13 +174,25 @@ public class Teacher implements SwingConstants {
 
 		switch (location) {
 		case NORTH: {
-			panel = TeacherNorth.createPanel(panel);
+			panel = InstructorTop.createPanel(panel);
 
 			break;
 		}
 
 		case SOUTH: {
+			
+			ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+			TooltipManager.setDefaultDelay(1000);
+			
+			BufferedImage myPicture = ImageIO
+					.read(new File("icons/buttom.jpg"));
+			WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
+			TooltipManager.setTooltip(picLabel, imgToolTip,
+					"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.", TooltipWay.up);
+			picLabel.setOpaque(false);
 			panel.add(new Clock());
+			panel.add(picLabel);
+
 			break;
 		}
 
@@ -182,13 +204,13 @@ public class Teacher implements SwingConstants {
 		}
 
 		case EAST: {
-			panel = TeacherEast.createPanel(panel);
+			panel = InstructorRight.createPanel(panel);
 
 			break;
 		}
 
 		case CENTER: {
-			panel = TeacherCenter.createPanel(panel);
+			panel = InstructorCenter.createPanel(panel);
 
 			break;
 		}

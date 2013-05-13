@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.alee.laf.label.WebLabel;
+
 public class Clock extends JPanel {
 
 	/**
@@ -20,7 +22,7 @@ public class Clock extends JPanel {
 
 	public Clock() {
 		setLayout(new BorderLayout());
-		clock = new JLabel();
+		clock = new WebLabel();
 		clock.setHorizontalAlignment(JLabel.LEFT);
 		clock.setOpaque(true);
 //		clock.setFont(UIManager.getFont("Label.font")
