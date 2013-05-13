@@ -11,6 +11,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.combobox.WebComboBox;
@@ -20,12 +24,22 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.quiz.service.QuizService;
+
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class OpenDialog extends JDialog {
 
 	private WebComboBox wbCmbBxOption;
 	private WebComboBox wbCmbBxSelection;
+	private WebTable wbTblQuestion;
+	private WebTable wbTblQuiz;
+	private ArrayList<Quiz> quizList;
 	/**
 	 * Launch the application.
 	 */
@@ -42,7 +56,41 @@ public class OpenDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public OpenDialog() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				QuizService qs = new QuizService();
+				DefaultTableModel model = (DefaultTableModel) wbTblQuiz.getModel();
+				try {
+					ArrayList<Quiz> list = qs.list();
+					if(list != null){
+						quizList.addAll(list);
+						for (int i = 0; i < list.size(); i++) {
+							Quiz z = list.get(i);
+							if(wbTblQuiz.getRowCount() == 0){
+								model.addRow(new Object[]{
+										1,
+										z.getTitle()
+								});
+							}
+							else{
+								model.addRow(new Object[]{
+										Integer.parseInt(String.valueOf(model.getValueAt(wbTblQuiz.getRowCount()-1, 0)))+1,
+										z.getTitle()
+								});
+							}
+						}
+					}
+					if(wbTblQuiz.getRowCount() != 0)
+						wbTblQuiz.getSelectionModel().setSelectionInterval(0, 0);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setSize(750, 700);
@@ -88,6 +136,25 @@ public class OpenDialog extends JDialog {
 		wblblSearch.setText("Search");
 		
 		WebTextField webTextField = new WebTextField();
+		webTextField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		WebLabel wblblCategory = new WebLabel();
 		wblblCategory.setText("Select");
@@ -137,10 +204,10 @@ public class OpenDialog extends JDialog {
 							.addGap(18)
 							.addComponent(wbCmbBxOption, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE))
 						.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.TRAILING, gl_webPanel_1.createSequentialGroup()
+							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)))
+							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_webPanel_1.setVerticalGroup(
@@ -161,15 +228,44 @@ public class OpenDialog extends JDialog {
 							.addComponent(wbCmbBxOption, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+						.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
 					.addGap(14))
 		);
 		
-		WebTable wbTblQuestion = new WebTable();
+		wbTblQuestion = new WebTable();
+		wbTblQuestion.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Title"
+			}
+		));
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
-		WebTable wbTblQuiz = new WebTable();
+		wbTblQuiz = new WebTable();
+		wbTblQuiz.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"#", "Name"
+			}
+		));
+		wbTblQuiz.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				Quiz quiz = quizList.get(wbTblQuiz.getSelectedRow());
+				DefaultTableModel model = (DefaultTableModel) wbTblQuestion.getModel();
+				for (int i = 0; i < quiz.getQuestionList().size(); i++) {
+					model.addRow(new Object[]{
+							quiz.getQuestionList().get(i).getTitle()
+					});
+				}
+				wbTblQuestion.getSelectionModel().setSelectionInterval(0, 0);
+			}
+		});
+		
 		webScrollPane.setViewportView(wbTblQuiz);
 		webPanel_1.setLayout(gl_webPanel_1);
 		webPanel.setLayout(gl_webPanel);

@@ -24,8 +24,10 @@ import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.events.QuizEvent;
+import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.util.Config;
@@ -34,7 +36,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Main extends JFrame {
-
+	
 	private WebPanel contentPane;
 	
 	private Question currentQuestion;
@@ -69,6 +71,20 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		new com.jajeem.util.Config();
+		com.jajeem.command.service.ClientService clientService = null;
+		try {
+			clientService = new com.jajeem.command.service.ClientService(
+					com.jajeem.util.Config.getParam("broadcastingIp"), Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+		} catch (NumberFormatException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		clientService.start();
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -245,9 +261,11 @@ public class Main extends JFrame {
 			        panel_bottom_2.LoadQuiz(currentQuiz);
 			        //TODO Code must be changed
 			        try {
+			        	//QuizWindow wind =new QuizWindow(currentQuiz);
+			        	
 			        	new Config();
 						ServerService serv = new ServerService();
-						StartQuizCommand cmd = new StartQuizCommand("192.168.0.15", 9090);
+						StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
@@ -261,6 +279,19 @@ public class Main extends JFrame {
 					
 				}
 				else{
+					try {
+						new Config();
+						ServerService serv = new ServerService();
+						StopQuizCommand cmd = new StopQuizCommand("127.0.0.1", 9090);
+						serv.send(cmd);
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
 					//quizEvent.fireStopEvent(new QuizStop(this));

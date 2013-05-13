@@ -312,13 +312,13 @@ public class QuestionDAO implements IQuestionDAO {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		
 		Connection con = BaseDAO.getConnection();
-
-		ps = con.prepareStatement("SELECT * FROM QuizQuestion where quizId = ?");
-		ps.setInt(0, id);
-
 		try {
+			ps = con.prepareStatement("SELECT * FROM QuizQuestion where QuizQuestion.Quizid=? ;");
+			ps.setInt(1, id);
+
+		
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Question question = new Question();

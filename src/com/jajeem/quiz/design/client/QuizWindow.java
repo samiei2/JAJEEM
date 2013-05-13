@@ -41,6 +41,8 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.util.ClientSession;
+import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
 public class QuizWindow extends WebFrame {
@@ -104,6 +106,7 @@ public class QuizWindow extends WebFrame {
 	 */
 	public QuizWindow(Quiz quiz) {
 		currentQuiz = quiz;
+		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -115,7 +118,7 @@ public class QuizWindow extends WebFrame {
 				
 				
 				for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
-					model.addElement("Question "+i);
+					model.addElement("Question "+(i+1));
 				}
 				
 				webList.setSelectedIndex(0);
@@ -256,14 +259,24 @@ public class QuizWindow extends WebFrame {
 		);
 		
 		webTextField_2 = new WebTextField();
+		webTextField_2.setEditable(false);
+		webTextField_2.setEnabled(false);
 		
 		webTextField_3 = new WebTextField();
+		webTextField_3.setEditable(false);
+		webTextField_3.setEnabled(false);
 		
 		webTextField_4 = new WebTextField();
+		webTextField_4.setEditable(false);
+		webTextField_4.setEnabled(false);
 		
 		webTextField_5 = new WebTextField();
+		webTextField_5.setEditable(false);
+		webTextField_5.setEnabled(false);
 		
 		webTextField_6 = new WebTextField();
+		webTextField_6.setEditable(false);
+		webTextField_6.setEnabled(false);
 		
 		webRadioButton = new WebRadioButton();
 		webRadioButton.addActionListener(new ActionListener() {
@@ -432,6 +445,8 @@ public class QuizWindow extends WebFrame {
 		webPanel_2.setLayout(gl_webPanel_2);
 		
 		final WebTextArea webTextArea = new WebTextArea();
+		webTextArea.setEditable(false);
+		webTextArea.setEnabled(false);
 		webScrollPane_1.setViewportView(webTextArea);
 		
 		model = new DefaultListModel();
@@ -456,6 +471,7 @@ public class QuizWindow extends WebFrame {
 					}
 					
 					//TODO clean up this code
+					
 					new Thread(new Runnable() {
 						
 						@Override
@@ -463,7 +479,8 @@ public class QuizWindow extends WebFrame {
 							QuizResponse resp = new QuizResponse(currentQuestion);
 							resp.setQuestion(currentQuestion);
 							resp.setStudent(getStudent());
-							SendQuizResponseCommand cmd = new SendQuizResponseCommand("192.168.0.234", 9092);
+							//new QuizEvent().fireResponseEvent(resp);
+							SendQuizResponseCommand cmd = new SendQuizResponseCommand("127.0.0.1", 9092);
 							cmd.setEvent(resp);
 							try {
 								ServerService service = new ServerService();
@@ -576,6 +593,8 @@ public class QuizWindow extends WebFrame {
 		wblblDirections.setText("Directions");
 		
 		WebTextField webTextField = new WebTextField();
+		webTextField.setEditable(false);
+		webTextField.setEnabled(false);
 		
 		webTextField_1 = new WebTextField();
 		webTextField_1.setEditable(false);

@@ -1,0 +1,4 @@
+new com.jajeem.util.Config();
+com.jajeem.command.service.ClientService clientService = new com.jajeem.command.service.ClientService(
+		com.jajeem.util.Config.getParam("broadcastingIp"), Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+clientService.start();
