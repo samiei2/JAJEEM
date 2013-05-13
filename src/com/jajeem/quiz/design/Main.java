@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,10 +26,12 @@ import com.alee.laf.panel.WebPanel;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.util.Config;
 
@@ -38,10 +41,10 @@ import java.awt.event.WindowEvent;
 public class Main extends JFrame {
 	
 	private WebPanel contentPane;
-	
+	private Main frame;
 	private Question currentQuestion;
 	private com.jajeem.quiz.model.Quiz currentQuiz;
-	private ArrayList<com.jajeem.quiz.model.Quiz> quizList;
+	//private ArrayList<com.jajeem.quiz.model.Quiz> quizList;
 	private boolean eventsEnabled;
 	private QuizEvent quizEvent;
 	private DefaultTableModel tablemodel;
@@ -71,11 +74,24 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		new com.jajeem.util.Config();
-		com.jajeem.command.service.ClientService clientService = null;
+		frame = this;
+		////////////////////////////////////////
+		////////////////////////////////////////
+//		new com.jajeem.util.Config();
+//		ClientService clientService = null;
+//		try {
+//			clientService = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+//		} catch (NumberFormatException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		} catch (Exception e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+//		clientService.start();
+		ClientService clientService2 = null;
 		try {
-			clientService = new com.jajeem.command.service.ClientService(
-					com.jajeem.util.Config.getParam("broadcastingIp"), Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+			clientService2 = new ClientService(Config.getParam("broadcastingIp"), 9092);
 		} catch (NumberFormatException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -83,23 +99,24 @@ public class Main extends JFrame {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		clientService.start();
-		
+		clientService2.start();
+		//////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				QuizService qs = new QuizService();
-				try {
-					quizList = new ArrayList<com.jajeem.quiz.model.Quiz>();
-					ArrayList<com.jajeem.quiz.model.Quiz> temp = qs.list();
-					if(temp != null)
-						quizList.addAll(qs.list());
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				quizList.add(new com.jajeem.quiz.model.Quiz());
-                setCurrentQuiz(quizList.get(0));
-                
+//				QuizService qs = new QuizService();
+//				try {
+//					quizList = new ArrayList<com.jajeem.quiz.model.Quiz>();
+//					ArrayList<com.jajeem.quiz.model.Quiz> temp = qs.list();
+//					if(temp != null)
+//						quizList.addAll(qs.list());
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//				quizList.add(new com.jajeem.quiz.model.Quiz());
+//                setCurrentQuiz(quizList.get(0));
+                setCurrentQuiz(new Quiz());
                 getCurrentQuiz().addQuestion(new Question());
                 getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
                 ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
@@ -195,8 +212,8 @@ public class Main extends JFrame {
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OpenDialog open = new OpenDialog();
-				currentQuiz = open.getValue();
+				OpenDialog open = new OpenDialog(frame);
+				open.setVisible(true);
 			}
 		});
 		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -265,7 +282,8 @@ public class Main extends JFrame {
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
-						StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
+						StartQuizCommand cmd = new StartQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
@@ -282,7 +300,7 @@ public class Main extends JFrame {
 					try {
 						new Config();
 						ServerService serv = new ServerService();
-						StopQuizCommand cmd = new StopQuizCommand("127.0.0.1", 9090);
+						StopQuizCommand cmd = new StopQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
@@ -375,5 +393,9 @@ public class Main extends JFrame {
 	public int getInstructorId() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void loadCurrentQuiz() {
+		
 	}
 }

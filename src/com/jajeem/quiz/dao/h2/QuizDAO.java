@@ -27,19 +27,19 @@ public class QuizDAO implements IQuizDAO {
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-
-		ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
-		ps.setInt(1, quiz.getInstructorId());
-		ps.setString(2, quiz.getTitle());
-		ps.setString(3, quiz.getCategory());
-		ps.setString(4, quiz.getDescription());
-		ps.setInt(5, quiz.getPoints());
-		ps.setInt(6, quiz.getPointing());
-		ps.setInt(7, quiz.getTime());
-		ps.setInt(8, quiz.getShuffle());
-
 		try {
+			ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle) "
+					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
+			ps.setInt(1, quiz.getInstructorId());
+			ps.setString(2, quiz.getTitle());
+			ps.setString(3, quiz.getCategory());
+			ps.setString(4, quiz.getDescription());
+			ps.setInt(5, quiz.getPoints());
+			ps.setInt(6, quiz.getPointing());
+			ps.setInt(7, quiz.getTime());
+			ps.setInt(8, quiz.getShuffle());
+
+		
 			rs = ps.executeUpdate();
 
 			// get last id
@@ -83,7 +83,9 @@ public class QuizDAO implements IQuizDAO {
 			QuestionDAO qdao = new QuestionDAO();
 			ArrayList<Question> list = quiz.getQuestionList();
 			for (int i = 0; i < list.size(); i++) {
-				qdao.create(list.get(i));
+				Question q = list.get(i);
+				q.setQuizId(quiz.getId());
+				qdao.create(q);
 			}
 		}catch(Exception e){
 			

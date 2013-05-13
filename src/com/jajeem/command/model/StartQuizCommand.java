@@ -8,6 +8,7 @@ public class StartQuizCommand extends Command {
 	 */
 	private static final long serialVersionUID = -4014963068838321817L;
 	private Quiz quiz;
+	private String server;
 	public StartQuizCommand(String host, int port2) {
 		super(host, port2);
 		
@@ -21,6 +22,12 @@ public class StartQuizCommand extends Command {
 		return quiz;
 	}
 	
-	
+	public String getServer() {
+		return server;
+	}
+
+	public void setServer(String server) {
+		this.server = server;
+	}
 
 }

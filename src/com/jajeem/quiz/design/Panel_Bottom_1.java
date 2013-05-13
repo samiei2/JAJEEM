@@ -1,30 +1,29 @@
 package com.jajeem.quiz.design;
 
-import javax.swing.JPanel;
-import com.alee.laf.panel.WebPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
-
-import com.alee.laf.button.WebButton;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.text.WebTextField;
+import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.text.WebTextField;
 import com.jajeem.quiz.model.Question;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
+@SuppressWarnings("serial")
 public class Panel_Bottom_1 extends WebPanel {
 
 	private QuestionListPanel questionListPanel;
@@ -33,6 +32,8 @@ public class Panel_Bottom_1 extends WebPanel {
 	private QuestionDesignPanel questionDesignPanel;
 	private WebTextField webTextField_2;
 	private WebCheckBox webCheckBox_1;
+	private WebTextField wbTxtFldDirection;
+	private WebTextField wbTxtFldPoints;
 	/**
 	 * Create the panel.
 	 * @param main 
@@ -297,15 +298,15 @@ public class Panel_Bottom_1 extends WebPanel {
 		WebLabel webLabel_1 = new WebLabel();
 		webLabel_1.setText("Points");
 		
-		WebTextField webTextField = new WebTextField();
+		setWbTxtFldDirection(new WebTextField());
 		
-		final WebTextField webTextField_1 = new WebTextField();
-		webTextField_1.getDocument().addDocumentListener(new DocumentListener() {
+		setWbTxtFldPoints(new WebTextField());
+		getWbTxtFldPoints().getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				if(parentPanel.getCurrentQuiz()!=null && parentPanel.isEventsEnabled()){
 					try {
-						parentPanel.getCurrentQuiz().setPoints(Integer.parseInt(webTextField_1.getText()));
+						parentPanel.getCurrentQuiz().setPoints(Integer.parseInt(getWbTxtFldPoints().getText()));
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
@@ -329,7 +330,7 @@ public class Panel_Bottom_1 extends WebPanel {
 			public void insertUpdate(DocumentEvent arg0) {
 				if(parentPanel.getCurrentQuiz()!=null && parentPanel.isEventsEnabled()){
 					try {
-						parentPanel.getCurrentQuiz().setPoints(Integer.parseInt(webTextField_1.getText()));
+						parentPanel.getCurrentQuiz().setPoints(Integer.parseInt(getWbTxtFldPoints().getText()));
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
@@ -417,7 +418,7 @@ public class Panel_Bottom_1 extends WebPanel {
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_webPanel_1.createSequentialGroup()
 							.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(webTextField_1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+								.addComponent(getWbTxtFldPoints(), GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 								.addComponent(webCheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(82)
 							.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
@@ -426,7 +427,7 @@ public class Panel_Bottom_1 extends WebPanel {
 									.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(webTextField_2, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))))
-						.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+						.addComponent(getWbTxtFldDirection(), GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_webPanel_1.setVerticalGroup(
@@ -434,13 +435,13 @@ public class Panel_Bottom_1 extends WebPanel {
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(getWbTxtFldDirection(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(webTextField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(getWbTxtFldPoints(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
@@ -573,5 +574,17 @@ public class Panel_Bottom_1 extends WebPanel {
 	}
 	public void setQuestionDesignPanel(QuestionDesignPanel questionDesignPanel) {
 		this.questionDesignPanel = questionDesignPanel;
+	}
+	public WebTextField getWbTxtFldDirection() {
+		return wbTxtFldDirection;
+	}
+	public void setWbTxtFldDirection(WebTextField wbTxtFldDirection) {
+		this.wbTxtFldDirection = wbTxtFldDirection;
+	}
+	public WebTextField getWbTxtFldPoints() {
+		return wbTxtFldPoints;
+	}
+	public void setWbTxtFldPoints(WebTextField wbTxtFldPoints) {
+		this.wbTxtFldPoints = wbTxtFldPoints;
 	}
 }

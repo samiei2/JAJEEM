@@ -8,14 +8,14 @@ public class Quiz implements Serializable{
 	//properties
 	private int id;
 	private int instructorId;
-	private String title;
-	private String category;
-	private String description;
+	private String title="";
+	private String category="";
+	private String description="";
 	private int points;
 	private int pointing;
 	private int time;
 	private byte shuffle;
-	private Response response;
+	private Response response = new Response();
 	private ArrayList<Question> questions = new ArrayList<>();
 	
 	//getter & setters

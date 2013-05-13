@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,6 +30,7 @@ import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
+@SuppressWarnings("serial")
 public class Panel_Bottom_2 extends WebPanel {
 
 	private Question currentQuestion;

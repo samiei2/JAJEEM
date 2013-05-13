@@ -27,24 +27,24 @@ public class QuestionDAO implements IQuestionDAO {
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-
-		ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
-				" answer1, answer2, answer3, answer4, answer5) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?);");
-		ps.setInt(1, question.getInstructorId());
-		ps.setString(2, question.getTitle());
-		ps.setInt(3, question.getQuizId());
-		ps.setByte(4, question.getType());
-		ps.setInt(5, question.getPoint());
-		ps.setString(6, question.getImagePath());
-		ps.setString(7, question.getUrl());
-		ps.setString(8, question.getAnswer1());
-		ps.setString(9, question.getAnswer2());
-		ps.setString(10, question.getAnswer3());
-		ps.setString(11, question.getAnswer4());
-		ps.setString(12, question.getAnswer5());
-
 		try {
+			ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
+					" answer1, answer2, answer3, answer4, answer5) "
+					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?);");
+			ps.setInt(1, question.getInstructorId());
+			ps.setString(2, question.getTitle());
+			ps.setInt(3, question.getQuizId());
+			ps.setByte(4, question.getType());
+			ps.setInt(5, question.getPoint());
+			ps.setString(6, question.getImagePath());
+			ps.setString(7, question.getUrl());
+			ps.setString(8, question.getAnswer1());
+			ps.setString(9, question.getAnswer2());
+			ps.setString(10, question.getAnswer3());
+			ps.setString(11, question.getAnswer4());
+			ps.setString(12, question.getAnswer5());
+
+		
 			rs = ps.executeUpdate();
 
 			// get last id

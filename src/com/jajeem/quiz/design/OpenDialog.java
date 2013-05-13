@@ -31,6 +31,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class OpenDialog extends JDialog {
@@ -39,13 +41,14 @@ public class OpenDialog extends JDialog {
 	private WebComboBox wbCmbBxSelection;
 	private WebTable wbTblQuestion;
 	private WebTable wbTblQuiz;
-	private ArrayList<Quiz> quizList;
+	private ArrayList<Quiz> quizList = new ArrayList<>();
+	private Main parentFrame;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			OpenDialog dialog = new OpenDialog();
+			OpenDialog dialog = new OpenDialog(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -55,9 +58,11 @@ public class OpenDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @param actionListener 
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public OpenDialog() {
+	public OpenDialog(Main frame) {
+		parentFrame = frame;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -66,9 +71,10 @@ public class OpenDialog extends JDialog {
 				try {
 					ArrayList<Quiz> list = qs.list();
 					if(list != null){
-						quizList.addAll(list);
+						//quizList.addAll(list);
 						for (int i = 0; i < list.size(); i++) {
 							Quiz z = list.get(i);
+							quizList.add(z);
 							if(wbTblQuiz.getRowCount() == 0){
 								model.addRow(new Object[]{
 										1,
@@ -100,9 +106,20 @@ public class OpenDialog extends JDialog {
 		getContentPane().add(webPanel, BorderLayout.CENTER);
 		
 		WebButton wbtnOpen = new WebButton();
+		wbtnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentFrame.setCurrentQuiz(quizList.get(wbTblQuiz.getSelectedRow()));
+				parentFrame.loadCurrentQuiz();
+			}
+		});
 		wbtnOpen.setText("Open");
 		
 		WebButton wbtnCancel = new WebButton();
+		wbtnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		wbtnCancel.setText("Cancel");
 		
 		WebPanel webPanel_1 = new WebPanel();
@@ -234,6 +251,7 @@ public class OpenDialog extends JDialog {
 		);
 		
 		wbTblQuestion = new WebTable();
+		wbTblQuestion.setEditable(false);
 		wbTblQuestion.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -244,6 +262,7 @@ public class OpenDialog extends JDialog {
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
 		wbTblQuiz = new WebTable();
+		wbTblQuiz.setEditable(false);
 		wbTblQuiz.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -257,6 +276,9 @@ public class OpenDialog extends JDialog {
 			public void valueChanged(ListSelectionEvent arg0) {
 				Quiz quiz = quizList.get(wbTblQuiz.getSelectedRow());
 				DefaultTableModel model = (DefaultTableModel) wbTblQuestion.getModel();
+				for (int i = 0; i < wbTblQuestion.getRowCount(); i++) {
+					model.removeRow(i);
+				}
 				for (int i = 0; i < quiz.getQuestionList().size(); i++) {
 					model.addRow(new Object[]{
 							quiz.getQuestionList().get(i).getTitle()

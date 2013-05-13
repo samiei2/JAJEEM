@@ -85,6 +85,8 @@ public class QuizWindow extends WebFrame {
 
 	NumberFormat format; // Format minutes:seconds with leading zeros
 
+	private String server;
+
 	/**
 	 * Launch the application.
 	 */
@@ -476,13 +478,14 @@ public class QuizWindow extends WebFrame {
 						
 						@Override
 						public void run() {
-							QuizResponse resp = new QuizResponse(currentQuestion);
-							resp.setQuestion(currentQuestion);
-							resp.setStudent(getStudent());
-							//new QuizEvent().fireResponseEvent(resp);
-							SendQuizResponseCommand cmd = new SendQuizResponseCommand("127.0.0.1", 9092);
-							cmd.setEvent(resp);
 							try {
+								QuizResponse resp = new QuizResponse(currentQuestion);
+								resp.setQuestion(currentQuestion);
+								resp.setStudent(getStudent());
+								//new QuizEvent().fireResponseEvent(resp);
+								SendQuizResponseCommand cmd = new SendQuizResponseCommand(server, Integer.parseInt(Config.getParam("quizlistenport")));
+								cmd.setEvent(resp);
+							
 								ServerService service = new ServerService();
 								service.send(cmd);
 							} catch (NumberFormatException e) {
@@ -683,5 +686,9 @@ public class QuizWindow extends WebFrame {
 
 	public void setQuiz(Quiz currentQuiz2) {
 		currentQuiz = currentQuiz2;
+	}
+
+	public void setServer(String serv) {
+		server = serv;
 	}
 }

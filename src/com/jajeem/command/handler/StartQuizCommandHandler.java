@@ -10,6 +10,7 @@ public class StartQuizCommandHandler implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StartQuizCommand command = (StartQuizCommand)cmd;
 		QuizWindow quiz = new QuizWindow(command.getQuiz());
+		quiz.setServer(command.getServer());
 	}
 
 }
