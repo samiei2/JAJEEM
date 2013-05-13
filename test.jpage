@@ -1,4 +1,11 @@
+<<<<<<< HEAD
+new com.jajeem.util.Config();
+com.jajeem.command.service.ClientService clientService = new com.jajeem.command.service.ClientService(
+		com.jajeem.util.Config.getParam("broadcastingIp"), Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+clientService.start();
+=======
 VolumeCommand v = new VolumeCommand("22",22, "mute", 3333);
 SetVolumeCommandHandler c = new SetVolumeCommandHandler();
 
 c.run(v);
+>>>>>>> b18368d90f9893185ec4a8b77537c99aa0e62b6c

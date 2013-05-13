@@ -261,10 +261,10 @@ public class QuizDAO implements IQuizDAO {
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-
-		ps = con.prepareStatement("SELECT * FROM Quiz");
-
 		try {
+			ps = con.prepareStatement("SELECT * FROM Quiz");
+
+		
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Quiz quiz = new Quiz();

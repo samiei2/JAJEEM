@@ -11,52 +11,56 @@ import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Response;
+import com.jajeem.util.StartUp;
 
 public class QuizService implements IQuizService{
 	private QuizDAO quizDAO;
 	private QuestionDAO questionDAO;
 	private ResponseDAO responseDAO;
 	private RunDAO runDAO;
+	StartUp start = new StartUp();
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
+		
 		quizDAO = new QuizDAO();//TODO remove this line
 		if(quizDAO != null)
-			quizDAO.create(quiz);
+			return quizDAO.create(quiz);
 		return null;
 	}
 
 	@Override
 	public Quiz get(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
-			quizDAO.get(quiz);
+			return quizDAO.get(quiz);
 		return null;
 	}
 
 	@Override
 	public boolean update(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
-			quizDAO.update(quiz);
+			return quizDAO.update(quiz);
 		return false;
 	}
 
 	@Override
 	public boolean delete(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
-			quizDAO.delete(quiz);
+			return quizDAO.delete(quiz);
 		return false;
 	}
 
 	@Override
 	public ArrayList<Quiz> list() throws SQLException {
+		quizDAO = new QuizDAO();//TODO remove this line
 		if(quizDAO != null)
-			quizDAO.list();
+			return quizDAO.list();
 		return null;
 	}
 
 	@Override
 	public Quiz copy(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
-			quizDAO.get(quiz);
+			return quizDAO.get(quiz);
 		return null;
 	}
 

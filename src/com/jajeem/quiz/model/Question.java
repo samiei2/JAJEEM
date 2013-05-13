@@ -5,23 +5,23 @@ import java.io.Serializable;
 public class Question implements Serializable {
 	
 	//properties
-	private int id;
-	private int instructorId;
-	private String title;
-	private int quizId;
-	private byte type;
-	private int point;
-	private String imagePath;
-	private String url;
-	private String answer1;
-	private String answer2;
-	private String answer3;
-	private String answer4;
-	private String answer5;
-	private boolean[] correctAnswer; //its a map.for example : false,true,false,false,false means ,1:wrong,2:right,....
+	private int id = 0;
+	private int instructorId = 0;
+	private String title = "";
+	private int quizId = 0;
+	private byte type = 0;
+	private int point = 0;
+	private String imagePath = "";
+	private String url = "";
+	private String answer1 = "";
+	private String answer2 = "";
+	private String answer3 = "";
+	private String answer4 = "";
+	private String answer5 = "";
+	private boolean[] correctAnswer = new boolean[]{false,false,false,false,false}; //its a map.for example : false,true,false,false,false means ,1:wrong,2:right,....
 	private boolean[] studentAnswer;
 	private String studentTextAnswer;
-	private Response response;
+	private Response response = new Response();
 	
 	public Question(int id2) {
 		this.id = id2;

@@ -47,6 +47,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	private Timer timer; // Updates the count every second
 	private long remaining; // How many milliseconds remain in the countdown.
 	private long lastUpdate; // When count was last updated
+	private int total;
 	
 	/**
 	 * Create the panel.
@@ -298,11 +299,25 @@ public class Panel_Bottom_2 extends WebPanel {
 				Question temp = e.getQuestion();
 				Student student = e.getStudent();
 				if(currentQuestion != null && temp != null && student != null){
+					if(quizResponse.get(webComboBox.getSelectedIndex()).size()!=0){
+						for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
+							if(student.getId() == quizResponse.get(webComboBox.getSelectedIndex()).get(i).getStudent().getId()){
+								quizResponse.get(webComboBox.getSelectedIndex()).remove(i);
+								quizResponse.get(webComboBox.getSelectedIndex()).add(e);
+							}
+							else{
+								quizResponse.get(webComboBox.getSelectedIndex()).add(e);
+							}
+						}
+					}
+					else{
+						quizResponse.get(webComboBox.getSelectedIndex()).add(e);
+					}
 					if(currentQuestion.getId() == temp.getId()){
 						AddResponse(e);
 					}
 					else{
-						quizResponse.get(webComboBox.getSelectedIndex()).add(e);
+						
 					}
 				}
 			}
@@ -320,10 +335,11 @@ public class Panel_Bottom_2 extends WebPanel {
 		Student student = e.getStudent();
 		if(currentQuestion.getType() == 0 || currentQuestion.getType() == 1){
 			if(webTable.getRowCount() != 0){
+				total = webTable.getRowCount();
 				model.addRow(new Object[]{
 						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
 						student.getId(),
-						student.getFirstName() + student.getLastName(),
+						student.getFirstName() + " " + student.getLastName(),
 						"",
 						(currentQuestion.getCorrectAnswer()[0] + "," + 
 							currentQuestion.getCorrectAnswer()[1] + "," + 
@@ -338,10 +354,11 @@ public class Panel_Bottom_2 extends WebPanel {
 				});
 			}
 			else{
+				total = 1;
 				model.addRow(new Object[]{
 						1,
 						student.getId(),
-						student.getFirstName() + student.getLastName(),
+						student.getFirstName() + " " + student.getLastName(),
 						"",
 						(currentQuestion.getCorrectAnswer()[0] + "," + 
 								currentQuestion.getCorrectAnswer()[1] + "," + 
@@ -361,7 +378,7 @@ public class Panel_Bottom_2 extends WebPanel {
 				model.addRow(new Object[]{
 						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
 						student.getId(),
-						student.getFirstName() + student.getLastName(),
+						student.getFirstName() + " " + student.getLastName(),
 						"",
 						"N/A",
 						temp.getStudentTextAnswer()
@@ -371,7 +388,7 @@ public class Panel_Bottom_2 extends WebPanel {
 				model.addRow(new Object[]{
 						1,
 						student.getId(),
-						student.getFirstName() + student.getLastName(),
+						student.getFirstName() + " " + student.getLastName(),
 						"",
 						"N/A",
 						temp.getStudentTextAnswer()

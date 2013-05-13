@@ -3,12 +3,12 @@ package com.jajeem.core.model;
 public class User {
 	// properties
 	private int id;
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	private String username;
-	private String password;
-	private String language;
+	private String firstName = "";
+	private String middleName = "";
+	private String lastName = "";
+	private String username = "";
+	private String password = "";
+	private String language = "";
 	
 	// setter & getters
 	public int getId() {
