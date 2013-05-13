@@ -161,7 +161,10 @@ public class Instructor implements SwingConstants {
 
 		WebPanel centerPanel = new WebPanel();
 		setupPanel(centerPanel, CENTER);
-		panel.add(centerPanel, "1,1");
+		WebScrollPane webScrollPaneCenter = new WebScrollPane(centerPanel, false);
+		webScrollPaneCenter
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panel.add(webScrollPaneCenter, "1,1");
 
 		return panel;
 	}
@@ -204,6 +207,7 @@ public class Instructor implements SwingConstants {
 		}
 
 		case EAST: {
+			InstructorRight.iconsPath = "icons/applications_style";
 			panel = InstructorRight.createPanel(panel);
 
 			break;

@@ -37,6 +37,8 @@ import com.jajeem.util.Config;
 
 public class InstructorRight {
 
+	public static String iconsPath = "";
+
 	public static WebPanel createPanel(WebPanel panel2) throws Exception {
 
 		new Config();
@@ -50,32 +52,31 @@ public class InstructorRight {
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
 
-		ImageIcon imgIntercom = new ImageIcon(
-				"icons/applications/intercom_text.png");
+		ImageIcon imgIntercom = new ImageIcon(iconsPath + "/intercom_text.png");
 		WebButton intercomButton = new WebButton(imgIntercom);
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				"Start talking to selected student", TooltipWay.left);
 		intercomButton.setRound(0);
 		panel.add(intercomButton);
 
-		ImageIcon imgStopInternet = new ImageIcon(
-				"icons/applications/stopInternet_text.png");
+		ImageIcon imgStopInternet = new ImageIcon(iconsPath
+				+ "/stopInternet_text.png");
 		WebButton stopInternetButton = new WebButton(imgStopInternet);
 		stopInternetButton.setRound(0);
 		TooltipManager.setTooltip(stopInternetButton, imgToolTip,
 				"Stop all browsers", TooltipWay.left);
 		panel.add(stopInternetButton);
 
-		ImageIcon imgGroupwork = new ImageIcon(
-				"icons/applications/groupwork_text.png");
+		ImageIcon imgGroupwork = new ImageIcon(iconsPath
+				+ "/groupwork_text.png");
 		WebButton groupworkButton = new WebButton(imgGroupwork);
 		groupworkButton.setRound(0);
 		TooltipManager.setTooltip(groupworkButton, imgToolTip,
 				"Start a group with selected students", TooltipWay.left);
 		panel.add(groupworkButton);
 
-		ImageIcon imgBlockApplication = new ImageIcon(
-				"icons/applications/blockApplication_text.png");
+		ImageIcon imgBlockApplication = new ImageIcon(iconsPath
+				+ "/blockApplication_text.png");
 		WebButton blockApplicationButton = new WebButton(imgBlockApplication);
 		blockApplicationButton.setRound(0);
 		TooltipManager.setTooltip(blockApplicationButton, imgToolTip,
@@ -83,8 +84,7 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(blockApplicationButton);
 
-		ImageIcon imgBlackout = new ImageIcon(
-				"icons/applications/blackout_text.png");
+		ImageIcon imgBlackout = new ImageIcon(iconsPath + "/blackout_text.png");
 		WebButton blackoutButton = new WebButton(imgBlackout);
 		blackoutButton.setRound(0);
 		TooltipManager.setTooltip(blackoutButton, imgToolTip,
@@ -92,37 +92,36 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(blackoutButton);
 
-		ImageIcon imgQuiz = new ImageIcon("icons/applications/quiz_text.png");
+		ImageIcon imgQuiz = new ImageIcon(iconsPath + "/quiz_text.png");
 		WebButton quizButton = new WebButton(imgQuiz);
 		quizButton.setRound(0);
 		TooltipManager.setTooltip(quizButton, imgToolTip,
 				"Start quiz for the class", TooltipWay.left);
 		panel.add(quizButton);
 
-		ImageIcon imgSendWebsite = new ImageIcon(
-				"icons/applications/sendWebsite_text.png");
+		ImageIcon imgSendWebsite = new ImageIcon(iconsPath
+				+ "/sendWebsite_text.png");
 		WebButton sendWebsiteButton = new WebButton(imgSendWebsite);
 		sendWebsiteButton.setRound(0);
 		TooltipManager.setTooltip(sendWebsiteButton, imgToolTip,
 				"Send website", TooltipWay.left);
 		panel.add(sendWebsiteButton);
 
-		ImageIcon imgMessage = new ImageIcon(
-				"icons/applications/message_text.png");
+		ImageIcon imgMessage = new ImageIcon(iconsPath + "/message_text.png");
 		WebButton messageButton = new WebButton(imgMessage);
 		messageButton.setRound(0);
 		TooltipManager.setTooltip(messageButton, imgToolTip, "Message",
 				TooltipWay.left);
 		panel.add(messageButton);
 
-		ImageIcon imgVNC = new ImageIcon("icons/applications/vnc_text.png");
+		ImageIcon imgVNC = new ImageIcon(iconsPath + "/vnc_text.png");
 		WebButton VNCButton = new WebButton(imgVNC);
 		VNCButton.setRound(0);
-		TooltipManager.setTooltip(VNCButton, imgToolTip, "Remote access to selected student",
-				TooltipWay.left);
+		TooltipManager.setTooltip(VNCButton, imgToolTip,
+				"Remote access to selected student", TooltipWay.left);
 		panel.add(VNCButton);
 
-		ImageIcon imgPower = new ImageIcon("icons/applications/power_text.png");
+		ImageIcon imgPower = new ImageIcon(iconsPath + "/power_text.png");
 		final WebButton powerButton = new WebButton(imgPower);
 		powerButton.setRound(0);
 		TooltipManager.setTooltip(powerButton, imgToolTip,
@@ -267,7 +266,8 @@ public class InstructorRight {
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
 				try {
-					powerCommand = new PowerCommand("", Integer.parseInt(Config.getParam("port")), "");
+					powerCommand = new PowerCommand("", Integer.parseInt(Config
+							.getParam("port")), "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -282,7 +282,7 @@ public class InstructorRight {
 					WebButton turnOffButton = new WebButton("Turn off");
 					WebButton logOffButton = new WebButton("Log off");
 					WebButton restartButton = new WebButton("Restart");
-					
+
 					WebButtonGroup buttonGroup = new WebButtonGroup(true,
 							turnOffButton, logOffButton, restartButton);
 					buttonGroup.setButtonsDrawFocus(false);
