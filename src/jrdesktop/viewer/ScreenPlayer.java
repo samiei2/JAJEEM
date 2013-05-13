@@ -24,6 +24,11 @@ import jrdesktop.utilities.ImageUtility;
 
 public class ScreenPlayer extends JLabel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 52426767737910040L;
+
 	private Recorder recorder;
 
 	private float screenScale = 1.0f;

@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import com.alee.laf.desktoppane.WebInternalFrame;
-import com.alee.laf.panel.WebPanel;
 
 import jrdesktop.Commons;
 import jrdesktop.Config;

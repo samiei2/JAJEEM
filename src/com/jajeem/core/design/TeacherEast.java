@@ -24,6 +24,7 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.quiz.design.Main;
@@ -42,6 +43,7 @@ public class TeacherEast {
 
 		GridLayout grid = new GridLayout(0, 1);
 		panel.setLayout(grid);
+		panel.setUndecorated(true);
 
 		ImageIcon imgIntercom = new ImageIcon(
 				"icons/applications/intercom_text.png");
@@ -49,7 +51,6 @@ public class TeacherEast {
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				"Start talking to selected student", TooltipWay.left);
 		intercomButton.setRound(0);
-		intercomButton.setUndecorated(true);
 		panel.add(intercomButton);
 
 		ImageIcon imgStopInternet = new ImageIcon(
@@ -58,7 +59,6 @@ public class TeacherEast {
 		stopInternetButton.setRound(0);
 		TooltipManager.setTooltip(stopInternetButton, imgToolTip,
 				"Stop all browsers", TooltipWay.left);
-		stopInternetButton.setUndecorated(true);
 		panel.add(stopInternetButton);
 
 		ImageIcon imgGroupwork = new ImageIcon(
@@ -172,10 +172,32 @@ public class TeacherEast {
 				WebLookAndFeel.setDecorateDialogs(true);
 
 				// Opening dialog
-				ExampleDialog exampleDialog = new ExampleDialog(panel);
-				exampleDialog.pack();
-				exampleDialog.setLocationRelativeTo(panel);
-				exampleDialog.setVisible(true);
+				Dialog dialog = new Dialog(panel, "application",
+						"Application name", "Block");
+				dialog.pack();
+				dialog.setLocationRelativeTo(panel);
+				dialog.setVisible(true);
+
+				// Restoring frame decoration option
+				WebLookAndFeel.setDecorateDialogs(decorateFrames);
+			}
+		});
+
+		// send a website to student's
+		sendWebsiteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+					throws NumberFormatException {
+				// Enabling dialog decoration
+				boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
+				WebLookAndFeel.setDecorateDialogs(true);
+
+				// Opening dialog
+				Dialog dialog = new Dialog(panel, "website", "Website", "Send");
+				dialog.pack();
+				dialog.setLocationRelativeTo(panel);
+				dialog.setVisible(true);
 
 				// Restoring frame decoration option
 				WebLookAndFeel.setDecorateDialogs(decorateFrames);
@@ -193,19 +215,24 @@ public class TeacherEast {
 
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
+		panel2.setUndecorated(true);
+		panel2.setOpaque(true);
+		panel.setOpaque(true);
 
-		return panel;
+		return panel2;
 	}
 
-	private static class ExampleDialog extends WebDialog {
+	private static class Dialog extends WebDialog {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -4762888417428594490L;
 
-		public ExampleDialog(WebPanel owner) {
+		public Dialog(WebPanel owner, String type, String labelText,
+				String buttonText) {
 			super(owner);
-			setIconImages(WebLookAndFeel.getImages());
+			//setIconImages(WebLookAndFeel.getImages());
+			setRound(0);
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
 			setResizable(false);
 			setModal(true);
@@ -220,47 +247,79 @@ public class TeacherEast {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
-			content.add(new WebLabel("Application name", WebLabel.TRAILING),
-					"0,0");
+			content.add(new WebLabel(labelText, WebLabel.TRAILING), "0,0");
 			final WebTextField text = new WebTextField(15);
 			content.add(text, "1,0");
 
-			WebButton block = new WebButton("Block");
+			WebButton ok = new WebButton(buttonText);
 			WebButton cancel = new WebButton("Cancel");
-			ActionListener listener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
-					if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
-						String selectedStudent = "";
-						selectedStudent = (String) TeacherCenter.desktopPane
-								.getSelectedFrame().getClientProperty("ip");
-						try {
-							ServerService ss = new ServerService();
-							WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")), text.getText(),
-									true);
-							ss.send(ic);
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+			if (type == "application") {
+				ActionListener listener = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+						if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) TeacherCenter.desktopPane
+									.getSelectedFrame().getClientProperty("ip");
+							try {
+								ServerService ss = new ServerService();
+								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										selectedStudent,
+										Integer.parseInt(Config
+												.getParam("port")),
+										text.getText(), true);
+								ss.send(ic);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
 						}
 
 					}
+				};
+				ok.addActionListener(listener);
+			} else if (type == "website") {
+				ActionListener listener = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+						if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) TeacherCenter.desktopPane
+									.getSelectedFrame().getClientProperty("ip");
+							try {
+								ServerService ss = new ServerService();
+								WebsiteCommand wc = new WebsiteCommand(
+										selectedStudent,
+										Integer.parseInt(Config
+												.getParam("port")),
+										text.getText());
+								ss.send(wc);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 
+						}
+
+					}
+				};
+				ok.addActionListener(listener);
+			}
+
+			cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
 				}
-			};
-
-			block.addActionListener(listener);
-			cancel.addActionListener(listener);
-			content.add(new CenterPanel(new GroupPanel(5, block, cancel)),
+			});
+			content.add(new CenterPanel(new GroupPanel(5, ok, cancel)),
 					"0,2,1,2");
-			SwingUtils.equalizeComponentsWidths(block, cancel);
+			SwingUtils.equalizeComponentsWidths(ok, cancel);
 
 			add(content);
 
-			HotkeyManager.registerHotkey(this, block, Hotkey.ESCAPE);
-			HotkeyManager.registerHotkey(this, block, Hotkey.ENTER);
+			HotkeyManager.registerHotkey(this, ok, Hotkey.ESCAPE);
+			HotkeyManager.registerHotkey(this, ok, Hotkey.ENTER);
 		}
 	}
 

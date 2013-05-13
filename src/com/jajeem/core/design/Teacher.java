@@ -7,21 +7,22 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.net.InetAddress;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.apache.log4j.PropertyConfigurator;
 
-import com.alee.extended.label.WebVerticalLabel;
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.scroll.WebScrollPane;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Clock;
 import com.jajeem.util.Config;
 
 public class Teacher implements SwingConstants {
@@ -75,8 +76,7 @@ public class Teacher implements SwingConstants {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
 		frmJajeemProject.setRound(0);
-		frmJajeemProject.setTitle("Jajeem Project");
-		
+		frmJajeemProject.setTitle("JaJeem Project");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Teacher.class.getResource("/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(250, 150, 850, 500);
@@ -124,19 +124,24 @@ public class Teacher implements SwingConstants {
 		setupPanel(southPanel, SOUTH);
 		panel.add(southPanel, "1,2,2,2");
 
-		WebPanel leadingPanel = new WebPanel();
-		leadingPanel.setDrawSides(true, false, false, true);
-		leadingPanel.setRound(0);
-		setupPanel(leadingPanel, WEST);
-		panel.add(leadingPanel, "0,1,0,2");
+		/*
+		 * West panel for now not shown. WebPanel leadingPanel = new WebPanel();
+		 * leadingPanel.setDrawSides(true, false, false, true);
+		 * leadingPanel.setRound(0); setupPanel(leadingPanel, WEST);
+		 * panel.add(leadingPanel, "0,1,0,2");
+		 */
 
 		WebPanel trailingPanel = new WebPanel();
 		trailingPanel.setDrawSides(false, true, true, false);
 		trailingPanel.setRound(0);
 		setupPanel(trailingPanel, EAST);
-		final WebCollapsiblePane rPanel = new WebCollapsiblePane("Controls",
-				trailingPanel);
-		
+		WebScrollPane webScrollPane = new WebScrollPane(trailingPanel, false);
+		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
+				webScrollPane);
+		rPanel.setCollapseIcon(new ImageIcon("icons/angle-right.png"));
+		rPanel.setExpandIcon(new ImageIcon("icons/angle-left.png"));
+		rPanel.setRotateStateIcon(false);
+
 		rPanel.setExpanded(true);
 		rPanel.setTitlePanePostion(SwingConstants.LEFT);
 		panel.add(rPanel, "2,0,2,1");
@@ -162,13 +167,13 @@ public class Teacher implements SwingConstants {
 		}
 
 		case SOUTH: {
-			panel.add(new WebLabel(
-					"Teanab Institute: English Advance 4, Prof. Samiei, Tuesdays 17-19"));
+			panel.add(new Clock());
 			break;
 		}
 
 		case WEST: {
-			panel.add(new WebVerticalLabel("West panel", WebLabel.CENTER, false));
+			// panel.add(new WebVerticalLabel("West panel", WebLabel.CENTER,
+			// false));
 
 			break;
 		}
