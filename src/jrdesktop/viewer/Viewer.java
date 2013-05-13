@@ -60,7 +60,7 @@ public class Viewer extends Thread {
 	public void Start() {
 		connect();
 		if (connected) {
-			recorder = new Recorder(this, client.clientConfig);
+			recorder = new Recorder(this, client.clientConfig, false);
 			recorder.viewerGUI.Start();
 		} else
 			Stop();
@@ -69,7 +69,7 @@ public class Viewer extends Thread {
 	public void StartThumbs(WebInternalFrame panel) {
 		connect();
 		if (connected) {
-			recorder = new Recorder(this, client.clientConfig);
+			recorder = new Recorder(this, client.clientConfig, true);
 			recorder.screenPlayer.thumb = true;
 			recorder.viewerGUIThumbs.Start(panel);
 		} else
@@ -224,7 +224,8 @@ public class Viewer extends Thread {
 	}
 
 	public void sendData() {
-		if (!recorder.viewerGUI.isActive())
+		if ((recorder.viewerGUI != null && !recorder.viewerGUI.isActive())
+				|| (recorder.viewerGUIThumbs !=null && !recorder.viewerGUIThumbs.isActive()))
 			return;
 		setMouseEvents();
 		setKeyEvents();
@@ -234,7 +235,8 @@ public class Viewer extends Thread {
 	public void receiveData() {
 		getScreenRect();
 		getScreenCapture();
-		if (!recorder.viewerGUI.isActive())
+		if ((recorder.viewerGUI != null && !recorder.viewerGUI.isActive())
+				|| (recorder.viewerGUIThumbs !=null && !recorder.viewerGUIThumbs.isActive()))
 			return;
 		getClipboardContent();
 	}

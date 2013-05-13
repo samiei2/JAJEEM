@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
+import com.alee.extended.panel.WebButtonGroup;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
@@ -19,20 +20,24 @@ import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.text.WebTextField;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
+import com.alee.managers.popup.PopupStyle;
+import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.quiz.design.Main;
+import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
 public class TeacherEast {
 
-	public static WebPanel createPanel(WebPanel panel2) {
+	public static WebPanel createPanel(WebPanel panel2) throws Exception {
 
 		new Config();
 
@@ -110,8 +115,22 @@ public class TeacherEast {
 				TooltipWay.left);
 		panel.add(messageButton);
 
+		ImageIcon imgVNC = new ImageIcon("icons/applications/vnc_text.png");
+		WebButton VNCButton = new WebButton(imgVNC);
+		VNCButton.setRound(0);
+		TooltipManager.setTooltip(VNCButton, imgToolTip, "Remote access to selected student",
+				TooltipWay.left);
+		panel.add(VNCButton);
+
+		ImageIcon imgPower = new ImageIcon("icons/applications/power_text.png");
+		final WebButton powerButton = new WebButton(imgPower);
+		powerButton.setRound(0);
+		TooltipManager.setTooltip(messageButton, imgToolTip,
+				"Turn off, Log off, Restart student's computer",
+				TooltipWay.left);
+		panel.add(powerButton);
+
 		// blacks student's screen
-		// TODO should lock student's mouse & keyboard
 		blackoutButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -213,6 +232,99 @@ public class TeacherEast {
 			}
 		});
 
+		VNCButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+					throws NumberFormatException {
+				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) TeacherCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					jrdesktop.Config conf = null;
+					try {
+						conf = new jrdesktop.Config(false, "", selectedStudent,
+								Integer.parseInt(Config.getParam("vncPort")),
+								"admin", "admin", false, false);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					VNCCaptureService vnc = new VNCCaptureService();
+					vnc.startClient(conf);
+				}
+
+			}
+		});
+
+		powerButton.addActionListener(new ActionListener() {
+
+			private PowerCommand powerCommand;
+			private String selectedStudent = "";
+			private ServerService serverService = new ServerService();
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+					throws NumberFormatException {
+				try {
+					powerCommand = new PowerCommand("", Integer.parseInt(Config.getParam("port")), "");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if (TeacherCenter.desktopPane.getSelectedFrame() != null) {
+
+					selectedStudent = (String) TeacherCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+
+					powerCommand.setHost(selectedStudent);
+
+					WebButton turnOffButton = new WebButton("Turn off");
+					WebButton logOffButton = new WebButton("Log off");
+					WebButton restartButton = new WebButton("Restart");
+					
+					WebButtonGroup buttonGroup = new WebButtonGroup(true,
+							turnOffButton, logOffButton, restartButton);
+					buttonGroup.setButtonsDrawFocus(false);
+
+					final WebPopup popup = new WebPopup();
+					popup.setPopupStyle(PopupStyle.lightSmall);
+					popup.setMargin(5);
+					popup.add(buttonGroup);
+					popup.setRound(0);
+					popup.showPopup(powerButton);
+
+					turnOffButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							popup.hidePopup();
+							powerCommand.setType("turnOff");
+							serverService.send(powerCommand);
+						}
+					});
+
+					logOffButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							popup.hidePopup();
+							powerCommand.setType("logOff");
+							serverService.send(powerCommand);
+						}
+					});
+
+					restartButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							popup.hidePopup();
+							powerCommand.setType("restart");
+							serverService.send(powerCommand);
+						}
+					});
+				}
+			}
+		});
+
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
 		panel2.setUndecorated(true);
@@ -231,7 +343,7 @@ public class TeacherEast {
 		public Dialog(WebPanel owner, String type, String labelText,
 				String buttonText) {
 			super(owner);
-			//setIconImages(WebLookAndFeel.getImages());
+			// setIconImages(WebLookAndFeel.getImages());
 			setRound(0);
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
 			setResizable(false);

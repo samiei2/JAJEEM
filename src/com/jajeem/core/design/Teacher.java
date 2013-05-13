@@ -71,8 +71,9 @@ public class Teacher implements SwingConstants {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws Exception 
 	 */
-	private void initialize() {
+	private void initialize() throws Exception {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
 		frmJajeemProject.setRound(0);
@@ -84,7 +85,7 @@ public class Teacher implements SwingConstants {
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
-		// frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		 frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
@@ -101,7 +102,7 @@ public class Teacher implements SwingConstants {
 		clientService.start();
 	}
 
-	private WebPanel createPanel() {
+	private WebPanel createPanel() throws Exception {
 
 		WebPanel panel = new WebPanel();
 		panel.setUndecorated(false);
@@ -155,7 +156,7 @@ public class Teacher implements SwingConstants {
 		return panel;
 	}
 
-	private void setupPanel(WebPanel panel, int location) {
+	private void setupPanel(WebPanel panel, int location) throws Exception {
 
 		panel.setUndecorated(false);
 		panel.setMargin(new Insets(1, 1, 1, 1));

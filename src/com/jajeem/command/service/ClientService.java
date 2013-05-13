@@ -107,19 +107,19 @@ public class ClientService implements IConnectorSevice, Runnable {
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
 					startCaptureHandler.run(cmd);
-					
+
 				} else if (cmd instanceof StopCaptureCommand) {
 					StopCaptureCommandHandler stopCaptureHandler = new StopCaptureCommandHandler();
 					stopCaptureHandler.run(cmd);
-					
+
 				} else if (cmd instanceof StartViewerCommand) {
 					StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
 					startViewerHandler.run(cmd);
-					
+
 				} else if (cmd instanceof StartUpCommand) {
 					StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
 					startUpHandler.run(cmd);
-					
+
 				} else if (cmd instanceof StartQuizCommand) {
 					StartQuizCommandHandler startQuizHandler = new StartQuizCommandHandler();
 					startQuizHandler.run(cmd);
@@ -129,26 +129,31 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof SendQuizResponseCommand) {
 					SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
 					sendquizresponse.run(cmd);
-					
+
 				} else if (cmd instanceof WhiteBlackAppCommand) {
 					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
 					setWhiteBlackAppCommandHandler.run(cmd);
-					
+
 				} else if (cmd instanceof BlackoutCommand) {
 					SetBlackoutCommandHandler setBlackoutCommandHandler = new SetBlackoutCommandHandler();
 					setBlackoutCommandHandler.run(cmd);
-					
+
 				} else if (cmd instanceof InternetCommand) {
 					SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
 					setInternetCommandHandler.run(cmd);
-					
+
 				} else if (cmd instanceof VolumeCommand) {
 					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
 					setVolumeCommandHandler.run(cmd);
-					
+
 				} else if (cmd instanceof LockCommand) {
 					SetLockCommandHandler setLockCommandHandler = new SetLockCommandHandler();
 					setLockCommandHandler.run(cmd);
+				}
+
+				else if (cmd instanceof PowerCommand) {
+					SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
+					setPowerCommandHandler.run(cmd);
 				}
 
 			} catch (Exception ex) {
