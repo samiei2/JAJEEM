@@ -149,7 +149,7 @@ public class QuizWindow extends WebFrame {
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			}
 		});
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 542, 626);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -169,9 +169,9 @@ public class QuizWindow extends WebFrame {
 		final WebPanel webPanel_1 = new WebPanel();
 		WebPanel webPanel_2 = new WebPanel();
 		WebPanel webPanel_3 = new WebPanel();
-		mainPanel.add(webPanel_1);
-		mainPanel.add(webPanel_2);
-		mainPanel.add(webPanel_3);
+		mainPanel.add(webPanel_1,"0");
+		mainPanel.add(webPanel_2,"1");
+		mainPanel.add(webPanel_3,"2");
 		
 		WebScrollPane webScrollPane_2 = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_3 = new GroupLayout(webPanel_3);

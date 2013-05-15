@@ -80,13 +80,12 @@ public class Panel_Bottom_1 extends WebPanel {
                 parentPanel.getCurrentQuestion().setQuizId(parentPanel.getCurrentQuiz().getId());
                 parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getInstructorId());
 				parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_1().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_2().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_3().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_4().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_5().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField_6().getText());
-				parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getInstructorId());
+				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField().getText());
+				parentPanel.getCurrentQuestion().setAnswer2(getQuestionDesignPanel().getWebTextField_1().getText());
+				parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
+				parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
+				parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
+				parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 				try{
 					parentPanel.getCurrentQuestion().setPoint(Integer.parseInt(getQuestionDesignPanel().getWebTextField_6().getText()));
 				}
@@ -128,8 +127,17 @@ public class Panel_Bottom_1 extends WebPanel {
 				/// Add the question to the current quiz and question list
 				if(questionListPanel.getWebTable().getSelectedRow() == -1){ // meaning no question is selected so the changes are made to a new question not an existing one
 					parentPanel.getCurrentQuiz().addQuestion(parentPanel.getCurrentQuestion());
+					if(questionListPanel.getWebTable().getRowCount() != 0)
 					parentPanel.getTablemodel().addRow(
-							new Object[]{questionListPanel.getWebTable().getRowCount() + 1,
+							new Object[]{
+									Integer.parseInt(String.valueOf(parentPanel.getTablemodel().getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,
+									getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
+									parentPanel.getCurrentQuestion().getPoint(),
+									parentPanel.getCurrentQuestion().getTitle()});
+					else
+						parentPanel.getTablemodel().addRow(
+								new Object[]{
+									1,
 									getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
 									parentPanel.getCurrentQuestion().getPoint(),
 									parentPanel.getCurrentQuestion().getTitle()});
@@ -158,7 +166,7 @@ public class Panel_Bottom_1 extends WebPanel {
 				getQuestionDesignPanel().getWebCheckBox_4().setSelected(false);
 				
 				parentPanel.getCurrentQuiz().addQuestion(new Question());
-				parentPanel.getTablemodel().addRow(new Object[]{questionListPanel.getWebTable().getRowCount(),getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),0,""});
+				parentPanel.getTablemodel().addRow(new Object[]{questionListPanel.getWebTable().getRowCount() + 1,getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),0,""});
 				ListSelectionModel m_modelSelection = questionListPanel.getWebTable().getSelectionModel();
 				m_modelSelection.setSelectionInterval(questionListPanel.getWebTable().getRowCount()-1, questionListPanel.getWebTable().getRowCount()-1);
 				parentPanel.setEventsEnabled(true);
