@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
-import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
 import com.jajeem.util.KeyboardBlocker;
@@ -19,14 +18,14 @@ import com.jajeem.util.MouseBlocker;
 public class SetBlackoutCommandHandler implements ICommandHandler {
 
 	private static MouseBlocker mouseBlocker = new MouseBlocker();
-	private static KeyboardBlocker keyboardBlocker = new KeyboardBlocker();
+//	private static KeyboardBlocker keyboardBlocker = new KeyboardBlocker();
 	private static JFrame frame = new JFrame();
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (Student.isBlack()) {
 			mouseBlocker.stop();
-			keyboardBlocker.stop();
+//			keyboardBlocker.stop();
 			frame.setVisible(false);
 			frame.dispose();
 			Student.setBlack(false);
@@ -44,7 +43,7 @@ public class SetBlackoutCommandHandler implements ICommandHandler {
 				frame.setAlwaysOnTop(true);
 				frame.setVisible(true);
 				mouseBlocker.start();
-				keyboardBlocker.start();
+//				keyboardBlocker.start();
 				Student.setBlack(true);
 			}
 		}
