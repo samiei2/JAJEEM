@@ -31,6 +31,16 @@ import com.jajeem.util.Config;
 public class Student {
 
 	private JFrame frmJajeemProject;
+	
+	private static boolean black;
+
+	public static boolean isBlack() {
+		return black;
+	}
+
+	public static void setBlack(boolean black) {
+		Student.black = black;
+	}
 
 	/**
 	 * Launch the application.
