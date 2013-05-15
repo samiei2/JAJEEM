@@ -89,6 +89,7 @@ public class Main extends JFrame {
 //			e2.printStackTrace();
 //		}
 //		clientService.start();
+		new Config();
 		ClientService clientService2 = null;
 		try {
 			clientService2 = new ClientService(Config.getParam("broadcastingIp"), 9092);
@@ -124,8 +125,8 @@ public class Main extends JFrame {
 			}
 		});
 		setBackground(new Color(245, 245, 245));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1049, 686);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 1049, 729);
 		contentPane = new WebPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -283,6 +284,7 @@ public class Main extends JFrame {
 			        	new Config();
 						ServerService serv = new ServerService();
 						StartQuizCommand cmd = new StartQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						//StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
