@@ -16,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.extended.panel.WebCollapsiblePane;
@@ -28,23 +29,26 @@ import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
-import com.jajeem.command.service.ServerService;
+import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.util.Config;
 
 public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
+	
+	private static ServerServiceTimer serverServiceTimer;
+	
+	static Logger logger = Logger.getLogger("Instructor.class");
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		PropertyConfigurator.configure("conf/log4j.conf");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Instructor window = new Instructor();
-					// window.frmJajeemProject.setUndecorated(true);
-					// window.frmJajeemProject.pack();
 					window.frmJajeemProject.setVisible(true);
 
 				} catch (Exception e) {
@@ -95,13 +99,22 @@ public class Instructor implements SwingConstants {
 		// frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
+	
+	/**
+	 * Initializes network, broadcasting an start up command to network
+	 */
 	private void networkSetup() throws NumberFormatException, Exception {
-		int port = Integer.parseInt(Config.getParam("port"));
+		serverServiceTimer = new ServerServiceTimer();
+		int port = Integer.parseInt(Config.getParam("startUpPort"));
 		String broadcastingIp = Config.getParam("broadcastingIp");
-		ServerService serverService = new ServerService();
+		
 		StartUpCommand cmd = new StartUpCommand(broadcastingIp, port,
-				InetAddress.getLocalHost().getHostAddress());
-		serverService.send(cmd);
+				InetAddress.getLocalHost().getHostAddress(),
+				System.getProperty("user.name"));
+		serverServiceTimer.setCmd(cmd);
+		serverServiceTimer.setInterval(3000);
+		serverServiceTimer.start();
+		logger.info("Server started, sending start up command every " + serverServiceTimer.getInterval() + " mseconds.");
 
 		ClientService clientService = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
@@ -160,7 +173,8 @@ public class Instructor implements SwingConstants {
 
 		WebPanel centerPanel = new WebPanel();
 		setupPanel(centerPanel, CENTER);
-		WebScrollPane webScrollPaneCenter = new WebScrollPane(centerPanel, false);
+		WebScrollPane webScrollPaneCenter = new WebScrollPane(centerPanel,
+				false);
 		webScrollPaneCenter
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel.add(webScrollPaneCenter, "1,1");
@@ -182,15 +196,19 @@ public class Instructor implements SwingConstants {
 		}
 
 		case SOUTH: {
-			
+
 			ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
 			TooltipManager.setDefaultDelay(1000);
-			
+
 			BufferedImage myPicture = ImageIO
 					.read(new File("icons/buttom.jpg"));
 			WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
-			TooltipManager.setTooltip(picLabel, imgToolTip,
-					"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.", TooltipWay.up);
+			TooltipManager
+					.setTooltip(
+							picLabel,
+							imgToolTip,
+							"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.",
+							TooltipWay.up);
 			picLabel.setOpaque(false);
 			panel.add(picLabel);
 

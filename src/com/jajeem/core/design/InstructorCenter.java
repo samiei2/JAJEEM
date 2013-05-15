@@ -1,14 +1,21 @@
 package com.jajeem.core.design;
 
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import jrdesktop.viewer.Viewer;
 
+import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.toolbar.WebToolBar;
 import com.jajeem.util.Config;
 
 public class InstructorCenter {
@@ -22,20 +29,37 @@ public class InstructorCenter {
 		return panel;
 	}
 
+	/**
+	 * Adds a new internal frame to desktop panel for a new student
+	 * @param desktopPane WebDesktopPane  
+	 * @param hostIp String
+	 * @param hostName String 
+	 */
 	public static WebInternalFrame createFrame(
-			final WebDesktopPane desktopPane, String host)
+			final WebDesktopPane desktopPane, String hostIp, String hostName)
 			throws NumberFormatException, Exception {
-		final WebInternalFrame internalFrame = new WebInternalFrame(host,
+		final WebInternalFrame internalFrame = new WebInternalFrame(hostName,
 				false, false, false, true);
-
-		internalFrame.putClientProperty("ip", host);
-
-		internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
-
-		jrdesktop.Config con = new jrdesktop.Config(false, "", host,
+		
+		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
 				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
 				false, false);
-		Viewer vnc = new Viewer(con);
+		final Viewer vnc = new Viewer(con);
+		
+		// get current list of students, if some one is new, add him/her
+		JInternalFrame[] frames = desktopPane.getAllFrames();
+		List<String> listOfStudents = new ArrayList<String>();
+		for (JInternalFrame frame : frames) {
+			listOfStudents.add((String) frame.getClientProperty("ip"));
+		}
+		
+		if (listOfStudents.contains(hostIp)) {
+			return null;
+		}
+		
+		internalFrame.putClientProperty("ip", hostIp);
+
+		internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -43,7 +67,24 @@ public class InstructorCenter {
 
 		internalFrame.setBounds(0 + (desktopPane.getComponentCount() * 200), 0,
 				200, 200);
-
+		
+		final WebToolBar toolBar = new WebToolBar();
+		toolBar.setRound(0);
+		toolBar.setFloatable(false);
+		WebPanel panel = new WebPanel();
+		panel.add(toolBar);
+		
+		internalFrame.getContentPane().add(panel, BorderLayout.SOUTH);
+		
+		final WebCheckBox checkBox = new WebCheckBox("");
+		checkBox.setRolloverDarkBorderOnly(true);
+		checkBox.setRound(0);
+		checkBox.setShadeWidth(0);
+		toolBar.add(checkBox);
+		internalFrame.revalidate();
+		toolBar.setVisible(true);
+		panel.setVisible(true);
+		
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
 			@Override
@@ -67,6 +108,7 @@ public class InstructorCenter {
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
 				internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
+				checkBox.setSelected(false);
 			}
 
 			@Override
@@ -84,6 +126,7 @@ public class InstructorCenter {
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
 				internalFrame.setFrameIcon(new ImageIcon("icons/menubar/tick.png"));
+				checkBox.setSelected(true);
 			}
 		});
 

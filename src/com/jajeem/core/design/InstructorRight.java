@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
@@ -135,21 +136,33 @@ public class InstructorRight {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
+				boolean currentBalckState = false;
 				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) InstructorCenter.desktopPane
-							.getSelectedFrame().getClientProperty("ip");
+					JInternalFrame selectedFrame = InstructorCenter.desktopPane
+							.getSelectedFrame();
+					selectedStudent = (String) selectedFrame.getClientProperty("ip");
+					if (selectedFrame.getClientProperty("balck") == null) {
+						currentBalckState = false;
+						selectedFrame.putClientProperty("black", "true");
+					} else if ((boolean) selectedFrame.getClientProperty("balck")) {
+						currentBalckState = true;
+						selectedFrame.putClientProperty("black", "false");
+					} else {
+						currentBalckState = false;
+						selectedFrame.putClientProperty("black", "true");
+					}
+
 					try {
 						ServerService ss = new ServerService();
 						BlackoutCommand bc = new BlackoutCommand(
 								selectedStudent, Integer.parseInt(Config
-										.getParam("port")));
+										.getParam("port")), currentBalckState);
 						ss.send(bc);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
 			}
 		});
@@ -365,6 +378,7 @@ public class InstructorRight {
 			WebButton ok = new WebButton(buttonText);
 			WebButton cancel = new WebButton("Cancel");
 			if (type == "application") {
+				WebButton unBlock = new WebButton("Unblock");
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
@@ -389,7 +403,35 @@ public class InstructorRight {
 
 					}
 				};
+				
+				ActionListener listenerUnblock = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+						if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) InstructorCenter.desktopPane
+									.getSelectedFrame().getClientProperty("ip");
+							try {
+								ServerService ss = new ServerService();
+								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										selectedStudent,
+										Integer.parseInt(Config
+												.getParam("port")),
+										text.getText(), false);
+								ss.send(ic);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+						}
+
+					}
+				};
+				unBlock.addActionListener(listenerUnblock);
 				ok.addActionListener(listener);
+				content.add(new CenterPanel(new GroupPanel(5, ok, unBlock, cancel)),
+						"0,2,1,2");
 			} else if (type == "website") {
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -416,6 +458,8 @@ public class InstructorRight {
 					}
 				};
 				ok.addActionListener(listener);
+				content.add(new CenterPanel(new GroupPanel(5, ok, cancel)),
+						"0,2,1,2");
 			}
 
 			cancel.addActionListener(new ActionListener() {
@@ -423,8 +467,7 @@ public class InstructorRight {
 					setVisible(false);
 				}
 			});
-			content.add(new CenterPanel(new GroupPanel(5, ok, cancel)),
-					"0,2,1,2");
+			
 			SwingUtils.equalizeComponentsWidths(ok, cancel);
 
 			add(content);

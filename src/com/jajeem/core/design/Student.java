@@ -104,6 +104,11 @@ public class Student {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("port")));
 		clientService.start();
+		
+		ClientService clientServiceTimer = new ClientService(
+				Config.getParam("broadcastingIp"), Integer.parseInt(Config
+						.getParam("startUpPort")));
+		clientServiceTimer.start();
 	}
 
 	private WebPanel createPanel() throws IOException {
