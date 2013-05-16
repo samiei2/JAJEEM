@@ -126,7 +126,7 @@ public class Main extends JFrame {
 		});
 		setBackground(new Color(245, 245, 245));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1049, 729);
+		setBounds(100, 100, 1103, 729);
 		contentPane = new WebPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -170,20 +170,21 @@ public class Main extends JFrame {
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(cards, GroupLayout.PREFERRED_SIZE, 1019, Short.MAX_VALUE)
-							.addGap(4))
-						.addComponent(panel_top, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(0))
+							.addContainerGap()
+							.addComponent(panel_top, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(cards, GroupLayout.PREFERRED_SIZE, 1019, Short.MAX_VALUE))
+					.addGap(4))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
 					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 570, Short.MAX_VALUE)
+					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -279,7 +280,7 @@ public class Main extends JFrame {
 			        panel_bottom_2.LoadQuiz(currentQuiz);
 			        //TODO Code must be changed
 			        try {
-			        	//QuizWindow wind =new QuizWindow(currentQuiz);
+			        	QuizWindow wind =new QuizWindow(currentQuiz);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();

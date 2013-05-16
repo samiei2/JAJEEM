@@ -31,7 +31,7 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_2 extends WebPanel {
+public class CopyOfPanel_Bottom_2 extends WebPanel {
 
 	private Question currentQuestion;
 	private Quiz currentQuiz;
@@ -51,7 +51,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Panel_Bottom_2() {
+	public CopyOfPanel_Bottom_2() {
 		quizResponse = new ArrayList<>();
 		WebLabel wblblQuestionNumber = new WebLabel();
 		wblblQuestionNumber.setText("Question Number");

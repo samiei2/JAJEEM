@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,6 +20,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -77,6 +81,7 @@ public class QuizWindow extends WebFrame {
 	protected Question currentQuestion;
 	
 	private QuizEvent quizEvent;
+	private ArrayList<Question> sendQueue = new ArrayList<>();
 	long remaining; // How many milliseconds remain in the countdown.
 
 	long lastUpdate; // When count was last updated
@@ -191,14 +196,19 @@ public class QuizWindow extends WebFrame {
 		);
 		
 		final WebTextArea webTextArea_1 = new WebTextArea();
+		
 		webScrollPane_2.setViewportView(webTextArea_1);
 		webPanel_3.setLayout(gl_webPanel_3);
 		
 		final WebButton wbtnNext = new WebButton();
 		wbtnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(webList.getSelectedIndex() != model.getSize()){
+				if(webList.getSelectedIndex() != model.getSize()-1){
 					webList.setSelectedIndex(webList.getSelectedIndex()+1);
+				}
+				else{
+					webList.setSelectedIndex(0);
+					dispose();
 				}
 			}
 		});
@@ -288,6 +298,13 @@ public class QuizWindow extends WebFrame {
 				webRadioButton_2.setSelected(false);
 				webRadioButton_3.setSelected(false);
 				webRadioButton_4.setSelected(false);
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webRadioButton.isSelected(),
+						webRadioButton_1.isSelected(),
+						webRadioButton_2.isSelected(),
+						webRadioButton_3.isSelected(),
+						webRadioButton_4.isSelected()
+				});
 			}
 		});
 		
@@ -299,6 +316,13 @@ public class QuizWindow extends WebFrame {
 				webRadioButton_2.setSelected(false);
 				webRadioButton_3.setSelected(false);
 				webRadioButton_4.setSelected(false);
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webRadioButton.isSelected(),
+						webRadioButton_1.isSelected(),
+						webRadioButton_2.isSelected(),
+						webRadioButton_3.isSelected(),
+						webRadioButton_4.isSelected()
+				});
 			}
 		});
 		
@@ -310,6 +334,13 @@ public class QuizWindow extends WebFrame {
 				webRadioButton_2.setSelected(true);
 				webRadioButton_3.setSelected(false);
 				webRadioButton_4.setSelected(false);
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webRadioButton.isSelected(),
+						webRadioButton_1.isSelected(),
+						webRadioButton_2.isSelected(),
+						webRadioButton_3.isSelected(),
+						webRadioButton_4.isSelected()
+				});
 			}
 		});
 		
@@ -321,6 +352,13 @@ public class QuizWindow extends WebFrame {
 				webRadioButton_2.setSelected(false);
 				webRadioButton_3.setSelected(true);
 				webRadioButton_4.setSelected(false);
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webRadioButton.isSelected(),
+						webRadioButton_1.isSelected(),
+						webRadioButton_2.isSelected(),
+						webRadioButton_3.isSelected(),
+						webRadioButton_4.isSelected()
+				});
 			}
 		});
 		
@@ -332,6 +370,13 @@ public class QuizWindow extends WebFrame {
 				webRadioButton_2.setSelected(false);
 				webRadioButton_3.setSelected(false);
 				webRadioButton_4.setSelected(true);
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webRadioButton.isSelected(),
+						webRadioButton_1.isSelected(),
+						webRadioButton_2.isSelected(),
+						webRadioButton_3.isSelected(),
+						webRadioButton_4.isSelected()
+				});
 			}
 		});
 		
@@ -392,14 +437,79 @@ public class QuizWindow extends WebFrame {
 		webTextField_16 = new WebTextField();
 		
 		webCheckBox = new WebCheckBox();
+		webCheckBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webCheckBox.isSelected(),
+						webCheckBox_1.isSelected(),
+						webCheckBox_2.isSelected(),
+						webCheckBox_3.isSelected(),
+						webCheckBox_4.isSelected()
+				});
+			}
+		});
 		
 		webCheckBox_1 = new WebCheckBox();
+		webCheckBox_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webCheckBox.isSelected(),
+						webCheckBox_1.isSelected(),
+						webCheckBox_2.isSelected(),
+						webCheckBox_3.isSelected(),
+						webCheckBox_4.isSelected()
+				});
+			}
+		});
 		
 		webCheckBox_2 = new WebCheckBox();
+		webCheckBox_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webCheckBox.isSelected(),
+						webCheckBox_1.isSelected(),
+						webCheckBox_2.isSelected(),
+						webCheckBox_3.isSelected(),
+						webCheckBox_4.isSelected()
+				});
+			}
+		});
 		
 		webCheckBox_3 = new WebCheckBox();
+		webCheckBox_3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webCheckBox.isSelected(),
+						webCheckBox_1.isSelected(),
+						webCheckBox_2.isSelected(),
+						webCheckBox_3.isSelected(),
+						webCheckBox_4.isSelected()
+				});
+			}
+		});
 		
 		webCheckBox_4 = new WebCheckBox();
+		webCheckBox_4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentQuestion.setStudentAnswer(new boolean[]{
+						webCheckBox.isSelected(),
+						webCheckBox_1.isSelected(),
+						webCheckBox_2.isSelected(),
+						webCheckBox_3.isSelected(),
+						webCheckBox_4.isSelected()
+				});
+			}
+		});
 		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
 		gl_webPanel_2.setHorizontalGroup(
 			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
@@ -459,6 +569,7 @@ public class QuizWindow extends WebFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				//Save CurrentQuestion and send to teacher
+				if(!arg0.getValueIsAdjusting()){
 				if(currentQuestion!=null){
 					if(currentQuestion.getType() == 0){
 						currentQuestion.setStudentAnswer(new boolean[]{webRadioButton.isSelected(),webRadioButton_1.isSelected(),webRadioButton_2.isSelected()
@@ -473,14 +584,24 @@ public class QuizWindow extends WebFrame {
 					}
 					
 					//TODO clean up this code
+					synchronized (sendQueue) {
+						sendQueue.add(currentQuestion);
+					}
 					
 					new Thread(new Runnable() {
 						
 						@Override
 						public void run() {
 							try {
-								QuizResponse resp = new QuizResponse(currentQuestion);
-								resp.setQuestion(currentQuestion);
+								Question question = null;
+								synchronized (sendQueue) {
+									if(!sendQueue.isEmpty()){
+										question = sendQueue.get(0);
+										sendQueue.remove(0);
+									}
+								}
+								QuizResponse resp = new QuizResponse(question);
+								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								//new QuizEvent().fireResponseEvent(resp);
 								SendQuizResponseCommand cmd = new SendQuizResponseCommand(server, Integer.parseInt(Config.getParam("quizlistenport")));
@@ -533,8 +654,8 @@ public class QuizWindow extends WebFrame {
 			        }
 				}
 				if(currentQuestion.getType() == 1){
-					CardLayout cl = (CardLayout)(webPanel_1.getLayout());
-			        cl.show(webPanel_1, "1");
+					CardLayout cl = (CardLayout)(mainPanel.getLayout());
+			        cl.show(mainPanel, "1");
 			        //lblInputAnswer.setText("Select answer");
 			        webTextField_12.setText(currentQuestion.getAnswer1());
 			        webTextField_13.setText(currentQuestion.getAnswer2());
@@ -559,8 +680,8 @@ public class QuizWindow extends WebFrame {
 			        
 				}
 				if(currentQuestion.getType() == 2){
-					CardLayout cl = (CardLayout)(webPanel_1.getLayout());
-			        cl.show(webPanel_1, "2");
+					CardLayout cl = (CardLayout)(mainPanel.getLayout());
+			        cl.show(mainPanel, "2");
 			        //lblInputAnswer.setText("Input Answer");
 			        String text = currentQuestion.getStudentTextAnswer();
 			        if(text != null)
@@ -577,6 +698,7 @@ public class QuizWindow extends WebFrame {
 					wbtnNext.setText("Submit");
 				else
 					wbtnNext.setText("Next");
+				}
 			}
 		});
 		
