@@ -34,11 +34,23 @@ public class Panel_Bottom_1 extends WebPanel {
 	private WebCheckBox webCheckBox_1;
 	private WebTextField wbTxtFldDirection;
 	private WebTextField wbTxtFldPoints;
+	//TODO remove the code below
+	private int id=0;
 	/**
 	 * Create the panel.
 	 * @param main 
 	 */
 	public Panel_Bottom_1(Main main) {
+		//TODO remove the code below
+		try {
+			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		this.setParentPanel(main);
 		WebPanel webPanel = new WebPanel();
 		
@@ -68,6 +80,7 @@ public class Panel_Bottom_1 extends WebPanel {
 //                		return;
 //                	}
 //                }
+				parentPanel.getCurrentQuestion().setId(id++);
                 parentPanel.getCurrentQuestion().setQuizId(parentPanel.getCurrentQuiz().getId());
                 parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getInstructorId());
 				parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());
@@ -153,6 +166,7 @@ public class Panel_Bottom_1 extends WebPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//System.out.println(paren.getModel().getClass());
 				parentPanel.setEventsEnabled(false);
+				parentPanel.getCurrentQuestion().setId(id++);
 				parentPanel.getCurrentQuestion().setQuizId(parentPanel.getCurrentQuiz().getId());
                 parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getInstructorId());
 				parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());

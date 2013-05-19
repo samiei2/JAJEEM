@@ -321,18 +321,26 @@ public class Panel_Bottom_2 extends WebPanel {
 						for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
 							if (temp.getId() == currentQuiz.getQuestionList().get(i).getId()) {
 								if(quizResponse.get(i).size()!=0){
-									for (int j = 0; j < quizResponse.get(i).size(); j++) {
-										if(student.getId() == quizResponse.get(i).get(j).getStudent().getId()){
-											quizResponse.get(i).remove(j);
-											quizResponse.get(i).add(e);
-										}
-										else{
-											quizResponse.get(i).add(e);
-										}
+									int j;
+									for (j = 0; j < quizResponse.get(i).size(); j++) {
+										if(student.getId() == quizResponse.get(i).get(j).getStudent().getId())
+											break;
+										else
+											j=-1;
+									}
+									if(j != -1){
+										quizResponse.get(i).remove(j);
+										quizResponse.get(i).add(e);
+										break;
+									}
+									else{
+										quizResponse.get(i).add(e);
+										break;
 									}
 								}
 								else{
 									quizResponse.get(i).add(e);
+									break;
 								}
 							}
 						}

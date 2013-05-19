@@ -1,6 +1,8 @@
 package com.jajeem.core.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 	// properties
 	private int id;
 	private String firstName = "";

@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Stack;
 
 import javax.swing.GroupLayout;
@@ -82,6 +83,10 @@ public class QuizWindow extends WebFrame {
 	
 	private QuizEvent quizEvent;
 	private ArrayList<Question> sendQueue = new ArrayList<>();
+	//TODO remove code below
+	private int sid;
+	private Student privateStudent = new Student();
+	
 	long remaining; // How many milliseconds remain in the countdown.
 
 	long lastUpdate; // When count was last updated
@@ -112,6 +117,11 @@ public class QuizWindow extends WebFrame {
 	 * Create the frame.
 	 */
 	public QuizWindow(Quiz quiz) {
+		//TODO remove code below
+		sid = new Random().nextInt(Integer.MAX_VALUE);
+		privateStudent.setId(sid);
+		
+		
 		currentQuiz = quiz;
 		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
@@ -619,7 +629,7 @@ public class QuizWindow extends WebFrame {
 						}
 
 						private Student getStudent() {
-							return new Student();//TODO correct this code
+							return privateStudent;//TODO correct this code
 						}
 					}).start();
 				}
