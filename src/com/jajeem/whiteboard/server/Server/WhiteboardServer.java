@@ -6,6 +6,7 @@ package com.jajeem.whiteboard.server.Server;
  * Team         : TheThreeBytes
  */
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,8 +46,14 @@ public class WhiteboardServer {
     /** The main entry of the Server */
     public static void main(String[] args) {
     	Policy.setPolicy(new MinimalPolicy());
-    	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintServer\\server.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintServer\\server.keystore");
+    	try {
+			com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	System.setProperty("javax.net.ssl.trustStore","cert/server.keystore");
+    	System.setProperty("javax.net.ssl.keyStore", "cert/server.keystore");
     	System.setProperty("javax.net.ssl.keyStorePassword", "server");
         // Create and install a security manager
         if (System.getSecurityManager() == null) {
