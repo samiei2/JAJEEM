@@ -31,6 +31,16 @@ import com.jajeem.util.Config;
 public class Student {
 
 	private JFrame frmJajeemProject;
+	
+	private static boolean black;
+
+	public static boolean isBlack() {
+		return black;
+	}
+
+	public static void setBlack(boolean black) {
+		Student.black = black;
+	}
 
 	/**
 	 * Launch the application.
@@ -104,6 +114,11 @@ public class Student {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("port")));
 		clientService.start();
+		
+		ClientService clientServiceTimer = new ClientService(
+				Config.getParam("broadcastingIp"), Integer.parseInt(Config
+						.getParam("startUpPort")));
+		clientServiceTimer.start();
 	}
 
 	private WebPanel createPanel() throws IOException {

@@ -6,12 +6,15 @@ public class StartUpCommand extends Command {
 	 * 
 	 */
 	private static final long serialVersionUID = -2287770406725442741L;
-	private String sender;
 	
-	public StartUpCommand(String host, int port, String sender) {
+	private String sender;
+	private String senderName;
+	
+	public StartUpCommand(String host, int port, String sender, String senderName) {
 		super(host, port);
+		
 		this.sender = sender;
-		// TODO Auto-generated constructor stub
+		this.senderName = senderName;
 	}
 
 	public String getSender() {
@@ -20,5 +23,13 @@ public class StartUpCommand extends Command {
 
 	public void setSender(String sender) {
 		this.sender = sender;
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
 	}
 }

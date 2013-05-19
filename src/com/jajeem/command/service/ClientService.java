@@ -23,7 +23,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 	private boolean stopped;
 
-	static Logger logger = Logger.getLogger("ServerService.class");
+	static Logger logger = Logger.getLogger("ClientService.class");
 
 	public ClientService(String group, int port) throws NumberFormatException,
 			Exception {
@@ -77,7 +77,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 		while (true) {
 			try {
 				byte[] packet = getDatagram();
-
+				
 				ByteArrayInputStream b = new ByteArrayInputStream(packet);
 				DataInputStream d = new DataInputStream(b);
 
@@ -103,6 +103,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 					throw new ClassNotFoundException("Object is not a message");
 
 				Command cmd = (Command) o;
+				
+				logger.info("Receiving: Message type: " + cmd.getClass() + ", from: " + cmd.getHost());
 
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
@@ -159,6 +161,9 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof VolumeCommand) {
 					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
 					setVolumeCommandHandler.run(cmd);
+				} else if (cmd instanceof WebsiteCommand) {
+					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
+					openWebsiteCommandHandler.run(cmd);
 				}
 
 			} catch (Exception ex) {
