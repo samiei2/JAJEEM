@@ -63,6 +63,7 @@ public class QuizWindow extends WebFrame {
 	private WebRadioButton webRadioButton_2;
 	private WebRadioButton webRadioButton_3;
 	private WebRadioButton webRadioButton_4;
+	private WebTextField webTextField;
 	private WebTextField webTextField_2;
 	private WebTextField webTextField_3;
 	private WebTextField webTextField_4;
@@ -145,7 +146,7 @@ public class QuizWindow extends WebFrame {
 				      public void actionPerformed(ActionEvent evt) {
 				     	  updateDisplay();
 				      }
-				  };
+				};
 				  
 				
 				if(currentQuiz.getTime() != 0){
@@ -162,6 +163,7 @@ public class QuizWindow extends WebFrame {
 				}
 				
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
+				webTextField.setText(currentQuestion.getTitle());
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -243,15 +245,15 @@ public class QuizWindow extends WebFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-								.addGap(280))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-								.addContainerGap()))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+							.addGap(280))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGap(4)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
@@ -271,8 +273,8 @@ public class QuizWindow extends WebFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -727,7 +729,7 @@ public class QuizWindow extends WebFrame {
 		WebLabel wblblDirections = new WebLabel();
 		wblblDirections.setText("Directions");
 		
-		WebTextField webTextField = new WebTextField();
+		webTextField = new WebTextField();
 		webTextField.setEditable(false);
 		webTextField.setEnabled(false);
 		

@@ -2,6 +2,8 @@ package com.jajeem.command.model;
 
 import java.io.Serializable;
 
+import com.jajeem.whiteboard.client.Client.WhiteboardClient;
+
 public class Command implements Serializable {
 
 	/**

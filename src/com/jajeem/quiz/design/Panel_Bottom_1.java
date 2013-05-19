@@ -338,6 +338,24 @@ public class Panel_Bottom_1 extends WebPanel {
 		webLabel_1.setText("Points");
 		
 		setWbTxtFldDirection(new WebTextField());
+		getWbTxtFldDirection().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				parentPanel.getCurrentQuiz().setTitle(getWbTxtFldDirection().getText());
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				parentPanel.getCurrentQuiz().setTitle(getWbTxtFldDirection().getText());
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		setWbTxtFldPoints(new WebTextField());
 		getWbTxtFldPoints().getDocument().addDocumentListener(new DocumentListener() {

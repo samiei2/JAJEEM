@@ -31,6 +31,7 @@ import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.util.Config;
+import com.jajeem.util.StartUp;
 
 public class Instructor implements SwingConstants {
 
@@ -44,6 +45,7 @@ public class Instructor implements SwingConstants {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		StartUp start = new StartUp();
 		PropertyConfigurator.configure("conf/log4j.conf");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

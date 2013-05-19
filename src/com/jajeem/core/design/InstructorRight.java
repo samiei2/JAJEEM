@@ -35,6 +35,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.quiz.design.Main;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
+import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class InstructorRight {
 
@@ -129,6 +130,14 @@ public class InstructorRight {
 				"Turn off, Log off, Restart student's computer",
 				TooltipWay.left);
 		panel.add(powerButton);
+		
+		ImageIcon imgWhiteboard = new ImageIcon(iconsPath + "/power_text.png");
+		final WebButton whiteboardButton = new WebButton(imgWhiteboard);
+		whiteboardButton.setRound(0);
+		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
+				"Turn off, Log off, Restart student's computer",
+				TooltipWay.left);
+		panel.add(whiteboardButton);
 
 		// blacks student's screen
 		blackoutButton.addActionListener(new ActionListener() {
@@ -337,6 +346,16 @@ public class InstructorRight {
 			}
 		});
 
+		whiteboardButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				WhiteboardClient whiteboard = 
+						new WhiteboardClient();
+				whiteboard.main(null);
+			}
+		});
+		
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
 		panel2.setUndecorated(true);
