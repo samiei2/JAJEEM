@@ -19,7 +19,7 @@ public class initDatabase {
 			"CREATE TABLE IF NOT EXISTS Instructor (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (ID));"+
 			"CREATE TABLE IF NOT EXISTS Student (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (id));"+
 			
-			"CREATE TABLE IF NOT EXISTS Room (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Size int, PRIMARY KEY (id));"+
+			"CREATE TABLE IF NOT EXISTS Room (id int DEFAULT 0 NOT NULL AUTO_INCREMENT,name varchar(255) NOT NULL, attendancetype tinyint, signintype tinyint, seatSize int, PRIMARY KEY (id));"+
 			"CREATE TABLE IF NOT EXISTS Session (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Instructorid int NOT NULL, Roomid int NOT NULL, Attendantid int, Courseid int, PRIMARY KEY (id));"+
 			"CREATE TABLE IF NOT EXISTS Attendant (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Sessionid int NOT NULL, Seatid int NOT NULL, studentid int NOT NULL, PRIMARY KEY (id));"+
 			"CREATE TABLE IF NOT EXISTS Course (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, name varchar(255), PRIMARY KEY (id));"+
@@ -42,8 +42,45 @@ public class initDatabase {
 			"ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770436 FOREIGN KEY (Sessionid) REFERENCES Session (id);"+
 			"ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770536 FOREIGN KEY (studentid) REFERENCES Student (id);"+
 			"ALTER TABLE Seat ADD CONSTRAINT IF NOT EXISTS FKSeat323739 FOREIGN KEY (Roomid) REFERENCES Room (id);";
+			
 			Statement statement = con.createStatement();
 			statement.executeUpdate(query);
+			
+			
+			//TODO just for sample data
+			query = "Insert into instructor(username,password,firstname,lastname,language) values('1','1','1','1','none');";
+			query += "Insert into instructor(username,password,firstname,lastname,language) values('ali','ali','ali','','eng');";
+			query += "Insert into instructor(username,password,firstname,lastname,language) values('armin','armin','armin','armin','farsi');";
+			query += "Insert into instructor(username,password,firstname,lastname,language) values('mohammad','mohammad','mohammad','mohammadi','arabic');";
+			query += "Insert into instructor(username,password,firstname,lastname,language) values('jajeem','jajeem','jajeem','jajeem','none');";
+			query += "Insert into student(username,password,firstname,lastname,language) values('2','2','2','2','none');";
+			query += "Insert into student(username,password,firstname,lastname,language) values('ali','ali','ali','ali','none');";
+			query += "Insert into student(username,password,firstname,lastname,language) values('master','master','master','master','none');";
+			query += "Insert into student(username,password,firstname,lastname,language) values('student','student','student','student','none');";
+			
+			query += "Insert into room(name,seatsize) values('a',10);";
+			query += "Insert into room(name,seatsize) values('b',20);";
+			query += "Insert into room(name,seatsize) values('c',30);";
+			query += "Insert into room(name,seatsize) values('d',45);";
+			
+			query += "Insert into course(name) values('farsi');";
+			query += "Insert into course(name) values('english');";
+			query += "Insert into course(name) values('math');";
+			query += "Insert into course(name) values('physic');";
+			query += "Insert into course(name) values('chemistry');";
+			
+			query += "Insert into seat(roomid,name,row,col) values(2,'a1',1,1);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a2',2,1);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a3',3,1);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a4',4,1);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a5',1,2);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a6',1,3);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a7',1,4);";
+			query += "Insert into seat(roomid,name,row,col) values(2,'a8',1,5);";
+			
+			statement = con.createStatement();
+			statement.executeUpdate(query);
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
