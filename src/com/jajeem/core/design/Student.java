@@ -31,9 +31,9 @@ import com.jajeem.util.Config;
 public class Student {
 
 	private JFrame frmJajeemProject;
-	
+
 	private static boolean black;
-	
+
 	public static boolean isBlack() {
 		return black;
 	}
@@ -82,7 +82,8 @@ public class Student {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private void initialize() throws IOException {
 		WebLookAndFeel.setDecorateFrames(true);
@@ -106,14 +107,11 @@ public class Student {
 		panel = createPanel();
 		frmJajeemProject.getContentPane().add(panel);
 
-		 frmJajeemProject.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmJajeemProject.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
-		ClientService clientService = new ClientService(
-				Config.getParam("broadcastingIp"), Integer.parseInt(Config
-						.getParam("port")));
-		clientService.start();
+
 	}
 
 	private WebPanel createPanel() throws IOException {
@@ -141,7 +139,7 @@ public class Student {
 
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
-		
+
 		ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
 		TooltipManager.setDefaultDelay(1000);
 

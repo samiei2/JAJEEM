@@ -22,9 +22,9 @@ public class StartUpCommandHandler implements ICommandHandler {
 			StartCaptureCommandHandler startCaptureCommandHandler = new StartCaptureCommandHandler();
 			startCaptureCommandHandler.run(cmd);
 			ServerService serverService = new ServerService();
-			StartUpCommand cmdToSend = new StartUpCommand(
-					((StartUpCommand) cmd).getSender(), InetAddress
-					.getLocalHost().getHostAddress(), port, InetAddress
+			StartUpCommand cmdToSend = new StartUpCommand(InetAddress
+					.getLocalHost().getHostAddress(),
+					((StartUpCommand) cmd).getSender() , port, InetAddress
 							.getLocalHost().getHostAddress(), System.getProperty("user.name"));
 			cmdToSend.setSender(InetAddress.getLocalHost().getHostAddress());
 			cmdToSend.setPort(port);

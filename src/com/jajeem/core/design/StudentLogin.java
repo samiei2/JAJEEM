@@ -53,7 +53,7 @@ public class StudentLogin extends JDialog {
 	public static void setServerIp(String serverIp) {
 		StudentLogin.serverIp = serverIp;
 	}
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -82,13 +82,18 @@ public class StudentLogin extends JDialog {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("startUpPort")));
 		clientServiceTimer.start();
+		
+		ClientService clientService = new ClientService(
+				Config.getParam("broadcastingIp"), Integer.parseInt(Config
+						.getParam("port")));
+		clientService.start();
 
 		// Enabling dialog decoration
 		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
 		WebLookAndFeel.setDecorateDialogs(true);
 
 		// Opening dialog
-		LoginDialog loginDialog = new LoginDialog(this);
+		loginDialog = new LoginDialog(this);
 		loginDialog.pack();
 		loginDialog.setLocationRelativeTo(this);
 		loginDialog.setVisible(true);
@@ -97,11 +102,12 @@ public class StudentLogin extends JDialog {
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);
 	}
 
-	private class LoginDialog extends WebDialog {
+	public static class LoginDialog extends WebDialog {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -4106820035425545163L;
+		public static String name = "";
 
 		public LoginDialog(Window owner) {
 			super(owner, "Login to iCalabo");
@@ -122,12 +128,13 @@ public class StudentLogin extends JDialog {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
+			final WebTextField username = new WebTextField(15);
 			content.add(new WebLabel("Name", WebLabel.TRAILING), "0,0");
-			content.add(new WebTextField(15), "1,0");
+			content.add(username, "1,0");
 
-			final WebLabel username = new WebLabel("Password",
-					WebLabel.TRAILING);
-			content.add(username, "0,1");
+			
+			content.add(new WebLabel("Password",
+					WebLabel.TRAILING), "0,1");
 			final WebPasswordField password = new WebPasswordField(15);
 			content.add(password, "1,1");
 
@@ -141,8 +148,9 @@ public class StudentLogin extends JDialog {
 						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								serverIp, Integer.parseInt(Config
-										.getParam("port")), username.getText(),
-								password.getPassword().toString());
+										.getParam("serverPort")), username.getText(),
+								password.getPassword());
+						name = username.getText();
 						ServerService serverService = new ServerService();
 						serverService.send(authenticateCommand);
 					} catch (Exception e2) {
@@ -154,7 +162,14 @@ public class StudentLogin extends JDialog {
 				}
 			};
 			login.addActionListener(listener);
-			cancel.addActionListener(listener);
+			cancel.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					dispose();
+				}
+			});
 			content.add(new CenterPanel(new GroupPanel(5, login, cancel)),
 					"0,2,1,2");
 			SwingUtils.equalizeComponentsWidths(login, cancel);
@@ -163,6 +178,10 @@ public class StudentLogin extends JDialog {
 
 			HotkeyManager.registerHotkey(this, login, Hotkey.ESCAPE);
 			HotkeyManager.registerHotkey(this, login, Hotkey.ENTER);
+		}
+
+		public String getName() {
+			return name;
 		}
 	}
 }
