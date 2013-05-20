@@ -17,15 +17,19 @@ import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
+import com.jajeem.whiteboard.client.Module.Graphics.Image;
 import com.jajeem.whiteboard.server.Module.Sessions;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FilePermission;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketPermission;
+import java.nio.file.DirectoryIteratorException;
 import java.security.AllPermission;
 import java.security.CodeSource;
 import java.security.Permission;
@@ -313,8 +317,14 @@ public class WhiteboardClient extends JFrame {
     /** The main entry of the client */
     public static void main(String[] args) {
     	Policy.setPolicy(new MinimalPolicy());
-    	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
+    	try {
+			com.google.common.io.Files.copy(new File("cert/client.keystore"), new File("c:/client.keystore"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
+    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
     	System.setProperty("javax.net.ssl.keyStorePassword", "client");
 
         // Create and install a security manager
