@@ -10,6 +10,7 @@ public class Response implements Serializable {
 	private int studentId;
 	private String answer;
 	private boolean[] boolAnswer;
+	private boolean answerValid = false;
 	
 	//getter & setters
 	public int getId() {
@@ -41,5 +42,11 @@ public class Response implements Serializable {
 	}
 	public void setBoolAnswer(boolean[] boolAnswer) {
 		this.boolAnswer = boolAnswer;
+	}
+	public boolean isAnswerValid() {
+		return answerValid;
+	}
+	public void setAnswerValid(boolean answerValid) {
+		this.answerValid = answerValid;
 	}
 }

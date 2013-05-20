@@ -284,8 +284,8 @@ public class QuizWindow extends WebFrame {
 		);
 		
 		webTextField_2 = new WebTextField();
-		webTextField_2.setEditable(false);
 		webTextField_2.setEnabled(false);
+		webTextField_2.setEditable(false);
 		
 		webTextField_3 = new WebTextField();
 		webTextField_3.setEditable(false);
@@ -616,7 +616,7 @@ public class QuizWindow extends WebFrame {
 								QuizResponse resp = new QuizResponse(question);
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
-								//new QuizEvent().fireResponseEvent(resp);
+								new QuizEvent().fireResponseEvent(resp);
 								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizlistenport")));
 								cmd.setEvent(resp);
 							

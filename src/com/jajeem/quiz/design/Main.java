@@ -284,7 +284,7 @@ public class Main extends JFrame {
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
-						StartQuizCommand cmd = new StartQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						//StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setQuiz(currentQuiz);
@@ -303,7 +303,7 @@ public class Main extends JFrame {
 					try {
 						new Config();
 						ServerService serv = new ServerService();
-						StopQuizCommand cmd = new StopQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						StopQuizCommand cmd = new StopQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block

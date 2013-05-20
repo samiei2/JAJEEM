@@ -21,6 +21,7 @@ public class Question implements Serializable {
 	private boolean[] correctAnswer = new boolean[]{false,false,false,false,false}; //its a map.for example : false,true,false,false,false means ,1:wrong,2:right,....
 	private boolean[] studentAnswer;
 	private String studentTextAnswer;
+	private boolean validResponse = false;
 	private Response response = new Response();
 	
 	public Question(int id2) {
@@ -131,5 +132,11 @@ public class Question implements Serializable {
 	}
 	public void setResponse(Response response) {
 		this.response = response;
+	}
+	public boolean isResponseValid() {
+		return response.isAnswerValid();
+	}
+	public void setValidResponse(boolean validResponse) {
+		this.response.setAnswerValid(validResponse);;
 	}
 }

@@ -158,7 +158,7 @@ public class Panel_Bottom_1 extends WebPanel {
 		});
 		webButton_1.setText("Next");
 		
-		setQuestionDesignPanel(new QuestionDesignPanel(this));
+		questionDesignPanel = new QuestionDesignPanel(this);
 		getQuestionDesignPanel().setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
 		WebButton wbBtn_add = new WebButton();
