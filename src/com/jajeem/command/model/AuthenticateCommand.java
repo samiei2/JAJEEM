@@ -8,10 +8,9 @@ public class AuthenticateCommand extends Command {
 	private static final long serialVersionUID = -6190735680180412086L;
 	
 	private String username;
-	private String password;
-	private String role;
+	private char[] password;
 
-	public AuthenticateCommand(String from, String to, int port, String username, String password) {
+	public AuthenticateCommand(String from, String to, int port, String username, char[] password) {
 		super(from, to, port);
 		
 		this.setUsername(username);
@@ -26,11 +25,11 @@ public class AuthenticateCommand extends Command {
 		this.username = username;
 	}
 
-	public String getPassword() {
+	public char[] getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(char[] password2) {
+		this.password = password2;
 	}
 }

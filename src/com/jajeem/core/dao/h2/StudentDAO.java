@@ -20,9 +20,11 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public boolean authenticate(String username, String password)
+	public boolean authenticate(String username, char[] pass)
 			throws SQLException {
 
+		String password = new String(pass);  
+		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 

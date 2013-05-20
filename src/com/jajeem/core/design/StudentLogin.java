@@ -122,12 +122,13 @@ public class StudentLogin extends JDialog {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
+			final WebTextField username = new WebTextField(15);
 			content.add(new WebLabel("Name", WebLabel.TRAILING), "0,0");
 			content.add(new WebTextField(15), "1,0");
 
-			final WebLabel username = new WebLabel("Password",
-					WebLabel.TRAILING);
-			content.add(username, "0,1");
+			
+			content.add(new WebLabel("Password",
+					WebLabel.TRAILING), "0,1");
 			final WebPasswordField password = new WebPasswordField(15);
 			content.add(password, "1,1");
 
@@ -142,7 +143,7 @@ public class StudentLogin extends JDialog {
 								InetAddress.getLocalHost().getHostAddress(),
 								serverIp, Integer.parseInt(Config
 										.getParam("port")), username.getText(),
-								password.getPassword().toString());
+								password.getPassword());
 						ServerService serverService = new ServerService();
 						serverService.send(authenticateCommand);
 					} catch (Exception e2) {
