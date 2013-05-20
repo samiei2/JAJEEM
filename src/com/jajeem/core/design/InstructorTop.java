@@ -2,6 +2,7 @@ package com.jajeem.core.design;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 
 import javax.swing.ImageIcon;
 
@@ -82,9 +83,11 @@ public class InstructorTop {
 						int vol = slider1.getValue();
 						try {
 							ServerService ss = new ServerService();
-							VolumeCommand vc = new VolumeCommand(
+							VolumeCommand vc = new VolumeCommand(InetAddress
+									.getLocalHost().getHostAddress(),
 									selectedStudent, Integer.parseInt(Config
-											.getParam("port")), "set", vol*650);
+											.getParam("port")), "set",
+									vol * 650);
 							ss.send(vc);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

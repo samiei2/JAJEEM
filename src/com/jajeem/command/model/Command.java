@@ -2,20 +2,20 @@ package com.jajeem.command.model;
 
 import java.io.Serializable;
 
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
-
 public class Command implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5200765941186849924L;
-	private String host;
+	private String to;
+	private String from;
 	private int port;
 
-	public Command(String host, int port2) {
-		this.setHost(host);
-		this.setPort(port2);
+	public Command(String from, String to, int port) {
+		this.setFrom(from);
+		this.setTo(to);
+		this.setPort(port);
 	}
 
 	public int getPort() {
@@ -26,11 +26,19 @@ public class Command implements Serializable {
 		this.port = port;
 	}
 
-	public String getHost() {
-		return host;
+	public String getFrom() {
+		return from;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
 	}
 }

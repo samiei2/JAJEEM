@@ -7,9 +7,8 @@ public class StopDesktopSharingGroupworkCommand extends Command {
 	 */
 	private static final long serialVersionUID = -6772136595948031606L;
 
-	public StopDesktopSharingGroupworkCommand(String host, int port2) {
-		super(host, port2);
-		// TODO Auto-generated constructor stub
+	public StopDesktopSharingGroupworkCommand(String from, String to, int port) {
+		super(from, to, port);
 	}
 
 }

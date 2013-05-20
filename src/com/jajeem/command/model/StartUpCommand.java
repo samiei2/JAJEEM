@@ -10,8 +10,8 @@ public class StartUpCommand extends Command {
 	private String sender;
 	private String senderName;
 	
-	public StartUpCommand(String host, int port, String sender, String senderName) {
-		super(host, port);
+	public StartUpCommand(String from, String to, int port, String sender, String senderName) {
+		super(from, to, port);
 		
 		this.sender = sender;
 		this.senderName = senderName;

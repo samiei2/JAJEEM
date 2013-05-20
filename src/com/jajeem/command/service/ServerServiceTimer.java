@@ -85,7 +85,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		InetAddress group = null;
 		
 		try {
-			group = InetAddress.getByName(cmd.getHost());
+			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
@@ -118,7 +118,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		byte[] b = null;
 		
 		try {
-			group = InetAddress.getByName(cmd.getHost());
+			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}

@@ -45,6 +45,7 @@ public class Instructor implements SwingConstants {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		StartUp start = new StartUp();
 		PropertyConfigurator.configure("conf/log4j.conf");
 		EventQueue.invokeLater(new Runnable() {
@@ -90,7 +91,7 @@ public class Instructor implements SwingConstants {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
 		frmJajeemProject.setRound(0);
-		frmJajeemProject.setTitle("JaJeem Project");
+		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(200, 100, 850, 600);
@@ -110,7 +111,8 @@ public class Instructor implements SwingConstants {
 		int port = Integer.parseInt(Config.getParam("startUpPort"));
 		String broadcastingIp = Config.getParam("broadcastingIp");
 		
-		StartUpCommand cmd = new StartUpCommand(broadcastingIp, port,
+		StartUpCommand cmd = new StartUpCommand(InetAddress
+				.getLocalHost().getHostAddress(), broadcastingIp, port,
 				InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);

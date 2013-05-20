@@ -7,9 +7,8 @@ public class StartRecordGroupworkCommand extends Command {
 	 */
 	private static final long serialVersionUID = -2911766911250228502L;
 
-	public StartRecordGroupworkCommand(String host, int port2) {
-		super(host, port2);
-		// TODO Auto-generated constructor stub
+	public StartRecordGroupworkCommand(String from, String to, int port) {
+		super(from, to, port);
 	}
 
 }
