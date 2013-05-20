@@ -167,12 +167,21 @@ public class ClientService implements IConnectorSevice, Runnable {
 					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
 					openWebsiteCommandHandler.run(cmd);
 				}
-				
+
+				else if (cmd instanceof StartWhiteBoardCommand) {
+					StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
+					whiteboardHandler.run(cmd);
+					
+				} else if (cmd instanceof StopWhiteBoardCommand) {
+					StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
+					whiteboardHandler.run(cmd);
+				}
+
 				else if (cmd instanceof AuthenticateCommand) {
 					SetAuthenticateCommandHanlder setAuthenticateCommandHanlder = new SetAuthenticateCommandHanlder();
 					setAuthenticateCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof GrantCommand) {
 					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
 					setGrantCommandHanlder.run(cmd);

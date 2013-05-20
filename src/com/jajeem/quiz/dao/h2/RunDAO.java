@@ -29,13 +29,15 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, start, end) "
-				+ " VALUES (?, ?, ?, ?, ?);");
+		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, studentid, start, end) "
+				+ " VALUES (?, ?, ?, ?, ? ,?);");
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
 		ps.setInt(3, run.getQuizId());
-		ps.setInt(4, run.getStart());
-		ps.setInt(5, run.getEnd());
+		ps.setInt(4, run.getStudentId());
+		ps.setInt(5, run.getStart());
+		ps.setInt(6, run.getEnd());
+		
 
 		try {
 			rs = ps.executeUpdate();
@@ -98,6 +100,7 @@ public class RunDAO implements IRunDAO {
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
 				run.setQuizId(rs.getInt("quizId"));
+				run.setStudentId(rs.getInt("studentid"));
 				run.setStart(rs.getInt("start"));
 				run.setEnd(rs.getInt("end"));
 
@@ -141,14 +144,15 @@ public class RunDAO implements IRunDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizRun SET instructorId = ?, sessionId = ?, "
-				+ "quizId = ?, start = ?, end = ? WHERE id = ?");
+				+ "quizId = ?, studentid=?, start = ?, end = ? WHERE id = ?");
 
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
 		ps.setInt(3, run.getQuizId());
-		ps.setInt(4, run.getStart());
-		ps.setInt(5, run.getEnd());
-		ps.setInt(6, run.getId());
+		ps.setInt(4, run.getStudentId());
+		ps.setInt(5, run.getStart());
+		ps.setInt(6, run.getEnd());
+		ps.setInt(7, run.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -248,6 +252,7 @@ public class RunDAO implements IRunDAO {
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
 				run.setQuizId(rs.getInt("quizId"));
+				run.setStudentId(rs.getInt("studentid"));
 				run.setStart(rs.getInt("start"));
 				run.setEnd(rs.getInt("end"));
 

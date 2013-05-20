@@ -202,18 +202,7 @@ public class WhiteboardClient extends JFrame {
             WhiteboardCreateASession createASession
                     = new WhiteboardCreateASession(sessions,this);
             
-            //TODO change this code
-            try{
-            	new Config();
-    			ServerService serv = new ServerService();
-    			StartWhiteBoardCommand cmd = new StartWhiteBoardCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-    			cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-    			cmd.setWhiteboardClient(this);
-    			serv.send(cmd);
-            }
-            catch(Exception ex){
-            	
-            }
+            
         } else {
             // if it does not connect to the server,
             // create a local whiteboard 

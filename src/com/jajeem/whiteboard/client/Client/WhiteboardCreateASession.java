@@ -9,6 +9,9 @@ package com.jajeem.whiteboard.client.Client;
  */
 import javax.swing.*;
 
+import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
@@ -18,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -205,7 +209,22 @@ public class WhiteboardCreateASession extends JFrame {
             // create the mainframe
             MainFrame mainFrame = new MainFrame(sessions,
                     sessionID,whiteboard,userid,adminName);
+            
+          //TODO change this code
+            try{
+            	new Config();
+    			ServerService serv = new ServerService();
+    			StartWhiteBoardCommand cmd = new StartWhiteBoardCommand("127.0.0.1", 9091);
+    			cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+    			cmd.setWhiteboardClient(whiteboardClient);
+    			serv.send(cmd);
+            }
+            catch(Exception ex){
+            	
+            }
             this.dispose();
+            
+          
 
         } catch(Exception ex) {
             System.out.println("Error during execution:" +
