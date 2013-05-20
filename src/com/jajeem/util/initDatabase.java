@@ -78,6 +78,8 @@ public class initDatabase {
 			query += "Insert into seat(roomid,name,row,col) values(2,'a7',1,4);";
 			query += "Insert into seat(roomid,name,row,col) values(2,'a8',1,5);";
 			
+			
+			
 			statement = con.createStatement();
 			statement.executeUpdate(query);
 			

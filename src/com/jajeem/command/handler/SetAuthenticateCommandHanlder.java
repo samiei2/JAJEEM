@@ -7,7 +7,7 @@ import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.dao.h2.StudentDAO;
+import com.jajeem.core.service.StudentService;
 import com.jajeem.util.Config;
 
 public class SetAuthenticateCommandHanlder implements ICommandHandler {
@@ -19,10 +19,10 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 		boolean grant = false;
 		GrantCommand grantCommand = new GrantCommand(InetAddress.getLocalHost()
 				.getHostAddress(), ((AuthenticateCommand) cmd).getFrom(),
-				Integer.parseInt(Config.getParam("port")), false);
+				Integer.parseInt(Config.getParam("serverPort")), false);
 
-		StudentDAO studentDAO = new StudentDAO();
-		grant = studentDAO.authenticate(
+		StudentService studentService = new StudentService();
+		grant = studentService.authenticate(
 				((AuthenticateCommand) cmd).getUsername(),
 				((AuthenticateCommand) cmd).getPassword());
 		

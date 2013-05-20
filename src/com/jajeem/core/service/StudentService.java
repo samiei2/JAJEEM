@@ -10,7 +10,7 @@ public class StudentService implements IStudentService{
 	private StudentDAO studentDAO;
 	
 	@Override
-	public boolean authenticate(String user, String pass) throws SQLException {
+	public boolean authenticate(String user, char[] pass) throws SQLException {
 		if(studentDAO != null)
 			studentDAO.authenticate(user, pass);
 		return false;

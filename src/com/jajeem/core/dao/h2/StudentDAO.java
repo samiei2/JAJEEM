@@ -23,8 +23,8 @@ public class StudentDAO implements IStudentDAO {
 	public boolean authenticate(String username, char[] pass)
 			throws SQLException {
 
-		String password = new String(pass);  
-		
+		String password = new String(pass);
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -89,20 +89,20 @@ public class StudentDAO implements IStudentDAO {
 
 	@Override
 	public Student create(Student student) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
-		ps = con.prepareStatement("INSERT INTO Student (firstName, middleName, lastName, username, password, language) " +
-				" VALUES (?, ?, ?, ?, ?, ?);");
+
+		ps = con.prepareStatement("INSERT INTO Student (firstName, middleName, lastName, username, password, language) "
+				+ " VALUES (?, ?, ?, ?, ?, ?);");
 		ps.setString(1, student.getFirstName());
 		ps.setString(2, student.getMiddleName());
 		ps.setString(3, student.getLastName());
 		ps.setString(4, student.getUsername());
 		ps.setString(5, student.getPassword());
-		ps.setString(6, student.getLanguage());		
+		ps.setString(6, student.getLanguage());
 
 		try {
 			rs = ps.executeUpdate();
@@ -149,12 +149,12 @@ public class StudentDAO implements IStudentDAO {
 
 	@Override
 	public Student get(Student student) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.id = ?;");
 		ps.setInt(1, student.getId());
 
@@ -200,14 +200,14 @@ public class StudentDAO implements IStudentDAO {
 
 	@Override
 	public boolean update(Student student) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("UPDATE Student SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
-		
+
 		ps.setString(1, student.getFirstName());
 		ps.setString(2, student.getMiddleName());
 		ps.setString(3, student.getLastName());
@@ -251,12 +251,12 @@ public class StudentDAO implements IStudentDAO {
 
 	@Override
 	public boolean delete(Student student) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("DELETE FROM Student WHERE Student.id = ?;");
 		ps.setInt(1, student.getId());
 
@@ -295,14 +295,14 @@ public class StudentDAO implements IStudentDAO {
 
 	@Override
 	public ArrayList<Student> list() throws SQLException {
-		
+
 		ArrayList<Student> allStudents = new ArrayList<>();
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Student");
 
 		try {
