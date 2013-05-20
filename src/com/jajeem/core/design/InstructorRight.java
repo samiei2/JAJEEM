@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
@@ -59,7 +60,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				"Start talking to selected student", TooltipWay.left);
 		intercomButton.setRound(0);
-		panel.add(intercomButton);
+		// panel.add(intercomButton);
 
 		ImageIcon imgStopInternet = new ImageIcon(iconsPath
 				+ "/stopInternet_text.png");
@@ -75,7 +76,7 @@ public class InstructorRight {
 		groupworkButton.setRound(0);
 		TooltipManager.setTooltip(groupworkButton, imgToolTip,
 				"Start a group with selected students", TooltipWay.left);
-		panel.add(groupworkButton);
+		// panel.add(groupworkButton);
 
 		ImageIcon imgBlockApplication = new ImageIcon(iconsPath
 				+ "/blockApplication_text.png");
@@ -130,7 +131,7 @@ public class InstructorRight {
 				"Turn off, Log off, Restart student's computer",
 				TooltipWay.left);
 		panel.add(powerButton);
-		
+
 		ImageIcon imgWhiteboard = new ImageIcon(iconsPath + "/power_text.png");
 		final WebButton whiteboardButton = new WebButton(imgWhiteboard);
 		whiteboardButton.setRound(0);
@@ -150,11 +151,13 @@ public class InstructorRight {
 					String selectedStudent = "";
 					JInternalFrame selectedFrame = InstructorCenter.desktopPane
 							.getSelectedFrame();
-					selectedStudent = (String) selectedFrame.getClientProperty("ip");
+					selectedStudent = (String) selectedFrame
+							.getClientProperty("ip");
 					if (selectedFrame.getClientProperty("balck") == null) {
 						currentBalckState = false;
 						selectedFrame.putClientProperty("black", "true");
-					} else if ((boolean) selectedFrame.getClientProperty("balck")) {
+					} else if ((boolean) selectedFrame
+							.getClientProperty("balck")) {
 						currentBalckState = true;
 						selectedFrame.putClientProperty("black", "false");
 					} else {
@@ -164,7 +167,8 @@ public class InstructorRight {
 
 					try {
 						ServerService ss = new ServerService();
-						BlackoutCommand bc = new BlackoutCommand(
+						BlackoutCommand bc = new BlackoutCommand(InetAddress
+								.getLocalHost().getHostAddress(),
 								selectedStudent, Integer.parseInt(Config
 										.getParam("port")), currentBalckState);
 						ss.send(bc);
@@ -188,7 +192,8 @@ public class InstructorRight {
 							.getSelectedFrame().getClientProperty("ip");
 					try {
 						ServerService ss = new ServerService();
-						InternetCommand ic = new InternetCommand(
+						InternetCommand ic = new InternetCommand(InetAddress
+								.getLocalHost().getHostAddress(),
 								selectedStudent, Integer.parseInt(Config
 										.getParam("port")));
 						ss.send(ic);
@@ -288,7 +293,8 @@ public class InstructorRight {
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
 				try {
-					powerCommand = new PowerCommand("", Integer.parseInt(Config
+					powerCommand = new PowerCommand(InetAddress.getLocalHost()
+							.getHostAddress(), "", Integer.parseInt(Config
 							.getParam("port")), "");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -299,7 +305,7 @@ public class InstructorRight {
 					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 
-					powerCommand.setHost(selectedStudent);
+					powerCommand.setTo(selectedStudent);
 
 					WebButton turnOffButton = new WebButton("Turn off");
 					WebButton logOffButton = new WebButton("Log off");
@@ -347,15 +353,15 @@ public class InstructorRight {
 		});
 
 		whiteboardButton.addActionListener(new ActionListener() {
-			
+
+			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				WhiteboardClient whiteboard = 
-						new WhiteboardClient();
+				WhiteboardClient whiteboard = new WhiteboardClient();
 				whiteboard.main(null);
 			}
 		});
-		
+
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
 		panel2.setUndecorated(true);
@@ -408,6 +414,8 @@ public class InstructorRight {
 							try {
 								ServerService ss = new ServerService();
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
 										selectedStudent,
 										Integer.parseInt(Config
 												.getParam("port")),
@@ -422,7 +430,7 @@ public class InstructorRight {
 
 					}
 				};
-				
+
 				ActionListener listenerUnblock = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
@@ -433,6 +441,8 @@ public class InstructorRight {
 							try {
 								ServerService ss = new ServerService();
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
 										selectedStudent,
 										Integer.parseInt(Config
 												.getParam("port")),
@@ -449,8 +459,8 @@ public class InstructorRight {
 				};
 				unBlock.addActionListener(listenerUnblock);
 				ok.addActionListener(listener);
-				content.add(new CenterPanel(new GroupPanel(5, ok, unBlock, cancel)),
-						"0,2,1,2");
+				content.add(new CenterPanel(new GroupPanel(5, ok, unBlock,
+						cancel)), "0,2,1,2");
 			} else if (type == "website") {
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -462,6 +472,8 @@ public class InstructorRight {
 							try {
 								ServerService ss = new ServerService();
 								WebsiteCommand wc = new WebsiteCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
 										selectedStudent,
 										Integer.parseInt(Config
 												.getParam("port")),
@@ -486,7 +498,7 @@ public class InstructorRight {
 					setVisible(false);
 				}
 			});
-			
+
 			SwingUtils.equalizeComponentsWidths(ok, cancel);
 
 			add(content);

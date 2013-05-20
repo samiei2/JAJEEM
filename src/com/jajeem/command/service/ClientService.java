@@ -77,7 +77,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 		while (true) {
 			try {
 				byte[] packet = getDatagram();
-				
+
 				ByteArrayInputStream b = new ByteArrayInputStream(packet);
 				DataInputStream d = new DataInputStream(b);
 
@@ -103,8 +103,9 @@ public class ClientService implements IConnectorSevice, Runnable {
 					throw new ClassNotFoundException("Object is not a message");
 
 				Command cmd = (Command) o;
-				
-				logger.info("Receiving: Message type: " + cmd.getClass() + ", from: " + cmd.getTo());
+
+				logger.info("Receiving: Message type: " + cmd.getClass()
+						+ ", from: " + cmd.getTo());
 
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
@@ -157,13 +158,24 @@ public class ClientService implements IConnectorSevice, Runnable {
 					SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
 					setPowerCommandHandler.run(cmd);
 				}
-				
+
 				else if (cmd instanceof VolumeCommand) {
 					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
 					setVolumeCommandHandler.run(cmd);
+
 				} else if (cmd instanceof WebsiteCommand) {
 					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
 					openWebsiteCommandHandler.run(cmd);
+				}
+				
+				else if (cmd instanceof AuthenticateCommand) {
+					SetAuthenticateCommandHanlder setAuthenticateCommandHanlder = new SetAuthenticateCommandHanlder();
+					setAuthenticateCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof GrantCommand) {
+					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
+					setGrantCommandHanlder.run(cmd);
 				}
 
 			} catch (Exception ex) {

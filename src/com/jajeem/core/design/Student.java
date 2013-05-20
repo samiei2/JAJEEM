@@ -33,7 +33,7 @@ public class Student {
 	private JFrame frmJajeemProject;
 	
 	private static boolean black;
-
+	
 	public static boolean isBlack() {
 		return black;
 	}
@@ -90,7 +90,7 @@ public class Student {
 		frmJajeemProject.setResizable(false);
 		frmJajeemProject.setUndecorated(true);
 		frmJajeemProject.setAlwaysOnTop(true);
-		frmJajeemProject.setTitle("JaJeem Project");
+		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Student.class.getResource("/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(0, 400, 320, 400);
@@ -114,11 +114,6 @@ public class Student {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("port")));
 		clientService.start();
-		
-		ClientService clientServiceTimer = new ClientService(
-				Config.getParam("broadcastingIp"), Integer.parseInt(Config
-						.getParam("startUpPort")));
-		clientServiceTimer.start();
 	}
 
 	private WebPanel createPanel() throws IOException {
@@ -163,5 +158,4 @@ public class Student {
 
 		return panel2;
 	}
-
 }

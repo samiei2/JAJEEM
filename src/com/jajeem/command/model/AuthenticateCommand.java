@@ -11,12 +11,11 @@ public class AuthenticateCommand extends Command {
 	private String password;
 	private String role;
 
-	public AuthenticateCommand(String from, String to, int port, String username, String password, String role) {
+	public AuthenticateCommand(String from, String to, int port, String username, String password) {
 		super(from, to, port);
 		
 		this.setUsername(username);
 		this.setPassword(password);
-		this.setRole(role);
 	}
 	
 	public String getUsername() {
@@ -33,13 +32,5 @@ public class AuthenticateCommand extends Command {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 }
