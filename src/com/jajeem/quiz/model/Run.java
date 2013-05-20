@@ -7,6 +7,7 @@ public class Run {
 	private int instructorId;
 	private int sessionId;
 	private int quizId;
+	private int studentId;
 	private int start;
 	private int end;
 	
@@ -46,5 +47,11 @@ public class Run {
 	}
 	public void setEnd(int end) {
 		this.end = end;
+	}
+	public int getStudentId() {
+		return studentId;
+	}
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
 	}
 }

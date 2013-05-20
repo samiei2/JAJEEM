@@ -27,12 +27,14 @@ public class SessionDAO implements ISessionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Session (classId, instructorId, start, end) " +
-				" VALUES (?, ?, ? , ?);");
+		ps = con.prepareStatement("INSERT INTO Session (roomId, instructorId, attendantId, courseId, start, end) " +
+				" VALUES (?, ?, ? ,? ,? ,?);");
 		ps.setInt(1, session.getClassId());
 		ps.setInt(2, session.getInstructorId());
-		ps.setInt(3, session.getStart());
-		ps.setInt(4, session.getEnd());
+		ps.setInt(3, session.getAttendantId());
+		ps.setInt(4, session.getCourseId());
+		ps.setInt(5, session.getStart());
+		ps.setInt(6, session.getEnd());
 
 		try {
 			rs = ps.executeUpdate();
@@ -91,8 +93,10 @@ public class SessionDAO implements ISessionDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				session.setClassId(rs.getInt("classId"));
+				session.setClassId(rs.getInt("roomId"));
 				session.setInstructorId(rs.getInt("instructorId"));
+				session.setAttendantId(rs.getInt("attendantid"));
+				session.setCourseId(rs.getInt("courseid"));
 				session.setStart(rs.getInt("start"));
 				session.setEnd(rs.getInt("end"));
 			} else {
@@ -134,13 +138,15 @@ public class SessionDAO implements ISessionDAO {
 
 		Connection con = BaseDAO.getConnection();
 		
-		ps = con.prepareStatement("UPDATE Session SET classId=?, instructorId=?, start=?, end=? WHERE id = ?");
+		ps = con.prepareStatement("UPDATE Session SET roomId=?, instructorId=?, attendantId=?, courseId=?, start=?, end=? WHERE id = ?");
 		
 		ps.setInt(1, session.getClassId());
 		ps.setInt(2, session.getInstructorId());
-		ps.setInt(3, session.getStart());
-		ps.setInt(4, session.getEnd());
-		ps.setInt(5, session.getId());
+		ps.setInt(3, session.getAttendantId());
+		ps.setInt(4, session.getCourseId());
+		ps.setInt(5, session.getStart());
+		ps.setInt(6, session.getEnd());
+		ps.setInt(7, session.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -237,8 +243,10 @@ public class SessionDAO implements ISessionDAO {
 				Session session = new Session();
 
 				session.setId(rs.getInt("id"));
-				session.setClassId(rs.getInt("classId"));
+				session.setClassId(rs.getInt("roomId"));
 				session.setInstructorId(rs.getInt("instructorId"));
+				session.setAttendantId(rs.getInt("attendantId"));
+				session.setCourseId(rs.getInt("courseId"));
 				session.setStart(rs.getInt("start"));
 				session.setEnd(rs.getInt("end"));
 

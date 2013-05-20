@@ -6,6 +6,8 @@ public class Session {
 	private int id;
 	private int classId;
 	private int instructorId;
+	private int attendantId;
+	private int courseId;
 	private int start;
 	private int end;
 	
@@ -39,6 +41,18 @@ public class Session {
 	}
 	public void setEnd(int end) {
 		this.end = end;
+	}
+	public int getAttendantId() {
+		return attendantId;
+	}
+	public void setAttendantId(int attendantId) {
+		this.attendantId = attendantId;
+	}
+	public int getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 
 }

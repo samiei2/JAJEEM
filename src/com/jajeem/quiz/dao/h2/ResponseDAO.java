@@ -28,7 +28,7 @@ public class ResponseDAO implements IResponseDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO QuizResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 		ps.setInt(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
 		ps.setString(3, response.getAnswer());

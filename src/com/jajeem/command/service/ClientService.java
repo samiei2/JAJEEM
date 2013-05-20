@@ -165,6 +165,14 @@ public class ClientService implements IConnectorSevice, Runnable {
 					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
 					openWebsiteCommandHandler.run(cmd);
 				}
+				else if(cmd instanceof StartWhiteBoardCommand){
+					StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
+					whiteboardHandler.run(cmd);
+				}
+				else if(cmd instanceof StopWhiteBoardCommand){
+					StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
+					whiteboardHandler.run(cmd);
+				}
 
 			} catch (Exception ex) {
 				System.err.println("Unknown message:" + ex.toString());

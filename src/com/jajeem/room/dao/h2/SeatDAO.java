@@ -27,7 +27,7 @@ public class SeatDAO implements ISeatDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Seat (classId, name, row, col) " +
+		ps = con.prepareStatement("INSERT INTO Seat (Roomid, name, row, col) " +
 				" VALUES (?, ?, ? , ?);");
 		ps.setInt(1, seat.getClassId());
 		ps.setString(2, seat.getName());
@@ -91,7 +91,7 @@ public class SeatDAO implements ISeatDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				seat.setClassId(rs.getInt("classId"));
+				seat.setClassId(rs.getInt("Roomid"));
 				seat.setName(rs.getString("name"));
 				seat.setRow(rs.getInt("row"));
 				seat.setColumn(rs.getInt("col"));
@@ -134,7 +134,7 @@ public class SeatDAO implements ISeatDAO {
 
 		Connection con = BaseDAO.getConnection();
 		
-		ps = con.prepareStatement("UPDATE Seat SET classId=?, name=?, row=?, col=? WHERE id = ?");
+		ps = con.prepareStatement("UPDATE Seat SET Roomid=?, name=?, row=?, col=? WHERE id = ?");
 		
 		ps.setInt(1, seat.getClassId());
 		ps.setString(2, seat.getName());
@@ -237,7 +237,7 @@ public class SeatDAO implements ISeatDAO {
 				Seat seat = new Seat();
 
 				seat.setId(rs.getInt("id"));
-				seat.setClassId(rs.getInt("classId"));
+				seat.setClassId(rs.getInt("Roomid"));
 				seat.setName(rs.getString("name"));
 				seat.setRow(rs.getInt("row"));
 				seat.setColumn(rs.getInt("col"));
