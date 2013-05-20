@@ -9,8 +9,8 @@ public class BlackoutCommand extends Command {
 	
 	private boolean black = false;
 
-	public BlackoutCommand(String host, int port2, boolean black) {
-		super(host, port2);
+	public BlackoutCommand(String from, String to, int port, boolean black) {
+		super(from, to, port);
 		
 		this.black = black;
 	}

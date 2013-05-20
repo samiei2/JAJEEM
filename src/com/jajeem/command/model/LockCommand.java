@@ -9,8 +9,8 @@ public class LockCommand extends Command {
 	
 	private boolean lock;
 
-	public LockCommand(String host, int port2) {
-		super(host, port2);
+	public LockCommand(String from, String to, int port) {
+		super(from, to, port);
 		
 		this.lock = false;
 	}

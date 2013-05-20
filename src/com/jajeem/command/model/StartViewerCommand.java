@@ -8,9 +8,8 @@ public class StartViewerCommand extends Command {
 	private static final long serialVersionUID = 4275059783011679327L;
 	private String leader;
 	
-	public StartViewerCommand(String host, int port, String leader) {
-		super(host, port);
-		// TODO Auto-generated constructor stub
+	public StartViewerCommand(String from, String to, int port, String leader) {
+		super(from, to, port);
 	}
 
 	public String getLeader() {

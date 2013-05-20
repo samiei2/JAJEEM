@@ -10,8 +10,8 @@ public class VolumeCommand extends Command {
 	private String type = "";
 	private int vol = 0;
 
-	public VolumeCommand(String host, int port2, String type, int vol) {
-		super(host, port2);
+	public VolumeCommand(String from, String to, int port, String type, int vol) {
+		super(from, to, port);
 		
 		this.setType(type);
 		this.setVol(vol);

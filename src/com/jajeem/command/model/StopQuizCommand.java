@@ -7,9 +7,8 @@ public class StopQuizCommand extends Command {
 	 */
 	private static final long serialVersionUID = -2279688740407019451L;
 
-	public StopQuizCommand(String host, int port2) {
-		super(host, port2);
-		// TODO Auto-generated constructor stub
+	public StopQuizCommand(String from, String to, int port) {
+		super(from, to, port);
 	}
 
 }

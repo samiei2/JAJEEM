@@ -9,8 +9,8 @@ public class PowerCommand extends Command {
 	
 	private String type;
 
-	public PowerCommand(String host, int port2, String type) {
-		super(host, port2);
+	public PowerCommand(String from, String to, int port, String type) {
+		super(from, to, port);
 		
 		this.setType(type);
 	}

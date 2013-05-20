@@ -9,8 +9,8 @@ public class WhiteBlackAppCommand extends Command {
 	private String appName;
 	private boolean black;
 
-	public WhiteBlackAppCommand(String host, int port2, String appName, boolean black) {
-		super(host, port2);
+	public WhiteBlackAppCommand(String from, String to, int port, String appName, boolean black) {
+		super(from, to, port);
 		this.black = black;
 		this.appName = appName;
 	}

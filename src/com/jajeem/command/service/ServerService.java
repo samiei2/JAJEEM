@@ -83,7 +83,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		InetAddress group = null;
 		
 		try {
-			group = InetAddress.getByName(cmd.getHost());
+			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		}
@@ -93,7 +93,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		
 		try {
 			socket.send(packet);
-			logger.info("Sending: Message type: " + cmd.getClass() + ", from: " + cmd.getHost());
+			logger.info("Sending: Message type: " + cmd.getClass() + ", from: " + cmd.getTo());
 		} catch (IOException e) {
 			System.err.println(e);
 			try {

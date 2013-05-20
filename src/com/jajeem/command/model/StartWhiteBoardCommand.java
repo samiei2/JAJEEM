@@ -10,8 +10,8 @@ public class StartWhiteBoardCommand extends Command {
 	
 	private WhiteboardClient client;
 	private String server;
-	public StartWhiteBoardCommand(String host, int port2) {
-		super(host, port2);
+	public StartWhiteBoardCommand(String from, String to, int port) {
+		super(from, to, port);
 		
 	}
 

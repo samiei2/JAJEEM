@@ -7,9 +7,8 @@ public class ChatCommand extends Command {
 	 */
 	private static final long serialVersionUID = 1186500153634955052L;
 
-	public ChatCommand(String host, int port2) {
-		super(host, port2);
-		// TODO Auto-generated constructor stub
+	public ChatCommand(String from, String to, int port) {
+		super(from, to, port);
 	}
 
 }

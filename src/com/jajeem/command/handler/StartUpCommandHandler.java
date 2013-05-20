@@ -6,6 +6,7 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorCenter;
+import com.jajeem.core.design.Student;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {
@@ -27,6 +28,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 			cmdToSend.setSender(InetAddress.getLocalHost().getHostAddress());
 			cmdToSend.setPort(port);
 			serverService.send(cmdToSend);
+			Student.setServerIp(((StartUpCommand) cmd).getSender());
 
 		} else if (Integer.parseInt(Config.getParam("server")) == 1
 				&& cmd.getPort() == Integer.parseInt(Config
