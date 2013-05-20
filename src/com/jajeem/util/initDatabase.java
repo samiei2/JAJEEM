@@ -17,7 +17,7 @@ public class initDatabase {
 			"CREATE TABLE IF NOT EXISTS Quiz (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, instructorid int NOT NULL, type tinyint, category varchar(255), description varchar(1000), pointing int, points int, time datetime, shuffle tinyint, title varchar(255), PRIMARY KEY (id));"+
 			
 			"CREATE TABLE IF NOT EXISTS Instructor (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (ID));"+
-			"CREATE TABLE IF NOT EXISTS Student (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Attendantid int NOT NULL, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (id));"+
+			"CREATE TABLE IF NOT EXISTS Student (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (id));"+
 			
 			"CREATE TABLE IF NOT EXISTS Room (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Size int, PRIMARY KEY (id));"+
 			"CREATE TABLE IF NOT EXISTS Session (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Instructorid int NOT NULL, Roomid int NOT NULL, Attendantid int, Courseid int, PRIMARY KEY (id));"+
@@ -29,12 +29,10 @@ public class initDatabase {
 			"ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"+
 			"ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti740493 FOREIGN KEY (quizId) REFERENCES Quiz (id);"+
 			"ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti13848 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"+
-			"ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun738461 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"+
+			"ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun738461 FOREIGN KEY (instructorid) REFERENCES Instructor (id);"+
 			"ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun166110 FOREIGN KEY (Studentid) REFERENCES Student (id);"+
 			"ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun478787 FOREIGN KEY (Quizid) REFERENCES Quiz (id);"+
-			"ALTER TABLE Quiz ADD CONSTRAINT IF NOT EXISTS FKQuiz212301 FOREIGN KEY (instructorid) REFERENCES Instructor (id);"+
-			
-			"ALTER TABLE Student ADD CONSTRAINT IF NOT EXISTS FKStudent503275 FOREIGN KEY (Attendantid) REFERENCES Attendant (id);"+
+			"ALTER TABLE Quiz ADD CONSTRAINT IF NOT EXISTS FKQuiz212301 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"+
 			
 			"ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession669271 FOREIGN KEY (Attendantid) REFERENCES Attendant (id);"+
 			"ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession748148 FOREIGN KEY (Roomid) REFERENCES Room (id);"+
@@ -53,6 +51,10 @@ public class initDatabase {
 		}
         
 		
+	}
+	
+	public static void main(String[] args){
+		initialize();
 	}
 
 }

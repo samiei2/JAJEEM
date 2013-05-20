@@ -1,10 +1,14 @@
 package com.jajeem.quiz.design;
 
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -22,6 +26,8 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
@@ -29,6 +35,8 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.util.Config;
+import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
 public class Panel_Bottom_2 extends WebPanel {
@@ -53,8 +61,6 @@ public class Panel_Bottom_2 extends WebPanel {
 	 */
 	public Panel_Bottom_2() {
 		quizResponse = new ArrayList<>();
-		WebLabel wblblQuestionNumber = new WebLabel();
-		wblblQuestionNumber.setText("Question Number");
 		
 		webComboBox = new WebComboBox();
 		webComboBox.addItemListener(new ItemListener() {
@@ -65,7 +71,7 @@ public class Panel_Bottom_2 extends WebPanel {
 				webTextArea.setText(currentQuestion.getTitle());
 				if(currentQuestion.getType() == 0){
 					webTextField.setText("Single Choice");
-				} 
+				}
 				else if(currentQuestion.getType() == 1){
 					webTextField.setText("Multiple Choice");
 				}
@@ -100,48 +106,73 @@ public class Panel_Bottom_2 extends WebPanel {
 		webPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
 		WebPanel webPanel_1 = new WebPanel();
+		
+		WebComboBox webComboBox_1 = new WebComboBox();
+		webComboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Student", "Question"}));
+		webComboBox_1.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				
+			}
+		});
+		
+		WebLabel wblblView = new WebLabel();
+		wblblView.setText("View");
+		
+		WebLabel wblblQuestion_1 = new WebLabel();
+		wblblQuestion_1.setText("Question");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wblblQuestionNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-					.addGap(149)
-					.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-					.addGap(73))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(webPanel_1, GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
-					.addGap(2))
+						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 997, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(19)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+									.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+									.addComponent(webComboBox_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+							.addGap(212)
+							.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(4)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(wblblQuestionNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(webComboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 240, Short.MAX_VALUE)
-					.addGap(1))
+					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE)
+					.addGap(8))
 		);
 		
 		WebLabel wblblResults = new WebLabel();
@@ -176,9 +207,12 @@ public class Panel_Bottom_2 extends WebPanel {
 		gl_webPanel_1.setHorizontalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addContainerGap()
+							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+							.addGap(24))
+						.addGroup(gl_webPanel_1.createSequentialGroup()
 							.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(375)
 							.addComponent(wblbltotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -195,11 +229,8 @@ public class Panel_Bottom_2 extends WebPanel {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(wblblCorrectRate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
-							.addGap(21)))
-					.addContainerGap())
+							.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+					.addGap(0))
 		);
 		gl_webPanel_1.setVerticalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
@@ -219,7 +250,7 @@ public class Panel_Bottom_2 extends WebPanel {
 						.addComponent(wblblCorrectRate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 						.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -227,7 +258,7 @@ public class Panel_Bottom_2 extends WebPanel {
 		webTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
+			new Object[] {
 				"#", "Number", "Student Name", "Order", "Correct Answer", "Answer"
 			}
 		));
@@ -363,7 +394,7 @@ public class Panel_Bottom_2 extends WebPanel {
 			if(webTable.getRowCount() != 0){
 				total = webTable.getRowCount();
 				model.addRow(new Object[]{
-						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
+						new Object(),
 						student.getId(),
 						student.getFirstName() + " " + student.getLastName(),
 						"",
@@ -382,7 +413,7 @@ public class Panel_Bottom_2 extends WebPanel {
 			else{
 				total = 1;
 				model.addRow(new Object[]{
-						1,
+						new Object(),
 						student.getId(),
 						student.getFirstName() + " " + student.getLastName(),
 						"",
@@ -402,7 +433,7 @@ public class Panel_Bottom_2 extends WebPanel {
 		else{
 			if(webTable.getRowCount() != 0){
 				model.addRow(new Object[]{
-						Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
+						new Object(),
 						student.getId(),
 						student.getFirstName() + " " + student.getLastName(),
 						"",
@@ -412,7 +443,7 @@ public class Panel_Bottom_2 extends WebPanel {
 			}
 			else{
 				model.addRow(new Object[]{
-						1,
+						new Object(),
 						student.getId(),
 						student.getFirstName() + " " + student.getLastName(),
 						"",
@@ -453,7 +484,17 @@ public class Panel_Bottom_2 extends WebPanel {
 				    if (remaining == 0) {
 				    // Stop updating now.
 				        timer.stop();
-				        //TODO broadCast QuizStop
+						try {
+							new Config();
+							ServerService serv = new ServerService();
+							StopQuizCommand cmd = new StopQuizCommand(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+							serv.send(cmd);
+						} catch (NumberFormatException e) {
+							e.printStackTrace();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
 				    }
 				}
 			};
@@ -481,4 +522,8 @@ public class Panel_Bottom_2 extends WebPanel {
 			
 		}
 	}
+}
+
+class Icons{
+	
 }
