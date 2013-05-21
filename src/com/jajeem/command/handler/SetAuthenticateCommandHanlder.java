@@ -10,7 +10,6 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorCenter;
-import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.util.Config;
 
@@ -37,7 +36,8 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 					.getAllFrames();
 			for (JInternalFrame frame : frames) {
 				if (cmd.getFrom().compareTo((String) frame.getClientProperty("ip")) == 0) {
-					frame.setTitle(StudentLogin.getUsername());
+					frame.setTitle(((AuthenticateCommand) cmd).getUsername());
+					frame.updateUI();
 					break;
 				}
 			}
