@@ -25,7 +25,6 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
-import com.jajeem.command.service.ClientService;
 import com.jajeem.util.Config;
 
 public class Student {

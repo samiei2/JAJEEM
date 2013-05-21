@@ -20,11 +20,12 @@ public class InstructorDAO implements IInstructorDAO {
 	}
 
 	@Override
-	public boolean authenticate(String username, String password)
-			throws SQLException {
+	public boolean authenticate(String username, char[] pass) throws SQLException {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+
+		String password = new String(pass);
 
 		Connection con = BaseDAO.getConnection();
 
@@ -45,7 +46,7 @@ public class InstructorDAO implements IInstructorDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				if (password.compareTo(rs.getString("password")) == 0) {
+				if (password.compareTo(rs.getString("PASSWORD")) == 0) {
 					return true;
 				} else {
 					logger.debug("authenticate: didn't match instructor's password [instructor no="
@@ -87,20 +88,20 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public Instructor create(Instructor instructor) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
-		ps = con.prepareStatement("INSERT INTO Instructor (firstName, middleName, lastName, username, password, language) " +
-				" VALUES (?, ?, ?, ?, ?, ?);");
+
+		ps = con.prepareStatement("INSERT INTO Instructor (firstName, middleName, lastName, username, password, language) "
+				+ " VALUES (?, ?, ?, ?, ?, ?);");
 		ps.setString(1, instructor.getFirstName());
 		ps.setString(2, instructor.getMiddleName());
 		ps.setString(3, instructor.getLastName());
 		ps.setString(4, instructor.getUsername());
 		ps.setString(5, instructor.getPassword());
-		ps.setString(6, instructor.getLanguage());		
+		ps.setString(6, instructor.getLanguage());
 
 		try {
 			rs = ps.executeUpdate();
@@ -147,12 +148,12 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public Instructor get(Instructor instructor) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.id = ?;");
 		ps.setInt(1, instructor.getId());
 
@@ -198,14 +199,14 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public boolean update(Instructor instructor) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("UPDATE Instructor SET firstName=?, middleName=?, lastName=?, username=?, password=?, language=? WHERE id = ?");
-		
+
 		ps.setString(1, instructor.getFirstName());
 		ps.setString(2, instructor.getMiddleName());
 		ps.setString(3, instructor.getLastName());
@@ -249,12 +250,12 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public boolean delete(Instructor instructor) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("DELETE FROM Instructor WHERE Instructor.id = ?;");
 		ps.setInt(1, instructor.getId());
 
@@ -293,14 +294,14 @@ public class InstructorDAO implements IInstructorDAO {
 
 	@Override
 	public ArrayList<Instructor> list() throws SQLException {
-		
+
 		ArrayList<Instructor> allInstructors = new ArrayList<>();
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Instructor");
 
 		try {
@@ -344,5 +345,4 @@ public class InstructorDAO implements IInstructorDAO {
 
 		return allInstructors;
 	}
-
 }

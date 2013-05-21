@@ -63,11 +63,11 @@ public class initDatabase {
 			query += "Insert into room(name,seatsize) values('c',30);";
 			query += "Insert into room(name,seatsize) values('d',45);";
 			
-			query += "Insert into course(name) values('farsi');";
-			query += "Insert into course(name) values('english');";
-			query += "Insert into course(name) values('math');";
-			query += "Insert into course(name) values('physic');";
-			query += "Insert into course(name) values('chemistry');";
+			query += "Insert into course(name) values('Farsi');";
+			query += "Insert into course(name) values('English');";
+			query += "Insert into course(name) values('Math');";
+			query += "Insert into course(name) values('Physic');";
+			query += "Insert into course(name) values('Chemistry');";
 			
 			query += "Insert into seat(roomid,name,row,col) values(2,'a1',1,1);";
 			query += "Insert into seat(roomid,name,row,col) values(2,'a2',2,1);";
