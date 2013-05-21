@@ -29,6 +29,9 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.TitledBorder;
 
 public class InstructorLogin extends WebDialog {
 
@@ -61,7 +64,7 @@ public class InstructorLogin extends WebDialog {
 
 		setResizable(false);
 		setModal(true);
-		pack();
+		
 		setTitle("Login to iCalabo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/menubar/jajeem.jpg")));
@@ -91,6 +94,10 @@ public class InstructorLogin extends WebDialog {
 
 		final WebList list1 = new WebList(listModel1);
 		WebScrollPane sPanel1 = new WebScrollPane(list1);
+		sPanel1.setDrawBackground(true);
+		sPanel1.setShadeWidth(0);
+		sPanel1.setRound(0);
+		sPanel1.setViewportBorder(new TitledBorder(null, "Instructors", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		//
 
 		// get list of courses
@@ -104,11 +111,14 @@ public class InstructorLogin extends WebDialog {
 
 		final WebList list2 = new WebList(listModel2);
 		WebScrollPane sPanel2 = new WebScrollPane(list2);
+		sPanel2.setDrawBackground(true);
+		sPanel2.setShadeWidth(0);
+		sPanel2.setRound(0);
+		sPanel2.setViewportBorder(new TitledBorder(null, "Courses", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		//
 
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
@@ -130,19 +140,34 @@ public class InstructorLogin extends WebDialog {
 				panel.add(lblNewLabel);
 			}
 			{
+				password.setShadeWidth(0);
+				password.setRound(0);
 				panel.add(password);
 
 			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Login");
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+				gl_buttonPane.setHorizontalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+							.addContainerGap(197, Short.MAX_VALUE)
+							.addComponent(okButton)
+							.addGap(190))
+				);
+				gl_buttonPane.setVerticalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPane.createSequentialGroup()
+							.addComponent(okButton)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+				buttonPane.setLayout(gl_buttonPane);
 
 				ActionListener listener = new ActionListener() {
 					@SuppressWarnings("static-access")
