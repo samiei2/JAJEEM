@@ -1,10 +1,9 @@
 package com.jajeem.command.handler;
 
-import javax.swing.JInternalFrame;
+import java.awt.Color;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GrantCommand;
-import com.jajeem.core.design.InstructorCenter;
 import com.jajeem.core.design.Student;
 import com.jajeem.core.design.StudentLogin;
 
@@ -17,17 +16,9 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 			Student student = new Student();
 			student.main(null);
 			StudentLogin.setLoginDialogVisible(false);
-			
-			JInternalFrame[] frames = InstructorCenter.desktopPane.getAllFrames();
-			for (JInternalFrame frame : frames) {
-				if ((String) frame.getClientProperty("ip") == cmd.getFrom()) {
-					frame.setTitle(StudentLogin.LoginDialog.name);
-					break;
-				}
-			}
 		} else {
+			StudentLogin.setFieldsColor(Color.decode("#FAD9D9"));
 			StudentLogin.setLoginDialogVisible(true);
-			System.out.println("Wrong!");
 		}
 	}
 

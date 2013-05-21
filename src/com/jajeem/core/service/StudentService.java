@@ -7,12 +7,12 @@ import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.core.model.Student;
 
 public class StudentService implements IStudentService{
-	private StudentDAO studentDAO;
+	private StudentDAO studentDAO = new StudentDAO();
 	
 	@Override
 	public boolean authenticate(String user, char[] pass) throws SQLException {
 		if(studentDAO != null)
-			studentDAO.authenticate(user, pass);
+			return studentDAO.authenticate(user, pass);
 		return false;
 	}
 

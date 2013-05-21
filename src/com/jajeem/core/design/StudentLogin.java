@@ -2,6 +2,7 @@ package com.jajeem.core.design;
 
 import info.clearthought.layout.TableLayout;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -10,7 +11,6 @@ import java.net.InetAddress;
 
 import javax.swing.JDialog;
 import javax.swing.UIManager;
-
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
@@ -38,12 +38,16 @@ public class StudentLogin extends JDialog {
 	private static String serverIp;
 	private static LoginDialog loginDialog;
 
+	final static WebTextField username = new WebTextField(15);
+	final static WebPasswordField password = new WebPasswordField(15);
+
 	public static void setLoginDialogVisible(boolean flag) {
 		loginDialog.setVisible(flag);
 	}
 
-	public static void setFields() {
-		// change fields if they are wrong
+	public static void setFieldsColor(Color color) {
+		username.setBackground(color);
+		password.setBackground(color);
 	}
 
 	public static String getServerIp() {
@@ -53,7 +57,7 @@ public class StudentLogin extends JDialog {
 	public static void setServerIp(String serverIp) {
 		StudentLogin.serverIp = serverIp;
 	}
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -82,7 +86,7 @@ public class StudentLogin extends JDialog {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("startUpPort")));
 		clientServiceTimer.start();
-		
+
 		ClientService clientService = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("port")));
@@ -128,14 +132,10 @@ public class StudentLogin extends JDialog {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
-			final WebTextField username = new WebTextField(15);
 			content.add(new WebLabel("Name", WebLabel.TRAILING), "0,0");
 			content.add(username, "1,0");
 
-			
-			content.add(new WebLabel("Password",
-					WebLabel.TRAILING), "0,1");
-			final WebPasswordField password = new WebPasswordField(15);
+			content.add(new WebLabel("Password", WebLabel.TRAILING), "0,1");
 			content.add(password, "1,1");
 
 			WebButton login = new WebButton("Login");
@@ -148,22 +148,19 @@ public class StudentLogin extends JDialog {
 						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								serverIp, Integer.parseInt(Config
-										.getParam("serverPort")), username.getText(),
-								password.getPassword());
+										.getParam("serverPort")),
+								username.getText(), password.getPassword());
 						name = username.getText();
 						ServerService serverService = new ServerService();
 						serverService.send(authenticateCommand);
 					} catch (Exception e2) {
-						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-
-					// setVisible(false);
 				}
 			};
 			login.addActionListener(listener);
 			cancel.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);

@@ -47,7 +47,7 @@ public class StudentDAO implements IStudentDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				if (password.compareTo(rs.getString("password")) == 0) {
+				if (password.compareTo(rs.getString("PASSWORD")) == 0) {
 					return true;
 				} else {
 					logger.debug("authenticate: didn't match student's password [student no="
