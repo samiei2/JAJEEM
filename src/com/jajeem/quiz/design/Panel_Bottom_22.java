@@ -5,6 +5,7 @@ import com.alee.laf.panel.WebPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.label.WebLabel;
@@ -15,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class Panel_Bottom_22 extends WebPanel {
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
 	private Panel_Bottom_2 parentPanel;
+	
+	private int id=1;
 
 	/**
 	 * Create the panel.
@@ -48,6 +53,103 @@ public class Panel_Bottom_22 extends WebPanel {
 		wblblStudent.setText("Student");
 		
 		webComboBox = new WebComboBox();
+		webComboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				currentStudent = new Student();
+				currentStudent.setId(Integer.parseInt(webComboBox.getSelectedItem().toString()));
+				
+				DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+				model.getDataVector().removeAllElements();
+				model.fireTableDataChanged();
+				
+				for (int i = 0; i < quizResponse.size(); i++) { // iterates through questions
+					for (int j = 0; j < quizResponse.get(i).size(); j++) { //iterates through responses
+						QuizResponse ex = quizResponse.get(i).get(j);
+						Student student = ex.getStudent();
+						Question question = ex.getQuestion();
+						if(currentStudent.getId() == student.getId()){
+							ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
+							if(ex.getQuestion().isResponseValid())
+								imgToolTip = new ImageIcon("icons/bullet-green.png");
+							
+							String StudentOption = "";
+							String QuestionOption = "";
+							if(question.getType() == 0){ // setting student's answer
+								if(question.getStudentAnswer()[0])
+									StudentOption = "First Option";
+								if(question.getStudentAnswer()[1])
+									StudentOption = "Second Option";
+								if(question.getStudentAnswer()[2])
+									StudentOption = "Third Option";
+								if(question.getStudentAnswer()[3])
+									StudentOption = "Fourth Option";
+								if(question.getStudentAnswer()[4])
+									StudentOption = "Fifth Option";
+								if(StudentOption == "")
+									StudentOption = "None Selected";
+							}
+							else if(question.getType() == 1){
+								if(question.getStudentAnswer()[0])
+									StudentOption += "First Option,";
+								if(question.getStudentAnswer()[1])
+									StudentOption += "Second Option,";
+								if(question.getStudentAnswer()[2])
+									StudentOption += "Third Option,";
+								if(question.getStudentAnswer()[3])
+									StudentOption += "Fourth Option,";
+								if(question.getStudentAnswer()[4])
+									StudentOption += "Fifth Option";
+								if(StudentOption == "")
+									StudentOption = "None Selected";
+							}
+							else
+								StudentOption = question.getStudentTextAnswer();
+							
+							Question temp2 = currentQuiz.getQuestionList().get(i);
+							if(temp2.getType() == 0){ // setting questions correct answer
+								if(temp2.getCorrectAnswer()[0])
+									QuestionOption = "First Option";
+								if(temp2.getCorrectAnswer()[1])
+									QuestionOption = "Second Option";
+								if(temp2.getCorrectAnswer()[2])
+									QuestionOption = "Third Option";
+								if(temp2.getCorrectAnswer()[3])
+									QuestionOption = "Fourth Option";
+								if(temp2.getCorrectAnswer()[4])
+									QuestionOption = "Fifth Option";
+								if(QuestionOption == "")
+									QuestionOption = "None Selected";
+							}
+							else if(temp2.getType() == 1){
+								if(temp2.getCorrectAnswer()[0])
+									QuestionOption += "First Option,";
+								if(temp2.getCorrectAnswer()[1])
+									QuestionOption += "Second Option,";
+								if(temp2.getCorrectAnswer()[2])
+									QuestionOption += "Third Option,";
+								if(temp2.getCorrectAnswer()[3])
+									QuestionOption += "Fourth Option,";
+								if(temp2.getCorrectAnswer()[4])
+									QuestionOption += "Fifth Option";
+								if(QuestionOption == "")
+									QuestionOption = "None Selected";
+							}
+							else
+								QuestionOption = "N/A";
+							
+							model.addRow(new Object[]{
+									imgToolTip,
+									question.getTitle(),
+									QuestionOption,
+									StudentOption
+							});
+						}
+					}
+				}
+			}
+		});
 		
 		WebLabel wblblStudentName = new WebLabel();
 		wblblStudentName.setText("Student Name");
@@ -134,7 +236,7 @@ public class Panel_Bottom_22 extends WebPanel {
 		);
 		
 		webTable = new WebTable();
-		webTable.setModel(new DefaultTableModel(
+		webTable.setModel(new WebTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -190,6 +292,18 @@ public class Panel_Bottom_22 extends WebPanel {
 		Question question = e.getQuestion();
 		Student student = e.getStudent();
 		boolean found = false;
+		for (int i = 0; i < webComboBox.getModel().getSize(); i++) {
+			if(webComboBox.getItemAt(i).toString().equals(String.valueOf(student.getId())))
+				found = true;
+		}
+		if(!found){
+			webComboBox.addItem(student.getId());
+			id = student.getId();
+		}
+		if(webComboBox.getSelectedIndex() == -1)
+			webComboBox.setSelectedIndex(0);
+		
+		found = false;
 		if(currentStudent != null && question != null && student != null){
 			int index = -1;
 			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find question index in the response list
@@ -198,7 +312,8 @@ public class Panel_Bottom_22 extends WebPanel {
 			}
 			for (int i = 0; i < quizResponse.size(); i++) {// search in results,if this question is already answered by this student,then update,otherwise save
 				for (int j = 0; j < quizResponse.get(i).size(); j++) { // search in student's response list of the question quizresponse.get(i) = list of responses of students who answered this question
-					if(quizResponse.get(i).get(j).getStudent().getId() == student.getId()){
+					if(quizResponse.get(i).get(j).getStudent().getId() == student.getId()
+					&& quizResponse.get(i).get(j).getQuestion().getId() == question.getId()){
 						quizResponse.get(i).set(j, e);
 						found = true;
 						break;
@@ -209,78 +324,88 @@ public class Panel_Bottom_22 extends WebPanel {
 				quizResponse.get(index).add(e);
 			
 			if(student.getId() == currentStudent.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
-				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
-				String StudentOption = "";
-				String QuestionOption = "";
-				if(question.getType() == 0){ // setting student's answer
-					if(question.getStudentAnswer()[0])
-						StudentOption = "First Option";
-					if(question.getStudentAnswer()[1])
-						StudentOption = "Second Option";
-					if(question.getStudentAnswer()[2])
-						StudentOption = "Third Option";
-					if(question.getStudentAnswer()[3])
-						StudentOption = "Fourth Option";
-					if(question.getStudentAnswer()[4])
-						StudentOption = "Fifth Option";
-				}
-				else if(question.getType() == 0){
-					if(question.getStudentAnswer()[0])
-						StudentOption += "First Option,";
-					if(question.getStudentAnswer()[1])
-						StudentOption += "Second Option,";
-					if(question.getStudentAnswer()[2])
-						StudentOption += "Third Option,";
-					if(question.getStudentAnswer()[3])
-						StudentOption += "Fourth Option,";
-					if(question.getStudentAnswer()[4])
-						StudentOption += "Fifth Option";
-				}
-				else
-					StudentOption = question.getStudentTextAnswer();
-				
-				Question temp2 = currentQuiz.getQuestionList().get(index);
-				if(temp2.getType() == 0){ // setting questions correct answer
-					if(temp2.getCorrectAnswer()[0])
-						QuestionOption = "First Option";
-					if(temp2.getCorrectAnswer()[1])
-						QuestionOption = "Second Option";
-					if(temp2.getCorrectAnswer()[2])
-						QuestionOption = "Third Option";
-					if(temp2.getCorrectAnswer()[3])
-						QuestionOption = "Fourth Option";
-					if(temp2.getCorrectAnswer()[4])
-						QuestionOption = "Fifth Option";
-				}
-				else if(temp2.getType() == 0){
-					if(temp2.getCorrectAnswer()[0])
-						QuestionOption += "First Option,";
-					if(temp2.getCorrectAnswer()[1])
-						QuestionOption += "Second Option,";
-					if(temp2.getCorrectAnswer()[2])
-						QuestionOption += "Third Option,";
-					if(temp2.getCorrectAnswer()[3])
-						QuestionOption += "Fourth Option,";
-					if(temp2.getCorrectAnswer()[4])
-						QuestionOption += "Fifth Option";
-				}
-				else
-					QuestionOption = "N/A";
-				
-				ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
-				if(e.getQuestion().isResponseValid())
-					imgToolTip = new ImageIcon("icons/bullet-green.png");
-				
-				for (int i = 0; i < webTable.getRowCount(); i++) {
-					model.removeRow(i);
-				}
-				
-				for (int i = 0; i < quizResponse.size(); i++) {
-					for (int j = 0; j < quizResponse.get(i).size(); j++) {
-						if(student.getId() == quizResponse.get(i).get(j).getStudent().getId()){
+				WebTableModel model = (WebTableModel)webTable.getModel();
+				model.getDataVector().removeAllElements();
+				model.fireTableDataChanged();
+				for (int i = 0; i < quizResponse.size(); i++) { //iterate through questions
+					for (int j = 0; j < quizResponse.get(i).size(); j++) { //iterate through answers
+						QuizResponse resp = quizResponse.get(i).get(j);
+						Question tempq = resp.getQuestion();
+						Student temps = resp.getStudent();
+						
+						if(student.getId() == temps.getId()){
+							String StudentOption = "";
+							String QuestionOption = "";
+							if(tempq.getType() == 0){ // setting student's answer
+								if(tempq.getStudentAnswer()[0])
+									StudentOption = "First Option";
+								if(tempq.getStudentAnswer()[1])
+									StudentOption = "Second Option";
+								if(tempq.getStudentAnswer()[2])
+									StudentOption = "Third Option";
+								if(tempq.getStudentAnswer()[3])
+									StudentOption = "Fourth Option";
+								if(tempq.getStudentAnswer()[4])
+									StudentOption = "Fifth Option";
+								if(StudentOption == "")
+									StudentOption = "None Selected";
+							}
+							else if(tempq.getType() == 1){
+								if(tempq.getStudentAnswer()[0])
+									StudentOption += "First Option,";
+								if(tempq.getStudentAnswer()[1])
+									StudentOption += "Second Option,";
+								if(tempq.getStudentAnswer()[2])
+									StudentOption += "Third Option,";
+								if(tempq.getStudentAnswer()[3])
+									StudentOption += "Fourth Option,";
+								if(tempq.getStudentAnswer()[4])
+									StudentOption += "Fifth Option";
+								if(StudentOption == "")
+									StudentOption = "None Selected";
+							}
+							else
+								StudentOption = tempq.getStudentTextAnswer();
+							
+							Question temp2 = currentQuiz.getQuestionList().get(i);
+							if(temp2.getType() == 0){ // setting questions correct answer
+								if(temp2.getCorrectAnswer()[0])
+									QuestionOption = "First Option";
+								if(temp2.getCorrectAnswer()[1])
+									QuestionOption = "Second Option";
+								if(temp2.getCorrectAnswer()[2])
+									QuestionOption = "Third Option";
+								if(temp2.getCorrectAnswer()[3])
+									QuestionOption = "Fourth Option";
+								if(temp2.getCorrectAnswer()[4])
+									QuestionOption = "Fifth Option";
+								if(QuestionOption == "")
+									QuestionOption = "None Selected";
+							}
+							else if(temp2.getType() == 1){
+								if(temp2.getCorrectAnswer()[0])
+									QuestionOption += "First Option,";
+								if(temp2.getCorrectAnswer()[1])
+									QuestionOption += "Second Option,";
+								if(temp2.getCorrectAnswer()[2])
+									QuestionOption += "Third Option,";
+								if(temp2.getCorrectAnswer()[3])
+									QuestionOption += "Fourth Option,";
+								if(temp2.getCorrectAnswer()[4])
+									QuestionOption += "Fifth Option";
+								if(QuestionOption == "")
+									QuestionOption = "None Selected";
+							}
+							else
+								QuestionOption = "N/A";
+							
+							ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
+							if(tempq.isResponseValid())
+								imgToolTip = new ImageIcon("icons/bullet-green.png");
+							
 							model.addRow(new Object[]{
 									imgToolTip,
-									question.getTitle(),
+									tempq.getTitle(),
 									QuestionOption,
 									StudentOption
 							});
@@ -290,4 +415,23 @@ public class Panel_Bottom_22 extends WebPanel {
 			}
 		}
 	}
+	
+	@SuppressWarnings("serial")
+	class WebTableModel extends DefaultTableModel{
+		public WebTableModel(Object[][] objects, String[] strings) {
+			super(objects, strings);
+		}
+
+		@Override
+		public Class<?> getColumnClass(int arg0) {
+			if(arg0 == 0)
+				return Icon.class;
+			return super.getColumnClass(arg0);
+		}
+	}
+
+	public void LoadQuiz(Quiz currentQuiz2) {
+		currentQuiz = currentQuiz2;
+	}
 }
+

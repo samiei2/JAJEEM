@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Question implements Serializable {
 	
 	//properties
-	private int id = 0;
-	private int instructorId = 0;
+	private int id = -1;
+	private int instructorId = -1;
 	private String title = "";
-	private int quizId = 0;
+	private int quizId = -1;
 	private byte type = 0;
 	private int point = 0;
 	private String imagePath = "";

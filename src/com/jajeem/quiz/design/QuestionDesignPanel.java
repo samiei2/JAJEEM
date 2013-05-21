@@ -117,6 +117,18 @@ public class QuestionDesignPanel extends WebPanel {
 					catch(Exception ex){
 						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
 					}
+					if(!parentPanel.getWebCheckBox().isSelected()){
+						int total = 0;
+						try {
+							for (int i = 0; i < parentPanel.getParentPanel().getCurrentQuiz().getQuestionList().size(); i++) {
+								total+=parentPanel.getParentPanel().getCurrentQuiz().getQuestionList().get(i).getPoint();
+							}
+							parentPanel.getWbTxtFldPoints().setText(String.valueOf(total));
+						} catch (Exception e2) {
+							//total = parentPanel.getParentPanel().getCurrentQuestion().getPoint();
+							parentPanel.getWbTxtFldPoints().setText(String.valueOf(0));
+						}
+					}
 				}
 			}
 			
@@ -129,6 +141,18 @@ public class QuestionDesignPanel extends WebPanel {
 					}
 					catch(Exception ex){
 						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
+					}
+					if(!parentPanel.getWebCheckBox().isSelected()){
+						int total = 0;
+						try {
+							for (int i = 0; i < parentPanel.getParentPanel().getCurrentQuiz().getQuestionList().size(); i++) {
+								total+=parentPanel.getParentPanel().getCurrentQuiz().getQuestionList().get(i).getPoint();
+							}
+							parentPanel.getWbTxtFldPoints().setText(String.valueOf(total));
+						} catch (Exception e2) {
+							//total = parentPanel.getParentPanel().getCurrentQuestion().getPoint();
+							parentPanel.getWbTxtFldPoints().setText(String.valueOf(0));
+						}
 					}
 				}
 			}
@@ -143,12 +167,15 @@ public class QuestionDesignPanel extends WebPanel {
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		
 		WebButton wbtnInsert = new WebButton();
+		wbtnInsert.setEnabled(false);
 		wbtnInsert.setText("Insert");
 		
 		wblblUrl = new WebLabel();
 		wblblUrl.setText("Url");
 		
 		webTextField_5 = new WebTextField();
+		webTextField_5.setEditable(false);
+		webTextField_5.setEnabled(false);
 		webTextField_5.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override

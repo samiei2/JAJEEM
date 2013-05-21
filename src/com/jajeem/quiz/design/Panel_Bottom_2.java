@@ -101,12 +101,14 @@ public class Panel_Bottom_2 extends WebPanel {
 								(temp.getCorrectAnswer()[1] == question.getStudentAnswer()[1]) &&
 								(temp.getCorrectAnswer()[2] == question.getStudentAnswer()[2]) &&
 								(temp.getCorrectAnswer()[3] == question.getStudentAnswer()[3]) &&
-								(temp.getCorrectAnswer()[4] == question.getStudentAnswer()[4]) )
+								(temp.getCorrectAnswer()[4] == question.getStudentAnswer()[4]))
 							{
 								e.getQuestion().setValidResponse(true);
 							}
-							else
+							else{
 								e.getQuestion().setValidResponse(false);
+							}
+							
 						}
 						else{ // for the time if text answer is validated
 							
@@ -114,12 +116,8 @@ public class Panel_Bottom_2 extends WebPanel {
 					}
 				}
 						
-				if (webComboBox.getSelectedItem().toString() == "Question") {
-					panel_bottom_21.QuestionAnswered(e);
-				}
-				else if(webComboBox.getSelectedItem().toString() == "Student") {
-					panel_bottom_22.QuestionAnswered(e);
-				}
+				panel_bottom_21.QuestionAnswered(e);
+				panel_bottom_22.QuestionAnswered(e);
 			}
 
 			@Override
@@ -136,6 +134,7 @@ public class Panel_Bottom_2 extends WebPanel {
 			quizResponse.add(new ArrayList<QuizResponse>());
 		}
 		panel_bottom_21.LoadQuiz(currentQuiz);
+		panel_bottom_22.LoadQuiz(currentQuiz);
 	}
 
 	public ArrayList<ArrayList<QuizResponse>> getQuizResponse() {

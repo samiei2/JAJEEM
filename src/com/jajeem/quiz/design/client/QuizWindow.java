@@ -164,7 +164,7 @@ public class QuizWindow extends WebFrame {
 				}
 				
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
-				webTextField.setText(currentQuestion.getTitle());
+				webTextField.setText(currentQuiz.getTitle());
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -242,26 +242,27 @@ public class QuizWindow extends WebFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 516, Short.MAX_VALUE)
+				.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 563, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 							.addGap(280))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
 							.addContainerGap())
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(4)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
-								.addComponent(mainPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE))
+							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
 							.addContainerGap())))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(388, Short.MAX_VALUE)
+					.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -274,9 +275,9 @@ public class QuizWindow extends WebFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
+					.addGap(12)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -440,14 +441,24 @@ public class QuizWindow extends WebFrame {
 		webPanel_1.setLayout(gl_webPanel_1);
 		
 		webTextField_12 = new WebTextField();
+		webTextField_12.setEnabled(false);
+		webTextField_12.setEditable(false);
 		
 		webTextField_13 = new WebTextField();
+		webTextField_13.setEnabled(false);
+		webTextField_13.setEditable(false);
 		
 		webTextField_14 = new WebTextField();
+		webTextField_14.setEnabled(false);
+		webTextField_14.setEditable(false);
 		
 		webTextField_15 = new WebTextField();
+		webTextField_15.setEnabled(false);
+		webTextField_15.setEditable(false);
 		
 		webTextField_16 = new WebTextField();
+		webTextField_16.setEnabled(false);
+		webTextField_16.setEditable(false);
 		
 		webCheckBox = new WebCheckBox();
 		webCheckBox.addActionListener(new ActionListener() {

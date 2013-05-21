@@ -8,6 +8,7 @@ public class Run {
 	private int sessionId;
 	private int quizId;
 	private int studentId;
+	private int score;
 	private int start;
 	private int end;
 	
@@ -53,5 +54,11 @@ public class Run {
 	}
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
 	}
 }

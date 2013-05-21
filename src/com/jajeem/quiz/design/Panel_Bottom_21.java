@@ -14,11 +14,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
+import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.ImageIcon;
 
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
@@ -87,8 +91,79 @@ public class Panel_Bottom_21 extends WebPanel {
 					model.removeRow(i);
 				}
 				
+				
 				for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
-					AddResponse(quizResponse.get(webComboBox.getSelectedIndex()).get(i));
+					QuizResponse ex = quizResponse.get(webComboBox.getSelectedIndex()).get(i);
+					Student student = ex.getStudent();
+					Question question = ex.getQuestion();
+					ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
+					if(ex.getQuestion().isResponseValid())
+						imgToolTip = new ImageIcon("icons/bullet-green.png");
+					
+					String StudentOption = "None Selected";
+					String QuestionOption = "None Selected";
+					if(question.getType() == 0){ // setting student's answer
+						if(question.getStudentAnswer()[0])
+							StudentOption = "First Option";
+						if(question.getStudentAnswer()[1])
+							StudentOption = "Second Option";
+						if(question.getStudentAnswer()[2])
+							StudentOption = "Third Option";
+						if(question.getStudentAnswer()[3])
+							StudentOption = "Fourth Option";
+						if(question.getStudentAnswer()[4])
+							StudentOption = "Fifth Option";
+					}
+					else if(question.getType() == 1){
+						if(question.getStudentAnswer()[0])
+							StudentOption += "First Option,";
+						if(question.getStudentAnswer()[1])
+							StudentOption += "Second Option,";
+						if(question.getStudentAnswer()[2])
+							StudentOption += "Third Option,";
+						if(question.getStudentAnswer()[3])
+							StudentOption += "Fourth Option,";
+						if(question.getStudentAnswer()[4])
+							StudentOption += "Fifth Option";
+					}
+					else
+						StudentOption = question.getStudentTextAnswer();
+					
+					Question temp2 = currentQuestion;
+					if(temp2.getType() == 0){ // setting questions correct answer
+						if(temp2.getCorrectAnswer()[0])
+							QuestionOption = "First Option";
+						if(temp2.getCorrectAnswer()[1])
+							QuestionOption = "Second Option";
+						if(temp2.getCorrectAnswer()[2])
+							QuestionOption = "Third Option";
+						if(temp2.getCorrectAnswer()[3])
+							QuestionOption = "Fourth Option";
+						if(temp2.getCorrectAnswer()[4])
+							QuestionOption = "Fifth Option";
+					}
+					else if(temp2.getType() == 0){
+						if(temp2.getCorrectAnswer()[0])
+							QuestionOption += "First Option,";
+						if(temp2.getCorrectAnswer()[1])
+							QuestionOption += "Second Option,";
+						if(temp2.getCorrectAnswer()[2])
+							QuestionOption += "Third Option,";
+						if(temp2.getCorrectAnswer()[3])
+							QuestionOption += "Fourth Option,";
+						if(temp2.getCorrectAnswer()[4])
+							QuestionOption += "Fifth Option";
+					}
+					else
+						QuestionOption = "N/A";
+					
+					model.addRow(new Object[]{
+							imgToolTip,
+							student.getId(),
+							student.getFirstName() + " " + student.getLastName(),
+							QuestionOption,
+							StudentOption
+					});
 				}
 			}
 		});
@@ -241,13 +316,16 @@ public class Panel_Bottom_21 extends WebPanel {
 		);
 		
 		webTable = new WebTable();
-		webTable.setModel(new DefaultTableModel(
+		webTable.setModel(new WebTableModel(
 			new Object[][] {
 			},
-			new Object[] {
-				"#", "Number", "Student Name", "Order", "Correct Answer", "Answer"
+			new String[] {
+				"#", "Number", "Student Name", "Correct Answer", "Answer"
 			}
 		));
+		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+		webTable.getColumnModel().getColumn(2).setPreferredWidth(91);
+		webTable.getColumnModel().getColumn(3).setPreferredWidth(101);
 		webScrollPane_1.setViewportView(webTable);
 		webPanel_1.setLayout(gl_webPanel_1);
 		
@@ -307,74 +385,6 @@ public class Panel_Bottom_21 extends WebPanel {
 		webScrollPane.setViewportView(webTextArea);
 		setLayout(groupLayout);
 		
-	}
-	
-	private void AddResponse(QuizResponse e) {
-		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
-		Question temp = e.getQuestion();
-		Student student = e.getStudent();
-		if(currentQuestion.getType() == 0 || currentQuestion.getType() == 1){
-			if(webTable.getRowCount() != 0){
-				total = webTable.getRowCount();
-				model.addRow(new Object[]{
-						new Object(),
-						student.getId(),
-						student.getFirstName() + " " + student.getLastName(),
-						"",
-						(currentQuestion.getCorrectAnswer()[0] + "," + 
-							currentQuestion.getCorrectAnswer()[1] + "," + 
-							currentQuestion.getCorrectAnswer()[2] + "," + 
-							currentQuestion.getCorrectAnswer()[3] + "," + 
-							currentQuestion.getCorrectAnswer()[4]),
-						(temp.getStudentAnswer()[0] + "," +
-							temp.getStudentAnswer()[1] + "," + 
-							temp.getStudentAnswer()[2] + "," + 
-							temp.getStudentAnswer()[3] + "," + 
-							temp.getStudentAnswer()[4])
-				});
-			}
-			else{
-				total = 1;
-				model.addRow(new Object[]{
-						new Object(),
-						student.getId(),
-						student.getFirstName() + " " + student.getLastName(),
-						"",
-						(currentQuestion.getCorrectAnswer()[0] + "," + 
-								currentQuestion.getCorrectAnswer()[1] + "," + 
-								currentQuestion.getCorrectAnswer()[2] + "," + 
-								currentQuestion.getCorrectAnswer()[3] + "," + 
-								currentQuestion.getCorrectAnswer()[4]),
-						(temp.getStudentAnswer()[0] + "," +
-								temp.getStudentAnswer()[1] + "," + 
-								temp.getStudentAnswer()[2] + "," + 
-								temp.getStudentAnswer()[3] + "," + 
-								temp.getStudentAnswer()[4])
-				});
-			}
-		}
-		else{
-			if(webTable.getRowCount() != 0){
-				model.addRow(new Object[]{
-						new Object(),
-						student.getId(),
-						student.getFirstName() + " " + student.getLastName(),
-						"",
-						"N/A",
-						temp.getStudentTextAnswer()
-				});
-			}
-			else{
-				model.addRow(new Object[]{
-						new Object(),
-						student.getId(),
-						student.getFirstName() + " " + student.getLastName(),
-						"",
-						"N/A",
-						temp.getStudentTextAnswer()
-				});
-			}
-		}
 	}
 	
 	public void LoadQuiz(Quiz quiz){
@@ -454,61 +464,125 @@ public class Panel_Bottom_21 extends WebPanel {
 	}
 
 	public void QuestionAnswered(QuizResponse e) {
-		Question temp = e.getQuestion();
+		Question question = e.getQuestion();
 		Student student = e.getStudent();
-		if(currentQuestion != null && temp != null && student != null){
-			if(temp.getId() == currentQuiz.getQuestionList().get(webComboBox.getSelectedIndex()).getId()){ //if recieved question id is equal to currently selected question id
-				if(quizResponse.get(webComboBox.getSelectedIndex()).size()!=0){
-					for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
-						if(student.getId() == quizResponse.get(webComboBox.getSelectedIndex()).get(i).getStudent().getId()){
-							quizResponse.get(webComboBox.getSelectedIndex()).remove(i);
-							quizResponse.get(webComboBox.getSelectedIndex()).add(e);
-						}
-						else{
-							quizResponse.get(webComboBox.getSelectedIndex()).add(e);
-						}
-					}
-				}
-				else{
-					quizResponse.get(webComboBox.getSelectedIndex()).add(e);
-				}
-				if(currentQuestion.getId() == temp.getId()){
-					AddResponse(e);
+		boolean found = false;
+
+		if(currentQuestion != null && question != null && student != null){
+			int index = -1;
+			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find question index in the response list
+				if(currentQuiz.getQuestionList().get(i).getId() == question.getId()){
+					index = i;
+					break;
 				}
 			}
-			else{
-				for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
-					if (temp.getId() == currentQuiz.getQuestionList().get(i).getId()) {
-						if(quizResponse.get(i).size()!=0){
-							int j;
-							for (j = 0; j < quizResponse.get(i).size(); j++) {
-								if(student.getId() == quizResponse.get(i).get(j).getStudent().getId())
-									break;
-								else
-									j=-1;
-							}
-							if(j != -1){
-								quizResponse.get(i).remove(j);
-								quizResponse.get(i).add(e);
-								break;
-							}
-							else{
-								quizResponse.get(i).add(e);
-								break;
-							}
-						}
-						else{
-							quizResponse.get(i).add(e);
-							break;
-						}
+			for (int i = 0; i < quizResponse.size(); i++) {// search in results,if this question is already answered by this student,then update,otherwise save
+				for (int j = 0; j < quizResponse.get(i).size(); j++) { // search in student's response list of the question quizresponse.get(i) = list of responses of students who answered this question
+					if(quizResponse.get(i).get(j).getStudent().getId() == student.getId() 
+					&& quizResponse.get(i).get(j).getQuestion().getId() == question.getId()){
+						quizResponse.get(i).set(j, e);
+						found = true;
+						break;
 					}
+				}
+			}
+			if(!found)
+				quizResponse.get(index).add(e);
+			
+			if(question.getId() == currentQuestion.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
+				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
+				String StudentOption = "None Selected";
+				String QuestionOption = "None Selected";
+				if(question.getType() == 0){ // setting student's answer
+					if(question.getStudentAnswer()[0])
+						StudentOption = "First Option";
+					if(question.getStudentAnswer()[1])
+						StudentOption = "Second Option";
+					if(question.getStudentAnswer()[2])
+						StudentOption = "Third Option";
+					if(question.getStudentAnswer()[3])
+						StudentOption = "Fourth Option";
+					if(question.getStudentAnswer()[4])
+						StudentOption = "Fifth Option";
+				}
+				else if(question.getType() == 1){
+					if(question.getStudentAnswer()[0])
+						StudentOption += "First Option,";
+					if(question.getStudentAnswer()[1])
+						StudentOption += "Second Option,";
+					if(question.getStudentAnswer()[2])
+						StudentOption += "Third Option,";
+					if(question.getStudentAnswer()[3])
+						StudentOption += "Fourth Option,";
+					if(question.getStudentAnswer()[4])
+						StudentOption += "Fifth Option";
+				}
+				else
+					StudentOption = question.getStudentTextAnswer();
+				
+				Question temp2 = currentQuiz.getQuestionList().get(index);
+				if(temp2.getType() == 0){ // setting questions correct answer
+					if(temp2.getCorrectAnswer()[0])
+						QuestionOption = "First Option";
+					if(temp2.getCorrectAnswer()[1])
+						QuestionOption = "Second Option";
+					if(temp2.getCorrectAnswer()[2])
+						QuestionOption = "Third Option";
+					if(temp2.getCorrectAnswer()[3])
+						QuestionOption = "Fourth Option";
+					if(temp2.getCorrectAnswer()[4])
+						QuestionOption = "Fifth Option";
+				}
+				else if(temp2.getType() == 0){
+					if(temp2.getCorrectAnswer()[0])
+						QuestionOption += "First Option,";
+					if(temp2.getCorrectAnswer()[1])
+						QuestionOption += "Second Option,";
+					if(temp2.getCorrectAnswer()[2])
+						QuestionOption += "Third Option,";
+					if(temp2.getCorrectAnswer()[3])
+						QuestionOption += "Fourth Option,";
+					if(temp2.getCorrectAnswer()[4])
+						QuestionOption += "Fifth Option";
+				}
+				else
+					QuestionOption = "N/A";
+				
+				ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
+				if(e.getQuestion().isResponseValid())
+					imgToolTip = new ImageIcon("icons/bullet-green.png");
+				
+				for (int i = 0; i < webTable.getRowCount(); i++) {
+					model.removeRow(i);
+				}
+				
+				for (int i = 0; i < quizResponse.get(index).size(); i++) {
+					model.addRow(new Object[]{
+							imgToolTip,
+							student.getId(),
+							student.getFirstName() + " " + student.getLastName(),
+							QuestionOption,
+							StudentOption
+					});
 				}
 			}
 		}
 	}
-
-}
-
-class Icons{
 	
+	@SuppressWarnings("serial")
+	class WebTableModel extends DefaultTableModel{
+		public WebTableModel(Object[][] objects, String[] strings) {
+			super(objects, strings);
+		}
+
+		@Override
+		public Class<?> getColumnClass(int arg0) {
+			// TODO Auto-generated method stub
+			if(arg0 == 0)
+				return Icon.class;
+			return super.getColumnClass(arg0);
+		}
+	}
 }
+
+
