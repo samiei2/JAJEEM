@@ -50,6 +50,10 @@ public class StudentLogin extends JDialog {
 		password.setBackground(color);
 	}
 
+	public static String getUsername() {
+		return username.getText();
+	}
+
 	public static String getServerIp() {
 		return serverIp;
 	}
@@ -175,10 +179,6 @@ public class StudentLogin extends JDialog {
 
 			HotkeyManager.registerHotkey(this, login, Hotkey.ESCAPE);
 			HotkeyManager.registerHotkey(this, login, Hotkey.ENTER);
-		}
-
-		public String getName() {
-			return name;
 		}
 	}
 }
