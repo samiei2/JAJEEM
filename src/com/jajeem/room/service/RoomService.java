@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.jajeem.room.dao.h2.AttendantDAO;
+import com.jajeem.room.dao.h2.CourseDAO;
 import com.jajeem.room.dao.h2.RoomDAO;
 import com.jajeem.room.dao.h2.SeatDAO;
 import com.jajeem.room.dao.h2.SessionDAO;
@@ -14,6 +15,8 @@ public class RoomService implements IRoomService{
 	private AttendantDAO attendantDAO;
 	private SeatDAO seatDAO;
 	private SessionDAO sessionDAO;
+	private CourseDAO courseDAO = new CourseDAO();
+	
 	@Override
 	public Room create(Room room) throws SQLException {
 		// TODO Auto-generated method stub
@@ -86,6 +89,14 @@ public class RoomService implements IRoomService{
 
 	public void setSessionDAO(SessionDAO sessionDAO) {
 		this.sessionDAO = sessionDAO;
+	}
+	
+	public CourseDAO getCourseDAO() {
+		return courseDAO;
+	}
+
+	public void setCourseDAO(CourseDAO courseDAO) {
+		this.courseDAO = courseDAO;
 	}
 	
 }

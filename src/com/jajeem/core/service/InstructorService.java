@@ -7,11 +7,11 @@ import com.jajeem.core.dao.h2.InstructorDAO;
 import com.jajeem.core.model.Instructor;
 
 public class InstructorService implements IInstructorService{
-	private InstructorDAO instructordao;
+	private InstructorDAO instructordao = new InstructorDAO();
 	@Override
-	public boolean authenticate(String user, String pass) throws SQLException {
+	public boolean authenticate(String user, char[] cs) throws SQLException {
 		if(instructordao!=null)
-			return instructordao.authenticate(user, pass);
+			return instructordao.authenticate(user, cs);
 		return false;
 	}
 

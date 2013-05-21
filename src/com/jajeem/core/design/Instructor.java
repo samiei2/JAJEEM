@@ -36,23 +36,33 @@ import com.jajeem.util.StartUp;
 public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
-	
+
 	private static ServerServiceTimer serverServiceTimer;
-	
+
 	static Logger logger = Logger.getLogger("Instructor.class");
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @throws Exception
+	 * @throws NumberFormatException
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) throws NumberFormatException,
+			Exception {
 		@SuppressWarnings("unused")
 		StartUp start = new StartUp();
+		networkSetup();
+
 		PropertyConfigurator.configure("conf/log4j.conf");
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Instructor window = new Instructor();
 					window.frmJajeemProject.setVisible(true);
+
+					window.frmJajeemProject.setTitle("iCalabo - Prof."
+							+ (String) args[0] + " - " + (String) args[1]);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,7 +89,6 @@ public class Instructor implements SwingConstants {
 		}
 
 		initialize();
-		networkSetup();
 	}
 
 	/**
@@ -91,7 +100,6 @@ public class Instructor implements SwingConstants {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
 		frmJajeemProject.setRound(0);
-		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(200, 100, 850, 600);
@@ -102,23 +110,23 @@ public class Instructor implements SwingConstants {
 		// frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
-	
 	/**
 	 * Initializes network, broadcasting an start up command to network
 	 */
-	private void networkSetup() throws NumberFormatException, Exception {
+	private static void networkSetup() throws NumberFormatException, Exception {
 		serverServiceTimer = new ServerServiceTimer();
 		int port = Integer.parseInt(Config.getParam("startUpPort"));
 		String broadcastingIp = Config.getParam("broadcastingIp");
-		
-		StartUpCommand cmd = new StartUpCommand(InetAddress
-				.getLocalHost().getHostAddress(), broadcastingIp, port,
-				InetAddress.getLocalHost().getHostAddress(),
+
+		StartUpCommand cmd = new StartUpCommand(InetAddress.getLocalHost()
+				.getHostAddress(), broadcastingIp, port, InetAddress
+				.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);
 		serverServiceTimer.setInterval(3000);
 		serverServiceTimer.start();
-		logger.info("Server started, sending start up command every " + serverServiceTimer.getInterval() + " mseconds.");
+		logger.info("Server started, sending start up command every "
+				+ serverServiceTimer.getInterval() + " mseconds.");
 
 		ClientService clientService = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
