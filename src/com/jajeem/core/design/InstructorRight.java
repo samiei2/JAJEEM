@@ -33,6 +33,7 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.message.design.MessageSend;
 import com.jajeem.quiz.design.Main;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
@@ -362,6 +363,23 @@ public class InstructorRight {
 			}
 		});
 
+		messageButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					MessageSend messageSendDialog = new MessageSend();
+					messageSendDialog.setTo(selectedStudent);
+				} else {
+
+				}
+
+			}
+		});
+		
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
 		panel2.setUndecorated(true);

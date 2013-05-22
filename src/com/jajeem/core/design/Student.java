@@ -7,6 +7,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.Config;
 
 public class Student {
@@ -152,6 +155,24 @@ public class Student {
 						TooltipWay.up);
 		southPanel.add(picLabel);
 		panel2.add(southPanel, BorderLayout.SOUTH);
+		
+		messageButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					MessageSend messageSendDialog = new MessageSend();
+					messageSendDialog.setTo(selectedStudent);
+				} else {
+
+				}
+
+			}
+		});
+		
 
 		return panel2;
 	}

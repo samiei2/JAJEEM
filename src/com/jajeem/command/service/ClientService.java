@@ -186,6 +186,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
 					setGrantCommandHanlder.run(cmd);
 				}
+				
+				else if (cmd instanceof MessageCommand) {
+					MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
+					messageCommandHanlder.run(cmd);
+				}
 
 			} catch (Exception ex) {
 				System.err.println("Unknown message:" + ex.toString());
