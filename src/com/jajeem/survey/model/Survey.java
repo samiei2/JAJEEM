@@ -1,5 +1,10 @@
 package com.jajeem.survey.model;
 
+import java.util.ArrayList;
+
+import com.jajeem.survey.model.Question;
+import com.jajeem.survey.model.Response;
+
 public class Survey {
 	
 	//properties
@@ -8,6 +13,8 @@ public class Survey {
 	private String title;
 	private String category;
 	private String description;
+	private Response response = new Response();
+	private ArrayList<Question> questions = new ArrayList<>();
 	
 	//getter & setters
 	public int getId() {
@@ -40,4 +47,16 @@ public class Survey {
 	public void setDescription(String description) {
 		this.description = description;
 	}	
+	public Response getResponse() {
+		return response;
+	}
+	public void setResponse(Response response) {
+		this.response = response;
+	}
+	public void addQuestion(Question question) {
+		this.questions.add(question);
+	}
+	public ArrayList<Question> getQuestionList() {
+		return questions;
+	}
 }

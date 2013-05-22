@@ -24,8 +24,8 @@ public class jUnitQuizDAO {
 		Connection con = BaseDAO.getConnection();
         
 		String query = "";
-		query += "drop table if exists Quiz;CREATE TABLE Quiz ( id INT auto_increment, instructorId INT,title varchar(100), points INT" +
-				",pointing int,category varchar(100),description varchar(100),time int,shuffle tinyint);";
+//		query += "drop table if exists Quiz;CREATE TABLE Quiz ( id INT auto_increment, instructorId INT,title varchar(100), points INT" +
+//				",pointing int,category varchar(100),description varchar(100),time int,shuffle tinyint);";
 		Statement statement = con.createStatement();
 		statement.executeUpdate(query);
 	}
@@ -55,6 +55,24 @@ public class jUnitQuizDAO {
 		assertEquals(true, dao.delete(s));
 		
 		con.close();
+	}
+	
+	@Test
+	public void Test() throws SQLException{
+		Connection con = BaseDAO.getConnection();
+		
+        QuizDAO dao = new QuizDAO();
+        Quiz q = new Quiz();
+        q.setInstructorId(1);
+        dao.create(q);
+        dao.create(q);
+        dao.create(q);
+        dao.create(q);
+        dao.create(q);
+        dao.create(q);
+        
+        
+        dao.list();
 	}
 
 }

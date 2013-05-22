@@ -29,7 +29,7 @@ public class QuizDAO implements IQuizDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle) "
-					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?);");
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 			ps.setInt(1, quiz.getInstructorId());
 			ps.setString(2, quiz.getTitle());
 			ps.setString(3, quiz.getCategory());
@@ -43,9 +43,10 @@ public class QuizDAO implements IQuizDAO {
 			rs = ps.executeUpdate();
 
 			// get last id
+			//list();
 			ResultSet maxId = null;
 			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
+			if (maxId.last()) {
 				quiz.setId(maxId.getInt(1));
 			} else {
 				quiz.setId(0);
@@ -88,7 +89,7 @@ public class QuizDAO implements IQuizDAO {
 				qdao.create(q);
 			}
 		}catch(Exception e){
-			
+			new JajeemExcetionHandler(e);
 		}
 
 		return quiz;
@@ -265,7 +266,7 @@ public class QuizDAO implements IQuizDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("SELECT * FROM Quiz");
-
+			//con.prepareStatement("Insert into quiz(instructorid) values(1);").executeUpdate();
 		
 			rs = ps.executeQuery();
 			while (rs.next()) {
