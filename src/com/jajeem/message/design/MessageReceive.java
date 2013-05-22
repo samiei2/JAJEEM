@@ -28,7 +28,7 @@ public class MessageReceive extends JDialog {
 	 */
 	private static final long serialVersionUID = 6562220877713666056L;
 
-	final public WebLabel messageLabel = new WebLabel("Sample Message",
+	private WebLabel messageLabel = new WebLabel("",
 			WebLabel.TRAILING);
 	private ExampleDialog exampleDialog = new ExampleDialog(this);
 
@@ -36,15 +36,17 @@ public class MessageReceive extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		String text = "";
 		@SuppressWarnings("unused")
-		MessageReceive dialog = new MessageReceive();
+		MessageReceive dialog = new MessageReceive(text);
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public MessageReceive() {
+	public MessageReceive(String text) {
 		
+		setMessageLabel(text);
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -73,6 +75,14 @@ public class MessageReceive extends JDialog {
 		exampleDialog.setVisible(vis);
 	}
 
+	public WebLabel getMessageLabel() {
+		return messageLabel;
+	}
+
+	public void setMessageLabel(String messageLabel) {
+		this.messageLabel.setText(messageLabel);
+	}
+
 	private class ExampleDialog extends WebDialog {
 		/**
 		 * 
@@ -94,7 +104,7 @@ public class MessageReceive extends JDialog {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
-			content.add(messageLabel, "0,0");
+			content.add(getMessageLabel(), "0,0");
 
 			WebButton cancel = new WebButton("Ok");
 			ActionListener listener = new ActionListener() {
