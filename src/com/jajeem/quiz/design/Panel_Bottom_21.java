@@ -1,28 +1,22 @@
 package com.jajeem.quiz.design;
 
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
-import javax.swing.Icon;
-import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.ImageIcon;
 
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
@@ -34,14 +28,10 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
-import com.jajeem.events.QuizEvent;
-import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizResponse;
-import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.util.Config;
-import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
 public class Panel_Bottom_21 extends WebPanel {

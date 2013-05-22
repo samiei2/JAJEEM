@@ -7,10 +7,14 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.event.MouseEvent;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JPanel;
 
 /**
  * Class StrokePanel provides the choice of different degrees of thickness,

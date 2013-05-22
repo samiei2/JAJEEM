@@ -30,12 +30,15 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
 
 public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
+	
+	private Chat[] chatList;
 
 	private static ServerServiceTimer serverServiceTimer;
 
@@ -59,9 +62,9 @@ public class Instructor implements SwingConstants {
 			public void run() {
 				try {
 					Instructor window = new Instructor();
-					window.frmJajeemProject.setVisible(true);
+					window.getFrmJajeemProject().setVisible(true);
 
-					window.frmJajeemProject.setTitle("iCalabo - Prof."
+					window.getFrmJajeemProject().setTitle("iCalabo - Prof."
 							+ (String) args[0] + " - " + (String) args[1]);
 
 				} catch (Exception e) {
@@ -98,15 +101,15 @@ public class Instructor implements SwingConstants {
 	 */
 	private void initialize() throws Exception {
 		WebLookAndFeel.setDecorateFrames(true);
-		frmJajeemProject = new WebFrame();
-		frmJajeemProject.setRound(0);
-		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
+		setFrmJajeemProject(new WebFrame());
+		getFrmJajeemProject().setRound(0);
+		getFrmJajeemProject().setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/menubar/jajeem.jpg")));
-		frmJajeemProject.setBounds(200, 100, 850, 600);
-		frmJajeemProject.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrmJajeemProject().setBounds(200, 100, 850, 600);
+		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
-		frmJajeemProject.getContentPane().add(panel);
+		getFrmJajeemProject().getContentPane().add(panel);
 		// frmJajeemProject.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
@@ -247,5 +250,21 @@ public class Instructor implements SwingConstants {
 			break;
 		}
 		}
+	}
+
+	public WebFrame getFrmJajeemProject() {
+		return frmJajeemProject;
+	}
+
+	public void setFrmJajeemProject(WebFrame frmJajeemProject) {
+		this.frmJajeemProject = frmJajeemProject;
+	}
+
+	public Chat[] getChatList() {
+		return chatList;
+	}
+
+	public void setChatList(Chat[] chatList) {
+		this.chatList = chatList;
 	}
 }

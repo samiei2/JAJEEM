@@ -7,16 +7,20 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
 
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.GradientData;
 import com.jajeem.whiteboard.server.Module.Shape;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Class ToolPanel is a container of tools, including the gradient

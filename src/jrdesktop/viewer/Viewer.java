@@ -11,12 +11,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import com.alee.laf.desktoppane.WebInternalFrame;
-
 import jrdesktop.Commons;
 import jrdesktop.Config;
-import jrdesktop.HostProperties;
 import jrdesktop.ConnectionInfos;
+import jrdesktop.HostProperties;
 import jrdesktop.SysTray;
 import jrdesktop.rmi.client.RMIClient;
 import jrdesktop.rmi.server.RMIServer;
@@ -24,6 +22,8 @@ import jrdesktop.server.robot;
 import jrdesktop.utilities.ClipbrdUtility;
 import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.FileMng.FileTransGUI;
+
+import com.alee.laf.desktoppane.WebInternalFrame;
 
 /**
  * Viewer.java

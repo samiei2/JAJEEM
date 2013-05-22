@@ -7,16 +7,21 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
-import javax.swing.*;
-
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
-import com.jajeem.whiteboard.client.Module.Data.FontData;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+
+import com.jajeem.whiteboard.client.Client.WhiteboardClient;
+import com.jajeem.whiteboard.client.Module.Data.FontData;
 
 /**
  * Class FontPanel provides an implementation of a container

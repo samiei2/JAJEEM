@@ -12,8 +12,8 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
-//import com.jajeem.util.KeyboardBlocker;
 import com.jajeem.util.MouseBlocker;
+//import com.jajeem.util.KeyboardBlocker;
 
 public class SetBlackoutCommandHandler implements ICommandHandler {
 

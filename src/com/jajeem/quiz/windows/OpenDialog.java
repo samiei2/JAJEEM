@@ -1,24 +1,21 @@
 package com.jajeem.quiz.windows;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
 import com.jajeem.quiz.model.Quiz;
-
-import java.awt.Dialog.ModalityType;
 
 public class OpenDialog extends JDialog {
 

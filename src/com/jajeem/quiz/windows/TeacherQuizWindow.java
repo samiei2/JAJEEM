@@ -41,9 +41,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.WebLookAndFeel;
-import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizEvent;
-import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;

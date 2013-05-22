@@ -1,7 +1,7 @@
 package com.jajeem.share.service;
 
 import jrdesktop.Config;
-import jrdesktop.server.*;
+import jrdesktop.server.Server;
 import jrdesktop.viewer.ConnectionDialog;
 import jrdesktop.viewer.Viewer;
 

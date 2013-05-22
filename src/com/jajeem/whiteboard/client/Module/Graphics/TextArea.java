@@ -6,7 +6,11 @@ package com.jajeem.whiteboard.client.Module.Graphics;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 

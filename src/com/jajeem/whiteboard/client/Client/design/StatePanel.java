@@ -7,8 +7,11 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Class StatePanel displays the information of cursor's position, drawing

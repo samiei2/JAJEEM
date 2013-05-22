@@ -7,11 +7,9 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.util.Observable;
 
 /**
  * Class WhiteboardListener is a listener for the remote whiteboard. If the

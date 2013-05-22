@@ -1,16 +1,19 @@
 package com.jajeem.quiz.dao.h2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.BaseDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IQuizDAO;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.util.BaseDAO;
 
 public class QuizDAO implements IQuizDAO {
 

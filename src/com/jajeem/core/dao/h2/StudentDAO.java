@@ -1,15 +1,18 @@
 package com.jajeem.core.dao.h2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.BaseDAO;
 import com.jajeem.core.dao.IStudentDAO;
-import com.jajeem.core.model.*;
+import com.jajeem.core.model.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.BaseDAO;
 
 public class StudentDAO implements IStudentDAO {
 

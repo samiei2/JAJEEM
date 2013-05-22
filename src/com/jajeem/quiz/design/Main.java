@@ -5,9 +5,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -23,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
-import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
@@ -34,9 +34,6 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.util.Config;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class Main extends JFrame {
 	

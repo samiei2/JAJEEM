@@ -7,16 +7,9 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
-
-import com.jajeem.command.model.StartWhiteBoardCommand;
-import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Config;
-import com.jajeem.whiteboard.client.Client.design.MainFrame;
-import com.jajeem.whiteboard.server.Module.Sessions;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -24,6 +17,21 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Config;
+import com.jajeem.whiteboard.client.Client.design.MainFrame;
+import com.jajeem.whiteboard.server.Module.Sessions;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class WhiteboardCreateASession provides an interface,

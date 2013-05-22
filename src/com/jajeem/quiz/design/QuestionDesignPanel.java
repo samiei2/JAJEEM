@@ -1,35 +1,30 @@
 package com.jajeem.quiz.design;
 
-import javax.swing.JPanel;
-
-import com.alee.laf.panel.WebPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.scroll.WebScrollPane;
-
 import java.awt.CardLayout;
 import java.awt.Component;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import com.alee.laf.text.WebTextArea;
-import com.alee.laf.combobox.WebComboBox;
-import javax.swing.DefaultComboBoxModel;
-import com.alee.laf.checkbox.WebCheckBox;
-import com.alee.laf.radiobutton.WebRadioButton;
-import com.alee.laf.text.WebTextField;
-import com.alee.extended.image.WebImage;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.alee.extended.image.WebImage;
 import com.alee.laf.button.WebButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.combobox.WebComboBox;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.radiobutton.WebRadioButton;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.text.WebTextArea;
+import com.alee.laf.text.WebTextField;
 
 public class QuestionDesignPanel extends WebPanel {
 	private WebTextField webTextField;

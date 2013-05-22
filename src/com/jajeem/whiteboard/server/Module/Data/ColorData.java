@@ -5,7 +5,7 @@ package com.jajeem.whiteboard.server.Module.Data;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Observable;
 

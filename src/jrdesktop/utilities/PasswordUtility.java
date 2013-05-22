@@ -7,14 +7,15 @@ package jrdesktop.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import jrdesktop.main;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *

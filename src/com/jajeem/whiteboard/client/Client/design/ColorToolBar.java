@@ -7,14 +7,18 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JColorChooser;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.FontData;
-
-import java.awt.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 
 /**
  * Class ColorToolBar provides an implementation of a container

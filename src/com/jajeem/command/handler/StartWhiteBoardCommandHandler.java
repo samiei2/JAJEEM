@@ -1,9 +1,7 @@
 package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
-import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class StartWhiteBoardCommandHandler implements ICommandHandler {

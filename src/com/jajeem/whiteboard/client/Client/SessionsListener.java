@@ -7,7 +7,7 @@ package com.jajeem.whiteboard.client.Client;
  * Team         : TheThreeBytes
  */
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import com.jajeem.whiteboard.server.Module.Sessions;
 

@@ -2,14 +2,15 @@ package jrdesktop.rmi.client;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import javax.swing.JOptionPane;
 
-import jrdesktop.rmi.server.ServerInterface;
-import jrdesktop.utilities.FileUtility;
 import jrdesktop.Config;
 import jrdesktop.Settings;
 import jrdesktop.SystemProperties;
+import jrdesktop.rmi.server.ServerInterface;
+import jrdesktop.utilities.FileUtility;
 import jrdesktop.utilities.InetAdrUtility;
 import jrdesktop.utilities.PasswordUtility;
 

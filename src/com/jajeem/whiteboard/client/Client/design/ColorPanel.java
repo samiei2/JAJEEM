@@ -7,11 +7,13 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
-
-import java.awt.*;
 
 /**
  * Class ColorPanel provides an implementation of the display

@@ -5,7 +5,9 @@ package com.jajeem.whiteboard.server.Module;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.Vector;
 

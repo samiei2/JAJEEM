@@ -11,6 +11,7 @@ import java.net.InetAddress;
 
 import javax.swing.JDialog;
 import javax.swing.UIManager;
+
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;

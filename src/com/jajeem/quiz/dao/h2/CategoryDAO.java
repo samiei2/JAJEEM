@@ -1,18 +1,18 @@
 package com.jajeem.quiz.dao.h2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.util.BaseDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.ICategoryDAO;
-import com.jajeem.quiz.dao.IQuestionDAO;
 import com.jajeem.quiz.model.Category;
-import com.jajeem.quiz.model.Question;
+import com.jajeem.util.BaseDAO;
 
 public class CategoryDAO implements ICategoryDAO {
 

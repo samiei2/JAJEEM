@@ -11,8 +11,47 @@ import java.net.MulticastSocket;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.command.handler.*;
-import com.jajeem.command.model.*;
+import com.jajeem.command.handler.ChatCommandHanlder;
+import com.jajeem.command.handler.MessageCommandHanlder;
+import com.jajeem.command.handler.OpenWebsiteCommandHandler;
+import com.jajeem.command.handler.SendQuizResponseCommandHandler;
+import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
+import com.jajeem.command.handler.SetBlackoutCommandHandler;
+import com.jajeem.command.handler.SetGrantCommandHanlder;
+import com.jajeem.command.handler.SetInternetCommandHandler;
+import com.jajeem.command.handler.SetLockCommandHandler;
+import com.jajeem.command.handler.SetPowerCommandHandler;
+import com.jajeem.command.handler.SetVolumeCommandHandler;
+import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
+import com.jajeem.command.handler.StartCaptureCommandHandler;
+import com.jajeem.command.handler.StartQuizCommandHandler;
+import com.jajeem.command.handler.StartUpCommandHandler;
+import com.jajeem.command.handler.StartViewerCommandHandler;
+import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
+import com.jajeem.command.handler.StopCaptureCommandHandler;
+import com.jajeem.command.handler.StopQuizCommandHanlder;
+import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
+import com.jajeem.command.model.AuthenticateCommand;
+import com.jajeem.command.model.BlackoutCommand;
+import com.jajeem.command.model.ChatCommand;
+import com.jajeem.command.model.Command;
+import com.jajeem.command.model.GrantCommand;
+import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.LockCommand;
+import com.jajeem.command.model.MessageCommand;
+import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.SendQuizResponseCommand;
+import com.jajeem.command.model.StartCaptureCommand;
+import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.model.StartViewerCommand;
+import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.command.model.StopCaptureCommand;
+import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.model.StopWhiteBoardCommand;
+import com.jajeem.command.model.VolumeCommand;
+import com.jajeem.command.model.WebsiteCommand;
+import com.jajeem.command.model.WhiteBlackAppCommand;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -190,6 +229,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof MessageCommand) {
 					MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
 					messageCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof ChatCommand) {
+					ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
+					chatCommandHanlder.run(cmd);
 				}
 
 			} catch (Exception ex) {

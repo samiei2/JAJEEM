@@ -1,21 +1,16 @@
 package com.jajeem.quiz.design;
 
-import javax.swing.JPanel;
+import java.awt.Component;
 
-import com.alee.laf.panel.WebPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JOptionPane;
-
-import com.alee.laf.table.WebTable;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import com.alee.laf.scroll.WebScrollPane;
-import com.jajeem.quiz.model.Question;
 
-import java.awt.Component;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
 
 public class QuestionListPanel extends WebPanel {
 	private WebTable webTable;
