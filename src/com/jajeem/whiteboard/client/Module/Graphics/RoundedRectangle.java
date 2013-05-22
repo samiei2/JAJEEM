@@ -6,7 +6,13 @@ package com.jajeem.whiteboard.client.Module.Graphics;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.RoundRectangle2D;
 
 import com.jajeem.whiteboard.client.Module.Data.GradientData;

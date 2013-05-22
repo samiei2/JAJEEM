@@ -3,7 +3,6 @@ package com.jajeem.util;
 import javax.swing.UIManager;
 
 import com.alee.laf.WebLookAndFeel;
-import com.jajeem.util.H2Connection;
 
 public class StartUp {
 	

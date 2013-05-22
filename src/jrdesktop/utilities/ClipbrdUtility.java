@@ -11,6 +11,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 
 import jrdesktop.Commons;

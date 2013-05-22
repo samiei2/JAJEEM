@@ -7,8 +7,7 @@ package com.jajeem.whiteboard.client.Client;
  * Team         : TheThreeBytes
  */
 
-import java.awt.*;
-import java.rmi.RemoteException;
+import java.awt.Point;
 import java.util.Stack;
 import java.util.Vector;
 

@@ -1,27 +1,23 @@
 package com.jajeem.quiz.design;
 
 
-import com.alee.laf.panel.WebPanel;
-
-import javax.imageio.ImageIO;
-import javax.swing.GroupLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.combobox.WebComboBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
-import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableModel;
+
+import com.alee.laf.combobox.WebComboBox;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;

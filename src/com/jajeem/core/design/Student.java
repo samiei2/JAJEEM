@@ -7,9 +7,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,11 +28,15 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.message.design.Chat;
+import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.Config;
 
 public class Student {
 
 	private JFrame frmJajeemProject;
+	
+	private static List<Chat> chatList;
 
 	private static boolean black;
 
@@ -40,6 +47,7 @@ public class Student {
 	public static void setBlack(boolean black) {
 		Student.black = black;
 	}
+	
 
 	/**
 	 * Launch the application.
@@ -153,6 +161,27 @@ public class Student {
 		southPanel.add(picLabel);
 		panel2.add(southPanel, BorderLayout.SOUTH);
 
+		messageButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					MessageSend.main(new String[] { StudentLogin.getServerIp(), Config.getParam("serverPort") });
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
 		return panel2;
+	}
+
+	public static List<Chat> getChatList() {
+		return chatList;
+	}
+
+	public static void setChatList(List<Chat> chatList) {
+		Student.chatList = chatList;
 	}
 }

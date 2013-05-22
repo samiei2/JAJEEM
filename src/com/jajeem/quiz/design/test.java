@@ -1,23 +1,24 @@
 package com.jajeem.quiz.design;
 
-import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.label.WebLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import com.alee.laf.combobox.WebComboBox;
-import com.alee.laf.scroll.WebScrollPane;
-
 import java.awt.CardLayout;
 import java.awt.Component;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EtchedBorder;
+
+import com.alee.extended.image.WebImage;
+import com.alee.laf.button.WebButton;
+import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.combobox.WebComboBox;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.radiobutton.WebRadioButton;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
-import com.alee.laf.panel.WebPanel;
-import javax.swing.border.EtchedBorder;
-import com.alee.laf.radiobutton.WebRadioButton;
-import com.alee.laf.button.WebButton;
-import com.alee.extended.image.WebImage;
-import com.alee.laf.checkbox.WebCheckBox;
 
 public class test extends JPanel {
 

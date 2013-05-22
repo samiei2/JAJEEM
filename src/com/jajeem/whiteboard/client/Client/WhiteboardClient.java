@@ -9,27 +9,16 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.jajeem.command.model.StartWhiteBoardCommand;
-import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Config;
-import com.jajeem.whiteboard.client.Client.design.MainFrame;
-import com.jajeem.whiteboard.client.Module.Graphics.Image;
-import com.jajeem.whiteboard.server.Module.Sessions;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketPermission;
-import java.nio.file.DirectoryIteratorException;
 import java.security.AllPermission;
 import java.security.CodeSource;
 import java.security.Permission;
@@ -40,6 +29,20 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.PropertyPermission;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.jajeem.whiteboard.client.Client.design.MainFrame;
+import com.jajeem.whiteboard.server.Module.Sessions;
 
 /**
  * Class WhiteboardClient implements a client, in

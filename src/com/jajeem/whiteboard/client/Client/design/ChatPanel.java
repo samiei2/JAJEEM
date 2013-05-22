@@ -6,16 +6,22 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
-
-import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.util.Date;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class ChatPanel provides the implementation of the chat interface,

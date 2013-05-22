@@ -7,15 +7,20 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import javax.swing.*;
-
-import com.jajeem.whiteboard.server.Module.Sessions;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import com.jajeem.whiteboard.server.Module.Sessions;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class MainFrame is the main frame to provide an interface

@@ -3,17 +3,16 @@ package jrdesktop.viewer;
 import java.awt.GraphicsDevice;
 import java.awt.event.WindowEvent;
 import java.io.File;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-
-import com.alee.laf.desktoppane.WebInternalFrame;
-import com.alee.laf.panel.WebPanel;
 
 import jrdesktop.Commons;
 import jrdesktop.HostProperties;
 import jrdesktop.main;
+
+import com.alee.laf.desktoppane.WebInternalFrame;
 
 /**
  * ViewerGUI.java

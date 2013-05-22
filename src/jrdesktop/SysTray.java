@@ -1,9 +1,17 @@
 package jrdesktop;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 
 import jrdesktop.rmi.server.RMIServer;
 import jrdesktop.server.Server;

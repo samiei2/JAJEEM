@@ -23,12 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.PropertyPermission;
-
-import javax.tools.JavaCompiler;
-
-import org.omg.CORBA.Environment;
 
 /**
  * Class WhiteboardServer provides an implementation of the registry

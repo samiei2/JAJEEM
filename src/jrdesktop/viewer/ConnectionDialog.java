@@ -1,6 +1,7 @@
 package jrdesktop.viewer;
 
 import java.util.regex.Pattern;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

@@ -6,13 +6,12 @@ import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
+
 import jrdesktop.Commons;
 import jrdesktop.utilities.ImageUtility;
 

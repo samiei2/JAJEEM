@@ -3,6 +3,7 @@ package jrdesktop.viewer;
 import java.awt.GraphicsDevice;
 import java.awt.event.WindowEvent;
 import java.io.File;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

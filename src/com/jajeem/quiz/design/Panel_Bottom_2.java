@@ -6,21 +6,20 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import com.alee.laf.panel.WebPanel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.label.WebLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 import com.alee.laf.combobox.WebComboBox;
-import com.jajeem.core.model.Student;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.DefaultComboBoxModel;
 
 
 @SuppressWarnings("serial")

@@ -3,10 +3,10 @@ package jrdesktop;
 import javax.swing.JOptionPane;
 
 import jrdesktop.server.Server;
-import jrdesktop.viewer.Viewer;
 import jrdesktop.utilities.InetAdrUtility;
 import jrdesktop.utilities.PasswordUtility;
 import jrdesktop.viewer.ConnectionDialog;
+import jrdesktop.viewer.Viewer;
 
 /**
  * main.java

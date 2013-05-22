@@ -1,9 +1,13 @@
 package com.jajeem.core.design;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 
 public class DesktopPaneIconMoveAdapter extends MouseAdapter

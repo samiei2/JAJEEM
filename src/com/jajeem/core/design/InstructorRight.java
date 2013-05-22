@@ -33,6 +33,8 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.message.design.Chat;
+import com.jajeem.message.design.MessageSend;
 import com.jajeem.quiz.design.Main;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
@@ -55,12 +57,12 @@ public class InstructorRight {
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
 
-		ImageIcon imgIntercom = new ImageIcon(iconsPath + "/intercom_text.png");
-		WebButton intercomButton = new WebButton(imgIntercom);
-		TooltipManager.setTooltip(intercomButton, imgToolTip,
-				"Start talking to selected student", TooltipWay.left);
-		intercomButton.setRound(0);
-		// panel.add(intercomButton);
+		ImageIcon imgChat = new ImageIcon(iconsPath + "/intercom_text.png");
+		WebButton chatButton = new WebButton(imgChat);
+		TooltipManager.setTooltip(chatButton, imgToolTip,
+				"Start chating to selected student", TooltipWay.left);
+		chatButton.setRound(0);
+		panel.add(chatButton);
 
 		ImageIcon imgStopInternet = new ImageIcon(iconsPath
 				+ "/stopInternet_text.png");
@@ -198,7 +200,6 @@ public class InstructorRight {
 										.getParam("port")));
 						ss.send(ic);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -359,6 +360,47 @@ public class InstructorRight {
 			public void actionPerformed(ActionEvent arg0) {
 				WhiteboardClient whiteboard = new WhiteboardClient();
 				whiteboard.main(null);
+			}
+		});
+
+		messageButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					try {
+						MessageSend.main(new String[] { selectedStudent,
+								Config.getParam("port") });
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+
+				}
+
+			}
+		});
+
+		chatButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					try {
+						new Chat(selectedStudent, Integer.parseInt(Config
+								.getParam("port")));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+
+				}
 			}
 		});
 

@@ -20,13 +20,13 @@ import jrdesktop.HostProperties;
 import jrdesktop.Settings;
 import jrdesktop.SysTray;
 import jrdesktop.rmi.client.RMIClient;
-import jrdesktop.viewer.ViewerOptions;
-import jrdesktop.utilities.ClipbrdUtility;
-import jrdesktop.utilities.FileUtility;
 import jrdesktop.rmi.server.RMIServer;
 import jrdesktop.server.http.HttpServer;
+import jrdesktop.utilities.ClipbrdUtility;
+import jrdesktop.utilities.FileUtility;
 import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.Recorder;
+import jrdesktop.viewer.ViewerOptions;
 
 /**
  * Server.java

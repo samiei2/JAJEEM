@@ -1,48 +1,42 @@
 package com.jajeem.quiz.windows;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
-
-import com.jajeem.events.QuizEventListener;
-import com.jajeem.events.QuizResponse;
-import com.jajeem.events.QuizEvent;
-import com.jajeem.events.QuizStop;
-import com.jajeem.quiz.model.Question;
-import com.jajeem.quiz.model.Quiz;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.text.NumberFormatter;
-import javax.swing.ListSelectionModel;
-import java.awt.Color;
-import javax.swing.JButton;
-
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimerTask;
+
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizResponse;
+import com.jajeem.events.QuizStop;
+import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
 
 public class StudentQuizWindow  extends JFrame{
 

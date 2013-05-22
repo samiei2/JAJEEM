@@ -3,14 +3,15 @@ package jrdesktop.rmi.server;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import javax.rmi.ssl.SslRMIServerSocketFactory;
 import javax.swing.JOptionPane;
 
 import jrdesktop.Commons;
-import jrdesktop.SystemProperties;
 import jrdesktop.Config;
 import jrdesktop.Settings;
+import jrdesktop.SystemProperties;
 import jrdesktop.rmi.client.MultihomeRMIClientSocketFactory;
 import jrdesktop.utilities.FileUtility;
 import jrdesktop.utilities.InetAdrUtility;

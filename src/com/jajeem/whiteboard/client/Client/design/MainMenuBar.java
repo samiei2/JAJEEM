@@ -7,19 +7,29 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import com.jajeem.whiteboard.server.Module.Shape;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.util.Vector;
+
+import javax.imageio.ImageIO;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import com.jajeem.whiteboard.server.Module.Shape;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class MainMenuBar is the main menu which is under the

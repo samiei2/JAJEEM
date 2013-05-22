@@ -3,6 +3,7 @@ package jrdesktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Hashtable;
+
 import javax.swing.JOptionPane;
 
 import jrdesktop.utilities.InetAdrUtility;

@@ -1,7 +1,7 @@
 package com.jajeem.util;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 public class Config {
 

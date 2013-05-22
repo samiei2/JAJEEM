@@ -5,7 +5,7 @@ package com.jajeem.whiteboard.server.Server;
  * Author       : Asset Issabayev
  * Team         : TheThreeBytes
  */
-import java.awt.*;
+import java.awt.Point;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Stack;

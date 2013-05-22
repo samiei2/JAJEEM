@@ -7,27 +7,40 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import com.jajeem.whiteboard.server.Module.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.FontData;
 import com.jajeem.whiteboard.client.Module.Data.GradientData;
-import com.jajeem.whiteboard.client.Module.Graphics.*;
+import com.jajeem.whiteboard.client.Module.Graphics.Erase;
 import com.jajeem.whiteboard.client.Module.Graphics.Image;
+import com.jajeem.whiteboard.client.Module.Graphics.Line;
+import com.jajeem.whiteboard.client.Module.Graphics.Oval;
+import com.jajeem.whiteboard.client.Module.Graphics.Pencil;
 import com.jajeem.whiteboard.client.Module.Graphics.Rectangle;
+import com.jajeem.whiteboard.client.Module.Graphics.RoundedRectangle;
 import com.jajeem.whiteboard.client.Module.Graphics.TextArea;
 import com.jajeem.whiteboard.server.Module.Shape;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Vector;
 
 /**
  * Class PaintPanel provides the implementation of the drawing area
