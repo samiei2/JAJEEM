@@ -8,6 +8,7 @@ public class MessageCommandHanlder implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
+		@SuppressWarnings("unused")
 		MessageReceive messageDialog = new MessageReceive(((MessageCommand) cmd).getMessage());
 	}
 
