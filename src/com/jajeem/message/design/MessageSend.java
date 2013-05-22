@@ -34,12 +34,14 @@ public class MessageSend extends JDialog {
 
 	final public WebTextArea messageField = new WebTextArea(3, 20);
 	private ExampleDialog exampleDialog = new ExampleDialog(this);
-	private String to = "";
+	private static String to = "";
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		setTo(args[0]);
+		
 		@SuppressWarnings("unused")
 		MessageSend dialog = new MessageSend();
 	}
@@ -81,8 +83,8 @@ public class MessageSend extends JDialog {
 		return to;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public static void setTo(String to) {
+		MessageSend.to = to;
 	}
 
 	private class ExampleDialog extends WebDialog {

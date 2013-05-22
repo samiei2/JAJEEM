@@ -371,8 +371,7 @@ public class InstructorRight {
 					String selectedStudent = "";
 					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
-					MessageSend messageSendDialog = new MessageSend();
-					messageSendDialog.setTo(selectedStudent);
+					MessageSend.main(new String[] {selectedStudent});
 				} else {
 
 				}
