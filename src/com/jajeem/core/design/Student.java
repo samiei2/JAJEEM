@@ -155,23 +155,14 @@ public class Student {
 						TooltipWay.up);
 		southPanel.add(picLabel);
 		panel2.add(southPanel, BorderLayout.SOUTH);
-		
+
 		messageButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) InstructorCenter.desktopPane
-							.getSelectedFrame().getClientProperty("ip");
-					MessageSend.main(new String[] {selectedStudent});
-				} else {
-
-				}
-
+				MessageSend.main(new String[] { StudentLogin.getServerIp() });
 			}
 		});
-		
 
 		return panel2;
 	}
