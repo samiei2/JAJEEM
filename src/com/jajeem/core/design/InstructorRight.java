@@ -371,7 +371,12 @@ public class InstructorRight {
 					String selectedStudent = "";
 					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
-					MessageSend.main(new String[] {selectedStudent});
+					try {
+						MessageSend.main(new String[] {selectedStudent, Config.getParam("port")});
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 
 				}

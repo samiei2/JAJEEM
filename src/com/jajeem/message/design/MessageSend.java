@@ -23,7 +23,6 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Config;
 
 public class MessageSend extends JDialog {
 
@@ -35,12 +34,14 @@ public class MessageSend extends JDialog {
 	final public WebTextArea messageField = new WebTextArea(3, 20);
 	private ExampleDialog exampleDialog = new ExampleDialog(this);
 	private static String to = "";
+	private static int port;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		setTo(args[0]);
+		setPort(Integer.parseInt(args[1]));
 		
 		@SuppressWarnings("unused")
 		MessageSend dialog = new MessageSend();
@@ -87,6 +88,14 @@ public class MessageSend extends JDialog {
 		MessageSend.to = to;
 	}
 
+	public static int getPort() {
+		return port;
+	}
+
+	public static void setPort(int port) {
+		MessageSend.port = port;
+	}
+
 	private class ExampleDialog extends WebDialog {
 		/**
 		 * 
@@ -116,8 +125,8 @@ public class MessageSend extends JDialog {
 					try {
 						MessageCommand messageCommand = new MessageCommand(
 								InetAddress.getLocalHost().getHostAddress(),
-								getTo(), Integer.parseInt(Config.getParam("port")),
-								"");
+								getTo(), getPort(),
+								messageField.getText());
 
 						ServerService serverService = new ServerService();
 						serverService.send(messageCommand);

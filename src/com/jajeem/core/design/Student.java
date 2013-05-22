@@ -160,7 +160,12 @@ public class Student {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MessageSend.main(new String[] { StudentLogin.getServerIp() });
+				try {
+					MessageSend.main(new String[] { StudentLogin.getServerIp(), Config.getParam("serverPort") });
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
