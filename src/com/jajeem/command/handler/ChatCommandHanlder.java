@@ -12,8 +12,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		new Config();
 
-		int port = Integer.parseInt(Config.getParam("serverPort"));
-		Chat currentChat;
+		Chat currentChat = null;
 
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
 			for (Chat chat : Student.getChatList()) {
@@ -23,9 +22,11 @@ public class ChatCommandHanlder implements ICommandHandler {
 					break;
 				}
 			}
-
-			currentChat = new Chat(cmd.getFrom(), port);
-			currentChat.addLine(((ChatCommand) cmd).getMessage());
+			if (currentChat == null) {
+				currentChat = new Chat(cmd.getFrom(), Integer.parseInt(Config.getParam("serverPort")));
+				currentChat.addLine(((ChatCommand) cmd).getMessage());
+			}
+			
 		} else {
 
 		}
