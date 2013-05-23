@@ -306,7 +306,7 @@ public class InstructorDAO implements IInstructorDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM Instructor");
+		ps = con.prepareStatement("SELECT * FROM Instructor;");
 
 		try {
 			rs = ps.executeQuery();
