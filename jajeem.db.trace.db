@@ -1,3 +1,24 @@
+<<<<<<< HEAD
 05-23 17:25:04 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
 SELECT * FROM Instructor; [42102-171]
+=======
+05-23 17:10:33 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+05-23 17:13:46 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+05-23 17:14:04 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+05-23 17:17:19 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+05-23 17:17:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+05-23 17:17:43 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "INSTRUCTOR" not found; SQL statement:
+SELECT * FROM Instructor [42102-171]
+>>>>>>> 6fbc73f6ef4fb2efb5f1334f42e1a42be044b7b7

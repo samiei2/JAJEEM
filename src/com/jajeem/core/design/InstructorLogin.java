@@ -65,7 +65,7 @@ public class InstructorLogin extends WebDialog {
 
 		setTitle("Login to iCalabo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Instructor.class.getResource("/menubar/jajeem.jpg")));
+				Instructor.class.getResource("/icons/menubar/jajeem.jpg")));
 		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
 		WebLookAndFeel.setDecorateDialogs(true);
 

@@ -9,7 +9,7 @@ public class Config {
 	
 	public Config () {
 		try {
-			Config.load(Config.class.getResource("/conf/conf.properties").getPath());
+			Config.load(Config.class.getResource("/com/jajeem/conf/conf.properties").getPath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

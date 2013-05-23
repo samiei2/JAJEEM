@@ -121,7 +121,7 @@ public class StudentLogin extends JDialog {
 		public LoginDialog(Window owner) {
 			super(owner, "Login to iCalabo");
 			setIconImage(Toolkit.getDefaultToolkit().getImage(
-					Student.class.getResource("/menubar/jajeem.jpg")));
+					Student.class.getResource("/icons/menubar/jajeem.jpg")));
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
 			setResizable(false);
 			setModal(true);
