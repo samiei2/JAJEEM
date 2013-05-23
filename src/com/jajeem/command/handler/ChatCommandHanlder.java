@@ -22,6 +22,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 						currentChat = chat;
 						currentChat.addLine(((ChatCommand) cmd).getMessage());
 						currentChat.scrollDown();
+						currentChat.setVisible(true);
 						break;
 					}
 				}
@@ -31,6 +32,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 							Integer.parseInt(Config.getParam("serverPort")));
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
 					Student.getChatList().add(currentChat);
+					currentChat.setVisible(true);
 					currentChat.scrollDown();
 				}
 			}
@@ -42,6 +44,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 						currentChat = chat;
 						currentChat.addLine(((ChatCommand) cmd).getMessage());
 						currentChat.scrollDown();
+						currentChat.setVisible(true);
 						break;
 					}
 				}
@@ -51,6 +54,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 							Integer.parseInt(Config.getParam("port")));
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
 					Instructor.getChatList().add(currentChat);
+					currentChat.setVisible(true);
 					currentChat.scrollDown();
 				}
 			}

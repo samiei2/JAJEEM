@@ -3,12 +3,18 @@ package com.jajeem.message.design;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
@@ -35,9 +41,11 @@ public class Chat extends WebFrame {
 	private static final long serialVersionUID = -2055942118955727767L;
 	private JPanel contentPane;
 	private DefaultListModel listModel = new DefaultListModel();
-	private WebList list = new WebList(listModel);
-	private WebScrollPane scrollPane = new WebScrollPane(list);
+	private WebList list = new WebList(getListModel());
+	private WebScrollPane scrollPane = new WebScrollPane(getList());
 	private static ServerService serverService;
+	private File file;
+
 	private String to = "";
 	private int port;
 
@@ -65,6 +73,9 @@ public class Chat extends WebFrame {
 	 */
 	public Chat(String to, int port) throws NumberFormatException, Exception {
 		super("Chat");
+		file = new File("/chat" + getTo() + ".txt");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				Chat.class.getResource("/menubar/chat.png")));
 
 		setTo(to);
 		setPort(port);
@@ -79,7 +90,6 @@ public class Chat extends WebFrame {
 		boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
 		WebLookAndFeel.setDecorateFrames(true);
 
-		setIconImages(WebLookAndFeel.getImages());
 		setDefaultCloseOperation(WebFrame.HIDE_ON_CLOSE);
 
 		ComponentMoveAdapter.install(getRootPane(), Chat.this);
@@ -106,8 +116,8 @@ public class Chat extends WebFrame {
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		panel_1.add(splitPane);
 
-		list.setEditable(false);
-		scrollPane.setViewportView(list);
+		getList().setEditable(false);
+		scrollPane.setViewportView(getList());
 		splitPane.setLeftComponent(scrollPane);
 
 		final WebTextArea textArea = new WebTextArea();
@@ -119,9 +129,11 @@ public class Chat extends WebFrame {
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER)
 						&& (!textArea.getText().equals(""))
 						&& (textArea.getText() != null)) {
-					listModel.addElement(textArea.getText());
-					scrollPane.getVerticalScrollBar().setValue(
-							scrollPane.getVerticalScrollBar().getMaximum());
+					getListModel().addElement("me: " + textArea.getText());
+					scrollPane.getVerticalScrollBar()
+							.setValue(
+									scrollPane.getVerticalScrollBar()
+											.getMaximum() + 10000);
 
 					ChatCommand chatCommand;
 					try {
@@ -139,12 +151,39 @@ public class Chat extends WebFrame {
 			}
 		});
 
+		btnSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (!file.exists()) {
+						file.createNewFile();
+					}
+					FileWriter fw;
+					fw = new FileWriter(file.getAbsoluteFile(), true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					DefaultListModel myList = getListModel();
+					int lsize = myList.size();
+					for (int i = 0; i < lsize; i++) {
+						Object o = myList.get(i);
+
+						bw.write(o.toString());
+
+					}
+					bw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 		WebLookAndFeel.setDecorateFrames(decorateFrames);
 		setVisible(true);
 	}
 
 	public void addLine(String text) {
-		listModel.addElement(text);
+		getListModel().addElement(text);
 	}
 
 	public String getTo() {
@@ -162,10 +201,26 @@ public class Chat extends WebFrame {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	
+
 	public void scrollDown() {
 		scrollPane.getVerticalScrollBar().setValue(
 				scrollPane.getVerticalScrollBar().getMaximum());
+	}
+
+	public WebList getList() {
+		return list;
+	}
+
+	public void setList(WebList list) {
+		this.list = list;
+	}
+
+	public DefaultListModel getListModel() {
+		return listModel;
+	}
+
+	public void setListModel(DefaultListModel listModel) {
+		this.listModel = listModel;
 	}
 
 }
