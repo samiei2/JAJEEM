@@ -1,6 +1,7 @@
 package com.jajeem.util;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class Config {
@@ -9,7 +10,7 @@ public class Config {
 	
 	public Config () {
 		try {
-			Config.load(Config.class.getResource("/com/jajeem/conf/conf.properties").getPath());
+			Config.load(Config.class.getResourceAsStream("/conf/conf.properties"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -22,9 +23,9 @@ public class Config {
 	 *            String
 	 * @throws Exception
 	 */
-	public static void load(String filename) throws Exception {
+	public static void load(InputStream filename) throws Exception {
 
-		FileInputStream propFile = new FileInputStream(filename);
+		InputStreamReader propFile = new InputStreamReader(filename);
 
 		props.clear();
 		props.load(propFile);
