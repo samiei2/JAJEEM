@@ -11,7 +11,6 @@ import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Stack;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,8 +21,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -592,45 +589,7 @@ public class SurveyWindow extends WebFrame {
 						currentQuestion.setStudentAnswer(webTextArea_1.getText());
 					}
 					
-					//TODO clean up this code
-					synchronized (sendQueue) {
-						sendQueue.add(currentQuestion);
-					}
-					
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							try {
-								Question question = null;
-								synchronized (sendQueue) {
-									if(!sendQueue.isEmpty()){
-										question = sendQueue.get(0);
-										sendQueue.remove(0);
-									}
-								}
-								SurveyResponse resp = new SurveyResponse(question);
-								resp.setQuestion(question);
-								resp.setStudent(getStudent());
-								new SurveyEvent().fireResponseEvent(resp);
-								SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveylistenport")));
-								cmd.setEvent(resp);
-							
-								ServerService service = new ServerService();
-								service.send(cmd);
-							} catch (NumberFormatException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-
-						private Student getStudent() {
-							return privateStudent;//TODO correct this code
-						}
-					}).start();
+					SendAnswerToTeacher();
 				}
 				//Load Next Question
 				currentQuestion = currentSurvey.getQuestionList().get(webList.getSelectedIndex());
@@ -708,6 +667,48 @@ public class SurveyWindow extends WebFrame {
 				else
 					wbtnNext.setText("Next");
 				}
+			}
+
+			private void SendAnswerToTeacher() {
+				//TODO clean up this code
+				synchronized (sendQueue) {
+					sendQueue.add(currentQuestion);
+				}
+				
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Question question = null;
+							synchronized (sendQueue) {
+								if(!sendQueue.isEmpty()){
+									question = sendQueue.get(0);
+									sendQueue.remove(0);
+								}
+							}
+							SurveyResponse resp = new SurveyResponse(question);
+							resp.setQuestion(question);
+							resp.setStudent(getStudent());
+							new SurveyEvent().fireResponseEvent(resp);
+							SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+							cmd.setEvent(resp);
+						
+							ServerService service = new ServerService();
+							service.send(cmd);
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+					private Student getStudent() {
+						return privateStudent;//TODO correct this code
+					}
+				}).start();
 			}
 		});
 		

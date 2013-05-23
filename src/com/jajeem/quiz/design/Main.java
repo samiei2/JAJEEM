@@ -28,6 +28,7 @@ import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
@@ -35,6 +36,7 @@ import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.quiz.service.ResultService;
+import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
@@ -285,13 +287,18 @@ public class Main extends JFrame {
 			        panel_bottom_2.LoadQuiz(currentQuiz);
 			        //TODO Code must be changed
 			        try {
-			        	QuizWindow wind =new QuizWindow(currentQuiz);
+			        	Run run = new Run();
+			        	run.setQuiz(currentQuiz);
+			        	run.setInstructor(getCurrentInstructor());
+			        	run.setSession(getCurrentSession());
+			        	QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
 						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						//StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+						cmd.setRun(run);
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
@@ -322,6 +329,16 @@ public class Main extends JFrame {
 					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
 					//quizEvent.fireStopEvent(new QuizStop(this));
 				}
+			}
+
+			private Session getCurrentSession() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			private Instructor getCurrentInstructor() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);

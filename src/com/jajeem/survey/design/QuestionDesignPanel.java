@@ -318,7 +318,7 @@ public class QuestionDesignPanel extends WebPanel {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
-					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextArea.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 3);
+					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextArea.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 2);
 					parentPanel.getParentPanel().getCurrentQuestion().setTitle(webTextArea.getText());
 				}
 			}
@@ -326,7 +326,7 @@ public class QuestionDesignPanel extends WebPanel {
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
 				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
-					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextArea.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 3);
+					parentPanel.getQuestionListPanel().getWebTable().setValueAt(webTextArea.getText(), parentPanel.getQuestionListPanel().getWebTable().getSelectedRow(), 2);
 					parentPanel.getParentPanel().getCurrentQuestion().setTitle(webTextArea.getText());
 				}
 			}

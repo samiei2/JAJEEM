@@ -87,7 +87,6 @@ public class Panel_Bottom_21 extends WebPanel {
 					Question question = ex.getQuestion();
 					
 					String StudentOption = "None Selected";
-					String QuestionOption = "None Selected";
 					if(question.getType() == 0){ // setting student's answer
 						if(question.getStudentAnswer()[0])
 							StudentOption = "First Option";
@@ -119,7 +118,6 @@ public class Panel_Bottom_21 extends WebPanel {
 					model.addRow(new Object[]{
 							student.getId(),
 							student.getFirstName() + " " + student.getLastName(),
-							QuestionOption,
 							StudentOption
 					});
 				}
@@ -278,12 +276,12 @@ public class Panel_Bottom_21 extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-					"Number", "Student Name", "Correct Answer", "Answer"
+					"Number", "Student Name", "Answer"
 			}
 		));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-		webTable.getColumnModel().getColumn(2).setPreferredWidth(91);
-		webTable.getColumnModel().getColumn(3).setPreferredWidth(101);
+		webTable.getColumnModel().getColumn(1).setPreferredWidth(91);
+		webTable.getColumnModel().getColumn(2).setPreferredWidth(101);
 		webScrollPane_1.setViewportView(webTable);
 		webPanel_1.setLayout(gl_webPanel_1);
 		
@@ -435,7 +433,6 @@ public class Panel_Bottom_21 extends WebPanel {
 			if(question.getId() == currentQuestion.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
 				String StudentOption = "None Selected";
-				String QuestionOption = "None Selected";
 				if(question.getType() == 0){ // setting student's answer
 					if(question.getStudentAnswer()[0])
 						StudentOption = "First Option";
@@ -472,7 +469,6 @@ public class Panel_Bottom_21 extends WebPanel {
 					model.addRow(new Object[]{
 							student.getId(),
 							student.getFirstName() + " " + student.getLastName(),
-							QuestionOption,
 							StudentOption
 					});
 				}
