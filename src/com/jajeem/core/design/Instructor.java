@@ -32,17 +32,15 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerServiceTimer;
-import com.jajeem.core.dao.h2.InstructorDAO;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
-import com.jajeem.util.StartUp;
 
 public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
 
 	private static ServerServiceTimer serverServiceTimer;
-	
+
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
 	static Logger logger = Logger.getLogger("Instructor.class");
@@ -55,11 +53,10 @@ public class Instructor implements SwingConstants {
 	 */
 	public static void main(final String[] args) throws NumberFormatException,
 			Exception {
-		@SuppressWarnings("unused")
-		StartUp start = new StartUp();
 		networkSetup();
 
-		PropertyConfigurator.configure(Instructor.class.getResource("/conf/log4j.conf").getPath());
+		PropertyConfigurator.configure(Instructor.class.getResource(
+				"/conf/log4j.conf").getPath());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -67,8 +64,9 @@ public class Instructor implements SwingConstants {
 					Instructor window = new Instructor();
 					window.getFrmJajeemProject().setVisible(true);
 
-					window.getFrmJajeemProject().setTitle("iCalabo - Prof."
-							+ (String) args[0] + " - " + (String) args[1]);
+					window.getFrmJajeemProject().setTitle(
+							"iCalabo - Prof." + (String) args[0] + " - "
+									+ (String) args[1]);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +87,8 @@ public class Instructor implements SwingConstants {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure(Instructor.class.getResource("/conf/log4j.conf").getPath());
+			PropertyConfigurator.configure(Instructor.class.getResource(
+					"/conf/log4j.conf").getPath());
 
 		} catch (Throwable e) {
 		}
@@ -106,8 +105,9 @@ public class Instructor implements SwingConstants {
 		WebLookAndFeel.setDecorateFrames(true);
 		setFrmJajeemProject(new WebFrame());
 		getFrmJajeemProject().setRound(0);
-		getFrmJajeemProject().setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Instructor.class.getResource("/menubar/jajeem.jpg")));
+		getFrmJajeemProject().setIconImage(
+				Toolkit.getDefaultToolkit().getImage(
+						Instructor.class.getResource("/menubar/jajeem.jpg")));
 		getFrmJajeemProject().setBounds(200, 100, 850, 600);
 		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
@@ -181,8 +181,12 @@ public class Instructor implements SwingConstants {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
 				webScrollPane);
-		rPanel.setCollapseIcon(new ImageIcon("icons/angle-right.png"));
-		rPanel.setExpandIcon(new ImageIcon("icons/angle-left.png"));
+		
+		rPanel.setCollapseIcon(new ImageIcon(Instructor.class
+				.getResource("/icons/angle-right.png").getPath()));
+		
+		rPanel.setExpandIcon(new ImageIcon(Instructor.class
+				.getResource("/icons/angle-left.png").getPath()));
 		rPanel.setRotateStateIcon(false);
 
 		rPanel.setExpanded(true);
@@ -215,11 +219,13 @@ public class Instructor implements SwingConstants {
 
 		case SOUTH: {
 
-			ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+			ImageIcon imgToolTip = new ImageIcon(Instructor.class
+					.getResource("/icons/menubar/tooltip.png").getPath());
 			TooltipManager.setDefaultDelay(1000);
-
+			
 			BufferedImage myPicture = ImageIO
-					.read(new File("icons/buttom.jpg"));
+					.read(new File(Instructor.class
+							.getResource("/icons/buttom.jpg").getPath()));
 			WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
 			TooltipManager
 					.setTooltip(
@@ -241,7 +247,9 @@ public class Instructor implements SwingConstants {
 		}
 
 		case EAST: {
-			InstructorRight.iconsPath = "icons/applications_style1";
+			
+			InstructorRight.iconsPath = Instructor.class
+					.getResource("/icons/applications_style1").getPath();
 			panel = InstructorRight.createPanel(panel);
 
 			break;

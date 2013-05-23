@@ -30,6 +30,7 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import com.jajeem.util.StartUp;
 
 public class InstructorLogin extends WebDialog {
 
@@ -62,6 +63,9 @@ public class InstructorLogin extends WebDialog {
 
 		setResizable(false);
 		setModal(true);
+		
+		@SuppressWarnings("unused")
+		StartUp start = new StartUp();
 
 		setTitle("Login to iCalabo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
