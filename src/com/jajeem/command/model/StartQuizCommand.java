@@ -1,6 +1,7 @@
 package com.jajeem.command.model;
 
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.quiz.model.Run;
 
 public class StartQuizCommand extends Command {
 	/**
@@ -9,6 +10,7 @@ public class StartQuizCommand extends Command {
 	private static final long serialVersionUID = -4014963068838321817L;
 	private Quiz quiz;
 	private String server;
+	private Run run;
 	public StartQuizCommand(String from, String to, int port) {
 		super(from, to, port);
 		
@@ -28,6 +30,14 @@ public class StartQuizCommand extends Command {
 
 	public void setServer(String server) {
 		this.server = server;
+	}
+
+	public void setRun(Run run) {
+		this.run = run;
+	}
+	
+	public Run getRun(){
+		return run;
 	}
 
 }

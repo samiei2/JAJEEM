@@ -44,6 +44,7 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 
@@ -115,13 +116,14 @@ public class QuizWindow extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizWindow(Quiz quiz) {
+	public QuizWindow(Run run) {
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
+		run.setStudent(privateStudent);
 		
 		
-		currentQuiz = quiz;
+		currentQuiz = run.getQuiz();
 		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
 			@Override

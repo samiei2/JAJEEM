@@ -67,7 +67,6 @@ public class Panel_Bottom_22 extends WebPanel {
 						Question question = ex.getQuestion();
 						if(currentStudent.getId() == student.getId()){
 							String StudentOption = "";
-							String QuestionOption = "";
 							if(question.getType() == 0){ // setting student's answer
 								if(question.getStudentAnswer()[0])
 									StudentOption = "First Option";
@@ -102,7 +101,6 @@ public class Panel_Bottom_22 extends WebPanel {
 							
 							model.addRow(new Object[]{
 									question.getTitle(),
-									QuestionOption,
 									StudentOption
 							});
 						}
@@ -200,7 +198,7 @@ public class Panel_Bottom_22 extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Question", "Correct Answer", "Student Answer"
+				"#", "Question", "Student Answer"
 			}
 		));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -295,7 +293,6 @@ public class Panel_Bottom_22 extends WebPanel {
 						
 						if(student.getId() == temps.getId()){
 							String StudentOption = "";
-							String QuestionOption = "";
 							if(tempq.getType() == 0){ // setting student's answer
 								if(tempq.getStudentAnswer()[0])
 									StudentOption = "First Option";
@@ -329,8 +326,8 @@ public class Panel_Bottom_22 extends WebPanel {
 							
 							
 							model.addRow(new Object[]{
+									webTable.getRowCount() == 0 ? 1 : Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
 									tempq.getTitle(),
-									QuestionOption,
 									StudentOption
 							});
 						}

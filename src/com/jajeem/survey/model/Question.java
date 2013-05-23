@@ -16,7 +16,7 @@ public class Question {
 	private String answer3;
 	private String answer4;
 	private String answer5;
-	private Response response;
+	private Response response = new Response();
 	
 	//getter & setters
 	public int getId() {

@@ -15,6 +15,7 @@ import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
+import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
 import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
 import com.jajeem.command.handler.SetBlackoutCommandHandler;
 import com.jajeem.command.handler.SetGrantCommandHanlder;
@@ -25,11 +26,13 @@ import com.jajeem.command.handler.SetVolumeCommandHandler;
 import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
 import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartQuizCommandHandler;
+import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
+import com.jajeem.command.handler.StopSurveyCommandHanlder;
 import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.BlackoutCommand;
@@ -41,13 +44,16 @@ import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
+import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCaptureCommand;
 import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.model.StopWhiteBoardCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
@@ -171,6 +177,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof SendQuizResponseCommand) {
 					SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
 					sendquizresponse.run(cmd);
+
+				} else if (cmd instanceof StartSurveyCommand) {
+					StartSurveyCommandHandler startSurveyHandler = new StartSurveyCommandHandler();
+					startSurveyHandler.run(cmd);
+				} else if (cmd instanceof StopSurveyCommand) {
+					StopSurveyCommandHanlder stopSurveyHandler = new StopSurveyCommandHanlder();
+					stopSurveyHandler.run(cmd);
+				} else if (cmd instanceof SendSurveyResponseCommand) {
+					SendSurveyResponseCommandHandler sendSurveyresponse = new SendSurveyResponseCommandHandler();
+					sendSurveyresponse.run(cmd);
 
 				} else if (cmd instanceof WhiteBlackAppCommand) {
 					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();

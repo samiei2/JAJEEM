@@ -255,9 +255,10 @@ public class OpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Title"
+				"#", "Title"
 			}
 		));
+		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(33);
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
 		wbTblQuiz = new WebTable();
@@ -275,11 +276,11 @@ public class OpenDialog extends JDialog {
 			public void valueChanged(ListSelectionEvent arg0) {
 				Quiz quiz = quizList.get(wbTblQuiz.getSelectedRow());
 				DefaultTableModel model = (DefaultTableModel) wbTblQuestion.getModel();
-				for (int i = 0; i < wbTblQuestion.getRowCount(); i++) {
-					model.removeRow(i);
-				}
+				model.getDataVector().removeAllElements();
+				model.fireTableDataChanged();
 				for (int i = 0; i < quiz.getQuestionList().size(); i++) {
 					model.addRow(new Object[]{
+							wbTblQuestion.getRowCount() == 0 ? 1 : Integer.parseInt(String.valueOf(model.getValueAt(wbTblQuestion.getRowCount()-1, 0)))+1,
 							quiz.getQuestionList().get(i).getTitle()
 					});
 				}

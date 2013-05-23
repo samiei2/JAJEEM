@@ -1,6 +1,8 @@
 package com.jajeem.room.model;
 
-public class Session {
+import java.io.Serializable;
+
+public class Session implements Serializable{
 	
 	//properties
 	private int id;

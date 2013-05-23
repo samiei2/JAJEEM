@@ -1,13 +1,23 @@
 package com.jajeem.quiz.model;
 
-public class Run {
+import java.io.Serializable;
+
+import com.jajeem.core.model.Instructor;
+import com.jajeem.core.model.Student;
+import com.jajeem.room.model.Session;
+
+public class Run implements Serializable{
 	
 	//properties
 	private int id; 
 	private int instructorId;
+	private Instructor instructor;
 	private int sessionId;
+	private Session session;
 	private int quizId;
+	private Quiz quiz;
 	private int studentId;
+	private Student student;
 	private int score;
 	private int start;
 	private int end;
@@ -60,5 +70,29 @@ public class Run {
 	}
 	public void setScore(int score) {
 		this.score = score;
+	}
+	public Instructor getInstructor() {
+		return instructor;
+	}
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+	public Session getSession() {
+		return session;
+	}
+	public void setSession(Session session) {
+		this.session = session;
+	}
+	public Quiz getQuiz() {
+		return quiz;
+	}
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 }
