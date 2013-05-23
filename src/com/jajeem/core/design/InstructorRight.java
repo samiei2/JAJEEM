@@ -140,7 +140,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
 				"Turn off, Log off, Restart student's computer",
 				TooltipWay.left);
-		panel.add(whiteboardButton);
+		// panel.add(whiteboardButton);
 
 		// blacks student's screen
 		blackoutButton.addActionListener(new ActionListener() {
@@ -393,8 +393,8 @@ public class InstructorRight {
 					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 					try {
-						Chat currentChat = new Chat(selectedStudent, Integer.parseInt(Config
-								.getParam("port")));
+						Chat currentChat = new Chat(selectedStudent, Integer
+								.parseInt(Config.getParam("port")));
 						Instructor.getChatList().add(currentChat);
 					} catch (Exception e) {
 						e.printStackTrace();
