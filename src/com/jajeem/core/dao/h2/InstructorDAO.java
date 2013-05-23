@@ -20,7 +20,7 @@ public class InstructorDAO implements IInstructorDAO {
 	Logger logger = Logger.getLogger(InstructorDAO.class);
 
 	public InstructorDAO() {
-		PropertyConfigurator.configure(InstructorDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

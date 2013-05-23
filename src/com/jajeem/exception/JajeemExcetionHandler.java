@@ -10,7 +10,7 @@ import com.jajeem.groupwork.dao.h2.GroupDAO;
 public class JajeemExcetionHandler extends Exception{
 	Logger logger = Logger.getLogger(GroupDAO.class);
 	public JajeemExcetionHandler(Exception e){ 
-		PropertyConfigurator.configure(Exception.class.getResource("/conf/log4j.conf").getPath());
+		
 		ExceptionHandler(e);
 	}
 	

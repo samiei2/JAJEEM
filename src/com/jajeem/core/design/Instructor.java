@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +56,6 @@ public class Instructor implements SwingConstants {
 			Exception {
 		networkSetup();
 
-		PropertyConfigurator.configure(Instructor.class.getResource(
-				"/conf/log4j.conf").getPath());
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -87,8 +85,6 @@ public class Instructor implements SwingConstants {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure(Instructor.class.getResource(
-					"/conf/log4j.conf").getPath());
 
 		} catch (Throwable e) {
 		}
@@ -107,7 +103,8 @@ public class Instructor implements SwingConstants {
 		getFrmJajeemProject().setRound(0);
 		getFrmJajeemProject().setIconImage(
 				Toolkit.getDefaultToolkit().getImage(
-						Instructor.class.getResource("/icons/menubar/jajeem.jpg")));
+						Instructor.class
+								.getResource("/icons/menubar/jajeem.jpg")));
 		getFrmJajeemProject().setBounds(200, 100, 850, 600);
 		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
@@ -181,12 +178,12 @@ public class Instructor implements SwingConstants {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
 				webScrollPane);
-		
-		rPanel.setCollapseIcon(new ImageIcon(Instructor.class
-				.getResource("/icons/angle-right.png").getPath()));
-		
-		rPanel.setExpandIcon(new ImageIcon(Instructor.class
-				.getResource("/icons/angle-left.png").getPath()));
+
+//		rPanel.setCollapseIcon(new ImageIcon(ImageIO.read(Instructor.class
+//				.getResourceAsStream("/icons/menubar/angle-right.png"))));
+//
+//		rPanel.setExpandIcon(new ImageIcon(ImageIO.read(Instructor.class
+//				.getResourceAsStream("/icons/menubar/angle-left.png"))));
 		rPanel.setRotateStateIcon(false);
 
 		rPanel.setExpanded(true);
@@ -219,13 +216,12 @@ public class Instructor implements SwingConstants {
 
 		case SOUTH: {
 
-			ImageIcon imgToolTip = new ImageIcon(Instructor.class
-					.getResource("/icons/menubar/tooltip.png").getPath());
+			ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Instructor.class
+					.getResourceAsStream(("/icons/menubar/tooltip.png"))));
 			TooltipManager.setDefaultDelay(1000);
-			
-			BufferedImage myPicture = ImageIO
-					.read(new File(Instructor.class
-							.getResource("/icons/buttom.jpg").getPath()));
+
+			BufferedImage myPicture = ImageIO.read(Instructor.class
+					.getResourceAsStream(("/icons/buttom.jpg")));
 			WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
 			TooltipManager
 					.setTooltip(
@@ -247,9 +243,9 @@ public class Instructor implements SwingConstants {
 		}
 
 		case EAST: {
-			
-			InstructorRight.iconsPath = Instructor.class
-					.getResource("/icons/applications_style1").getPath();
+
+			InstructorRight.iconsPath = Instructor.class.getResource(
+					"/icons/applications_style1").getPath();
 			panel = InstructorRight.createPanel(panel);
 
 			break;

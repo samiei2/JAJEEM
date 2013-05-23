@@ -20,7 +20,7 @@ public class AttendantDAO implements IAttendantDAO {
 	Logger logger = Logger.getLogger(AttendantDAO.class);
 
 	public AttendantDAO() {
-		PropertyConfigurator.configure(AttendantDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

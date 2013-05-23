@@ -78,8 +78,7 @@ public class InstructorLogin extends WebDialog {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure(InstructorLogin.class.getResource(
-					"/com/jajeem/conf/log4j.conf").getPath());
+			
 
 		} catch (Throwable e) {
 		}

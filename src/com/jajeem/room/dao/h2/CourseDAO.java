@@ -20,7 +20,7 @@ public class CourseDAO implements ICourseDAO {
 	Logger logger = Logger.getLogger(CourseDAO.class);
 
 	public CourseDAO() {
-		PropertyConfigurator.configure(CourseDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

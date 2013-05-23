@@ -20,7 +20,7 @@ public class RoomDAO implements IRoomDAO {
 	Logger logger = Logger.getLogger(RoomDAO.class);
 
 	public RoomDAO() {
-		PropertyConfigurator.configure(RoomDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

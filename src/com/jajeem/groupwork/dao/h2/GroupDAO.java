@@ -20,7 +20,7 @@ public class GroupDAO implements IGroupDAO {
 	Logger logger = Logger.getLogger(GroupDAO.class);
 
 	public GroupDAO() {
-		PropertyConfigurator.configure(GroupDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

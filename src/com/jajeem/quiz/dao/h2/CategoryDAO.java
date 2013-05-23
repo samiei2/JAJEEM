@@ -20,7 +20,7 @@ public class CategoryDAO implements ICategoryDAO {
 	Logger logger = Logger.getLogger(QuestionDAO.class);
 
 	public CategoryDAO() {
-		PropertyConfigurator.configure(CategoryDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

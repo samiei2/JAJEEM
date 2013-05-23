@@ -20,7 +20,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 	Logger logger = Logger.getLogger(GroupworkDAO.class);
 
 	public GroupworkDAO() {
-		PropertyConfigurator.configure(GroupworkDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

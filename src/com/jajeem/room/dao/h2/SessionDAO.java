@@ -20,7 +20,7 @@ public class SessionDAO implements ISessionDAO {
 	Logger logger = Logger.getLogger(SessionDAO.class);
 
 	public SessionDAO() {
-		PropertyConfigurator.configure(SessionDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

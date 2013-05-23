@@ -21,7 +21,7 @@ public class QuizDAO implements IQuizDAO {
 	Logger logger = Logger.getLogger(QuizDAO.class);
 
 	public QuizDAO() {
-		PropertyConfigurator.configure(QuizDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

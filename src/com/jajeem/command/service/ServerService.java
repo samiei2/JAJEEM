@@ -35,7 +35,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	
 	public ServerService() throws NumberFormatException, Exception {
 
-		PropertyConfigurator.configure(ServerService.class.getResource("/conf/log4j.conf").getPath());
+		
 			
 		stopped = false;
 				
@@ -51,7 +51,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 	public ServerService(String group, int ttl, int interval,
 			String type) throws NumberFormatException, Exception {
 
-		PropertyConfigurator.configure(ServerService.class.getResource("/conf/log4j.conf").getPath());
+		
 			
 		stopped = false;
 		

@@ -20,7 +20,6 @@ public class QuestionDAO implements IQuestionDAO {
 	Logger logger = Logger.getLogger(QuestionDAO.class);
 
 	public QuestionDAO() {
-		PropertyConfigurator.configure(QuestionDAO.class.getResource("/conf/log4j.conf").getPath());
 	}
 
 	@Override

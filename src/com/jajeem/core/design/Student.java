@@ -77,7 +77,7 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure(Student.class.getResource("/conf/log4j.conf").getPath());
+			
 
 		} catch (Throwable e) {
 			// Something went wrong

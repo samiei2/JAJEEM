@@ -20,7 +20,7 @@ public class MessageDAO implements IMessageDAO {
 	Logger logger = Logger.getLogger(MessageDAO.class);
 
 	public MessageDAO() {
-		PropertyConfigurator.configure(MessageDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

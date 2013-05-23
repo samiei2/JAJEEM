@@ -20,7 +20,7 @@ public class RunDAO implements IRunDAO {
 	Logger logger = Logger.getLogger(RunDAO.class);
 
 	public RunDAO() {
-		PropertyConfigurator.configure(RunDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

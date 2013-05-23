@@ -20,7 +20,7 @@ public class ResponseDAO implements IResponseDAO {
 	Logger logger = Logger.getLogger(ResponseDAO.class);
 
 	public ResponseDAO() {
-		PropertyConfigurator.configure(ResponseDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class SeatDAO implements ISeatDAO {
 	Logger logger = Logger.getLogger(SeatDAO.class);
 
 	public SeatDAO() {
-		PropertyConfigurator.configure(SeatDAO.class.getResource("/conf/log4j.conf").getPath());
+		
 	}
 
 	@Override
