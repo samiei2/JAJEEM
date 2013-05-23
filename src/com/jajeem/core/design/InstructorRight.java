@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
@@ -49,40 +50,45 @@ public class InstructorRight {
 		new Config();
 
 		final WebPanel panel = new WebPanel();
-		
-		ImageIcon imgToolTip = new ImageIcon(InstructorRight.class.getResource(
-				"/icons/menubar/tooltip.png").getPath());
+
+		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(InstructorRight.class
+				.getResourceAsStream("/icons/menubar/tooltip.png")));
 		TooltipManager.setDefaultDelay(1000);
 
 		GridLayout grid = new GridLayout(0, 1);
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
 
-		ImageIcon imgChat = new ImageIcon(iconsPath + "/intercom_text.png");
+		ImageIcon imgChat = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/intercom_text.png")));
 		WebButton chatButton = new WebButton(imgChat);
 		TooltipManager.setTooltip(chatButton, imgToolTip,
 				"Start chating to selected student", TooltipWay.left);
 		chatButton.setRound(0);
 		panel.add(chatButton);
 
-		ImageIcon imgStopInternet = new ImageIcon(iconsPath
-				+ "/stopInternet_text.png");
+		ImageIcon imgStopInternet = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/stopInternet_text.png")));
 		WebButton stopInternetButton = new WebButton(imgStopInternet);
 		stopInternetButton.setRound(0);
 		TooltipManager.setTooltip(stopInternetButton, imgToolTip,
 				"Stop all browsers", TooltipWay.left);
 		panel.add(stopInternetButton);
 
-		ImageIcon imgGroupwork = new ImageIcon(iconsPath
-				+ "/groupwork_text.png");
+		ImageIcon imgGroupwork = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/groupwork_text.png")));
 		WebButton groupworkButton = new WebButton(imgGroupwork);
 		groupworkButton.setRound(0);
 		TooltipManager.setTooltip(groupworkButton, imgToolTip,
 				"Start a group with selected students", TooltipWay.left);
 		// panel.add(groupworkButton);
 
-		ImageIcon imgBlockApplication = new ImageIcon(iconsPath
-				+ "/blockApplication_text.png");
+		ImageIcon imgBlockApplication = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/blockApplication_text.png")));
 		WebButton blockApplicationButton = new WebButton(imgBlockApplication);
 		blockApplicationButton.setRound(0);
 		TooltipManager.setTooltip(blockApplicationButton, imgToolTip,
@@ -90,7 +96,9 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(blockApplicationButton);
 
-		ImageIcon imgBlackout = new ImageIcon(iconsPath + "/blackout_text.png");
+		ImageIcon imgBlackout = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/blackout_text.png")));
 		WebButton blackoutButton = new WebButton(imgBlackout);
 		blackoutButton.setRound(0);
 		TooltipManager.setTooltip(blackoutButton, imgToolTip,
@@ -98,43 +106,54 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(blackoutButton);
 
-		ImageIcon imgQuiz = new ImageIcon(iconsPath + "/quiz_text.png");
+		ImageIcon imgQuiz = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/quiz_text.png")));
 		WebButton quizButton = new WebButton(imgQuiz);
 		quizButton.setRound(0);
 		TooltipManager.setTooltip(quizButton, imgToolTip,
 				"Start quiz for the class", TooltipWay.left);
 		panel.add(quizButton);
-		
-		ImageIcon imgSurvey = new ImageIcon(iconsPath + "/quiz_text.png");
+
+		ImageIcon imgSurvey = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/quiz_text.png")));
 		WebButton surveyButton = new WebButton(imgSurvey);
 		surveyButton.setRound(0);
 		TooltipManager.setTooltip(surveyButton, imgToolTip,
 				"Start quiz for the class", TooltipWay.left);
 		panel.add(surveyButton);
 
-		ImageIcon imgSendWebsite = new ImageIcon(iconsPath
-				+ "/sendWebsite_text.png");
+		ImageIcon imgSendWebsite = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/sendWebsite_text.png")));
 		WebButton sendWebsiteButton = new WebButton(imgSendWebsite);
 		sendWebsiteButton.setRound(0);
 		TooltipManager.setTooltip(sendWebsiteButton, imgToolTip,
 				"Send website", TooltipWay.left);
 		panel.add(sendWebsiteButton);
 
-		ImageIcon imgMessage = new ImageIcon(iconsPath + "/message_text.png");
+		ImageIcon imgMessage = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/message_text.png")));
 		WebButton messageButton = new WebButton(imgMessage);
 		messageButton.setRound(0);
 		TooltipManager.setTooltip(messageButton, imgToolTip, "Message",
 				TooltipWay.left);
 		panel.add(messageButton);
 
-		ImageIcon imgVNC = new ImageIcon(iconsPath + "/vnc_text.png");
+		ImageIcon imgVNC = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/vnc_text.png")));
 		WebButton VNCButton = new WebButton(imgVNC);
 		VNCButton.setRound(0);
 		TooltipManager.setTooltip(VNCButton, imgToolTip,
 				"Remote access to selected student", TooltipWay.left);
 		panel.add(VNCButton);
 
-		ImageIcon imgPower = new ImageIcon(iconsPath + "/power_text.png");
+		ImageIcon imgPower = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/power_text.png")));
 		final WebButton powerButton = new WebButton(imgPower);
 		powerButton.setRound(0);
 		TooltipManager.setTooltip(powerButton, imgToolTip,
@@ -142,7 +161,9 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(powerButton);
 
-		ImageIcon imgWhiteboard = new ImageIcon(iconsPath + "/power_text.png");
+		ImageIcon imgWhiteboard = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/power_text.png")));
 		final WebButton whiteboardButton = new WebButton(imgWhiteboard);
 		whiteboardButton.setRound(0);
 		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
@@ -266,7 +287,7 @@ public class InstructorRight {
 				quiz.setVisible(true);
 			}
 		});
-		
+
 		surveyButton.addActionListener(new ActionListener() {
 
 			@Override
