@@ -7,8 +7,13 @@ import java.sql.Statement;
 public class initDatabase {
 
 	public static void initialize() {
+		Config conf = new Config();
+		
 		Connection con;
 		try {
+			String s = conf.getParam("server");
+			if(s.equals("1")){
+				
 			con = BaseDAO.getConnection();
 			String query = 
 			"CREATE TABLE IF NOT EXISTS QuizReponse (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, answerValid boolean, studentId int NOT NULL, QuizQuestionid int NOT NULL, PRIMARY KEY (id));"+
@@ -88,9 +93,12 @@ public class initDatabase {
 			
 			statement = con.createStatement();
 			statement.executeUpdate(query);
-			
+			}
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
