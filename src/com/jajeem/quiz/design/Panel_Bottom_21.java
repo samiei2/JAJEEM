@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
@@ -64,6 +65,7 @@ public class Panel_Bottom_21 extends WebPanel {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
+				if(currentQuiz != null){
 				currentQuestion = currentQuiz.getQuestionList().get(webComboBox.getSelectedIndex());
 				webTextArea.setText(currentQuestion.getTitle());
 				if(currentQuestion.getType() == 0){
@@ -163,6 +165,7 @@ public class Panel_Bottom_21 extends WebPanel {
 							StudentOption
 					});
 				}
+			}
 			}
 		});
 		
@@ -445,7 +448,7 @@ public class Panel_Bottom_21 extends WebPanel {
 			//webTextField_2.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			
 			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
-				webComboBox.addItem("Question " + i);
+				webComboBox.addItem("Question " + (i+1));
 			}
 			
 			webComboBox.setSelectedIndex(0);
@@ -588,6 +591,26 @@ public class Panel_Bottom_21 extends WebPanel {
 				return Icon.class;
 			return super.getColumnClass(arg0);
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void clearQuiz() {
+		webTextArea.clear();
+		webTextField.clear();
+		webTextField_1.clear();
+		webTextField_2.clear();
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		if(timer != null && timer.isRunning()){
+			timer.stop();
+		}
+		
+		currentQuiz = null;
+		currentQuestion = null;
+		webComboBox.removeAllItems();
+		
+		
 	}
 }
 

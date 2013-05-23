@@ -35,7 +35,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
-import com.jajeem.quiz.design.Main;
+import com.jajeem.quiz.design.QuizMainPanel;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
@@ -104,6 +104,13 @@ public class InstructorRight {
 		TooltipManager.setTooltip(quizButton, imgToolTip,
 				"Start quiz for the class", TooltipWay.left);
 		panel.add(quizButton);
+		
+		ImageIcon imgSurvey = new ImageIcon(iconsPath + "/quiz_text.png");
+		WebButton surveyButton = new WebButton(imgSurvey);
+		surveyButton.setRound(0);
+		TooltipManager.setTooltip(surveyButton, imgToolTip,
+				"Start quiz for the class", TooltipWay.left);
+		panel.add(surveyButton);
 
 		ImageIcon imgSendWebsite = new ImageIcon(iconsPath
 				+ "/sendWebsite_text.png");
@@ -255,8 +262,17 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Main quiz = new Main();
+				QuizMainPanel quiz = new QuizMainPanel();
 				quiz.setVisible(true);
+			}
+		});
+		
+		surveyButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				com.jajeem.survey.design.Main survey = new com.jajeem.survey.design.Main();
+				survey.setVisible(true);
 			}
 		});
 

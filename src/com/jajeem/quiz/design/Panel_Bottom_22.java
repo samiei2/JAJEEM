@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
@@ -428,6 +429,15 @@ public class Panel_Bottom_22 extends WebPanel {
 
 	public void LoadQuiz(Quiz currentQuiz2) {
 		currentQuiz = currentQuiz2;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void clearQuiz() {
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		webComboBox.removeAllItems();
+		currentStudent = null;
 	}
 }
 

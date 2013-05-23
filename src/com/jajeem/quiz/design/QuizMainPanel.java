@@ -16,15 +16,20 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
@@ -39,12 +44,13 @@ import com.jajeem.quiz.service.QuizService;
 import com.jajeem.quiz.service.ResultService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class Main extends JFrame {
+public class QuizMainPanel extends WebDialog {
 	
 	private WebPanel contentPane;
-	private Main frame;
+	private QuizMainPanel frame;
 	private Question currentQuestion;
 	private com.jajeem.quiz.model.Quiz currentQuiz;
 	//private ArrayList<com.jajeem.quiz.model.Quiz> quizList;
@@ -65,7 +71,7 @@ public class Main extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main frame = new Main();
+					QuizMainPanel frame = new QuizMainPanel();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +83,19 @@ public class Main extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Main() {
+	public QuizMainPanel() {
+		setTitle("Jajeem Quiz");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMainPanel.class.getResource("/com/jajeem/images/quiz.png")));
+		try {
+			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+		} catch (Exception e3) {
+		}
+		// Enabling dialog decoration
+				boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
+				WebLookAndFeel.setDecorateFrames(true);
+				
+				// Restoring frame decoration option
+				WebLookAndFeel.setDecorateFrames(decorateFrames);
 		frame = this;
 		////////////////////////////////////////
 		////////////////////////////////////////
@@ -195,11 +213,16 @@ public class Main extends JFrame {
 		);
 		
 		WebButton wbtnNew = new WebButton();
+		wbtnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_bottom_1.clear();
+			}
+		});
 		wbtnNew.setText("New");
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/Add.png")));
+		wbtnNew.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/Add.png")));
 		
 		WebButton wbtnReports = new WebButton();
 		wbtnReports.setEnabled(false);
@@ -207,7 +230,7 @@ public class Main extends JFrame {
 		wbtnReports.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnReports.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnReports.setVerticalAlignment(SwingConstants.TOP);
-		wbtnReports.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
+		wbtnReports.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
 		
 		WebButton wbtnResponse = new WebButton();
 		wbtnResponse.setEnabled(false);
@@ -215,7 +238,7 @@ public class Main extends JFrame {
 		wbtnResponse.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnResponse.setText("Response");
 		wbtnResponse.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnResponse.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/distributor-report.png")));
+		wbtnResponse.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
@@ -228,7 +251,7 @@ public class Main extends JFrame {
 		wbtnOpen.setVerticalAlignment(SwingConstants.TOP);
 		wbtnOpen.setText("Open");
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/folder_green_open.png")));
+		wbtnOpen.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
 		WebButton wbtnSave = new WebButton();
 		wbtnSave.addActionListener(new ActionListener() {
@@ -254,21 +277,40 @@ public class Main extends JFrame {
 		wbtnSave.setText("Save");
 		wbtnSave.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSave.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/document-save-as.png")));
 		
 		final WebButton wbtnContent = new WebButton();
 		wbtnContent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int i = JOptionPane.showConfirmDialog(null, "If you leave this page the quiz will stop and results will be lost.Are you sure you want to continue?");
+				if(i == 0){
+					try {
+						new Config();
+						ServerService serv = new ServerService();
+						StopQuizCommand cmd = new StopQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						serv.send(cmd);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if(i == 1){
+					return;
+				}
+				else{
+					return;
+				}
 				CardLayout cl = (CardLayout)(cards.getLayout());
 		        cl.show(cards, "Page 1");
 				wbtnContent.setEnabled(false);
 				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
-				//TODO BroadCast Stop Quiz
+				wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+				panel_bottom_2.ClearQuiz();
+				//Broadcast quiz stop
+				
 			}
 		});
-		wbtnContent.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/content.png")));
+		wbtnContent.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/content.png")));
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setVerticalAlignment(SwingConstants.TOP);
 		wbtnContent.setText("Content");
@@ -279,10 +321,15 @@ public class Main extends JFrame {
 		wbtnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(wbtnStart.getText() == "Start"){
+					if(panel_bottom_1.getQuestionListPanel().getWebTable().getRowCount() == 0){
+						JOptionPane.showMessageDialog(null, "At least one question is required for the quiz to start!");
+						return;
+					}
+						
 					wbtnSaveResults.setVisible(true);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/stop-red.png")));
+					wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
 			        panel_bottom_2.LoadQuiz(currentQuiz);
@@ -327,7 +374,7 @@ public class Main extends JFrame {
 					}
 					
 					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
 					//quizEvent.fireStopEvent(new QuizStop(this));
 				}
 			}
@@ -346,7 +393,7 @@ public class Main extends JFrame {
 		wbtnStart.setText("Start");
 		wbtnStart.setVerticalAlignment(SwingConstants.TOP);
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+		wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
 		
 		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.setEnabled(false);
@@ -371,7 +418,7 @@ public class Main extends JFrame {
 				}
 			}
 		});
-		wbtnSaveResults.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSaveResults.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/document-save-as.png")));
 		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");

@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebDialog;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StopSurveyCommand;
@@ -37,8 +38,11 @@ import com.jajeem.util.Config;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.Toolkit;
 
-public class Main extends JFrame {
+public class Main extends WebDialog {
 	
 	private WebPanel contentPane;
 	private Main frame;
@@ -74,6 +78,8 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		setTitle("Jajeem Survey");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/com/jajeem/images/survey.png")));
 		frame = this;
 		////////////////////////////////////////
 		////////////////////////////////////////
@@ -170,6 +176,11 @@ public class Main extends JFrame {
 		);
 		
 		WebButton wbtnNew = new WebButton();
+		wbtnNew.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				panel_bottom_1.clear();
+			}
+		});
 		wbtnNew.setText("New");
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -193,6 +204,7 @@ public class Main extends JFrame {
 		wbtnResponse.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		WebButton wbtnOpen = new WebButton();
+		wbtnOpen.setEnabled(false);
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				OpenDialog open = new OpenDialog(frame);
@@ -206,6 +218,7 @@ public class Main extends JFrame {
 		wbtnOpen.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
 		WebButton wbtnSave = new WebButton();
+		wbtnSave.setEnabled(false);
 		wbtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current survey?");

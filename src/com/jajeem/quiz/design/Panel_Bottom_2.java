@@ -135,6 +135,13 @@ public class Panel_Bottom_2 extends WebPanel {
 		panel_bottom_21.LoadQuiz(currentQuiz);
 		panel_bottom_22.LoadQuiz(currentQuiz);
 	}
+	
+	public void ClearQuiz(){
+		this.currentQuiz = null;
+		quizResponse = new ArrayList<>();
+		panel_bottom_21.clearQuiz();
+		panel_bottom_22.clearQuiz();
+	}
 
 	public ArrayList<ArrayList<QuizResponse>> getQuizResponse() {
 		return quizResponse;
