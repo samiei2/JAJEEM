@@ -107,7 +107,7 @@ public class Instructor implements SwingConstants {
 		getFrmJajeemProject().setRound(0);
 		getFrmJajeemProject().setIconImage(
 				Toolkit.getDefaultToolkit().getImage(
-						Instructor.class.getResource("/menubar/jajeem.jpg")));
+						Instructor.class.getResource("/icons/menubar/jajeem.jpg")));
 		getFrmJajeemProject().setBounds(200, 100, 850, 600);
 		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
