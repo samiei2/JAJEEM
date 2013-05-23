@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -35,8 +36,8 @@ import com.jajeem.util.Config;
 public class Student {
 
 	private JFrame frmJajeemProject;
-	
-	private static List<Chat> chatList;
+
+	private static List<Chat> chatList = new ArrayList<Chat>();
 
 	private static boolean black;
 
@@ -47,7 +48,6 @@ public class Student {
 	public static void setBlack(boolean black) {
 		Student.black = black;
 	}
-	
 
 	/**
 	 * Launch the application.
@@ -166,7 +166,8 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					MessageSend.main(new String[] { StudentLogin.getServerIp(), Config.getParam("serverPort") });
+					MessageSend.main(new String[] { StudentLogin.getServerIp(),
+							Config.getParam("serverPort") });
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -37,10 +39,10 @@ import com.jajeem.util.StartUp;
 public class Instructor implements SwingConstants {
 
 	private WebFrame frmJajeemProject;
-	
-	private Chat[] chatList;
 
 	private static ServerServiceTimer serverServiceTimer;
+	
+	private static List<Chat> chatList = new ArrayList<Chat>();
 
 	static Logger logger = Logger.getLogger("Instructor.class");
 
@@ -260,11 +262,12 @@ public class Instructor implements SwingConstants {
 		this.frmJajeemProject = frmJajeemProject;
 	}
 
-	public Chat[] getChatList() {
+	public static List<Chat> getChatList() {
 		return chatList;
 	}
 
-	public void setChatList(Chat[] chatList) {
-		this.chatList = chatList;
+	public static void setChatList(List<Chat> chatList) {
+		Instructor.chatList = chatList;
 	}
+
 }

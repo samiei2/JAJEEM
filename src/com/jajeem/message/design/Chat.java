@@ -35,6 +35,8 @@ public class Chat extends WebFrame {
 	private static final long serialVersionUID = -2055942118955727767L;
 	private JPanel contentPane;
 	private DefaultListModel listModel = new DefaultListModel();
+	private WebList list = new WebList(listModel);
+	private WebScrollPane scrollPane = new WebScrollPane(list);
 	private static ServerService serverService;
 	private String to = "";
 	private int port;
@@ -57,17 +59,18 @@ public class Chat extends WebFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws Exception 
-	 * @throws NumberFormatException 
+	 * 
+	 * @throws Exception
+	 * @throws NumberFormatException
 	 */
-	public Chat(String to, int port) throws NumberFormatException, Exception {		
+	public Chat(String to, int port) throws NumberFormatException, Exception {
 		super("Chat");
-		
+
 		setTo(to);
 		setPort(port);
-		
+
 		serverService = new ServerService();
-		
+
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (Exception e) {
@@ -77,10 +80,9 @@ public class Chat extends WebFrame {
 		WebLookAndFeel.setDecorateFrames(true);
 
 		setIconImages(WebLookAndFeel.getImages());
-		setDefaultCloseOperation(WebFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WebFrame.HIDE_ON_CLOSE);
 
 		ComponentMoveAdapter.install(getRootPane(), Chat.this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 450, 300);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -104,15 +106,13 @@ public class Chat extends WebFrame {
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		panel_1.add(splitPane);
 
-		WebList list = new WebList(listModel);
 		list.setEditable(false);
-		final WebScrollPane scrollPane = new WebScrollPane(list);
 		scrollPane.setViewportView(list);
 		splitPane.setLeftComponent(scrollPane);
 
 		final WebTextArea textArea = new WebTextArea();
 		splitPane.setRightComponent(textArea);
-		
+
 		textArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -122,25 +122,27 @@ public class Chat extends WebFrame {
 					listModel.addElement(textArea.getText());
 					scrollPane.getVerticalScrollBar().setValue(
 							scrollPane.getVerticalScrollBar().getMaximum());
-					
+
 					ChatCommand chatCommand;
 					try {
 						chatCommand = new ChatCommand(InetAddress
-								.getLocalHost().getHostAddress(), getTo(), getPort(), textArea.getText());
+								.getLocalHost().getHostAddress(), getTo(),
+								getPort(), textArea.getText());
 						serverService.send(chatCommand);
 					} catch (UnknownHostException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+
 					textArea.setText("");
 				}
 			}
 		});
-		
+
 		WebLookAndFeel.setDecorateFrames(decorateFrames);
+		setVisible(true);
 	}
-	
+
 	public void addLine(String text) {
 		listModel.addElement(text);
 	}
@@ -159,6 +161,11 @@ public class Chat extends WebFrame {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+	
+	public void scrollDown() {
+		scrollPane.getVerticalScrollBar().setValue(
+				scrollPane.getVerticalScrollBar().getMaximum());
 	}
 
 }
