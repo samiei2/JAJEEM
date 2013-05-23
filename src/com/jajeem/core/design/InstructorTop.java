@@ -2,8 +2,10 @@ package com.jajeem.core.design;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import com.alee.laf.StyleConstants;
@@ -47,64 +49,83 @@ public class InstructorTop {
 
 		WebButton settingButton = new WebButton();
 
-		settingButton = WebButton.createIconWebButton(new ImageIcon(
-				InstructorTop.class.getResource("/icons/menubar/setting.png")
-						.getPath()), StyleConstants.smallRound, true);
+		try {
+			settingButton = WebButton
+					.createIconWebButton(
+							new ImageIcon(
+									ImageIO.read(InstructorTop.class
+											.getResourceAsStream("/icons/menubar/setting.png"))),
+							StyleConstants.smallRound, true);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		TooltipManager.setTooltip(settingButton, imgToolTip,
 				"Extra options will be added here!", TooltipWay.down);
 		// toolbar.add(settingButton);
 
 		// toolbar.addSeparator();
-		
-		volumeButton = WebButton.createIconWebButton(new ImageIcon(
-				InstructorTop.class.getResource("/icons/menubar/volume.png").getPath()), StyleConstants.smallRound, true);
-		TooltipManager.setTooltip(volumeButton, imgToolTip,
-				"Change speaker volume of selected student", TooltipWay.down);
-		toolbar.add(volumeButton);
 
-		volumeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				slider1.setMinimum(0);
-				slider1.setMaximum(100);
-				slider1.setMinorTickSpacing(10);
-				slider1.setMajorTickSpacing(50);
-				slider1.setPaintTicks(false);
-				slider1.setPaintLabels(false);
+		try {
+			volumeButton = WebButton
+					.createIconWebButton(
+							new ImageIcon(
+									ImageIO.read(InstructorTop.class
+											.getResourceAsStream("/icons/menubar/volume.png"))),
+							StyleConstants.smallRound, true);
+			TooltipManager.setTooltip(volumeButton, imgToolTip,
+					"Change speaker volume of selected student",
+					TooltipWay.down);
+			toolbar.add(volumeButton);
+			volumeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					slider1.setMinimum(0);
+					slider1.setMaximum(100);
+					slider1.setMinorTickSpacing(10);
+					slider1.setMajorTickSpacing(50);
+					slider1.setPaintTicks(false);
+					slider1.setPaintLabels(false);
 
-				popup.setPopupStyle(PopupStyle.lightSmall);
-				popup.setMargin(0);
-				popup.add(slider1);
-				popup.setRound(0);
+					popup.setPopupStyle(PopupStyle.lightSmall);
+					popup.setMargin(0);
+					popup.add(slider1);
+					popup.setRound(0);
 
-				if (popup.isShowing()) {
-					popup.hidePopup();
-					if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
-						String selectedStudent = "";
-						selectedStudent = (String) InstructorCenter.desktopPane
-								.getSelectedFrame().getClientProperty("ip");
-						int vol = slider1.getValue();
-						try {
-							ServerService ss = new ServerService();
-							VolumeCommand vc = new VolumeCommand(InetAddress
-									.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")), "set",
-									vol * 650);
-							ss.send(vc);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					if (popup.isShowing()) {
+						popup.hidePopup();
+						if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) InstructorCenter.desktopPane
+									.getSelectedFrame().getClientProperty("ip");
+							int vol = slider1.getValue();
+							try {
+								ServerService ss = new ServerService();
+								VolumeCommand vc = new VolumeCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
+										selectedStudent, Integer
+												.parseInt(Config
+														.getParam("port")),
+										"set", vol * 650);
+								ss.send(vc);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 						}
-
+					} else {
+						popup.showPopup(volumeButton);
 					}
-				} else {
-					popup.showPopup(volumeButton);
+
 				}
 
-			}
-
-		});
+			});
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 }

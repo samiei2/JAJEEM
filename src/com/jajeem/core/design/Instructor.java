@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;

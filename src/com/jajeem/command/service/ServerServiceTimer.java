@@ -69,6 +69,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 	@Override
 	public void start() {
 		timer.schedule(this, 0, getInterval());
+		System.out.println("Server started, sending packets each " + getInterval() + "seconds.");
 		logger.info("Server started, sending startUpCommand every: " + getInterval());
 	}
 
