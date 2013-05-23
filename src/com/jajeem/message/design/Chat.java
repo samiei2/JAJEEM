@@ -121,6 +121,7 @@ public class Chat extends WebFrame {
 		splitPane.setLeftComponent(scrollPane);
 
 		final WebTextArea textArea = new WebTextArea();
+		textArea.requestFocus();
 		splitPane.setRightComponent(textArea);
 
 		textArea.addKeyListener(new KeyAdapter() {
@@ -142,7 +143,6 @@ public class Chat extends WebFrame {
 								getPort(), textArea.getText());
 						serverService.send(chatCommand);
 					} catch (UnknownHostException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
@@ -166,9 +166,7 @@ public class Chat extends WebFrame {
 					int lsize = myList.size();
 					for (int i = 0; i < lsize; i++) {
 						Object o = myList.get(i);
-
 						bw.write(o.toString());
-
 					}
 					bw.close();
 				} catch (IOException e) {
@@ -180,6 +178,7 @@ public class Chat extends WebFrame {
 
 		WebLookAndFeel.setDecorateFrames(decorateFrames);
 		setVisible(true);
+		textArea.requestFocus();
 	}
 
 	public void addLine(String text) {
