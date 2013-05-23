@@ -1,5 +1,7 @@
 package com.jajeem.command.model;
 
+import com.jajeem.survey.model.Survey;
+
 public class StartSurveyCommand extends Command {
 
 	/**
@@ -9,6 +11,16 @@ public class StartSurveyCommand extends Command {
 
 	public StartSurveyCommand(String from, String to, int port) {
 		super(from, to, port);
+	}
+
+	public void setSurvey(Survey currentSurvey) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setServer(String hostAddress) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

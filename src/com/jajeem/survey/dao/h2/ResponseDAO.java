@@ -30,15 +30,16 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer1, answer2, answer3, answer4, answer5) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?);");
+		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5) "
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 		ps.setInt(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
-		ps.setString(3, response.getAnswer1());
-		ps.setString(4, response.getAnswer2());
-		ps.setString(5, response.getAnswer3());
-		ps.setString(6, response.getAnswer4());
-		ps.setString(7, response.getAnswer5());
+		ps.setString(3, response.getAnswer());
+		ps.setString(4, String.valueOf(response.getBoolAnswer()[0]));
+		ps.setString(5, String.valueOf(response.getBoolAnswer()[1]));
+		ps.setString(6, String.valueOf(response.getBoolAnswer()[2]));
+		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
+		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
 		
 		try {
 			rs = ps.executeUpdate();
@@ -99,11 +100,15 @@ public class ResponseDAO implements IResponseDAO {
 			if (rs.next()) {
 				response.setRunId(rs.getInt("runId"));
 				response.setStudentId(rs.getInt("studentId"));
-				response.setAnswer1(rs.getString("answer1"));
-				response.setAnswer2(rs.getString("answer2"));
-				response.setAnswer3(rs.getString("answer3"));
-				response.setAnswer4(rs.getString("answer4"));
-				response.setAnswer5(rs.getString("answer5"));
+				response.setAnswer(rs.getString("answer"));
+				boolean[] list = new boolean[]{
+						(rs.getString("bool1") != null && rs.getString("bool1") == "true")? true : false,
+						(rs.getString("bool2") != null && rs.getString("bool2") == "true")? true : false,
+						(rs.getString("bool3") != null && rs.getString("bool3") == "true")? true : false,
+						(rs.getString("bool4") != null && rs.getString("bool4") == "true")? true : false,
+						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
+				};
+				response.setBoolAnswer(list);
 
 			} else {
 				response.setId(0);
@@ -145,16 +150,17 @@ public class ResponseDAO implements IResponseDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE SurveyResponse SET runId = ?, studentId = ?, " +
-				"answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ? WHERE id = ?");
+				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE id = ?");
 
 		ps.setInt(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
-		ps.setString(3, response.getAnswer1());
-		ps.setString(4, response.getAnswer2());
-		ps.setString(5, response.getAnswer3());
-		ps.setString(6, response.getAnswer4());
-		ps.setString(7, response.getAnswer5());
-		ps.setInt(8, response.getId());
+		ps.setString(3, response.getAnswer());
+		ps.setString(4, String.valueOf(response.getBoolAnswer()[0]));
+		ps.setString(5, String.valueOf(response.getBoolAnswer()[1]));
+		ps.setString(6, String.valueOf(response.getBoolAnswer()[2]));
+		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
+		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
+		ps.setInt(9, response.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -253,11 +259,15 @@ public class ResponseDAO implements IResponseDAO {
 				response.setId(rs.getInt("id"));
 				response.setRunId(rs.getInt("runId"));
 				response.setStudentId(rs.getInt("studentId"));
-				response.setAnswer1(rs.getString("answer1"));
-				response.setAnswer2(rs.getString("answer2"));
-				response.setAnswer3(rs.getString("answer3"));
-				response.setAnswer4(rs.getString("answer4"));
-				response.setAnswer5(rs.getString("answer5"));
+				response.setAnswer(rs.getString("answer"));
+				boolean[] list = new boolean[]{
+						(rs.getString("bool1") != null && rs.getString("bool1") == "true")? true : false,
+						(rs.getString("bool2") != null && rs.getString("bool2") == "true")? true : false,
+						(rs.getString("bool3") != null && rs.getString("bool3") == "true")? true : false,
+						(rs.getString("bool4") != null && rs.getString("bool4") == "true")? true : false,
+						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
+				};
+				response.setBoolAnswer(list);
 
 				allResponses.add(response);
 			}

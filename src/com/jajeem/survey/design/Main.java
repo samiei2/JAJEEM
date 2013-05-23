@@ -1,14 +1,13 @@
-package com.jajeem.quiz.design;
+package com.jajeem.survey.design;
 
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -24,36 +23,36 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
-import com.jajeem.command.model.StartQuizCommand;
-import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.handler.StartSurveyCommandHandler;
+import com.jajeem.command.model.StartSurveyCommand;
+import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.events.QuizEvent;
-import com.jajeem.quiz.design.client.QuizWindow;
-import com.jajeem.quiz.model.Question;
-import com.jajeem.quiz.model.Quiz;
-import com.jajeem.quiz.model.Run;
-import com.jajeem.quiz.service.QuizService;
-import com.jajeem.quiz.service.ResultService;
+import com.jajeem.events.SurveyEvent;
+import com.jajeem.survey.design.client.SurveyWindow;
+import com.jajeem.survey.model.Question;
+import com.jajeem.survey.model.Survey;
+import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.Config;
 
-@SuppressWarnings("serial")
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class Main extends JFrame {
 	
 	private WebPanel contentPane;
 	private Main frame;
 	private Question currentQuestion;
-	private com.jajeem.quiz.model.Quiz currentQuiz;
-	//private ArrayList<com.jajeem.quiz.model.Quiz> quizList;
+	private com.jajeem.survey.model.Survey currentSurvey;
+	//private ArrayList<com.jajeem.survey.model.Survey> surveyList;
 	private boolean eventsEnabled;
-	private QuizEvent quizEvent;
+	private SurveyEvent surveyEvent;
 	private DefaultTableModel tablemodel;
 	private WebPanel cards;
 	private Panel_Bottom_1 panel_bottom_1;
 	private Panel_Bottom_2 panel_bottom_2;
 	private WebPanel panel_bottom_3;
 	private WebButton wbtnStart;
-	private WebButton wbtnSaveResults;
 
 	/**
 	 * Launch the application.
@@ -78,25 +77,15 @@ public class Main extends JFrame {
 		frame = this;
 		////////////////////////////////////////
 		////////////////////////////////////////
-//		new com.jajeem.util.Config();
-//		ClientService clientService = null;
-//		try {
-//			clientService = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-//		} catch (NumberFormatException e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		} catch (Exception e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		}
-//		clientService.start();
 		new Config();
 		ClientService clientService2 = null;
 		try {
-			clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("quizport")));
+			clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("surveyport")));
 		} catch (NumberFormatException e2) {
+			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		} catch (Exception e2) {
+			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		clientService2.start();
@@ -105,22 +94,11 @@ public class Main extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-//				QuizService qs = new QuizService();
-//				try {
-//					quizList = new ArrayList<com.jajeem.quiz.model.Quiz>();
-//					ArrayList<com.jajeem.quiz.model.Quiz> temp = qs.list();
-//					if(temp != null)
-//						quizList.addAll(qs.list());
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//				quizList.add(new com.jajeem.quiz.model.Quiz());
-//                setCurrentQuiz(quizList.get(0));
-                setCurrentQuiz(new Quiz());
-                getCurrentQuiz().addQuestion(new Question());
+                setCurrentSurvey(new Survey());
+                getCurrentSurvey().addQuestion(new Question());
                 // TODO remove these lines
-                getCurrentQuiz().getQuestionList().get(0).setInstructorId(1);
-                getCurrentQuiz().setInstructorId(1);
+                getCurrentSurvey().getQuestionList().get(0).setInstructorId(1);
+                getCurrentSurvey().setInstructorId(1);
                 /////////////////////
                 getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
                 ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
@@ -230,17 +208,17 @@ public class Main extends JFrame {
 		WebButton wbtnSave = new WebButton();
 		wbtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current quiz?");
-				QuizService qs = new QuizService();
+				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current survey?");
+				SurveyService qs = new SurveyService();
 				if (i == 0){
 					try {
-						qs.create(currentQuiz);
+						qs.create(currentSurvey);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 				else if (i == 1){
-					//TODO dispose currentquiz
+					//TODO dispose currentsurvey
 				}
 				else{
 					
@@ -259,10 +237,9 @@ public class Main extends JFrame {
 				CardLayout cl = (CardLayout)(cards.getLayout());
 		        cl.show(cards, "Page 1");
 				wbtnContent.setEnabled(false);
-				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
-				//TODO BroadCast Stop Quiz
+				//TODO BroadCast Stop Survey
 			}
 		});
 		wbtnContent.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/content.png")));
@@ -276,23 +253,22 @@ public class Main extends JFrame {
 		wbtnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(wbtnStart.getText() == "Start"){
-					wbtnSaveResults.setVisible(true);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
-			        panel_bottom_2.LoadQuiz(currentQuiz);
+			        panel_bottom_2.LoadSurvey(currentSurvey);
 			        //TODO Code must be changed
 			        try {
-			        	QuizWindow wind =new QuizWindow(currentQuiz);
+			        	SurveyWindow wind =new SurveyWindow(currentSurvey);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
-						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						//StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
+						StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						//StartSurveyCommand cmd = new StartSurveyCommand("127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-						cmd.setQuiz(currentQuiz);
+						cmd.setSurvey(currentSurvey);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
@@ -308,7 +284,7 @@ public class Main extends JFrame {
 					try {
 						new Config();
 						ServerService serv = new ServerService();
-						StopQuizCommand cmd = new StopQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
@@ -320,7 +296,7 @@ public class Main extends JFrame {
 					
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
-					//quizEvent.fireStopEvent(new QuizStop(this));
+					//surveyEvent.fireStopEvent(new SurveyStop(this));
 				}
 			}
 		});
@@ -329,35 +305,6 @@ public class Main extends JFrame {
 		wbtnStart.setVerticalAlignment(SwingConstants.TOP);
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
-		
-		wbtnSaveResults = new WebButton();
-		wbtnSaveResults.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current results?");
-				ResultService qs = new ResultService();
-				if (i == 0){
-					Run run = new Run();
-					run.setId(1);
-					run.setInstructorId(1);
-					run.setQuizId(1);
-					run.setSessionId(1);
-					run.setStudentId(1);
-					qs.create(panel_bottom_2.getQuizResponse(),run);
-				}
-				else if (i == 1){
-					//TODO dispose currentquiz
-				}
-				else{
-					
-				}
-			}
-		});
-		wbtnSaveResults.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/document-save-as.png")));
-		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
-		wbtnSaveResults.setText("Save Results");
-		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setVisible(false);
 		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(
@@ -368,9 +315,7 @@ public class Main extends JFrame {
 					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
 					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnResponse, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
@@ -389,8 +334,7 @@ public class Main extends JFrame {
 						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnResponse, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_top.setLayout(gl_panel_top);
@@ -398,12 +342,12 @@ public class Main extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	public com.jajeem.quiz.model.Quiz getCurrentQuiz() {
-		return currentQuiz;
+	public com.jajeem.survey.model.Survey getCurrentSurvey() {
+		return currentSurvey;
 	}
 
-	public void setCurrentQuiz(com.jajeem.quiz.model.Quiz currentQuiz) {
-		this.currentQuiz = currentQuiz;
+	public void setCurrentSurvey(com.jajeem.survey.model.Survey currentSurvey) {
+		this.currentSurvey = currentSurvey;
 	}
 
 	public DefaultTableModel getTablemodel() {
@@ -435,7 +379,7 @@ public class Main extends JFrame {
 		return 0;
 	}
 
-	public void loadCurrentQuiz() {
+	public void loadCurrentSurvey() {
 		
 	}
 }

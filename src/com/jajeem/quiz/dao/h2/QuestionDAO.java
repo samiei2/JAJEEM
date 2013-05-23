@@ -32,8 +32,8 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
-					" answer1, answer2, answer3, answer4, answer5) "
-					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?);");
+					" answer1, answer2, answer3, answer4, answer5, bool1, bool2, bool3, bool4, bool5) "
+					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?, ? ,? ,? ,? ,?);");
 			ps.setInt(1, question.getInstructorId());
 			ps.setString(2, question.getTitle());
 			ps.setInt(3, question.getQuizId());
@@ -46,6 +46,11 @@ public class QuestionDAO implements IQuestionDAO {
 			ps.setString(10, question.getAnswer3());
 			ps.setString(11, question.getAnswer4());
 			ps.setString(12, question.getAnswer5());
+			ps.setBoolean(13, question.getCorrectAnswer()[0]);
+			ps.setBoolean(14, question.getCorrectAnswer()[1]);
+			ps.setBoolean(15, question.getCorrectAnswer()[2]);
+			ps.setBoolean(16, question.getCorrectAnswer()[3]);
+			ps.setBoolean(17, question.getCorrectAnswer()[4]);
 
 		
 			rs = ps.executeUpdate();
@@ -116,6 +121,14 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
+				boolean[] list = new boolean[]{
+						rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"),
+						rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"),
+						rs.getBoolean("bool5")
+				};
+				question.setCorrectAnswer(list);
 
 			} else {
 				question.setId(0);
@@ -157,7 +170,7 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizQuestion SET instructorId = ?, title = ?, quizId = ?, type = ?, point = ?, imagePath = ?" +
-				", url, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ? WHERE id = ?");
+				", url, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE id = ?");
 
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
@@ -171,7 +184,12 @@ public class QuestionDAO implements IQuestionDAO {
 		ps.setString(10, question.getAnswer3());
 		ps.setString(11, question.getAnswer4());
 		ps.setString(12, question.getAnswer5());
-		ps.setInt(13, question.getId());
+		ps.setBoolean(13, question.getCorrectAnswer()[0]);
+		ps.setBoolean(14, question.getCorrectAnswer()[1]);
+		ps.setBoolean(15, question.getCorrectAnswer()[2]);
+		ps.setBoolean(16, question.getCorrectAnswer()[3]);
+		ps.setBoolean(17, question.getCorrectAnswer()[4]);
+		ps.setInt(18, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -280,6 +298,14 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
+				boolean[] list = new boolean[]{
+						rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"),
+						rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"),
+						rs.getBoolean("bool5")
+				};
+				question.setCorrectAnswer(list);
 
 				allQuestions.add(question);
 			}
@@ -339,6 +365,14 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
+				boolean[] list = new boolean[]{
+						rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"),
+						rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"),
+						rs.getBoolean("bool5")
+				};
+				question.setCorrectAnswer(list);
 
 				allQuestions.add(question);
 			}

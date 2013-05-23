@@ -12,9 +12,15 @@ public class initDatabase {
 			con = BaseDAO.getConnection();
 			String query = 
 			"CREATE TABLE IF NOT EXISTS QuizReponse (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, answerValid boolean, studentId int NOT NULL, QuizQuestionid int NOT NULL, PRIMARY KEY (id));"+
-			"CREATE TABLE IF NOT EXISTS QuizQuestion (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, quizId int NOT NULL, title varchar(5000), type tinyint NOT NULL, point int, imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), instructorid int NOT NULL, PRIMARY KEY (id));"+
+			"CREATE TABLE IF NOT EXISTS QuizQuestion (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, quizId int NOT NULL, title varchar(5000), type tinyint NOT NULL, point int, imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, instructorid int NOT NULL, PRIMARY KEY (id));"+
 			"CREATE TABLE IF NOT EXISTS QuizRun (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, quizid int NOT NULL, Instructorid int NOT NULL, start datetime, end datetime, score int, Studentid int NOT NULL, sessionid int NOT NULL, PRIMARY KEY (id));"+
-			"CREATE TABLE IF NOT EXISTS Quiz (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, instructorid int NOT NULL, type tinyint, category varchar(255), description varchar(1000), pointing int, points int, time datetime, shuffle tinyint, title varchar(255), PRIMARY KEY (id));"+
+			"CREATE TABLE IF NOT EXISTS Quiz (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, instructorid int NOT NULL, type tinyint, category varchar(255), description varchar(1000), pointing int, points int, time int, shuffle tinyint, title varchar(255), PRIMARY KEY (id));"+
+			
+"CREATE TABLE IF NOT EXISTS SurveyReponse (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, studentId int NOT NULL, ResponseQuestionid int NOT NULL, PRIMARY KEY (id));"+
+"CREATE TABLE IF NOT EXISTS SurveyQuestion (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, responseId int NOT NULL, title varchar(5000), type tinyint NOT NULL, imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), instructorid int NOT NULL, PRIMARY KEY (id));"+
+"CREATE TABLE IF NOT EXISTS SurveyRun (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, surveyid int NOT NULL, Instructorid int NOT NULL, start datetime, end datetime, score int, Studentid int NOT NULL, sessionid int NOT NULL, PRIMARY KEY (id));"+
+"CREATE TABLE IF NOT EXISTS Survey (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, instructorid int NOT NULL, type tinyint, category varchar(255), description varchar(1000), pointing int, title varchar(255), PRIMARY KEY (id));"+
+
 			
 			"CREATE TABLE IF NOT EXISTS Instructor (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (ID));"+
 			"CREATE TABLE IF NOT EXISTS Student (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, Username varchar(255), Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (id));"+

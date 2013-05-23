@@ -1,5 +1,6 @@
 package com.jajeem.survey.model;
 
+
 public class Question {
 	
 	//properties
@@ -15,6 +16,7 @@ public class Question {
 	private String answer3;
 	private String answer4;
 	private String answer5;
+	private Response response;
 	
 	//getter & setters
 	public int getId() {
@@ -88,5 +90,23 @@ public class Question {
 	}
 	public void setAnswer5(String answer5) {
 		this.answer5 = answer5;
+	}
+	public void setStudentAnswer(boolean[] bs) {
+		response.setBoolAnswer(bs);
+	}
+	public void setStudentAnswer(String text) {
+		response.setAnswer(text);
+	}
+	public boolean[] getStudentAnswer() {
+		return response.getBoolAnswer();
+	}
+	public String getStudentTextAnswer() {
+		return response.getAnswer();
+	}
+	public Response getResponse() {
+		return response;
+	}
+	public void setResponse(Response response) {
+		this.response = response;
 	}
 }
