@@ -49,9 +49,9 @@ public class InstructorTop {
 				"icons/menubar/setting.png"), StyleConstants.smallRound, true);
 		TooltipManager.setTooltip(settingButton, imgToolTip,
 				"Extra options will be added here!", TooltipWay.down);
-		toolbar.add(settingButton);
+//		toolbar.add(settingButton);
 
-		toolbar.addSeparator();
+//		toolbar.addSeparator();
 
 		volumeButton = WebButton.createIconWebButton(new ImageIcon(
 				"icons/menubar/volume.png"), StyleConstants.smallRound, true);

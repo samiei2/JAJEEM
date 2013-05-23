@@ -393,8 +393,9 @@ public class InstructorRight {
 					selectedStudent = (String) InstructorCenter.desktopPane
 							.getSelectedFrame().getClientProperty("ip");
 					try {
-						new Chat(selectedStudent, Integer.parseInt(Config
+						Chat currentChat = new Chat(selectedStudent, Integer.parseInt(Config
 								.getParam("port")));
+						Instructor.getChatList().add(currentChat);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

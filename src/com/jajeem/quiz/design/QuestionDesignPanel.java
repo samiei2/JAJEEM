@@ -35,6 +35,7 @@ public class QuestionDesignPanel extends WebPanel {
 	private WebTextField webTextField_4;
 	private WebTextField webTextField_6;
 	private WebTextArea webTextArea;
+	private WebScrollPane webScrollPane;
 	private WebRadioButton webRadioButton;
 	private WebRadioButton webRadioButton_1;
 	private WebRadioButton webRadioButton_2;
@@ -92,7 +93,8 @@ public class QuestionDesignPanel extends WebPanel {
 			}
 		});
 		
-		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
+		setWebScrollPane(new WebScrollPane((Component) null));
+		getWebScrollPane().setEnabled(false);
 		
 		WebPanel webPanel = new WebPanel();
 		webPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -215,7 +217,7 @@ public class QuestionDesignPanel extends WebPanel {
 								.addGap(6)
 								.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+								.addComponent(getWebScrollPane(), GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
 							.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
@@ -242,7 +244,7 @@ public class QuestionDesignPanel extends WebPanel {
 								.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
+							.addComponent(getWebScrollPane(), GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
@@ -394,8 +396,16 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton = new WebRadioButton();
 		webRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(webTextField.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webRadioButton.setSelected(false);
+					return;
+				}
+				if(webTextField.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webRadioButton.setSelected(false);
+					return;
+				}
 				webRadioButton.setSelected(true);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(false);
@@ -414,8 +424,16 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_1 = new WebRadioButton();
 		webRadioButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(webTextField_1.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webRadioButton_1.setSelected(false);
+					return;
+				}
+				if(webTextField_1.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webRadioButton_1.setSelected(false);
+					return;
+				}
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(true);
 				webRadioButton_2.setSelected(false);
@@ -434,8 +452,16 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_2 = new WebRadioButton();
 		webRadioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(webTextField_2.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webRadioButton_2.setSelected(false);
+					return;
+				}
+				if(webTextField_2.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webRadioButton_2.setSelected(false);
+					return;
+				}
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(true);
@@ -454,8 +480,16 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_3 = new WebRadioButton();
 		webRadioButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(webTextField_3.getText().equals(""))
-					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webRadioButton_3.setSelected(false);
+					return;
+				}
+				if(webTextField_3.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webRadioButton_3.setSelected(false);
+					return;
+				}
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(false);
@@ -474,8 +508,14 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_4 = new WebRadioButton();
 		webRadioButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webRadioButton_4.setSelected(false);
+					return;
+				}
 				if(webTextField_4.getText().equals("")){
-					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webRadioButton_4.setSelected(false);
 					return;
 				}
 				webRadioButton.setSelected(false);
@@ -525,6 +565,16 @@ public class QuestionDesignPanel extends WebPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webCheckBox.setSelected(false);
+					return;
+				}
+				if(webTextField.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webCheckBox.setSelected(false);
+					return;
+				}
 				parentPanel.getParentPanel().getCurrentQuestion().setCorrectAnswer(new boolean[]{
 						webCheckBox.isSelected(),
 						webCheckBox_1.isSelected(),
@@ -540,6 +590,16 @@ public class QuestionDesignPanel extends WebPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webCheckBox_1.setSelected(false);
+					return;
+				}
+				if(webTextField_1.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webCheckBox_1.setSelected(false);
+					return;
+				}
 				parentPanel.getParentPanel().getCurrentQuestion().setCorrectAnswer(new boolean[]{
 						webCheckBox.isSelected(),
 						webCheckBox_1.isSelected(),
@@ -555,6 +615,16 @@ public class QuestionDesignPanel extends WebPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webCheckBox_2.setSelected(false);
+					return;
+				}
+				if(webTextField_2.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webCheckBox_2.setSelected(false);
+					return;
+				}
 				parentPanel.getParentPanel().getCurrentQuestion().setCorrectAnswer(new boolean[]{
 						webCheckBox.isSelected(),
 						webCheckBox_1.isSelected(),
@@ -570,6 +640,16 @@ public class QuestionDesignPanel extends WebPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webCheckBox_3.setSelected(false);
+					return;
+				}
+				if(webTextField_3.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webCheckBox_3.setSelected(false);
+					return;
+				}
 				parentPanel.getParentPanel().getCurrentQuestion().setCorrectAnswer(new boolean[]{
 						webCheckBox.isSelected(),
 						webCheckBox_1.isSelected(),
@@ -585,6 +665,16 @@ public class QuestionDesignPanel extends WebPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextArea.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Question is empty,please first type in the question!");
+					webCheckBox_4.setSelected(false);
+					return;
+				}
+				if(webTextField_4.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in the answer!");
+					webCheckBox_4.setSelected(false);
+					return;
+				}
 				parentPanel.getParentPanel().getCurrentQuestion().setCorrectAnswer(new boolean[]{
 						webCheckBox.isSelected(),
 						webCheckBox_1.isSelected(),
@@ -681,7 +771,7 @@ public class QuestionDesignPanel extends WebPanel {
 				
 			}
 		});
-		webScrollPane.setViewportView(webTextArea);
+		getWebScrollPane().setViewportView(webTextArea);
 		setLayout(groupLayout);
 
 	}
@@ -901,5 +991,15 @@ public class QuestionDesignPanel extends WebPanel {
 
 	public void setWblblQuestion(WebLabel wblblQuestion) {
 		this.wblblQuestion = wblblQuestion;
+	}
+
+
+	public WebScrollPane getWebScrollPane() {
+		return webScrollPane;
+	}
+
+
+	public void setWebScrollPane(WebScrollPane webScrollPane) {
+		this.webScrollPane = webScrollPane;
 	}
 }

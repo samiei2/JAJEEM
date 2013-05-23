@@ -275,6 +275,20 @@ public class Panel_Bottom_1 extends WebPanel {
 				}
                 
                 wbBtn_Next.setEnabled(true);
+                questionDesignPanel.setEnabled(true);
+                questionDesignPanel.getWebScrollPane().setEnabled(true);
+				questionDesignPanel.getWebTextField().setEnabled(true);
+				questionDesignPanel.getWebTextField_1().setEnabled(true);
+				questionDesignPanel.getWebTextField_2().setEnabled(true);
+				questionDesignPanel.getWebTextField_3().setEnabled(true);
+				questionDesignPanel.getWebTextField_4().setEnabled(true);
+				questionDesignPanel.getWebTextField_6().setEnabled(true);
+				questionDesignPanel.getWebRadioButton().setEnabled(true);
+				questionDesignPanel.getWebRadioButton_1().setEnabled(true);
+				questionDesignPanel.getWebRadioButton_2().setEnabled(true);
+				questionDesignPanel.getWebRadioButton_3().setEnabled(true);
+				questionDesignPanel.getWebRadioButton_4().setEnabled(true);
+				questionDesignPanel.getWebComboBox().setEnabled(true);
 			}
 		});
 		wbBtn_add.setText("Add");
@@ -307,8 +321,22 @@ public class Panel_Bottom_1 extends WebPanel {
 					getQuestionDesignPanel().getWebTextField_6().setText(String.valueOf(parentPanel.getTablemodel().getValueAt(questionListPanel.getWebTable().getSelectedRow(), 2)));
 				}
 				
-				if(getQuestionListPanel().getWebTable().getRowCount() == 0)
+				if(getQuestionListPanel().getWebTable().getRowCount() == 0){
 					wbBtn_Next.setEnabled(false);
+					questionDesignPanel.getWebScrollPane().setEnabled(false);
+					questionDesignPanel.getWebTextField().setEnabled(false);
+					questionDesignPanel.getWebTextField_1().setEnabled(false);
+					questionDesignPanel.getWebTextField_2().setEnabled(false);
+					questionDesignPanel.getWebTextField_3().setEnabled(false);
+					questionDesignPanel.getWebTextField_4().setEnabled(false);
+					questionDesignPanel.getWebTextField_6().setEnabled(false);
+					questionDesignPanel.getWebRadioButton().setEnabled(false);
+					questionDesignPanel.getWebRadioButton_1().setEnabled(false);
+					questionDesignPanel.getWebRadioButton_2().setEnabled(false);
+					questionDesignPanel.getWebRadioButton_3().setEnabled(false);
+					questionDesignPanel.getWebRadioButton_4().setEnabled(false);
+					questionDesignPanel.getWebComboBox().setEnabled(false);
+				}
 			}
 		});
 		webButton_3.setText("Delete");
