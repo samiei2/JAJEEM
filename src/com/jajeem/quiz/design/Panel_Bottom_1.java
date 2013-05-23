@@ -28,7 +28,7 @@ import com.jajeem.quiz.model.Quiz;
 public class Panel_Bottom_1 extends WebPanel {
 
 	private QuestionListPanel questionListPanel;
-	private Main parentPanel;
+	private QuizMainPanel parentPanel;
 	private WebCheckBox webCheckBox;
 	private QuestionDesignPanel questionDesignPanel;
 	private WebTextField wbTxtFldTimeLimit;
@@ -41,7 +41,7 @@ public class Panel_Bottom_1 extends WebPanel {
 	 * Create the panel.
 	 * @param main 
 	 */
-	public Panel_Bottom_1(Main main) {
+	public Panel_Bottom_1(QuizMainPanel main) {
 		//TODO remove the code below
 		try {
 			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
@@ -689,10 +689,10 @@ public class Panel_Bottom_1 extends WebPanel {
 	public void setQuestionListPanel(QuestionListPanel questionListPanel) {
 		this.questionListPanel = questionListPanel;
 	}
-	public Main getParentPanel() {
+	public QuizMainPanel getParentPanel() {
 		return parentPanel;
 	}
-	public void setParentPanel(Main parentPanel) {
+	public void setParentPanel(QuizMainPanel parentPanel) {
 		this.parentPanel = parentPanel;
 	}
 	public QuestionDesignPanel getQuestionDesignPanel() {

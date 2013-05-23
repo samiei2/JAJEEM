@@ -435,4 +435,9 @@ public class Panel_Bottom_1 extends WebPanel {
 	
 	public void setWebCheckBox(WebCheckBox webCheckBox) {
 	}
+	public void clear() {
+		wbTxtFldDirection.setText("");
+		getQuestionDesignPanel().clear();
+		getQuestionListPanel().clear();
+	}
 }

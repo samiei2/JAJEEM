@@ -108,8 +108,8 @@ public class OpenDialog extends JDialog {
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parentFrame.setCurrentQuiz(quizList.get(wbTblQuiz.getSelectedRow()));
-				parentFrame.loadCurrentQuiz();
+				//parentFrame.setCurrentSurvey(quizList.get(wbTblQuiz.getSelectedRow()));
+				parentFrame.loadCurrentSurvey();
 			}
 		});
 		wbtnOpen.setText("Open");
