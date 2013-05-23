@@ -39,7 +39,6 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		PropertyConfigurator.configure("conf/log4j.conf");
 			
 		stopped = false;
-				
 		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
 		this.setInterval(Integer.parseInt(Config.getParam("interval")));;
 

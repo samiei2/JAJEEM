@@ -119,4 +119,10 @@ public class QuestionListPanel extends WebPanel {
 	public void setWebTable(WebTable webTable) {
 		this.webTable = webTable;
 	}
+
+	public void clear() {
+		DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+	}
 }

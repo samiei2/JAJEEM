@@ -167,7 +167,7 @@ public class QuizWindow extends WebFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 589, 650);
+		setBounds(100, 100, 694, 741);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -627,7 +627,7 @@ public class QuizWindow extends WebFrame {
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								new QuizEvent().fireResponseEvent(resp);
-								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizlistenport")));
+								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 								cmd.setEvent(resp);
 							
 								ServerService service = new ServerService();
