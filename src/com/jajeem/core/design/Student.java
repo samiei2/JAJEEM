@@ -29,7 +29,6 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.Config;
@@ -148,10 +147,10 @@ public class Student {
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
 		
-		ImageIcon imgToolTip = new ImageIcon(Student.class.getResource("icons/menubar/tooltip.png").getPath());
+		ImageIcon imgToolTip = new ImageIcon(Student.class.getResource("/icons/menubar/tooltip.png").getPath());
 		TooltipManager.setDefaultDelay(1000);
 		
-		BufferedImage myPicture = ImageIO.read(new File(Student.class.getResource("icons/buttom.jpg").getPath()));
+		BufferedImage myPicture = ImageIO.read(new File(Student.class.getResource("/icons/buttom.jpg").getPath()));
 		WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
 		TooltipManager
 				.setTooltip(
