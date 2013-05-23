@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.dao.IGroupworkDAO;
 import com.jajeem.groupwork.model.Groupwork;
@@ -19,7 +20,7 @@ public class GroupworkDAO implements IGroupworkDAO {
 	Logger logger = Logger.getLogger(GroupworkDAO.class);
 
 	public GroupworkDAO() {
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(GroupworkDAO.class.getResource("/conf/log4j.conf").getPath());
 	}
 
 	@Override

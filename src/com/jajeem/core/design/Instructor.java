@@ -32,6 +32,7 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.core.dao.h2.InstructorDAO;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
@@ -58,7 +59,7 @@ public class Instructor implements SwingConstants {
 		StartUp start = new StartUp();
 		networkSetup();
 
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(Instructor.class.getResource("/conf/log4j.conf").getPath());
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -88,7 +89,7 @@ public class Instructor implements SwingConstants {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure("conf/log4j.conf");
+			PropertyConfigurator.configure(Instructor.class.getResource("/conf/log4j.conf").getPath());
 
 		} catch (Throwable e) {
 		}

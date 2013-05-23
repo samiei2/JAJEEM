@@ -41,20 +41,23 @@ public class InstructorTop {
 		final WebPopup popup = new WebPopup();
 		final WebSlider slider1 = new WebSlider(WebSlider.HORIZONTAL);
 
-		ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+		ImageIcon imgToolTip = new ImageIcon(InstructorTop.class.getResource(
+				"/icons/menubar/tooltip.png").getPath());
 		TooltipManager.setDefaultDelay(1000);
 
 		WebButton settingButton = new WebButton();
+
 		settingButton = WebButton.createIconWebButton(new ImageIcon(
-				"icons/menubar/setting.png"), StyleConstants.smallRound, true);
+				InstructorTop.class.getResource("/icons/menubar/setting.png")
+						.getPath()), StyleConstants.smallRound, true);
 		TooltipManager.setTooltip(settingButton, imgToolTip,
 				"Extra options will be added here!", TooltipWay.down);
-//		toolbar.add(settingButton);
+		// toolbar.add(settingButton);
 
-//		toolbar.addSeparator();
-
+		// toolbar.addSeparator();
+		
 		volumeButton = WebButton.createIconWebButton(new ImageIcon(
-				"icons/menubar/volume.png"), StyleConstants.smallRound, true);
+				InstructorTop.class.getResource("/icons/menubar/volume.png").getPath()), StyleConstants.smallRound, true);
 		TooltipManager.setTooltip(volumeButton, imgToolTip,
 				"Change speaker volume of selected student", TooltipWay.down);
 		toolbar.add(volumeButton);

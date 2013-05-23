@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.dao.IAttendantDAO;
 import com.jajeem.room.model.Attendant;
@@ -19,7 +20,7 @@ public class AttendantDAO implements IAttendantDAO {
 	Logger logger = Logger.getLogger(AttendantDAO.class);
 
 	public AttendantDAO() {
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(AttendantDAO.class.getResource("/conf/log4j.conf").getPath());
 	}
 
 	@Override

@@ -58,8 +58,9 @@ public class InstructorCenter {
 		}
 		
 		internalFrame.putClientProperty("ip", hostIp);
-
-		internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
+		
+		internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
+				"/icons/menubar/student.png").getPath()));
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -104,10 +105,11 @@ public class InstructorCenter {
 				// TODO Auto-generated method stub
 
 			}
-
+			
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-				internalFrame.setFrameIcon(new ImageIcon("icons/menubar/student.png"));
+				internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
+						"/icons/menubar/student.png").getPath()));
 				checkBox.setSelected(false);
 			}
 
@@ -125,7 +127,9 @@ public class InstructorCenter {
 
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
-				internalFrame.setFrameIcon(new ImageIcon("icons/menubar/tick.png"));
+				
+				internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
+						"/icons/menubar/tick.png").getPath()));
 				checkBox.setSelected(true);
 			}
 		});

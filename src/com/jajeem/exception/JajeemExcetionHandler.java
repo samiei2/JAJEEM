@@ -3,13 +3,14 @@ package com.jajeem.exception;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.groupwork.dao.h2.GroupDAO;
 
 @SuppressWarnings("serial")
 public class JajeemExcetionHandler extends Exception{
 	Logger logger = Logger.getLogger(GroupDAO.class);
 	public JajeemExcetionHandler(Exception e){ 
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(Exception.class.getResource("/conf/log4j.conf").getPath());
 		ExceptionHandler(e);
 	}
 	

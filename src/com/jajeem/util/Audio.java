@@ -9,9 +9,10 @@ public class Audio {
 	
 	public Audio() {
 		if(System.getProperty("os.arch").contains("64")) {
-			path = "extra/nircmdc_64.exe";
+			
+			path = Audio.class.getResource("/extra/nircmdc_64.exe").getPath();
 		} else {
-			path = "extra/nircmdc_32.exe";
+			path = Audio.class.getResource("/extra/nircmdc_32.exe").getPath();
 		}
 		
 	}

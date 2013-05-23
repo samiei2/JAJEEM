@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.message.dao.IMessageDAO;
 import com.jajeem.message.model.Message;
@@ -19,7 +20,7 @@ public class MessageDAO implements IMessageDAO {
 	Logger logger = Logger.getLogger(MessageDAO.class);
 
 	public MessageDAO() {
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(MessageDAO.class.getResource("/conf/log4j.conf").getPath());
 	}
 
 	@Override

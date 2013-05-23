@@ -19,7 +19,7 @@ public class StudentDAO implements IStudentDAO {
 	Logger logger = Logger.getLogger(StudentDAO.class);
 
 	public StudentDAO() {
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(StudentDAO.class.getResource("/conf/log4j.conf").getPath());
 	}
 
 	@Override

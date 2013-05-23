@@ -29,6 +29,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.Config;
@@ -77,7 +78,7 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure("conf/log4j.conf");
+			PropertyConfigurator.configure(Student.class.getResource("/conf/log4j.conf").getPath());
 
 		} catch (Throwable e) {
 			// Something went wrong
@@ -136,7 +137,7 @@ public class Student {
 		panel.setLayout(grid);
 
 		ImageIcon imgMessage = new ImageIcon(
-				"icons/applications_style1/message_text.png");
+				Student.class.getResource("/icons/applications_style1/message_text.png").getPath());
 		WebButton messageButton = new WebButton(imgMessage);
 		panel.add(messageButton);
 
@@ -146,11 +147,11 @@ public class Student {
 
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
-
-		ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+		
+		ImageIcon imgToolTip = new ImageIcon(Student.class.getResource("icons/menubar/tooltip.png").getPath());
 		TooltipManager.setDefaultDelay(1000);
-
-		BufferedImage myPicture = ImageIO.read(new File("icons/buttom.jpg"));
+		
+		BufferedImage myPicture = ImageIO.read(new File(Student.class.getResource("icons/buttom.jpg").getPath()));
 		WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
 		TooltipManager
 				.setTooltip(

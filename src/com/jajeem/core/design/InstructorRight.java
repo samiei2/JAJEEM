@@ -49,8 +49,9 @@ public class InstructorRight {
 		new Config();
 
 		final WebPanel panel = new WebPanel();
-
-		ImageIcon imgToolTip = new ImageIcon("icons/menubar/tooltip.png");
+		
+		ImageIcon imgToolTip = new ImageIcon(InstructorRight.class.getResource(
+				"/icons/menubar/tooltip.png").getPath());
 		TooltipManager.setDefaultDelay(1000);
 
 		GridLayout grid = new GridLayout(0, 1);

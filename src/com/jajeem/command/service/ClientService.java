@@ -75,7 +75,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		stopped = false;
 
-		PropertyConfigurator.configure("conf/log4j.conf");
+		PropertyConfigurator.configure(ClientService.class.getResource("/conf/log4j.conf").getPath());
 
 		this.port = port;
 		this.group = InetAddress.getByName(group);

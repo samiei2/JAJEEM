@@ -62,7 +62,7 @@ public class InstructorLogin extends WebDialog {
 
 		setResizable(false);
 		setModal(true);
-		
+
 		setTitle("Login to iCalabo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/menubar/jajeem.jpg")));
@@ -74,7 +74,8 @@ public class InstructorLogin extends WebDialog {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			PropertyConfigurator.configure(InstructorLogin.class.getResource("/com/jajeem/conf/log4j.conf").getPath());
+			PropertyConfigurator.configure(InstructorLogin.class.getResource(
+					"/com/jajeem/conf/log4j.conf").getPath());
 
 		} catch (Throwable e) {
 		}
@@ -95,7 +96,8 @@ public class InstructorLogin extends WebDialog {
 		sPanel1.setDrawBackground(true);
 		sPanel1.setShadeWidth(0);
 		sPanel1.setRound(0);
-		sPanel1.setViewportBorder(new TitledBorder(null, "Instructors", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sPanel1.setViewportBorder(new TitledBorder(null, "Instructors",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		//
 
 		// get list of courses
@@ -112,7 +114,8 @@ public class InstructorLogin extends WebDialog {
 		sPanel2.setDrawBackground(true);
 		sPanel2.setShadeWidth(0);
 		sPanel2.setRound(0);
-		sPanel2.setViewportBorder(new TitledBorder(null, "Courses", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sPanel2.setViewportBorder(new TitledBorder(null, "Courses",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		//
 
 		setBounds(100, 100, 450, 300);
@@ -152,19 +155,20 @@ public class InstructorLogin extends WebDialog {
 				okButton.setActionCommand("OK");
 				getRootPane().setDefaultButton(okButton);
 				GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-				gl_buttonPane.setHorizontalGroup(
-					gl_buttonPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-							.addContainerGap(197, Short.MAX_VALUE)
-							.addComponent(okButton)
-							.addGap(190))
-				);
-				gl_buttonPane.setVerticalGroup(
-					gl_buttonPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_buttonPane.createSequentialGroup()
-							.addComponent(okButton)
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
+				gl_buttonPane.setHorizontalGroup(gl_buttonPane
+						.createParallelGroup(Alignment.LEADING).addGroup(
+								Alignment.TRAILING,
+								gl_buttonPane.createSequentialGroup()
+										.addContainerGap(197, Short.MAX_VALUE)
+										.addComponent(okButton).addGap(190)));
+				gl_buttonPane.setVerticalGroup(gl_buttonPane
+						.createParallelGroup(Alignment.LEADING).addGroup(
+								gl_buttonPane
+										.createSequentialGroup()
+										.addComponent(okButton)
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 				buttonPane.setLayout(gl_buttonPane);
 
 				ActionListener listener = new ActionListener() {
@@ -179,7 +183,8 @@ public class InstructorLogin extends WebDialog {
 							if (grant) {
 								setVisible(false);
 								Instructor instructor = new Instructor();
-								instructor.main(new String[] { (String) list1.getSelectedValue(),
+								instructor.main(new String[] {
+										(String) list1.getSelectedValue(),
 										(String) list2.getSelectedValue() });
 								dispose();
 							} else {
