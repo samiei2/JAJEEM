@@ -90,8 +90,8 @@ public class Panel_Bottom_21 extends WebPanel {
 					if(ex.getQuestion().isResponseValid())
 						imgToolTip = new ImageIcon("icons/bullet-green.png");
 					
-					String StudentOption = "None Selected";
-					String QuestionOption = "None Selected";
+					String StudentOption = "";
+					String QuestionOption = "";
 					if(question.getType() == 0){ // setting student's answer
 						if(question.getStudentAnswer()[0])
 							StudentOption = "First Option";
@@ -103,6 +103,8 @@ public class Panel_Bottom_21 extends WebPanel {
 							StudentOption = "Fourth Option";
 						if(question.getStudentAnswer()[4])
 							StudentOption = "Fifth Option";
+						if(StudentOption == "")
+							StudentOption = "None Selected";
 					}
 					else if(question.getType() == 1){
 						if(question.getStudentAnswer()[0])
@@ -115,6 +117,8 @@ public class Panel_Bottom_21 extends WebPanel {
 							StudentOption += "Fourth Option,";
 						if(question.getStudentAnswer()[4])
 							StudentOption += "Fifth Option";
+						if(StudentOption == "")
+							StudentOption = "None Selected";
 					}
 					else
 						StudentOption = question.getStudentTextAnswer();
@@ -131,6 +135,8 @@ public class Panel_Bottom_21 extends WebPanel {
 							QuestionOption = "Fourth Option";
 						if(temp2.getCorrectAnswer()[4])
 							QuestionOption = "Fifth Option";
+						if(QuestionOption == "")
+							QuestionOption = "None Selected";
 					}
 					else if(temp2.getType() == 0){
 						if(temp2.getCorrectAnswer()[0])
@@ -143,6 +149,8 @@ public class Panel_Bottom_21 extends WebPanel {
 							QuestionOption += "Fourth Option,";
 						if(temp2.getCorrectAnswer()[4])
 							QuestionOption += "Fifth Option";
+						if(QuestionOption == "")
+							QuestionOption = "None Selected";
 					}
 					else
 						QuestionOption = "N/A";
@@ -481,8 +489,8 @@ public class Panel_Bottom_21 extends WebPanel {
 			
 			if(question.getId() == currentQuestion.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
-				String StudentOption = "None Selected";
-				String QuestionOption = "None Selected";
+				String StudentOption = "";
+				String QuestionOption = "";
 				if(question.getType() == 0){ // setting student's answer
 					if(question.getStudentAnswer()[0])
 						StudentOption = "First Option";
@@ -494,6 +502,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						StudentOption = "Fourth Option";
 					if(question.getStudentAnswer()[4])
 						StudentOption = "Fifth Option";
+					if(StudentOption == "")
+						StudentOption = "None Selected";
 				}
 				else if(question.getType() == 1){
 					if(question.getStudentAnswer()[0])
@@ -506,6 +516,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						StudentOption += "Fourth Option,";
 					if(question.getStudentAnswer()[4])
 						StudentOption += "Fifth Option";
+					if(StudentOption == "")
+						StudentOption = "None Selected";
 				}
 				else
 					StudentOption = question.getStudentTextAnswer();
@@ -522,6 +534,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						QuestionOption = "Fourth Option";
 					if(temp2.getCorrectAnswer()[4])
 						QuestionOption = "Fifth Option";
+					if(QuestionOption == "")
+						QuestionOption = "None Selected";
 				}
 				else if(temp2.getType() == 0){
 					if(temp2.getCorrectAnswer()[0])
@@ -534,6 +548,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						QuestionOption += "Fourth Option,";
 					if(temp2.getCorrectAnswer()[4])
 						QuestionOption += "Fifth Option";
+					if(QuestionOption == "")
+						QuestionOption = "None Selected";
 				}
 				else
 					QuestionOption = "N/A";

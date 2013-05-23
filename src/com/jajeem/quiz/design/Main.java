@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.DesignMode;
 import java.net.InetAddress;
 import java.sql.SQLException;
 
@@ -131,7 +132,7 @@ public class Main extends JFrame {
 		});
 		setBackground(new Color(245, 245, 245));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1103, 729);
+		setBounds(100, 100, 1189, 729);
 		contentPane = new WebPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -291,7 +292,7 @@ public class Main extends JFrame {
 			        	run.setQuiz(currentQuiz);
 			        	run.setInstructor(getCurrentInstructor());
 			        	run.setSession(getCurrentSession());
-			        	QuizWindow wind =new QuizWindow(run);
+			        	//QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
@@ -348,6 +349,7 @@ public class Main extends JFrame {
 		wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
 		
 		wbtnSaveResults = new WebButton();
+		wbtnSaveResults.setEnabled(false);
 		wbtnSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current results?");
@@ -453,6 +455,7 @@ public class Main extends JFrame {
 	}
 
 	public void loadCurrentQuiz() {
-		
+		panel_bottom_1.clear();
+		panel_bottom_1.loadCurrentQuiz(currentQuiz);
 	}
 }

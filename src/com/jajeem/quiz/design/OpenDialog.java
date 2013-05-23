@@ -62,6 +62,7 @@ public class OpenDialog extends JDialog {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public OpenDialog(Main frame) {
 		parentFrame = frame;
+		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -152,6 +153,7 @@ public class OpenDialog extends JDialog {
 		wblblSearch.setText("Search");
 		
 		WebTextField webTextField = new WebTextField();
+		webTextField.setEnabled(false);
 		webTextField.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
@@ -176,6 +178,7 @@ public class OpenDialog extends JDialog {
 		wblblCategory.setText("Select");
 		
 		wbCmbBxSelection = new WebComboBox();
+		wbCmbBxSelection.setEnabled(false);
 		wbCmbBxSelection.setModel(new DefaultComboBoxModel(new String[] {"Category", "Question Type", "Instructor"}));
 		wbCmbBxSelection.addItemListener(new ItemListener() {
 			
@@ -202,6 +205,7 @@ public class OpenDialog extends JDialog {
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		
 		wbCmbBxOption = new WebComboBox();
+		wbCmbBxOption.setEnabled(false);
 		wbCmbBxOption.setVisible(false);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(

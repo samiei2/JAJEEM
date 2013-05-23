@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
@@ -393,6 +394,8 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton = new WebRadioButton();
 		webRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextField.getText().equals(""))
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
 				webRadioButton.setSelected(true);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(false);
@@ -411,6 +414,8 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_1 = new WebRadioButton();
 		webRadioButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextField_1.getText().equals(""))
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(true);
 				webRadioButton_2.setSelected(false);
@@ -429,6 +434,8 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_2 = new WebRadioButton();
 		webRadioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextField_2.getText().equals(""))
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(true);
@@ -447,6 +454,8 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_3 = new WebRadioButton();
 		webRadioButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextField_3.getText().equals(""))
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(false);
@@ -465,6 +474,10 @@ public class QuestionDesignPanel extends WebPanel {
 		webRadioButton_4 = new WebRadioButton();
 		webRadioButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(webTextField_4.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Answer is empty,please first type in your answer!");
+					return;
+				}
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
 				webRadioButton_2.setSelected(false);
