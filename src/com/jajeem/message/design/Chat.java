@@ -75,7 +75,7 @@ public class Chat extends WebFrame {
 		super("Chat");
 		file = new File("/chat_" + to + ".txt");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Chat.class.getResource("/menubar/chat.png")));
+				Chat.class.getResource("/icons/menubar/chat.png")));
 
 		setTo(to);
 		setPort(port);

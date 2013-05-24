@@ -20,6 +20,7 @@ import com.alee.laf.rootpane.WebDialog;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
+import java.awt.Toolkit;
 
 public class MessageReceive extends JDialog {
 
@@ -45,6 +46,7 @@ public class MessageReceive extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageReceive(String text) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageReceive.class.getResource("/icons/menubar/message.png")));
 		
 		setMessageLabel(text);
 		try {

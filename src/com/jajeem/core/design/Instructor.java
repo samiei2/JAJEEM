@@ -123,10 +123,8 @@ public class Instructor implements SwingConstants {
 				.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);
-		serverServiceTimer.setInterval(3000);
+		serverServiceTimer.setInterval(5000);
 		serverServiceTimer.start();
-		logger.info("Server started, sending start up command every "
-				+ serverServiceTimer.getInterval() + " mseconds.");
 
 		ClientService clientService = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config

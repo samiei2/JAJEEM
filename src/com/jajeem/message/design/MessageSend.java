@@ -23,6 +23,7 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.service.ServerService;
+import java.awt.Toolkit;
 
 public class MessageSend extends JDialog {
 
@@ -51,6 +52,7 @@ public class MessageSend extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageSend() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageSend.class.getResource("/icons/menubar/message.png")));
 
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
