@@ -29,4 +29,8 @@ public class ClientSession {
 	public static void setSurveyWindowHndl(SurveyWindow surveyWindow) {
 		surveyWindowHndl = surveyWindow;
 	}
+
+	public static SurveyWindow getSurveyWindowHndl() {
+		return surveyWindowHndl;
+	}
 }

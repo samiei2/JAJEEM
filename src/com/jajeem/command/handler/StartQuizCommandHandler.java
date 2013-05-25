@@ -12,5 +12,4 @@ public class StartQuizCommandHandler implements ICommandHandler {
 		QuizWindow quiz = new QuizWindow(command.getRun());
 		quiz.setServer(command.getServer());
 	}
-
 }
