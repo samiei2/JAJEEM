@@ -360,7 +360,7 @@ public class QuizMainPanel extends WebDialog {
 			        	run.setQuiz(currentQuiz);
 			        	run.setInstructor(getCurrentInstructor());
 			        	run.setSession(getCurrentSession());
-			        	QuizWindow wind =new QuizWindow(run);
+			        	//QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();

@@ -47,6 +47,7 @@ import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class SurveyWindow extends WebFrame {
@@ -117,6 +118,8 @@ public class SurveyWindow extends WebFrame {
 	 * Create the frame.
 	 */
 	public SurveyWindow(Survey survey) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyWindow.class.getResource("/com/jajeem/images/survey.png")));
+		setTitle("Survey");
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
@@ -151,7 +154,7 @@ public class SurveyWindow extends WebFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 589, 650);
+		setBounds(100, 100, 647, 674);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
