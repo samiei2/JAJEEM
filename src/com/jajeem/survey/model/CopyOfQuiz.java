@@ -1,6 +1,6 @@
 package com.jajeem.survey.model;
 
-public class Quiz {
+public class CopyOfQuiz {
 	
 	//properties
 	private int id;

@@ -1,11 +1,12 @@
 package com.jajeem.survey.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Response;
 
-public class Survey {
+public class Survey implements Serializable{
 	
 	//properties
 	private int id;

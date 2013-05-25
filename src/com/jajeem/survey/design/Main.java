@@ -274,12 +274,12 @@ public class Main extends WebDialog {
 			        panel_bottom_2.LoadSurvey(currentSurvey);
 			        //TODO Code must be changed
 			        try {
-			        	SurveyWindow wind =new SurveyWindow(currentSurvey);
+			        	//SurveyWindow wind =new SurveyWindow(currentSurvey);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
 						StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						//StartSurveyCommand cmd = new StartSurveyCommand("127.0.0.1", 9090);
+						//StartSurveyCommand cmd = new StartSurveyCommand("127.0.0.1","127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setSurvey(currentSurvey);
 						serv.send(cmd);

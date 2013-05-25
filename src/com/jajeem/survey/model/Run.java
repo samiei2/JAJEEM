@@ -1,6 +1,8 @@
 package com.jajeem.survey.model;
 
-public class Run {
+import java.io.Serializable;
+
+public class Run implements Serializable{
 	
 	//properties
 	private int id; 
