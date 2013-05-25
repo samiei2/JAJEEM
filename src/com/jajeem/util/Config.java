@@ -10,7 +10,7 @@ public class Config {
 	
 	public Config () {
 		try {
-			Config.load(Config.class.getResourceAsStream("/conf/conf.properties"));
+			Config.load(Config.class.getResourceAsStream("/com/jajeem/conf/conf.properties"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

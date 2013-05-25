@@ -147,6 +147,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				Command cmd = (Command) o;
 
+				System.out.println("Receiving ----> Command: " + cmd.getClass() + " from: " + cmd.getFrom());
+				
 				logger.info("Receiving: Message type: " + cmd.getClass()
 						+ ", from: " + cmd.getTo());
 

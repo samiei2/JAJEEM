@@ -89,7 +89,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 			e1.printStackTrace();
 		}
 		b = constructMessage(cmd);
-		
+		System.out.println("Sending ----> Command: " + cmd.getClass() + " to: " + cmd.getTo());
 		DatagramPacket packet = new DatagramPacket(b, b.length, group, cmd.getPort());
 		
 		try {

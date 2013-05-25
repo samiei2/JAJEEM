@@ -77,7 +77,6 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			
 
 		} catch (Throwable e) {
 			// Something went wrong
@@ -100,7 +99,7 @@ public class Student {
 		frmJajeemProject.setAlwaysOnTop(true);
 		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Student.class.getResource("/menubar/jajeem.jpg")));
+				Student.class.getResource("/icons/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(0, 400, 320, 400);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
@@ -136,7 +135,8 @@ public class Student {
 		panel.setLayout(grid);
 
 		ImageIcon imgMessage = new ImageIcon(
-				Student.class.getResource("/icons/applications_style1/message_text.png").getPath());
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
 		WebButton messageButton = new WebButton(imgMessage);
 		panel.add(messageButton);
 
@@ -146,11 +146,13 @@ public class Student {
 
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
-		
-		ImageIcon imgToolTip = new ImageIcon(Student.class.getResource("/icons/menubar/tooltip.png").getPath());
+
+		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Student.class
+				.getResourceAsStream(("/icons/menubar/tooltip.png"))));
 		TooltipManager.setDefaultDelay(1000);
-		
-		BufferedImage myPicture = ImageIO.read(new File(Student.class.getResource("/icons/buttom.jpg").getPath()));
+
+		BufferedImage myPicture = ImageIO.read(Instructor.class
+				.getResourceAsStream(("/icons/buttom.jpg")));
 		WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
 		TooltipManager
 				.setTooltip(

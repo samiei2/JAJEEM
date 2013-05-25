@@ -1,9 +1,11 @@
 package com.jajeem.core.design;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
@@ -31,9 +33,13 @@ public class InstructorCenter {
 
 	/**
 	 * Adds a new internal frame to desktop panel for a new student
-	 * @param desktopPane WebDesktopPane  
-	 * @param hostIp String
-	 * @param hostName String 
+	 * 
+	 * @param desktopPane
+	 *            WebDesktopPane
+	 * @param hostIp
+	 *            String
+	 * @param hostName
+	 *            String
 	 */
 	public static WebInternalFrame createFrame(
 			final WebDesktopPane desktopPane, String hostIp, String hostName)
@@ -59,8 +65,8 @@ public class InstructorCenter {
 		
 		internalFrame.putClientProperty("ip", hostIp);
 		
-		internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
-				"/icons/menubar/student.png").getPath()));
+		internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
+				.getResourceAsStream("/icons/menubar/student.png"))));
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -108,8 +114,14 @@ public class InstructorCenter {
 			
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-				internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
-						"/icons/menubar/student.png").getPath()));
+				
+				try {
+					internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
+							.getResourceAsStream("/icons/menubar/student.png"))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				checkBox.setSelected(false);
 			}
 
@@ -128,8 +140,13 @@ public class InstructorCenter {
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
 				
-				internalFrame.setFrameIcon(new ImageIcon(InstructorCenter.class.getResource(
-						"/icons/menubar/tick.png").getPath()));
+				try {
+					internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
+							.getResourceAsStream("/icons/menubar/tick.png"))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				checkBox.setSelected(true);
 			}
 		});

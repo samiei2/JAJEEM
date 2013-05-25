@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;
@@ -129,10 +126,8 @@ public class Instructor implements SwingConstants {
 				.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);
-		serverServiceTimer.setInterval(3000);
+		serverServiceTimer.setInterval(5000);
 		serverServiceTimer.start();
-		logger.info("Server started, sending start up command every "
-				+ serverServiceTimer.getInterval() + " mseconds.");
 
 		ClientService clientService = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config

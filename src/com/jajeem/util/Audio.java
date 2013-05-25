@@ -1,28 +1,23 @@
 package com.jajeem.util;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class Audio {
 
 	static Process process;
-	private String path = "";
+	private String path;
+	
 	
 	public Audio() {
 		if(System.getProperty("os.arch").contains("64")) {
 			
-			path = Audio.class.getResource("/extra/nircmdc_64.exe").getPath();
+			path = Audio.class.getResource("/com/jajeem/extra/nircmdc_64.exe").getPath();
 		} else {
-			path = Audio.class.getResource("/extra/nircmdc_32.exe").getPath();
+			path = Audio.class.getResource("/com/jajeem/extra/nircmdc_32.exe").getPath();
 		}
 		
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public void mute() throws IOException, InterruptedException {
