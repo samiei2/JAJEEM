@@ -30,6 +30,9 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.core.design.InstructorCenter;
+import com.jajeem.core.design.InstructorRight;
+import com.jajeem.core.design.InstructorTop;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
 
@@ -240,7 +243,7 @@ public class Instructor implements SwingConstants {
 		case EAST: {
 
 			InstructorRight.iconsPath = Instructor.class.getResource(
-					"/icons/applications_style1").getPath();
+					"/icons/applications_style1/").getPath();
 			panel = InstructorRight.createPanel(panel);
 
 			break;

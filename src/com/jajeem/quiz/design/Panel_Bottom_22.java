@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,6 +21,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.core.design.InstructorRight;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.quiz.model.Question;
@@ -55,7 +57,8 @@ public class Panel_Bottom_22 extends WebPanel {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				currentStudent = new Student();
-				currentStudent.setId(Integer.parseInt(webComboBox.getSelectedItem().toString()));
+				if(webComboBox.getSelectedIndex() != -1)
+					currentStudent.setId(Integer.parseInt(webComboBox.getSelectedItem().toString()));
 				
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel();
 				model.getDataVector().removeAllElements();
@@ -67,9 +70,19 @@ public class Panel_Bottom_22 extends WebPanel {
 						Student student = ex.getStudent();
 						Question question = ex.getQuestion();
 						if(currentStudent.getId() == student.getId()){
-							ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
-							if(ex.getQuestion().isResponseValid())
-								imgToolTip = new ImageIcon("icons/bullet-green.png");
+							ImageIcon imgToolTip = null;
+							try{
+								imgToolTip = new ImageIcon(
+										ImageIO.read(Panel_Bottom_22.class
+												.getResourceAsStream("/icons/bullet-red.png")));
+								if(ex.getQuestion().isResponseValid())
+									imgToolTip = new ImageIcon(
+											ImageIO.read(Panel_Bottom_22.class
+													.getResourceAsStream("/icons/bullet-green.png")));
+							}
+							catch(Exception exp){
+								
+							}
 							
 							String StudentOption = "";
 							String QuestionOption = "";
@@ -396,9 +409,19 @@ public class Panel_Bottom_22 extends WebPanel {
 							else
 								QuestionOption = "N/A";
 							
-							ImageIcon imgToolTip = new ImageIcon("icons/bullet-red.png");
-							if(tempq.isResponseValid())
-								imgToolTip = new ImageIcon("icons/bullet-green.png");
+							ImageIcon imgToolTip = null;
+							try{
+								imgToolTip = new ImageIcon(
+										ImageIO.read(Panel_Bottom_22.class
+												.getResourceAsStream("/icons/bullet-red.png")));
+								if(tempq.isResponseValid())
+									imgToolTip = new ImageIcon(
+											ImageIO.read(Panel_Bottom_22.class
+													.getResourceAsStream("/icons/bullet-green.png")));
+							}
+							catch(Exception exp){
+								
+							}
 							
 							model.addRow(new Object[]{
 									imgToolTip,
@@ -429,6 +452,7 @@ public class Panel_Bottom_22 extends WebPanel {
 
 	public void LoadQuiz(Quiz currentQuiz2) {
 		currentQuiz = currentQuiz2;
+		quizResponse = parentPanel.getQuizResponse();
 	}
 
 	@SuppressWarnings("rawtypes")

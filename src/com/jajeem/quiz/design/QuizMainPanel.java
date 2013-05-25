@@ -305,6 +305,7 @@ public class QuizMainPanel extends WebDialog {
 				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+				wbtnStart.setEnabled(true);
 				panel_bottom_2.ClearQuiz();
 				//Broadcast quiz stop
 				
@@ -325,7 +326,27 @@ public class QuizMainPanel extends WebDialog {
 						JOptionPane.showMessageDialog(null, "At least one question is required for the quiz to start!");
 						return;
 					}
-						
+					
+					for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
+						Question question = currentQuiz.getQuestionList().get(i);
+						if(question.getTitle().equals("")){
+							JOptionPane.showMessageDialog(null, "Question "+(i+1)+" has no title.Please enter a title for it.");
+							return;
+						}
+						if(question.getAnswer1().equals("") && question.getAnswer2().equals("") && question.getAnswer3().equals("") 
+								&& question.getAnswer4().equals("") && question.getAnswer5().equals("")){
+							JOptionPane.showMessageDialog(null, "No answer is entered for the question "+(i+1)+".Please enter at least one.");
+							return;
+						}
+						if(question.getType() == 0 || question.getType() == 1){
+							if(!question.getCorrectAnswer()[0] && !question.getCorrectAnswer()[1] && !question.getCorrectAnswer()[2] &&
+									!question.getCorrectAnswer()[3] && !question.getCorrectAnswer()[4]){
+								JOptionPane.showMessageDialog(null, "No correct answer is selected for question "+(i+1)+".Please select one.");
+								return;
+							}
+						}
+					}
+					
 					wbtnSaveResults.setVisible(true);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
@@ -339,7 +360,7 @@ public class QuizMainPanel extends WebDialog {
 			        	run.setQuiz(currentQuiz);
 			        	run.setInstructor(getCurrentInstructor());
 			        	run.setSession(getCurrentSession());
-			        	//QuizWindow wind =new QuizWindow(run);
+			        	QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
@@ -375,6 +396,7 @@ public class QuizMainPanel extends WebDialog {
 					
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setEnabled(false);
 					//quizEvent.fireStopEvent(new QuizStop(this));
 				}
 			}
