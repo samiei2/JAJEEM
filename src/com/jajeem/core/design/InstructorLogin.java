@@ -18,7 +18,7 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import org.apache.log4j.PropertyConfigurator;
+//import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.list.DefaultListModel;
@@ -63,11 +63,11 @@ public class InstructorLogin extends WebDialog {
 
 		setResizable(false);
 		setModal(true);
-		
+
 		@SuppressWarnings("unused")
 		StartUp start = new StartUp();
 
-		setTitle("Login to iCalabo");
+		setTitle("Welcome to iCalabo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Instructor.class.getResource("/icons/menubar/jajeem.jpg")));
 		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
@@ -78,7 +78,6 @@ public class InstructorLogin extends WebDialog {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			
 
 		} catch (Throwable e) {
 		}
@@ -91,7 +90,8 @@ public class InstructorLogin extends WebDialog {
 		DefaultListModel listModel1 = new DefaultListModel();
 
 		for (com.jajeem.core.model.Instructor instructorItem : instructorList) {
-			listModel1.addElement(instructorItem.getUsername());
+			listModel1.addElement(instructorItem.getFirstName() + " "
+					+ instructorItem.getLastName() + " (" + instructorItem.getUsername() + ")");
 		}
 
 		final WebList list1 = new WebList(listModel1);
@@ -121,7 +121,7 @@ public class InstructorLogin extends WebDialog {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		//
 
-		setBounds(100, 100, 450, 300);
+		setBounds(400, 200, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
@@ -179,9 +179,12 @@ public class InstructorLogin extends WebDialog {
 					public void actionPerformed(ActionEvent e) {
 						try {
 							boolean grant = false;
+							String user = list1.getSelectedValue().toString();
 							InstructorService instructorService = new InstructorService();
+							int indexOfOpenBracket = user.indexOf("(");
+							int indexOfLastBracket = user.lastIndexOf(")");
 							grant = instructorService.authenticate(
-									(String) list1.getSelectedValue(),
+									user.substring(indexOfOpenBracket+1, indexOfLastBracket),
 									password.getPassword());
 							if (grant) {
 								setVisible(false);
