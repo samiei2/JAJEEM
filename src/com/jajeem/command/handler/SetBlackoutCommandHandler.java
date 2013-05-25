@@ -31,6 +31,8 @@ public class SetBlackoutCommandHandler implements ICommandHandler {
 			int xSize = ((int) tk.getScreenSize().getWidth());
 			int ySize = ((int) tk.getScreenSize().getHeight());
 			frame.setSize(xSize, ySize);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setAlwaysOnTop(true);
 			frame.setUndecorated(true);
 			frame.setVisible(true);
 			mouseBlocker.start();

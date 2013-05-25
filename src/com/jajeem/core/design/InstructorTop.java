@@ -76,7 +76,7 @@ public class InstructorTop {
 			TooltipManager.setTooltip(volumeButton, imgToolTip,
 					"Change speaker volume of selected student",
 					TooltipWay.down);
-			toolbar.add(volumeButton);
+//			toolbar.add(volumeButton);
 			volumeButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {

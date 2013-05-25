@@ -104,7 +104,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(blackoutButton, imgToolTip,
 				"Locks student's mouse and keyboard with blacking his screen",
 				TooltipWay.left);
-		panel.add(blackoutButton);
+//		panel.add(blackoutButton);
 
 		ImageIcon imgQuiz = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -121,7 +121,7 @@ public class InstructorRight {
 		WebButton surveyButton = new WebButton(imgSurvey);
 		surveyButton.setRound(0);
 		TooltipManager.setTooltip(surveyButton, imgToolTip,
-				"Start quiz for the class", TooltipWay.left);
+				"Start survey for the class", TooltipWay.left);
 		panel.add(surveyButton);
 
 		ImageIcon imgSendWebsite = new ImageIcon(
