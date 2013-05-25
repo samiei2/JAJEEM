@@ -278,8 +278,8 @@ public class Main extends WebDialog {
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
-						//StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						StartSurveyCommand cmd = new StartSurveyCommand("127.0.0.1","127.0.0.1", 9090);
+						StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						//StartSurveyCommand cmd = new StartSurveyCommand("127.0.0.1","127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setSurvey(currentSurvey);
 						serv.send(cmd);
