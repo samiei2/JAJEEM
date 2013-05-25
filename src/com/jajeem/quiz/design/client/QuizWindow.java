@@ -47,6 +47,7 @@ import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class QuizWindow extends WebFrame {
@@ -117,6 +118,8 @@ public class QuizWindow extends WebFrame {
 	 * Create the frame.
 	 */
 	public QuizWindow(Run run) {
+		setTitle("Quiz");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizWindow.class.getResource("/com/jajeem/images/quiz.png")));
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
@@ -219,7 +222,59 @@ public class QuizWindow extends WebFrame {
 					webList.setSelectedIndex(webList.getSelectedIndex()+1);
 				}
 				else{
-					webList.setSelectedIndex(0);
+					if(currentQuestion!=null){
+						if(currentQuestion.getType() == 0){
+							currentQuestion.setStudentAnswer(new boolean[]{webRadioButton.isSelected(),webRadioButton_1.isSelected(),webRadioButton_2.isSelected()
+					        		,webRadioButton_3.isSelected(),webRadioButton_4.isSelected()});
+						}
+						if(currentQuestion.getType() == 1){
+							currentQuestion.setStudentAnswer(new boolean[]{webCheckBox.isSelected(),webCheckBox_1.isSelected(),webCheckBox_2.isSelected()
+					        		,webCheckBox_3.isSelected(),webCheckBox_4.isSelected()});
+						}
+						if(currentQuestion.getType() == 2){
+							currentQuestion.setStudentAnswer(webTextArea_1.getText());
+						}
+						
+						//TODO clean up this code
+						synchronized (sendQueue) {
+							sendQueue.add(currentQuestion);
+						}
+						
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								try {
+									Question question = null;
+									synchronized (sendQueue) {
+										if(!sendQueue.isEmpty()){
+											question = sendQueue.get(0);
+											sendQueue.remove(0);
+										}
+									}
+									QuizResponse resp = new QuizResponse(question);
+									resp.setQuestion(question);
+									resp.setStudent(getStudent());
+									new QuizEvent().fireResponseEvent(resp);
+									SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
+									cmd.setEvent(resp);
+								
+									ServerService service = new ServerService();
+									service.send(cmd);
+								} catch (NumberFormatException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+
+							private Student getStudent() {
+								return privateStudent;//TODO correct this code
+							}
+						}).start();
+					}
 					dispose();
 				}
 			}

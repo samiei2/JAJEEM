@@ -158,4 +158,6 @@ public class Panel_Bottom_2 extends WebPanel {
 	public void setCurrentQuiz(Quiz currentQuiz) {
 		this.currentQuiz = currentQuiz;
 	}
+
+	
 }
