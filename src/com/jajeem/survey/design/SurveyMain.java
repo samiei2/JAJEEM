@@ -86,7 +86,7 @@ public class SurveyMain extends WebFrame {
 		getContentPane().add(webPanel, BorderLayout.CENTER);
 
 		setTitle("Jajeem Survey");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/com/jajeem/images/survey.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyMain.class.getResource("/com/jajeem/images/survey.png")));
 		frame = this;
 		////////////////////////////////////////
 		////////////////////////////////////////
@@ -184,7 +184,7 @@ public class SurveyMain extends WebFrame {
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/Add.png")));
+		wbtnNew.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/Add.png")));
 		
 		WebButton wbtnReports = new WebButton();
 		wbtnReports.setEnabled(false);
@@ -192,7 +192,7 @@ public class SurveyMain extends WebFrame {
 		wbtnReports.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnReports.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnReports.setVerticalAlignment(SwingConstants.TOP);
-		wbtnReports.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
+		wbtnReports.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
 		
 		WebButton wbtnResponse = new WebButton();
 		wbtnResponse.setEnabled(false);
@@ -200,7 +200,7 @@ public class SurveyMain extends WebFrame {
 		wbtnResponse.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnResponse.setText("Response");
 		wbtnResponse.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnResponse.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/distributor-report.png")));
+		wbtnResponse.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.setEnabled(false);
@@ -214,7 +214,7 @@ public class SurveyMain extends WebFrame {
 		wbtnOpen.setVerticalAlignment(SwingConstants.TOP);
 		wbtnOpen.setText("Open");
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/folder_green_open.png")));
+		wbtnOpen.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
 		WebButton wbtnSave = new WebButton();
 		wbtnSave.setEnabled(false);
@@ -241,7 +241,7 @@ public class SurveyMain extends WebFrame {
 		wbtnSave.setText("Save");
 		wbtnSave.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSave.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/document-save-as.png")));
 		
 		final WebButton wbtnContent = new WebButton();
 		wbtnContent.addActionListener(new ActionListener() {
@@ -250,11 +250,11 @@ public class SurveyMain extends WebFrame {
 		        cl.show(cards, "Page 1");
 				wbtnContent.setEnabled(false);
 				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+				wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
 				//TODO BroadCast Stop Survey
 			}
 		});
-		wbtnContent.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/content.png")));
+		wbtnContent.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/content.png")));
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setVerticalAlignment(SwingConstants.TOP);
 		wbtnContent.setText("Content");
@@ -267,7 +267,7 @@ public class SurveyMain extends WebFrame {
 				if(wbtnStart.getText() == "Start"){
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/stop-red.png")));
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
 			        panel_bottom_2.LoadSurvey(currentSurvey);
@@ -307,7 +307,7 @@ public class SurveyMain extends WebFrame {
 					}
 					
 					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
 					//surveyEvent.fireStopEvent(new SurveyStop(this));
 				}
 			}
@@ -316,7 +316,7 @@ public class SurveyMain extends WebFrame {
 		wbtnStart.setText("Start");
 		wbtnStart.setVerticalAlignment(SwingConstants.TOP);
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setIcon(new ImageIcon(Main.class.getResource("/com/jajeem/images/start.png")));
+		wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
 		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(
