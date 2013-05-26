@@ -99,7 +99,7 @@ public class Student {
 		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Student.class.getResource("/icons/menubar/jajeem.jpg")));
-		frmJajeemProject.setBounds(0, 400, 320, 400);
+		frmJajeemProject.setBounds(0, 400, 280, 400);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -133,10 +133,20 @@ public class Student {
 		GridLayout grid = new GridLayout(0, 1);
 		panel.setLayout(grid);
 
+		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Student.class
+				.getResourceAsStream(("/icons/menubar/tooltip.png"))));
+		TooltipManager.setDefaultDelay(1000);
+
 		ImageIcon imgMessage = new ImageIcon(
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
 		WebButton messageButton = new WebButton(imgMessage);
+		TooltipManager
+		.setTooltip(
+				messageButton,
+				imgToolTip,
+				"Send a message to your instructor.",
+				TooltipWay.down);
 		panel.add(messageButton);
 
 		WebPanel panel2 = new WebPanel();
@@ -145,10 +155,6 @@ public class Student {
 
 		WebPanel southPanel = new WebPanel();
 		southPanel.setDrawSides(true, true, false, false);
-
-		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Student.class
-				.getResourceAsStream(("/icons/menubar/tooltip.png"))));
-		TooltipManager.setDefaultDelay(1000);
 
 		BufferedImage myPicture = ImageIO.read(Instructor.class
 				.getResourceAsStream(("/icons/buttom.jpg")));

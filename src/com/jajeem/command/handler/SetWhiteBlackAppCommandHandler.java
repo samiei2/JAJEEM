@@ -13,6 +13,12 @@ public class SetWhiteBlackAppCommandHandler implements ICommandHandler {
 			WinRegistry
 					.createKey(WinRegistry.HKEY_CURRENT_USER,
 							"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\DisallowRun");
+
+			WinRegistry
+					.writeStringValue(
+							WinRegistry.HKEY_CURRENT_USER,
+							"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+							"DisallowRun", "1");
 			WinRegistry
 					.writeStringValue(
 							WinRegistry.HKEY_CURRENT_USER,
