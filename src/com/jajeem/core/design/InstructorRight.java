@@ -37,7 +37,6 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.quiz.design.QuizMain;
-import com.jajeem.quiz.design.QuizMainPanel;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;

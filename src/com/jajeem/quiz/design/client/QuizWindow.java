@@ -170,7 +170,7 @@ public class QuizWindow extends WebFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(200, 100, 694, 741);
+		setBounds(200, 0, 694, 741);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -82,9 +82,9 @@ public class QuizMain extends WebFrame {
 	 */
 	public QuizMain() {
 		setTitle("Jajeem Quiz");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMainPanel.class.getResource("/com/jajeem/images/quiz.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMain.class.getResource("/com/jajeem/images/quiz.png")));
 		
-		setBounds(100, 100, 1160, 753);
+		setBounds(100, 0, 1160, 800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		frame = this;
@@ -185,7 +185,7 @@ public class QuizMain extends WebFrame {
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/Add.png")));
+		wbtnNew.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/Add.png")));
 		
 		WebButton wbtnReports = new WebButton();
 		wbtnReports.setEnabled(false);
@@ -193,7 +193,7 @@ public class QuizMain extends WebFrame {
 		wbtnReports.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnReports.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnReports.setVerticalAlignment(SwingConstants.TOP);
-		wbtnReports.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
+		wbtnReports.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
 		
 		WebButton wbtnResponse = new WebButton();
 		wbtnResponse.setEnabled(false);
@@ -201,7 +201,7 @@ public class QuizMain extends WebFrame {
 		wbtnResponse.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnResponse.setText("Response");
 		wbtnResponse.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnResponse.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/distributor-report.png")));
+		wbtnResponse.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
@@ -214,7 +214,7 @@ public class QuizMain extends WebFrame {
 		wbtnOpen.setVerticalAlignment(SwingConstants.TOP);
 		wbtnOpen.setText("Open");
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/folder_green_open.png")));
+		wbtnOpen.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
 		WebButton wbtnSave = new WebButton();
 		wbtnSave.addActionListener(new ActionListener() {
@@ -240,7 +240,7 @@ public class QuizMain extends WebFrame {
 		wbtnSave.setText("Save");
 		wbtnSave.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSave.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/document-save-as.png")));
 		
 		final WebButton wbtnContent = new WebButton();
 		wbtnContent.addActionListener(new ActionListener() {
@@ -267,14 +267,14 @@ public class QuizMain extends WebFrame {
 				wbtnContent.setEnabled(false);
 				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+				wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 				wbtnStart.setEnabled(true);
 				panel_bottom_2.ClearQuiz();
 				//Broadcast quiz stop
 				
 			}
 		});
-		wbtnContent.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/content.png")));
+		wbtnContent.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/content.png")));
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setVerticalAlignment(SwingConstants.TOP);
 		wbtnContent.setText("Content");
@@ -313,7 +313,7 @@ public class QuizMain extends WebFrame {
 					wbtnSaveResults.setVisible(true);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/stop-red.png")));
+					wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
 			        panel_bottom_2.LoadQuiz(currentQuiz);
@@ -358,7 +358,7 @@ public class QuizMain extends WebFrame {
 					}
 					
 					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 					wbtnStart.setEnabled(false);
 					//quizEvent.fireStopEvent(new QuizStop(this));
 				}
@@ -378,7 +378,7 @@ public class QuizMain extends WebFrame {
 		wbtnStart.setText("Start");
 		wbtnStart.setVerticalAlignment(SwingConstants.TOP);
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/start.png")));
+		wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 		
 		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.setEnabled(false);
@@ -403,7 +403,7 @@ public class QuizMain extends WebFrame {
 				}
 			}
 		});
-		wbtnSaveResults.setIcon(new ImageIcon(QuizMainPanel.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSaveResults.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/document-save-as.png")));
 		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");
