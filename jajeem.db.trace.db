@@ -273,7 +273,11 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 20 more
+<<<<<<< HEAD
 05-26 15:45:14 jdbc[3]: null
+=======
+05-26 14:01:09 jdbc[3]: null
+>>>>>>> f521d1c3aa5879268d16e2bde4ec99e3a5ac2b4a
 org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.get(DbException.java:169)
 	at org.h2.message.DbException.get(DbException.java:146)
@@ -298,7 +302,11 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 20 more
+<<<<<<< HEAD
 05-26 15:46:27 jdbc[3]: null
+=======
+05-26 14:58:02 jdbc[3]: null
+>>>>>>> f521d1c3aa5879268d16e2bde4ec99e3a5ac2b4a
 org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.get(DbException.java:169)
 	at org.h2.message.DbException.get(DbException.java:146)
@@ -323,6 +331,7 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 20 more
+<<<<<<< HEAD
 05-26 15:47:06 jdbc[3]: null
 org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.get(DbException.java:169)
@@ -767,3 +776,5 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 64 more
+=======
+>>>>>>> f521d1c3aa5879268d16e2bde4ec99e3a5ac2b4a

@@ -206,7 +206,59 @@ public class SurveyWindow extends WebFrame {
 					webList.setSelectedIndex(webList.getSelectedIndex()+1);
 				}
 				else{
-					webList.setSelectedIndex(0);
+					if(currentQuestion!=null){
+						if(currentQuestion.getType() == 0){
+							currentQuestion.setStudentAnswer(new boolean[]{webRadioButton.isSelected(),webRadioButton_1.isSelected(),webRadioButton_2.isSelected()
+					        		,webRadioButton_3.isSelected(),webRadioButton_4.isSelected()});
+						}
+						if(currentQuestion.getType() == 1){
+							currentQuestion.setStudentAnswer(new boolean[]{webCheckBox.isSelected(),webCheckBox_1.isSelected(),webCheckBox_2.isSelected()
+					        		,webCheckBox_3.isSelected(),webCheckBox_4.isSelected()});
+						}
+						if(currentQuestion.getType() == 2){
+							currentQuestion.setStudentAnswer(webTextArea_1.getText());
+						}
+						
+						//TODO clean up this code
+						synchronized (sendQueue) {
+							sendQueue.add(currentQuestion);
+						}
+						
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								try {
+									Question question = null;
+									synchronized (sendQueue) {
+										if(!sendQueue.isEmpty()){
+											question = sendQueue.get(0);
+											sendQueue.remove(0);
+										}
+									}
+									SurveyResponse resp = new SurveyResponse(question);
+									resp.setQuestion(question);
+									resp.setStudent(getStudent());
+									//new SurveyEvent().fireResponseEvent(resp);
+									SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+									cmd.setEvent(resp);
+								
+									ServerService service = new ServerService();
+									service.send(cmd);
+								} catch (NumberFormatException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+
+							private Student getStudent() {
+								return privateStudent;//TODO correct this code
+							}
+						}).start();
+					}
 					dispose();
 				}
 			}
@@ -694,7 +746,7 @@ public class SurveyWindow extends WebFrame {
 							SurveyResponse resp = new SurveyResponse(question);
 							resp.setQuestion(question);
 							resp.setStudent(getStudent());
-							new SurveyEvent().fireResponseEvent(resp);
+							//new SurveyEvent().fireResponseEvent(resp);
 							SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
 							cmd.setEvent(resp);
 						

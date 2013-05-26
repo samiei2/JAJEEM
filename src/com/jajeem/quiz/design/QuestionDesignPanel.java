@@ -46,11 +46,9 @@ public class QuestionDesignPanel extends WebPanel {
 	private WebCheckBox webCheckBox_2;
 	private WebCheckBox webCheckBox_3;
 	private WebCheckBox webCheckBox_4;
-	private WebTextField webTextField_5;
 	private WebComboBox webComboBox;
 	private Panel_Bottom_1 parentPanel;
 	private WebPanel webPanelOptions;
-	private WebLabel wblblUrl;
 	private WebLabel wblblQuestion;
 
 
@@ -161,41 +159,6 @@ public class QuestionDesignPanel extends WebPanel {
 				
 			}
 		});
-		
-		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
-		
-		WebButton wbtnInsert = new WebButton();
-		wbtnInsert.setEnabled(false);
-		wbtnInsert.setText("Insert");
-		
-		wblblUrl = new WebLabel();
-		wblblUrl.setText("Url");
-		
-		webTextField_5 = new WebTextField();
-		webTextField_5.setEditable(false);
-		webTextField_5.setEnabled(false);
-		webTextField_5.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
-					parentPanel.getParentPanel().getCurrentQuestion().setUrl(webTextField_5.getText());
-				}
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				if(parentPanel.getQuestionListPanel().getWebTable().getSelectedRow() != -1 && parentPanel.getParentPanel().isEventsEnabled()){
-					parentPanel.getParentPanel().getCurrentQuestion().setUrl(webTextField_5.getText());
-				}
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -212,21 +175,11 @@ public class QuestionDesignPanel extends WebPanel {
 							.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGap(6)
-								.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(getWebScrollPane(), GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(wblblUrl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(webTextField_5, GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
-									.addComponent(wbtnInsert, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -244,26 +197,14 @@ public class QuestionDesignPanel extends WebPanel {
 								.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(getWebScrollPane(), GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
+							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(wblblUrl, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webTextField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(wbtnInsert, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(97, Short.MAX_VALUE))
 		);
-		
-		WebImage webImage = new WebImage();
-		webScrollPane_1.setViewportView(webImage);
 		
 		webTextField = new WebTextField();
 		webTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -965,15 +906,6 @@ public class QuestionDesignPanel extends WebPanel {
 
 	public void setWebTextField_4(WebTextField webTextField_4) {
 		this.webTextField_4 = webTextField_4;
-	}
-	
-	public WebTextField getWebTextField_5() {
-		return webTextField_5;
-	}
-
-
-	public void setWebTextField_5(WebTextField webTextField_5) {
-		this.webTextField_5 = webTextField_5;
 	}
 	
 	public WebTextField getWebTextField_6() {

@@ -175,30 +175,6 @@ public class Panel_Bottom_22 extends WebPanel {
 		
 		WebLabel webLabel = new WebLabel();
 		webLabel.setText("Results");
-		
-		WebLabel webLabel_1 = new WebLabel();
-		webLabel_1.setText("[Total]");
-		
-		WebLabel webLabel_2 = new WebLabel();
-		webLabel_2.setText("?");
-		
-		WebLabel webLabel_3 = new WebLabel();
-		webLabel_3.setText("[Answered]");
-		
-		WebLabel webLabel_4 = new WebLabel();
-		webLabel_4.setText("?");
-		
-		WebLabel webLabel_5 = new WebLabel();
-		webLabel_5.setText("[Correct]");
-		
-		WebLabel webLabel_6 = new WebLabel();
-		webLabel_6.setText("?");
-		
-		WebLabel webLabel_7 = new WebLabel();
-		webLabel_7.setText("Correct Rate");
-		
-		WebLabel webLabel_8 = new WebLabel();
-		webLabel_8.setText("?");
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -206,23 +182,7 @@ public class Panel_Bottom_22 extends WebPanel {
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_webPanel.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(209)
-							.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel_4, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(webLabel_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel_6, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-							.addGap(24)
-							.addComponent(webLabel_7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel_8, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
+							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE))
 					.addGap(24))
 		);
@@ -230,16 +190,7 @@ public class Panel_Bottom_22 extends WebPanel {
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(webLabel_4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(webLabel_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_6, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_7, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_8, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
 					.addContainerGap())

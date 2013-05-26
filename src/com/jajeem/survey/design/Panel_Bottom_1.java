@@ -24,16 +24,16 @@ import com.jajeem.survey.model.Question;
 public class Panel_Bottom_1 extends WebPanel {
 
 	private QuestionListPanel questionListPanel;
-	private Main parentPanel;
+	private SurveyMain parentPanel;
 	private QuestionDesignPanel questionDesignPanel;
 	private WebTextField wbTxtFldDirection;
 	//TODO remove the code below
 	private int id=0;
 	/**
 	 * Create the panel.
-	 * @param main 
+	 * @param surveyMain 
 	 */
-	public Panel_Bottom_1(Main main) {
+	public Panel_Bottom_1(SurveyMain surveyMain) {
 		//TODO remove the code below
 		try {
 			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
@@ -44,7 +44,7 @@ public class Panel_Bottom_1 extends WebPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.setParentPanel(main);
+		this.setParentPanel(surveyMain);
 		WebPanel webPanel = new WebPanel();
 		
 		final WebButton wbBtn_Next = new WebButton();
@@ -82,7 +82,7 @@ public class Panel_Bottom_1 extends WebPanel {
 				parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
 				parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
 				parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
-				parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
+				//parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 				try{
 				}
 				catch(Exception ex){
@@ -156,7 +156,7 @@ public class Panel_Bottom_1 extends WebPanel {
 					parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
 					parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
 					parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
-					parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
+					//parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 					try{
 						if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 0){
 							parentPanel.getCurrentQuestion().setType(Byte.parseByte("0"));
@@ -411,11 +411,11 @@ public class Panel_Bottom_1 extends WebPanel {
 	public void setQuestionListPanel(QuestionListPanel questionListPanel) {
 		this.questionListPanel = questionListPanel;
 	}
-	public Main getParentPanel() {
+	public SurveyMain getParentPanel() {
 		return parentPanel;
 	}
-	public void setParentPanel(Main parentPanel) {
-		this.parentPanel = parentPanel;
+	public void setParentPanel(SurveyMain surveyMain) {
+		this.parentPanel = surveyMain;
 	}
 	public QuestionDesignPanel getQuestionDesignPanel() {
 		return questionDesignPanel;
