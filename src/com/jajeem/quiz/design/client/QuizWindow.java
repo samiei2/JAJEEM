@@ -170,7 +170,7 @@ public class QuizWindow extends WebFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(200, 0, 694, 741);
+		setBounds(200, 0, 694, 700);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -295,8 +295,8 @@ public class QuizWindow extends WebFrame {
 		wbtnPrevious_1.setText("Previous");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 563, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 668, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -305,14 +305,14 @@ public class QuizWindow extends WebFrame {
 							.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 							.addGap(280))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
 							.addContainerGap())
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(4)
-							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
 							.addContainerGap())))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(388, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(495, Short.MAX_VALUE)
 					.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
@@ -329,12 +329,12 @@ public class QuizWindow extends WebFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
-					.addGap(12)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+							.addGap(12)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wbtnPrevious_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 455, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		

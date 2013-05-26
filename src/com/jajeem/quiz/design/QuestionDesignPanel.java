@@ -165,7 +165,7 @@ public class QuestionDesignPanel extends WebPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+						.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
 						.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
