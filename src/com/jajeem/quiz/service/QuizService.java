@@ -18,7 +18,7 @@ public class QuizService implements IQuizService{
 	private QuestionDAO questionDAO;
 	private ResponseDAO responseDAO;
 	private RunDAO runDAO;
-	StartUp start = new StartUp();
+	//StartUp start = new StartUp();
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
 		

@@ -178,7 +178,17 @@ public class Main extends WebDialog {
 		WebButton wbtnNew = new WebButton();
 		wbtnNew.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				panel_bottom_1.clear();
+				setCurrentSurvey(new Survey());
+                getCurrentSurvey().addQuestion(new Question());
+                // TODO remove these lines
+                getCurrentSurvey().getQuestionList().get(0).setInstructorId(1);
+                getCurrentSurvey().setInstructorId(1);
+                /////////////////////
+                panel_bottom_1.clear();
+                getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
+                ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0);
+				
 			}
 		});
 		wbtnNew.setText("New");

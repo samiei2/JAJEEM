@@ -3,11 +3,11 @@ package com.jajeem.quiz.design;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.DesignMode;
 import java.net.InetAddress;
 import java.sql.SQLException;
 
@@ -16,11 +16,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
@@ -29,14 +28,12 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
-import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.events.QuizEvent;
-import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -44,7 +41,6 @@ import com.jajeem.quiz.service.QuizService;
 import com.jajeem.quiz.service.ResultService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
-import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class QuizMainPanel extends WebDialog {
@@ -215,7 +211,16 @@ public class QuizMainPanel extends WebDialog {
 		WebButton wbtnNew = new WebButton();
 		wbtnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panel_bottom_1.clear();
+				setCurrentQuiz(new Quiz());
+                getCurrentQuiz().addQuestion(new Question());
+                // TODO remove these lines
+                getCurrentQuiz().getQuestionList().get(0).setInstructorId(1);
+                getCurrentQuiz().setInstructorId(1);
+                /////////////////////
+                panel_bottom_1.clear();
+                getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
+                ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0);
 			}
 		});
 		wbtnNew.setText("New");
