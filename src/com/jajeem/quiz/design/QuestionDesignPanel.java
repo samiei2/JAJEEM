@@ -74,6 +74,20 @@ public class QuestionDesignPanel extends WebPanel {
 			public void itemStateChanged(ItemEvent arg0) {
 				CardLayout cl = (CardLayout)(webPanelOptions.getLayout());
 		        cl.show(webPanelOptions, (String)arg0.getItem());
+		        if(((String)arg0.getItem()).equals("Essay")){
+		        	webTextField.setVisible(false);
+		        	webTextField_1.setVisible(false);
+		        	webTextField_2.setVisible(false);
+		        	webTextField_3.setVisible(false);
+		        	webTextField_4.setVisible(false);
+		        }
+		        else{
+		        	webTextField.setVisible(true);
+		        	webTextField_1.setVisible(true);
+		        	webTextField_2.setVisible(true);
+		        	webTextField_3.setVisible(true);
+		        	webTextField_4.setVisible(true);
+		        }
 		        webRadioButton.setSelected(false);
 		        webRadioButton_1.setSelected(false);
 		        webRadioButton_2.setSelected(false);
