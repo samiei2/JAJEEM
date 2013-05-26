@@ -255,7 +255,7 @@ public class QuizWindow extends WebFrame {
 									QuizResponse resp = new QuizResponse(question);
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
-									new QuizEvent().fireResponseEvent(resp);
+									//new QuizEvent().fireResponseEvent(resp);
 									SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 									cmd.setEvent(resp);
 								
@@ -681,7 +681,7 @@ public class QuizWindow extends WebFrame {
 								QuizResponse resp = new QuizResponse(question);
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
-								new QuizEvent().fireResponseEvent(resp);
+								//new QuizEvent().fireResponseEvent(resp);
 								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 								cmd.setEvent(resp);
 							

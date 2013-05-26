@@ -36,6 +36,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
+import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.quiz.design.QuizMainPanel;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
@@ -283,7 +284,7 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				QuizMainPanel quiz = new QuizMainPanel();
+				QuizMain quiz = new QuizMain();
 				quiz.setVisible(true);
 			}
 		});
@@ -292,7 +293,7 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				com.jajeem.survey.design.Main survey = new com.jajeem.survey.design.Main();
+				com.jajeem.survey.design.SurveyMain survey = new com.jajeem.survey.design.SurveyMain();
 				survey.setVisible(true);
 			}
 		});

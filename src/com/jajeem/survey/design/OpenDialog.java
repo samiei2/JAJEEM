@@ -42,7 +42,7 @@ public class OpenDialog extends JDialog {
 	private WebTable wbTblQuestion;
 	private WebTable wbTblQuiz;
 	private ArrayList<Quiz> quizList = new ArrayList<>();
-	private Main parentFrame;
+	private SurveyMain parentFrame;
 	/**
 	 * Launch the application.
 	 */
@@ -61,7 +61,7 @@ public class OpenDialog extends JDialog {
 	 * @param actionListener 
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public OpenDialog(Main frame) {
+	public OpenDialog(SurveyMain frame) {
 		parentFrame = frame;
 		addWindowListener(new WindowAdapter() {
 			@Override

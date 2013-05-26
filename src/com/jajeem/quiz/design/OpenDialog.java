@@ -32,6 +32,7 @@ import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class OpenDialog extends JDialog {
@@ -41,7 +42,7 @@ public class OpenDialog extends JDialog {
 	private WebTable wbTblQuestion;
 	private WebTable wbTblQuiz;
 	private ArrayList<Quiz> quizList = new ArrayList<>();
-	private QuizMainPanel parentFrame;
+	private QuizMain parentFrame;
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +61,9 @@ public class OpenDialog extends JDialog {
 	 * @param actionListener 
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public OpenDialog(QuizMainPanel frame) {
+	public OpenDialog(QuizMain frame) {
+		setTitle("Open");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(OpenDialog.class.getResource("/com/jajeem/images/quiz.png")));
 		parentFrame = frame;
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {

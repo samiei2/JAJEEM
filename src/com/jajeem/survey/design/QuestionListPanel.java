@@ -77,7 +77,7 @@ public class QuestionListPanel extends WebPanel {
 				parentPanel.getQuestionDesignPanel().getWebTextField_2().setText(parentPanel.getParentPanel().getCurrentQuestion().getAnswer3());
 				parentPanel.getQuestionDesignPanel().getWebTextField_3().setText(parentPanel.getParentPanel().getCurrentQuestion().getAnswer4());
            		parentPanel.getQuestionDesignPanel().getWebTextField_4().setText(parentPanel.getParentPanel().getCurrentQuestion().getAnswer5());
-				parentPanel.getQuestionDesignPanel().getWebTextField_5().setText(parentPanel.getParentPanel().getCurrentQuestion().getUrl());
+				//parentPanel.getQuestionDesignPanel().getWebTextField_5().setText(parentPanel.getParentPanel().getCurrentQuestion().getUrl());
            		if(parentPanel.getParentPanel().getCurrentQuestion().getType() == 0){
            			parentPanel.getQuestionDesignPanel().getWebComboBox().setSelectedIndex(0);
            		}

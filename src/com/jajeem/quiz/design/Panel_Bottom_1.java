@@ -28,7 +28,7 @@ import com.jajeem.quiz.model.Quiz;
 public class Panel_Bottom_1 extends WebPanel {
 
 	private QuestionListPanel questionListPanel;
-	private QuizMainPanel parentPanel;
+	private QuizMain parentPanel;
 	private WebCheckBox webCheckBox;
 	private QuestionDesignPanel questionDesignPanel;
 	private WebTextField wbTxtFldTimeLimit;
@@ -39,9 +39,9 @@ public class Panel_Bottom_1 extends WebPanel {
 	private int id=0;
 	/**
 	 * Create the panel.
-	 * @param main 
+	 * @param quizMain 
 	 */
-	public Panel_Bottom_1(QuizMainPanel main) {
+	public Panel_Bottom_1(QuizMain quizMain) {
 		//TODO remove the code below
 		try {
 			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
@@ -52,7 +52,7 @@ public class Panel_Bottom_1 extends WebPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.setParentPanel(main);
+		this.setParentPanel(quizMain);
 		WebPanel webPanel = new WebPanel();
 		
 		final WebButton wbBtn_Next = new WebButton();
@@ -90,7 +90,7 @@ public class Panel_Bottom_1 extends WebPanel {
 				parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
 				parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
 				parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
-				parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
+				//parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 				try{
 					parentPanel.getCurrentQuestion().setPoint(Integer.parseInt(getQuestionDesignPanel().getWebTextField_6().getText()));
 				}
@@ -197,7 +197,7 @@ public class Panel_Bottom_1 extends WebPanel {
 					parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
 					parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
 					parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
-					parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
+					//parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 					try{
 						parentPanel.getCurrentQuestion().setPoint(Integer.parseInt(getQuestionDesignPanel().getWebTextField_6().getText()));
 					}
@@ -620,7 +620,9 @@ public class Panel_Bottom_1 extends WebPanel {
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.LEADING, gl_webPanel.createSequentialGroup()
+							.addGap(422)
+							.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 						.addComponent(questionDesignPanel, GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE))
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_webPanel.createSequentialGroup()
@@ -689,10 +691,10 @@ public class Panel_Bottom_1 extends WebPanel {
 	public void setQuestionListPanel(QuestionListPanel questionListPanel) {
 		this.questionListPanel = questionListPanel;
 	}
-	public QuizMainPanel getParentPanel() {
+	public QuizMain getParentPanel() {
 		return parentPanel;
 	}
-	public void setParentPanel(QuizMainPanel parentPanel) {
+	public void setParentPanel(QuizMain parentPanel) {
 		this.parentPanel = parentPanel;
 	}
 	public QuestionDesignPanel getQuestionDesignPanel() {

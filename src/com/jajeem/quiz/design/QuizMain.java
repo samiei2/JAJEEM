@@ -1,5 +1,6 @@
 package com.jajeem.quiz.design;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -44,11 +45,10 @@ import com.jajeem.quiz.service.ResultService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
 
-@SuppressWarnings("serial")
-public class QuizMainPanel extends WebFrame {
-	
+public class QuizMain extends WebFrame {
+
 	private WebPanel contentPane;
-	private QuizMainPanel frame;
+	private QuizMain frame;
 	private Question currentQuestion;
 	private com.jajeem.quiz.model.Quiz currentQuiz;
 	//private ArrayList<com.jajeem.quiz.model.Quiz> quizList;
@@ -61,7 +61,6 @@ public class QuizMainPanel extends WebFrame {
 	private WebPanel panel_bottom_3;
 	private WebButton wbtnStart;
 	private WebButton wbtnSaveResults;
-
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +68,7 @@ public class QuizMainPanel extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuizMainPanel frame = new QuizMainPanel();
+					QuizMain frame = new QuizMain();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,34 +80,19 @@ public class QuizMainPanel extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizMainPanel() {
+	public QuizMain() {
 		setTitle("Jajeem Quiz");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMainPanel.class.getResource("/com/jajeem/images/quiz.png")));
-		try {
-			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
-		} catch (Exception e3) {
-		}
-		// Enabling dialog decoration
-				boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
-				WebLookAndFeel.setDecorateFrames(true);
-				
-				// Restoring frame decoration option
-				WebLookAndFeel.setDecorateFrames(decorateFrames);
+		
+		setBounds(100, 100, 1160, 753);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		frame = this;
-		////////////////////////////////////////
-		////////////////////////////////////////
-//		new com.jajeem.util.Config();
-//		ClientService clientService = null;
-//		try {
-//			clientService = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-//		} catch (NumberFormatException e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		} catch (Exception e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		}
-//		clientService.start();
+		
+		WebPanel webPanel = new WebPanel();
+		getContentPane().add(webPanel, BorderLayout.CENTER);
+		
+		
 		new Config();
 		ClientService clientService2 = null;
 		try {
@@ -119,22 +103,11 @@ public class QuizMainPanel extends WebFrame {
 			e2.printStackTrace();
 		}
 		clientService2.start();
-		//////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////
+		
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-//				QuizService qs = new QuizService();
-//				try {
-//					quizList = new ArrayList<com.jajeem.quiz.model.Quiz>();
-//					ArrayList<com.jajeem.quiz.model.Quiz> temp = qs.list();
-//					if(temp != null)
-//						quizList.addAll(qs.list());
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//				quizList.add(new com.jajeem.quiz.model.Quiz());
-//                setCurrentQuiz(quizList.get(0));
                 setCurrentQuiz(new Quiz());
                 getCurrentQuiz().addQuestion(new Question());
                 // TODO remove these lines
@@ -146,24 +119,8 @@ public class QuizMainPanel extends WebFrame {
 				m_modelSelection.setSelectionInterval(0,0);
 			}
 		});
-		setBackground(new Color(245, 245, 245));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1189, 729);
-		contentPane = new WebPanel();
-		contentPane.setBackground(new Color(245, 245, 245));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		
 		WebPanel panel = new WebPanel();
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1023, Short.MAX_VALUE)
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		);
 		
 		WebPanel panel_top = new WebPanel();
 		panel_top.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -193,12 +150,11 @@ public class QuizMainPanel extends WebFrame {
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_top, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(cards, GroupLayout.PREFERRED_SIZE, 1019, Short.MAX_VALUE))
-					.addGap(4))
+						.addComponent(cards, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1071, Short.MAX_VALUE)
+						.addComponent(panel_top, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -206,7 +162,7 @@ public class QuizMainPanel extends WebFrame {
 					.addContainerGap()
 					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
+					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 616, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -490,7 +446,8 @@ public class QuizMainPanel extends WebFrame {
 		);
 		panel_top.setLayout(gl_panel_top);
 		panel.setLayout(gl_panel);
-		contentPane.setLayout(gl_contentPane);
+		
+		webPanel.add(panel);
 	}
 
 	public com.jajeem.quiz.model.Quiz getCurrentQuiz() {

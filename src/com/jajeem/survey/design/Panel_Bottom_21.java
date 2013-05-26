@@ -195,79 +195,23 @@ public class Panel_Bottom_21 extends WebPanel {
 		WebLabel wblblResults = new WebLabel();
 		wblblResults.setText("Results");
 		
-		WebLabel wblbltotal = new WebLabel();
-		wblbltotal.setText("[Total]");
-		
-		WebLabel webLabel = new WebLabel();
-		webLabel.setText("?");
-		
-		WebLabel wblblAnswered = new WebLabel();
-		wblblAnswered.setText("[Answered]");
-		
-		WebLabel webLabel_1 = new WebLabel();
-		webLabel_1.setText("?");
-		
-		WebLabel wblblcorrect = new WebLabel();
-		wblblcorrect.setText("[Correct]");
-		
-		WebLabel webLabel_2 = new WebLabel();
-		webLabel_2.setText("?");
-		
-		WebLabel wblblCorrectRate = new WebLabel();
-		wblblCorrectRate.setText("Correct Rate");
-		
-		WebLabel webLabel_3 = new WebLabel();
-		webLabel_3.setText("?");
-		
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGap(24))
-						.addGroup(Alignment.LEADING, gl_webPanel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(375)
-							.addComponent(wblbltotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(wblblAnswered, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(wblblcorrect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(wblblCorrectRate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
-					.addGap(0))
+					.addContainerGap()
+					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(939, Short.MAX_VALUE))
+				.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
 		);
 		gl_webPanel_1.setVerticalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-								.addComponent(wblbltotal, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE))
-							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wblblAnswered, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(webLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(wblblcorrect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wblblCorrectRate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_3, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
