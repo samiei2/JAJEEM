@@ -101,8 +101,8 @@ public class OpenDialog extends JDialog {
 			}
 		});
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setResizable(false);
-		setSize(750, 700);
+		setResizable(true);
+		setBounds(100, 0, 800, 720);
 		setLocationByPlatform(true);
 		
 		WebPanel webPanel = new WebPanel();
