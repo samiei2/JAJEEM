@@ -18,6 +18,7 @@ import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.toolbar.WebToolBar;
+import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.util.Config;
 
 public class InstructorCenter {
@@ -64,6 +65,7 @@ public class InstructorCenter {
 		}
 
 		internalFrame.putClientProperty("ip", hostIp);
+		internalFrame.putClientProperty("username", hostName);
 
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorCenter.class
