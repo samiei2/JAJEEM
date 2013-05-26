@@ -788,6 +788,7 @@ public class QuestionDesignPanel extends WebPanel {
 
 
 	public void clear() {
+		parentPanel.getParentPanel().setEventsEnabled(false);
 		webTextArea.setText("");
         getWebTextField().setText("");
         getWebTextField_1().setText("");
@@ -805,6 +806,7 @@ public class QuestionDesignPanel extends WebPanel {
         getWebCheckBox_2().setSelected(false);
         getWebCheckBox_3().setSelected(false);
         getWebCheckBox_4().setSelected(false);
+        parentPanel.getParentPanel().setEventsEnabled(true);
 	}
 
 	public WebComboBox getWebComboBox() {

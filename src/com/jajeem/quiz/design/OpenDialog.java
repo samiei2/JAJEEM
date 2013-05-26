@@ -110,6 +110,7 @@ public class OpenDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				parentFrame.setCurrentQuiz(quizList.get(wbTblQuiz.getSelectedRow()));
 				parentFrame.loadCurrentQuiz();
+				dispose();
 			}
 		});
 		wbtnOpen.setText("Open");

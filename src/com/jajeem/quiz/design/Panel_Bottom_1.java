@@ -512,7 +512,7 @@ public class Panel_Bottom_1 extends WebPanel {
 						parentPanel.getCurrentQuiz().setTime(Integer.parseInt(wbTxtFldTimeLimit.getText()));
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, ex.getMessage());
+						//JOptionPane.showMessageDialog(null, ex.getMessage());
 					}
 				}
 			}
@@ -524,7 +524,7 @@ public class Panel_Bottom_1 extends WebPanel {
 						parentPanel.getCurrentQuiz().setTime(Integer.parseInt(wbTxtFldTimeLimit.getText()));
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, ex.getMessage());
+						JOptionPane.showMessageDialog(null, "Invalid value!");
 					}
 				}
 			}
