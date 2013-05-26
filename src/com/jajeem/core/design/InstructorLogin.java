@@ -64,7 +64,8 @@ public class InstructorLogin extends JDialog {
 	 * @throws SQLException
 	 */
 	public InstructorLogin() throws SQLException {
-
+		@SuppressWarnings("unused")
+		StartUp start = new StartUp();
 		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
 		WebLookAndFeel.setDecorateDialogs(true);
 
@@ -117,8 +118,7 @@ public class InstructorLogin extends JDialog {
 			}
 		});
 
-		@SuppressWarnings("unused")
-		StartUp start = new StartUp();
+		
 
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);
 	}
