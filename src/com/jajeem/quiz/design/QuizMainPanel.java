@@ -28,12 +28,14 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.events.QuizEvent;
+import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -43,7 +45,7 @@ import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
-public class QuizMainPanel extends WebDialog {
+public class QuizMainPanel extends WebFrame {
 	
 	private WebPanel contentPane;
 	private QuizMainPanel frame;
@@ -339,7 +341,7 @@ public class QuizMainPanel extends WebDialog {
 							return;
 						}
 						if(question.getAnswer1().equals("") && question.getAnswer2().equals("") && question.getAnswer3().equals("") 
-								&& question.getAnswer4().equals("") && question.getAnswer5().equals("")){
+								&& question.getAnswer4().equals("") && question.getAnswer5().equals("") && question.getType()!=2){
 							JOptionPane.showMessageDialog(null, "No answer is entered for the question "+(i+1)+".Please enter at least one.");
 							return;
 						}
@@ -365,12 +367,12 @@ public class QuizMainPanel extends WebDialog {
 			        	run.setQuiz(currentQuiz);
 			        	run.setInstructor(getCurrentInstructor());
 			        	run.setSession(getCurrentSession());
-			        	//QuizWindow wind =new QuizWindow(run);
+			        	QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
 						ServerService serv = new ServerService();
 						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						//StartQuizCommand cmd = new StartQuizCommand("127.0.0.1", 9090);
+						//StartQuizCommand cmd = new StartQuizCommand("","127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 						cmd.setRun(run);
 						cmd.setQuiz(currentQuiz);
