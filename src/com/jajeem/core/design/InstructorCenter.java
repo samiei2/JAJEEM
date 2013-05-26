@@ -46,27 +46,28 @@ public class InstructorCenter {
 			throws NumberFormatException, Exception {
 		final WebInternalFrame internalFrame = new WebInternalFrame(hostName,
 				false, false, false, true);
-		
+
 		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
 				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
 				false, false);
 		final Viewer vnc = new Viewer(con);
-		
+
 		// get current list of students, if some one is new, add him/her
 		JInternalFrame[] frames = desktopPane.getAllFrames();
 		List<String> listOfStudents = new ArrayList<String>();
 		for (JInternalFrame frame : frames) {
 			listOfStudents.add((String) frame.getClientProperty("ip"));
 		}
-		
+
 		if (listOfStudents.contains(hostIp)) {
 			return null;
 		}
-		
+
 		internalFrame.putClientProperty("ip", hostIp);
-		
-		internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
-				.getResourceAsStream("/icons/menubar/student.png"))));
+
+		internalFrame.setFrameIcon(new ImageIcon(ImageIO
+				.read(InstructorCenter.class
+						.getResourceAsStream("/icons/menubar/student.png"))));
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -74,15 +75,15 @@ public class InstructorCenter {
 
 		internalFrame.setBounds(0 + (desktopPane.getComponentCount() * 200), 0,
 				200, 200);
-		
+
 		final WebToolBar toolBar = new WebToolBar();
 		toolBar.setRound(0);
 		toolBar.setFloatable(false);
 		WebPanel panel = new WebPanel();
-		panel.add(toolBar);
-		
+//		 panel.add(toolBar);
+
 		internalFrame.getContentPane().add(panel, BorderLayout.SOUTH);
-		
+
 		final WebCheckBox checkBox = new WebCheckBox("");
 		checkBox.setRolloverDarkBorderOnly(true);
 		checkBox.setRound(0);
@@ -91,7 +92,7 @@ public class InstructorCenter {
 		internalFrame.revalidate();
 		toolBar.setVisible(true);
 		panel.setVisible(true);
-		
+
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
 			@Override
@@ -111,13 +112,14 @@ public class InstructorCenter {
 				// TODO Auto-generated method stub
 
 			}
-			
+
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-				
+
 				try {
-					internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
-							.getResourceAsStream("/icons/menubar/student.png"))));
+					internalFrame.setFrameIcon(new ImageIcon(
+							ImageIO.read(InstructorCenter.class
+									.getResourceAsStream("/icons/menubar/student.png"))));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -139,10 +141,11 @@ public class InstructorCenter {
 
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
-				
+
 				try {
-					internalFrame.setFrameIcon(new ImageIcon(ImageIO.read(InstructorCenter.class
-							.getResourceAsStream("/icons/menubar/tick.png"))));
+					internalFrame.setFrameIcon(new ImageIcon(
+							ImageIO.read(InstructorCenter.class
+									.getResourceAsStream("/icons/menubar/tick.png"))));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
