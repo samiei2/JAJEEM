@@ -154,7 +154,7 @@ public class SurveyWindow extends WebFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(200, 100, 647, 674);
+		setBounds(200, 0, 720, 700);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

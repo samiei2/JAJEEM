@@ -79,7 +79,7 @@ public class SurveyMain extends WebFrame {
 	 * Create the frame.
 	 */
 	public SurveyMain() {
-		setBounds(100, 100, 1129, 755);
+		setBounds(100, 0, 1160, 780);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		WebPanel webPanel = new WebPanel();
