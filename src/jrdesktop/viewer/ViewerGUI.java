@@ -142,7 +142,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		// jPopupMenuHelp.add(jMenuItemAbout);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-		setTitle(" JaJeem Viewer");
+		setTitle(" iCalabo Viewer");
 		setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -480,9 +480,9 @@ public class ViewerGUI extends javax.swing.JFrame {
 		if (recorder.isRecording()) {
 			setIconImage(new ImageIcon(Commons.ALIVE_ICON).getImage());
 			jBtnStartStop.setIcon(new ImageIcon(Commons.STOP_ICON));
-			setTitle("JaJeem Viewer [" + recorder.config.server_address + "]");
+			setTitle("iCalabo Viewer [" + recorder.config.server_address + "]");
 		} else {
-			setTitle("JaJeem Viewer");
+			setTitle("iCalabo Viewer");
 			setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
 			jBtnStartStop.setIcon(new ImageIcon(Commons.START_ICON));
 			jToggleBtnPauseResume.setSelected(false);

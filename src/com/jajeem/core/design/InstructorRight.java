@@ -45,7 +45,11 @@ import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 public class InstructorRight {
 
 	public static String iconsPath = "";
+	final static WebPopup popup = new WebPopup();
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public static WebPanel createPanel(WebPanel panel2) throws Exception {
 
 		new Config();
@@ -60,9 +64,18 @@ public class InstructorRight {
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
 
+		ImageIcon imgVNC = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/vnc_text.png")));
+		WebButton VNCButton = new WebButton(imgVNC);
+		VNCButton.setRound(0);
+		TooltipManager.setTooltip(VNCButton, imgToolTip,
+				"Remote access to selected student", TooltipWay.left);
+		panel.add(VNCButton);
+
 		ImageIcon imgChat = new ImageIcon(
 				ImageIO.read(InstructorRight.class
-						.getResourceAsStream("/icons/applications_style1/intercom_text.png")));
+						.getResourceAsStream("/icons/applications_style1/chat_text.png")));
 		WebButton chatButton = new WebButton(imgChat);
 		TooltipManager.setTooltip(chatButton, imgToolTip,
 				"Start chating to selected student", TooltipWay.left);
@@ -105,7 +118,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(blackoutButton, imgToolTip,
 				"Locks student's mouse and keyboard with blacking his screen",
 				TooltipWay.left);
-//		panel.add(blackoutButton);
+		// panel.add(blackoutButton);
 
 		ImageIcon imgQuiz = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -118,7 +131,7 @@ public class InstructorRight {
 
 		ImageIcon imgSurvey = new ImageIcon(
 				ImageIO.read(InstructorRight.class
-						.getResourceAsStream("/icons/applications_style1/quiz_text.png")));
+						.getResourceAsStream("/icons/applications_style1/survey_text.png")));
 		WebButton surveyButton = new WebButton(imgSurvey);
 		surveyButton.setRound(0);
 		TooltipManager.setTooltip(surveyButton, imgToolTip,
@@ -142,15 +155,6 @@ public class InstructorRight {
 		TooltipManager.setTooltip(messageButton, imgToolTip, "Message",
 				TooltipWay.left);
 		panel.add(messageButton);
-
-		ImageIcon imgVNC = new ImageIcon(
-				ImageIO.read(InstructorRight.class
-						.getResourceAsStream("/icons/applications_style1/vnc_text.png")));
-		WebButton VNCButton = new WebButton(imgVNC);
-		VNCButton.setRound(0);
-		TooltipManager.setTooltip(VNCButton, imgToolTip,
-				"Remote access to selected student", TooltipWay.left);
-		panel.add(VNCButton);
 
 		ImageIcon imgPower = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -355,12 +359,15 @@ public class InstructorRight {
 							turnOffButton, logOffButton, restartButton);
 					buttonGroup.setButtonsDrawFocus(false);
 
-					final WebPopup popup = new WebPopup();
 					popup.setPopupStyle(PopupStyle.lightSmall);
 					popup.setMargin(5);
 					popup.add(buttonGroup);
 					popup.setRound(0);
-					popup.showPopup(powerButton);
+					if (popup.isShowing()) {
+						popup.hidePopup();
+					} else {
+						popup.showPopup(powerButton);
+					}
 
 					turnOffButton.addActionListener(new ActionListener() {
 						@Override
@@ -445,7 +452,8 @@ public class InstructorRight {
 		});
 
 		panel2.setLayout(new BorderLayout());
-		panel2.add(panel, BorderLayout.NORTH);
+		panel2.add(panel, BorderLayout.CENTER);
+
 		panel2.setUndecorated(true);
 		panel2.setOpaque(true);
 		panel.setOpaque(true);

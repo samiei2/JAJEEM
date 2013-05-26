@@ -1,0 +1,5 @@
+WinRegistry
+					.writeStringValue(
+							WinRegistry.HKEY_CURRENT_USER,
+							"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+							"DisallowRun", "1");

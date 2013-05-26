@@ -105,7 +105,8 @@ public class Instructor implements SwingConstants {
 				Toolkit.getDefaultToolkit().getImage(
 						Instructor.class
 								.getResource("/icons/menubar/jajeem.jpg")));
-		getFrmJajeemProject().setBounds(200, 100, 850, 600);
+		
+		getFrmJajeemProject().setBounds(200, 0, 1000, 755);
 		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
@@ -171,11 +172,9 @@ public class Instructor implements SwingConstants {
 		trailingPanel.setDrawSides(false, true, true, false);
 		trailingPanel.setRound(0);
 		setupPanel(trailingPanel, EAST);
-		WebScrollPane webScrollPane = new WebScrollPane(trailingPanel, false);
-		webScrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
-				webScrollPane);
+				trailingPanel);
 
 //		rPanel.setCollapseIcon(new ImageIcon(ImageIO.read(Instructor.class
 //				.getResourceAsStream("/icons/menubar/angle-right.png"))));
