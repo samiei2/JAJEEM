@@ -85,7 +85,7 @@ public class SurveyMain extends WebFrame {
 		WebPanel webPanel = new WebPanel();
 		getContentPane().add(webPanel, BorderLayout.CENTER);
 
-		setTitle("Jajeem Survey");
+		setTitle("Survey");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyMain.class.getResource("/com/jajeem/images/survey.png")));
 		frame = this;
 		////////////////////////////////////////

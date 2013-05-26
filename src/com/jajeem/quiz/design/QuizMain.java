@@ -84,7 +84,7 @@ public class QuizMain extends WebFrame {
 	 * Create the frame.
 	 */
 	public QuizMain() {
-		setTitle("Jajeem Quiz");
+		setTitle("Quiz");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMain.class.getResource("/com/jajeem/images/quiz.png")));
 		
 		setBounds(100, 0, 1200, 780);
