@@ -61,7 +61,6 @@ public class QuizMain extends WebFrame {
 	private Panel_Bottom_2 panel_bottom_2;
 	private WebPanel panel_bottom_3;
 	private WebButton wbtnStart;
-	private WebButton wbtnSaveResults;
 	private WebButton wbtnContent;
 	private WebButton wbtnOpen;
 	private WebButton wbtnSave;
@@ -196,7 +195,7 @@ public class QuizMain extends WebFrame {
 					wbtnContent.setEnabled(false);
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
-					wbtnSaveResults.setVisible(false);
+					//wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 					wbtnStart.setEnabled(true);
@@ -219,22 +218,6 @@ public class QuizMain extends WebFrame {
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
 		wbtnNew.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/Add.png")));
-		
-		WebButton wbtnReports = new WebButton();
-		wbtnReports.setEnabled(false);
-		wbtnReports.setText("Reports");
-		wbtnReports.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnReports.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnReports.setVerticalAlignment(SwingConstants.TOP);
-		wbtnReports.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/gnome-mime-application-vnd.lotus-1-2-3.png")));
-		
-		WebButton wbtnResponse = new WebButton();
-		wbtnResponse.setEnabled(false);
-		wbtnResponse.setVerticalAlignment(SwingConstants.TOP);
-		wbtnResponse.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnResponse.setText("Response");
-		wbtnResponse.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnResponse.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
 		wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
@@ -300,7 +283,7 @@ public class QuizMain extends WebFrame {
 				wbtnContent.setEnabled(false);
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
-				wbtnSaveResults.setVisible(false);
+				//wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 				wbtnStart.setEnabled(true);
@@ -345,7 +328,7 @@ public class QuizMain extends WebFrame {
 						}
 					}
 					
-					wbtnSaveResults.setVisible(true);
+					//wbtnSaveResults.setVisible(true);
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					
@@ -419,36 +402,6 @@ public class QuizMain extends WebFrame {
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 		
-		wbtnSaveResults = new WebButton();
-		wbtnSaveResults.setEnabled(false);
-		wbtnSaveResults.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to save current results?");
-				ResultService qs = new ResultService();
-				if (i == 0){
-					Run run = new Run();
-					run.setId(1);
-					run.setInstructorId(1);
-					run.setQuizId(1);
-					run.setSessionId(1);
-					run.setStudentId(1);
-					qs.create(panel_bottom_2.getQuizResponse(),run);
-				}
-				else if (i == 1){
-					//TODO dispose currentquiz
-				}
-				else{
-					
-				}
-			}
-		});
-		wbtnSaveResults.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/document-save-as.png")));
-		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
-		wbtnSaveResults.setText("Save Results");
-		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setVisible(false);
-		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(
 			gl_panel_top.createParallelGroup(Alignment.LEADING)
@@ -458,14 +411,8 @@ public class QuizMain extends WebFrame {
 					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 742, Short.MAX_VALUE)
 					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnResponse, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnReports, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
 		);
@@ -474,13 +421,11 @@ public class QuizMain extends WebFrame {
 				.addGroup(gl_panel_top.createSequentialGroup()
 					.addGroup(gl_panel_top.createParallelGroup(Alignment.LEADING)
 						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnReports, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_top.createParallelGroup(Alignment.BASELINE)
+							.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
 						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnResponse, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_top.setLayout(gl_panel_top);
