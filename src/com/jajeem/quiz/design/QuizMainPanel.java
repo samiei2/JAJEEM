@@ -146,7 +146,7 @@ public class QuizMainPanel extends WebDialog {
 		});
 		setBackground(new Color(245, 245, 245));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1189, 729);
+		setBounds(100, 0, 1189, 729);
 		contentPane = new WebPanel();
 		contentPane.setBackground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

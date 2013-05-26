@@ -44,6 +44,7 @@ import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 public class InstructorRight {
 
 	public static String iconsPath = "";
+	final static WebPopup popup = new WebPopup();
 
 	/**
 	 * @wbp.parser.entryPoint
@@ -57,11 +58,11 @@ public class InstructorRight {
 		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(InstructorRight.class
 				.getResourceAsStream("/icons/menubar/tooltip.png")));
 		TooltipManager.setDefaultDelay(1000);
-		
+
 		GridLayout grid = new GridLayout(0, 1);
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
-		
+
 		ImageIcon imgVNC = new ImageIcon(
 				ImageIO.read(InstructorRight.class
 						.getResourceAsStream("/icons/applications_style1/vnc_text.png")));
@@ -116,7 +117,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(blackoutButton, imgToolTip,
 				"Locks student's mouse and keyboard with blacking his screen",
 				TooltipWay.left);
-//		panel.add(blackoutButton);
+		// panel.add(blackoutButton);
 
 		ImageIcon imgQuiz = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -357,12 +358,15 @@ public class InstructorRight {
 							turnOffButton, logOffButton, restartButton);
 					buttonGroup.setButtonsDrawFocus(false);
 
-					final WebPopup popup = new WebPopup();
 					popup.setPopupStyle(PopupStyle.lightSmall);
 					popup.setMargin(5);
 					popup.add(buttonGroup);
 					popup.setRound(0);
-					popup.showPopup(powerButton);
+					if (popup.isShowing()) {
+						popup.hidePopup();
+					} else {
+						popup.showPopup(powerButton);
+					}
 
 					turnOffButton.addActionListener(new ActionListener() {
 						@Override
@@ -448,7 +452,7 @@ public class InstructorRight {
 
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.CENTER);
-		
+
 		panel2.setUndecorated(true);
 		panel2.setOpaque(true);
 		panel.setOpaque(true);
