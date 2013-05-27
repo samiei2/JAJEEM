@@ -7,20 +7,13 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import com.jajeem.whiteboard.server.Module.Sessions;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import com.jajeem.whiteboard.server.Module.Sessions;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class MainFrame is the main frame to provide an interface
@@ -60,7 +53,7 @@ public class MainFrame extends JFrame {
      */
     public MainFrame(Sessions sessions, int sessionID, Whiteboard whiteboard,
                      int userid, String username) {
-    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         // initialize the private fields. 
         this.isUserLeave = false;
         this.sessions = sessions;

@@ -7,31 +7,20 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.net.InetAddress;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 /**
  * Class WhiteboardCreateASession provides an interface,
@@ -218,21 +207,17 @@ public class WhiteboardCreateASession extends JFrame {
             MainFrame mainFrame = new MainFrame(sessions,
                     sessionID,whiteboard,userid,adminName);
             
-          //TODO change this code
             try{
             	new Config();
-    			ServerService serv = new ServerService();
-    			StartWhiteBoardCommand cmd = new StartWhiteBoardCommand("127.0.0.1", 9091);
-    			cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-    			cmd.setWhiteboardClient(whiteboardClient);
-    			serv.send(cmd);
+            	ServerService server = new ServerService();
+            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand("", "127.0.0.1", Integer.parseInt(Config.getParam("port")));
+            	cmd.setSessionID(0);
+            	server.send(cmd);
             }
             catch(Exception ex){
             	
             }
             this.dispose();
-            
-          
 
         } catch(Exception ex) {
             System.out.println("Error during execution:" +

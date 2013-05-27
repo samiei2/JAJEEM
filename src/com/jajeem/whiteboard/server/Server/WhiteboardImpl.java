@@ -170,10 +170,10 @@ public class WhiteboardImpl extends UnicastRemoteObject
                 // if there is a vacancy
                 if (i != 0) {
                     // if it is not the administrator
-                    if (!this.password.equals(password)) {
-                        // the password is incorrect
-                        return -2;
-                    }
+//                    if (!this.password.equals(password)) {
+//                        // the password is incorrect
+//                        return -2;
+//                    }
                     // initialize the user information
                     userList[i][0] = username;
                     userList[i][1] = "User";

@@ -6,13 +6,13 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-
-import java.awt.Point;
-import java.util.Stack;
-import java.util.Vector;
-
 import com.jajeem.whiteboard.server.Module.Shape;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
+
+import java.awt.*;
+import java.rmi.RemoteException;
+import java.util.Stack;
+import java.util.Vector;
 
 /**
  * Class LocalWhiteboard implements a whiteboard locally, which can be used

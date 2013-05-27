@@ -8,19 +8,11 @@ public class StartWhiteBoardCommand extends Command {
 	 */
 	private static final long serialVersionUID = -4014963068838321817L;
 	
-	private WhiteboardClient client;
+	private int sessionID;
 	private String server;
 	public StartWhiteBoardCommand(String from, String to, int port) {
 		super(from, to, port);
 		
-	}
-
-	public WhiteboardClient getWhiteboardClient() {
-		return client;
-	}
-	
-	public void setWhiteboardClient(WhiteboardClient cli) {
-		client = cli;
 	}
 
 	public String getServer() {
@@ -31,4 +23,11 @@ public class StartWhiteBoardCommand extends Command {
 		this.server = server;
 	}
 
+	public void setSessionID(int sessionID) {
+		this.sessionID = sessionID;
+	}
+
+	public int getSessionID(){
+		return sessionID;
+	}
 }

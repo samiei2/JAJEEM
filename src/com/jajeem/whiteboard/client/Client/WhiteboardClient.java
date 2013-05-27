@@ -9,15 +9,19 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
+import com.jajeem.command.service.ClientService;
+import com.jajeem.util.Config;
+import com.jajeem.whiteboard.client.Client.design.MainFrame;
+import com.jajeem.whiteboard.server.Module.Sessions;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FilePermission;
-import java.io.IOException;
+import java.net.Socket;
 import java.net.SocketPermission;
 import java.security.AllPermission;
 import java.security.CodeSource;
@@ -29,20 +33,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.PropertyPermission;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.jajeem.whiteboard.client.Client.design.MainFrame;
-import com.jajeem.whiteboard.server.Module.Sessions;
 
 /**
  * Class WhiteboardClient implements a client, in
@@ -89,6 +79,18 @@ public class WhiteboardClient extends JFrame {
     /** The constructor to initialize the components */
     public WhiteboardClient() {
     	
+    	//TODO remove these line
+    	new Config();
+		ClientService clientService2 = null;
+		try {
+			clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+		} catch (NumberFormatException e2) {
+			e2.printStackTrace();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		clientService2.start();
+    	
         // create a table model
         tableModel = new DefaultTableModel(data,columnNames);
         // create a table and set its editable to disable
@@ -112,7 +114,7 @@ public class WhiteboardClient extends JFrame {
         this.chooseSessionsLabel.setForeground(Color.RED);
         this.chooseSessionsLabel.setBounds(250,5,120,20);
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600,330);
         // set the display position to the center of screen 
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -204,8 +206,6 @@ public class WhiteboardClient extends JFrame {
             // if connect to the server
             WhiteboardCreateASession createASession
                     = new WhiteboardCreateASession(sessions,this);
-            
-            
         } else {
             // if it does not connect to the server,
             // create a local whiteboard 
@@ -239,19 +239,6 @@ public class WhiteboardClient extends JFrame {
     /** Leave the application */
     private void btnCancel_ActionPerformed(ActionEvent e) {
         System.exit(0);
-    }
-    
-    public void joinStudent(WhiteboardClient student){
-    	int selectedRow = student.sessionsList.getSelectedRow();
-        
-        if (selectedRow >= 0){
-            // get the identity of the session
-            String strSessionID = student.sessionsList.getValueAt(selectedRow, 0).toString();
-            int sessionID = Integer.parseInt(strSessionID);
-            // join a session 
-            WhiteboardJoinASession joinASession
-                = new WhiteboardJoinASession(student.sessions,sessionID,student);
-        }
     }
 
     /** Update the list of session */
@@ -309,16 +296,10 @@ public class WhiteboardClient extends JFrame {
     /** The main entry of the client */
     public static void main(String[] args) {
     	Policy.setPolicy(new MinimalPolicy());
-    	try {
-			com.google.common.io.Files.copy(new File("cert/client.keystore"), new File("c:/client.keystore"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
+    	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
+    	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
     	System.setProperty("javax.net.ssl.keyStorePassword", "client");
-
+    	
         // Create and install a security manager
         if (System.getSecurityManager() == null) {
             SecurityManager manager = new SecurityManager();

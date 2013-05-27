@@ -6,10 +6,9 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-
-import javax.swing.JOptionPane;
-
 import com.jajeem.whiteboard.server.Module.Sessions;
+
+import javax.swing.*;
 
 /**
  * Class SessionsListener provides an implementation of listener
