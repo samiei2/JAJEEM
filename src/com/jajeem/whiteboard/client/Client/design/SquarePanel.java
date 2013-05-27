@@ -15,11 +15,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import com.alee.laf.panel.WebPanel;
+
 /**
  * Class SquarePanel implements a display panel, from which users can
  * choose the type of their drawing shape, whether is square or not.
  */
-public class SquarePanel extends JPanel {
+public class SquarePanel extends WebPanel {
 
     /** The flag whether the drawing shape is square */
     private boolean isSquare;

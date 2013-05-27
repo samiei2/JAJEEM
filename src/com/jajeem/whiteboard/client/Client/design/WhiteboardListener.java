@@ -9,6 +9,7 @@ package com.jajeem.whiteboard.client.Client.design;
  */
 import javax.swing.JOptionPane;
 
+import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
@@ -69,10 +70,10 @@ public class WhiteboardListener implements Runnable{
                         if(userid != 0){
                             // if the user is not an administrator,
                             // close this session.
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                "The administrator has already left and the "
                                + "whiteboard is closed.",
-                               "Error", JOptionPane.ERROR_MESSAGE);
+                               "Error", WebOptionPane.ERROR_MESSAGE);
                             mainFrame.window_exit();
                         }
                     }
@@ -82,17 +83,17 @@ public class WhiteboardListener implements Runnable{
                     }
                 }
             } catch(Exception ex) {
-                JOptionPane.showMessageDialog(null,
+                WebOptionPane.showMessageDialog(null,
                    "Error happens while detecting the updates " + 
                    "of remote whiteboard",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+                   "Error", WebOptionPane.ERROR_MESSAGE);
                 try {
                     // closing this session 
                     mainFrame.window_exit();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,
+                    WebOptionPane.showMessageDialog(null,
                        "Error happens while closing this session.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
                     System.exit(0);
                 }
             }

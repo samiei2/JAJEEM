@@ -28,6 +28,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import com.alee.extended.filechooser.WebFileChooser;
+import com.alee.laf.menu.WebCheckBoxMenuItem;
+import com.alee.laf.menu.WebMenu;
+import com.alee.laf.menu.WebMenuBar;
+import com.alee.laf.menu.WebMenuItem;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.whiteboard.server.Module.Shape;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
 
@@ -36,10 +42,10 @@ import com.jajeem.whiteboard.server.Module.Whiteboard;
  * title of the main frame. It provides the choice of operations
  * like opening new file, saving file and saving image, and etc. 
  */
-public class MainMenuBar extends JMenuBar {
+public class MainMenuBar extends WebMenuBar {
 
     /** The check box in the menu */
-    private JCheckBoxMenuItem transparentCheckBox;
+    private WebCheckBoxMenuItem transparentCheckBox;
 
     /** The main frame */
     private MainFrame mainFrame;
@@ -59,31 +65,31 @@ public class MainMenuBar extends JMenuBar {
     /** The constructor to initialize the instance variables. */
     public MainMenuBar(MainFrame mainFrame, Whiteboard whiteboard) {
         // creates the file menu
-        JMenu fileMenu;
-        JMenuItem fileMenuNew;
-        JMenuItem fileMenuOpen;
-        JMenuItem fileMenuSave;
-        JMenuItem fileMenuSaveAs;
-        JMenuItem fileMenuSaveAsImage;
-        JMenuItem fileMenuExit;
+        WebMenu fileMenu;
+        WebMenuItem fileMenuNew;
+        WebMenuItem fileMenuOpen;
+        WebMenuItem fileMenuSave;
+        WebMenuItem fileMenuSaveAs;
+        WebMenuItem fileMenuSaveAsImage;
+        WebMenuItem fileMenuExit;
 
         // creates the edit menu
-        JMenu editMenu;
-        JMenuItem editMenuUndo;
-        JMenuItem editMenuRedo;
+        WebMenu editMenu;
+        WebMenuItem editMenuUndo;
+        WebMenuItem editMenuRedo;
 
         // creates the shape menu
-        JMenu shapeMenu;
+        WebMenu shapeMenu;
 
         this.mainFrame = mainFrame;
         this.whiteboard = whiteboard;
         this.fileChooser = new JFileChooser();
         
-        fileMenu = new JMenu("File");
+        fileMenu = new WebMenu("File");
         fileMenu.setMnemonic('F');
 
         // create a new whiteboard
-        fileMenuNew = new JMenuItem("New");
+        fileMenuNew = new WebMenuItem("New");
         fileMenuNew.setMnemonic('N');
         fileMenuNew.setActionCommand("NewFile");
         fileMenuNew.addActionListener(new ActionListener(){
@@ -93,7 +99,7 @@ public class MainMenuBar extends JMenuBar {
         });
 
         // open a project file
-        fileMenuOpen = new JMenuItem("Open...");
+        fileMenuOpen = new WebMenuItem("Open...");
         fileMenuOpen.setMnemonic('O');
         fileMenuOpen.setActionCommand("OpenFile");
         fileMenuOpen.addActionListener(new ActionListener(){
@@ -103,7 +109,7 @@ public class MainMenuBar extends JMenuBar {
         });
 
         // save to a project file
-        fileMenuSave = new JMenuItem("Save");
+        fileMenuSave = new WebMenuItem("Save");
         fileMenuSave.setMnemonic('S');
         fileMenuSave.setActionCommand("SaveFile");
         fileMenuSave.addActionListener(new ActionListener(){
@@ -113,7 +119,7 @@ public class MainMenuBar extends JMenuBar {
         });
 
         // save to a specified path 
-        fileMenuSaveAs = new JMenuItem("Save As...");
+        fileMenuSaveAs = new WebMenuItem("Save As...");
         fileMenuSaveAs.setMnemonic('A');
         fileMenuSaveAs.setActionCommand("SaveAsFile");
         fileMenuSaveAs.addActionListener(new ActionListener(){
@@ -123,7 +129,7 @@ public class MainMenuBar extends JMenuBar {
         });     
 
         // Save to an image file
-        fileMenuSaveAsImage = new JMenuItem("Save As A Image...");
+        fileMenuSaveAsImage = new WebMenuItem("Save As A Image...");
         fileMenuSaveAsImage.setMnemonic('I');
         fileMenuSaveAsImage.setActionCommand("SaveAsImage");
         fileMenuSaveAsImage.addActionListener(new ActionListener(){
@@ -133,7 +139,7 @@ public class MainMenuBar extends JMenuBar {
         });
 
         // exit operation
-        fileMenuExit = new JMenuItem("Exit");
+        fileMenuExit = new WebMenuItem("Exit");
         fileMenuExit.setMnemonic('x');
         fileMenuExit.setActionCommand("Exit");
         fileMenuExit.addActionListener(new ActionListener(){
@@ -153,10 +159,10 @@ public class MainMenuBar extends JMenuBar {
         this.add(fileMenu);
 
         // the Edit menu
-        editMenu = new JMenu("Edit");
+        editMenu = new WebMenu("Edit");
         editMenu.setMnemonic('E');
         // the undo menu item
-        editMenuUndo = new JMenuItem("Undo");
+        editMenuUndo = new WebMenuItem("Undo");
         editMenuUndo.setMnemonic('U');
         editMenuUndo.setActionCommand("Undo");
         editMenuUndo.addActionListener(new ActionListener(){
@@ -165,7 +171,7 @@ public class MainMenuBar extends JMenuBar {
             }
         });
         // the redo menu item
-        editMenuRedo = new JMenuItem("Redo");
+        editMenuRedo = new WebMenuItem("Redo");
         editMenuRedo.setMnemonic('R');
         editMenuRedo.setActionCommand("Redo");
         editMenuRedo.addActionListener(new ActionListener(){
@@ -180,12 +186,12 @@ public class MainMenuBar extends JMenuBar {
         this.add(editMenu);
 
         // the Graphics menu
-        shapeMenu = new JMenu("Graphics");
+        shapeMenu = new WebMenu("Graphics");
         shapeMenu.setMnemonic('G');
 
         // the menu item to decide whether drawing the empty shape
         // is transparent
-        transparentCheckBox = new JCheckBoxMenuItem("Transparent");
+        transparentCheckBox = new WebCheckBoxMenuItem("Transparent");
         transparentCheckBox.setSelected(true);
         shapeMenu.add(transparentCheckBox);
 
@@ -210,22 +216,22 @@ public class MainMenuBar extends JMenuBar {
                 // the whiteboard has been drawn, so ask
                 // the user whether the current whiteboard
                 // should be discarded
-                int choice = JOptionPane.showConfirmDialog(this,
+                int choice = WebOptionPane.showConfirmDialog(this,
                                 "The current whiteboard is not saved, "
                                 + "do you want to create a new whiteboard?"
                                ,"Confirm Create"
-                               ,JOptionPane.OK_CANCEL_OPTION
-                               ,JOptionPane.PLAIN_MESSAGE );
-                if (choice == JOptionPane.OK_OPTION)
+                               ,WebOptionPane.OK_CANCEL_OPTION
+                               ,WebOptionPane.PLAIN_MESSAGE );
+                if (choice == WebOptionPane.OK_OPTION)
                 {
                     // create a new whiteboard
                     whiteboard.createNewWhiteboard();
                 }               
             }
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "Error happens while opening a new whiteboard.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -271,18 +277,18 @@ public class MainMenuBar extends JMenuBar {
                 }
             }
         } catch(Exception cnfex){
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                    "Error happens while opening a project file.",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+                   "Error", WebOptionPane.ERROR_MESSAGE);
         } finally {
             // closing the object input stream
             if(objectInputStream != null) {
                 try {
                     objectInputStream.close();
                 } catch(IOException ioex) {
-                    JOptionPane.showMessageDialog(null,
+                    WebOptionPane.showMessageDialog(null,
                        "The closing stream of Open File Error.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
                 }
             }
             // closing the file input stream
@@ -290,9 +296,9 @@ public class MainMenuBar extends JMenuBar {
                 try {
                     fileInputStream.close();
                 } catch(IOException ioex) {
-                    JOptionPane.showMessageDialog(null,
+                    WebOptionPane.showMessageDialog(null,
                        "the closing stream of Open File Error.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -357,9 +363,9 @@ public class MainMenuBar extends JMenuBar {
         try{
             mainFrame.window_exit();
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "Error happens while closing the window.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -375,9 +381,9 @@ public class MainMenuBar extends JMenuBar {
                 whiteboard.undo();
             }
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "A error happens while undo the operation",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -393,9 +399,9 @@ public class MainMenuBar extends JMenuBar {
                 whiteboard.redo();
             }
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "A error happens while redo the operation.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -421,9 +427,9 @@ public class MainMenuBar extends JMenuBar {
             // write the buffered image into the file
             ImageIO.write(image, "jpeg", file);
         } catch(IOException ioe) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "A error happens while saving to a image file.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
     /**
@@ -451,18 +457,18 @@ public class MainMenuBar extends JMenuBar {
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(shapeVector);
         } catch(IOException ioe) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                    "An error happens, while writing to the file.",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+                   "Error", WebOptionPane.ERROR_MESSAGE);
         } finally {
             // closing the object stream
             try {
                 if (objectOutputStream != null )
                     objectOutputStream.close();
             } catch(IOException ioe){
-                JOptionPane.showMessageDialog(null,
+                WebOptionPane.showMessageDialog(null,
                    "An error happens, while closing the object stream.",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+                   "Error", WebOptionPane.ERROR_MESSAGE);
             }
 
             // closing the file stream
@@ -470,9 +476,9 @@ public class MainMenuBar extends JMenuBar {
                 if (fileOutputStream != null )
                     fileOutputStream.close();
             } catch(IOException ioe){
-                JOptionPane.showMessageDialog(null,
+                WebOptionPane.showMessageDialog(null,
                    "An error happens, while closing the file stream.",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+                   "Error", WebOptionPane.ERROR_MESSAGE);
             }
         }
     }

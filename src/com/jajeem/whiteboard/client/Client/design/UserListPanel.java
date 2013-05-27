@@ -11,30 +11,31 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+
+import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class UserListPanel is the list to display the information of peers,
  * including the name, type and who has the drawing power. 
  */
-public class UserListPanel extends JPanel {
+public class UserListPanel extends WebPanel {
     /** The name of columns */
     private final String[] columnNames = {"Username","Type","Right"};
 
     /** The list of user information */
-    private JTable userlist;
+    private WebTable userlist;
 
     /** The scroll pane which provides a movable display area */
-    private JScrollPane scrollPane;
+    private WebScrollPane scrollPane;
 
     /** The model of table which implements the modify of table */
     private TableModel tableModel;
@@ -48,10 +49,10 @@ public class UserListPanel extends JPanel {
     /** The constructor to initialize */
     public UserListPanel(int userid, Whiteboard whiteboard) {
         
-        JButton btnGrantRight;
-        JButton btnWithdrawRight;
-        JPanel rightManagePanel;
-        JPanel btnPanel;
+        WebButton btnGrantRight;
+        WebButton btnWithdrawRight;
+        WebPanel rightManagePanel;
+        WebPanel btnPanel;
         
         this.whiteboard = whiteboard;
         try {
@@ -59,25 +60,25 @@ public class UserListPanel extends JPanel {
             // from the whiteboard
             data = whiteboard.getUserlist();
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                 "Error happens while reading the list of user information.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", WebOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         tableModel = new DefaultTableModel(data,columnNames);
         // create the table and change it editable to disable
-        userlist = new JTable(){
+        userlist = new WebTable(){
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        rightManagePanel = new JPanel();
+        rightManagePanel = new WebPanel();
         rightManagePanel.setLayout(new BorderLayout());
-        btnPanel = new JPanel();
+        btnPanel = new WebPanel();
         btnPanel.setLayout(new BorderLayout()); 
 
-        btnGrantRight = new JButton("Grant");
-        btnWithdrawRight = new JButton("Withdraw");
+        btnGrantRight = new WebButton("Grant");
+        btnWithdrawRight = new WebButton("Withdraw");
 
         btnGrantRight.setPreferredSize(new Dimension(100,20));
         // listen the event of button clicked
@@ -97,8 +98,8 @@ public class UserListPanel extends JPanel {
             }
         }));
 
-        // sets the table model to the JTable, which
-        // is used for updating the JTable.
+        // sets the table model to the WebTable, which
+        // is used for updating the WebTable.
         userlist.setModel(tableModel);
         // sets that the table only choose one line
         userlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -106,7 +107,7 @@ public class UserListPanel extends JPanel {
         userlist.setPreferredScrollableViewportSize(new Dimension(200, 160));
         userlist.getTableHeader().setResizingAllowed(false);
         
-        scrollPane = new JScrollPane(userlist);
+        scrollPane = new WebScrollPane(userlist);
         if(userid != 0)
         {
             // if the user is not an administrator of
@@ -143,9 +144,9 @@ public class UserListPanel extends JPanel {
                 // grant the right to the selected row 
                 this.whiteboard.grantRightTo(selectedRow);
             } catch(Exception ex) {
-                JOptionPane.showMessageDialog(null,
+                WebOptionPane.showMessageDialog(null,
                     "Error happens while withdrawing the drawing right.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "Error", WebOptionPane.ERROR_MESSAGE);
             }
         }       
     }
@@ -155,9 +156,9 @@ public class UserListPanel extends JPanel {
         try {
             this.whiteboard.withdrawRight();
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                 "Error happens while withdrawing the drawing right.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 }

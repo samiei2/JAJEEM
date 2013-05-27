@@ -16,11 +16,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import com.alee.laf.panel.WebPanel;
+
 /**
  * Class StrokePanel provides the choice of different degrees of thickness,
  * which users can draw different lines. 
  */
-public class StrokePanel extends JPanel {
+public class StrokePanel extends WebPanel {
 
     /** The number of stroke displayed */
     private int length;

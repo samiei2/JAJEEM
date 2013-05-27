@@ -9,8 +9,13 @@ package com.jajeem.whiteboard.client.Client;
  * Author       : Ruxin Hou
  * Team         : TheThreeBytes
  */
-import com.jajeem.command.service.ClientService;
-import com.jajeem.util.Config;
+import com.alee.laf.button.WebButton;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import javax.swing.*;
@@ -40,22 +45,22 @@ import java.util.PropertyPermission;
  * the list. User can choose the session to join,
  * or create a own session.
  */
-public class WhiteboardClient extends JFrame {
+public class WhiteboardClient extends WebFrame {
 
     /** The default server port */
     public static final int SESSIONS_PORT = 2019;
     public static final int WHITEBOARD_PORT = 2020;
 
     /** The related components */
-    private JPanel sessionsPanel;
-    private JTable sessionsList;
-    private JScrollPane scrollPane;
+    private WebPanel sessionsPanel;
+    private WebTable sessionsList;
+    private WebScrollPane scrollPane;
     private TableModel tableModel;
-    private JLabel chooseSessionsLabel;
-    private JButton btnCreate;
-    private JButton btnJoin;
-    private JButton btnCancel;
-    private JButton btnConnect;
+    private WebLabel chooseSessionsLabel;
+    private WebButton btnCreate;
+    private WebButton btnJoin;
+    private WebButton btnCancel;
+    private WebButton btnConnect;
 
     /** The name of columns */
     private final String[] columnNames = {"Session ID","Session Name","Administrator",
@@ -78,35 +83,22 @@ public class WhiteboardClient extends JFrame {
 
     /** The constructor to initialize the components */
     public WhiteboardClient() {
-    	
-    	//TODO remove these line
-    	new Config();
-		ClientService clientService2 = null;
-		try {
-			clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-		} catch (NumberFormatException e2) {
-			e2.printStackTrace();
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-		clientService2.start();
-    	
         // create a table model
         tableModel = new DefaultTableModel(data,columnNames);
         // create a table and set its editable to disable
-        sessionsList = new JTable(){
+        sessionsList = new WebTable(){
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
         // initialize the components 
-        sessionsPanel = new JPanel();
-        btnCreate = new JButton();
-        btnJoin = new JButton();
-        btnCancel = new JButton();
-        btnConnect = new JButton();
-        chooseSessionsLabel = new JLabel();
+        sessionsPanel = new WebPanel();
+        btnCreate = new WebButton();
+        btnJoin = new WebButton();
+        btnCancel = new WebButton();
+        btnConnect = new WebButton();
+        chooseSessionsLabel = new WebLabel();
 
         this.chooseSessionsLabel.setText("Choose a session");
         this.chooseSessionsLabel.setFont(new Font("Calibri",
@@ -114,7 +106,7 @@ public class WhiteboardClient extends JFrame {
         this.chooseSessionsLabel.setForeground(Color.RED);
         this.chooseSessionsLabel.setBounds(250,5,120,20);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600,330);
         // set the display position to the center of screen 
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -172,8 +164,8 @@ public class WhiteboardClient extends JFrame {
             }
         }));
 
-        // sets the table model to the JTable, which
-        // is used for updating the JTable.
+        // sets the table model to the WebTable, which
+        // is used for updating the WebTable.
         sessionsList.setModel(tableModel);
         
         // sets that the table only choose one line
@@ -185,7 +177,7 @@ public class WhiteboardClient extends JFrame {
         // set the header of the table fixed
         sessionsList.getTableHeader().setResizingAllowed(false);
         
-        scrollPane = new JScrollPane(sessionsList);
+        scrollPane = new WebScrollPane(sessionsList);
         scrollPane.setVisible(true);
         scrollPane.setBounds(50,30,500,200);
 
@@ -196,7 +188,7 @@ public class WhiteboardClient extends JFrame {
         this.sessionsPanel.add(btnJoin);
         this.sessionsPanel.add(btnCancel);
         this.sessionsPanel.add(btnConnect);
-        this.add(sessionsPanel);
+        getContentPane().add(sessionsPanel);
         this.setVisible(true);
     }
 
@@ -230,9 +222,9 @@ public class WhiteboardClient extends JFrame {
                     = new WhiteboardJoinASession(sessions,sessionID,this);
             }
         } else {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                        "Please connect the server first.",
-                       "Error", JOptionPane.ERROR_MESSAGE);
+                       "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -299,7 +291,7 @@ public class WhiteboardClient extends JFrame {
     	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
     	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
     	System.setProperty("javax.net.ssl.keyStorePassword", "client");
-    	
+
         // Create and install a security manager
         if (System.getSecurityManager() == null) {
             SecurityManager manager = new SecurityManager();

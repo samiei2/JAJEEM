@@ -18,8 +18,7 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JPanel;
-
+import com.alee.laf.panel.WebPanel;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.GradientData;
 
@@ -27,7 +26,7 @@ import com.jajeem.whiteboard.client.Module.Data.GradientData;
  * Class GradientPanel provides an implementation of a panel
  * which displays the choices of gradient type to users.
  */
-public class GradientPanel extends JPanel implements Observer {
+public class GradientPanel extends WebPanel implements Observer {
 
     /** The gradient data. */
     private GradientData gradientData;

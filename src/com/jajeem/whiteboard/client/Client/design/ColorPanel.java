@@ -11,8 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
+import com.alee.laf.panel.WebPanel;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 
 /**
@@ -21,7 +20,7 @@ import com.jajeem.whiteboard.client.Module.Data.ColorData;
  * represents the forward color, and another one stands for the
  * background color.
  */
-public class ColorPanel extends JPanel {
+public class ColorPanel extends WebPanel {
     /** The data of colors */
     private ColorData colorData;
     

@@ -10,38 +10,40 @@ package com.jajeem.whiteboard.client.Client.design;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+
 
 /**
  * Class StatePanel displays the information of cursor's position, drawing
  * type, and the name of current user.
  */
-public class StatePanel extends JPanel {
+@SuppressWarnings("serial")
+public class StatePanel extends WebPanel {
 
     /** The label displays the state of current user information */
-    private JLabel labelState;
+    private WebLabel labelState;
 
     /** The label displays the current type of shape */
-    private JLabel labelType;
+    private WebLabel labelType;
 
     /** The constructor of StatePanel to initialize the variables  */
     public StatePanel(String username) {
         // create a label display the name of user
-        JLabel labelUsername;
-        JPanel usernameAndTypePanel;
+        WebLabel labelUsername;
+        WebPanel usernameAndTypePanel;
         // set the layout type of this panel
 		this.setLayout(new BorderLayout());
 
         // initializes the components
-		labelState = new JLabel();
+		labelState = new WebLabel();
 		labelState.setPreferredSize(new Dimension(200,23));
-		labelType = new JLabel("Current Shape: Cursor");
+		labelType = new WebLabel("Current Shape: Cursor");
         labelType.setPreferredSize(new Dimension(200,23));
-        labelUsername = new JLabel("Username: "+ username);
+        labelUsername = new WebLabel("Username: "+ username);
         labelUsername.setPreferredSize(new Dimension(200,23));
 
-        usernameAndTypePanel = new JPanel();
+        usernameAndTypePanel = new WebPanel();
         usernameAndTypePanel.setLayout(new BorderLayout());
         usernameAndTypePanel.add("East",labelUsername);
         usernameAndTypePanel.add("West",labelType);

@@ -27,6 +27,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.laf.panel.WebPanel;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.FontData;
@@ -48,7 +50,7 @@ import com.jajeem.whiteboard.server.Module.Whiteboard;
  * And it calls the method of the remote 'whiteboard' object to add
  * and receive the information.
  */
-public class PaintPanel extends JPanel implements Observer {
+public class PaintPanel extends WebPanel implements Observer {
 
     /** Declare a reference of whiteboard */
     private Whiteboard whiteboard;
@@ -129,9 +131,9 @@ public class PaintPanel extends JPanel implements Observer {
                         // clean the text
                         whiteboard.removeTheCurrentShape();
                     } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while canceling the input text.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     // Close the keyboard listening mode
@@ -153,9 +155,9 @@ public class PaintPanel extends JPanel implements Observer {
                             whiteboard.textAppend(keyEvent.getKeyChar());
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while canceling the input text.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     repaint();
@@ -180,9 +182,9 @@ public class PaintPanel extends JPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -204,9 +206,9 @@ public class PaintPanel extends JPanel implements Observer {
                             paintPanel.requestFocus();
                             
                         }catch(Exception ex) {
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                 "Error happens while adding the shape.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error", WebOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         repaint();
@@ -223,9 +225,9 @@ public class PaintPanel extends JPanel implements Observer {
                     // the enquiry of who has the drawing right
                     currentRightAt = whiteboard.getCurrentRightAt();
                 } catch(Exception ex) {
-                    JOptionPane.showMessageDialog(null,
+                    WebOptionPane.showMessageDialog(null,
                         "Error happens while acquiring who has the paint right.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", WebOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(currentRightAt == paintPanel.getUserid()) {
@@ -310,9 +312,9 @@ public class PaintPanel extends JPanel implements Observer {
                             // change the buffered image to byte array
                             imageData = Image.getCompressedImage(bufferedImage);
                         } catch(Exception ex) {
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                 "Error happens while getting the image.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error", WebOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         // creates an image
@@ -340,10 +342,10 @@ public class PaintPanel extends JPanel implements Observer {
                         // add the shape to the whiteboard
                         whiteboard.addShape(shape);
                     }catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while adding the "
                             + "shape to the whiteboard.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     repaint();
@@ -370,9 +372,9 @@ public class PaintPanel extends JPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -384,10 +386,10 @@ public class PaintPanel extends JPanel implements Observer {
                             // add the point to the current shape of whiteboard
                             paintPanel.getWhiteboard().addPointToCurrentShape(x, y);
                         }catch(Exception ex) {
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                 "Error happens while adding the point "
                                 + "to the shape of whiteboard.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error", WebOptionPane.ERROR_MESSAGE);
                                 return;
                         }
                         repaint();
@@ -403,9 +405,9 @@ public class PaintPanel extends JPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -419,9 +421,9 @@ public class PaintPanel extends JPanel implements Observer {
                             // finish the choosing area operation
                             whiteboard.setDrawingFinished(true);
                         }catch(Exception ex) {
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                 "Error happens while finishing the choosing area.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error", WebOptionPane.ERROR_MESSAGE);
                             return;
                         }
 
@@ -473,9 +475,9 @@ public class PaintPanel extends JPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null,
+                        WebOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", WebOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -486,10 +488,10 @@ public class PaintPanel extends JPanel implements Observer {
                             // add the point to the current shape of whiteboard
                             paintPanel.getWhiteboard().addPointToCurrentShape(x, y);
                         }catch(Exception ex) {
-                            JOptionPane.showMessageDialog(null,
+                            WebOptionPane.showMessageDialog(null,
                                 "Error happens while adding the point "
                                 + "to the shape of whiteboard.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error", WebOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         repaint();
@@ -524,9 +526,9 @@ public class PaintPanel extends JPanel implements Observer {
                 m--;
             }
         }catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                 "Error happens while synchronizing the local buffer.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", WebOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -625,9 +627,9 @@ public class PaintPanel extends JPanel implements Observer {
             this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                     imageCursor, point, Name));
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            WebOptionPane.showMessageDialog(null,
                 "Error happens while setting the cursor image.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                "Error", WebOptionPane.ERROR_MESSAGE);
         }
     }
 

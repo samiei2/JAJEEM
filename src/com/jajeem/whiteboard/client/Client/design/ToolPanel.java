@@ -17,6 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
+import com.alee.laf.button.WebToggleButton;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.toolbar.WebToolBar;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.GradientData;
@@ -27,7 +30,7 @@ import com.jajeem.whiteboard.server.Module.Shape;
  * panel, stroke panel, the buttons of drawing shape and etc. The
  * users can choose the tool to draw the picture.
  */
-public class ToolPanel extends JToolBar implements ActionListener {
+public class ToolPanel extends WebToolBar implements ActionListener {
 
     /** Declare a reference of PaintPanel class */
     private PaintPanel paintPanel;
@@ -42,7 +45,7 @@ public class ToolPanel extends JToolBar implements ActionListener {
                 "FilledRoundedRectangle","Oval","FilledOval","TextArea","Image"};
 
     /** The tool buttons */
-    private JToggleButton[] btnTool;
+    private WebToggleButton[] btnTool;
     
     /** The panel to change the size of stroke */
     private StrokePanel strokePanel;
@@ -75,13 +78,13 @@ public class ToolPanel extends JToolBar implements ActionListener {
     public ToolPanel(PaintPanel paintPanel, MainFrame mainFrame,
                      ColorData colorData) {
         // set the tool bar is displayed in vertical type
-        super(JToolBar.VERTICAL);
+        super(WebToolBar.VERTICAL);
         // create the array of buttons
-        this.btnTool = new JToggleButton[toolText.length];
+        this.btnTool = new WebToggleButton[toolText.length];
         // create the icons of image
         ImageIcon[] imageIcons = new ImageIcon[toolText.length];
         // create the panel contains buttons 
-        JPanel buttonPanel;
+        WebPanel buttonPanel;
 
         // get the reference from the passing parameters
         this.paintPanel = paintPanel;
@@ -90,12 +93,12 @@ public class ToolPanel extends JToolBar implements ActionListener {
         // the default value of gradient type
         this.gradientType = GradientData.GradientType.Normal;
 
-        buttonPanel = new JPanel(null);
+        buttonPanel = new WebPanel();
         // initialize the buttons and add them to the button panel
         for( int i=0; i< btnTool.length; i++) {
             imageIcons[i] = new ImageIcon(WhiteboardClient.class.getResource("/com/jajeem/whiteboard/client/Client/Image/" + imageFileName[i] + ".gif"));
 
-            btnTool[i] = new JToggleButton("", imageIcons[i]);
+            btnTool[i] = new WebToggleButton("", imageIcons[i]);
             btnTool[i].setToolTipText(toolText[i]);
             btnTool[i].setActionCommand(imageFileName[i]);
 
