@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -210,7 +211,7 @@ public class WhiteboardCreateASession extends JFrame {
             try{
             	new Config();
             	ServerService server = new ServerService();
-            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand("", "127.0.0.1", Integer.parseInt(Config.getParam("port")));
+            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
             	cmd.setSessionID(0);
             	server.send(cmd);
             }
