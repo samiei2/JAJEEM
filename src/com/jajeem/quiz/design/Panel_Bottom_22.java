@@ -36,7 +36,7 @@ public class Panel_Bottom_22 extends WebPanel {
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
 	private Panel_Bottom_2 parentPanel;
-	
+	private WebLabel wblblScore;
 	private int id=1;
 
 	/**
@@ -158,6 +158,20 @@ public class Panel_Bottom_22 extends WebPanel {
 						}
 					}
 				}
+				
+				int score=0;
+				for (int i = 0; i < quizResponse.size(); i++) {
+					for (int j = 0; j < quizResponse.get(i).size(); j++) {
+						Student temp =  quizResponse.get(i).get(j).getStudent();
+						Question tempq = quizResponse.get(i).get(j).getQuestion();
+						if(temp.getId() == currentStudent.getId()){
+							if(tempq.isResponseValid()){
+								score += tempq.getPoint();
+							}
+						}
+					}
+				}
+				wblblScore.setText(String.valueOf(score));
 			}
 		});
 		
@@ -175,6 +189,12 @@ public class Panel_Bottom_22 extends WebPanel {
 		
 		WebLabel webLabel = new WebLabel();
 		webLabel.setText("Results");
+		
+		WebLabel wblblStudentScore = new WebLabel();
+		wblblStudentScore.setText("Student Score : ");
+		
+		wblblScore = new WebLabel();
+		wblblScore.setText("?");
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -182,7 +202,11 @@ public class Panel_Bottom_22 extends WebPanel {
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_webPanel.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(308)
+							.addComponent(wblblStudentScore, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wblblScore, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
 						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE))
 					.addGap(24))
 		);
@@ -190,9 +214,13 @@ public class Panel_Bottom_22 extends WebPanel {
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(wblblScore, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wblblStudentScore, GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)))
+					.addGap(10)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -384,6 +412,21 @@ public class Panel_Bottom_22 extends WebPanel {
 					}
 				}
 			}
+			
+			int score=0;
+			for (int i = 0; i < quizResponse.size(); i++) {
+				for (int j = 0; j < quizResponse.get(i).size(); j++) {
+					Student temp =  quizResponse.get(i).get(j).getStudent();
+					Question tempq = quizResponse.get(i).get(j).getQuestion();
+					if(temp.getId() == student.getId()){
+						if(tempq.isResponseValid()){
+							score += tempq.getPoint();
+						}
+					}
+				}
+			}
+			
+			wblblScore.setText(String.valueOf(score));
 		}
 	}
 	

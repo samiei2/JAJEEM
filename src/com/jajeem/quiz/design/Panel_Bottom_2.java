@@ -114,7 +114,7 @@ public class Panel_Bottom_2 extends WebPanel {
 						}
 					}
 				}
-						
+				
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
 			}

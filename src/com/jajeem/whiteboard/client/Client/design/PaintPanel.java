@@ -569,13 +569,21 @@ public class PaintPanel extends JPanel implements Observer {
         this.mainFrame.setShapeType(currentShapeType);
 
         if(currentShapeType.equals("Cursor")){
-            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        	this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
         else if(currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.Pencil.toString())) {
-            this.setCursor("Pencil",new Point(8,23),"Pencil");
+        	Toolkit tk = Toolkit.getDefaultToolkit();
+        	Cursor c = tk.createCustomCursor(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/jajeem/whiteboard/client/Client/Image/Cursors/Pencil.gif")),new Point(15,16),"Cross");
+        	
+//        	this.setCursor("Pencil",new Point(8,23),"Pencil");
+        	this.setCursor(c);
         }
         else if(currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.Erase.toString())) {
-            this.setCursor("Erase",new Point(8,22),"Erase");
+        	Toolkit tk = Toolkit.getDefaultToolkit();
+        	Cursor c = tk.createCustomCursor(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/jajeem/whiteboard/client/Client/Image/Cursors/Erase.gif")),new Point(15,16),"Cross");
+        	
+//        	this.setCursor("Erase",new Point(8,22),"Erase");
+        	this.setCursor(c);
         }
         else if (currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.Line.toString())
             || currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.Oval.toString())
@@ -585,10 +593,16 @@ public class PaintPanel extends JPanel implements Observer {
             || currentShapeType.equals("FilledRoundedRectangle")
             || currentShapeType.equals("FilledOval")
             || currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.TextArea.toString())){
-            this.setCursor("Cross",new Point(15,16),"Cross");
+        	Toolkit tk = Toolkit.getDefaultToolkit();
+        	Cursor c = tk.createCustomCursor(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/jajeem/whiteboard/client/Client/Image/Cursors/Cross.gif")),new Point(15,16),"Cross");
+//            this.setCursor("Cross",new Point(15,16),"Cross");
+        	this.setCursor(c);
         } else if (currentShapeType.equals(com.jajeem.whiteboard.server.Module.Shape.ShapeType.Image.toString())
                 && isDrawImage()) {
-                this.setCursor("Cross",new Point(15,16),"Cross");
+        	Toolkit tk = Toolkit.getDefaultToolkit();
+        	Cursor c = tk.createCustomCursor(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/jajeem/whiteboard/client/Client/Image/Cursors/Cross.gif")),new Point(15,16),"Cross");
+//            this.setCursor("Cross",new Point(15,16),"Cross");
+        	this.setCursor(c);
         }
     }
 

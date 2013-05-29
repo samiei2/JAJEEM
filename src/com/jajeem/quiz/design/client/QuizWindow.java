@@ -87,6 +87,7 @@ public class QuizWindow extends WebFrame {
 	//TODO remove code below
 	private int sid;
 	private Student privateStudent = new Student();
+	private Run currentRun;
 	
 	long remaining; // How many milliseconds remain in the countdown.
 
@@ -124,7 +125,7 @@ public class QuizWindow extends WebFrame {
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
 		run.setStudent(privateStudent);
-		
+		currentRun = run;
 		
 		currentQuiz = run.getQuiz();
 		ClientSession.setQuizWindowHndl(this);
@@ -255,6 +256,7 @@ public class QuizWindow extends WebFrame {
 									QuizResponse resp = new QuizResponse(question);
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
+									resp.setQuizRun(currentRun);
 									//new QuizEvent().fireResponseEvent(resp);
 									SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 									cmd.setEvent(resp);
@@ -262,10 +264,8 @@ public class QuizWindow extends WebFrame {
 									ServerService service = new ServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								} catch (Exception e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -681,6 +681,7 @@ public class QuizWindow extends WebFrame {
 								QuizResponse resp = new QuizResponse(question);
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
+								resp.setQuizRun(currentRun);
 								//new QuizEvent().fireResponseEvent(resp);
 								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 								cmd.setEvent(resp);
@@ -688,10 +689,8 @@ public class QuizWindow extends WebFrame {
 								ServerService service = new ServerService();
 								service.send(cmd);
 							} catch (NumberFormatException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
