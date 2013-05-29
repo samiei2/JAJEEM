@@ -10,17 +10,13 @@ public class Run implements Serializable{
 	
 	//properties
 	private int id; 
-	private int instructorId;
 	private Instructor instructor;
-	private int sessionId;
 	private Session session;
-	private int quizId;
 	private Quiz quiz;
-	private int studentId;
 	private Student student;
 	private int score;
-	private int start;
-	private int end;
+	private long start;
+	private long end;
 	
 	//getter & setters
 	public int getId() {
@@ -30,40 +26,40 @@ public class Run implements Serializable{
 		this.id = id;
 	}
 	public int getInstructorId() {
-		return instructorId;
+		return instructor.getId();
 	}
 	public void setInstructorId(int instructorId) {
-		this.instructorId = instructorId;
+		this.instructor.setId(instructorId);
 	}
 	public int getSessionId() {
-		return sessionId;
+		return session.getId();
 	}
 	public void setSessionId(int sessionId) {
-		this.sessionId = sessionId;
+		this.session.setId(sessionId);
 	}
 	public int getQuizId() {
-		return quizId;
+		return quiz.getId();
 	}
 	public void setQuizId(int quizId) {
-		this.quizId = quizId;
+		this.quiz.setId(quizId);
 	}
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
-	public void setStart(int start) {
+	public void setStart(long start) {
 		this.start = start;
 	}
-	public int getEnd() {
+	public long getEnd() {
 		return end;
 	}
-	public void setEnd(int end) {
+	public void setEnd(long end) {
 		this.end = end;
 	}
 	public int getStudentId() {
-		return studentId;
+		return student.getId();
 	}
 	public void setStudentId(int studentId) {
-		this.studentId = studentId;
+		this.student.setId(studentId);
 	}
 	public int getScore() {
 		return score;

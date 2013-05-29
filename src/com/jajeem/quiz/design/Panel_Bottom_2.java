@@ -20,6 +20,7 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.quiz.model.Run;
 
 
 @SuppressWarnings("serial")
@@ -28,6 +29,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	private Panel_Bottom_21 panel_bottom_21;
 	private Panel_Bottom_22 panel_bottom_22;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
+	private ArrayList<Run> runResults;
 	private QuizEvent responseRecieved;
 	
 	private Quiz currentQuiz;
@@ -36,6 +38,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	 */
 	public Panel_Bottom_2() {
 		quizResponse = new ArrayList<>();
+		runResults = new ArrayList<>();
 		
 		WebLabel wblblView = new WebLabel();
 		wblblView.setText("View");
@@ -114,7 +117,11 @@ public class Panel_Bottom_2 extends WebPanel {
 						}
 					}
 				}
-				
+				for (int i = 0; i < getRunResults().size(); i++) {
+					if(getRunResults().get(i).getId() != e.getQuizRun().getId() && i == getRunResults().size()){
+						getRunResults().add(e.getQuizRun());
+					}
+				}
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
 			}
@@ -157,6 +164,14 @@ public class Panel_Bottom_2 extends WebPanel {
 
 	public void setCurrentQuiz(Quiz currentQuiz) {
 		this.currentQuiz = currentQuiz;
+	}
+
+	public ArrayList<Run> getRunResults() {
+		return runResults;
+	}
+
+	public void setRunResults(ArrayList<Run> runResults) {
+		this.runResults = runResults;
 	}
 
 	

@@ -10,13 +10,14 @@ import com.jajeem.quiz.model.Response;
 import com.jajeem.quiz.model.Run;
 
 public class ResultService {
-	public void create(ArrayList<ArrayList<QuizResponse>> e,Run run){
+	public void create(ArrayList<ArrayList<QuizResponse>> e,ArrayList<Run> run){
 		RunDAO rundao = new RunDAO();
 		ResponseDAO responsedao = new ResponseDAO();
 		try {
-			rundao.create(run);
+			for (int i = 0; i < run.size(); i++) {
+				rundao.create(run.get(i));
+			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		for (int i = 0; i < e.size(); i++) {

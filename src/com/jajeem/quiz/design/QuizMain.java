@@ -11,6 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -345,6 +347,7 @@ public class QuizMain extends WebFrame {
 			        	run.setQuiz(currentQuiz);
 			        	run.setInstructor(getCurrentInstructor());
 			        	run.setSession(getCurrentSession());
+			        	run.setStart(System.currentTimeMillis());
 			        	//QuizWindow wind =new QuizWindow(run);
 			        	
 			        	new Config();
@@ -352,7 +355,7 @@ public class QuizMain extends WebFrame {
 						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						//StartQuizCommand cmd = new StartQuizCommand("","127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-						cmd.setRun(run);
+						//cmd.setRun(run);
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
@@ -402,6 +405,20 @@ public class QuizMain extends WebFrame {
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 		
+		WebButton wbtnSaveResults = new WebButton();
+		wbtnSaveResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Run> results = panel_bottom_2.getRunResults();
+				ResultService service = new ResultService();
+				service.create(panel_bottom_2.getQuizResponse(), results);
+			}
+		});
+		wbtnSaveResults.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
+		wbtnSaveResults.setText("Save Results");
+		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(
 			gl_panel_top.createParallelGroup(Alignment.LEADING)
@@ -411,7 +428,9 @@ public class QuizMain extends WebFrame {
 					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 742, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 681, Short.MAX_VALUE)
 					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
@@ -425,7 +444,8 @@ public class QuizMain extends WebFrame {
 							.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 							.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
 						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_top.setLayout(gl_panel_top);

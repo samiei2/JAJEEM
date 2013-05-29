@@ -57,7 +57,7 @@ public class QuizWindow extends WebFrame {
 	private DefaultListModel model;
 	private WebTextField webTextField_1;
 	private WebList webList;
-	private Quiz currentQuiz;
+	//private Quiz currentRun.getQuiz();
 	private WebRadioButton webRadioButton;
 	private WebRadioButton webRadioButton_1;
 	private WebRadioButton webRadioButton_2;
@@ -118,28 +118,26 @@ public class QuizWindow extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizWindow(Run run) {
+	public QuizWindow(Quiz quiz) {
 		setTitle("Quiz");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizWindow.class.getResource("/com/jajeem/images/quiz.png")));
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
-		run.setStudent(privateStudent);
-		currentRun = run;
+		currentRun.setStudent(privateStudent);
 		
-		currentQuiz = run.getQuiz();
 		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				if(currentQuiz == null || currentQuiz.getQuestionList().size() == 0){
+				if(currentRun.getQuiz() == null || currentRun.getQuiz().getQuestionList().size() == 0){
 					JOptionPane.showMessageDialog(null, "An error occured while opening the quiz");
 					dispose();
 					return;
 				}
 				
 				
-				for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
+				for (int i = 0; i < currentRun.getQuiz().getQuestionList().size(); i++) {
 					model.addElement("Question "+(i+1));
 				}
 				
@@ -153,9 +151,9 @@ public class QuizWindow extends WebFrame {
 				};
 				  
 				
-				if(currentQuiz.getTime() != 0){
-					webTextField_1.setText(String.valueOf(currentQuiz.getTime()).concat(":00"));
-					remaining = currentQuiz.getTime()*60000;
+				if(currentRun.getQuiz().getTime() != 0){
+					webTextField_1.setText(String.valueOf(currentRun.getQuiz().getTime()).concat(":00"));
+					remaining = currentRun.getQuiz().getTime()*60000;
 					timer = new Timer(1000,taskPerformer);
 				    timer.setInitialDelay(0);
 				    lastUpdate = System.currentTimeMillis();
@@ -167,7 +165,7 @@ public class QuizWindow extends WebFrame {
 				}
 				
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
-				webTextField.setText(currentQuiz.getTitle());
+				webTextField.setText(currentRun.getQuiz().getTitle());
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -701,7 +699,7 @@ public class QuizWindow extends WebFrame {
 					}).start();
 				}
 				//Load Next Question
-				currentQuestion = currentQuiz.getQuestionList().get(webList.getSelectedIndex());
+				currentQuestion = currentRun.getQuiz().getQuestionList().get(webList.getSelectedIndex());
 				wblblQuestion.setText("Question " + (webList.getSelectedIndex()+1));
 				webTextArea.setText(currentQuestion.getTitle());
 				
@@ -883,8 +881,8 @@ public class QuizWindow extends WebFrame {
 	    }
 	  }
 
-	public void setQuiz(Quiz currentQuiz2) {
-		currentQuiz = currentQuiz2;
+	public void setQuiz(Quiz quiz) {
+		currentRun.setQuiz(quiz);
 	}
 
 	public void setServer(String serv) {

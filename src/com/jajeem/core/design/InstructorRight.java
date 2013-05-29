@@ -136,6 +136,15 @@ public class InstructorRight {
 		TooltipManager.setTooltip(surveyButton, imgToolTip,
 				"Start survey for the class", TooltipWay.left);
 		panel.add(surveyButton);
+		
+		ImageIcon imgWhiteBoard = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/whiteboard_text.png")));
+		WebButton whiteboardButton = new WebButton(imgWhiteBoard);
+		whiteboardButton.setRound(0);
+		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
+				"Start Whiteboard for the class", TooltipWay.left);
+		panel.add(whiteboardButton);
 
 		ImageIcon imgSendWebsite = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -165,15 +174,6 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(powerButton);
 
-		ImageIcon imgWhiteboard = new ImageIcon(
-				ImageIO.read(InstructorRight.class
-						.getResourceAsStream("/icons/applications_style1/power_text.png")));
-		final WebButton whiteboardButton = new WebButton(imgWhiteboard);
-		whiteboardButton.setRound(0);
-		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
-				"Turn off, Log off, Restart student's computer",
-				TooltipWay.left);
-		// panel.add(whiteboardButton);
 
 		// blacks student's screen
 		blackoutButton.addActionListener(new ActionListener() {
@@ -404,7 +404,7 @@ public class InstructorRight {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				WhiteboardClient whiteboard = new WhiteboardClient();
-				whiteboard.main(null);
+				//whiteboard.main(null);
 			}
 		});
 
