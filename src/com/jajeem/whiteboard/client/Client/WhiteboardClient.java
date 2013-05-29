@@ -192,6 +192,16 @@ public class WhiteboardClient extends WebFrame {
         this.setVisible(false);
         
         try{
+        	Policy.setPolicy(new MinimalPolicy());
+        	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
+        	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
+        	System.setProperty("javax.net.ssl.keyStorePassword", "client");
+
+            // Create and install a security manager
+            if (System.getSecurityManager() == null) {
+                SecurityManager manager = new SecurityManager();
+                System.setSecurityManager(manager);
+            }
         	whiteboardChooseServer = new WhiteboardChooseServer(this);
         	WhiteboardCreateASession createASession
         		= new WhiteboardCreateASession(sessions,this);

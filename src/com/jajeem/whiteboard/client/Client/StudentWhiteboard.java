@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.security.Policy;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -21,17 +22,28 @@ public class StudentWhiteboard {
 	private Sessions sessions;
 	private int userid;
 	
-	public StudentWhiteboard(){
+	public StudentWhiteboard(String host){
+		Policy.setPolicy(new MinimalPolicy());
+    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
+    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
+    	System.setProperty("javax.net.ssl.keyStorePassword", "client");
+
+        // Create and install a security manager
+        if (System.getSecurityManager() == null) {
+            SecurityManager manager = new SecurityManager();
+            System.setSecurityManager(manager);
+        }
+		hostname = host;
 		
 		userid = new Random().nextInt(2000);
 		/** Connect to the server */
 		try {
-            if (txtServerAddress == null || txtServerAddress.equals("")){
+            if (getTxtServerAddress() == null || getTxtServerAddress().equals("")){
                 // if the user specify the address of server
                 
             }
             else {
-            	hostname = txtServerAddress;
+            	hostname = getTxtServerAddress();
             }
 
             // Make reference to SSL-based registry
@@ -94,6 +106,14 @@ public class StudentWhiteboard {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String getTxtServerAddress() {
+		return txtServerAddress;
+	}
+
+	public void setTxtServerAddress(String txtServerAddress) {
+		this.txtServerAddress = txtServerAddress;
 	}
 
 }
