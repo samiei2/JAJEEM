@@ -6,36 +6,27 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ListSelectionModel;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-
-import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.scroll.WebScrollPane;
-import com.alee.laf.table.WebTable;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Class UserListPanel is the list to display the information of peers,
  * including the name, type and who has the drawing power. 
  */
-public class UserListPanel extends WebPanel {
+public class UserListPanel extends JPanel {
     /** The name of columns */
     private final String[] columnNames = {"Username","Type","Right"};
 
     /** The list of user information */
-    private WebTable userlist;
+    private JTable userlist;
 
     /** The scroll pane which provides a movable display area */
-    private WebScrollPane scrollPane;
+    private JScrollPane scrollPane;
 
     /** The model of table which implements the modify of table */
     private TableModel tableModel;
@@ -49,10 +40,10 @@ public class UserListPanel extends WebPanel {
     /** The constructor to initialize */
     public UserListPanel(int userid, Whiteboard whiteboard) {
         
-        WebButton btnGrantRight;
-        WebButton btnWithdrawRight;
-        WebPanel rightManagePanel;
-        WebPanel btnPanel;
+        JButton btnGrantRight;
+        JButton btnWithdrawRight;
+        JPanel rightManagePanel;
+        JPanel btnPanel;
         
         this.whiteboard = whiteboard;
         try {
@@ -60,25 +51,25 @@ public class UserListPanel extends WebPanel {
             // from the whiteboard
             data = whiteboard.getUserlist();
         } catch(Exception ex) {
-            WebOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                 "Error happens while reading the list of user information.",
-                "Error", WebOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         tableModel = new DefaultTableModel(data,columnNames);
         // create the table and change it editable to disable
-        userlist = new WebTable(){
+        userlist = new JTable(){
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        rightManagePanel = new WebPanel();
+        rightManagePanel = new JPanel();
         rightManagePanel.setLayout(new BorderLayout());
-        btnPanel = new WebPanel();
+        btnPanel = new JPanel();
         btnPanel.setLayout(new BorderLayout()); 
 
-        btnGrantRight = new WebButton("Grant");
-        btnWithdrawRight = new WebButton("Withdraw");
+        btnGrantRight = new JButton("Grant");
+        btnWithdrawRight = new JButton("Withdraw");
 
         btnGrantRight.setPreferredSize(new Dimension(100,20));
         // listen the event of button clicked
@@ -98,8 +89,8 @@ public class UserListPanel extends WebPanel {
             }
         }));
 
-        // sets the table model to the WebTable, which
-        // is used for updating the WebTable.
+        // sets the table model to the JTable, which
+        // is used for updating the JTable.
         userlist.setModel(tableModel);
         // sets that the table only choose one line
         userlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -107,7 +98,7 @@ public class UserListPanel extends WebPanel {
         userlist.setPreferredScrollableViewportSize(new Dimension(200, 160));
         userlist.getTableHeader().setResizingAllowed(false);
         
-        scrollPane = new WebScrollPane(userlist);
+        scrollPane = new JScrollPane(userlist);
         if(userid != 0)
         {
             // if the user is not an administrator of
@@ -144,9 +135,9 @@ public class UserListPanel extends WebPanel {
                 // grant the right to the selected row 
                 this.whiteboard.grantRightTo(selectedRow);
             } catch(Exception ex) {
-                WebOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(null,
                     "Error happens while withdrawing the drawing right.",
-                    "Error", WebOptionPane.ERROR_MESSAGE);
+                    "Error", JOptionPane.ERROR_MESSAGE);
             }
         }       
     }
@@ -156,9 +147,9 @@ public class UserListPanel extends WebPanel {
         try {
             this.whiteboard.withdrawRight();
         } catch(Exception ex) {
-            WebOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                 "Error happens while withdrawing the drawing right.",
-                "Error", WebOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

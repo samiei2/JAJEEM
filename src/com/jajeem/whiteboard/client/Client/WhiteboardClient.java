@@ -189,7 +189,21 @@ public class WhiteboardClient extends WebFrame {
         this.sessionsPanel.add(btnCancel);
         this.sessionsPanel.add(btnConnect);
         getContentPane().add(sessionsPanel);
-        this.setVisible(true);
+        this.setVisible(false);
+        
+        try{
+        	whiteboardChooseServer = new WhiteboardChooseServer(this);
+        	WhiteboardCreateASession createASession
+        		= new WhiteboardCreateASession(sessions,this);
+        }
+        catch(Exception ex){
+        	setIsRunSessionsListener(false);
+        	updateList(null);
+        	LocalWhiteboard localWhiteboard = new LocalWhiteboard();
+            MainFrame mainFrame = new MainFrame(null,
+                0,localWhiteboard,0,"localuser");
+        }
+        
     }
 
     /** Display a dialog to create a new session */

@@ -7,9 +7,6 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
 import javax.swing.*;
@@ -22,7 +19,7 @@ import java.rmi.RemoteException;
  * Class MainFrame is the main frame to provide an interface
  * to users. And it contains the paintpanel and other components.
  */
-public class MainFrame extends WebFrame {
+public class MainFrame extends JFrame {
     /** the default background color of tools */
     public static final Color TOOL_BACKGROUNDCOLOR = new Color(240,240,240);
     
@@ -70,9 +67,9 @@ public class MainFrame extends WebFrame {
                 // sets the title of this session
                 this.setTitle("Session Name: "+ sessions.getSessionName(sessionID));
             } catch(Exception ex) {
-                WebOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(null,
                        "Error happens while getting the name of the session.",
-                       "Error", WebOptionPane.ERROR_MESSAGE);
+                       "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             // if this session is a local whiteboard
@@ -80,9 +77,9 @@ public class MainFrame extends WebFrame {
         }
 
         // it is the container of the paint and color panel
-        WebPanel paintAndColorPanel;
+        JPanel paintAndColorPanel;
         // the panel contains the list of user and chat module
-        WebPanel userlistAndChatPanel;
+        JPanel userlistAndChatPanel;
         // the list of user panel
         UserListPanel userlistPanel;
 
@@ -91,8 +88,8 @@ public class MainFrame extends WebFrame {
         this.setLayout(new BorderLayout());
 
         // create the object of those components
-        paintAndColorPanel = new WebPanel(new BorderLayout());
-        userlistAndChatPanel = new WebPanel(new BorderLayout());
+        paintAndColorPanel = new JPanel(new BorderLayout());
+        userlistAndChatPanel = new JPanel(new BorderLayout());
         mainMenuBar = new MainMenuBar(this, whiteboard);
         colorToolBar = new ColorToolBar();
         paintPanel = new PaintPanel(this,whiteboard, 
@@ -134,10 +131,10 @@ public class MainFrame extends WebFrame {
             listener.start();
 
         } catch(Exception ex) {
-            WebOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                        "Error happens while starting the listener thread," +
                        "this frame will be closed.",
-                       "Error", WebOptionPane.ERROR_MESSAGE);
+                       "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
 

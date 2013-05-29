@@ -6,25 +6,15 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
+import com.jajeem.whiteboard.client.Client.WhiteboardClient;
+import com.jajeem.whiteboard.client.Module.Data.FontData;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-
-import com.alee.laf.button.WebToggleButton;
-import com.alee.laf.combobox.WebComboBox;
-import com.alee.laf.panel.WebPanel;
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
-import com.jajeem.whiteboard.client.Module.Data.FontData;
 
 /**
  * Class FontPanel provides an implementation of a container
@@ -82,7 +72,7 @@ public class FontPanel extends JPanel implements ActionListener {
         fontComboBox.setBounds(0,1,140,18);
         sizeComboBox.setSelectedItem("Calibri");
 
-        buttonPanel = new JPanel();
+        buttonPanel = new JPanel(null);
 
         // initialize the buttons
         for( int i=0; i< btnTool.length; i++) {

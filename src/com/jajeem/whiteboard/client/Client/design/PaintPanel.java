@@ -7,42 +7,25 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import com.jajeem.whiteboard.client.Module.Data.GradientData;
+import com.jajeem.whiteboard.client.Module.Graphics.*;
+import com.jajeem.whiteboard.client.Module.Graphics.Image;
+import com.jajeem.whiteboard.client.Module.Graphics.Rectangle;
+import com.jajeem.whiteboard.client.Module.Graphics.TextArea;
+import com.jajeem.whiteboard.client.Client.WhiteboardClient;
+import com.jajeem.whiteboard.client.Module.*;
+import com.jajeem.whiteboard.client.Module.Data.ColorData;
+import com.jajeem.whiteboard.client.Module.Data.FontData;
+import com.jajeem.whiteboard.server.Module.Shape;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.panel.WebPanel;
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
-import com.jajeem.whiteboard.client.Module.Data.ColorData;
-import com.jajeem.whiteboard.client.Module.Data.FontData;
-import com.jajeem.whiteboard.client.Module.Data.GradientData;
-import com.jajeem.whiteboard.client.Module.Graphics.Erase;
-import com.jajeem.whiteboard.client.Module.Graphics.Image;
-import com.jajeem.whiteboard.client.Module.Graphics.Line;
-import com.jajeem.whiteboard.client.Module.Graphics.Oval;
-import com.jajeem.whiteboard.client.Module.Graphics.Pencil;
-import com.jajeem.whiteboard.client.Module.Graphics.Rectangle;
-import com.jajeem.whiteboard.client.Module.Graphics.RoundedRectangle;
-import com.jajeem.whiteboard.client.Module.Graphics.TextArea;
-import com.jajeem.whiteboard.server.Module.Shape;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
 
 /**
  * Class PaintPanel provides the implementation of the drawing area
@@ -50,7 +33,7 @@ import com.jajeem.whiteboard.server.Module.Whiteboard;
  * And it calls the method of the remote 'whiteboard' object to add
  * and receive the information.
  */
-public class PaintPanel extends WebPanel implements Observer {
+public class PaintPanel extends JPanel implements Observer {
 
     /** Declare a reference of whiteboard */
     private Whiteboard whiteboard;
@@ -131,9 +114,9 @@ public class PaintPanel extends WebPanel implements Observer {
                         // clean the text
                         whiteboard.removeTheCurrentShape();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while canceling the input text.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     // Close the keyboard listening mode
@@ -155,9 +138,9 @@ public class PaintPanel extends WebPanel implements Observer {
                             whiteboard.textAppend(keyEvent.getKeyChar());
                         }
                     } catch (Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while canceling the input text.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     repaint();
@@ -182,9 +165,9 @@ public class PaintPanel extends WebPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -206,9 +189,9 @@ public class PaintPanel extends WebPanel implements Observer {
                             paintPanel.requestFocus();
                             
                         }catch(Exception ex) {
-                            WebOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(null,
                                 "Error happens while adding the shape.",
-                                "Error", WebOptionPane.ERROR_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         repaint();
@@ -225,9 +208,9 @@ public class PaintPanel extends WebPanel implements Observer {
                     // the enquiry of who has the drawing right
                     currentRightAt = whiteboard.getCurrentRightAt();
                 } catch(Exception ex) {
-                    WebOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(null,
                         "Error happens while acquiring who has the paint right.",
-                        "Error", WebOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(currentRightAt == paintPanel.getUserid()) {
@@ -312,9 +295,9 @@ public class PaintPanel extends WebPanel implements Observer {
                             // change the buffered image to byte array
                             imageData = Image.getCompressedImage(bufferedImage);
                         } catch(Exception ex) {
-                            WebOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(null,
                                 "Error happens while getting the image.",
-                                "Error", WebOptionPane.ERROR_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         // creates an image
@@ -342,10 +325,10 @@ public class PaintPanel extends WebPanel implements Observer {
                         // add the shape to the whiteboard
                         whiteboard.addShape(shape);
                     }catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while adding the "
                             + "shape to the whiteboard.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     repaint();
@@ -372,9 +355,9 @@ public class PaintPanel extends WebPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -386,10 +369,10 @@ public class PaintPanel extends WebPanel implements Observer {
                             // add the point to the current shape of whiteboard
                             paintPanel.getWhiteboard().addPointToCurrentShape(x, y);
                         }catch(Exception ex) {
-                            WebOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(null,
                                 "Error happens while adding the point "
                                 + "to the shape of whiteboard.",
-                                "Error", WebOptionPane.ERROR_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
                         repaint();
@@ -405,9 +388,9 @@ public class PaintPanel extends WebPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -421,9 +404,9 @@ public class PaintPanel extends WebPanel implements Observer {
                             // finish the choosing area operation
                             whiteboard.setDrawingFinished(true);
                         }catch(Exception ex) {
-                            WebOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(null,
                                 "Error happens while finishing the choosing area.",
-                                "Error", WebOptionPane.ERROR_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
 
@@ -475,9 +458,9 @@ public class PaintPanel extends WebPanel implements Observer {
                         // the enquiry of who has the drawing right
                         currentRightAt = whiteboard.getCurrentRightAt();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while acquiring who has the paint right.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     if(currentRightAt == paintPanel.getUserid()) {
@@ -488,10 +471,10 @@ public class PaintPanel extends WebPanel implements Observer {
                             // add the point to the current shape of whiteboard
                             paintPanel.getWhiteboard().addPointToCurrentShape(x, y);
                         }catch(Exception ex) {
-                            WebOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(null,
                                 "Error happens while adding the point "
                                 + "to the shape of whiteboard.",
-                                "Error", WebOptionPane.ERROR_MESSAGE);
+                                "Error", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                         repaint();
@@ -526,9 +509,9 @@ public class PaintPanel extends WebPanel implements Observer {
                 m--;
             }
         }catch(Exception ex) {
-            WebOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                 "Error happens while synchronizing the local buffer.",
-                "Error", WebOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -621,15 +604,15 @@ public class PaintPanel extends WebPanel implements Observer {
             java.awt.Image imageCursor =
                     Toolkit.getDefaultToolkit().getImage(
                     WhiteboardClient.class.getResource(
-                    "/com/jajeem/whiteboard/client/Client/Image/Cursors/" + fileName + ".gif"));
+                    "/client/Client/Image/Cursors/" + fileName + ".gif"));
             
             // set the cursor
             this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                     imageCursor, point, Name));
         } catch(Exception ex) {
-            WebOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                 "Error happens while setting the cursor image.",
-                "Error", WebOptionPane.ERROR_MESSAGE);
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

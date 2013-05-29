@@ -6,34 +6,26 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.Dimension;
-import java.awt.Font;
+import com.jajeem.whiteboard.server.Module.Whiteboard;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.util.Date;
 
-
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.scroll.WebScrollPane;
-import com.alee.laf.text.WebTextArea;
-import com.alee.laf.text.WebTextField;
-import com.jajeem.whiteboard.server.Module.Whiteboard;
-
 /**
  * Class ChatPanel provides the implementation of the chat interface,
  * which receives the input from users and displays the messages passed
  * by other users.
  */
-public class ChatPanel extends WebPanel {
+public class ChatPanel extends JPanel {
     /** The display area */
-    private WebTextArea textArea;
+    private JTextArea textArea;
 
     /** The input area */
-    private WebTextField textInput;
+    private JTextField textInput;
 
     /** Declare a whiteboard object */
     private Whiteboard whiteboard;
@@ -45,33 +37,33 @@ public class ChatPanel extends WebPanel {
     public ChatPanel(int userid, Whiteboard whiteboard){
         // Declare a scroll pane which can change the size
         // of display area
-        WebScrollPane scrollPane;
+        JScrollPane scrollPane;
 
         // The label of title
-        WebLabel chatLabel;
+        JLabel chatLabel;
 
         // initialize instance variables
         this.userid = userid;
         this.whiteboard = whiteboard;
         // sets the layout and size of this panel
         this.setLayout(null);
-        this.setPreferredSize(new Dimension(205, 250));
+        this.setPreferredSize(new Dimension(200,250));
         
         // creates the title label
-        chatLabel = new WebLabel("Chat Channel");
+        chatLabel = new JLabel("Chat Channel");
         chatLabel.setBounds(50,0,130,20);
         chatLabel.setFont(new Font("Calibri",
                 Font.BOLD, 20));
 
         // initialize the display and input area
-        textArea = new WebTextArea();
+        textArea = new JTextArea();
         textArea.setBounds(5,20,200,200);
         textArea.setEditable(false);
-        textInput = new WebTextField();
+        textInput = new JTextField();
         textInput.setBounds(5,220,200,20);
 
         // initialize the scroll pane
-        scrollPane = new WebScrollPane(textArea);
+        scrollPane = new JScrollPane(textArea);
         scrollPane.setVisible(true);
         scrollPane.setBounds(5,20,200,200);
 
@@ -87,9 +79,9 @@ public class ChatPanel extends WebPanel {
                     try {
                         sendMessages();
                     } catch(Exception ex) {
-                        WebOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(null,
                             "Error happens while sending the message.",
-                            "Error", WebOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     }
 
                 }

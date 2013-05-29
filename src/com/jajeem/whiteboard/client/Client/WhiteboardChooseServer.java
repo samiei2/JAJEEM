@@ -124,7 +124,8 @@ public class WhiteboardChooseServer extends JDialog {
         userPanel.add(btnOk);
         userPanel.add(btnCancel);
         this.add(userPanel);
-        this.setVisible(true);
+        this.setVisible(false);
+        btnOk_ActionPerformed(null);
     }
 
     /** Connect to the server */

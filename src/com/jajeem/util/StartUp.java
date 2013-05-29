@@ -13,8 +13,10 @@ public class StartUp {
 		BaseDAO.setH2Connection(conn);
 		initDatabase.initialize();
 		
+		
+		
 //		new initServices();
-//		com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
+		com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
 		
 		try
 		{

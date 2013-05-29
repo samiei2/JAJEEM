@@ -6,18 +6,13 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import com.alee.laf.colorchooser.WebColorChooser;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.toolbar.WebToolBar;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.FontData;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 /**
  * Class ColorToolBar provides an implementation of a container
@@ -25,7 +20,7 @@ import com.jajeem.whiteboard.client.Module.Data.FontData;
  * clicking the color button. And the current color of the
  * whiteboard is displayed in ColorPanel.
  */
-public class ColorToolBar extends WebToolBar implements MouseListener {
+public class ColorToolBar extends JToolBar implements MouseListener {
 
     /** creates a panel which displays the current colors */
     private ColorPanel colorPanel;
@@ -41,7 +36,7 @@ public class ColorToolBar extends WebToolBar implements MouseListener {
         final int numOfColorButtons = 28;
 
         // the panel contains the colorpanel and colorbuttons
-        WebPanel colorDisplayPanel;
+        JPanel colorDisplayPanel;
 
         // creates the array of color buttons
         ColorButton[] colorButtons = new ColorButton[numOfColorButtons];
@@ -58,8 +53,8 @@ public class ColorToolBar extends WebToolBar implements MouseListener {
         // sets the layout of this component
         this.setLayout(new BorderLayout());
 
-        // creates a instance of WebPanel
-        colorDisplayPanel = new WebPanel();
+        // creates a instance of JPanel
+        colorDisplayPanel = new JPanel(null);
 
         // creates a instance of ColorPanel
         colorPanel = new ColorPanel();
@@ -129,9 +124,9 @@ public class ColorToolBar extends WebToolBar implements MouseListener {
         ColorButton colorButton = (ColorButton)event.getSource();
         // the user clicks the button on twice times.
         if(event.getClickCount() == 2) {
-            // the WebColorChooser is the Class of WebAVA, which
+            // the JColorChooser is the Class of JAVA, which
             // provides a dialog of editing colors.
-            Color color = WebColorChooser.showDialog(getParent(),
+            Color color = JColorChooser.showDialog(getParent(),
                     "Color Editor", colorButton.getColor());
             // sets the changed color to the corresponding button
             colorButton.setColor(color);

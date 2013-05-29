@@ -7,26 +7,21 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
-
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Observable;
-import java.util.Observer;
-
-import com.alee.laf.panel.WebPanel;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
 import com.jajeem.whiteboard.client.Module.Data.GradientData;
+
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Class GradientPanel provides an implementation of a panel
  * which displays the choices of gradient type to users.
  */
-public class GradientPanel extends WebPanel implements Observer {
+public class GradientPanel extends JPanel implements Observer {
 
     /** The gradient data. */
     private GradientData gradientData;

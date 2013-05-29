@@ -7,21 +7,16 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JPanel;
-
-import com.alee.laf.panel.WebPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
 
 /**
  * Class SquarePanel implements a display panel, from which users can
  * choose the type of their drawing shape, whether is square or not.
  */
-public class SquarePanel extends WebPanel {
+public class SquarePanel extends JPanel {
 
     /** The flag whether the drawing shape is square */
     private boolean isSquare;

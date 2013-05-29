@@ -148,7 +148,7 @@ public class WhiteboardCreateASession extends JFrame {
         displayPanel.add(btnOk);
         displayPanel.add(btnCancel);
         this.add(displayPanel);
-        this.setVisible(true);
+        this.setVisible(false);
 
         // add a listener of closing window
         this.addWindowListener(new WindowAdapter() {
@@ -156,14 +156,16 @@ public class WhiteboardCreateASession extends JFrame {
                window_Closed();
            }
         });
+        
+        btnOk_ActionPerformed(null);
     }
 
     /** The operation to create a session */
     private void btnOk_ActionPerformed(ActionEvent e) {
-        String sessionName = txtSessionName.getText().trim();
-        String adminName = txtAdminName.getText().trim();
-        String password = new String(txtPwd.getPassword());
-        String confirmPwd = new String(txtVerifyPwd.getPassword());
+        String sessionName = "Home";//txtSessionName.getText().trim();
+        String adminName = getTeacher();//txtAdminName.getText().trim();
+        String password = "a";//new String(txtPwd.getPassword());
+        String confirmPwd = "a";//new String(txtVerifyPwd.getPassword());
         
         if(sessionName.equals("") || adminName.equals("")) {
             // if the input text is empty
@@ -226,7 +228,12 @@ public class WhiteboardCreateASession extends JFrame {
         }
     }
 
-    /** Closing this window */
+    private String getTeacher() {
+		// TODO Implement
+		return "Admin";
+	}
+
+	/** Closing this window */
     private void window_Closed(){
         this.dispose();
     }

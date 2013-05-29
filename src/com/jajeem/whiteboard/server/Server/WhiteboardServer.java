@@ -42,7 +42,7 @@ public class WhiteboardServer {
     public static void main(String[] args) {
     	Policy.setPolicy(new MinimalPolicy());
 //    	try {
-//			//com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));
+//			com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -94,7 +94,7 @@ public class WhiteboardServer {
             System.out.println("Error starting the server: " +
                  ex.getMessage());
         }
-
+        
         // creates a new thread to receive the user's input
         // which is used to end the program
         new Thread( new Runnable()

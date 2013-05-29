@@ -6,13 +6,10 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-
-import com.alee.laf.panel.WebPanel;
 import com.jajeem.whiteboard.client.Module.Data.ColorData;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Class ColorPanel provides an implementation of the display
@@ -20,7 +17,7 @@ import com.jajeem.whiteboard.client.Module.Data.ColorData;
  * represents the forward color, and another one stands for the
  * background color.
  */
-public class ColorPanel extends WebPanel {
+public class ColorPanel extends JPanel {
     /** The data of colors */
     private ColorData colorData;
     
