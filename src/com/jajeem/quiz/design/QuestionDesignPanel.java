@@ -47,7 +47,7 @@ public class QuestionDesignPanel extends WebPanel {
 	private WebCheckBox webCheckBox_3;
 	private WebCheckBox webCheckBox_4;
 	private WebComboBox webComboBox;
-	private Panel_Bottom_1 parentPanel;
+	private QuizTab_1 parentPanel;
 	private WebPanel webPanelOptions;
 	private WebLabel wblblQuestion;
 
@@ -55,7 +55,7 @@ public class QuestionDesignPanel extends WebPanel {
 	/**
 	 * Create the panel.
 	 */
-	public QuestionDesignPanel(Panel_Bottom_1 panel) {
+	public QuestionDesignPanel(QuizTab_1 panel) {
 		this.parentPanel = panel;
 		setWblblQuestion(new WebLabel());
 		getWblblQuestion().setText("Question ?");

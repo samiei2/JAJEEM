@@ -291,7 +291,7 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setTitle(rs.getString("title"));
 				question.setQuizId(rs.getInt("quizId"));
 				question.setType(rs.getByte("type"));
-				question.setPoint(rs.getInt("quizId"));
+				question.setPoint(rs.getInt("point"));
 				question.setImagePath(rs.getString("imagePath"));
 				question.setUrl(rs.getString("url"));
 				question.setAnswer1(rs.getString("answer1"));
@@ -358,7 +358,7 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setTitle(rs.getString("title"));
 				question.setQuizId(rs.getInt("quizId"));
 				question.setType(rs.getByte("type"));
-				question.setPoint(rs.getInt("quizId"));
+				question.setPoint(rs.getInt("point"));
 				question.setImagePath(rs.getString("imagePath"));
 				question.setUrl(rs.getString("url"));
 				question.setAnswer1(rs.getString("answer1"));

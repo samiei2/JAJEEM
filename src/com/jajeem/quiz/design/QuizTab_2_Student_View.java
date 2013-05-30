@@ -27,7 +27,7 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
-public class Panel_Bottom_22 extends WebPanel {
+public class QuizTab_2_Student_View extends WebPanel {
 	private JTextField textField;
 	private WebTable webTable;
 	private WebComboBox webComboBox;
@@ -35,7 +35,7 @@ public class Panel_Bottom_22 extends WebPanel {
 	private Student currentStudent;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
-	private Panel_Bottom_2 parentPanel;
+	private QuizTab_2 parentPanel;
 	private WebLabel wblblScore;
 	private int id=1;
 
@@ -43,7 +43,7 @@ public class Panel_Bottom_22 extends WebPanel {
 	 * Create the panel.
 	 * @param panel_Bottom_2 
 	 */
-	public Panel_Bottom_22(Panel_Bottom_2 panel_Bottom_2) {
+	public QuizTab_2_Student_View(QuizTab_2 panel_Bottom_2) {
 		this.parentPanel = panel_Bottom_2;
 		quizResponse = parentPanel.getQuizResponse();
 		currentQuiz = parentPanel.getCurrentQuiz();
@@ -73,11 +73,11 @@ public class Panel_Bottom_22 extends WebPanel {
 							ImageIcon imgToolTip = null;
 							try{
 								imgToolTip = new ImageIcon(
-										ImageIO.read(Panel_Bottom_22.class
+										ImageIO.read(QuizTab_2_Student_View.class
 												.getResourceAsStream("/icons/bullet-red.png")));
 								if(ex.getQuestion().isResponseValid())
 									imgToolTip = new ImageIcon(
-											ImageIO.read(Panel_Bottom_22.class
+											ImageIO.read(QuizTab_2_Student_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
 							}
 							catch(Exception exp){
@@ -391,11 +391,11 @@ public class Panel_Bottom_22 extends WebPanel {
 							ImageIcon imgToolTip = null;
 							try{
 								imgToolTip = new ImageIcon(
-										ImageIO.read(Panel_Bottom_22.class
+										ImageIO.read(QuizTab_2_Student_View.class
 												.getResourceAsStream("/icons/bullet-red.png")));
 								if(tempq.isResponseValid())
 									imgToolTip = new ImageIcon(
-											ImageIO.read(Panel_Bottom_22.class
+											ImageIO.read(QuizTab_2_Student_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
 							}
 							catch(Exception exp){

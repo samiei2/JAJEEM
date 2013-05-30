@@ -36,4 +36,12 @@ public class QuizEvent implements Serializable{
             }
         }
     }
+    public void fireQuizFinished(QuizFinished evt){
+    	Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i = i+2) {
+            if (listeners[i] == QuizEventListener.class) {
+                ((QuizEventListener) listeners[i+1]).quizFinished(evt);
+            }
+        }
+    }
 }

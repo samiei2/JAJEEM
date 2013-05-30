@@ -16,6 +16,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizFinished;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
@@ -24,10 +25,11 @@ import com.jajeem.quiz.model.Run;
 
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_2 extends WebPanel {
+public class QuizTab_2 extends WebPanel {
 
-	private Panel_Bottom_21 panel_bottom_21;
-	private Panel_Bottom_22 panel_bottom_22;
+	private QuizTab_2_Question_View panel_bottom_21;
+	private QuizTab_2_Student_View panel_bottom_22;
+	private QuizTab_2_Points_View panel_bottom_23;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private ArrayList<Run> runResults;
 	private QuizEvent responseRecieved;
@@ -36,7 +38,7 @@ public class Panel_Bottom_2 extends WebPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Panel_Bottom_2() {
+	public QuizTab_2() {
 		quizResponse = new ArrayList<>();
 		runResults = new ArrayList<>();
 		
@@ -44,13 +46,15 @@ public class Panel_Bottom_2 extends WebPanel {
 		wblblView.setText("View");
 		
 		final WebPanel cards = new WebPanel(new CardLayout());
-		panel_bottom_21 = new Panel_Bottom_21(this);
-		panel_bottom_22 = new Panel_Bottom_22(this);
+		panel_bottom_21 = new QuizTab_2_Question_View(this);
+		panel_bottom_22 = new QuizTab_2_Student_View(this);
+		panel_bottom_23 = new QuizTab_2_Points_View(this);
 		cards.add(panel_bottom_21,"Question");
 		cards.add(panel_bottom_22,"Student");
+		cards.add(panel_bottom_23,"Overall");
 		
 		final WebComboBox webComboBox = new WebComboBox();
-		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student"}));
+		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student", "Overall"}));
 		webComboBox.addItemListener(new ItemListener() {
 			
 			@Override
@@ -117,18 +121,20 @@ public class Panel_Bottom_2 extends WebPanel {
 						}
 					}
 				}
-				for (int i = 0; i < getRunResults().size(); i++) {
-					if(getRunResults().get(i).getId() != e.getQuizRun().getId() && i == getRunResults().size()){
-						getRunResults().add(e.getQuizRun());
-					}
-				}
+				
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
+				panel_bottom_23.QuestionAnswered(e);
 			}
 
 			@Override
 			public void quizStoped(QuizStop e) {
 				
+			}
+
+			@Override
+			public void quizFinished(QuizFinished e) {
+				runResults.add(e.getQuizRun());
 			}
 		});
 
@@ -141,6 +147,7 @@ public class Panel_Bottom_2 extends WebPanel {
 		}
 		panel_bottom_21.LoadQuiz(currentQuiz);
 		panel_bottom_22.LoadQuiz(currentQuiz);
+		panel_bottom_23.LoadQuiz(currentQuiz);
 	}
 	
 	public void ClearQuiz(){
@@ -148,6 +155,7 @@ public class Panel_Bottom_2 extends WebPanel {
 		quizResponse = new ArrayList<>();
 		panel_bottom_21.clearQuiz();
 		panel_bottom_22.clearQuiz();
+		panel_bottom_23.clearQuiz();
 	}
 
 	public ArrayList<ArrayList<QuizResponse>> getQuizResponse() {

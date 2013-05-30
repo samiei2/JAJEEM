@@ -25,7 +25,7 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_1 extends WebPanel {
+public class QuizTab_1 extends WebPanel {
 
 	private QuestionListPanel questionListPanel;
 	private QuizMain parentPanel;
@@ -41,7 +41,7 @@ public class Panel_Bottom_1 extends WebPanel {
 	 * Create the panel.
 	 * @param quizMain 
 	 */
-	public Panel_Bottom_1(QuizMain quizMain) {
+	public QuizTab_1(QuizMain quizMain) {
 		//TODO remove the code below
 		try {
 			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
@@ -598,7 +598,7 @@ public class Panel_Bottom_1 extends WebPanel {
 				parentPanel.getCurrentQuiz().getQuestionList().add(currentIndex - 1, temp);
 			}
 		});
-		webButton_6.setIcon(new ImageIcon(Panel_Bottom_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
+		webButton_6.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
 		
 		WebButton webButton_5 = new WebButton();
 		webButton_5.addActionListener(new ActionListener() {
@@ -614,7 +614,7 @@ public class Panel_Bottom_1 extends WebPanel {
 				parentPanel.getCurrentQuiz().getQuestionList().add(currentIndex + 1, temp);
 			}
 		});
-		webButton_5.setIcon(new ImageIcon(Panel_Bottom_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
+		webButton_5.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -722,13 +722,16 @@ public class Panel_Bottom_1 extends WebPanel {
 		this.webCheckBox = webCheckBox;
 	}
 	public void clear() {
+		parentPanel.setEventsEnabled(false);
 		wbTxtFldDirection.setText("");
 		wbTxtFldPoints.setText("");
 		wbTxtFldTimeLimit.setText("");
 		getQuestionDesignPanel().clear();
 		getQuestionListPanel().clear();
+		parentPanel.setEventsEnabled(true);
 	}
 	public void loadCurrentQuiz(Quiz currentQuiz) {
+		parentPanel.setEventsEnabled(false);
 		wbTxtFldDirection.setText(currentQuiz.getTitle());
 		wbTxtFldPoints.setText(String.valueOf(currentQuiz.getPoints()));
 		wbTxtFldTimeLimit.setText(String.valueOf(currentQuiz.getTime()));
@@ -752,6 +755,7 @@ public class Panel_Bottom_1 extends WebPanel {
 			});
 		}
 		
+		parentPanel.setEventsEnabled(true);
 		if(model.getRowCount() != 0)
 			getQuestionListPanel().getWebTable().getSelectionModel().setSelectionInterval(0, 0);
 		

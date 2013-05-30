@@ -40,6 +40,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizFinished;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
 import com.jajeem.quiz.model.Question;
@@ -118,12 +119,14 @@ public class QuizWindow extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuizWindow(Quiz quiz) {
+	public QuizWindow(Run run) {
 		setTitle("Quiz");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizWindow.class.getResource("/com/jajeem/images/quiz.png")));
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
+		privateStudent.setFullName(com.jajeem.util.Session.studentName);
+		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		
 		ClientSession.setQuizWindowHndl(this);
@@ -851,6 +854,12 @@ public class QuizWindow extends WebFrame {
 			
 			@Override
 			public void questionAnswered(QuizResponse e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void quizFinished(QuizFinished e) {
 				// TODO Auto-generated method stub
 				
 			}

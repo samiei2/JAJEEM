@@ -16,6 +16,7 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 			Student student = new Student();
 			student.main(null);
 			StudentLogin.setLoginDialogVisible(false);
+			
 		} else {
 			StudentLogin.setFieldsColor(Color.decode("#FAD9D9"));
 			StudentLogin.setLoginDialogVisible(true);

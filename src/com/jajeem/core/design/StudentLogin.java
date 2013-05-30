@@ -150,6 +150,8 @@ public class StudentLogin extends JDialog {
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
+						//TODO remove or change this line
+						com.jajeem.util.Session.studentName = username.getText();
 						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								serverIp, Integer.parseInt(Config
@@ -168,6 +170,8 @@ public class StudentLogin extends JDialog {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					//TODO remove or change this line
+					com.jajeem.util.Session.studentName = "Anonymous";
 					setVisible(false);
 					dispose();
 				}

@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable{
 	// properties
 	private int id;
+	private String fullName = "";
 	private String firstName = "";
 	private String middleName = "";
 	private String lastName = "";
@@ -54,5 +55,14 @@ public class User implements Serializable{
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+	public String getFullName() {
+		if(fullName != "" && fullName != null)
+			return fullName;
+		this.fullName = firstName + " " + lastName;
+		return firstName + " " + lastName;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 }

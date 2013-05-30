@@ -59,8 +59,8 @@ public class QuizMain extends WebFrame {
 	private QuizEvent quizEvent;
 	private DefaultTableModel tablemodel;
 	private WebPanel cards;
-	private Panel_Bottom_1 panel_bottom_1;
-	private Panel_Bottom_2 panel_bottom_2;
+	private QuizTab_1 panel_bottom_1;
+	private QuizTab_2 panel_bottom_2;
 	private WebPanel panel_bottom_3;
 	private WebButton wbtnStart;
 	private WebButton wbtnContent;
@@ -109,6 +109,17 @@ public class QuizMain extends WebFrame {
 		}
 		clientService2.start();
 		
+		new Config();
+		ClientService clientService = null;
+		try {
+			clientService = new ClientService(Config.getParam("broadcastingIp"), 9090);
+		} catch (NumberFormatException e2) {
+			e2.printStackTrace();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		clientService.start();
+		
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -132,9 +143,9 @@ public class QuizMain extends WebFrame {
 		
 		cards = new WebPanel(new CardLayout());
 		
-		panel_bottom_1 = new Panel_Bottom_1(this);
+		panel_bottom_1 = new QuizTab_1(this);
 		setTablemodel((DefaultTableModel)panel_bottom_1.getQuestionListPanel().getWebTable().getModel());
-		panel_bottom_2 = new Panel_Bottom_2();
+		panel_bottom_2 = new QuizTab_2();
 		panel_bottom_3 = new WebPanel();
 		
 		cards.add(panel_bottom_1,"Page 1");
@@ -224,7 +235,7 @@ public class QuizMain extends WebFrame {
 		wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OpenDialog open = new OpenDialog(frame);
+				QuizOpenDialog open = new QuizOpenDialog(frame);
 				open.setVisible(true);
 			}
 		});
@@ -355,7 +366,7 @@ public class QuizMain extends WebFrame {
 						StartQuizCommand cmd = new StartQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						//StartQuizCommand cmd = new StartQuizCommand("","127.0.0.1", 9090);
 						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-						//cmd.setRun(run);
+						cmd.setRun(run);
 						cmd.setQuiz(currentQuiz);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {

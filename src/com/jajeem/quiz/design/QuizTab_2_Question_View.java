@@ -36,7 +36,7 @@ import com.jajeem.quiz.model.Quiz;
 import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_21 extends WebPanel {
+public class QuizTab_2_Question_View extends WebPanel {
 
 	private Question currentQuestion;
 	private WebTextField webTextField;
@@ -49,14 +49,14 @@ public class Panel_Bottom_21 extends WebPanel {
 	private long remaining; // How many milliseconds remain in the countdown.
 	private long lastUpdate; // When count was last updated
 	private int total;
-	private Panel_Bottom_2 parentPanel;
+	private QuizTab_2 parentPanel;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
 	
 	/**
 	 * Create the panel.
 	 */
-	public Panel_Bottom_21(Panel_Bottom_2 Panel_Bottom_2) {
+	public QuizTab_2_Question_View(QuizTab_2 Panel_Bottom_2) {
 		this.parentPanel = Panel_Bottom_2;
 		quizResponse = parentPanel.getQuizResponse();
 		currentQuiz = parentPanel.getCurrentQuiz();
@@ -92,11 +92,11 @@ public class Panel_Bottom_21 extends WebPanel {
 						ImageIcon imgToolTip = null;
 						try{
 							imgToolTip = new ImageIcon(
-									ImageIO.read(Panel_Bottom_22.class
+									ImageIO.read(QuizTab_2_Student_View.class
 											.getResourceAsStream("/icons/bullet-red.png")));
 							if(ex.getQuestion().isResponseValid())
 								imgToolTip = new ImageIcon(
-										ImageIO.read(Panel_Bottom_22.class
+										ImageIO.read(QuizTab_2_Student_View.class
 												.getResourceAsStream("/icons/bullet-green.png")));
 						}
 						catch(Exception exp){
@@ -171,7 +171,7 @@ public class Panel_Bottom_21 extends WebPanel {
 						model.addRow(new Object[]{
 								imgToolTip,
 								student.getId(),
-								student.getFirstName() + " " + student.getLastName(),
+								student.getFullName(),
 								QuestionOption,
 								StudentOption
 						});
@@ -413,11 +413,11 @@ public class Panel_Bottom_21 extends WebPanel {
 		}
 	}
 
-	public Panel_Bottom_2 getParentPanel() {
+	public QuizTab_2 getParentPanel() {
 		return parentPanel;
 	}
 
-	public void setParentPanel(Panel_Bottom_2 parentPanel) {
+	public void setParentPanel(QuizTab_2 parentPanel) {
 		this.parentPanel = parentPanel;
 	}
 
@@ -517,11 +517,11 @@ public class Panel_Bottom_21 extends WebPanel {
 				ImageIcon imgToolTip = null;
 				try{
 					imgToolTip = new ImageIcon(
-							ImageIO.read(Panel_Bottom_22.class
+							ImageIO.read(QuizTab_2_Student_View.class
 									.getResourceAsStream("/icons/bullet-red.png")));
 					if(e.getQuestion().isResponseValid())
 						imgToolTip = new ImageIcon(
-								ImageIO.read(Panel_Bottom_22.class
+								ImageIO.read(QuizTab_2_Student_View.class
 										.getResourceAsStream("/icons/bullet-green.png")));
 				}
 				catch(Exception exp){
@@ -536,7 +536,7 @@ public class Panel_Bottom_21 extends WebPanel {
 					model.addRow(new Object[]{
 							imgToolTip,
 							student.getId(),
-							student.getFirstName() + " " + student.getLastName(),
+							student.getFullName(),
 							QuestionOption,
 							StudentOption
 					});

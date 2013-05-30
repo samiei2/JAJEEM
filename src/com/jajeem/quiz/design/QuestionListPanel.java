@@ -14,14 +14,14 @@ import com.alee.laf.table.WebTable;
 
 public class QuestionListPanel extends WebPanel {
 	private WebTable webTable;
-	private Panel_Bottom_1 parentPanel;
+	private QuizTab_1 parentPanel;
 
 	/**
 	 * Create the panel.
 	 * @param panel_Bottom_1 
 	 */
 	@SuppressWarnings("serial")
-	public QuestionListPanel(Panel_Bottom_1 panel_Bottom_1) {
+	public QuestionListPanel(QuizTab_1 panel_Bottom_1) {
 		this.parentPanel = panel_Bottom_1;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout groupLayout = new GroupLayout(this);

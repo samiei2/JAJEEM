@@ -35,7 +35,7 @@ import com.jajeem.quiz.service.QuizService;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class OpenDialog extends JDialog {
+public class QuizOpenDialog extends JDialog {
 
 	private WebComboBox wbCmbBxOption;
 	private WebComboBox wbCmbBxSelection;
@@ -48,7 +48,7 @@ public class OpenDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			OpenDialog dialog = new OpenDialog(null);
+			QuizOpenDialog dialog = new QuizOpenDialog(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -61,9 +61,9 @@ public class OpenDialog extends JDialog {
 	 * @param actionListener 
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public OpenDialog(QuizMain frame) {
+	public QuizOpenDialog(QuizMain frame) {
 		setTitle("Open");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(OpenDialog.class.getResource("/com/jajeem/images/quiz.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(QuizOpenDialog.class.getResource("/com/jajeem/images/quiz.png")));
 		parentFrame = frame;
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
