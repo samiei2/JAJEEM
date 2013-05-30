@@ -11,7 +11,7 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 	public void run(Command cmd) {
 
 		try {
-			Student.receiver.close();
+			Student.getReceiver().close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -41,7 +41,7 @@ public class Student {
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
-	public static AVReceive2 receiver;
+	private static AVReceive2 receiver;
 
 	private static boolean black;
 
@@ -83,7 +83,7 @@ public class Student {
 			new Config();
 			
 			LibJitsi.start();
-			receiver = new AVReceive2("10000", "", "5000");
+			setReceiver(new AVReceive2("10000", "", "5000"));
 
 		} catch (Throwable e) {
 			// Something went wrong
@@ -195,5 +195,16 @@ public class Student {
 
 	public static void setChatList(List<Chat> chatList) {
 		Student.chatList = chatList;
+	}
+
+	public static AVReceive2 getReceiver() throws Exception {
+		if(receiver == null){
+			 receiver = new AVReceive2("", "", "");
+		}
+		return receiver;
+	}
+
+	public void setReceiver(AVReceive2 receiver) {
+		Student.receiver = receiver;
 	}
 }

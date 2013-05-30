@@ -17,9 +17,9 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 
 		try {
 
-			Student.receiver
+			Student.getReceiver()
 					.setRemoteAddr(InetAddress.getByName(cmd.getFrom()));
-			Student.receiver.initialize();
+			Student.getReceiver().initialize();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
