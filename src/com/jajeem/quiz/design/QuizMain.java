@@ -109,16 +109,16 @@ public class QuizMain extends WebFrame {
 		}
 		clientService2.start();
 		
-		new Config();
-		ClientService clientService = null;
-		try {
-			clientService = new ClientService(Config.getParam("broadcastingIp"), 9090);
-		} catch (NumberFormatException e2) {
-			e2.printStackTrace();
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-		clientService.start();
+//		new Config();
+//		ClientService clientService = null;
+//		try {
+//			clientService = new ClientService(Config.getParam("broadcastingIp"), 9090);
+//		} catch (NumberFormatException e2) {
+//			e2.printStackTrace();
+//		} catch (Exception e2) {
+//			e2.printStackTrace();
+//		}
+//		clientService.start();
 		
 		
 		addWindowListener(new WindowAdapter() {
