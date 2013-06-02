@@ -6,7 +6,11 @@ package com.jajeem.whiteboard.client.Client.design;
  * Author       : Hengfeng Li
  * Team         : TheThreeBytes
  */
+import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileFilter;
+
+import com.alee.extended.filefilter.DefaultFileFilter;
+
 import java.io.File;
 
 /**

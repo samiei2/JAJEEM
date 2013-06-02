@@ -7,10 +7,13 @@ package com.jajeem.whiteboard.client.Client.design;
  * Team         : TheThreeBytes
  */
 
+import com.alee.extended.filechooser.WebFileChooser;
+import com.alee.extended.filefilter.DefaultFileFilter;
 import com.jajeem.whiteboard.server.Module.Shape;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -222,18 +225,20 @@ public class MainMenuBar extends JMenuBar {
      */
     @SuppressWarnings(value = {"unchecked"})
     private void fileMenuOpen_actionPerformed(ActionEvent e){
+    	WebFileChooser fileChooser = new WebFileChooser(mainFrame);
         int flag;
         File file;
-        fileChooser.setDialogTitle("Open File");
+        fileChooser.setTitle("Open File");
         // create a custom file filter
         MyFileFilter projFileFilter = new MyFileFilter(".ttb","Project Files(*.ttb)");
+        
         // set the file filter to the file chooser 
-        fileChooser.setFileFilter(projFileFilter);
+        fileChooser.setChooseFilter(projFileFilter);
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try{
             // display a dialog to choose file
-            flag = fileChooser.showOpenDialog(mainFrame);
+            flag = fileChooser.showDialog();
 
             if( flag == JFileChooser.APPROVE_OPTION) {               
                 // read the file object into the local shapeVector

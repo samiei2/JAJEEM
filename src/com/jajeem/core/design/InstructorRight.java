@@ -10,8 +10,10 @@ import java.net.InetAddress;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 
+import com.alee.extended.filechooser.WebFileChooser;
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.extended.panel.WebButtonGroup;
@@ -39,6 +41,7 @@ import com.jajeem.message.design.MessageSend;
 import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
+import com.jajeem.videoplayer.design.VideoPlayer;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class InstructorRight {
@@ -145,6 +148,13 @@ public class InstructorRight {
 		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
 				"Start Whiteboard for the class", TooltipWay.left);
 		panel.add(whiteboardButton);
+		
+		ImageIcon imgVideoPlayer = new ImageIcon(InstructorRight.class.getResource("/com/jajeem/images/Video-icon.png"));
+		WebButton videoPlayerButton = new WebButton(imgVideoPlayer);
+		videoPlayerButton.setRound(0);
+		TooltipManager.setTooltip(videoPlayerButton, imgToolTip,
+				"Start video player for the class", TooltipWay.left);
+		panel.add(videoPlayerButton);
 
 		ImageIcon imgSendWebsite = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -300,6 +310,14 @@ public class InstructorRight {
 				survey.setVisible(true);
 			}
 		});
+		
+		videoPlayerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VideoPlayer player = new VideoPlayer("");
+			}
+		});
 
 		VNCButton.addActionListener(new ActionListener() {
 
@@ -403,6 +421,8 @@ public class InstructorRight {
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//WebFileChooser file = new WebFileChooser(new java.awt.Frame());
+				//file.showDialog();
 				WhiteboardClient whiteboard = new WhiteboardClient();
 				//whiteboard.main(null);
 			}

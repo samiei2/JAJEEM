@@ -18,12 +18,11 @@ public class ClientSession {
 	}
 
 	public static WhiteboardClient getWhiteboardWindowHndl() {
-		// TODO Auto-generated method stub
-		return null;
+		return whiteboardWindowHndl;
 	}
 	
-	public static void setQuizWindowHndl(WhiteboardClient quizWindowHndl) {
-		//ClientSession.quizWindowHndl = quizWindowHndl;
+	public static void setQuizWindowHndl(WhiteboardClient wbWindowHndl) {
+		whiteboardWindowHndl = wbWindowHndl;
 	}
 
 	public static void setSurveyWindowHndl(SurveyWindow surveyWindow) {

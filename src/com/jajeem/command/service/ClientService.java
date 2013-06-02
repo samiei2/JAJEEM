@@ -49,6 +49,7 @@ import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCaptureCommand;
@@ -250,6 +251,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof ChatCommand) {
 					ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
 					chatCommandHanlder.run(cmd);
+				}
+				
+				else if(cmd instanceof StartVideoCommand){
+					StartViewerCommandHandler videoCommandHandler = new StartViewerCommandHandler();
+					videoCommandHandler.run(cmd);
 				}
 
 			} catch (Exception ex) {
