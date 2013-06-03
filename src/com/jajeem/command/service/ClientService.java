@@ -28,6 +28,7 @@ import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
+import com.jajeem.command.handler.StartVideoCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
@@ -254,7 +255,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 				
 				else if(cmd instanceof StartVideoCommand){
-					StartViewerCommandHandler videoCommandHandler = new StartViewerCommandHandler();
+					StartVideoCommandHandler videoCommandHandler = new StartVideoCommandHandler();
 					videoCommandHandler.run(cmd);
 				}
 

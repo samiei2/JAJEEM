@@ -31,7 +31,7 @@ public class StreamRtp extends Vlcj {
 
     public StreamRtp(String mrl, String param) throws InterruptedException {
     	String media = mrl;
-        String options = formatRtpStream("230.0.0.1", 5555);
+        String options = formatRtpStream("230.1.1.1", 5555);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 
@@ -57,7 +57,7 @@ public class StreamRtp extends Vlcj {
         }
 
         String media = args[0];
-        String options = formatRtpStream("230.0.0.1", 5555);
+        String options = formatRtpStream("224.5.6.7", 5555);
 
         System.out.println("Streaming '" + media + "' to '" + options + "'");
 

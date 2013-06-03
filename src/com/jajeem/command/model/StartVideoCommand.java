@@ -9,6 +9,7 @@ public class StartVideoCommand extends Command {
 	private String streamServer;
 	private String streamPort;
 	private String streamAddress;
+	private boolean isClient;
 	
 	public StartVideoCommand(String from, String to, int port) {
 		super(from, to, port);
@@ -33,7 +34,13 @@ public class StartVideoCommand extends Command {
 	public void setStreamAddress(String address){
 		this.streamAddress = address;
 	}
-
 	
+	public void setClient(boolean b) {
+		isClient = b;
+	}
+
+	public boolean isClient(){
+		return isClient;
+	}
 
 }

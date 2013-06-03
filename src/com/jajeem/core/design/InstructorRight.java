@@ -315,7 +315,7 @@ public class InstructorRight {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VideoPlayer player = new VideoPlayer("");
+				VideoPlayer player = new VideoPlayer("",false);
 			}
 		});
 
@@ -340,7 +340,6 @@ public class InstructorRight {
 					VNCCaptureService vnc = new VNCCaptureService();
 					vnc.startClient(conf);
 				}
-
 			}
 		});
 

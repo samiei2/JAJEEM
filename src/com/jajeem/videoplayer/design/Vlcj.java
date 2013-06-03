@@ -90,7 +90,7 @@ public abstract class Vlcj {
         String lookAndFeelClassName = null;
         LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
         for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
-            if("Nimbus".equals(lookAndFeel.getName())) {
+            if("Windows".equals(lookAndFeel.getName())) {
                 lookAndFeelClassName = lookAndFeel.getClassName();
             }
         }

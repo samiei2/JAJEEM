@@ -10,7 +10,6 @@ public class StartVideoCommandHandler implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StartVideoCommand command = (StartVideoCommand)cmd;
-		VideoPlayer quiz = new VideoPlayer(command.getStreamAddress());
-		
+		VideoPlayer player = new VideoPlayer(command.getStreamAddress(),command.isClient());
 	}
 }

@@ -96,9 +96,11 @@ public class PlayerControlsPanel extends JPanel {
     private boolean mousePressedPlaying = false;
     private JButton btnBroadcast;
 
-    public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
+	private VideoPlayer player;
 
+    public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer,VideoPlayer player) {
+        this.mediaPlayer = mediaPlayer;
+        this.player = player;
         createUI();
 
         executorService.scheduleAtFixedRate(new UpdateRunnable(mediaPlayer), 0L, 1L, TimeUnit.SECONDS);
@@ -230,19 +232,21 @@ public class PlayerControlsPanel extends JPanel {
         bottomPanel.add(volumeSlider);
         bottomPanel.add(toggleMuteButton);
 
-        bottomPanel.add(ejectButton);
+        if(!player.isClient())
+        	bottomPanel.add(ejectButton);
         
-                captureButton = new JButton();
-                captureButton.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/Camera-icon.png")));
-                //        captureButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
-                        captureButton.setToolTipText("Take picture");
-                        
-                                bottomPanel.add(captureButton);
-        bottomPanel.add(connectButton);
+        captureButton = new JButton();
+        captureButton.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/Camera-icon.png")));
+        //        captureButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
+        captureButton.setToolTipText("Take picture");
+        bottomPanel.add(captureButton);
+                      
+        if(!player.isClient())
+        	bottomPanel.add(connectButton);
 
         bottomPanel.add(fullScreenButton);
 
-        bottomPanel.add(subTitlesButton);
+        //bottomPanel.add(subTitlesButton);
 
         add(bottomPanel, BorderLayout.SOUTH);
         
@@ -259,24 +263,26 @@ public class PlayerControlsPanel extends JPanel {
 					}
 					else{
 						if(mediaPlayer.mrl().startsWith("file:")){
-							SwingUtilities.invokeLater(new Runnable() {
-					            @Override
-					            public void run() {
-					            	try {
+							Thread t = new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									try {
 										StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
+									} catch (Exception e) {
 										e.printStackTrace();
 									}
-					            }
-					        });
-							//StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");
-							videoCommand.setStreamAddress("rtp://"+InetAddress.getLocalHost().getHostAddress()+":5555");
+								}
+							});
+							t.start();
+							//StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");"
+							videoCommand.setStreamAddress("rtp://@"+"230.1.1.1"+":5555");
 						}
 						else{
 							videoCommand.setStreamAddress(mediaPlayer.mrl());
 						}
 					}
+					videoCommand.setClient(true);
 					server.send(videoCommand);
         		} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -285,7 +291,8 @@ public class PlayerControlsPanel extends JPanel {
         });
         btnBroadcast.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/broadcast.png")));
         btnBroadcast.setToolTipText("Broadcast current media to all students");
-        bottomPanel.add(btnBroadcast);
+        if(!player.isClient())
+        	bottomPanel.add(btnBroadcast);
     }
 
     /**

@@ -98,6 +98,7 @@ public class VideoPlayer extends Vlcj {
     private Canvas videoSurface;
     private final JPanel controlsPanel;
     private final JPanel videoAdjustPanel;
+    private boolean isClient;
 
     private MediaPlayerFactory mediaPlayerFactory;
 
@@ -119,12 +120,13 @@ public class VideoPlayer extends Vlcj {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new VideoPlayer("");
+                new VideoPlayer("",false);
             }
         });
     }
 
-    public VideoPlayer(String stream) {
+    public VideoPlayer(String stream, boolean b) {
+    	this.isClient = b;
     	NativeLibrary.addSearchPath(
                 RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
             );
@@ -200,7 +202,7 @@ public class VideoPlayer extends Vlcj {
         mediaPlayer.setEnableKeyInputHandling(false);
         mediaPlayer.setEnableMouseInputHandling(false);
 
-        controlsPanel = new PlayerControlsPanel(mediaPlayer);
+        controlsPanel = new PlayerControlsPanel(mediaPlayer,this);
         videoAdjustPanel = new PlayerVideoAdjustPanel(mediaPlayer);
 
         mainFrame.setLayout(new BorderLayout());
@@ -210,7 +212,7 @@ public class VideoPlayer extends Vlcj {
         mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
         mainFrame.setJMenuBar(buildMenuBar());
         mainFrame.pack();
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
@@ -355,6 +357,8 @@ public class VideoPlayer extends Vlcj {
         mediaMenu.setMnemonic('m');
 
         JMenuItem mediaPlayFileMenuItem = new JMenuItem("Play File...");
+        if(isClient)
+        	mediaPlayFileMenuItem.setEnabled(false);
         mediaPlayFileMenuItem.setMnemonic('f');
         mediaMenu.add(mediaPlayFileMenuItem);
         mediaPlayFileMenuItem.addActionListener(new ActionListener() {
@@ -379,6 +383,8 @@ public class VideoPlayer extends Vlcj {
 		});
 
         JMenuItem mediaPlayStreamMenuItem = new JMenuItem("Play Stream...");
+        if(isClient)
+        	mediaPlayStreamMenuItem.setEnabled(false);
         mediaPlayFileMenuItem.setMnemonic('s');
         mediaMenu.add(mediaPlayStreamMenuItem);
         mediaPlayStreamMenuItem.addActionListener(new ActionListener() {
@@ -422,7 +428,7 @@ public class VideoPlayer extends Vlcj {
         }
         playbackMenu.add(subtitlesMenu);
 
-        menuBar.add(playbackMenu);
+        //menuBar.add(playbackMenu);
 
         JMenu toolsMenu = new JMenu("Tools");
         toolsMenu.setMnemonic('t');
@@ -431,7 +437,7 @@ public class VideoPlayer extends Vlcj {
         toolsPreferencesMenuItem.setMnemonic('p');
         toolsMenu.add(toolsPreferencesMenuItem);
 
-        menuBar.add(toolsMenu);
+        //menuBar.add(toolsMenu);
 
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic('h');
@@ -440,7 +446,8 @@ public class VideoPlayer extends Vlcj {
         helpAboutMenuItem.setMnemonic('a');
         helpMenu.add(helpAboutMenuItem);
 
-        menuBar.add(helpMenu);
+        //menuBar.add(helpMenu);
+        
 
         return menuBar;
     }
@@ -593,7 +600,15 @@ public class VideoPlayer extends Vlcj {
         }
     }
 
-    /**
+    public boolean isClient() {
+		return isClient;
+	}
+
+	public void setClient(boolean isClient) {
+		this.isClient = isClient;
+	}
+
+	/**
      *
      */
     private final class TestPlayerMouseListener extends MouseAdapter {

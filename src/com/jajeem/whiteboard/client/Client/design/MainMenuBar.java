@@ -11,6 +11,8 @@ import com.alee.extended.filechooser.WebFileChooser;
 import com.alee.extended.filefilter.DefaultFileFilter;
 import com.jajeem.whiteboard.server.Module.Shape;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -39,7 +41,7 @@ public class MainMenuBar extends JMenuBar {
     private Whiteboard whiteboard;
 
     /** The chooser of file */
-    private JFileChooser fileChooser;
+    private MyFileChooser fileChooser;
 
     /** The vector to store the shapes readed from the file */
     private Vector<Shape> shapeVector = null;
@@ -68,7 +70,7 @@ public class MainMenuBar extends JMenuBar {
 
         this.mainFrame = mainFrame;
         this.whiteboard = whiteboard;
-        this.fileChooser = new JFileChooser();
+        this.fileChooser = new MyFileChooser();
         
         fileMenu = new JMenu("File");
         fileMenu.setMnemonic('F');
@@ -225,20 +227,19 @@ public class MainMenuBar extends JMenuBar {
      */
     @SuppressWarnings(value = {"unchecked"})
     private void fileMenuOpen_actionPerformed(ActionEvent e){
-    	WebFileChooser fileChooser = new WebFileChooser(mainFrame);
         int flag;
         File file;
-        fileChooser.setTitle("Open File");
+        fileChooser.setDialogTitle("Open File");
         // create a custom file filter
         MyFileFilter projFileFilter = new MyFileFilter(".ttb","Project Files(*.ttb)");
         
         // set the file filter to the file chooser 
-        fileChooser.setChooseFilter(projFileFilter);
+        fileChooser.setFileFilter(projFileFilter);
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
         try{
             // display a dialog to choose file
-            flag = fileChooser.showDialog();
+            flag = fileChooser.showOpenDialog(this);
 
             if( flag == JFileChooser.APPROVE_OPTION) {               
                 // read the file object into the local shapeVector

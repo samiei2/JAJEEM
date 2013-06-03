@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
@@ -23,7 +24,6 @@ import javax.swing.border.EmptyBorder;
 import com.alee.extended.window.ComponentMoveAdapter;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
