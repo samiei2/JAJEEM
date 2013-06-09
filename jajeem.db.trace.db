@@ -134,6 +134,7 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 21 more
+<<<<<<< HEAD
 06-09 15:42:57 jdbc[3]: null
 org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.get(DbException.java:169)
@@ -239,6 +240,9 @@ Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the ap
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 21 more
 06-09 16:14:58 jdbc[3]: null
+=======
+06-09 14:24:25 jdbc[3]: null
+>>>>>>> f64e494c28788184106c9d38fa6588bae29b26a8
 org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.get(DbException.java:169)
 	at org.h2.message.DbException.get(DbException.java:146)

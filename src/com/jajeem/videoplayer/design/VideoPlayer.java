@@ -44,8 +44,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -60,6 +65,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 
+import sun.misc.IOUtils;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -105,6 +111,7 @@ public class VideoPlayer extends Vlcj {
     private EmbeddedMediaPlayer mediaPlayer;
 
     public static void main(final String[] args) throws Exception {
+    	//loadDlls();
     	NativeLibrary.addSearchPath(
                 RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
             );
@@ -125,8 +132,37 @@ public class VideoPlayer extends Vlcj {
         });
     }
 
-    public VideoPlayer(String stream, boolean b) {
+    private void unzipDlls() {
+    	InputStream is = getClass().getResourceAsStream("my_embedded_file.zip");
+    	ZipInputStream zis = new ZipInputStream(is);
+    	ZipEntry entry;
+    	File file = new File("");
+    	try {
+			while ((entry = zis.getNextEntry()) != null) {
+			    // do something with the entry - for example, extract the data 
+				if(entry.isDirectory()){
+					file.mkdirs();
+				}
+				else{
+					file = new File(entry.getName());
+					InputStream in = entry. // get the input stream
+					FileOutputStream fos = new FileOutputStream(file);
+					while (is.available() > 0) {  // write contents of 'is' to 'fos'
+						fos.write(is.read());
+					}
+					fos.close();
+					is.close();
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public VideoPlayer(String stream, boolean b) {
     	this.isClient = b;
+    	unzipDlls();
     	NativeLibrary.addSearchPath(
                 RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
             );
@@ -207,6 +243,7 @@ public class VideoPlayer extends Vlcj {
 
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.add(videoSurface, BorderLayout.CENTER);
         mainFrame.add(controlsPanel, BorderLayout.SOUTH);
         mainFrame.add(videoAdjustPanel, BorderLayout.EAST);

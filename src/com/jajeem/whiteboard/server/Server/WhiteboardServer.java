@@ -47,14 +47,14 @@ public class WhiteboardServer {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-    	System.setProperty("javax.net.ssl.trustStore","cert/server.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "cert/server.keystore");
-    	System.setProperty("javax.net.ssl.keyStorePassword", "server");
+//    	System.setProperty("javax.net.ssl.trustStore","cert/server.keystore");
+//    	System.setProperty("javax.net.ssl.keyStore", "cert/server.keystore");
+//    	System.setProperty("javax.net.ssl.keyStorePassword", "server");
         // Create and install a security manager
-        if (System.getSecurityManager() == null) {
-            SecurityManager manager = new SecurityManager();
-            System.setSecurityManager(manager);
-        }
+//        if (System.getSecurityManager() == null) {
+//            SecurityManager manager = new SecurityManager();
+//            System.setSecurityManager(manager);
+//        }
         
         int sessionsNum = SESSIONS_MAX_NUMBER;
         if( args.length == 1) {
@@ -76,12 +76,13 @@ public class WhiteboardServer {
 
         try {
             InetAddress addr = InetAddress.getLocalHost();
-            String hostname = addr.getHostName();
+            String hostname = addr.getHostAddress();
 
             // Create SSL-based registry
-            Registry registry = LocateRegistry.createRegistry(SESSIONS_PORT,
-                    new javax.rmi.ssl.SslRMIClientSocketFactory(),
-                    new javax.rmi.ssl.SslRMIServerSocketFactory()); 
+//            Registry registry = LocateRegistry.createRegistry(SESSIONS_PORT,
+//                    new javax.rmi.ssl.SslRMIClientSocketFactory(),
+//                    new javax.rmi.ssl.SslRMIServerSocketFactory()); 
+            Registry registry = LocateRegistry.createRegistry(SESSIONS_PORT);
 
             SessionsImpl sessions = new SessionsImpl(hostname, sessionsNum);
 

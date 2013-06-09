@@ -135,25 +135,26 @@ public class WhiteboardChooseServer extends JDialog {
             // the local address
             InetAddress addr = InetAddress.getLocalHost();
             // get the name of local host
-            String hostname = addr.getHostName();
+            String hostname = addr.getHostAddress();
             if (!txtServerAddress.getText().trim().equals("")){
                 // if the user specify the address of server
                 hostname = txtServerAddress.getText();
             }
 
             // Make reference to SSL-based registry
+//            Registry registry = LocateRegistry.getRegistry(
+//                hostname, WhiteboardClient.SESSIONS_PORT,
+//                new javax.rmi.ssl.SslRMIClientSocketFactory()
+//            );
             Registry registry = LocateRegistry.getRegistry(
-                hostname, WhiteboardClient.SESSIONS_PORT,
-                new javax.rmi.ssl.SslRMIClientSocketFactory()
-            );
-
+                  hostname, WhiteboardClient.SESSIONS_PORT);
 
             String serviceName = "RWS";
 
             // "proxy" is the identifier that refer to
             // the remote object that implements the "Sessions"
             // interface
-            String[] list = registry.list();
+            //String[] list = registry.list();
             Object proxy = registry.lookup(serviceName);
             Sessions sessions = (Sessions)proxy;
 
@@ -177,6 +178,7 @@ public class WhiteboardChooseServer extends JDialog {
                 listener.start();
 
             } catch(Exception ex) {
+            	System.out.println(getClass().getName()+" : "+ex.getMessage());
                 JOptionPane.showMessageDialog(null,
                    "Error happens while starting the session listener.",
                    "Error", JOptionPane.ERROR_MESSAGE);
@@ -186,6 +188,7 @@ public class WhiteboardChooseServer extends JDialog {
             whiteboardClient.btnConnect_SetText("Disconnect");
 
         } catch(Exception ex) {
+        	System.out.println(getClass().getName()+" : "+ex.getMessage());
             JOptionPane.showMessageDialog(null,
                    "Connection refused to host, please make "
                    + "true the host is correct.",

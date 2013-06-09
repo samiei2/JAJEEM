@@ -192,11 +192,13 @@ public class WhiteboardCreateASession extends JFrame {
             String hostname = whiteboardClient.getHostName();
 
             // Make reference to SSL-based registry
-            Registry registry = LocateRegistry.getRegistry(
-                    hostname, WhiteboardClient.WHITEBOARD_PORT,
-                    new javax.rmi.ssl.SslRMIClientSocketFactory()
-                    );
+//            Registry registry = LocateRegistry.getRegistry(
+//                    hostname, WhiteboardClient.WHITEBOARD_PORT,
+//                    new javax.rmi.ssl.SslRMIClientSocketFactory()
+//                    );
 
+            Registry registry = LocateRegistry.getRegistry(
+                  hostname, WhiteboardClient.WHITEBOARD_PORT);
             // create the name of service
             String serviceName = "RemoteWhiteboard" + sessionID;
 
@@ -218,11 +220,12 @@ public class WhiteboardCreateASession extends JFrame {
             	server.send(cmd);
             }
             catch(Exception ex){
-            	
+            	System.out.println(getClass().getName()+" : "+ex.getMessage());
             }
             this.dispose();
 
         } catch(Exception ex) {
+        	System.out.println(getClass().getName()+" : "+ex.getMessage());
             System.out.println("Error during execution:" +
                             ex.getMessage());
         }
