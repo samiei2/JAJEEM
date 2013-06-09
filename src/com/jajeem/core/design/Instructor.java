@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
+import org.jitsi.examples.AVTransmit2;
 
 import com.alee.extended.panel.WebCollapsiblePane;
 import com.alee.laf.WebLookAndFeel;
@@ -41,6 +42,8 @@ public class Instructor implements SwingConstants {
 	private WebFrame frmJajeemProject;
 
 	private static ServerServiceTimer serverServiceTimer;
+	
+	public static AVTransmit2 transmitter;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -85,6 +88,8 @@ public class Instructor implements SwingConstants {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
+			
+			 transmitter = new AVTransmit2("5000", "", "10000");
 
 		} catch (Throwable e) {
 		}

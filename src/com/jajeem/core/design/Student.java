@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import org.jitsi.examples.AVReceive2;
+
 //import org.apache.log4j.PropertyConfigurator;
 
 import com.alee.laf.WebLookAndFeel;
@@ -37,6 +39,8 @@ public class Student {
 	private JFrame frmJajeemProject;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
+	
+	public static AVReceive2 receiver;
 
 	private static boolean black;
 
@@ -76,6 +80,8 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
+			
+			receiver = new AVReceive2("10000", "", "5000");
 
 		} catch (Throwable e) {
 			// Something went wrong
