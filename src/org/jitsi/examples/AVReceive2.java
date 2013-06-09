@@ -320,22 +320,19 @@ public class AVReceive2
     {
         // We need three parameters to do the transmission. For example,
         // ant run-example -Drun.example.name=AVReceive2 -Drun.example.arg.line="--local-port-base=10000 --remote-host=129.130.131.132 --remote-port-base=5000"
-        if (args.length < 3)
-        {
-            prUsage();
-        }
-        else
-        {
-            Map<String, String> argMap = AVTransmit2.parseCommandLineArgs(args);
+//        if (args.length < 3)
+//        {
+//            prUsage();
+//        }
+//        else
+//        {
+//            Map<String, String> argMap = AVTransmit2.parseCommandLineArgs(args);
 
             LibJitsi.start();
             try
             {
                 AVReceive2 avReceive
-                    = new AVReceive2(
-                            argMap.get(LOCAL_PORT_BASE_ARG_NAME),
-                            argMap.get(REMOTE_HOST_ARG_NAME),
-                            argMap.get(REMOTE_PORT_BASE_ARG_NAME));
+                    = new AVReceive2("1000","192.168.0.234", "5000" );
 
                 if (avReceive.initialize())
                 {
@@ -376,7 +373,7 @@ public class AVReceive2
             {
                 LibJitsi.stop();
             }
-        }
+//        }
     }
 
     /**

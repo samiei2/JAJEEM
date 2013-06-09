@@ -24,8 +24,8 @@ import org.jitsi.service.neomedia.format.*;
  */
 public class AVTransmit2
 {
-	private boolean transmitting; 
-    /**
+    private boolean transmitting = false;
+	/**
      * The port which is the source of the transmission i.e. from which the
      * media is to be transmitted.
      *
@@ -227,7 +227,7 @@ public class AVTransmit2
                 mediaStream.start();
         
         setTransmitting(true);
-
+        
         return null;
     }
 
@@ -257,6 +257,7 @@ public class AVTransmit2
             }
 
             mediaStreams = null;
+            
             setTransmitting(false);
         }
     }
@@ -325,23 +326,20 @@ public class AVTransmit2
     {
         // We need two parameters to do the transmission. For example,
         // ant run-example -Drun.example.name=AVTransmit2 -Drun.example.arg.line="--remote-host=127.0.0.1 --remote-port-base=10000"
-        if (args.length < 2)
-        {
-            prUsage();
-        }
-        else
-        {
-            Map<String, String> argMap = parseCommandLineArgs(args);
+//        if (args.length < 2)
+//        {
+//            prUsage();
+//        }
+//        else
+//        {
+//            Map<String, String> argMap = parseCommandLineArgs(args);
 
             LibJitsi.start();
             try
             {
                 // Create a audio transmit object with the specified params.
                 AVTransmit2 at
-                    = new AVTransmit2(
-                            argMap.get(LOCAL_PORT_BASE_ARG_NAME),
-                            argMap.get(REMOTE_HOST_ARG_NAME),
-                            argMap.get(REMOTE_PORT_BASE_ARG_NAME));
+                    = new AVTransmit2("1000","192.168.0.15", "5000");
                 // Start the transmission
                 String result = at.start();
 
@@ -359,7 +357,7 @@ public class AVTransmit2
                     // "Stop" button that would call stop on AVTransmit2
                     try
                     {
-                        Thread.sleep(6000000);
+                        Thread.sleep(60000);
                     } catch (InterruptedException ie)
                     {
                     }
@@ -378,7 +376,7 @@ public class AVTransmit2
             {
                 LibJitsi.stop();
             }
-        }
+//        }
     }
 
     /**
@@ -431,19 +429,19 @@ public class AVTransmit2
             err.println("  " + arg[0] + " " + arg[1]);
     }
 
-	public boolean isTransmitting() {
-		return transmitting;
-	}
-
-	public void setTransmitting(boolean transmitting) {
-		this.transmitting = transmitting;
-	}
-
 	public InetAddress getRemoteAddr() {
 		return remoteAddr;
 	}
 
 	public void setRemoteAddr(InetAddress remoteAddr) {
 		this.remoteAddr = remoteAddr;
+	}
+
+	public boolean isTransmitting() {
+		return transmitting;
+	}
+
+	public void setTransmitting(boolean transmitting) {
+		this.transmitting = transmitting;
 	}
 }

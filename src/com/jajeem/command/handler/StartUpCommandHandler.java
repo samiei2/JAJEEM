@@ -18,6 +18,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 
 		int port = Integer.parseInt(Config.getParam("serverPort"));
 
+		System.out.println(Config.getParam("server"));
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
 			StartCaptureCommandHandler startCaptureCommandHandler = new StartCaptureCommandHandler();
 			startCaptureCommandHandler.run(cmd);

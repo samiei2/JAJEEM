@@ -145,7 +145,7 @@ public class VideoPlayer extends Vlcj {
 				}
 				else{
 					file = new File(entry.getName());
-					InputStream in = zis.read(); // get the input stream
+					InputStream in = entry. // get the input stream
 					FileOutputStream fos = new FileOutputStream(file);
 					while (is.available() > 0) {  // write contents of 'is' to 'fos'
 						fos.write(is.read());

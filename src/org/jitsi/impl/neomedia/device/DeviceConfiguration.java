@@ -487,8 +487,7 @@ public class DeviceConfiguration
 
                 if (audioSystem == null)
                     audioSystem = availableAudioSystems[0];
-                
-                audioSystem = availableAudioSystems[1];
+
                 setAudioSystem(audioSystem, false);
             }
         }

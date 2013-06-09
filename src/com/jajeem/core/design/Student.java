@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceive2;
+import org.jitsi.service.libjitsi.LibJitsi;
 
 //import org.apache.log4j.PropertyConfigurator;
 
@@ -39,8 +40,8 @@ public class Student {
 	private JFrame frmJajeemProject;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
-	
-	private static AVReceive2 receiver;
+
+	public static AVReceive2 receiver;
 
 	private static boolean black;
 
@@ -147,12 +148,8 @@ public class Student {
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
 		WebButton messageButton = new WebButton(imgMessage);
-		TooltipManager
-		.setTooltip(
-				messageButton,
-				imgToolTip,
-				"Send a message to your instructor.",
-				TooltipWay.down);
+		TooltipManager.setTooltip(messageButton, imgToolTip,
+				"Send a message to your instructor.", TooltipWay.down);
 		panel.add(messageButton);
 
 		WebPanel panel2 = new WebPanel();
