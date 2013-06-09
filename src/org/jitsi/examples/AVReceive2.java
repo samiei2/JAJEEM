@@ -119,7 +119,7 @@ public class AVReceive2
              * only. In a call, the MediaStream's direction will most commonly
              * be set to SENDRECV.
              */
-            mediaStream.setDirection(MediaDirection.RECVONLY);
+            mediaStream.setDirection(MediaDirection.SENDRECV);
 
             // format
             String encoding;
@@ -332,7 +332,7 @@ public class AVReceive2
             try
             {
                 AVReceive2 avReceive
-                    = new AVReceive2("1000","192.168.0.234", "5000" );
+                    = new AVReceive2("5000","192.168.0.234", "10000" );
 
                 if (avReceive.initialize())
                 {

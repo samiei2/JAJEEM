@@ -212,11 +212,14 @@ public class Student {
 		Student.receiver = receiver;
 	}
 
-	public static AVTransmit2 getTransmitter() {
+	public static AVTransmit2 getTransmitter() throws Exception {
+		if(transmitter== null){
+			transmitter = new AVTransmit2("5010", "", "10010");
+		}
 		return transmitter;
 	}
 
-	public static void setTransmitter(AVTransmit2 transmitter) {
+	public static void setTransmitter(AVTransmit2 transmitter) throws Exception {
 		Student.transmitter = transmitter;
 	}
 }

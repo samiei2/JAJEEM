@@ -117,7 +117,7 @@ public class AVTransmit2
              * only. In a call, the MediaStream's direction will most commonly
              * be set to SENDRECV.
              */
-            mediaStream.setDirection(MediaDirection.SENDONLY);
+            mediaStream.setDirection(MediaDirection.SENDRECV);
 
             // format
             String encoding;
@@ -339,7 +339,7 @@ public class AVTransmit2
             {
                 // Create a audio transmit object with the specified params.
                 AVTransmit2 at
-                    = new AVTransmit2("1000","192.168.0.15", "5000");
+                    = new AVTransmit2("5000", "192.168.0.234", "10000");
                 // Start the transmission
                 String result = at.start();
 

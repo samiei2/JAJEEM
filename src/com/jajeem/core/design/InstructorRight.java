@@ -220,12 +220,13 @@ public class InstructorRight {
 						// "--remote-host=127.0.0.1 --remote-port-base=10000"
 
 						if (Instructor.getTransmitter().isTransmitting()) {
-							
+
 							intercomButton.setIcon(imgIntercom);
-							
+
 							// Stop transmitting to prev student and sent stop
 							// command to him
 							Instructor.getTransmitter().stop();
+							Instructor.getReceiver().close();
 							Instructor.getTransmitter().getRemoteAddr()
 									.getHostAddress();
 							StopIntercomCommand si = new StopIntercomCommand(
@@ -234,18 +235,20 @@ public class InstructorRight {
 											.getHostAddress(), Integer
 											.parseInt(Config.getParam("port")));
 							ss.send(si);
-							
+
 							// if selected new student, start talking to him
 							if (!Instructor.getTransmitter().getRemoteAddr()
 									.getHostAddress().equals(selectedStudent)) {
-								
+
 								intercomButton.setIcon(imgStopIntercom);
-								
+
 								// Start transmitting to new student
-								Instructor.getTransmitter()
-										.setRemoteAddr(InetAddress
-												.getByName(selectedStudent));
+								Instructor.getTransmitter().setRemoteAddr(
+										InetAddress.getByName(selectedStudent));
+								Instructor.getReceiver().setRemoteAddr(
+										InetAddress.getByName(selectedStudent));
 								Instructor.getTransmitter().start();
+								Instructor.getReceiver().initialize();
 								//
 							}
 						} else {
@@ -260,9 +263,12 @@ public class InstructorRight {
 											.getParam("port")));
 							ss.send(si);
 
-							Instructor.getTransmitter().setRemoteAddr(InetAddress
-									.getByName(selectedStudent));
+							Instructor.getTransmitter().setRemoteAddr(
+									InetAddress.getByName(selectedStudent));
+							Instructor.getReceiver().setRemoteAddr(
+									InetAddress.getByName(selectedStudent));
 							Instructor.getTransmitter().start();
+							Instructor.getReceiver().initialize();
 						}
 
 					} catch (Exception e) {
@@ -272,13 +278,13 @@ public class InstructorRight {
 				} else {
 					// if no students selected and is transmitting to someone
 					if (Instructor.getTransmitter().isTransmitting()) {
-						
+
 						intercomButton.setIcon(imgIntercom);
 
 						// Stop transmitting to prev student and sent stop
 						// command to him
 						Instructor.getTransmitter().stop();
-						Instructor.getTransmitter().getRemoteAddr().getHostAddress();
+						Instructor.getReceiver().close();
 						StopIntercomCommand si;
 						try {
 							si = new StopIntercomCommand(InetAddress

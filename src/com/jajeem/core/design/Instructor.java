@@ -44,7 +44,7 @@ public class Instructor implements SwingConstants {
 	private WebFrame frmJajeemProject;
 
 	private static ServerServiceTimer serverServiceTimer;
-	
+
 	private static AVTransmit2 transmitter;
 	private static AVReceive2 receiver;
 
@@ -91,12 +91,12 @@ public class Instructor implements SwingConstants {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			
-//			Start LibJitsi for first time
+
+			// Start LibJitsi for first time
 			LibJitsi.start();
-			
-			 setTransmitter(new AVTransmit2("5000", "", "10000"));
-			 setReceiver(new AVReceive2("10010", "", "5010"));
+
+			setTransmitter(new AVTransmit2("5000", "", "10000"));
+			setReceiver(new AVReceive2("10010", "", "5010"));
 
 		} catch (Throwable e) {
 		}
@@ -117,7 +117,7 @@ public class Instructor implements SwingConstants {
 				Toolkit.getDefaultToolkit().getImage(
 						Instructor.class
 								.getResource("/icons/menubar/jajeem.jpg")));
-		
+
 		getFrmJajeemProject().setBounds(200, 0, 1000, 755);
 		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WebPanel panel = new WebPanel();
@@ -184,15 +184,15 @@ public class Instructor implements SwingConstants {
 		trailingPanel.setDrawSides(false, true, true, false);
 		trailingPanel.setRound(0);
 		setupPanel(trailingPanel, EAST);
-		
+
 		final WebCollapsiblePane rPanel = new WebCollapsiblePane("",
 				trailingPanel);
 
-//		rPanel.setCollapseIcon(new ImageIcon(ImageIO.read(Instructor.class
-//				.getResourceAsStream("/icons/menubar/angle-right.png"))));
-//
-//		rPanel.setExpandIcon(new ImageIcon(ImageIO.read(Instructor.class
-//				.getResourceAsStream("/icons/menubar/angle-left.png"))));
+		// rPanel.setCollapseIcon(new ImageIcon(ImageIO.read(Instructor.class
+		// .getResourceAsStream("/icons/menubar/angle-right.png"))));
+		//
+		// rPanel.setExpandIcon(new ImageIcon(ImageIO.read(Instructor.class
+		// .getResourceAsStream("/icons/menubar/angle-left.png"))));
 		rPanel.setRotateStateIcon(false);
 
 		rPanel.setExpanded(true);
