@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceive2;
+import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
 //import org.apache.log4j.PropertyConfigurator;
@@ -42,6 +43,7 @@ public class Student {
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
 	private static AVReceive2 receiver;
+	private static AVTransmit2 transmitter;
 
 	private static boolean black;
 
@@ -82,7 +84,9 @@ public class Student {
 
 			new Config();
 			
+			// initiate Libjitsi for intercom
 			LibJitsi.start();
+			setTransmitter(new AVTransmit2("5010", "", "10010"));
 			setReceiver(new AVReceive2("10000", "", "5000"));
 
 		} catch (Throwable e) {
@@ -199,12 +203,20 @@ public class Student {
 
 	public static AVReceive2 getReceiver() throws Exception {
 		if(receiver == null){
-			 receiver = new AVReceive2("", "", "");
+			 receiver = new AVReceive2("10000", "", "5000");
 		}
 		return receiver;
 	}
 
 	public void setReceiver(AVReceive2 receiver) {
 		Student.receiver = receiver;
+	}
+
+	public static AVTransmit2 getTransmitter() {
+		return transmitter;
+	}
+
+	public static void setTransmitter(AVTransmit2 transmitter) {
+		Student.transmitter = transmitter;
 	}
 }

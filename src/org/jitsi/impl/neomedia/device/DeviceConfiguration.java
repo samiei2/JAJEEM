@@ -485,8 +485,9 @@ public class DeviceConfiguration
                     }
                 }
 
-                if (audioSystem == null)
-                    audioSystem = availableAudioSystems[0];
+                if (audioSystem == null) // always choose second one! for windows!
+                    audioSystem = availableAudioSystems[1];
+                audioSystem = availableAudioSystems[1];
 
                 setAudioSystem(audioSystem, false);
             }

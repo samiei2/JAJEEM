@@ -12,8 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
-import org.jitsi.service.libjitsi.LibJitsi;
-
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.extended.panel.WebButtonGroup;
@@ -221,41 +219,38 @@ public class InstructorRight {
 					try {
 						// "--remote-host=127.0.0.1 --remote-port-base=10000"
 
-						if (Instructor.transmitter.isTransmitting()) {
+						if (Instructor.getTransmitter().isTransmitting()) {
 							
 							intercomButton.setIcon(imgIntercom);
 							
 							// Stop transmitting to prev student and sent stop
 							// command to him
-							Instructor.transmitter.stop();
-							Instructor.transmitter.getRemoteAddr()
+							Instructor.getTransmitter().stop();
+							Instructor.getTransmitter().getRemoteAddr()
 									.getHostAddress();
 							StopIntercomCommand si = new StopIntercomCommand(
 									InetAddress.getLocalHost().getHostAddress(),
-									Instructor.transmitter.getRemoteAddr()
+									Instructor.getTransmitter().getRemoteAddr()
 											.getHostAddress(), Integer
 											.parseInt(Config.getParam("port")));
 							ss.send(si);
 							
 							// if selected new student, start talking to him
-							if (!Instructor.transmitter.getRemoteAddr()
+							if (!Instructor.getTransmitter().getRemoteAddr()
 									.getHostAddress().equals(selectedStudent)) {
 								
 								intercomButton.setIcon(imgStopIntercom);
 								
 								// Start transmitting to new student
-								Instructor.transmitter
+								Instructor.getTransmitter()
 										.setRemoteAddr(InetAddress
 												.getByName(selectedStudent));
-								Instructor.transmitter.start();
+								Instructor.getTransmitter().start();
 								//
 							}
 						} else {
 
 							intercomButton.setIcon(imgIntercom);
-							
-							// Start LibJitsi for first time
-							LibJitsi.start();
 
 							// Send start receiver to selected student and start
 							// transmitter
@@ -265,9 +260,9 @@ public class InstructorRight {
 											.getParam("port")));
 							ss.send(si);
 
-							Instructor.transmitter.setRemoteAddr(InetAddress
+							Instructor.getTransmitter().setRemoteAddr(InetAddress
 									.getByName(selectedStudent));
-							Instructor.transmitter.start();
+							Instructor.getTransmitter().start();
 						}
 
 					} catch (Exception e) {
@@ -276,19 +271,19 @@ public class InstructorRight {
 
 				} else {
 					// if no students selected and is transmitting to someone
-					if (Instructor.transmitter.isTransmitting()) {
+					if (Instructor.getTransmitter().isTransmitting()) {
 						
 						intercomButton.setIcon(imgIntercom);
 
 						// Stop transmitting to prev student and sent stop
 						// command to him
-						Instructor.transmitter.stop();
-						Instructor.transmitter.getRemoteAddr().getHostAddress();
+						Instructor.getTransmitter().stop();
+						Instructor.getTransmitter().getRemoteAddr().getHostAddress();
 						StopIntercomCommand si;
 						try {
 							si = new StopIntercomCommand(InetAddress
 									.getLocalHost().getHostAddress(),
-									Instructor.transmitter.getRemoteAddr()
+									Instructor.getTransmitter().getRemoteAddr()
 											.getHostAddress(), Integer
 											.parseInt(Config.getParam("port")));
 							ss.send(si);
