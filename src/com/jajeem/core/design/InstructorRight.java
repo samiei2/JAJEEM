@@ -10,10 +10,10 @@ import java.net.InetAddress;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 
-import com.alee.extended.filechooser.WebFileChooser;
+import org.jitsi.service.libjitsi.LibJitsi;
+
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.extended.panel.WebButtonGroup;
@@ -33,6 +33,8 @@ import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.StartIntercomCommand;
+import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
@@ -65,6 +67,18 @@ public class InstructorRight {
 		GridLayout grid = new GridLayout(0, 1);
 		panel.setLayout(grid);
 		panel.setUndecorated(true);
+
+		final ImageIcon imgIntercom = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/intercom_text.png")));
+		final ImageIcon imgStopIntercom = new ImageIcon(
+				ImageIO.read(InstructorRight.class
+						.getResourceAsStream("/icons/applications_style1/stop_intercom.png")));
+		final WebButton intercomButton = new WebButton(imgIntercom);
+		intercomButton.setRound(0);
+		TooltipManager.setTooltip(intercomButton, imgToolTip,
+				"Start talking to selected student", TooltipWay.left);
+		panel.add(intercomButton);
 
 		ImageIcon imgVNC = new ImageIcon(
 				ImageIO.read(InstructorRight.class
@@ -139,7 +153,7 @@ public class InstructorRight {
 		TooltipManager.setTooltip(surveyButton, imgToolTip,
 				"Start survey for the class", TooltipWay.left);
 		panel.add(surveyButton);
-		
+
 		ImageIcon imgWhiteBoard = new ImageIcon(
 				ImageIO.read(InstructorRight.class
 						.getResourceAsStream("/icons/applications_style1/whiteboard_text.png")));
@@ -148,8 +162,10 @@ public class InstructorRight {
 		TooltipManager.setTooltip(whiteboardButton, imgToolTip,
 				"Start Whiteboard for the class", TooltipWay.left);
 		panel.add(whiteboardButton);
-		
-		ImageIcon imgVideoPlayer = new ImageIcon(InstructorRight.class.getResource("/com/jajeem/images/Video-icon.png"));
+
+		ImageIcon imgVideoPlayer = new ImageIcon(
+				InstructorRight.class
+						.getResource("/com/jajeem/images/Video-icon.png"));
 		WebButton videoPlayerButton = new WebButton(imgVideoPlayer);
 		videoPlayerButton.setRound(0);
 		TooltipManager.setTooltip(videoPlayerButton, imgToolTip,
@@ -184,6 +200,108 @@ public class InstructorRight {
 				TooltipWay.left);
 		panel.add(powerButton);
 
+		// talk
+		intercomButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+					throws NumberFormatException {
+
+				ServerService ss = null;
+				try {
+					ss = new ServerService();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorCenter.desktopPane
+							.getSelectedFrame().getClientProperty("ip");
+					try {
+						// "--remote-host=127.0.0.1 --remote-port-base=10000"
+
+						if (Instructor.transmitter.isTransmitting()) {
+							
+							intercomButton.setIcon(imgIntercom);
+							
+							// Stop transmitting to prev student and sent stop
+							// command to him
+							Instructor.transmitter.stop();
+							Instructor.transmitter.getRemoteAddr()
+									.getHostAddress();
+							StopIntercomCommand si = new StopIntercomCommand(
+									InetAddress.getLocalHost().getHostAddress(),
+									Instructor.transmitter.getRemoteAddr()
+											.getHostAddress(), Integer
+											.parseInt(Config.getParam("port")));
+							ss.send(si);
+							
+							// if selected new student, start talking to him
+							if (!Instructor.transmitter.getRemoteAddr()
+									.getHostAddress().equals(selectedStudent)) {
+								
+								intercomButton.setIcon(imgStopIntercom);
+								
+								// Start transmitting to new student
+								Instructor.transmitter
+										.setRemoteAddr(InetAddress
+												.getByName(selectedStudent));
+								Instructor.transmitter.start();
+								//
+							}
+						} else {
+
+							intercomButton.setIcon(imgIntercom);
+							
+							// Start LibJitsi for first time
+							LibJitsi.start();
+
+							// Send start receiver to selected student and start
+							// transmitter
+							StartIntercomCommand si = new StartIntercomCommand(
+									InetAddress.getLocalHost().getHostAddress(),
+									selectedStudent, Integer.parseInt(Config
+											.getParam("port")));
+							ss.send(si);
+
+							Instructor.transmitter.setRemoteAddr(InetAddress
+									.getByName(selectedStudent));
+							Instructor.transmitter.start();
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					// if no students selected and is transmitting to someone
+					if (Instructor.transmitter.isTransmitting()) {
+						
+						intercomButton.setIcon(imgIntercom);
+
+						// Stop transmitting to prev student and sent stop
+						// command to him
+						Instructor.transmitter.stop();
+						Instructor.transmitter.getRemoteAddr().getHostAddress();
+						StopIntercomCommand si;
+						try {
+							si = new StopIntercomCommand(InetAddress
+									.getLocalHost().getHostAddress(),
+									Instructor.transmitter.getRemoteAddr()
+											.getHostAddress(), Integer
+											.parseInt(Config.getParam("port")));
+							ss.send(si);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						return;
+					}
+				}
+			}
+
+		});
 
 		// blacks student's screen
 		blackoutButton.addActionListener(new ActionListener() {
@@ -310,12 +428,13 @@ public class InstructorRight {
 				survey.setVisible(true);
 			}
 		});
-		
+
 		videoPlayerButton.addActionListener(new ActionListener() {
-			
+
+			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VideoPlayer player = new VideoPlayer("",false);
+				VideoPlayer player = new VideoPlayer("", false);
 			}
 		});
 
@@ -417,13 +536,14 @@ public class InstructorRight {
 
 		whiteboardButton.addActionListener(new ActionListener() {
 
-			@SuppressWarnings("static-access")
+			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//WebFileChooser file = new WebFileChooser(new java.awt.Frame());
-				//file.showDialog();
+				// WebFileChooser file = new WebFileChooser(new
+				// java.awt.Frame());
+				// file.showDialog();
 				WhiteboardClient whiteboard = new WhiteboardClient();
-				//whiteboard.main(null);
+				// whiteboard.main(null);
 			}
 		});
 
