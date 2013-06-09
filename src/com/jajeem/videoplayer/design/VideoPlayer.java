@@ -60,6 +60,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 
+import sun.misc.IOUtils;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.LibVlcFactory;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
@@ -105,6 +106,7 @@ public class VideoPlayer extends Vlcj {
     private EmbeddedMediaPlayer mediaPlayer;
 
     public static void main(final String[] args) throws Exception {
+    	loadDlls();
     	NativeLibrary.addSearchPath(
                 RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
             );
@@ -125,7 +127,11 @@ public class VideoPlayer extends Vlcj {
         });
     }
 
-    public VideoPlayer(String stream, boolean b) {
+    private static void loadDlls() {
+		
+	}
+
+	public VideoPlayer(String stream, boolean b) {
     	this.isClient = b;
     	NativeLibrary.addSearchPath(
                 RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
@@ -207,6 +213,7 @@ public class VideoPlayer extends Vlcj {
 
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.add(videoSurface, BorderLayout.CENTER);
         mainFrame.add(controlsPanel, BorderLayout.SOUTH);
         mainFrame.add(videoAdjustPanel, BorderLayout.EAST);

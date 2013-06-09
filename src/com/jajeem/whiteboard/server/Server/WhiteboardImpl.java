@@ -70,9 +70,10 @@ public class WhiteboardImpl extends UnicastRemoteObject
                                  String password) throws RemoteException {
         // use the standard SSL-based custom socket factory classes
         // to creates the Remote Object
-        super(WhiteboardServer.WHITEBOARD_PORT,                
-                new javax.rmi.ssl.SslRMIClientSocketFactory(),
-                new javax.rmi.ssl.SslRMIServerSocketFactory());       
+//        super(WhiteboardServer.WHITEBOARD_PORT,                
+//                new javax.rmi.ssl.SslRMIClientSocketFactory(),
+//                new javax.rmi.ssl.SslRMIServerSocketFactory()); 
+    	super(WhiteboardServer.WHITEBOARD_PORT);
         shapeVector = new Vector<Shape>();
         shapeStack = new Stack<Shape>();
         this.sessionsName = sessionsName;

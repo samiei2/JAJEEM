@@ -2,7 +2,6 @@ package com.jajeem.quiz.design;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,15 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
@@ -38,7 +32,6 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.events.QuizEvent;
-import com.jajeem.quiz.design.client.QuizWindow;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -49,6 +42,10 @@ import com.jajeem.util.Config;
 
 public class QuizMain extends WebFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int pageNumber = 1;
 	private WebPanel contentPane;
 	private QuizMain frame;
@@ -66,6 +63,7 @@ public class QuizMain extends WebFrame {
 	private WebButton wbtnContent;
 	private WebButton wbtnOpen;
 	private WebButton wbtnSave;
+	private WebButton wbtnSaveResults;
 	/**
 	 * Launch the application.
 	 */
@@ -296,6 +294,7 @@ public class QuizMain extends WebFrame {
 				wbtnContent.setEnabled(false);
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
+				wbtnSaveResults.setVisible(false);
 				//wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
@@ -344,7 +343,7 @@ public class QuizMain extends WebFrame {
 					//wbtnSaveResults.setVisible(true);
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
-					
+					wbtnSaveResults.setVisible(true);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/stop-red.png")));
@@ -416,7 +415,7 @@ public class QuizMain extends WebFrame {
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 		
-		WebButton wbtnSaveResults = new WebButton();
+		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<Run> results = panel_bottom_2.getRunResults();
@@ -429,6 +428,7 @@ public class QuizMain extends WebFrame {
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSaveResults.setVisible(false);
 		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(

@@ -20,7 +20,12 @@ import com.jajeem.whiteboard.server.Module.Sessions;
  */
 public class SessionsImpl extends UnicastRemoteObject
         implements Sessions {
-    /** The place to store whiteboards */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1960919987230605311L;
+
+	/** The place to store whiteboards */
     private WhiteboardImpl sessions[];
 
     /** The maximum number of whiteboards */
@@ -54,9 +59,10 @@ public class SessionsImpl extends UnicastRemoteObject
     public SessionsImpl(String hostname, int sessionsMaxNum) throws RemoteException {
         // use the standard SSL-based custom socket factory classes
         // to creates the Remote Object
-        super(WhiteboardServer.SESSIONS_PORT,
-                new javax.rmi.ssl.SslRMIClientSocketFactory(),
-                new javax.rmi.ssl.SslRMIServerSocketFactory());
+//        super(WhiteboardServer.SESSIONS_PORT,
+//                new javax.rmi.ssl.SslRMIClientSocketFactory(),
+//                new javax.rmi.ssl.SslRMIServerSocketFactory());
+    	super(WhiteboardServer.SESSIONS_PORT);
         this.hostname = hostname;
         this.sessionsMaxNum = sessionsMaxNum;
         this.sessionsNum = 0;
@@ -71,9 +77,10 @@ public class SessionsImpl extends UnicastRemoteObject
         System.out.println("Sessions Create");
 
         // Create SSL-based registry
-        registry = LocateRegistry.createRegistry(WhiteboardServer.WHITEBOARD_PORT,
-            new javax.rmi.ssl.SslRMIClientSocketFactory(),
-            new javax.rmi.ssl.SslRMIServerSocketFactory());
+//        registry = LocateRegistry.createRegistry(WhiteboardServer.WHITEBOARD_PORT,
+//            new javax.rmi.ssl.SslRMIClientSocketFactory(),
+//            new javax.rmi.ssl.SslRMIServerSocketFactory());
+        registry = LocateRegistry.createRegistry(WhiteboardServer.WHITEBOARD_PORT);
     }
 
     /** Create a new session (or whiteboard) */
