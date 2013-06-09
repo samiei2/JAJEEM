@@ -6,8 +6,6 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
@@ -23,8 +21,6 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-//import org.apache.log4j.PropertyConfigurator;
-
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
@@ -36,6 +32,7 @@ import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
+//import org.apache.log4j.PropertyConfigurator;
 
 public class InstructorLogin extends JDialog {
 
@@ -51,6 +48,7 @@ public class InstructorLogin extends JDialog {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
+			@SuppressWarnings("unused")
 			InstructorLogin dialog = new InstructorLogin();
 
 		} catch (Exception e) {

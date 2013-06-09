@@ -12,9 +12,6 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 
 		try {
 			Student.receiver.close();
-			
-			LibJitsi.stop();
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

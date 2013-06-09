@@ -2,7 +2,6 @@ package com.jajeem.command.handler;
 
 import java.net.InetAddress;
 
-import org.jitsi.service.libjitsi.LibJitsi;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
@@ -17,8 +16,6 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 		// -Drun.example.arg.line="--local-port-base=10000 --remote-host=129.130.131.132 --remote-port-base=5000"
 
 		try {
-
-			LibJitsi.start();
 
 			Student.receiver
 					.setRemoteAddr(InetAddress.getByName(cmd.getFrom()));
