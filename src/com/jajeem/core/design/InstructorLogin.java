@@ -130,7 +130,7 @@ public class InstructorLogin extends JDialog {
 		public loginDialog(Window owner) throws SQLException {
 			super(owner, "Welcome to iCalabo");
 			setIconImage(Toolkit.getDefaultToolkit().getImage(
-					Instructor.class.getResource("/icons/menubar/jajeem.jpg")));
+					InstructorLogin.class.getResource("/icons/menubar/jajeem.jpg")));
 			try {
 				new Config();
 
@@ -250,8 +250,8 @@ public class InstructorLogin extends JDialog {
 										.getPassword());
 								if (grant) {
 									setVisible(false);
-									Instructor instructor = new Instructor();
-									instructor
+									InstructorNoa instructorNoa = new InstructorNoa();
+									instructorNoa
 											.main(new String[] {
 													(String) list1
 															.getSelectedValue(),

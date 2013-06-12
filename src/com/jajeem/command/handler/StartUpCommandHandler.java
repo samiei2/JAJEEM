@@ -5,7 +5,8 @@ import java.net.InetAddress;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.InstructorCenter;
+import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.InstructorNoaUtil;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.util.Config;
 
@@ -18,7 +19,6 @@ public class StartUpCommandHandler implements ICommandHandler {
 
 		int port = Integer.parseInt(Config.getParam("serverPort"));
 
-		System.out.println(Config.getParam("server"));
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
 			StartCaptureCommandHandler startCaptureCommandHandler = new StartCaptureCommandHandler();
 			startCaptureCommandHandler.run(cmd);
@@ -35,7 +35,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 		} else if (Integer.parseInt(Config.getParam("server")) == 1
 				&& cmd.getPort() == Integer.parseInt(Config
 						.getParam("serverPort"))) {
-			InstructorCenter.createFrame(InstructorCenter.desktopPane,
+			InstructorNoaUtil.createFrame(InstructorNoa.getDesktopPane(),
 					((StartUpCommand) cmd).getSender(), ((StartUpCommand) cmd).getSenderName());
 		}
 	}
