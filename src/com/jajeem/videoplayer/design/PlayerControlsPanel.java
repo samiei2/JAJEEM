@@ -49,6 +49,7 @@ import javax.swing.filechooser.FileFilter;
 import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
+import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
@@ -97,6 +98,7 @@ public class PlayerControlsPanel extends JPanel {
     private JButton btnBroadcast;
 
 	private VideoPlayer player;
+	private JButton btnRecord;
 
     public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer,VideoPlayer player) {
         this.mediaPlayer = mediaPlayer;
@@ -157,6 +159,10 @@ public class PlayerControlsPanel extends JPanel {
         nextChapterButton = new JButton();
         nextChapterButton.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/End-icon.png")));
         nextChapterButton.setToolTipText("Go to next chapter");
+        
+        btnRecord = new JButton();
+        btnRecord.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/rec-icon.png")));
+        btnRecord.setToolTipText("Record");
 
         toggleMuteButton = new JButton();
         toggleMuteButton.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/Mute-icon.png")));
@@ -192,6 +198,10 @@ public class PlayerControlsPanel extends JPanel {
         fullScreenButton.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/FS-icon.png")));
 //        fullScreenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/image.png")));
         fullScreenButton.setToolTipText("Toggle full-screen");
+        
+        btnBroadcast = new JButton();
+        btnBroadcast.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/broadcast.png")));
+        btnBroadcast.setToolTipText("Broadcast current media to all students");
 
         subTitlesButton = new JButton();
 //        subTitlesButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/comment.png")));
@@ -228,6 +238,7 @@ public class PlayerControlsPanel extends JPanel {
         bottomPanel.add(playButton);
         bottomPanel.add(fastForwardButton);
         bottomPanel.add(nextChapterButton);
+        bottomPanel.add(btnRecord);
 
         bottomPanel.add(volumeSlider);
         bottomPanel.add(toggleMuteButton);
@@ -245,54 +256,14 @@ public class PlayerControlsPanel extends JPanel {
         	bottomPanel.add(connectButton);
 
         bottomPanel.add(fullScreenButton);
-
+        if(!player.isClient())
+        	bottomPanel.add(btnBroadcast);
         //bottomPanel.add(subTitlesButton);
 
         add(bottomPanel, BorderLayout.SOUTH);
         
-        btnBroadcast = new JButton();
-        btnBroadcast.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		try {
-        			System.out.println(mediaPlayer.mrl());
-        			new Config();
-					ServerService server = new ServerService();
-					StartVideoCommand videoCommand = new StartVideoCommand(InetAddress.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-					if(mediaPlayer.mrl().equals("") || mediaPlayer.mrl().equals("null")){
-						videoCommand.setStreamAddress("");
-					}
-					else{
-						if(mediaPlayer.mrl().startsWith("file:")){
-							Thread t = new Thread(new Runnable() {
-								
-								@Override
-								public void run() {
-									try {
-										StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");
-									} catch (Exception e) {
-										e.printStackTrace();
-									}
-								}
-							});
-							t.start();
-							//StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");"
-							videoCommand.setStreamAddress("rtp://@"+"230.1.1.1"+":5555");
-						}
-						else{
-							videoCommand.setStreamAddress(mediaPlayer.mrl());
-						}
-					}
-					videoCommand.setClient(true);
-					server.send(videoCommand);
-        		} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-        	}
-        });
-        btnBroadcast.setIcon(new ImageIcon(PlayerControlsPanel.class.getResource("/com/jajeem/images/broadcast.png")));
-        btnBroadcast.setToolTipText("Broadcast current media to all students");
-        if(!player.isClient())
-        	bottomPanel.add(btnBroadcast);
+        
+        
     }
 
     /**
@@ -418,6 +389,25 @@ public class PlayerControlsPanel extends JPanel {
                 mediaPlayer.nextChapter();
             }
         });
+        
+
+        btnRecord.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		String saveFilePath = "";
+        		int flag;
+                fileChooser.setDialogTitle("Save File");
+                // set the file filter 
+//                MyFileFilter projFileFilter = new MyFileFilter(".avi","*");
+//                fileChooser.setFileFilter(projFileFilter);
+
+                // display the dialog to choose file name saved
+                flag = fileChooser.showSaveDialog(null);
+                if( flag == JFileChooser.APPROVE_OPTION) {
+                    saveFilePath = fileChooser.getSelectedFile().getPath();
+                    mediaPlayer.playMedia(mediaPlayer.mrl(),"--sout file/avi:c:\\stream.avi");
+                }
+        	}
+        });
 
         toggleMuteButton.addActionListener(new ActionListener() {
             @Override
@@ -471,6 +461,45 @@ public class PlayerControlsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.toggleFullScreen();
             }
+        });
+        
+        btnBroadcast.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		try {
+        			System.out.println(mediaPlayer.mrl());
+        			new Config();
+					ServerService server = new ServerService();
+					StartVideoCommand videoCommand = new StartVideoCommand(InetAddress.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+					if(mediaPlayer.mrl().equals("") || mediaPlayer.mrl().equals("null")){
+						videoCommand.setStreamAddress("");
+					}
+					else{
+						if(mediaPlayer.mrl().startsWith("file:")){
+							Thread t = new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									try {
+										StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							});
+							t.start();
+							//StreamRtp stream = new StreamRtp(mediaPlayer.mrl(), "");"
+							videoCommand.setStreamAddress("rtp://@"+"230.1.1.1"+":5555");
+						}
+						else{
+							videoCommand.setStreamAddress(mediaPlayer.mrl());
+						}
+					}
+					videoCommand.setClient(true);
+					server.send(videoCommand);
+        		} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+        	}
         });
 
         subTitlesButton.addActionListener(new ActionListener() {
