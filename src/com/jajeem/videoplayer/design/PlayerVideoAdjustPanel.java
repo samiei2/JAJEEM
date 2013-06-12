@@ -35,6 +35,8 @@ import javax.swing.event.ChangeListener;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import com.alee.laf.panel.WebPanel;
+import com.jajeem.util.audiovisualizer.music.NewGUI;
 
 public class PlayerVideoAdjustPanel extends JPanel {
 
@@ -58,6 +60,7 @@ public class PlayerVideoAdjustPanel extends JPanel {
 
     private JLabel gammaLabel;
     private JSlider gammaSlider;
+    private WebPanel webPanel;
 
     public PlayerVideoAdjustPanel(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
@@ -148,6 +151,11 @@ public class PlayerVideoAdjustPanel extends JPanel {
         slidersPanel.add(gammaSlider);
 
         add(slidersPanel, BorderLayout.CENTER);
+        
+        webPanel = new WebPanel();
+        webPanel.setSize(100, 50);
+        //webPanel.add(new NewGUI());
+        slidersPanel.add(webPanel);
     }
 
     private void registerListeners() {

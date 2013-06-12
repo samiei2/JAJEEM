@@ -34,8 +34,6 @@ import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 
 public class InstructorNoa {
 
@@ -160,14 +158,14 @@ public class InstructorNoa {
 		);
 		topPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel topLogoLabel = new JLabel("");
+		WebLabel topLogoLabel = new WebLabel("");
 		topLogoLabel.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa/teacher_128.png")));
 		topLogoLabel.setFont(new Font("Tahoma", Font.BOLD, 23));
 		topLogoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		topLogoLabel.setForeground(Color.WHITE);
 		topPanel.add(topLogoLabel);
 		
-		JLabel topNameLabel = new JLabel("iCalabo");
+		WebLabel topNameLabel = new WebLabel("iCalabo");
 		topNameLabel.setForeground(new Color(51, 51, 255));
 		topNameLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
 		topPanel.add(topNameLabel);

@@ -43,13 +43,22 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import javax.swing.ImageIcon;
@@ -83,6 +92,8 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 
+import com.alee.utils.zip.UnzipListener;
+import com.jajeem.quiz.design.QuizMain;
 import com.sun.awt.AWTUtilities;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
@@ -111,16 +122,17 @@ public class VideoPlayer extends Vlcj {
     private EmbeddedMediaPlayer mediaPlayer;
 
     public static void main(final String[] args) throws Exception {
-    	//loadDlls();
-    	NativeLibrary.addSearchPath(
-                RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
-            );
-		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        LibVlc libVlc = LibVlcFactory.factory().create();
-
-        Logger.info("  version: {}", libVlc.libvlc_get_version());
-        Logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
-        Logger.info("changeset: {}", libVlc.libvlc_get_changeset());
+    	//unzipDlls();
+//    	unzip(VideoPlayer.class.getResource("vlclib.zip").getFile());
+//    	NativeLibrary.addSearchPath(
+//                RuntimeUtil.getLibVlcLibraryName(), "vlclib/vlclib"
+//            );
+//		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+//        LibVlc libVlc = LibVlcFactory.factory().create();
+//
+//        Logger.info("  version: {}", libVlc.libvlc_get_version());
+//        Logger.info(" compiler: {}", libVlc.libvlc_get_compiler());
+//        Logger.info("changeset: {}", libVlc.libvlc_get_changeset());
 
         setLookAndFeel();
 
@@ -132,39 +144,155 @@ public class VideoPlayer extends Vlcj {
         });
     }
 
-    private void unzipDlls() {
-    	InputStream is = getClass().getResourceAsStream("my_embedded_file.zip");
+    private static void unzipDlls() {
+    	if(new File("vlclib/").exists())
+    		return;
+    	InputStream is = VideoPlayer.class.getResourceAsStream("vlclib.zip");
     	ZipInputStream zis = new ZipInputStream(is);
+    	File directory = null;
+		directory = new File("/");
+    	directory.mkdir();
     	ZipEntry entry;
-    	File file = new File("");
+    	File folder = new File("");
     	try {
 			while ((entry = zis.getNextEntry()) != null) {
 			    // do something with the entry - for example, extract the data 
-				if(entry.isDirectory()){
-					file.mkdirs();
-				}
+				File destinationFilePath = new File(directory,entry.getName());
+
+                //create directories if required.
+				if(destinationFilePath.getParentFile() != null)
+					destinationFilePath.getParentFile().mkdirs();
+               
+                //if the entry is directory, leave it. Otherwise extract it.
+                if(entry.isDirectory())
+                {
+                	continue;
+                }
 				else{
-					file = new File(entry.getName());
-					InputStream in = entry. // get the input stream
-					FileOutputStream fos = new FileOutputStream(file);
-					while (is.available() > 0) {  // write contents of 'is' to 'fos'
-						fos.write(is.read());
-					}
-					fos.close();
-					is.close();
+					int size;
+	                byte[] buffer = new byte[4096];
+
+	                File file = new File(entry.getName());
+	                if(!file.exists())
+	                	file.createNewFile();
+	                FileOutputStream fos =
+	                        new FileOutputStream(entry.getName());
+	                BufferedOutputStream bos =
+	                        new BufferedOutputStream(fos, buffer.length);
+
+	                while ((size = zis.read(buffer, 0, buffer.length)) != -1) {
+	                    bos.write(buffer, 0, size);
+	                }
+	                bos.flush();
+	                bos.close();
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
+			//JOptionPane.showMessageDialog(null, "An error has occured.Cannot open Video player.");
 			e.printStackTrace();
 		}
 	}
 
+    private static void unzip(String strZipFile) {
+        
+        try
+        {
+        	strZipFile = "vlclib.zip";
+        	byte buff[] = new byte[1024];
+        	File file = new File(strZipFile);
+        	file.createNewFile();
+        	FileOutputStream out = new FileOutputStream("vlclib.zip");
+        	BufferedInputStream inp = new BufferedInputStream(VideoPlayer.class.getResourceAsStream("vlclib.zip"));
+        	int flag;
+        	while ((flag = inp.read(buff, 0, 1024)) != -1) {
+          	  out.write(buff, 0, flag);
+            }
+        	out.flush();
+        	out.close();
+        	
+        	
+        	strZipFile = "vlclib.zip";
+            /*\
+             * STEP 1 : Create directory with the name of the zip file
+             *
+             * For e.g. if we are going to extract c:/demo.zip create c:/demo
+             * directory where we can extract all the zip entries
+             *
+            \*/
+//            File fSourceZip = new File(strZipFile);
+            String zipPath = strZipFile.substring(0, strZipFile.length()-4);
+            System.out.println(zipPath + " created");
+               
+            /*
+             * STEP 2 : Extract entries while creating required
+             * sub-directories
+             *
+             */
+             ZipFile zipFile = new ZipFile(file);
+             Enumeration e = zipFile.entries();
+               
+             while(e.hasMoreElements())
+             {
+            	 ZipEntry entry = (ZipEntry)e.nextElement();
+                 File destinationFilePath = new File(zipPath,entry.getName());
+
+                 //create directories if required.
+                 destinationFilePath.getParentFile().mkdirs();
+                       
+                 //if the entry is directory, leave it. Otherwise extract it.
+                 if(entry.isDirectory())
+                 {
+                	 continue;
+                 }
+                 else
+                 {
+                     System.out.println("Extracting " + destinationFilePath);
+                               
+                     /*
+                      * Get the InputStream for current entry
+                      * of the zip file using
+                      *
+                      * InputStream getInputStream(Entry entry) method.
+                      */
+                      BufferedInputStream bis = new BufferedInputStream(zipFile.getInputStream(entry));
+                                                                                                  
+                      int b;
+                      byte buffer[] = new byte[1024];
+                      /*
+                       * read the current entry from the zip file, extract it
+                       * and write the extracted file.
+                       */
+                      FileOutputStream fos = new FileOutputStream(destinationFilePath);
+                      BufferedOutputStream bos = new BufferedOutputStream(fos,1024);
+
+                      while ((b = bis.read(buffer, 0, 1024)) != -1) {
+                    	  bos.write(buffer, 0, b);
+                      }
+                               
+                      //flush the output stream and close it.
+                      bos.flush();
+                      bos.close();
+                               
+                      //close the input stream.
+                      bis.close();
+                }
+            }
+            zipFile.close();
+            file.delete();
+        }
+        catch(IOException ioe)
+        {
+        	System.out.println("IOError :" + ioe);
+        }
+    }
+    
 	public VideoPlayer(String stream, boolean b) {
     	this.isClient = b;
-    	unzipDlls();
+    	
+    	unzip("");
     	NativeLibrary.addSearchPath(
-                RuntimeUtil.getLibVlcLibraryName(), "vlclib/"
+                RuntimeUtil.getLibVlcLibraryName(), "vlclib/vlclib"
             );
 		Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         LibVlc libVlc = LibVlcFactory.factory().create();
@@ -221,6 +349,7 @@ public class VideoPlayer extends Vlcj {
         Logger.debug("vlcArgs={}", vlcArgs);
 
         mainFrame = new JFrame("Video Player");
+        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMain.class.getResource("/com/jajeem/images/Video-icon.png")));
         //mainFrame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
 
         FullScreenStrategy fullScreenStrategy = new DefaultFullScreenStrategy(mainFrame);
@@ -381,6 +510,7 @@ public class VideoPlayer extends Vlcj {
         
         if(!stream.equals("")){
         	mediaPlayer.playMedia(stream);
+        	((PlayerControlsPanel)controlsPanel).setStream(stream);
         }
     }
 
