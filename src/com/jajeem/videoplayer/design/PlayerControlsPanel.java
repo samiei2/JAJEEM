@@ -50,6 +50,9 @@ import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
+import com.xuggle.mediatool.IMediaReader;
+import com.xuggle.mediatool.IMediaWriter;
+import com.xuggle.mediatool.ToolFactory;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
@@ -99,6 +102,8 @@ public class PlayerControlsPanel extends JPanel {
 
 	private VideoPlayer player;
 	private JButton btnRecord;
+	
+	private String stream = "";
 
     public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer,VideoPlayer player) {
         this.mediaPlayer = mediaPlayer;
@@ -401,10 +406,54 @@ public class PlayerControlsPanel extends JPanel {
 //                fileChooser.setFileFilter(projFileFilter);
 
                 // display the dialog to choose file name saved
-                flag = fileChooser.showSaveDialog(null);
-                if( flag == JFileChooser.APPROVE_OPTION) {
-                    saveFilePath = fileChooser.getSelectedFile().getPath();
-                    mediaPlayer.playMedia(mediaPlayer.mrl(),"--sout file/avi:c:\\stream.avi");
+                
+                if(getStream().equals("")){
+                	flag = fileChooser.showSaveDialog(null);
+	                if( flag == JFileChooser.APPROVE_OPTION) {
+	                    saveFilePath = fileChooser.getSelectedFile().getPath();
+	                   
+	                    // create a media reader
+	                    if(!mediaPlayer.mrl().startsWith("file:")){
+		                    IMediaReader reader = ToolFactory.makeReader(mediaPlayer.mrl());
+		                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
+		                    
+		                    // add a debug listener to the writer to see media writer events
+		                    writer.addListener(ToolFactory.makeDebugListener());
+		                    reader.addListener(writer);
+		                   
+		                    // read and decode packets from the source file and
+		                    // and dispatch decoded audio and video to the writer
+		                    while (true) {
+		                        if (reader.readPacket() != null) {
+		                            break;
+		                        }
+		                    }
+		                    writer.flush();
+		                    writer.close();
+	                    }
+	                }
+                }
+                else{
+                	flag = fileChooser.showSaveDialog(null);
+                	if( flag == JFileChooser.APPROVE_OPTION) {
+	                    saveFilePath = fileChooser.getSelectedFile().getPath();
+	                    IMediaReader reader = ToolFactory.makeReader(getStream());
+	                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
+	                    
+	                    // add a debug listener to the writer to see media writer events
+	                    writer.addListener(ToolFactory.makeDebugListener());
+	                    reader.addListener(writer);
+	                   
+	                    // read and decode packets from the source file and
+	                    // and dispatch decoded audio and video to the writer
+	                    while (true) {
+	                        if (reader.readPacket() != null) {
+	                            break;
+	                        }
+	                    }
+	                    writer.flush();
+	                    writer.close();
+                	}
                 }
         	}
         });
@@ -570,4 +619,13 @@ public class PlayerControlsPanel extends JPanel {
     private void updateVolume(int value) {
         volumeSlider.setValue(value);
     }
+
+	public void setStream(String stream) {
+		this.stream = stream;
+	}
+	
+	public String getStream() {
+		return this.stream;
+	}
+	
 }

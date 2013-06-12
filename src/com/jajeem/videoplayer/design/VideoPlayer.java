@@ -510,6 +510,7 @@ public class VideoPlayer extends Vlcj {
         
         if(!stream.equals("")){
         	mediaPlayer.playMedia(stream);
+        	((PlayerControlsPanel)controlsPanel).setStream(stream);
         }
     }
 
