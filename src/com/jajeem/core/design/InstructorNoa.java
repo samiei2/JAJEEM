@@ -34,6 +34,8 @@ import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 
 public class InstructorNoa {
 
@@ -128,11 +130,15 @@ public class InstructorNoa {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(bottomButtonPanel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 777, Short.MAX_VALUE)
-						.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 777, GroupLayout.PREFERRED_SIZE))
-					.addGap(46)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 777, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(centerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+								.addComponent(bottomButtonPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 777, GroupLayout.PREFERRED_SIZE))
+							.addGap(46)))
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(bottomLogoPanel, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
@@ -146,10 +152,10 @@ public class InstructorNoa {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 462, GroupLayout.PREFERRED_SIZE))
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+							.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE))
+						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
@@ -182,8 +188,8 @@ public class InstructorNoa {
 		gl_centerPanel.setVerticalGroup(
 			gl_centerPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_centerPanel.createSequentialGroup()
-					.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 462, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 436, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
 		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
 		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
@@ -193,50 +199,53 @@ public class InstructorNoa {
 		desktopPane.setLayout(gl_desktopPane);
 		centerPanel.setLayout(gl_centerPanel);
 
-		// WebScrollPane scrollPane = new WebScrollPane();
-		// scrollPane.setBounds(0, 0, 2, 2);
-		// desktopPane.add(scrollPane);
-		topButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
-
 		WebPanel volumeButtonContainer = new WebPanel();
 		volumeButtonContainer.setBackground(new Color(58, 109, 175));
-		topButtonPanel.add(volumeButtonContainer);
-		volumeButtonContainer.setLayout(new GridLayout(0, 1, 0, 0));
 
 		WebPanel volumeContainer = new WebPanel();
 		volumeContainer.setBackground(new Color(58, 109, 175));
-		volumeButtonContainer.add(volumeContainer);
 		volumeContainer.setLayout(null);
 
 		WebLabel volumeLabel = new WebLabel("Volume Control");
+		volumeLabel.setBounds(21, 0, 111, 47);
 		volumeLabel.setForeground(Color.WHITE);
 		volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		volumeLabel.setBounds(10, 6, 107, 41);
 		volumeContainer.add(volumeLabel);
 
 		WebButton volumeButton = new WebButton("");
+		volumeButton.setBounds(10, 0, 127, 47);
 		volumeButton.setBackground(new Color(58, 109, 175));
-		volumeButton.setBounds(0, 0, 127, 47);
 		volumeContainer.add(volumeButton);
 		volumeButton.setUndecorated(true);
 		volumeButton.setIcon(new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa/top_orange.png")));
+		GroupLayout gl_volumeButtonContainer = new GroupLayout(volumeButtonContainer);
+		gl_volumeButtonContainer.setHorizontalGroup(
+			gl_volumeButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_volumeButtonContainer.createSequentialGroup()
+					.addComponent(volumeContainer, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(52, Short.MAX_VALUE))
+		);
+		gl_volumeButtonContainer.setVerticalGroup(
+			gl_volumeButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_volumeButtonContainer.createSequentialGroup()
+					.addComponent(volumeContainer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		volumeButtonContainer.setLayout(gl_volumeButtonContainer);
 		volumeButton.putClientProperty("key", "volume");
 
 		WebPanel attendanceButtonContainer = new WebPanel();
 		attendanceButtonContainer.setBackground(new Color(58, 109, 175));
-		topButtonPanel.add(attendanceButtonContainer);
-		attendanceButtonContainer.setLayout(new GridLayout(0, 1, 0, 0));
 
 		WebPanel attendanceContainer = new WebPanel();
 		attendanceContainer.setBackground(new Color(58, 109, 175));
-		attendanceButtonContainer.add(attendanceContainer);
 		attendanceContainer.setLayout(null);
 
 		WebLabel attendaceLabel = new WebLabel("Attendance Summary");
 		attendaceLabel.setForeground(Color.WHITE);
 		attendaceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		attendaceLabel.setBounds(10, 6, 107, 41);
+		attendaceLabel.setBounds(10, 0, 107, 47);
 		attendanceContainer.add(attendaceLabel);
 
 		WebButton attendanceButton = new WebButton("");
@@ -250,18 +259,15 @@ public class InstructorNoa {
 
 		WebPanel callAllButtonContainer = new WebPanel();
 		callAllButtonContainer.setBackground(new Color(58, 109, 175));
-		topButtonPanel.add(callAllButtonContainer);
-		callAllButtonContainer.setLayout(new GridLayout(0, 1, 0, 0));
 
 		WebPanel callAllContainer = new WebPanel();
 		callAllContainer.setBackground(new Color(58, 109, 175));
-		callAllButtonContainer.add(callAllContainer);
 		callAllContainer.setLayout(null);
 
 		WebLabel callAllLabel = new WebLabel("Call All");
 		callAllLabel.setForeground(Color.WHITE);
 		callAllLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		callAllLabel.setBounds(10, 6, 107, 41);
+		callAllLabel.setBounds(10, 0, 107, 47);
 		callAllContainer.add(callAllLabel);
 
 		WebButton callAllButton = new WebButton("");
@@ -277,7 +283,54 @@ public class InstructorNoa {
 		viewModeButton.putClientProperty("key", "viewMode");
 		viewModeButton.setModel(new DefaultComboBoxModel(new String[] {
 				"Thumbnail", "List" }));
-		topButtonPanel.add(viewModeButton);
+		GroupLayout gl_topButtonPanel = new GroupLayout(topButtonPanel);
+		gl_topButtonPanel.setHorizontalGroup(
+			gl_topButtonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_topButtonPanel.createSequentialGroup()
+					.addComponent(volumeButtonContainer, GroupLayout.PREFERRED_SIZE, 139, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(attendanceButtonContainer, GroupLayout.PREFERRED_SIZE, 125, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(callAllButtonContainer, GroupLayout.PREFERRED_SIZE, 127, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(288))
+		);
+		gl_topButtonPanel.setVerticalGroup(
+			gl_topButtonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_topButtonPanel.createSequentialGroup()
+					.addGroup(gl_topButtonPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(volumeButtonContainer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(attendanceButtonContainer, 0, 0, Short.MAX_VALUE)
+						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+						.addComponent(callAllButtonContainer, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		GroupLayout gl_callAllButtonContainer = new GroupLayout(callAllButtonContainer);
+		gl_callAllButtonContainer.setHorizontalGroup(
+			gl_callAllButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addComponent(callAllContainer, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+		);
+		gl_callAllButtonContainer.setVerticalGroup(
+			gl_callAllButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addComponent(callAllContainer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+		);
+		callAllButtonContainer.setLayout(gl_callAllButtonContainer);
+		GroupLayout gl_attendanceButtonContainer = new GroupLayout(attendanceButtonContainer);
+		gl_attendanceButtonContainer.setHorizontalGroup(
+			gl_attendanceButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_attendanceButtonContainer.createSequentialGroup()
+					.addComponent(attendanceContainer, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(62, Short.MAX_VALUE))
+		);
+		gl_attendanceButtonContainer.setVerticalGroup(
+			gl_attendanceButtonContainer.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_attendanceButtonContainer.createSequentialGroup()
+					.addComponent(attendanceContainer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		attendanceButtonContainer.setLayout(gl_attendanceButtonContainer);
+		topButtonPanel.setLayout(gl_topButtonPanel);
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 
 		WebButton surveyButton = new WebButton("Survey");
