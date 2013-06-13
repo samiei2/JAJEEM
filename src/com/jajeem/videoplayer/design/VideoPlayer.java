@@ -89,6 +89,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
+import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 
@@ -305,7 +306,7 @@ public class VideoPlayer extends Vlcj {
         
         if(RuntimeUtil.isWindows()) {
             // If running on Windows and you want the mouse/keyboard event hack...
-            videoSurface = new WindowsCanvas();
+            videoSurface = new Canvas();
         }
         else {
             videoSurface = new Canvas();

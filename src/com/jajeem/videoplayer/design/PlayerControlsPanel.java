@@ -398,7 +398,7 @@ public class PlayerControlsPanel extends JPanel {
 
         btnRecord.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		String saveFilePath = "";
+        		
         		int flag;
                 fileChooser.setDialogTitle("Save File");
                 // set the file filter 
@@ -410,49 +410,58 @@ public class PlayerControlsPanel extends JPanel {
                 if(getStream().equals("")){
                 	flag = fileChooser.showSaveDialog(null);
 	                if( flag == JFileChooser.APPROVE_OPTION) {
-	                    saveFilePath = fileChooser.getSelectedFile().getPath();
-	                   
 	                    // create a media reader
 	                    if(!mediaPlayer.mrl().startsWith("file:")){
-		                    IMediaReader reader = ToolFactory.makeReader(mediaPlayer.mrl());
-		                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
-		                    
-		                    // add a debug listener to the writer to see media writer events
-		                    writer.addListener(ToolFactory.makeDebugListener());
-		                    reader.addListener(writer);
-		                   
-		                    // read and decode packets from the source file and
-		                    // and dispatch decoded audio and video to the writer
-		                    while (true) {
-		                        if (reader.readPacket() != null) {
-		                            break;
-		                        }
-		                    }
-		                    writer.flush();
-		                    writer.close();
+	                    	new Thread(new Runnable() {
+								public void run() {
+									String saveFilePath = "";
+				                    saveFilePath = fileChooser.getSelectedFile().getPath();
+				                    IMediaReader reader = ToolFactory.makeReader(mediaPlayer.mrl());
+				                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
+				                    
+				                    // add a debug listener to the writer to see media writer events
+				                    writer.addListener(ToolFactory.makeDebugListener());
+				                    reader.addListener(writer);
+				                   
+				                    // read and decode packets from the source file and
+				                    // and dispatch decoded audio and video to the writer
+				                    while (true) {
+				                        if (reader.readPacket() != null) {
+				                            break;
+				                        }
+				                    }
+				                    writer.flush();
+				                    writer.close();
+								}
+							});
 	                    }
 	                }
                 }
                 else{
                 	flag = fileChooser.showSaveDialog(null);
                 	if( flag == JFileChooser.APPROVE_OPTION) {
-	                    saveFilePath = fileChooser.getSelectedFile().getPath();
-	                    IMediaReader reader = ToolFactory.makeReader(getStream());
-	                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
-	                    
-	                    // add a debug listener to the writer to see media writer events
-	                    writer.addListener(ToolFactory.makeDebugListener());
-	                    reader.addListener(writer);
-	                   
-	                    // read and decode packets from the source file and
-	                    // and dispatch decoded audio and video to the writer
-	                    while (true) {
-	                        if (reader.readPacket() != null) {
-	                            break;
-	                        }
-	                    }
-	                    writer.flush();
-	                    writer.close();
+	                    new Thread(new Runnable() {
+							public void run() {
+								String saveFilePath = "";
+			                    saveFilePath = fileChooser.getSelectedFile().getPath();
+								IMediaReader reader = ToolFactory.makeReader(getStream());
+			                    IMediaWriter writer = ToolFactory.makeWriter(saveFilePath+" - output.mp4", reader);
+			                    
+			                    // add a debug listener to the writer to see media writer events
+			                    writer.addListener(ToolFactory.makeDebugListener());
+			                    reader.addListener(writer);
+			                   
+			                    // read and decode packets from the source file and
+			                    // and dispatch decoded audio and video to the writer
+								while (true) {
+			                        if (reader.readPacket() != null) {
+			                            break;
+			                        }
+			                    }
+								writer.flush();
+			                    writer.close();
+							}
+						});
                 	}
                 }
         	}
