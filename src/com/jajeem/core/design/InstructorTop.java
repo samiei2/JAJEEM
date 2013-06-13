@@ -1,5 +1,6 @@
 package com.jajeem.core.design;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.swing.ImageIcon;
 
 import com.alee.laf.StyleConstants;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.slider.WebSlider;
 import com.alee.laf.toolbar.ToolbarStyle;
@@ -24,6 +26,9 @@ import com.jajeem.util.Config;
 
 public class InstructorTop {
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public static WebPanel createPanel(WebPanel panel) {
 
 		WebToolBar aft = new WebToolBar(WebToolBar.HORIZONTAL);
@@ -31,7 +36,17 @@ public class InstructorTop {
 
 		aft.setUndecorated(true);
 		setupToolBar(aft);
-		panel.add(aft);
+//		panel.add(aft);
+		
+		WebPanel wb = new WebPanel();
+		WebLabel wl = new WebLabel("SOFTWARE NAME");
+		wb.add(wl);
+		wb.add(aft);
+		wb.setVisible(true);
+		panel.add(wb);
+		
+		panel.setBackground(Color
+				.decode("#FFFFFF"));
 		panel.setUndecorated(true);
 
 		return panel;
@@ -57,14 +72,13 @@ public class InstructorTop {
 											.getResourceAsStream("/icons/menubar/setting.png"))),
 							StyleConstants.smallRound, true);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		TooltipManager.setTooltip(settingButton, imgToolTip,
 				"Extra options will be added here!", TooltipWay.down);
-		// toolbar.add(settingButton);
+		 toolbar.add(settingButton);
 
-		// toolbar.addSeparator();
+		 toolbar.addSeparator();
 
 		try {
 			volumeButton = WebButton
@@ -76,7 +90,7 @@ public class InstructorTop {
 			TooltipManager.setTooltip(volumeButton, imgToolTip,
 					"Change speaker volume of selected student",
 					TooltipWay.down);
-//			toolbar.add(volumeButton);
+			toolbar.add(volumeButton);
 			volumeButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -110,7 +124,6 @@ public class InstructorTop {
 										"set", vol * 650);
 								ss.send(vc);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -123,7 +136,6 @@ public class InstructorTop {
 
 			});
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

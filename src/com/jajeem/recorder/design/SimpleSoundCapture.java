@@ -71,7 +71,7 @@ import javax.swing.border.SoftBevelBorder;
  * 
  * @author Steve Potts
  */
-public class SimpleSoundCapture extends JPanel implements ActionListener {
+public class SimpleSoundCapture extends JFrame implements ActionListener {
 
   final int bufSize = 16384;
 
@@ -95,7 +95,7 @@ public class SimpleSoundCapture extends JPanel implements ActionListener {
     setLayout(new BorderLayout());
     EmptyBorder eb = new EmptyBorder(5, 5, 5, 5);
     SoftBevelBorder sbb = new SoftBevelBorder(SoftBevelBorder.LOWERED);
-    setBorder(new EmptyBorder(5, 5, 5, 5));
+    //setBorder(new EmptyBorder(5, 5, 5, 5));
 
     JPanel p1 = new JPanel();
     p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
@@ -112,6 +112,7 @@ public class SimpleSoundCapture extends JPanel implements ActionListener {
 
     p1.add(p2);
     add(p1);
+    setVisible(true);
   }
 
   public void open() {
@@ -285,11 +286,15 @@ public class SimpleSoundCapture extends JPanel implements ActionListener {
   /**
    * Reads data from the input channel and writes to the output stream
    */
-  class Capture implements Runnable {
+  public class Capture implements Runnable {
 
     TargetDataLine line;
 
     Thread thread;
+    
+    public Capture(){
+    
+    }
 
     public void start() {
       errStr = null;
@@ -407,15 +412,15 @@ public class SimpleSoundCapture extends JPanel implements ActionListener {
   public static void main(String s[]) {
     SimpleSoundCapture ssc = new SimpleSoundCapture();
     ssc.open();
-    JFrame f = new JFrame("Capture/Playback");
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    f.getContentPane().add("Center", ssc);
-    f.pack();
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int w = 360;
-    int h = 170;
-    f.setLocation(screenSize.width / 2 - w / 2, screenSize.height / 2 - h / 2);
-    f.setSize(w, h);
-    f.show();
+//    JFrame f = new JFrame("Capture/Playback");
+//    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    f.getContentPane().add("Center", ssc);
+//    f.pack();
+//    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//    int w = 360;
+//    int h = 170;
+//    f.setLocation(screenSize.width / 2 - w / 2, screenSize.height / 2 - h / 2);
+//    f.setSize(w, h);
+//    f.show();
   }
 }

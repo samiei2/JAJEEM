@@ -60,7 +60,7 @@ public class Instructor implements SwingConstants {
 	 */
 	public static void main(final String[] args) throws NumberFormatException,
 			Exception {
-		networkSetup();
+//		networkSetup();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -90,7 +90,7 @@ public class Instructor implements SwingConstants {
 			// Setting up WebLookAndFeel style
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
-			new Config();
+//			new Config();
 
 			// Start LibJitsi for first time
 			LibJitsi.start();

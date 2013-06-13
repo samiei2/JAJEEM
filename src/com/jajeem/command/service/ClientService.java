@@ -153,8 +153,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				System.out.println("Receiving ----> Command: " + cmd.getClass() + " from: " + cmd.getFrom());
 				
-				logger.info("Receiving: Message type: " + cmd.getClass()
-						+ ", from: " + cmd.getTo());
+//				logger.info("Receiving: Message type: " + cmd.getClass()
+//						+ ", from: " + cmd.getTo());
 
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
