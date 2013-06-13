@@ -83,9 +83,10 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getClientProperty(
-												"ip");
+										.getDesktopPane().getSelectedFrame()
+										.getClientProperty("ip");
 								jrdesktop.Config conf = null;
+								System.out.println(selectedStudent);
 								try {
 									conf = new jrdesktop.Config(false, "",
 											selectedStudent,
@@ -102,7 +103,7 @@ public class InstructorNoaUtil {
 					});
 
 					break;
-				case "interocm":
+				case "intercom":
 					((JButton) c).addActionListener(new ActionListener() {
 
 						@Override
@@ -113,7 +114,7 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getClientProperty(
+										.getDesktopPane().getSelectedFrame().getClientProperty(
 												"ip");
 								try {
 									// "--remote-host=127.0.0.1 --remote-port-base=10000"
@@ -272,7 +273,7 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getClientProperty(
+										.getDesktopPane().getSelectedFrame().getClientProperty(
 												"ip");
 								try {
 									Chat currentChat = new Chat(
@@ -313,7 +314,7 @@ public class InstructorNoaUtil {
 				final JButton button = ((JButton) c);
 
 				key = (String) ((JButton) c).getClientProperty("key");
-				if(key == null) {
+				if (key == null) {
 					return;
 				}
 
@@ -447,7 +448,7 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getClientProperty(
+										.getDesktopPane().getSelectedFrame().getClientProperty(
 												"ip");
 								try {
 
@@ -477,8 +478,8 @@ public class InstructorNoaUtil {
 							WebLookAndFeel.setDecorateDialogs(true);
 
 							// Opening dialog
-							Dialog dialog = new Dialog(bottomButtonPanel, "application",
-									"Application name", "Block");
+							Dialog dialog = new Dialog(bottomButtonPanel,
+									"application", "Application name", "Block");
 							dialog.pack();
 							dialog.setLocationRelativeTo(bottomButtonPanel);
 							dialog.setVisible(true);
@@ -614,7 +615,7 @@ public class InstructorNoaUtil {
 				try {
 					internalFrame.setFrameIcon(new ImageIcon(
 							ImageIO.read(InstructorNoaUtil.class
-									.getResourceAsStream("/icons/menubar/tick.png"))));
+									.getResourceAsStream("/icons/menubar/check.png"))));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -692,7 +693,7 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
 							try {
 
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
@@ -718,7 +719,7 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
 							try {
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
 										InetAddress.getLocalHost()
@@ -747,7 +748,7 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
 							try {
 								WebsiteCommand wc = new WebsiteCommand(
 										InetAddress.getLocalHost()
