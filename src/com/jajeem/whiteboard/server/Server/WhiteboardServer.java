@@ -40,7 +40,7 @@ public class WhiteboardServer {
 
     /** The main entry of the Server */
     public static void main(String[] args) {
-    	Policy.setPolicy(new MinimalPolicy());
+//    	Policy.setPolicy(new MinimalPolicy());
 //    	try {
 //			com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));
 //		} catch (IOException e) {

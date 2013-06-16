@@ -23,16 +23,16 @@ public class StudentWhiteboard {
 	private int userid;
 	
 	public StudentWhiteboard(String host){
-		Policy.setPolicy(new MinimalPolicy());
-    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
-    	System.setProperty("javax.net.ssl.keyStorePassword", "client");
+//		Policy.setPolicy(new MinimalPolicy());
+//    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
+//    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
+//    	System.setProperty("javax.net.ssl.keyStorePassword", "client");
 
         // Create and install a security manager
-        if (System.getSecurityManager() == null) {
-            SecurityManager manager = new SecurityManager();
-            System.setSecurityManager(manager);
-        }
+//        if (System.getSecurityManager() == null) {
+//            SecurityManager manager = new SecurityManager();
+//            System.setSecurityManager(manager);
+//        }
 		hostname = host;
 		
 		userid = new Random().nextInt(2000);
@@ -47,10 +47,13 @@ public class StudentWhiteboard {
             }
 
             // Make reference to SSL-based registry
+//            Registry registry = LocateRegistry.getRegistry(
+//                hostname, WhiteboardClient.SESSIONS_PORT,
+//                new javax.rmi.ssl.SslRMIClientSocketFactory()
+//            );
             Registry registry = LocateRegistry.getRegistry(
-                hostname, WhiteboardClient.SESSIONS_PORT,
-                new javax.rmi.ssl.SslRMIClientSocketFactory()
-            );
+                    hostname, WhiteboardClient.SESSIONS_PORT
+                );
 
 
             String serviceName = "RWS";
@@ -72,9 +75,12 @@ public class StudentWhiteboard {
 		try {
 			sessions.joinSession(sessionID);
 			
+//			Registry registry = LocateRegistry.getRegistry(
+//	                hostname, WhiteboardClient.WHITEBOARD_PORT,
+//	                new javax.rmi.ssl.SslRMIClientSocketFactory()
+//	                );
 			Registry registry = LocateRegistry.getRegistry(
-	                hostname, WhiteboardClient.WHITEBOARD_PORT,
-	                new javax.rmi.ssl.SslRMIClientSocketFactory()
+	                hostname, WhiteboardClient.WHITEBOARD_PORT
 	                );
 
 	        // the name of service in RMI server
