@@ -2,13 +2,16 @@ package com.jajeem.survey.design;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,34 +21,29 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.rootpane.WebFrame;
-import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.events.SurveyEvent;
-import com.jajeem.survey.design.client.SurveyWindow;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.Config;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.Toolkit;
-
 public class SurveyMain extends WebFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int pageNumber = 1;
 	private WebPanel contentPane;
 	private SurveyMain frame;
 	private Question currentQuestion;
@@ -59,6 +57,9 @@ public class SurveyMain extends WebFrame {
 	private Panel_Bottom_2 panel_bottom_2;
 	private WebPanel panel_bottom_3;
 	private WebButton wbtnStart;
+	private WebButton wbtnOpen;
+	private WebButton wbtnSave;
+	private WebButton wbtnContent;
 	/**
 	 * Launch the application.
 	 */
@@ -165,6 +166,49 @@ public class SurveyMain extends WebFrame {
 		);
 		
 		WebButton wbtnNew = new WebButton();
+		wbtnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(pageNumber == 2){
+					int i = JOptionPane.showConfirmDialog(null, "If you leave this page the quiz will stop and results will be lost.Are you sure you want to continue?");
+					if(i == 0){
+						try {
+							new Config();
+							ServerService serv = new ServerService();
+							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+							serv.send(cmd);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					else if(i == 1){
+						return;
+					}
+					else{
+						return;
+					}
+					CardLayout cl = (CardLayout)(cards.getLayout());
+			        cl.show(cards, "Page 1");
+					wbtnContent.setEnabled(false);
+					wbtnOpen.setEnabled(true);
+					wbtnSave.setEnabled(true);
+					//wbtnSaveResults.setVisible(false);
+					wbtnStart.setText("Start");
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setEnabled(true);
+					panel_bottom_2.ClearQuiz();
+				}
+				setCurrentQuiz(new Quiz());
+                getCurrentQuiz().addQuestion(new Question());
+                // TODO remove these lines
+                getCurrentQuiz().getQuestionList().get(0).setInstructorId(1);
+                getCurrentQuiz().setInstructorId(1);
+                /////////////////////
+                panel_bottom_1.clear();
+                getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
+                ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0);
+			}
+		});
 		wbtnNew.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				setCurrentSurvey(new Survey());
@@ -202,7 +246,7 @@ public class SurveyMain extends WebFrame {
 		wbtnResponse.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnResponse.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/distributor-report.png")));
 		
-		WebButton wbtnOpen = new WebButton();
+		wbtnOpen = new WebButton();
 		wbtnOpen.setEnabled(false);
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,7 +260,7 @@ public class SurveyMain extends WebFrame {
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnOpen.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/folder_green_open.png")));
 		
-		WebButton wbtnSave = new WebButton();
+		wbtnSave = new WebButton();
 		wbtnSave.setEnabled(false);
 		wbtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -243,7 +287,7 @@ public class SurveyMain extends WebFrame {
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSave.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/document-save-as.png")));
 		
-		final WebButton wbtnContent = new WebButton();
+		wbtnContent = new WebButton();
 		wbtnContent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)(cards.getLayout());
@@ -307,6 +351,7 @@ public class SurveyMain extends WebFrame {
 					}
 					
 					wbtnStart.setText("Start");
+					pageNumber=2;
 					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
 					//surveyEvent.fireStopEvent(new SurveyStop(this));
 				}

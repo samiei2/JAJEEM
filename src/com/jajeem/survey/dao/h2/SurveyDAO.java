@@ -11,6 +11,9 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.quiz.model.Quiz;
+import com.jajeem.survey.dao.h2.QuestionDAO;
+import com.jajeem.survey.model.Question;
 import com.jajeem.survey.dao.ISurveyDAO;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.util.BaseDAO;
@@ -77,6 +80,19 @@ public class SurveyDAO implements ISurveyDAO {
 				new JajeemExcetionHandler(e);
 			}
 		}
+		
+		try{
+			QuestionDAO qdao = new QuestionDAO();
+			ArrayList<Question> list = survey.getQuestionList();
+			for (int i = 0; i < list.size(); i++) {
+				Question q = list.get(i);
+				q.setSurveyId(survey.getId());
+				qdao.create(q);
+			}
+		}catch(Exception e){
+			new JajeemExcetionHandler(e);
+		}
+
 
 		return survey;
 	}
@@ -271,6 +287,16 @@ public class SurveyDAO implements ISurveyDAO {
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
+		}
+		
+		try {
+			QuestionDAO qdao = new QuestionDAO();
+			for (int i = 0; i < allSurveys.size(); i++) {
+				Survey q = allSurveys.get(i);
+				q.getQuestionList().addAll(qdao.list(q.getId()));
+			}
+		} catch(Exception ex){
+			
 		}
 
 		return allSurveys;
