@@ -197,43 +197,116 @@ public class InstructorNoa {
 		topPanel.setRound(2);
 		topPanel.setBackground(new Color(56, 107, 170));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(topButtonPanel, GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-						.addComponent(centerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-						.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-						.addComponent(bottomButtonPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 902, Short.MAX_VALUE))
-					.addGap(6)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(bottomLogoPanel, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
-							.addGap(49))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-							.addGap(28)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 435, Short.MAX_VALUE))
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE))
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
-							.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(bottomLogoPanel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
-					.addGap(0))
-		);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																topPanel,
+																GroupLayout.DEFAULT_SIZE,
+																902,
+																Short.MAX_VALUE)
+														.addComponent(
+																topButtonPanel,
+																Alignment.TRAILING,
+																GroupLayout.DEFAULT_SIZE,
+																902,
+																Short.MAX_VALUE)
+														.addComponent(
+																centerPanel,
+																GroupLayout.DEFAULT_SIZE,
+																902,
+																Short.MAX_VALUE)
+														.addComponent(
+																bottomButtonPanel,
+																GroupLayout.PREFERRED_SIZE,
+																902,
+																Short.MAX_VALUE))
+										.addGap(6)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.TRAILING,
+																false)
+														.addComponent(
+																rightButtonPanel,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				bottomLogoPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				152,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(49)))));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				topPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				129,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				topButtonPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				37,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				centerPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				435,
+																				Short.MAX_VALUE))
+														.addComponent(
+																rightButtonPanel,
+																GroupLayout.DEFAULT_SIZE,
+																613,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												ComponentPlacement.RELATED,
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.TRAILING,
+																false)
+														.addComponent(
+																bottomButtonPanel,
+																GroupLayout.PREFERRED_SIZE,
+																51,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																bottomLogoPanel,
+																GroupLayout.PREFERRED_SIZE,
+																45,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(0)));
 		GroupLayout gl_topPanel = new GroupLayout(topPanel);
 		gl_topPanel.setHorizontalGroup(gl_topPanel.createParallelGroup(
 				Alignment.LEADING).addGap(0, 860, Short.MAX_VALUE));
@@ -246,16 +319,16 @@ public class InstructorNoa {
 
 		desktopPane.setBackground(new Color(237, 246, 253));
 		GroupLayout gl_centerPanel = new GroupLayout(centerPanel);
-		gl_centerPanel.setHorizontalGroup(
-			gl_centerPanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-		);
-		gl_centerPanel.setVerticalGroup(
-			gl_centerPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_centerPanel.createSequentialGroup()
-					.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-					.addGap(0))
-		);
+		gl_centerPanel.setHorizontalGroup(gl_centerPanel.createParallelGroup(
+				Alignment.LEADING).addComponent(desktopPane,
+				Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 902,
+				Short.MAX_VALUE));
+		gl_centerPanel.setVerticalGroup(gl_centerPanel.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				gl_centerPanel
+						.createSequentialGroup()
+						.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE,
+								447, Short.MAX_VALUE).addGap(0)));
 		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
 		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
@@ -376,7 +449,7 @@ public class InstructorNoa {
 		intercomButton.setIcon(new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa/right_panel/intercom.png")));
 		intercomButton.setIconTextGap(30);
-		monitorButton.putClientProperty("key", "intercom");
+		intercomButton.putClientProperty("key", "intercom");
 		intercomButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		intercomButton.setDrawShade(false);
 		intercomButton.setRound(10);
@@ -406,8 +479,9 @@ public class InstructorNoa {
 		rightButtonPanel.add(groupButton);
 
 		WebButton modelButton = new WebButton();
-		// groupButton.setIcon(new ImageIcon(InstructorNoa.class
-		// .getResource("/icons/noa/right_panel/group.png")));
+		modelButton.setHorizontalAlignment(SwingConstants.LEADING);
+		modelButton.setIcon(new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa/right_panel/group.png")));
 		modelButton.setIconTextGap(30);
 		modelButton.putClientProperty("key", "model");
 		modelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
