@@ -156,10 +156,13 @@ public class WhiteboardJoinASession extends JFrame {
             String hostname = whiteboardClient.getHostName();
 
             // Make reference to SSL-based registry
+//            Registry registry = LocateRegistry.getRegistry(
+//                hostname, WhiteboardClient.WHITEBOARD_PORT,
+//                new javax.rmi.ssl.SslRMIClientSocketFactory()
+//                );
             Registry registry = LocateRegistry.getRegistry(
-                hostname, WhiteboardClient.WHITEBOARD_PORT,
-                new javax.rmi.ssl.SslRMIClientSocketFactory()
-                );
+                    hostname, WhiteboardClient.WHITEBOARD_PORT
+                    );
 
             // the name of service in RMI server
             String serviceName = "RemoteWhiteboard" + sessionID;
