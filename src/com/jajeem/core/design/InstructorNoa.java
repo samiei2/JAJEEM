@@ -22,6 +22,10 @@ import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
+import com.alee.extended.layout.ToolbarLayout;
+import com.alee.extended.statusbar.WebMemoryBar;
+import com.alee.extended.statusbar.WebStatusBar;
+import com.alee.extended.statusbar.WebStatusLabel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
@@ -32,6 +36,9 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
 
 public class InstructorNoa {
 
@@ -100,7 +107,7 @@ public class InstructorNoa {
 		frame.setTitle("iCalabo");
 		frame.setShowResizeCorner(false);
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
-		frame.setBounds(200, 0, 1045, 718);
+		frame.setBounds(200, 0, 1021, 656);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		WebPanel centerPanel = new WebPanel();
@@ -140,7 +147,7 @@ public class InstructorNoa {
 		attendanceButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		attendanceButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		attendanceButton.setForeground(Color.WHITE);
-		attendanceButton.setText("Attendace Summary");
+		attendanceButton.setText("Attendance Summary");
 		attendanceButton.setBottomBgColor(new Color(235, 105, 11));
 		attendanceButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(attendanceButton);
@@ -197,116 +204,46 @@ public class InstructorNoa {
 		topPanel.setRound(2);
 		topPanel.setBackground(new Color(56, 107, 170));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																topPanel,
-																GroupLayout.DEFAULT_SIZE,
-																902,
-																Short.MAX_VALUE)
-														.addComponent(
-																topButtonPanel,
-																Alignment.TRAILING,
-																GroupLayout.DEFAULT_SIZE,
-																902,
-																Short.MAX_VALUE)
-														.addComponent(
-																centerPanel,
-																GroupLayout.DEFAULT_SIZE,
-																902,
-																Short.MAX_VALUE)
-														.addComponent(
-																bottomButtonPanel,
-																GroupLayout.PREFERRED_SIZE,
-																902,
-																Short.MAX_VALUE))
-										.addGap(6)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																rightButtonPanel,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				bottomLogoPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				152,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(49)))));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				topPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				129,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				topButtonPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				37,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				centerPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				435,
-																				Short.MAX_VALUE))
-														.addComponent(
-																rightButtonPanel,
-																GroupLayout.DEFAULT_SIZE,
-																613,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED,
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																bottomButtonPanel,
-																GroupLayout.PREFERRED_SIZE,
-																51,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																bottomLogoPanel,
-																GroupLayout.PREFERRED_SIZE,
-																45,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(0)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(bottomButtonPanel, 0, 0, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(centerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+								.addComponent(topButtonPanel, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 741, Short.MAX_VALUE)
+									.addGap(12)))
+							.addGap(6)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bottomLogoPanel, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
+						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bottomLogoPanel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 		GroupLayout gl_topPanel = new GroupLayout(topPanel);
 		gl_topPanel.setHorizontalGroup(gl_topPanel.createParallelGroup(
 				Alignment.LEADING).addGap(0, 860, Short.MAX_VALUE));
@@ -319,16 +256,16 @@ public class InstructorNoa {
 
 		desktopPane.setBackground(new Color(237, 246, 253));
 		GroupLayout gl_centerPanel = new GroupLayout(centerPanel);
-		gl_centerPanel.setHorizontalGroup(gl_centerPanel.createParallelGroup(
-				Alignment.LEADING).addComponent(desktopPane,
-				Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 902,
-				Short.MAX_VALUE));
-		gl_centerPanel.setVerticalGroup(gl_centerPanel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_centerPanel
-						.createSequentialGroup()
-						.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE,
-								447, Short.MAX_VALUE).addGap(0)));
+		gl_centerPanel.setHorizontalGroup(
+			gl_centerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_centerPanel.createSequentialGroup()
+					.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+					.addGap(2))
+		);
+		gl_centerPanel.setVerticalGroup(
+			gl_centerPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+		);
 		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
 		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
@@ -524,7 +461,7 @@ public class InstructorNoa {
 		speechButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		speechButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		speechButton.setForeground(Color.WHITE);
-		speechButton.setText("Speech Recongnition");
+		speechButton.setText("Speech Recognition");
 		speechButton.setBottomBgColor(new Color(225, 234, 244));
 		speechButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(speechButton);
