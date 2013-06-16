@@ -51,8 +51,6 @@ import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.recorder.design.Recorder;
-import com.jajeem.recorder.design.SimpleSoundCapture;
-import com.jajeem.recorder.design.SimpleSoundCapture.Capture;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.videoplayer.design.VideoPlayer;
