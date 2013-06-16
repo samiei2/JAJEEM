@@ -30,7 +30,12 @@ import java.awt.Dimension;
 import java.awt.Window.Type;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Date;
 
 public class Recorder extends WebDialog {
 	
@@ -70,7 +75,7 @@ public class Recorder extends WebDialog {
 		setRound(0);
 		
 		setResizable(false);
-		setBounds(100,100,260,110);
+		setBounds(100,100,349,110);
 		getContentPane().setLayout(null);
 		
 		wbtnPlay = new WebButton();
@@ -111,6 +116,37 @@ public class Recorder extends WebDialog {
 		getContentPane().add(wbtnRecord);
 		setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
 		SwingUtils.equalizeComponentsWidths(wbtnPlay,wbtnRecord);
+		
+		WebButton wbtnSave = new WebButton();
+		wbtnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FileOutputStream fileout = null;
+				try {
+					fileout = new FileOutputStream("record-"+System.currentTimeMillis()+".mp3");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				OutputStreamWriter writer = new OutputStreamWriter(fileout);
+				
+				int b;
+				
+				try {
+					while((b = audioInputStream.read())!=-1){
+						writer.write(b);
+					}
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		wbtnSave.setText("Save");
+		wbtnSave.setBounds(216, 11, 93, 29);
+		getContentPane().add(wbtnSave);
 //		pack();
 		//setVisible(true);
 	}
