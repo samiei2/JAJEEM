@@ -2,8 +2,14 @@ package com.jajeem.survey.design;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -15,6 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.combobox.WebComboBox;
@@ -23,32 +30,25 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
-import com.jajeem.quiz.model.Quiz;
-import com.jajeem.quiz.service.QuizService;
-
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.jajeem.survey.model.Survey;
+import com.jajeem.survey.service.SurveyService;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class OpenDialog extends JDialog {
+public class SurveyOpenDialog extends JDialog {
 
 	private WebComboBox wbCmbBxOption;
 	private WebComboBox wbCmbBxSelection;
 	private WebTable wbTblQuestion;
-	private WebTable wbTblQuiz;
-	private ArrayList<Quiz> quizList = new ArrayList<>();
+	private WebTable wbTblSurvey;
+	private ArrayList<Survey> surveyList = new ArrayList<>();
 	private SurveyMain parentFrame;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			OpenDialog dialog = new OpenDialog(null);
+			SurveyOpenDialog dialog = new SurveyOpenDialog(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -61,21 +61,24 @@ public class OpenDialog extends JDialog {
 	 * @param actionListener 
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public OpenDialog(SurveyMain frame) {
+	public SurveyOpenDialog(SurveyMain frame) {
+		setTitle("Open");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyOpenDialog.class.getResource("/com/jajeem/images/survey.png")));
 		parentFrame = frame;
+		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				QuizService qs = new QuizService();
-				DefaultTableModel model = (DefaultTableModel) wbTblQuiz.getModel();
+				SurveyService qs = new SurveyService();
+				DefaultTableModel model = (DefaultTableModel) wbTblSurvey.getModel();
 				try {
-					ArrayList<Quiz> list = qs.list();
+					ArrayList<Survey> list = qs.list();
 					if(list != null){
-						//quizList.addAll(list);
+						//surveyList.addAll(list);
 						for (int i = 0; i < list.size(); i++) {
-							Quiz z = list.get(i);
-							quizList.add(z);
-							if(wbTblQuiz.getRowCount() == 0){
+							Survey z = list.get(i);
+							surveyList.add(z);
+							if(wbTblSurvey.getRowCount() == 0){
 								model.addRow(new Object[]{
 										1,
 										z.getTitle()
@@ -83,14 +86,14 @@ public class OpenDialog extends JDialog {
 							}
 							else{
 								model.addRow(new Object[]{
-										Integer.parseInt(String.valueOf(model.getValueAt(wbTblQuiz.getRowCount()-1, 0)))+1,
+										Integer.parseInt(String.valueOf(model.getValueAt(wbTblSurvey.getRowCount()-1, 0)))+1,
 										z.getTitle()
 								});
 							}
 						}
 					}
-					if(wbTblQuiz.getRowCount() != 0)
-						wbTblQuiz.getSelectionModel().setSelectionInterval(0, 0);
+					if(wbTblSurvey.getRowCount() != 0)
+						wbTblSurvey.getSelectionModel().setSelectionInterval(0, 0);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -108,8 +111,9 @@ public class OpenDialog extends JDialog {
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//parentFrame.setCurrentSurvey(quizList.get(wbTblQuiz.getSelectedRow()));
+				parentFrame.setCurrentSurvey(surveyList.get(wbTblSurvey.getSelectedRow()));
 				parentFrame.loadCurrentSurvey();
+				dispose();
 			}
 		});
 		wbtnOpen.setText("Open");
@@ -153,6 +157,7 @@ public class OpenDialog extends JDialog {
 		wblblSearch.setText("Search");
 		
 		WebTextField webTextField = new WebTextField();
+		webTextField.setEnabled(false);
 		webTextField.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
@@ -177,6 +182,7 @@ public class OpenDialog extends JDialog {
 		wblblCategory.setText("Select");
 		
 		wbCmbBxSelection = new WebComboBox();
+		wbCmbBxSelection.setEnabled(false);
 		wbCmbBxSelection.setModel(new DefaultComboBoxModel(new String[] {"Category", "Question Type", "Instructor"}));
 		wbCmbBxSelection.addItemListener(new ItemListener() {
 			
@@ -203,6 +209,7 @@ public class OpenDialog extends JDialog {
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		
 		wbCmbBxOption = new WebComboBox();
+		wbCmbBxOption.setEnabled(false);
 		wbCmbBxOption.setVisible(false);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(
@@ -256,45 +263,46 @@ public class OpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Title"
+				"#", "Title"
 			}
 		));
+		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(33);
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
-		wbTblQuiz = new WebTable();
-		wbTblQuiz.setEditable(false);
-		wbTblQuiz.setModel(new DefaultTableModel(
+		wbTblSurvey = new WebTable();
+		wbTblSurvey.setEditable(false);
+		wbTblSurvey.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"#", "Name"
 			}
 		));
-		wbTblQuiz.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		wbTblSurvey.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				Quiz quiz = quizList.get(wbTblQuiz.getSelectedRow());
+				Survey survey = surveyList.get(wbTblSurvey.getSelectedRow());
 				DefaultTableModel model = (DefaultTableModel) wbTblQuestion.getModel();
-				for (int i = 0; i < wbTblQuestion.getRowCount(); i++) {
-					model.removeRow(i);
-				}
-				for (int i = 0; i < quiz.getQuestionList().size(); i++) {
+				model.getDataVector().removeAllElements();
+				model.fireTableDataChanged();
+				for (int i = 0; i < survey.getQuestionList().size(); i++) {
 					model.addRow(new Object[]{
-							quiz.getQuestionList().get(i).getTitle()
+							wbTblQuestion.getRowCount() == 0 ? 1 : Integer.parseInt(String.valueOf(model.getValueAt(wbTblQuestion.getRowCount()-1, 0)))+1,
+							survey.getQuestionList().get(i).getTitle()
 					});
 				}
 				wbTblQuestion.getSelectionModel().setSelectionInterval(0, 0);
 			}
 		});
 		
-		webScrollPane.setViewportView(wbTblQuiz);
+		webScrollPane.setViewportView(wbTblSurvey);
 		webPanel_1.setLayout(gl_webPanel_1);
 		webPanel.setLayout(gl_webPanel);
 		setVisible(true);
 	}
 	
-	public Quiz getValue() {
+	public Survey getValue() {
 		// TODO Auto-generated method stub
 		return null;
 	}

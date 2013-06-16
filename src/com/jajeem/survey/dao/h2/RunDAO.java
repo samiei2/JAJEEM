@@ -36,8 +36,8 @@ public class RunDAO implements IRunDAO {
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
 		ps.setInt(3, run.getSurveyId());
-		ps.setInt(4, run.getStart());
-		ps.setInt(5, run.getEnd());
+		ps.setLong(4, run.getStart());
+		ps.setLong(5, run.getEnd());
 
 		try {
 			rs = ps.executeUpdate();
@@ -147,8 +147,8 @@ public class RunDAO implements IRunDAO {
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
 		ps.setInt(3, run.getSurveyId());
-		ps.setInt(4, run.getStart());
-		ps.setInt(5, run.getEnd());
+		ps.setLong(4, run.getStart());
+		ps.setLong(5, run.getEnd());
 		ps.setInt(6, run.getId());
 
 		try {

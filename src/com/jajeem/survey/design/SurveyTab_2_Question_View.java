@@ -9,9 +9,12 @@ import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
@@ -33,7 +36,7 @@ import com.jajeem.survey.model.Survey;
 import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_21 extends WebPanel {
+public class SurveyTab_2_Question_View extends WebPanel {
 
 	private Question currentQuestion;
 	private WebTextField webTextField;
@@ -41,28 +44,26 @@ public class Panel_Bottom_21 extends WebPanel {
 	private WebTable webTable;
 	private WebComboBox webComboBox;
 	private WebTextField webTextField_1;
-	private WebTextField webTextField_2;
 	private Timer timer; // Updates the count every second
 	private long remaining; // How many milliseconds remain in the countdown.
 	private long lastUpdate; // When count was last updated
 	private int total;
-	private Panel_Bottom_2 parentPanel;
+	private SurveyTab_2 parentPanel;
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
 	private Survey currentSurvey;
 	
 	/**
 	 * Create the panel.
 	 */
-	public Panel_Bottom_21(Panel_Bottom_2 Panel_Bottom_2) {
+	public SurveyTab_2_Question_View(SurveyTab_2 Panel_Bottom_2) {
 		this.parentPanel = Panel_Bottom_2;
-		surveyResponse = parentPanel.getSurveyResponse();
-		currentSurvey = parentPanel.getCurrentSurvey();
 		
 		webComboBox = new WebComboBox();
 		webComboBox.addItemListener(new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
+				if(currentSurvey != null){
 				currentQuestion = currentSurvey.getQuestionList().get(webComboBox.getSelectedIndex());
 				webTextArea.setText(currentQuestion.getTitle());
 				if(currentQuestion.getType() == 0){
@@ -80,46 +81,55 @@ public class Panel_Bottom_21 extends WebPanel {
 					model.removeRow(i);
 				}
 				
-				
-				for (int i = 0; i < surveyResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
-					SurveyResponse ex = surveyResponse.get(webComboBox.getSelectedIndex()).get(i);
-					Student student = ex.getStudent();
-					Question question = ex.getQuestion();
-					
-					String StudentOption = "None Selected";
-					if(question.getType() == 0){ // setting student's answer
-						if(question.getStudentAnswer()[0])
-							StudentOption = "First Option";
-						if(question.getStudentAnswer()[1])
-							StudentOption = "Second Option";
-						if(question.getStudentAnswer()[2])
-							StudentOption = "Third Option";
-						if(question.getStudentAnswer()[3])
-							StudentOption = "Fourth Option";
-						if(question.getStudentAnswer()[4])
-							StudentOption = "Fifth Option";
+				if(webComboBox.getSelectedIndex() != -1 && surveyResponse.size() != 0){
+					for (int i = 0; i < surveyResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
+						SurveyResponse ex = surveyResponse.get(webComboBox.getSelectedIndex()).get(i);
+						Student student = ex.getStudent();
+						Question question = ex.getQuestion();
+						
+						String StudentOption = "";
+						String QuestionOption = "";
+						if(question.getType() == 0){ // setting student's answer
+							if(question.getStudentAnswer()[0])
+								StudentOption = "First Option";
+							if(question.getStudentAnswer()[1])
+								StudentOption = "Second Option";
+							if(question.getStudentAnswer()[2])
+								StudentOption = "Third Option";
+							if(question.getStudentAnswer()[3])
+								StudentOption = "Fourth Option";
+							if(question.getStudentAnswer()[4])
+								StudentOption = "Fifth Option";
+							if(StudentOption == "")
+								StudentOption = "None Selected";
+						}
+						else if(question.getType() == 1){
+							if(question.getStudentAnswer()[0])
+								StudentOption += "First Option,";
+							if(question.getStudentAnswer()[1])
+								StudentOption += "Second Option,";
+							if(question.getStudentAnswer()[2])
+								StudentOption += "Third Option,";
+							if(question.getStudentAnswer()[3])
+								StudentOption += "Fourth Option,";
+							if(question.getStudentAnswer()[4])
+								StudentOption += "Fifth Option";
+							if(StudentOption == "")
+								StudentOption = "None Selected";
+						}
+						else
+							StudentOption = question.getStudentTextAnswer();
+						
+						
+						
+						model.addRow(new Object[]{
+								student.getId(),
+								student.getFullName(),
+								QuestionOption,
+								StudentOption
+						});
 					}
-					else if(question.getType() == 1){
-						if(question.getStudentAnswer()[0])
-							StudentOption += "First Option,";
-						if(question.getStudentAnswer()[1])
-							StudentOption += "Second Option,";
-						if(question.getStudentAnswer()[2])
-							StudentOption += "Third Option,";
-						if(question.getStudentAnswer()[3])
-							StudentOption += "Fourth Option,";
-						if(question.getStudentAnswer()[4])
-							StudentOption += "Fifth Option";
-					}
-					else
-						StudentOption = question.getStudentTextAnswer();
-					
-					
-					model.addRow(new Object[]{
-							student.getId(),
-							student.getFirstName() + " " + student.getLastName(),
-							StudentOption
-					});
+				}
 				}
 			}
 		});
@@ -159,7 +169,7 @@ public class Panel_Bottom_21 extends WebPanel {
 								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
 								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
 								.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
 							.addGap(138)
@@ -179,14 +189,12 @@ public class Panel_Bottom_21 extends WebPanel {
 								.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+								.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
 								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addGap(100))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-							.addGap(194)))
+							.addGap(194))
+						.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -202,7 +210,7 @@ public class Panel_Bottom_21 extends WebPanel {
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(939, Short.MAX_VALUE))
+					.addGap(0))
 				.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
 		);
 		gl_webPanel_1.setVerticalGroup(
@@ -220,12 +228,12 @@ public class Panel_Bottom_21 extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-					"Number", "Student Name", "Answer"
+				"Number", "Student Name", "Correct Answer", "Answer"
 			}
 		));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-		webTable.getColumnModel().getColumn(1).setPreferredWidth(91);
-		webTable.getColumnModel().getColumn(2).setPreferredWidth(101);
+		webTable.getColumnModel().getColumn(2).setPreferredWidth(91);
+		webTable.getColumnModel().getColumn(3).setPreferredWidth(101);
 		webScrollPane_1.setViewportView(webTable);
 		webPanel_1.setLayout(gl_webPanel_1);
 		
@@ -238,13 +246,6 @@ public class Panel_Bottom_21 extends WebPanel {
 		webTextField_1 = new WebTextField();
 		webTextField_1.setEditable(false);
 		webTextField_1.setEnabled(false);
-		
-		WebLabel wblblTime = new WebLabel();
-		wblblTime.setText("Time Left");
-		
-		webTextField_2 = new WebTextField();
-		webTextField_2.setEditable(false);
-		webTextField_2.setEnabled(false);
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -253,13 +254,9 @@ public class Panel_Bottom_21 extends WebPanel {
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(wblblSurveyInfo, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_webPanel.createSequentialGroup()
-							.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(wblblTime, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(wblblDirection, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+							.addComponent(wblblDirection, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(webTextField_2, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webTextField_1, GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))))
+							.addComponent(webTextField_1, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_webPanel.setVerticalGroup(
@@ -271,11 +268,7 @@ public class Panel_Bottom_21 extends WebPanel {
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(wblblDirection, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 						.addComponent(webTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(wblblTime, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webTextField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(83, Short.MAX_VALUE))
+					.addContainerGap(52, Short.MAX_VALUE))
 		);
 		webPanel.setLayout(gl_webPanel);
 		
@@ -292,47 +285,10 @@ public class Panel_Bottom_21 extends WebPanel {
 		if(currentSurvey != null){
 			webTextField_1.setText(currentSurvey.getTitle());
 			
-			/////Setting the timer
-			ActionListener taskPerformer = new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					updateDisplay();
-				}
-
-				private void updateDisplay() {
-					NumberFormat format = NumberFormat.getInstance();
-					  
-				    long now = System.currentTimeMillis(); // current time in ms
-				    long elapsed = now - lastUpdate; // ms elapsed since last update
-				    remaining -= elapsed; // adjust remaining time
-				    lastUpdate = now; // remember this update time
-			      // Convert remaining milliseconds to mm:ss format and display
-				    if (remaining < 0)
-				        remaining = 0;
-				    int minutes = (int) (remaining / 60000);
-				    int seconds = (int) ((remaining % 60000) / 1000);
-				    webTextField_2.setText(format.format(minutes) + ":" + format.format(seconds));
-
-				    // If we've completed the countdown beep and display new page
-				    if (remaining == 0) {
-				    // Stop updating now.
-				        timer.stop();
-						try {
-							new Config();
-							ServerService serv = new ServerService();
-							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-							serv.send(cmd);
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
-				    }
-				}
-			};
+			//webTextField_2.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 			
 			for (int i = 0; i < currentSurvey.getQuestionList().size(); i++) {
-				webComboBox.addItem("Question " + i);
+				webComboBox.addItem("Question " + (i+1));
 			}
 			
 			webComboBox.setSelectedIndex(0);
@@ -340,11 +296,11 @@ public class Panel_Bottom_21 extends WebPanel {
 		}
 	}
 
-	public Panel_Bottom_2 getParentPanel() {
+	public SurveyTab_2 getParentPanel() {
 		return parentPanel;
 	}
 
-	public void setParentPanel(Panel_Bottom_2 parentPanel) {
+	public void setParentPanel(SurveyTab_2 parentPanel) {
 		this.parentPanel = parentPanel;
 	}
 
@@ -376,7 +332,8 @@ public class Panel_Bottom_21 extends WebPanel {
 			
 			if(question.getId() == currentQuestion.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
-				String StudentOption = "None Selected";
+				String StudentOption = "";
+				String QuestionOption = "";
 				if(question.getType() == 0){ // setting student's answer
 					if(question.getStudentAnswer()[0])
 						StudentOption = "First Option";
@@ -388,6 +345,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						StudentOption = "Fourth Option";
 					if(question.getStudentAnswer()[4])
 						StudentOption = "Fifth Option";
+					if(StudentOption == "")
+						StudentOption = "None Selected";
 				}
 				else if(question.getType() == 1){
 					if(question.getStudentAnswer()[0])
@@ -400,6 +359,8 @@ public class Panel_Bottom_21 extends WebPanel {
 						StudentOption += "Fourth Option,";
 					if(question.getStudentAnswer()[4])
 						StudentOption += "Fifth Option";
+					if(StudentOption == "")
+						StudentOption = "None Selected";
 				}
 				else
 					StudentOption = question.getStudentTextAnswer();
@@ -412,7 +373,8 @@ public class Panel_Bottom_21 extends WebPanel {
 				for (int i = 0; i < surveyResponse.get(index).size(); i++) {
 					model.addRow(new Object[]{
 							student.getId(),
-							student.getFirstName() + " " + student.getLastName(),
+							student.getFullName(),
+							QuestionOption,
 							StudentOption
 					});
 				}
@@ -433,6 +395,25 @@ public class Panel_Bottom_21 extends WebPanel {
 				return Icon.class;
 			return super.getColumnClass(arg0);
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void clearSurvey() {
+		webTextArea.clear();
+		webTextField.clear();
+		webTextField_1.clear();
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		if(timer != null && timer.isRunning()){
+			timer.stop();
+		}
+		
+		currentSurvey = null;
+		currentQuestion = null;
+		webComboBox.removeAllItems();
+		
+		
 	}
 }
 

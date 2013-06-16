@@ -50,8 +50,12 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.QuizMain;
+import com.jajeem.recorder.design.Recorder;
+import com.jajeem.recorder.design.SimpleSoundCapture;
+import com.jajeem.recorder.design.SimpleSoundCapture.Capture;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
+import com.jajeem.videoplayer.design.VideoPlayer;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class InstructorNoaUtil {
@@ -62,12 +66,13 @@ public class InstructorNoaUtil {
 	/*
 	 * ***************** Right Panel Events **************************
 	 */
-
-	public void addEventsRightPanel(WebPanel rightButtonPanel) {
+	Component intl;
+	public void addEventsRightPanel(final WebPanel rightButtonPanel) {
 
 		String key = "";
-
+		
 		for (Component c : rightButtonPanel.getComponents()) {
+			intl = c;
 			if (c instanceof JButton) {
 
 				key = (String) ((JButton) c).getClientProperty("key");
@@ -246,12 +251,37 @@ public class InstructorNoaUtil {
 
 					break;
 				case "record":
-
+					((JButton) c).addActionListener(new ActionListener() {
+						
+						@Override
+						//recorder action
+						public void actionPerformed(ActionEvent arg0) {
+							// Enabling dialog decoration
+							boolean decorateFrames = WebLookAndFeel
+									.isDecorateDialogs();
+							WebLookAndFeel.setDecorateDialogs(true);
+							
+							Recorder recorder = new Recorder();
+							recorder.setLocationRelativeTo(rightButtonPanel);
+							recorder.setVisible(true);
+							
+							// Restoring frame decoration option
+							WebLookAndFeel.setDecorateDialogs(decorateFrames);
+						}
+					});
+					
 					break;
 				case "speech":
 
 					break;
 				case "file":
+					((JButton) c).addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							VideoPlayer player= new VideoPlayer("", false);
+						}
+					});
 
 					break;
 				case "quiz":
@@ -304,9 +334,7 @@ public class InstructorNoaUtil {
 				}
 			}
 		}
-
 	}
-
 	/*
 	 * ***************** Bottom Panel Events **************************
 	 */

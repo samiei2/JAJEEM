@@ -3,6 +3,7 @@ package com.jajeem.survey.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.jajeem.quiz.dao.h2.QuizDAO;
 import com.jajeem.survey.dao.h2.QuestionDAO;
 import com.jajeem.survey.dao.h2.ResponseDAO;
 import com.jajeem.survey.dao.h2.RunDAO;
@@ -14,9 +15,12 @@ public class SurveyService implements ISurveyService{
 	private QuestionDAO questionDAO;
 	private RunDAO runDAO;
 	private ResponseDAO responseDAO;
+	
 	@Override
 	public Survey create(Survey survey) throws SQLException {
-		// TODO Auto-generated method stub
+		surveyDAO = new SurveyDAO();//TODO remove this line
+		if(surveyDAO != null)
+			return surveyDAO.create(survey);
 		return null;
 	}
 
@@ -40,7 +44,9 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public ArrayList<Survey> list() throws SQLException {
-		// TODO Auto-generated method stub
+		surveyDAO = new SurveyDAO();//TODO remove this line
+		if(surveyDAO != null)
+			return surveyDAO.list();
 		return null;
 	}
 

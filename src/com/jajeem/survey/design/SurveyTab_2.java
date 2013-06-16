@@ -6,45 +6,48 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import com.alee.laf.panel.WebPanel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.label.WebLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 import com.alee.laf.combobox.WebComboBox;
-import com.jajeem.core.model.Student;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
 import com.jajeem.events.SurveyEvent;
 import com.jajeem.events.SurveyEventListener;
+import com.jajeem.events.SurveyFinished;
+//import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
-import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
-import com.jajeem.survey.model.Survey;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.DefaultComboBoxModel;
+import com.jajeem.survey.model.Run;
 
 
 @SuppressWarnings("serial")
-public class Panel_Bottom_2 extends WebPanel {
+public class SurveyTab_2 extends WebPanel {
 
-	private Panel_Bottom_21 panel_bottom_21;
-	private Panel_Bottom_22 panel_bottom_22;
-	private ArrayList<ArrayList<SurveyResponse>> quizResponse;
+	private SurveyTab_2_Question_View panel_bottom_21;
+	private SurveyTab_2_Student_View panel_bottom_22;
+	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
+	private ArrayList<Run> runResults;
 	private SurveyEvent responseRecieved;
 	
 	private Survey currentSurvey;
 	/**
 	 * Create the panel.
 	 */
-	public Panel_Bottom_2() {
-		quizResponse = new ArrayList<>();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public SurveyTab_2() {
+		surveyResponse = new ArrayList<>();
+		runResults = new ArrayList<>();
 		
 		WebLabel wblblView = new WebLabel();
 		wblblView.setText("View");
 		
 		final WebPanel cards = new WebPanel(new CardLayout());
-		panel_bottom_21 = new Panel_Bottom_21(this);
-		panel_bottom_22 = new Panel_Bottom_22(this);
+		panel_bottom_21 = new SurveyTab_2_Question_View(this);
+		panel_bottom_22 = new SurveyTab_2_Student_View(this);
 		cards.add(panel_bottom_21,"Question");
 		cards.add(panel_bottom_22,"Student");
 		
@@ -90,9 +93,8 @@ public class Panel_Bottom_2 extends WebPanel {
 		responseRecieved = new SurveyEvent();
         responseRecieved.addEventListener(new SurveyEventListener() {
 			
-        	@Override
+			@Override
 			public void questionAnswered(SurveyResponse e) {
-						
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
 			}
@@ -101,6 +103,11 @@ public class Panel_Bottom_2 extends WebPanel {
 			public void surveyStoped(SurveyStop e) {
 				
 			}
+
+			@Override
+			public void surveyFinished(SurveyFinished e) {
+				runResults.add(e.getSurveyRun());
+			}
 		});
 
 	}
@@ -108,18 +115,25 @@ public class Panel_Bottom_2 extends WebPanel {
 	public void LoadSurvey(Survey currentSurvey) {
 		this.currentSurvey = currentSurvey;
 		for (int i = 0; i < currentSurvey.getQuestionList().size(); i++) {
-			quizResponse.add(new ArrayList<SurveyResponse>());
+			surveyResponse.add(new ArrayList<SurveyResponse>());
 		}
 		panel_bottom_21.LoadSurvey(currentSurvey);
 		panel_bottom_22.LoadSurvey(currentSurvey);
 	}
-
-	public ArrayList<ArrayList<SurveyResponse>> getSurveyResponse() {
-		return quizResponse;
+	
+	public void ClearSurvey(){
+		this.currentSurvey = null;
+		surveyResponse = new ArrayList<>();
+		panel_bottom_21.clearSurvey();
+		panel_bottom_22.clearSurvey();
 	}
 
-	public void setSurveyResponse(ArrayList<ArrayList<SurveyResponse>> quizResponse) {
-		this.quizResponse = quizResponse;
+	public ArrayList<ArrayList<SurveyResponse>> getSurveyResponse() {
+		return surveyResponse;
+	}
+
+	public void setSurveyResponse(ArrayList<ArrayList<SurveyResponse>> surveyResponse) {
+		this.surveyResponse = surveyResponse;
 	}
 
 	public Survey getCurrentSurvey() {
@@ -129,4 +143,14 @@ public class Panel_Bottom_2 extends WebPanel {
 	public void setCurrentSurvey(Survey currentSurvey) {
 		this.currentSurvey = currentSurvey;
 	}
+
+	public ArrayList<Run> getRunResults() {
+		return runResults;
+	}
+
+	public void setRunResults(ArrayList<Run> runResults) {
+		this.runResults = runResults;
+	}
+
+	
 }

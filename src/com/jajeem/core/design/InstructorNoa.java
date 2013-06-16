@@ -550,7 +550,7 @@ public class InstructorNoa {
 		WebLabel copyRightLabel = new WebLabel("Copy right 2013");
 		copyRightLabel.setForeground(Color.WHITE);
 		copyRightLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		copyRightLabel.setText("Copy right \u00A9 2013");
+		copyRightLabel.setText("Copy Right \u00A9 2013");
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		bottomLogoPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		bottomLogoPanel.add(bottomLogoLabel);
