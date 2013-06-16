@@ -72,7 +72,13 @@ public class InstructorNoaUtil {
 
 				key = (String) ((JButton) c).getClientProperty("key");
 
+				key = (String) ((JButton) c).getClientProperty("key");
+				if (key == null) {
+					return;
+				}
+
 				switch (key) {
+
 				case "monitor":
 					((JButton) c).addActionListener(new ActionListener() {
 
@@ -114,8 +120,8 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getSelectedFrame().getClientProperty(
-												"ip");
+										.getDesktopPane().getSelectedFrame()
+										.getClientProperty("ip");
 								try {
 									// "--remote-host=127.0.0.1 --remote-port-base=10000"
 
@@ -273,8 +279,8 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getSelectedFrame().getClientProperty(
-												"ip");
+										.getDesktopPane().getSelectedFrame()
+										.getClientProperty("ip");
 								try {
 									Chat currentChat = new Chat(
 											selectedStudent, Integer
@@ -338,7 +344,6 @@ public class InstructorNoaUtil {
 						button.addActionListener(new ActionListener() {
 
 							private PowerCommand powerCommand;
-							private String selectedStudent = "";
 
 							@Override
 							public void actionPerformed(ActionEvent arg0)
@@ -448,8 +453,8 @@ public class InstructorNoaUtil {
 									.getSelectedFrame() != null) {
 								String selectedStudent = "";
 								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getSelectedFrame().getClientProperty(
-												"ip");
+										.getDesktopPane().getSelectedFrame()
+										.getClientProperty("ip");
 								try {
 
 									InternetCommand ic = new InternetCommand(
@@ -693,7 +698,8 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame()
+									.getClientProperty("ip");
 							try {
 
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
@@ -719,7 +725,8 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame()
+									.getClientProperty("ip");
 							try {
 								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
 										InetAddress.getLocalHost()
@@ -748,7 +755,8 @@ public class InstructorNoaUtil {
 						if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) InstructorNoa
-									.getDesktopPane().getSelectedFrame().getClientProperty("ip");
+									.getDesktopPane().getSelectedFrame()
+									.getClientProperty("ip");
 							try {
 								WebsiteCommand wc = new WebsiteCommand(
 										InetAddress.getLocalHost()
