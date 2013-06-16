@@ -206,7 +206,7 @@ public class QuizMain extends WebFrame {
 					wbtnContent.setEnabled(false);
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
-					//wbtnSaveResults.setVisible(false);
+					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(QuizMain.class.getResource("/com/jajeem/images/start.png")));
 					wbtnStart.setEnabled(true);

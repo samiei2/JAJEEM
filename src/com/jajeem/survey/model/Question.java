@@ -6,18 +6,18 @@ import java.io.Serializable;
 public class Question implements Serializable{
 	
 	//properties
-	private int id;
-	private int instructorId;
-	private int surveyId;
-	private String title;
+	private int id = -1;
+	private int instructorId = -1;
+	private int surveyId = -1;
+	private String title = "";
 	private byte type;
-	private String imagePath;
-	private String url;
-	private String answer1;
-	private String answer2;
-	private String answer3;
-	private String answer4;
-	private String answer5;
+	private String imagePath = "";
+	private String url = "";
+	private String answer1 = ""; 
+	private String answer2 = "";
+	private String answer3 = "";
+	private String answer4 = "";
+	private String answer5 = "";
 	private Response response = new Response();
 	
 	//getter & setters

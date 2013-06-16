@@ -35,6 +35,7 @@ import com.jajeem.events.SurveyEvent;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
+import com.jajeem.survey.service.ResultService;
 import com.jajeem.survey.service.SurveyService;
 //import com.jajeem.survey.service.ResultService;
 import com.jajeem.room.model.Session;
@@ -206,7 +207,7 @@ public class SurveyMain extends WebFrame {
 					wbtnContent.setEnabled(false);
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
-					//wbtnSaveResults.setVisible(false);
+					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
 					wbtnStart.setEnabled(true);
@@ -333,7 +334,7 @@ public class SurveyMain extends WebFrame {
 						}
 					}
 					
-					//wbtnSaveResults.setVisible(true);
+					wbtnSaveResults.setVisible(true);
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					wbtnSaveResults.setVisible(true);
@@ -412,8 +413,8 @@ public class SurveyMain extends WebFrame {
 		wbtnSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<Run> results = panel_bottom_2.getRunResults();
-				//ResultService service = new ResultService();
-				//service.create(panel_bottom_2.getSurveyResponse(), results);
+				ResultService service = new ResultService();
+				service.create(panel_bottom_2.getSurveyResponse(), results);
 			}
 		});
 		wbtnSaveResults.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/document-save-as.png")));
@@ -421,7 +422,6 @@ public class SurveyMain extends WebFrame {
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setVisible(false);
 		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(

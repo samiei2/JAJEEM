@@ -57,7 +57,8 @@ public class SurveyTab_2_Question_View extends WebPanel {
 	 */
 	public SurveyTab_2_Question_View(SurveyTab_2 Panel_Bottom_2) {
 		this.parentPanel = Panel_Bottom_2;
-		
+		surveyResponse = parentPanel.getSurveyResponse();
+		currentSurvey = parentPanel.getCurrentSurvey();
 		webComboBox = new WebComboBox();
 		webComboBox.addItemListener(new ItemListener() {
 			
