@@ -1,32 +1,27 @@
 package com.jajeem.survey.design;
 
-import javax.swing.JPanel;
+import java.awt.Component;
 
-import com.alee.laf.panel.WebPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JOptionPane;
-
-import com.alee.laf.table.WebTable;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import com.alee.laf.scroll.WebScrollPane;
-import com.jajeem.quiz.model.Question;
 
-import java.awt.Component;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
 
 public class QuestionListPanel extends WebPanel {
 	private WebTable webTable;
-	private Panel_Bottom_1 parentPanel;
+	private SurveyTab_1 parentPanel;
 
 	/**
 	 * Create the panel.
 	 * @param panel_Bottom_1 
 	 */
 	@SuppressWarnings("serial")
-	public QuestionListPanel(Panel_Bottom_1 panel_Bottom_1) {
+	public QuestionListPanel(SurveyTab_1 panel_Bottom_1) {
 		this.parentPanel = panel_Bottom_1;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -46,7 +41,14 @@ public class QuestionListPanel extends WebPanel {
 			new String[] {
 				"#", "Type", "Content"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		webScrollPane.setViewportView(getWebTable());
 		setLayout(groupLayout);
 		

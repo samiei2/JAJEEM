@@ -2,15 +2,20 @@ package com.jajeem.survey.model;
 
 import java.io.Serializable;
 
+import com.jajeem.core.model.Instructor;
+import com.jajeem.core.model.Student;
+import com.jajeem.room.model.Session;
+
 public class Run implements Serializable{
 	
 	//properties
 	private int id; 
-	private int instructorId;
-	private int sessionId;
-	private int surveyId;
-	private int start;
-	private int end;
+	private Instructor instructor;
+	private Session session;
+	private Survey survey;
+	private Student student;
+	private long start;
+	private long end;
 	
 	//getter & setters
 	public int getId() {
@@ -20,33 +25,57 @@ public class Run implements Serializable{
 		this.id = id;
 	}
 	public int getInstructorId() {
-		return instructorId;
+		return instructor.getId();
 	}
 	public void setInstructorId(int instructorId) {
-		this.instructorId = instructorId;
+		this.instructor.setId(instructorId);
 	}
 	public int getSessionId() {
-		return sessionId;
+		return session.getId();
 	}
 	public void setSessionId(int sessionId) {
-		this.sessionId = sessionId;
+		this.session.setId(sessionId);
 	}
 	public int getSurveyId() {
-		return surveyId;
+		return survey.getId();
 	}
 	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
+		this.survey.setId(surveyId);
 	}
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
-	public void setStart(int start) {
+	public void setStart(long start) {
 		this.start = start;
 	}
-	public int getEnd() {
+	public long getEnd() {
 		return end;
 	}
-	public void setEnd(int end) {
+	public void setEnd(long end) {
 		this.end = end;
+	}
+	public Survey getSurvey(){
+		return this.survey;
+	}
+	public void setSurvey(Survey currentSurvey) {
+		this.survey = currentSurvey;
+	}
+	public Instructor getInstructor(){
+		return this.instructor;
+	}
+	public void setInstructor(Instructor currentInstructor) {
+		this.instructor = currentInstructor;
+	}
+	public Session getSession(){
+		return this.session;
+	}
+	public void setSession(Session currentSession) {
+		this.session = currentSession;
+	}
+	public Student getStudent(){
+		return this.student;
+	}
+	public void setStudent(Student privateStudent) {
+		this.student = privateStudent;
 	}
 }

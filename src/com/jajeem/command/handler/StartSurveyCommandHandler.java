@@ -9,7 +9,7 @@ public class StartSurveyCommandHandler implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StartSurveyCommand command = (StartSurveyCommand)cmd;
-		SurveyWindow quiz = new SurveyWindow(command.getSurvey());
+		SurveyWindow quiz = new SurveyWindow(command.getRun());
 		quiz.setServer(command.getServer());
 	}
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +23,11 @@ import com.jajeem.events.SurveyResponse;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 
-public class Panel_Bottom_22 extends WebPanel {
+public class SurveyTab_2_Student_View extends WebPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private WebTable webTable;
 	private WebComboBox webComboBox;
@@ -32,18 +35,17 @@ public class Panel_Bottom_22 extends WebPanel {
 	private Student currentStudent;
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
 	private Survey currentSurvey;
-	private Panel_Bottom_2 parentPanel;
-	
+	@SuppressWarnings("unused")
+	private SurveyTab_2 parentPanel;
+	@SuppressWarnings("unused")
 	private int id=1;
 
 	/**
 	 * Create the panel.
 	 * @param panel_Bottom_2 
 	 */
-	public Panel_Bottom_22(Panel_Bottom_2 panel_Bottom_2) {
+	public SurveyTab_2_Student_View(SurveyTab_2 panel_Bottom_2) {
 		this.parentPanel = panel_Bottom_2;
-		surveyResponse = parentPanel.getSurveyResponse();
-		currentSurvey = parentPanel.getCurrentSurvey();
 		
 		WebLabel wblblStudent = new WebLabel();
 		wblblStudent.setText("Student");
@@ -54,7 +56,8 @@ public class Panel_Bottom_22 extends WebPanel {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				currentStudent = new Student();
-				currentStudent.setId(Integer.parseInt(webComboBox.getSelectedItem().toString()));
+				if(webComboBox.getSelectedIndex() != -1)
+					currentStudent.setId(Integer.parseInt(webComboBox.getSelectedItem().toString()));
 				
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel();
 				model.getDataVector().removeAllElements();
@@ -66,7 +69,9 @@ public class Panel_Bottom_22 extends WebPanel {
 						Student student = ex.getStudent();
 						Question question = ex.getQuestion();
 						if(currentStudent.getId() == student.getId()){
+							
 							String StudentOption = "";
+							String QuestionOption = "";
 							if(question.getType() == 0){ // setting student's answer
 								if(question.getStudentAnswer()[0])
 									StudentOption = "First Option";
@@ -101,6 +106,7 @@ public class Panel_Bottom_22 extends WebPanel {
 							
 							model.addRow(new Object[]{
 									question.getTitle(),
+									QuestionOption,
 									StudentOption
 							});
 						}
@@ -139,8 +145,8 @@ public class Panel_Bottom_22 extends WebPanel {
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+					.addGap(14)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -149,7 +155,7 @@ public class Panel_Bottom_22 extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Question", "Student Answer"
+				"Question", "Correct Answer", "Student Answer"
 			}
 		));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -244,6 +250,7 @@ public class Panel_Bottom_22 extends WebPanel {
 						
 						if(student.getId() == temps.getId()){
 							String StudentOption = "";
+							String QuestionOption = "";
 							if(tempq.getType() == 0){ // setting student's answer
 								if(tempq.getStudentAnswer()[0])
 									StudentOption = "First Option";
@@ -275,10 +282,9 @@ public class Panel_Bottom_22 extends WebPanel {
 							else
 								StudentOption = tempq.getStudentTextAnswer();
 							
-							
 							model.addRow(new Object[]{
-									webTable.getRowCount() == 0 ? 1 : Integer.parseInt(String.valueOf(model.getValueAt(webTable.getRowCount()-1, 0)))+1,
 									tempq.getTitle(),
+									QuestionOption,
 									StudentOption
 							});
 						}
@@ -304,6 +310,15 @@ public class Panel_Bottom_22 extends WebPanel {
 
 	public void LoadSurvey(Survey currentSurvey2) {
 		currentSurvey = currentSurvey2;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void clearSurvey() {
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		webComboBox.removeAllItems();
+		currentStudent = null;
 	}
 }
 

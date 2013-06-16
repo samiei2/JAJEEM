@@ -36,4 +36,12 @@ public class SurveyEvent implements Serializable{
             }
         }
     }
+    public void fireSurveyFinished(SurveyFinished evt){
+    	Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i = i+2) {
+            if (listeners[i] == SurveyEventListener.class) {
+                ((SurveyEventListener) listeners[i+1]).surveyFinished(evt);
+            }
+        }
+    }
 }
