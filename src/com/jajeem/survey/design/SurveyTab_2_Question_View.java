@@ -124,8 +124,10 @@ public class SurveyTab_2_Question_View extends WebPanel {
 						
 						
 						model.addRow(new Object[]{
-								student.getId(),
-								student.getFullName(),
+//								student.getId(),
+								"No ID",
+//								student.getFullName(),
+								"No Name",
 								QuestionOption,
 								StudentOption
 						});

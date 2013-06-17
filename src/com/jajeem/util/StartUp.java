@@ -22,16 +22,17 @@ public class StartUp {
 		initDatabase.initialize();
 		Unzipper.unzip("util.zip");
 		
-		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
-				"util/windows/");
-		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
-				"util/windows-64/");
-//		Native.loadLibrary("jnawtrenderer.dll",null);
+//		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
+//				"util/windows/");
+//		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
+//				"util/windows-64/");
+//		Native.loadLibrary("jnawtrenderer",Empty.class);
+//		
+//		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+//		System.out.println("Library is : " + path + "util/windows/jnawtrenderer");
+//		
+////		System.loadLibrary("jnawtrenderer");
 		
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		System.out.println("Library is : " + path + "util/windows/jnawtrenderer");
-		
-		System.loadLibrary(path + "util/windows-64/jnawtrenderer");
 		
 //		
 //		try {

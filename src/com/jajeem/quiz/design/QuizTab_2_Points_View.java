@@ -97,7 +97,8 @@ public class QuizTab_2_Points_View extends WebPanel {
 				}
 			}
 			model.addRow(new Object[]{
-					student.getFirstName() + " " + student.getLastName(),
+//					student.getFirstName() + " " + student.getLastName(),
+					student.getId(),
 					score
 			});
 		}

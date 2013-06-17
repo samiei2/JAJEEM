@@ -52,7 +52,7 @@ public class SurveyTab_2 extends WebPanel {
 		cards.add(panel_bottom_22,"Student");
 		
 		final WebComboBox webComboBox = new WebComboBox();
-		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student"}));
+		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question"}));
 		webComboBox.addItemListener(new ItemListener() {
 			
 			@Override

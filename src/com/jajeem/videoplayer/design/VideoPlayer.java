@@ -81,11 +81,14 @@ import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.player.AudioOutput;
+import uk.co.caprica.vlcj.player.DefaultMediaPlayer;
 import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaMeta;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.DefaultEmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
@@ -273,7 +276,7 @@ public class VideoPlayer extends Vlcj {
         mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
         mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(videoSurface));
         mediaPlayer.setPlaySubItems(true);
-
+        DefaultDirectMediaPlayer player;
         mediaPlayer.setEnableKeyInputHandling(false);
         mediaPlayer.setEnableMouseInputHandling(false);
 
@@ -288,23 +291,22 @@ public class VideoPlayer extends Vlcj {
         mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
         mainFrame.setJMenuBar(buildMenuBar());
         mainFrame.pack();
-        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
                 Logger.debug("windowClosing(evt={})", evt);
 
                 if(videoSurface instanceof WindowsCanvas) {
-                    ((WindowsCanvas)videoSurface).release();
+                    //((WindowsCanvas)videoSurface).release();
                 }
 
                 if(mediaPlayer != null) {
-                    mediaPlayer.release();
+                    //mediaPlayer.release();
                     mediaPlayer = null;
                 }
 
                 if(mediaPlayerFactory != null) {
-                    mediaPlayerFactory.release();
+                    //mediaPlayerFactory.release();
                     mediaPlayerFactory = null;
                 }
             }
