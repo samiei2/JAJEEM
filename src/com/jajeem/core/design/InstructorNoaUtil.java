@@ -139,7 +139,7 @@ public class InstructorNoaUtil {
 										// sent stop
 										// command to him
 										InstructorNoa.getTransmitter().stop();
-										InstructorNoa.getReceiver().close();
+//										InstructorNoa.getReceiver().close();
 										InstructorNoa.getTransmitter()
 												.getRemoteAddr()
 												.getHostAddress();
@@ -167,15 +167,15 @@ public class InstructorNoaUtil {
 													.setRemoteAddr(
 															InetAddress
 																	.getByName(selectedStudent));
-											InstructorNoa
-													.getReceiver()
-													.setRemoteAddr(
-															InetAddress
-																	.getByName(selectedStudent));
+//											InstructorNoa
+//													.getReceiver()
+//													.setRemoteAddr(
+//															InetAddress
+//																	.getByName(selectedStudent));
 											InstructorNoa.getTransmitter()
 													.start();
-											InstructorNoa.getReceiver()
-													.initialize();
+//											InstructorNoa.getReceiver()
+//													.initialize();
 											//
 										}
 									} else {
@@ -197,14 +197,14 @@ public class InstructorNoaUtil {
 												.setRemoteAddr(
 														InetAddress
 																.getByName(selectedStudent));
-										InstructorNoa
-												.getReceiver()
-												.setRemoteAddr(
-														InetAddress
-																.getByName(selectedStudent));
+//										InstructorNoa
+//												.getReceiver()
+//												.setRemoteAddr(
+//														InetAddress
+//																.getByName(selectedStudent));
 										InstructorNoa.getTransmitter().start();
-										InstructorNoa.getReceiver()
-												.initialize();
+//										InstructorNoa.getReceiver()
+//												.initialize();
 									}
 
 								} catch (Exception e) {
@@ -221,7 +221,7 @@ public class InstructorNoaUtil {
 									// sent stop
 									// command to him
 									InstructorNoa.getTransmitter().stop();
-									InstructorNoa.getReceiver().close();
+//									InstructorNoa.getReceiver().close();
 									StopIntercomCommand si;
 									try {
 										si = new StopIntercomCommand(
