@@ -87,7 +87,7 @@ public class InstructorNoa {
 			// Start LibJitsi for first time
 			LibJitsi.start();
 			setTransmitter(new AVTransmit2("5000", "", "10000"));
-			setReceiver(new AVReceive2("10010", "", "5010"));
+//			setReceiver(new AVReceive2("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
