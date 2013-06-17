@@ -108,7 +108,7 @@ public class Recorder extends WebDialog {
 						@Override
 						public void run() {
 							try {
-								AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new FileOutputStream("c:\\mpas.mp3"));
+								AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new FileOutputStream("record-"+System.currentTimeMillis()+".wav"));
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
