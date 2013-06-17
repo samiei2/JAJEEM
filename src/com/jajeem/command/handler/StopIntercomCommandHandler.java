@@ -11,7 +11,7 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 
 		try {
 			
-			Student.getReceiver().close();
+//			Student.getReceiver().close();
 			Student.getTransmitter().stop();
 			
 		} catch (Exception e) {
