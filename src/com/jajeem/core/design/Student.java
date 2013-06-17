@@ -86,8 +86,8 @@ public class Student {
 			
 			// initiate Libjitsi for intercom
 			LibJitsi.start();
-			setTransmitter(new AVTransmit2("5010", "", "10010"));
-			setReceiver(new AVReceive2("10000", "", "5000"));
+			setTransmitter(new AVTransmit2("10000", "", "5000"));
+//			setReceiver(new AVReceive2("10000", "", "5000"));
 
 		} catch (Throwable e) {
 			// Something went wrong
@@ -214,7 +214,7 @@ public class Student {
 
 	public static AVTransmit2 getTransmitter() throws Exception {
 		if(transmitter== null){
-			transmitter = new AVTransmit2("5010", "", "10010");
+			transmitter = new AVTransmit2("10000", "", "5000");
 		}
 		return transmitter;
 	}
