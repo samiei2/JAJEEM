@@ -23,18 +23,19 @@ public class test {
     
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
-            H2Connection db = new H2Connection();
-            Connection con = db.getConnection();
-            
-    		String query = "";
-  		query += "drop table if exists Student;CREATE TABLE Student ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
-  				"lastName varchar(100),username varchar(100),password varchar(100),language varchar(100));";
+        	Unzipper.unzip("resources.zip");
+//            H2Connection db = new H2Connection();
+//            Connection con = db.getConnection();
+//            
+//    		String query = "";
+//  		query += "drop table if exists Student;CREATE TABLE Student ( id INT auto_increment, firstName varchar(100),middleName varchar(100)," +
+//  				"lastName varchar(100),username varchar(100),password varchar(100),language varchar(100));";
+////    		
 //    		
-    		
-    		try(Statement statement = con.createStatement()){
-    			statement.executeUpdate(query);
-//    			QuestionDAO qdao = new QuestionDAO();
-//            	com.jajeem.survey.model.Question q = new com.jajeem.survey.model.Question();
+//    		try(Statement statement = con.createStatement()){
+//    			statement.executeUpdate(query);
+////    			QuestionDAO qdao = new QuestionDAO();
+////            	com.jajeem.survey.model.Question q = new com.jajeem.survey.model.Question();
 //            	q.setId(1);
 //            	q.setAsnwer1("123");
 //            	q.setAsnwer3("13221");
@@ -46,7 +47,7 @@ public class test {
             	//qdao.delete(s2);
             	
 //            	ArrayList<com.jajeem.survey.model.Question> seats =  qdao.list();
-    		}
+//    		}
             //db.ExecuteUpdate("drop table if exists person");
             //db.ExecuteUpdate("create table person (id integer, name varchar(100))");
             //db.ExecuteUpdate("insert into person values(1, 'leo')");
