@@ -39,6 +39,7 @@ public class InstructorLogin extends JDialog {
 
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 9010296991450692526L;
 
