@@ -21,7 +21,7 @@ public class Commons {
     
     public static String defaultServerAddress = "127.0.0.1";
     public static final int defaultHttpPort = 6666;
-    public static final int defaultServerPort = 5099;
+    public static final int defaultServerPort = 1099;
     public static final String defaultUsername = "admin";
     public static final String defaultPassword = "admin";
     public static final boolean defaultSSL = false;
