@@ -32,6 +32,7 @@ import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
+
 //import org.apache.log4j.PropertyConfigurator;
 
 public class InstructorLogin extends JDialog {
@@ -116,8 +117,6 @@ public class InstructorLogin extends JDialog {
 			}
 		});
 
-		
-
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);
 	}
 
@@ -130,7 +129,8 @@ public class InstructorLogin extends JDialog {
 		public loginDialog(Window owner) throws SQLException {
 			super(owner, "Welcome to iCalabo");
 			setIconImage(Toolkit.getDefaultToolkit().getImage(
-					InstructorLogin.class.getResource("/icons/menubar/jajeem.jpg")));
+					InstructorLogin.class
+							.getResource("/icons/menubar/jajeem.jpg")));
 			try {
 				new Config();
 
@@ -235,7 +235,6 @@ public class InstructorLogin extends JDialog {
 					buttonPane.setLayout(gl_buttonPane);
 
 					ActionListener listener = new ActionListener() {
-						@SuppressWarnings("static-access")
 						public void actionPerformed(ActionEvent e) {
 							try {
 								boolean grant = false;
@@ -250,14 +249,13 @@ public class InstructorLogin extends JDialog {
 										.getPassword());
 								if (grant) {
 									setVisible(false);
-									InstructorNoa instructorNoa = new InstructorNoa();
-									instructorNoa
+									InstructorNoa
 											.main(new String[] {
 													(String) list1
 															.getSelectedValue(),
 													(String) list2
 															.getSelectedValue() });
-									
+
 								} else {
 									password.setBackground(Color
 											.decode("#FAD9D9"));

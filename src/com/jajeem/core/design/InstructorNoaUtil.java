@@ -33,6 +33,7 @@ import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.slider.WebSlider;
 import com.alee.laf.text.WebTextField;
 import com.alee.laf.toolbar.WebToolBar;
 import com.alee.managers.hotkey.Hotkey;
@@ -45,6 +46,7 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StopIntercomCommand;
+import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
@@ -554,27 +556,73 @@ public class InstructorNoaUtil {
 				switch (key) {
 
 				case "volume":
-					
+					final WebSlider slider1 = new WebSlider(WebSlider.HORIZONTAL);
+					button.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							slider1.setMinimum(0);
+							slider1.setMaximum(100);
+							slider1.setMinorTickSpacing(10);
+							slider1.setMajorTickSpacing(50);
+							slider1.setPaintTicks(false);
+							slider1.setPaintLabels(false);
+
+							popup.setPopupStyle(PopupStyle.lightSmall);
+							popup.setMargin(0);
+							popup.add(slider1);
+							popup.setRound(0);
+
+							if (popup.isShowing()) {
+								popup.hidePopup();
+								if (InstructorNoa.getDesktopPane()
+										.getSelectedFrame() != null) {
+									String selectedStudent = "";
+									selectedStudent = (String) InstructorNoa
+											.getDesktopPane().getSelectedFrame()
+											.getClientProperty("ip");
+									int vol = slider1.getValue();
+									try {
+										VolumeCommand vc = new VolumeCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(),
+												selectedStudent,
+												Integer.parseInt(Config
+														.getParam("port")),
+												"set", vol * 650);
+										InstructorNoa.getServerService().send(vc);
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+
+								}
+							} else {
+								popup.showPopup(button);
+							}
+
+						}
+
+					});
 					break;
 				case "attendance":
-					
+
 					break;
 				case "callAll":
-					
+
 					break;
 				case "viewMode":
 					button.addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent e) {
-								CardLayout cl = (CardLayout)InstructorNoa.getCenterPanel().getLayout();
-							    cl.next(InstructorNoa.getCenterPanel());
+							CardLayout cl = (CardLayout) InstructorNoa
+									.getCenterPanel().getLayout();
+							cl.next(InstructorNoa.getCenterPanel());
 						}
 					});
-					
+
 					break;
 				case "language":
-					
+
 					break;
 				}
 			}
@@ -704,11 +752,11 @@ public class InstructorNoaUtil {
 				checkBox.setSelected(true);
 			}
 		});
-		
+
 		// Add new student to student's table (List View)
-		DefaultTableModel model = (DefaultTableModel) InstructorNoa.getStudentListTable().getModel();
-		model.addRow(new Object[]{hostIp, hostName});
-		
+		DefaultTableModel model = (DefaultTableModel) InstructorNoa
+				.getStudentListTable().getModel();
+		model.addRow(new Object[] { hostIp, hostName });
 
 		return internalFrame;
 	}
