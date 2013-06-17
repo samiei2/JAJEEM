@@ -26,23 +26,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
+
+import uk.co.caprica.vlcj.player.AudioOutput;
+
 import java.awt.Dimension;
 import java.awt.Window.Type;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Date;
 
 public class Recorder extends WebDialog {
-	
+
 	private WebButton wbtnPlay;
 	private WebButton wbtnRecord;
-	
+
 	private static boolean isRecording = false;
-	
+
 	private AudioInputStream audioInputStream;
-	
+
 	Capture capt = new Capture();
-	
+
 	Playback play = new Playback();
 
 	/**
@@ -65,23 +73,22 @@ public class Recorder extends WebDialog {
 	 * Create the frame.
 	 */
 	public Recorder() {
-		//setAlwaysOnTop(true);
+		// setAlwaysOnTop(true);
 		setModal(true);
 		setRound(0);
-		
+
 		setResizable(false);
-		setBounds(100,100,260,110);
+		setBounds(100, 100, 349, 110);
 		getContentPane().setLayout(null);
-		
+
 		wbtnPlay = new WebButton();
 		wbtnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(wbtnPlay.getText().equals("Stop")){
+
+				if (wbtnPlay.getText().equals("Stop")) {
 					play.stop();
 					wbtnPlay.setText("Play");
-				}
-				else{
+				} else {
 					play.start();
 					wbtnPlay.setText("Stop");
 				}
@@ -90,16 +97,15 @@ public class Recorder extends WebDialog {
 		wbtnPlay.setText("Play");
 		wbtnPlay.setBounds(10, 11, 93, 29);
 		getContentPane().add(wbtnPlay);
-		
+
 		wbtnRecord = new WebButton();
 		wbtnRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(wbtnRecord.getText().equals("Record")){
+				if (wbtnRecord.getText().equals("Record")) {
 					wbtnPlay.setEnabled(false);
 					capt.start();
 					wbtnRecord.setText("Stop");
-				}
-				else{
+				} else {
 					wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record");
 					capt.stop();
@@ -110,11 +116,21 @@ public class Recorder extends WebDialog {
 		wbtnRecord.setBounds(113, 11, 93, 29);
 		getContentPane().add(wbtnRecord);
 		setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-		SwingUtils.equalizeComponentsWidths(wbtnPlay,wbtnRecord);
-//		pack();
-		//setVisible(true);
+		SwingUtils.equalizeComponentsWidths(wbtnPlay, wbtnRecord);
+
+		WebButton wbtnSave = new WebButton();
+		wbtnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				org.z
+			}
+		});
+		wbtnSave.setText("Save");
+		wbtnSave.setBounds(216, 11, 93, 29);
+		getContentPane().add(wbtnSave);
+		// pack();
+		// setVisible(true);
 	}
-	
+
 	public class Capture implements Runnable {
 
 		TargetDataLine line;
@@ -221,8 +237,8 @@ public class Recorder extends WebDialog {
 
 			byte audioBytes[] = out.toByteArray();
 			ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
-			audioInputStream = new AudioInputStream(bais, format, audioBytes.length
-					/ frameSizeInBytes);
+			audioInputStream = new AudioInputStream(bais, format,
+					audioBytes.length / frameSizeInBytes);
 
 			long milliseconds = (long) ((audioInputStream.getFrameLength() * 1000) / format
 					.getFrameRate());
@@ -292,12 +308,12 @@ public class Recorder extends WebDialog {
 			AudioFormat format = new AudioFormat(encoding, rate, sampleSize,
 					channels, (sampleSize / 8) * channels, rate, bigEndian);
 
-			AudioInputStream playbackInputStream = AudioSystem.getAudioInputStream(
-					format, audioInputStream);
+			AudioInputStream playbackInputStream = AudioSystem
+					.getAudioInputStream(format, audioInputStream);
 
 			if (playbackInputStream == null) {
-				shutDown("Unable to convert stream of format " + audioInputStream
-						+ " to format " + format);
+				shutDown("Unable to convert stream of format "
+						+ audioInputStream + " to format " + format);
 				return;
 			}
 
@@ -338,7 +354,8 @@ public class Recorder extends WebDialog {
 					}
 					int numBytesRemaining = numBytesRead;
 					while (numBytesRemaining > 0) {
-						numBytesRemaining -= line.write(data, 0, numBytesRemaining);
+						numBytesRemaining -= line.write(data, 0,
+								numBytesRemaining);
 					}
 				} catch (Exception e) {
 					shutDown("Error during playback: " + e);
@@ -357,6 +374,5 @@ public class Recorder extends WebDialog {
 			shutDown(null);
 		}
 
-		
 	} // End class Playback
 }
