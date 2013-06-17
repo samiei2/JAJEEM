@@ -129,7 +129,7 @@ public class Logger
      */
     public void trace(Object msg, Throwable t)
     {
-        loggerDelegate.log(Level.FINER, msg!=null?msg.toString():"null", t);
+        loggerDelegate.log(Level.FINE, msg!=null?msg.toString():"null", t);
     }
 
     /**
@@ -190,7 +190,7 @@ public class Logger
      */
     public void info(Object msg)
     {
-        loggerDelegate.info(msg!=null?msg.toString():"null");
+//        loggerDelegate.info(msg!=null?msg.toString():"null");
     }
 
     /**
@@ -201,7 +201,7 @@ public class Logger
      */
     public void info(Object msg, Throwable t)
     {
-        loggerDelegate.log(Level.INFO, msg!=null?msg.toString():"null", t);
+//        loggerDelegate.log(Level.INFO, msg!=null?msg.toString():"null", t);
     }
 
     /**
