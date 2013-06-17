@@ -22,10 +22,6 @@ import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
-import com.alee.extended.layout.ToolbarLayout;
-import com.alee.extended.statusbar.WebMemoryBar;
-import com.alee.extended.statusbar.WebStatusBar;
-import com.alee.extended.statusbar.WebStatusLabel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
@@ -36,9 +32,6 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
 
 public class InstructorNoa {
 

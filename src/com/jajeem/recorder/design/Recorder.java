@@ -4,6 +4,7 @@ import info.clearthought.layout.TableLayout;
 
 import java.awt.EventQueue;
 
+import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -11,6 +12,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.spi.AudioFileWriter;
 import javax.swing.JFrame;
 
 import com.alee.laf.panel.WebPanel;
@@ -19,6 +21,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.button.WebButton;
 import com.alee.utils.SwingUtils;
+import com.jajeem.util.Audio;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -27,12 +31,15 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 
+import org.zoolu.sound.AudioOutputStream;
+
 import uk.co.caprica.vlcj.player.AudioOutput;
 
 import java.awt.Dimension;
 import java.awt.Window.Type;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -78,7 +85,7 @@ public class Recorder extends WebDialog {
 		setRound(0);
 
 		setResizable(false);
-		setBounds(100, 100, 349, 110);
+		setBounds(100, 100, 372, 110);
 		getContentPane().setLayout(null);
 
 		wbtnPlay = new WebButton();
@@ -121,7 +128,24 @@ public class Recorder extends WebDialog {
 		WebButton wbtnSave = new WebButton();
 		wbtnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				org.z
+				try {
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							try {
+								AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new FileOutputStream("c:\\mpas.mp3"));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}).start();
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		wbtnSave.setText("Save");
