@@ -1,6 +1,7 @@
 package com.jajeem.core.design;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -22,28 +23,32 @@ import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
-import com.alee.extended.layout.ToolbarLayout;
-import com.alee.extended.statusbar.WebMemoryBar;
-import com.alee.extended.statusbar.WebStatusBar;
-import com.alee.extended.statusbar.WebStatusLabel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.table.WebTable;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import java.awt.CardLayout;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.BorderLayout;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class InstructorNoa {
 
 	private WebFrame frame;
 	private static WebDesktopPane desktopPane;
+	private static WebPanel centerPanel;
+	private static WebTable studentListTable; 
 
 	private static AVTransmit2 transmitter;
 	private static AVReceive2 receiver;
@@ -111,7 +116,27 @@ public class InstructorNoa {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		WebPanel centerPanel = new WebPanel();
+		InstructorNoa.setCenterPanel(centerPanel);
+		WebPanel centerListPanel = new WebPanel();
+		centerPanel.add(centerListPanel);
 		centerPanel.setBackground(new Color(255, 255, 255));
+
+		DefaultTableModel model = new DefaultTableModel();  
+
+		model.addColumn("PC IP"); 
+		model.addColumn("Student name"); 
+
+		WebTable table = new WebTable(model);
+		setStudentListTable(table);
+		table.setBackground(new Color(237, 246, 253));
+		table.setEditable(false);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowSelectionAllowed(false);
+		table.setColumnSelectionAllowed(false);
+		table.setPreferredScrollableViewportSize(new Dimension(300, 100));
+		WebScrollPane scrollPanel = new WebScrollPane(table);
+		scrollPanel.setDrawBorder(false);
+		
 
 		WebPanel rightButtonPanel = new WebPanel();
 		rightButtonPanel.setBackground(new Color(56, 107, 170));
@@ -204,46 +229,131 @@ public class InstructorNoa {
 		topPanel.setRound(2);
 		topPanel.setBackground(new Color(56, 107, 170));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(bottomButtonPanel, 0, 0, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(centerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
-								.addComponent(topButtonPanel, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 741, Short.MAX_VALUE)
-									.addGap(12)))
-							.addGap(6)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottomLogoPanel, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottomLogoPanel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				bottomButtonPanel,
+																				0,
+																				0,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED))
+														.addGroup(
+																Alignment.TRAILING,
+																groupLayout
+																		.createSequentialGroup()
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.TRAILING)
+																						.addComponent(
+																								centerPanel,
+																								Alignment.LEADING,
+																								GroupLayout.DEFAULT_SIZE,
+																								753,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								topButtonPanel,
+																								Alignment.LEADING,
+																								0,
+																								0,
+																								Short.MAX_VALUE)
+																						.addGroup(
+																								Alignment.LEADING,
+																								groupLayout
+																										.createSequentialGroup()
+																										.addComponent(
+																												topPanel,
+																												GroupLayout.PREFERRED_SIZE,
+																												741,
+																												Short.MAX_VALUE)
+																										.addGap(12)))
+																		.addGap(6)))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING,
+																false)
+														.addComponent(
+																rightButtonPanel,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																bottomLogoPanel,
+																GroupLayout.DEFAULT_SIZE,
+																226,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				topPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				129,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				topButtonPanel,
+																				GroupLayout.PREFERRED_SIZE,
+																				37,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				centerPanel,
+																				GroupLayout.DEFAULT_SIZE,
+																				361,
+																				Short.MAX_VALUE))
+														.addComponent(
+																rightButtonPanel,
+																GroupLayout.DEFAULT_SIZE,
+																539,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																bottomButtonPanel,
+																GroupLayout.PREFERRED_SIZE,
+																51,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																bottomLogoPanel,
+																GroupLayout.PREFERRED_SIZE,
+																42,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap()));
 		GroupLayout gl_topPanel = new GroupLayout(topPanel);
 		gl_topPanel.setHorizontalGroup(gl_topPanel.createParallelGroup(
 				Alignment.LEADING).addGap(0, 860, Short.MAX_VALUE));
@@ -255,28 +365,24 @@ public class InstructorNoa {
 		setDesktopPane(desktopPane);
 
 		desktopPane.setBackground(new Color(237, 246, 253));
-		GroupLayout gl_centerPanel = new GroupLayout(centerPanel);
-		gl_centerPanel.setHorizontalGroup(
-			gl_centerPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_centerPanel.createSequentialGroup()
-					.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
-					.addGap(2))
-		);
-		gl_centerPanel.setVerticalGroup(
-			gl_centerPanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-		);
+		centerPanel.setBackground(new Color(237, 246, 253));
 		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
 		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		gl_desktopPane.setVerticalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		desktopPane.setLayout(gl_desktopPane);
-		centerPanel.setLayout(gl_centerPanel);
+		centerPanel.setLayout(new CardLayout(0, 0));
+		centerPanel.add(centerListPanel, "name_3466370417827");
+		centerListPanel.setLayout(new BorderLayout(0, 0));
+		centerListPanel.add(scrollPanel);
+		centerPanel.add(desktopPane, "name_3466416048915");
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
+		centerListPanel.setBackground(new Color(237, 246, 253));
+		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{desktopPane, centerListPanel}));
 
 		WebButton surveyButton = new WebButton();
 		surveyButton.setIconTextGap(30);
@@ -570,6 +676,7 @@ public class InstructorNoa {
 		InstructorNoaUtil instructorNoaUtil = new InstructorNoaUtil();
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
 		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel);
+		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
 	}
 
 	public static WebDesktopPane getDesktopPane() {
@@ -610,5 +717,21 @@ public class InstructorNoa {
 
 	public static void setServerService(ServerService serverService) {
 		InstructorNoa.serverService = serverService;
+	}
+
+	public static WebPanel getCenterPanel() {
+		return centerPanel;
+	}
+
+	public static void setCenterPanel(WebPanel centerPanel) {
+		InstructorNoa.centerPanel = centerPanel;
+	}
+
+	public static WebTable getStudentListTable() {
+		return studentListTable;
+	}
+
+	public static void setStudentListTable(WebTable studentListTable) {
+		InstructorNoa.studentListTable = studentListTable;
 	}
 }
