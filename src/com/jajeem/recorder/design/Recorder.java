@@ -1,8 +1,12 @@
 package com.jajeem.recorder.design;
 
-import info.clearthought.layout.TableLayout;
-
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
@@ -12,40 +16,10 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-import javax.sound.sampled.spi.AudioFileWriter;
-import javax.swing.JFrame;
 
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebDialog;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.rootpane.WebDialog;
 import com.alee.utils.SwingUtils;
-import com.jajeem.util.Audio;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-
-import org.zoolu.sound.AudioOutputStream;
-
-import uk.co.caprica.vlcj.player.AudioOutput;
-
-import java.awt.Dimension;
-import java.awt.Window.Type;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Date;
 
 public class Recorder extends WebDialog {
 
