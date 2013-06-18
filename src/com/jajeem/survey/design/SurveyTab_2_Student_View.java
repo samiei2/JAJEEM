@@ -106,7 +106,6 @@ public class SurveyTab_2_Student_View extends WebPanel {
 							
 							model.addRow(new Object[]{
 									question.getTitle(),
-									QuestionOption,
 									StudentOption
 							});
 						}
@@ -155,7 +154,7 @@ public class SurveyTab_2_Student_View extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Question", "Correct Answer", "Student Answer"
+				"Question", "Student Answer"
 			}
 		));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -284,7 +283,6 @@ public class SurveyTab_2_Student_View extends WebPanel {
 							
 							model.addRow(new Object[]{
 									tempq.getTitle(),
-									QuestionOption,
 									StudentOption
 							});
 						}
