@@ -40,6 +40,7 @@ import com.jajeem.survey.service.SurveyService;
 //import com.jajeem.survey.service.ResultService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
+import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
 
 public class SurveyMain extends WebFrame {
 
@@ -92,7 +93,7 @@ public class SurveyMain extends WebFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		frame = this;
-		
+
 		WebPanel webPanel = new WebPanel();
 		getContentPane().add(webPanel, BorderLayout.CENTER);
 		
@@ -422,6 +423,7 @@ public class SurveyMain extends WebFrame {
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSaveResults.setVisible(false);
 		
 		GroupLayout gl_panel_top = new GroupLayout(panel_top);
 		gl_panel_top.setHorizontalGroup(

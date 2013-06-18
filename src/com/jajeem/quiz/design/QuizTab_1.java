@@ -584,8 +584,8 @@ public class QuizTab_1 extends WebPanel {
 		questionListPanel = new QuestionListPanel(this);
 		setQuestionListPanel(questionListPanel);
 		
-		WebButton webButton_6 = new WebButton();
-		webButton_6.addActionListener(new ActionListener() {
+		WebButton wBtn_up = new WebButton();
+		wBtn_up.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = questionListPanel.getWebTable().getSelectedRow();
 				if(currentIndex == 0)
@@ -596,12 +596,13 @@ public class QuizTab_1 extends WebPanel {
 				Question temp = parentPanel.getCurrentQuiz().getQuestionList().get(currentIndex);
 				parentPanel.getCurrentQuiz().getQuestionList().remove(currentIndex);
 				parentPanel.getCurrentQuiz().getQuestionList().add(currentIndex - 1, temp);
+				getQuestionListPanel().getWebTable().getSelectionModel().setSelectionInterval(currentIndex - 1, currentIndex - 1);
 			}
 		});
-		webButton_6.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
+		wBtn_up.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
 		
-		WebButton webButton_5 = new WebButton();
-		webButton_5.addActionListener(new ActionListener() {
+		WebButton wBtn_down = new WebButton();
+		wBtn_down.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = questionListPanel.getWebTable().getSelectedRow();
 				if(currentIndex == questionListPanel.getWebTable().getRowCount()-1)
@@ -612,9 +613,10 @@ public class QuizTab_1 extends WebPanel {
 				Question temp = parentPanel.getCurrentQuiz().getQuestionList().get(currentIndex);
 				parentPanel.getCurrentQuiz().getQuestionList().remove(currentIndex);
 				parentPanel.getCurrentQuiz().getQuestionList().add(currentIndex + 1, temp);
+				getQuestionListPanel().getWebTable().getSelectionModel().setSelectionInterval(currentIndex + 1, currentIndex + 1);
 			}
 		});
-		webButton_5.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
+		wBtn_down.setIcon(new ImageIcon(QuizTab_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -639,8 +641,8 @@ public class QuizTab_1 extends WebPanel {
 								.addComponent(questionListPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(webButton_5, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webButton_6, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(wBtn_down, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wBtn_up, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
 		gl_webPanel.setVerticalGroup(
@@ -657,9 +659,9 @@ public class QuizTab_1 extends WebPanel {
 									.addComponent(questionListPanel, GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
 								.addGroup(gl_webPanel.createSequentialGroup()
 									.addGap(156)
-									.addComponent(webButton_6, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addComponent(wBtn_up, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webButton_5, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(wBtn_down, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)

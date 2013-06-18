@@ -129,7 +129,7 @@ public class SurveyTab_1 extends WebPanel {
 				q.setInstructorId(parentPanel.getCurrentSurvey().getInstructorId());
 				q.setSurveyId(parentPanel.getCurrentSurvey().getId());
 				parentPanel.getCurrentSurvey().addQuestion(q);
-				parentPanel.getTablemodel().addRow(new Object[]{questionListPanel.getWebTable().getRowCount() + 1,getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),0,""});
+				parentPanel.getTablemodel().addRow(new Object[]{questionListPanel.getWebTable().getRowCount() + 1,getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),getQuestionDesignPanel().getWebTextArea().getText()});
 				ListSelectionModel m_modelSelection = questionListPanel.getWebTable().getSelectionModel();
 				m_modelSelection.setSelectionInterval(questionListPanel.getWebTable().getRowCount()-1, questionListPanel.getWebTable().getRowCount()-1);
 				
@@ -180,14 +180,14 @@ public class SurveyTab_1 extends WebPanel {
                 	obj = new Object[]{
                 		Integer.parseInt(String.valueOf(model.getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,
                 		getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
-                        0,
-                        ""};
+                		getQuestionDesignPanel().getWebTextArea().getText()
+                		};
                 else
                 	obj = new Object[]{
                 		1,
                 		getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
-                        0,
-                        ""};
+                		getQuestionDesignPanel().getWebTextArea().getText()
+                		};
 				model.addRow(obj);
 				Question q = new Question();
 				q.setId(id++);
@@ -213,8 +213,8 @@ public class SurveyTab_1 extends WebPanel {
 		});
 		wbBtn_add.setText("Add");
 		
-		WebButton webButton_3 = new WebButton();
-		webButton_3.addActionListener(new ActionListener() {
+		WebButton wBtn_delete = new WebButton();
+		wBtn_delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(questionListPanel.getWebTable().getSelectedRow() == -1)
 					return;	
@@ -241,10 +241,10 @@ public class SurveyTab_1 extends WebPanel {
 				}
 			}
 		});
-		webButton_3.setText("Delete");
+		wBtn_delete.setText("Delete");
 		
-		WebButton webButton_4 = new WebButton();
-		webButton_4.addActionListener(new ActionListener() {
+		WebButton wBtn_copy = new WebButton();
+		wBtn_copy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentPanel.setEventsEnabled(false);
 				if(parentPanel.getCurrentSurvey().getQuestionList().size() != 0 && questionListPanel.getWebTable().getRowCount() != 0){
@@ -272,7 +272,7 @@ public class SurveyTab_1 extends WebPanel {
 				parentPanel.setEventsEnabled(true);
 			}
 		});
-		webButton_4.setText("Copy");
+		wBtn_copy.setText("Copy");
 		
 		WebPanel webPanel_1 = new WebPanel();
 		webPanel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -324,8 +324,8 @@ public class SurveyTab_1 extends WebPanel {
 		questionListPanel = new QuestionListPanel(this);
 		setQuestionListPanel(questionListPanel);
 		
-		WebButton webButton_6 = new WebButton();
-		webButton_6.addActionListener(new ActionListener() {
+		WebButton wBtn_up = new WebButton();
+		wBtn_up.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = questionListPanel.getWebTable().getSelectedRow();
 				if(currentIndex == 0)
@@ -336,12 +336,14 @@ public class SurveyTab_1 extends WebPanel {
 				Question temp = parentPanel.getCurrentSurvey().getQuestionList().get(currentIndex);
 				parentPanel.getCurrentSurvey().getQuestionList().remove(currentIndex);
 				parentPanel.getCurrentSurvey().getQuestionList().add(currentIndex - 1, temp);
+				questionListPanel.getWebTable().getSelectionModel().setSelectionInterval(currentIndex - 1,currentIndex - 1);
+				
 			}
 		});
-		webButton_6.setIcon(new ImageIcon(SurveyTab_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
+		wBtn_up.setIcon(new ImageIcon(SurveyTab_1.class.getResource("/com/jajeem/images/Stock Index Up.png")));
 		
-		WebButton webButton_5 = new WebButton();
-		webButton_5.addActionListener(new ActionListener() {
+		WebButton wBtn_down = new WebButton();
+		wBtn_down.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int currentIndex = questionListPanel.getWebTable().getSelectedRow();
 				if(currentIndex == questionListPanel.getWebTable().getRowCount()-1)
@@ -352,9 +354,10 @@ public class SurveyTab_1 extends WebPanel {
 				Question temp = parentPanel.getCurrentSurvey().getQuestionList().get(currentIndex);
 				parentPanel.getCurrentSurvey().getQuestionList().remove(currentIndex);
 				parentPanel.getCurrentSurvey().getQuestionList().add(currentIndex + 1, temp);
+				questionListPanel.getWebTable().getSelectionModel().setSelectionInterval(currentIndex + 1,currentIndex + 1);
 			}
 		});
-		webButton_5.setIcon(new ImageIcon(SurveyTab_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
+		wBtn_down.setIcon(new ImageIcon(SurveyTab_1.class.getResource("/com/jajeem/images/Stock Index Down.png")));
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
@@ -369,9 +372,9 @@ public class SurveyTab_1 extends WebPanel {
 							.addGap(24)
 							.addComponent(wbBtn_add, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
-							.addComponent(webButton_3, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wBtn_delete, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webButton_4, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+							.addComponent(wBtn_copy, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
 							.addGap(12)
 							.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
@@ -379,8 +382,8 @@ public class SurveyTab_1 extends WebPanel {
 								.addComponent(questionListPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(webButton_5, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webButton_6, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(wBtn_down, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wBtn_up, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
 		gl_webPanel.setVerticalGroup(
@@ -397,15 +400,15 @@ public class SurveyTab_1 extends WebPanel {
 									.addComponent(questionListPanel, GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
 								.addGroup(gl_webPanel.createSequentialGroup()
 									.addGap(156)
-									.addComponent(webButton_6, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addComponent(wBtn_up, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webButton_5, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(wBtn_down, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbBtn_add, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButton_3, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButton_4, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wBtn_delete, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wBtn_copy, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		webPanel.setLayout(gl_webPanel);

@@ -301,6 +301,7 @@ public class VideoPlayer extends Vlcj {
                 }
 
                 if(mediaPlayer != null) {
+                	mediaPlayer.stop();
                     //mediaPlayer.release();
                     mediaPlayer = null;
                 }
