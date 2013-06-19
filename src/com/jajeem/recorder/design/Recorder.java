@@ -1,10 +1,14 @@
 package com.jajeem.recorder.design;
 
+import java.awt.Desktop;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -16,10 +20,16 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
+import javax.swing.ImageIcon;
 
+import com.alee.extended.filechooser.WebFileChooser;
+import com.alee.extended.filefilter.DefaultFileFilter;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.utils.SwingUtils;
+import com.alee.utils.file.FileDownloadListener;
+import com.wet.wired.jsr.recorder.DesktopScreenRecorder;
+import com.wet.wired.jsr.recorder.ScreenRecorderListener;
 
 public class Recorder extends WebDialog {
 
@@ -33,6 +43,8 @@ public class Recorder extends WebDialog {
 	Capture capt = new Capture();
 
 	Playback play = new Playback();
+	private WebButton wbtnRecordDesktopOnly;
+	private WebButton wbtnRecordBoth;
 
 	/**
 	 * Launch the application.
@@ -59,318 +71,142 @@ public class Recorder extends WebDialog {
 		setRound(0);
 
 		setResizable(false);
-		setBounds(100, 100, 372, 110);
+		setBounds(100, 100, 211, 295);
 		getContentPane().setLayout(null);
 
 		wbtnPlay = new WebButton();
 		wbtnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (wbtnPlay.getText().equals("Stop")) {
-					play.stop();
-					wbtnPlay.setText("Play");
-				} else {
-					play.start();
-					wbtnPlay.setText("Stop");
+				WebFileChooser fileopener = new WebFileChooser(null);
+				fileopener.setAlwaysOnTop(true);
+				fileopener.setCurrentDirectory("/");
+				int command = fileopener.showDialog();
+				if(command == 0){
+					File file = fileopener.getSelectedFile();
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+//				if (wbtnPlay.getText().equals("Stop")) {
+//					play.stop();
+//					wbtnPlay.setText("Play");
+//					wbtnRecord.setEnabled(false);
+//					wbtnRecordBoth.setEnabled(false);
+//					wbtnRecordDesktopOnly.setEnabled(false);
+//				} else {
+//					play.start();
+//					play.audioInputStream = audioInputStream;
+//					wbtnPlay.setText("Stop");
+//					wbtnRecord.setEnabled(true);
+//					wbtnRecordBoth.setEnabled(true);
+//					wbtnRecordDesktopOnly.setEnabled(true);
+//				}
 			}
 		});
 		wbtnPlay.setText("Play");
-		wbtnPlay.setBounds(10, 11, 93, 29);
+		wbtnPlay.setBounds(10, 131, 146, 29);
 		getContentPane().add(wbtnPlay);
 
 		wbtnRecord = new WebButton();
 		wbtnRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (wbtnRecord.getText().equals("Record")) {
+				if (wbtnRecord.getText().equals("Record Voice Only")) {
 					wbtnPlay.setEnabled(false);
+					audioInputStream = capt.audioInputStream;
 					capt.start();
 					wbtnRecord.setText("Stop");
+					wbtnRecordBoth.setEnabled(false);
+					wbtnRecordDesktopOnly.setEnabled(false);
+					wbtnPlay.setEnabled(false);
 				} else {
 					wbtnPlay.setEnabled(true);
-					wbtnRecord.setText("Record");
+					wbtnRecord.setText("Record Voice Only");
 					capt.stop();
-				}
-			}
-		});
-		wbtnRecord.setText("Record");
-		wbtnRecord.setBounds(113, 11, 93, 29);
-		getContentPane().add(wbtnRecord);
-		setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-		SwingUtils.equalizeComponentsWidths(wbtnPlay, wbtnRecord);
-
-		WebButton wbtnSave = new WebButton();
-		wbtnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							try {
-								AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new FileOutputStream("record-"+System.currentTimeMillis()+".wav"));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+					try {
+						File filetemp = new File("Recordings");
+						if(!filetemp.exists())
+							filetemp.mkdir();
+						else
+							if(!filetemp.isDirectory()){
+								filetemp.delete();
+								filetemp.mkdir();
 							}
-						}
-					}).start();
+						File output = new File("Recordings","recording - "+System.currentTimeMillis()+".mp3");
+						if(!output.exists())
+							output.createNewFile();
+						FileOutputStream file = new FileOutputStream(output);
+						AudioSystem.write(capt.audioInputStream, AudioFileFormat.Type.AIFF, file);
+						file.flush();
+						file.close();
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
 					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					wbtnRecordBoth.setEnabled(true);
+					wbtnRecordDesktopOnly.setEnabled(true);
+					wbtnPlay.setEnabled(true);
 				}
 			}
 		});
-		wbtnSave.setText("Save");
-		wbtnSave.setBounds(216, 11, 93, 29);
-		getContentPane().add(wbtnSave);
+		wbtnRecord.setText("Record Voice Only");
+		wbtnRecord.setBounds(10, 11, 146, 29);
+		getContentPane().add(wbtnRecord);
+		setDefaultCloseOperation(WebDialog.HIDE_ON_CLOSE);
+		SwingUtils.equalizeComponentsWidths(wbtnPlay, wbtnRecord);
+		
+		wbtnRecordDesktopOnly = new WebButton();
+		wbtnRecordDesktopOnly.addActionListener(new ActionListener() {
+			@SuppressWarnings("static-access")
+			public void actionPerformed(ActionEvent arg0) {
+				CaptureScreenToFile capture = null;
+				if(wbtnRecordDesktopOnly.getText().equals("Record Desktop Only")){
+					capture = new CaptureScreenToFile();
+					capture.StartCaputre("temp.mp4");
+					wbtnRecordDesktopOnly.setText("Stop");
+					wbtnRecord.setEnabled(false);
+					wbtnRecordBoth.setEnabled(false);
+				}
+				else{
+					capture.StopCapture();
+					wbtnRecordDesktopOnly.setText("Record Desktop Only");
+					wbtnRecord.setEnabled(true);
+					wbtnRecordBoth.setEnabled(true);
+				}
+			}
+		});
+		wbtnRecordDesktopOnly.setText("Record Desktop Only");
+		wbtnRecordDesktopOnly.setBounds(10, 51, 146, 29);
+		getContentPane().add(wbtnRecordDesktopOnly);
+		
+		wbtnRecordBoth = new WebButton();
+		wbtnRecordBoth.addActionListener(new ActionListener() {
+			@SuppressWarnings({ "static-access", "null" })
+			public void actionPerformed(ActionEvent e) {
+				CaptureScreenToFile capture = null;
+				if(wbtnRecordBoth.getText().equals("Record Both")){
+					capture = new CaptureScreenToFile();
+					capture.StartCaputreWithAudio("");
+					wbtnRecordBoth.setText("Stop");
+					wbtnRecordDesktopOnly.setEnabled(false);
+					wbtnRecord.setEnabled(false);
+				}
+				else{
+					capture.StopCapture();
+					wbtnRecordBoth.setText("Record Both");
+					wbtnRecordDesktopOnly.setEnabled(true);
+					wbtnRecord.setEnabled(true);
+				}
+			}
+		});
+		wbtnRecordBoth.setText("Record Both");
+		wbtnRecordBoth.setBounds(10, 91, 146, 29);
+		getContentPane().add(wbtnRecordBoth);
 		// pack();
 		// setVisible(true);
 	}
-
-	public class Capture implements Runnable {
-
-		TargetDataLine line;
-		Thread thread;
-		String errStr;
-		double duration, seconds;
-
-		public Capture() {
-
-		}
-
-		public void start() {
-			errStr = null;
-			thread = new Thread(this);
-			thread.setName("Capture");
-			thread.start();
-		}
-
-		public void stop() {
-			thread = null;
-		}
-
-		private void shutDown(String message) {
-			if ((errStr = message) != null && thread != null) {
-				thread = null;
-				System.err.println(errStr);
-			}
-		}
-
-		public void run() {
-
-			duration = 0;
-			audioInputStream = null;
-
-			// define the required attributes for our line,
-			// and make sure a compatible line is supported.
-
-			AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
-			float rate = 44100.0f;
-			int channels = 2;
-			int frameSize = 4;
-			int sampleSize = 16;
-			boolean bigEndian = true;
-
-			AudioFormat format = new AudioFormat(encoding, rate, sampleSize,
-					channels, (sampleSize / 8) * channels, rate, bigEndian);
-
-			DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-
-			if (!AudioSystem.isLineSupported(info)) {
-				shutDown("Line matching " + info + " not supported.");
-				return;
-			}
-
-			// get and open the target data line for capture.
-
-			try {
-				line = (TargetDataLine) AudioSystem.getLine(info);
-				line.open(format, line.getBufferSize());
-			} catch (LineUnavailableException ex) {
-				shutDown("Unable to open the line: " + ex);
-				return;
-			} catch (SecurityException ex) {
-				shutDown(ex.toString());
-				// JavaSound.showInfoDialog();
-				return;
-			} catch (Exception ex) {
-				shutDown(ex.toString());
-				return;
-			}
-
-			// play back the captured audio data
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			int frameSizeInBytes = format.getFrameSize();
-			int bufferLengthInFrames = line.getBufferSize() / 8;
-			int bufferLengthInBytes = bufferLengthInFrames * frameSizeInBytes;
-			byte[] data = new byte[bufferLengthInBytes];
-			int numBytesRead;
-
-			line.start();
-
-			while (thread != null) {
-				if ((numBytesRead = line.read(data, 0, bufferLengthInBytes)) == -1) {
-					break;
-				}
-				out.write(data, 0, numBytesRead);
-			}
-
-			// we reached the end of the stream.
-			// stop and close the line.
-			line.stop();
-			line.close();
-			line = null;
-
-			// stop and close the output stream
-			try {
-				out.flush();
-				out.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-
-			// load bytes into the audio input stream for playback
-
-			byte audioBytes[] = out.toByteArray();
-			ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
-			audioInputStream = new AudioInputStream(bais, format,
-					audioBytes.length / frameSizeInBytes);
-
-			long milliseconds = (long) ((audioInputStream.getFrameLength() * 1000) / format
-					.getFrameRate());
-			duration = milliseconds / 1000.0;
-
-			try {
-				audioInputStream.reset();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				return;
-			}
-		}
-	}
-
-	public class Playback implements Runnable {
-
-		SourceDataLine line;
-		String errStr;
-		Thread thread;
-		final int bufSize = 16384;
-		double duration, seconds;
-
-		public void start() {
-			errStr = null;
-			thread = new Thread(this);
-			thread.setName("Playback");
-			thread.start();
-		}
-
-		public void stop() {
-			thread = null;
-		}
-
-		private void shutDown(String message) {
-			if ((errStr = message) != null) {
-				System.err.println(errStr);
-			}
-			if (thread != null) {
-				thread = null;
-			}
-		}
-
-		public void run() {
-
-			// make sure we have something to play
-			if (audioInputStream == null) {
-				shutDown("No loaded audio to play back");
-				return;
-			}
-			// reset to the beginnning of the stream
-			try {
-				audioInputStream.reset();
-			} catch (Exception e) {
-				shutDown("Unable to reset the stream\n" + e);
-				return;
-			}
-
-			// get an AudioInputStream of the desired format for playback
-
-			AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
-			float rate = 44100.0f;
-			int channels = 2;
-			int frameSize = 4;
-			int sampleSize = 16;
-			boolean bigEndian = true;
-
-			AudioFormat format = new AudioFormat(encoding, rate, sampleSize,
-					channels, (sampleSize / 8) * channels, rate, bigEndian);
-
-			AudioInputStream playbackInputStream = AudioSystem
-					.getAudioInputStream(format, audioInputStream);
-
-			if (playbackInputStream == null) {
-				shutDown("Unable to convert stream of format "
-						+ audioInputStream + " to format " + format);
-				return;
-			}
-
-			// define the required attributes for our line,
-			// and make sure a compatible line is supported.
-
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-			if (!AudioSystem.isLineSupported(info)) {
-				shutDown("Line matching " + info + " not supported.");
-				return;
-			}
-
-			// get and open the source data line for playback.
-
-			try {
-				line = (SourceDataLine) AudioSystem.getLine(info);
-				line.open(format, bufSize);
-			} catch (LineUnavailableException ex) {
-				shutDown("Unable to open the line: " + ex);
-				return;
-			}
-
-			// play back the captured audio data
-
-			int frameSizeInBytes = format.getFrameSize();
-			int bufferLengthInFrames = line.getBufferSize() / 8;
-			int bufferLengthInBytes = bufferLengthInFrames * frameSizeInBytes;
-			byte[] data = new byte[bufferLengthInBytes];
-			int numBytesRead = 0;
-
-			// start the source data line
-			line.start();
-
-			while (thread != null) {
-				try {
-					if ((numBytesRead = playbackInputStream.read(data)) == -1) {
-						break;
-					}
-					int numBytesRemaining = numBytesRead;
-					while (numBytesRemaining > 0) {
-						numBytesRemaining -= line.write(data, 0,
-								numBytesRemaining);
-					}
-				} catch (Exception e) {
-					shutDown("Error during playback: " + e);
-					break;
-				}
-			}
-			// we reached the end of the stream.
-			// let the data play out, then
-			// stop and close the line.
-			if (thread != null) {
-				line.drain();
-			}
-			line.stop();
-			line.close();
-			line = null;
-			shutDown(null);
-		}
-
-	} // End class Playback
 }

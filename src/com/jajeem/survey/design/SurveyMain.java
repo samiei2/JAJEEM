@@ -335,10 +335,9 @@ public class SurveyMain extends WebFrame {
 						}
 					}
 					
-					wbtnSaveResults.setVisible(true);
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
-					wbtnSaveResults.setVisible(true);
+					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/stop-red.png")));

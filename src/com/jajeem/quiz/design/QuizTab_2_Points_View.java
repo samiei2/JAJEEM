@@ -106,12 +106,14 @@ public class QuizTab_2_Points_View extends WebPanel {
 
 	public void clearQuiz() {
 		clearTable();
-		
 	}
 	
 	public void clearTable(){
 		((DefaultTableModel)webTable.getModel()).getDataVector().clear();
 		((DefaultTableModel)webTable.getModel()).fireTableDataChanged();
+		currentQuiz = null;
+		quizResponse.clear();
+		quizResponse = null;
 	}
 	
 	public void LoadQuiz(Quiz currentQuiz2) {

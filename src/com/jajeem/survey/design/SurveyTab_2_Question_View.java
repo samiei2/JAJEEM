@@ -370,9 +370,11 @@ public class SurveyTab_2_Question_View extends WebPanel {
 					model.removeRow(i);
 				}
 				
+				
 				for (int i = 0; i < surveyResponse.get(index).size(); i++) {
+					System.out.println(student.getId());
 					model.addRow(new Object[]{
-							student.getId(),
+							String.valueOf(student.getId()),
 							student.getFullName(),
 							StudentOption
 					});
@@ -403,13 +405,19 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		webTextField_1.clear();
 		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
 		model.getDataVector().clear();
+		for (int i = 0; i < webTable.getRowCount(); i++) {
+			model.removeRow(i);
+		}
 		model.fireTableDataChanged();
+		webTable.updateUI();
 		if(timer != null && timer.isRunning()){
 			timer.stop();
 		}
 		
 		currentSurvey = null;
 		currentQuestion = null;
+		surveyResponse.clear();
+		surveyResponse = null;
 		webComboBox.removeAllItems();
 		
 		

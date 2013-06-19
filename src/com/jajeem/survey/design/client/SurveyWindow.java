@@ -86,7 +86,7 @@ public class SurveyWindow extends WebFrame {
 	private ArrayList<Question> sendQueue = new ArrayList<>();
 	//TODO remove code below
 	private int sid;
-	private Student privateStudent = new Student();
+	private Student privateStudent;
 	private Run currentRun;
 	
 	long remaining; // How many milliseconds remain in the countdown.
@@ -123,6 +123,7 @@ public class SurveyWindow extends WebFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyWindow.class.getResource("/com/jajeem/images/survey.png")));
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
+		privateStudent = new Student();
 		privateStudent.setId(sid);
 		privateStudent.setFullName(com.jajeem.util.Session.studentName);
 		currentRun = run;

@@ -20,7 +20,8 @@ public class StartUp {
 		conn = new H2Connection();
 		BaseDAO.setH2Connection(conn);
 		initDatabase.initialize();
-		Unzipper.unzip("util.zip");
+		if(!new File("util").exists())
+			Unzipper.unzip("util.zip");
 		
 //		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
 //				"util/windows/");
