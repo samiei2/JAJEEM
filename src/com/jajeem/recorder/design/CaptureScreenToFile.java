@@ -163,8 +163,6 @@ public class CaptureScreenToFile {
 	
 	public static void StartCaputreWithAudio(String file) {
 		try {
-			if(file == "")
-				file = "temp.mp4";
 			final String outFile;
 			outFile = "Recordings/temp.mp4";
 			running = true;
@@ -334,7 +332,7 @@ public class CaptureScreenToFile {
 		// extension
 
 		IMediaWriter mWriter = ToolFactory
-				.makeWriter("Recordings/recording - "+System.currentTimeMillis()+".avi"); // output
+				.makeWriter("Recordings/recording - "+System.currentTimeMillis()+".mp4"); // output
 		// file
 
 		IContainer containerVideo = IContainer.make();

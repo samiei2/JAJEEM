@@ -2,34 +2,21 @@ package com.jajeem.recorder.design;
 
 import java.awt.Desktop;
 import java.awt.EventQueue;
-import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.TargetDataLine;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import com.alee.extended.filechooser.WebFileChooser;
-import com.alee.extended.filefilter.DefaultFileFilter;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.utils.SwingUtils;
-import com.alee.utils.file.FileDownloadListener;
-import com.wet.wired.jsr.recorder.DesktopScreenRecorder;
-import com.wet.wired.jsr.recorder.ScreenRecorderListener;
 
 public class Recorder extends WebDialog {
 
@@ -125,7 +112,11 @@ public class Recorder extends WebDialog {
 					wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
 					capt.stop();
+					wbtnRecordBoth.setEnabled(true);
+					wbtnRecordDesktopOnly.setEnabled(true);
+					wbtnPlay.setEnabled(true);
 					try {
+						Thread.sleep(500);
 						File filetemp = new File("Recordings");
 						if(!filetemp.exists())
 							filetemp.mkdir();
@@ -135,21 +126,14 @@ public class Recorder extends WebDialog {
 								filetemp.mkdir();
 							}
 						File output = new File("Recordings","recording - "+System.currentTimeMillis()+".mp3");
-						if(!output.exists())
-							output.createNewFile();
 						FileOutputStream file = new FileOutputStream(output);
 						AudioSystem.write(capt.audioInputStream, AudioFileFormat.Type.AIFF, file);
 						file.flush();
 						file.close();
 						
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (IOException | InterruptedException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage());
 					} 
-					
-					wbtnRecordBoth.setEnabled(true);
-					wbtnRecordDesktopOnly.setEnabled(true);
-					wbtnPlay.setEnabled(true);
 				}
 			}
 		});
