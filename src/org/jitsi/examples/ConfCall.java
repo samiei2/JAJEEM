@@ -4,7 +4,6 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.jitsi.service.libjitsi.LibJitsi;
 import org.jitsi.service.neomedia.DefaultStreamConnector;
@@ -34,7 +33,6 @@ public class ConfCall {
 					new DatagramSocket(8000),
 			        new DatagramSocket(8001));
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

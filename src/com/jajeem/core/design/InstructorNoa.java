@@ -50,6 +50,7 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
@@ -430,7 +431,7 @@ public class InstructorNoa {
 
 		WebButton powerButton = new WebButton();
 		powerButton.setIconTextGap(30);
-		powerButton.putClientProperty("key", "power");
+		powerButton.putClientProperty("key", "pcController");
 		powerButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		powerButton.setDrawShade(false);
 		powerButton.setRound(10);
@@ -441,6 +442,89 @@ public class InstructorNoa {
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(powerButton);
+
+		WebButton powerOffButton = new WebButton("Power Off");
+		powerOffButton.putClientProperty("key", "powerOff");
+		powerOffButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorNoa.getDesktopPane()
+							.getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("turnOff");
+						InstructorNoa.getServerService().send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButton logOffButton = new WebButton("Log Off");
+		logOffButton.putClientProperty("key", "logOff");
+		logOffButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorNoa.getDesktopPane()
+							.getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("logOff");
+						InstructorNoa.getServerService().send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		WebButton restartButton = new WebButton("Restart");
+		restartButton.putClientProperty("key", "restart");
+		restartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorNoa.getDesktopPane()
+							.getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("restart");
+						InstructorNoa.getServerService().send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		WebButtonPopup pcControllerPopupButton = new WebButtonPopup(
+				powerButton, PopupWay.upCenter);
+
+		GroupPanel pcControllerPopupContent = new GroupPanel(5, false,
+				powerOffButton, logOffButton, restartButton);
+		pcControllerPopupContent.setMargin(15);
+
+		pcControllerPopupButton.setContent(pcControllerPopupContent);
 
 		WebButton internetButton = new WebButton();
 		internetButton.putClientProperty("key", "internet");
@@ -549,11 +633,6 @@ public class InstructorNoa {
 		WebScrollPane programTableScrollPane = new WebScrollPane(ptable);
 		programTableScrollPane.setOpaque(false);
 
-		// TableColumn column = ptable.getColumnModel().getColumn(1);
-		//
-		// WebDefaultTableCellRenderer renderer = new
-		// WebDefaultTableCellRenderer();
-		//
 		initColumnSizes(ptable);
 
 		GroupPanel programPopupContent = new GroupPanel(5, false,

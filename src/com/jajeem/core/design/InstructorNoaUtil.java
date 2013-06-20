@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -383,102 +382,7 @@ public class InstructorNoaUtil {
 					break;
 
 				case "power":
-					try {
-
-						button.addActionListener(new ActionListener() {
-
-							private PowerCommand powerCommand;
-
-							@Override
-							public void actionPerformed(ActionEvent arg0)
-									throws NumberFormatException {
-								try {
-									powerCommand = new PowerCommand(InetAddress
-											.getLocalHost().getHostAddress(),
-											"", Integer.parseInt(Config
-													.getParam("port")), "");
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-
-								if (InstructorNoa.getDesktopPane()
-										.getSelectedFrame() != null) {
-									String selectedStudent = "";
-									selectedStudent = (String) InstructorNoa
-											.getDesktopPane()
-											.getClientProperty("ip");
-
-									powerCommand.setTo(selectedStudent);
-
-									WebButton turnOffButton = new WebButton(
-											"Turn off");
-									WebButton logOffButton = new WebButton(
-											"Log off");
-									WebButton restartButton = new WebButton(
-											"Restart");
-
-									WebButtonGroup buttonGroup = new WebButtonGroup(
-											true, turnOffButton, logOffButton,
-											restartButton);
-									buttonGroup.setButtonsDrawFocus(false);
-
-									popup.setPopupStyle(PopupStyle.lightSmall);
-									popup.setMargin(5);
-									popup.add(buttonGroup);
-									popup.setRound(0);
-									if (popup.isShowing()) {
-										popup.hidePopup();
-									} else {
-										popup.showPopup(button);
-									}
-
-									turnOffButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("turnOff");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-
-									logOffButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("logOff");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-
-									restartButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("restart");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-								}
-							}
-						});
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					// in instructor noa!
 					break;
 
 				case "whiteBoard":
@@ -492,25 +396,8 @@ public class InstructorNoaUtil {
 					// in instructor noa!
 					break;
 
-				case "programStop":
-					/*
-					 * button.addActionListener(new ActionListener() {
-					 * 
-					 * @Override public void actionPerformed(ActionEvent e)
-					 * throws NumberFormatException { // Enabling dialog
-					 * decoration boolean decorateFrames = WebLookAndFeel
-					 * .isDecorateDialogs();
-					 * WebLookAndFeel.setDecorateDialogs(true);
-					 * 
-					 * // Opening dialog Dialog dialog = new
-					 * Dialog(bottomButtonPanel, "application",
-					 * "Application name", "Block"); dialog.pack();
-					 * dialog.setLocationRelativeTo(bottomButtonPanel);
-					 * dialog.setVisible(true);
-					 * 
-					 * // Restoring frame decoration option
-					 * WebLookAndFeel.setDecorateDialogs(decorateFrames); } });
-					 */
+				case "program":
+					// in instructor noa!
 					break;
 				case "programStart":
 					try {
