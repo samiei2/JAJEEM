@@ -1,20 +1,330 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java" line="98" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/test/jUnitQuizResponseDAO.java" afterPath="$PROJECT_DIR$/src/com/jajeem/test/jUnitQuizResponseDAO.java" />
+    <list default="true" id="265344af-7001-44a5-9bcf-99bc9b1ad7d1" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Jajeem.iml" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid5024.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid5104.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6132.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6584.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6740.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7288.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7632.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7652.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7912.log" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\jajeem.db.lock.db" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\videoplayer\design\vlclib.zip" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\libvlc.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\libvlccore.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\3dnow\libmemcpy3dn_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_attachment_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_bd_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_ftp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_http_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_imem_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_mms_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_rar_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_realrtsp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_smb_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_tcp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_udp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libaccess_vdr_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libcdda_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libdshow_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libdtv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libdvdnav_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libdvdread_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libfilesystem_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libidummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\liblibbluray_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\librtp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libscreen_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libsdp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libstream_filter_rar_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libvcd_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access\libzip_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_dummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_file_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_http_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_livehttp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_shout_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\access_output\libaccess_output_udp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\liba52tofloat32_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\liba52tospdif_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libaudio_format_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libaudiobargraph_a_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libchorus_flanger_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libcompressor_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libconverter_fixed_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libdolby_surround_decoder_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libdtstofloat32_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libdtstospdif_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libequalizer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libheadphone_channel_mixer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libkaraoke_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libmono_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libmpgatofixed32_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libnormvol_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libparam_eq_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libsamplerate_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libscaletempo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libsimple_channel_mixer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libspatializer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libspeex_resampler_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libtrivial_channel_mixer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_filter\libugly_resampler_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_mixer\libfixed32_mixer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_mixer\libfloat32_mixer_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_output\libadummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_output\libamem_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_output\libaout_directx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_output\libaout_file_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\audio_output\libwaveout_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\liba52_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libadpcm_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libaes3_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libaraw_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libavcodec_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libcc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libcdg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libcvdsub_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libddummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libdmo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libdts_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libdvbsub_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libedummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libfaad_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libflac_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libfluidsynth_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libkate_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\liblibass_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\liblibmpeg2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\liblpcm_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libmpeg_audio_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libopus_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libpng_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libquicktime_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\librawvideo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libschroedinger_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libspeex_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libspudec_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libstl_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libsubsdec_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libsubsusf_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libsvcdsub_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libt140_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libtheora_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libtwolame_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libvorbis_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libx264_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\codec\libzvbi_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libdummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libgestures_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libglobalhotkeys_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libhotkeys_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libnetsync_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\libntservice_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\control\liboldrc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libaiff_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libasf_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libau_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libavi_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libdemux_cdg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libdemux_stl_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libdemuxdump_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libdirac_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libes_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libflacsys_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libgme_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libh264_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libimage_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\liblive555_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmjpeg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmkv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmod_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmp4_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmpc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libmpgv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libnsc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libnsv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libnuv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libogg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libplaylist_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libps_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libpva_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\librawaud_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\librawdv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\librawvid_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libreal_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libsid_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libsmf_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libsubtitle_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libts_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libtta_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libty_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libvc1_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libvobsub_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libvoc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libwav_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\demux\libxa_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\gui\libqt4_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\gui\libskins2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\lua\liblua_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\meta_engine\libfolder_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\meta_engine\libtaglib_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libaudioscrobbler_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libexport_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libgnutls_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\liblogger_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libmemcpy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libosd_parser_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libstats_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libvod_rtsp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\misc\libxml_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mmx\libi420_rgb_mmx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mmx\libi420_yuy2_mmx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mmx\libi422_yuy2_mmx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mmx\libmemcpymmx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mmxext\libmemcpymmxext_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_asf_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_avi_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_dummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_mp4_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_mpjpeg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_ogg_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_ps_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_ts_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\mux\libmux_wav_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\notify\libmsn_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_copy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_dirac_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_flac_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_h264_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_mlp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_mpeg4audio_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_mpeg4video_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_mpegvideo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\packetizer\libpacketizer_vc1_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\services_discovery\libmediadirs_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\services_discovery\libpodcast_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\services_discovery\libsap_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\services_discovery\libupnp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\services_discovery\libwindrive_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\sse2\libi420_rgb_sse2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\sse2\libi420_yuy2_sse2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\sse2\libi422_yuy2_sse2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_filter\libstream_filter_dash_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_filter\libstream_filter_httplive_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_filter\libstream_filter_record_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_autodel_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_bridge_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_delay_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_description_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_display_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_dummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_duplicate_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_es_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_gather_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_langfromtelx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_mosaic_bridge_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_raop_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_record_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_rtp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_select_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_setid_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_smem_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_standard_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\stream_out\libstream_out_transcode_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\text_renderer\libfreetype_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\text_renderer\libtdummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libgrey_yuv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libi420_rgb_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libi420_yuy2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libi422_i420_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libi422_yuy2_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\librv32_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libyuy2_i420_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_chroma\libyuy2_i422_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libadjust_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libalphamask_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libantiflicker_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libatmo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libaudiobargraph_v_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libball_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libblend_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libblendbench_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libbluescreen_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libcanvas_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libchain_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libclone_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libcolorthres_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libcroppadd_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libdeinterlace_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\liberase_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libextract_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libgaussianblur_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libgradfun_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libgradient_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libgrain_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libhqdn3d_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libinvert_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\liblogo_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmagnify_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmarq_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmirror_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmosaic_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmotionblur_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libmotiondetect_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libosdmenu_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libpanoramix_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libposterize_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libpostproc_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libpsychedelic_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libpuzzle_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libremoteosd_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libripple_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\librotate_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\librss_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libscale_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libscene_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libsepia_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libsharpen_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libsubsdelay_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libswscale_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libtransform_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libwall_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libwave_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_filter\libyuvp_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libcaca_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libdirect2d_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libdirect3d_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libdirectx_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libdrawable_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libglwin32_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libvdummy_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libvmem_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libwingdi_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\video_output\libyuv_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\visualization\libgoom_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\visualization\libprojectm_plugin.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\visualization\libvisual_plugin.dll" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jajeem.db.h2.db" afterPath="$PROJECT_DIR$/jajeem.db.h2.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Points_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Points_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Question_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Question_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Student_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Student_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyMain.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyMain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Question_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Question_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Student_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Student_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/client/SurveyWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/client/SurveyWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jajeem.db.trace.db" afterPath="$PROJECT_DIR$/jajeem.db.trace.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewer.conf" afterPath="$PROJECT_DIR$/viewer.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <ignored path="jajeem.iws" />
+    <ignored path="Jajeem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1368294918061" ignored="false" />
-    <file path="/QuizEvent.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367404538828" ignored="false" />
-    <file path="/QuizEventListener.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367404494196" ignored="false" />
-    <file path="/QuizTeacherWindow.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367405384970" ignored="false" />
-    <file path="/a.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367408860230" ignored="false" />
-    <file path="/sample.java" changelist="5eb58b33-6706-46ac-807a-68f6a1fa2788" time="1367408860871" ignored="false" />
+    <file path="/Dummy.txt" changelist="265344af-7001-44a5-9bcf-99bc9b1ad7d1" time="1371569606070" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,10 +381,29 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="jajeem" />
+    <favorites_list name="Jajeem" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="QuizWindow.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="22" selection-start="2282" selection-end="2282" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Survey.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.03526971">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -92,12 +421,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/jajeem/windows/survey/test.java" />
-        <option value="$PROJECT_DIR$/src/com/jajeem/events/QuizEventListener.java" />
-        <option value="$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java" />
-        <option value="$PROJECT_DIR$/src/com/jajeem/quiz/windows/QuizTeacherWindow.java" />
-        <option value="$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java" />
-        <option value="$PROJECT_DIR$/src/com/jajeem/core/dao/h2/InstructorDAO.java" />
+        <option value="$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java" />
       </list>
     </option>
   </component>
@@ -120,7 +444,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
+    <option name="STATE" value="2" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
@@ -135,17 +459,19 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
+              <option name="myItemId" value="Jajeem" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
+              <option name="myItemId" value="Jajeem" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -155,7 +481,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
+              <option name="myItemId" value="Jajeem" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -164,139 +490,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quiz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jajeem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quiz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="design" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="187" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="216" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="209" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="recentsLimit" value="5" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="217" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="884" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="891" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="210" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="208" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/smack-3.3.0.jar!/" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Java" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.jajeem.quiz.design.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.jajeem.quiz.design.Main" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Jajeem" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -388,25 +607,13 @@
       <patterns />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.Main" />
-    </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <list size="0" />
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SliceManager">
-    <option name="analysisUIOptions">
-      <AnalysisUIOptions />
-    </option>
-  </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
@@ -426,9 +633,9 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5eb58b33-6706-46ac-807a-68f6a1fa2788" name="Default" comment="" />
-      <created>1367392073832</created>
-      <updated>1367392073832</updated>
+      <changelist id="265344af-7001-44a5-9bcf-99bc9b1ad7d1" name="Default" comment="" />
+      <created>1371565352973</created>
+      <updated>1371565352973</updated>
     </task>
     <servers />
   </component>
@@ -436,7 +643,7 @@
     <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33992094" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -445,21 +652,23 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Code Graph" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="CodeLock" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1969112" sideWeight="0.67061925" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22329472" sideWeight="0.67107004" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32938075" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -528,79 +737,124 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/core/dao/h2/InstructorDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="296" column="69" selection-start="6799" selection-end="6799" vertical-scroll-proportion="0.0">
+        <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="67" column="22" selection-start="2282" selection-end="2282" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.03526971">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="100" selection-start="572" selection-end="572" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/windows/OpenWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="91" selection-start="4877" selection-end="4877" vertical-scroll-proportion="0.54771787" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/events/QuizEventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="28" selection-start="144" selection-end="144" vertical-scroll-proportion="0.17634855" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/events/QuizEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="28" selection-start="778" selection-end="778" vertical-scroll-proportion="0.6493776" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="47" selection-start="2630" selection-end="2630" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jajeem/core/dao/h2/InstructorDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="296" column="69" selection-start="6799" selection-end="6799" vertical-scroll-proportion="0.024011299">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Whiteboard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="22" selection-start="188" selection-end="962" vertical-scroll-proportion="0.1680791">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>Jajeem:Instructor</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Jajeem</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 

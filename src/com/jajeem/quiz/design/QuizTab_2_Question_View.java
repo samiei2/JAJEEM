@@ -575,9 +575,9 @@ public class QuizTab_2_Question_View extends WebPanel {
 		
 		currentQuiz = null;
 		currentQuestion = null;
+		quizResponse.clear();
+		quizResponse = null;
 		webComboBox.removeAllItems();
-		
-		
 	}
 }
 
