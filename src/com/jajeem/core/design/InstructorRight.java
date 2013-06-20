@@ -651,7 +651,6 @@ public class InstructorRight {
 										text.getText(), true);
 								ss.send(ic);
 							} catch (Exception e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 
