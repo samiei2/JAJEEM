@@ -9,6 +9,12 @@ public class Attendant {
 	private int seatId;
 	private short status;
 	
+	public Attendant(int int1) {
+		this.id = int1;
+	}
+	public Attendant() {
+		// TODO Auto-generated constructor stub
+	}
 	//getter & setters
 	public int getId() {
 		return id;

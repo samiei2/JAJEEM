@@ -2,14 +2,16 @@ package com.jajeem.room.model;
 
 import java.io.Serializable;
 
+import com.jajeem.core.model.Instructor;
+
 public class Session implements Serializable{
 	
 	//properties
 	private int id;
-	private int classId;
-	private int instructorId;
-	private int attendantId;
-	private int courseId;
+	private Room room;
+	private Instructor instructor;
+	private Attendant attendant;
+	private Course course;
 	private int start;
 	private int end;
 	
@@ -19,18 +21,6 @@ public class Session implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getClassId() {
-		return classId;
-	}
-	public void setClassId(int classId) {
-		this.classId = classId;
-	}
-	public int getInstructorId() {
-		return instructorId;
-	}
-	public void setInstructorId(int instructorId) {
-		this.instructorId = instructorId;
 	}
 	public int getStart() {
 		return start;
@@ -44,17 +34,29 @@ public class Session implements Serializable{
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	public int getAttendantId() {
-		return attendantId;
+	public Room getRoom() {
+		return room;
 	}
-	public void setAttendantId(int attendantId) {
-		this.attendantId = attendantId;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
-	public int getCourseId() {
-		return courseId;
+	public Instructor getInstructor() {
+		return instructor;
 	}
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+	public Attendant getAttendant() {
+		return attendant;
+	}
+	public void setAttendant(Attendant attendant) {
+		this.attendant = attendant;
+	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 }

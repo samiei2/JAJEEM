@@ -35,7 +35,7 @@ public class jUnitSessionDAO {
         
         SessionDAO dao = new SessionDAO();
 		Session s = new Session();
-		s.setClassId(12);
+		s.setRoomId(12);
 		s.setInstructorId(2);
 		s.setId(1);
 		s.setStart(4);
@@ -45,7 +45,7 @@ public class jUnitSessionDAO {
 		assertEquals(4, dao.get(s).getStart());
 		assertEquals(1, dao.get(s).getId());
 		assertEquals(2, dao.get(s).getInstructorId());
-		assertEquals(12, dao.get(s).getClassId());
+		assertEquals(12, dao.get(s).getRoomId());
 		
 		s.setStart(5);
 		assertEquals(true, dao.update(s));

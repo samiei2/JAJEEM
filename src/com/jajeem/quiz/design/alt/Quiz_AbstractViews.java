@@ -11,9 +11,6 @@ public class Quiz_AbstractViews extends WebPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private static Run currentRun;
-	private static boolean isEventsEnabled = false;
 	
 	/**
 	 * Create the panel.
@@ -21,5 +18,4 @@ public class Quiz_AbstractViews extends WebPanel {
 	public Quiz_AbstractViews() {
 
 	}
-
 }

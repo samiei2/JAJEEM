@@ -150,8 +150,11 @@ public class StudentLogin extends JDialog {
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						//TODO remove or change this line
-						com.jajeem.util.Session.studentName = username.getText();
+						
+						com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
+						student.setFullName(username.getText());
+						com.jajeem.util.Session.setStudent(student);
+						
 						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								serverIp, Integer.parseInt(Config
@@ -170,8 +173,12 @@ public class StudentLogin extends JDialog {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//TODO remove or change this line
-					com.jajeem.util.Session.studentName = "Anonymous";
+					//Since the user has not logged in,then the user is anonymous
+					com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
+					student.setFullName("Anonymous");
+					com.jajeem.util.Session.setStudent(student);
+					
+					
 					setVisible(false);
 					dispose();
 				}

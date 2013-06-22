@@ -125,7 +125,7 @@ public class SurveyWindow extends WebFrame {
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent = new Student();
 		privateStudent.setId(sid);
-		privateStudent.setFullName(com.jajeem.util.Session.studentName);
+		privateStudent.setFullName(com.jajeem.util.Session.getStudentName());
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		

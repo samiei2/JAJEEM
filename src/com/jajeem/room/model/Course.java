@@ -6,6 +6,12 @@ public class Course {
 	private int id;
 	private String name;
 	
+	public Course(int int1) {
+		this.id = int1;
+	}
+	public Course() {
+		// TODO Auto-generated constructor stub
+	}
 	//getter & setters
 	public int getId() {
 		return id;

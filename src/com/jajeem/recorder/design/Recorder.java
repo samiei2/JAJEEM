@@ -62,6 +62,7 @@ public class Recorder extends WebDialog {
 		getContentPane().setLayout(null);
 
 		wbtnPlay = new WebButton();
+		wbtnPlay.setVisible(false);
 		wbtnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WebFileChooser fileopener = new WebFileChooser(null);

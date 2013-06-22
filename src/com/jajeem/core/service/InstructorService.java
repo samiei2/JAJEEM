@@ -28,6 +28,12 @@ public class InstructorService implements IInstructorService{
 			return instructordao.get(instruct);
 		return null;
 	}
+	
+	public Instructor get(String user) {
+		if(instructordao!=null)
+			return instructordao.get(user);
+		return null;
+	}
 
 	@Override
 	public boolean update(Instructor instruct) throws SQLException {
@@ -57,5 +63,7 @@ public class InstructorService implements IInstructorService{
 	public void setInstructorDAO(InstructorDAO instructor) {
 		this.instructordao = instructor;
 	}
+
+	
 
 }

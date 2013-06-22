@@ -10,8 +10,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.core.dao.h2.StudentDAO;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.dao.ISessionDAO;
+import com.jajeem.room.model.Attendant;
+import com.jajeem.room.model.Course;
+import com.jajeem.room.model.Room;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.BaseDAO;
 
@@ -33,10 +37,10 @@ public class SessionDAO implements ISessionDAO {
 
 		ps = con.prepareStatement("INSERT INTO Session (roomId, instructorId, attendantId, courseId, start, end) " +
 				" VALUES (?, ?, ? ,? ,? ,?);");
-		ps.setInt(1, session.getClassId());
-		ps.setInt(2, session.getInstructorId());
-		ps.setInt(3, session.getAttendantId());
-		ps.setInt(4, session.getCourseId());
+		ps.setInt(1, session.getRoom().getId());
+		ps.setInt(2, session.getInstructor().getId());
+		ps.setInt(3, session.getAttendant().getId());
+		ps.setInt(4, session.getCourse().getId());
 		ps.setInt(5, session.getStart());
 		ps.setInt(6, session.getEnd());
 
@@ -97,10 +101,10 @@ public class SessionDAO implements ISessionDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				session.setClassId(rs.getInt("roomId"));
-				session.setInstructorId(rs.getInt("instructorId"));
-				session.setAttendantId(rs.getInt("attendantid"));
-				session.setCourseId(rs.getInt("courseid"));
+				session.setRoom(new Room(rs.getInt("roomId")));
+				session.setInstructor(new Instructor(rs.getInt("instructorId")));
+				session.setAttendant(new Attendant(rs.getInt("attendantid")));
+				session.setCourse(new Course(rs.getInt("courseid")));
 				session.setStart(rs.getInt("start"));
 				session.setEnd(rs.getInt("end"));
 			} else {
@@ -144,10 +148,10 @@ public class SessionDAO implements ISessionDAO {
 		
 		ps = con.prepareStatement("UPDATE Session SET roomId=?, instructorId=?, attendantId=?, courseId=?, start=?, end=? WHERE id = ?");
 		
-		ps.setInt(1, session.getClassId());
-		ps.setInt(2, session.getInstructorId());
-		ps.setInt(3, session.getAttendantId());
-		ps.setInt(4, session.getCourseId());
+		ps.setInt(1, session.getRoom().getId());
+		ps.setInt(2, session.getInstructor().getId());
+		ps.setInt(3, session.getAttendant().getId());
+		ps.setInt(4, session.getCourse().getId());
 		ps.setInt(5, session.getStart());
 		ps.setInt(6, session.getEnd());
 		ps.setInt(7, session.getId());
@@ -247,10 +251,10 @@ public class SessionDAO implements ISessionDAO {
 				Session session = new Session();
 
 				session.setId(rs.getInt("id"));
-				session.setClassId(rs.getInt("roomId"));
-				session.setInstructorId(rs.getInt("instructorId"));
-				session.setAttendantId(rs.getInt("attendantId"));
-				session.setCourseId(rs.getInt("courseId"));
+				session.setRoom(new Room(rs.getInt("roomId")));
+				session.setInstructor(new Instructor(rs.getInt("instructorId")));
+				session.setAttendant(new Attendant(rs.getInt("attendantId")));
+				session.setCourse(new Course(rs.getInt("courseId")));
 				session.setStart(rs.getInt("start"));
 				session.setEnd(rs.getInt("end"));
 

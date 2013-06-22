@@ -9,6 +9,12 @@ public class Room {
 	private byte attendanceType;
 	private int seatSize;
 	
+	public Room(int int1) {
+		this.id = int1;
+	}
+	public Room() {
+		// TODO Auto-generated constructor stub
+	}
 	//getter & setters
 	public int getId() {
 		return id;

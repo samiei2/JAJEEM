@@ -409,7 +409,6 @@ public class QuizTab_1 extends WebPanel {
 			
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -468,7 +467,6 @@ public class QuizTab_1 extends WebPanel {
 			
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -531,7 +529,6 @@ public class QuizTab_1 extends WebPanel {
 			
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 		});

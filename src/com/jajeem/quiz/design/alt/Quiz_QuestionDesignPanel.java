@@ -2,6 +2,9 @@ package com.jajeem.quiz.design.alt;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Frame;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -9,13 +12,19 @@ import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
 
+import com.alee.extended.filechooser.WebFileChooser;
+import com.alee.extended.filechooser.WebFileChooserField;
+import com.alee.extended.filefilter.DefaultFileFilter;
 import com.alee.extended.image.WebImage;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
@@ -26,12 +35,24 @@ import com.alee.laf.radiobutton.WebRadioButton;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
+
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.BorderLayout;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.UIManager;
 
+import sun.awt.image.ToolkitImage;
+
 public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private WebTextField webTextField;
 	private WebTextField webTextField_1;
 	private WebTextField webTextField_2;
@@ -55,13 +76,19 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 	private WebLabel wblblQuestion;
 	private WebButton wbtnimage;
 	private WebButton wbtnDelete;
-	private WebImage webImage;
 	private WebTextField webTextField_5;
+	private Quiz_FirstPage parentPanel;
+	private WebImage webImage;
 
 	/**
 	 * Create the panel.
+	 * 
+	 * @param quiz_FirstPage
 	 */
-	public Quiz_QuestionDesignPanel() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Quiz_QuestionDesignPanel(WebPanel quiz_FirstPage) {
+		this.parentPanel = (Quiz_FirstPage) quiz_FirstPage;
+
 		setBorder(UIManager.getBorder("TitledBorder.border"));
 		setWblblQuestion(new WebLabel());
 		getWblblQuestion().setText("Question ?");
@@ -306,8 +333,11 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 												GroupLayout.PREFERRED_SIZE)
 										.addContainerGap(24, Short.MAX_VALUE)));
 
+		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
+		webPanel_1.add(webScrollPane_1, BorderLayout.CENTER);
+
 		webImage = new WebImage();
-		webPanel_1.add(webImage, BorderLayout.CENTER);
+		webScrollPane_1.setViewportView(webImage);
 
 		webTextField = new WebTextField();
 
@@ -554,56 +584,14 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		getWebScrollPane().setViewportView(webTextArea);
 		setLayout(groupLayout);
 
+		initEvents();
 	}
 
 	private void initEvents() {
 		webComboBox.addItemListener(new ItemListener() {
-
 			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
-				cl.show(webPanelOptions, (String) arg0.getItem());
-				if (((String) arg0.getItem()).equals("Essay")) {
-					webTextField.setVisible(false);
-					webTextField_1.setVisible(false);
-					webTextField_2.setVisible(false);
-					webTextField_3.setVisible(false);
-					webTextField_4.setVisible(false);
-				} else {
-					webTextField.setVisible(true);
-					webTextField_1.setVisible(true);
-					webTextField_2.setVisible(true);
-					webTextField_3.setVisible(true);
-					webTextField_4.setVisible(true);
-				}
-				webRadioButton.setSelected(false);
-				webRadioButton_1.setSelected(false);
-				webRadioButton_2.setSelected(false);
-				webRadioButton_3.setSelected(false);
-				webRadioButton_4.setSelected(false);
-				webCheckBox.setSelected(false);
-				webCheckBox_1.setSelected(false);
-				webCheckBox_2.setSelected(false);
-				webCheckBox_3.setSelected(false);
-				webCheckBox_4.setSelected(false);
-				if (parentPanel.getQuestionListPanel().getWebTable()
-						.getSelectedRow() != -1
-						&& parentPanel.getParentPanel().isEventsEnabled()) {
-					parentPanel
-							.getParentPanel()
-							.getTablemodel()
-							.setValueAt(
-									webComboBox.getSelectedItem().toString(),
-									parentPanel.getQuestionListPanel()
-											.getWebTable().getSelectedRow(), 1);
-					parentPanel
-							.getParentPanel()
-							.getCurrentQuiz()
-							.getQuestionList()
-							.get(parentPanel.getQuestionListPanel()
-									.getWebTable().getSelectedRow())
-							.setType((byte) webComboBox.getSelectedIndex());
-				}
+			public void itemStateChanged(ItemEvent e) {
+				_itemStateChanged(e);
 			}
 		});
 
@@ -611,41 +599,46 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				if (parentPanel.getQuestionListPanel().getWebTable()
-						.getSelectedRow() != -1
-						&& parentPanel.getParentPanel().isEventsEnabled()) {
-					parentPanel
-							.getQuestionListPanel()
-							.getWebTable()
-							.setValueAt(
-									webTextArea.getText(),
-									parentPanel.getQuestionListPanel()
-											.getWebTable().getSelectedRow(), 3);
-					parentPanel.getParentPanel().getCurrentQuestion()
-							.setTitle(webTextArea.getText());
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (parentPanel.getWebQuestionListPanel().getWebTable()
+							.getSelectedRow() != -1
+							&& parentPanel.getParentPanel().isEventsEnabled()) {
+						parentPanel
+								.getWebQuestionListPanel()
+								.getWebTable()
+								.setValueAt(
+										webTextArea.getText(),
+										parentPanel.getWebQuestionListPanel()
+												.getWebTable().getSelectedRow(),
+										3);
+						parentPanel.getParentPanel().getCurrentQuestion()
+								.setTitle(webTextArea.getText());
+					}
 				}
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-				if (parentPanel.getQuestionListPanel().getWebTable()
-						.getSelectedRow() != -1
-						&& parentPanel.getParentPanel().isEventsEnabled()) {
-					parentPanel
-							.getQuestionListPanel()
-							.getWebTable()
-							.setValueAt(
-									webTextArea.getText(),
-									parentPanel.getQuestionListPanel()
-											.getWebTable().getSelectedRow(), 3);
-					parentPanel.getParentPanel().getCurrentQuestion()
-							.setTitle(webTextArea.getText());
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (parentPanel.getWebQuestionListPanel().getWebTable()
+							.getSelectedRow() != -1
+							&& parentPanel.getParentPanel().isEventsEnabled()) {
+						parentPanel
+								.getWebQuestionListPanel()
+								.getWebTable()
+								.setValueAt(
+										webTextArea.getText(),
+										parentPanel.getWebQuestionListPanel()
+												.getWebTable().getSelectedRow(),
+										3);
+						parentPanel.getParentPanel().getCurrentQuestion()
+								.setTitle(webTextArea.getText());
+					}
 				}
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -654,60 +647,67 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				if (parentPanel.getQuestionListPanel().getWebTable()
-						.getSelectedRow() != -1
-						&& parentPanel.getParentPanel().isEventsEnabled()) {
-					parentPanel.getParentPanel().getCurrentQuestion()
-							.setAnswer1(webTextField.getText());
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (parentPanel.getWebQuestionListPanel().getWebTable()
+							.getSelectedRow() != -1
+							&& parentPanel.getParentPanel().isEventsEnabled()) {
+						parentPanel.getParentPanel().getCurrentQuestion()
+								.setAnswer1(webTextField.getText());
+					}
 				}
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-				if (parentPanel.getQuestionListPanel().getWebTable()
-						.getSelectedRow() != -1
-						&& parentPanel.getParentPanel().isEventsEnabled()) {
-					parentPanel.getParentPanel().getCurrentQuestion()
-							.setAnswer1(webTextField.getText());
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (parentPanel.getWebQuestionListPanel().getWebTable()
+							.getSelectedRow() != -1
+							&& parentPanel.getParentPanel().isEventsEnabled()) {
+						parentPanel.getParentPanel().getCurrentQuestion()
+								.setAnswer1(webTextField.getText());
+					}
 				}
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
 
 			}
 		});
 
-		webTextField_1 = new WebTextField();
 		webTextField_1.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
 					public void removeUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer2(webTextField_1.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer2(webTextField_1.getText());
+							}
 						}
 					}
 
 					@Override
 					public void insertUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer2(webTextField_1.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer2(webTextField_1.getText());
+							}
 						}
 					}
 
 					@Override
 					public void changedUpdate(DocumentEvent arg0) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -717,29 +717,34 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void removeUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer3(webTextField_2.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer3(webTextField_2.getText());
+							}
 						}
 					}
 
 					@Override
 					public void insertUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer3(webTextField_2.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer3(webTextField_2.getText());
+							}
 						}
 					}
 
 					@Override
 					public void changedUpdate(DocumentEvent arg0) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -749,29 +754,34 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void removeUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer4(webTextField_3.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer4(webTextField_3.getText());
+							}
 						}
 					}
 
 					@Override
 					public void insertUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer4(webTextField_3.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer4(webTextField_3.getText());
+							}
 						}
 					}
 
 					@Override
 					public void changedUpdate(DocumentEvent arg0) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -781,29 +791,34 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void removeUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer5(webTextField_4.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer5(webTextField_4.getText());
+							}
 						}
 					}
 
 					@Override
 					public void insertUpdate(DocumentEvent arg0) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel.getParentPanel().getCurrentQuestion()
-									.setAnswer5(webTextField_4.getText());
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+								parentPanel.getParentPanel()
+										.getCurrentQuestion()
+										.setAnswer5(webTextField_4.getText());
+							}
 						}
 					}
 
 					@Override
 					public void changedUpdate(DocumentEvent arg0) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -813,47 +828,63 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void removeUpdate(DocumentEvent e) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel
-									.getQuestionListPanel()
-									.getWebTable()
-									.setValueAt(
-											webTextField_6.getText(),
-											parentPanel.getQuestionListPanel()
-													.getWebTable()
-													.getSelectedRow(), 2);
-							try {
-								parentPanel
-										.getParentPanel()
-										.getCurrentQuestion()
-										.setPoint(
-												Integer.parseInt(webTextField_6
-														.getText()));
-							} catch (Exception ex) {
-								parentPanel.getParentPanel()
-										.getCurrentQuestion().setPoint(0);
-							}
-							if (!parentPanel.getWebCheckBox().isSelected()) {
-								int total = 0;
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
 								try {
-									for (int i = 0; i < parentPanel
-											.getParentPanel().getCurrentQuiz()
-											.getQuestionList().size(); i++) {
-										total += parentPanel.getParentPanel()
-												.getCurrentQuiz()
-												.getQuestionList().get(i)
-												.getPoint();
+									parentPanel
+											.getParentPanel()
+											.getCurrentQuestion()
+											.setPoint(
+													Integer.parseInt(webTextField_6
+															.getText()));
+									parentPanel
+											.getWebQuestionListPanel()
+											.getWebTable()
+											.setValueAt(
+													webTextField_6.getText(),
+													parentPanel
+															.getWebQuestionListPanel()
+															.getWebTable()
+															.getSelectedRow(),
+													2);
+								} catch (Exception ex) {
+									parentPanel.getParentPanel()
+											.getCurrentQuestion().setPoint(0);
+									parentPanel
+											.getWebQuestionListPanel()
+											.getWebTable()
+											.setValueAt(
+													0,
+													parentPanel
+															.getWebQuestionListPanel()
+															.getWebTable()
+															.getSelectedRow(),
+													2);
+								}
+								if (!parentPanel.getWbchckbxAuto().isSelected()) {
+									int total = 0;
+									try {
+										for (int i = 0; i < parentPanel
+												.getParentPanel()
+												.getCurrentRun().getQuiz()
+												.getQuestionList().size(); i++) {
+											total += parentPanel
+													.getParentPanel()
+													.getCurrentRun().getQuiz()
+													.getQuestionList().get(i)
+													.getPoint();
+										}
+										parentPanel.getWbtxtfldPoints()
+												.setText(String.valueOf(total));
+									} catch (Exception e2) {
+										// total =
+										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
+										parentPanel.getWbtxtfldPoints()
+												.setText(String.valueOf(0));
 									}
-									parentPanel.getWbTxtFldPoints().setText(
-											String.valueOf(total));
-								} catch (Exception e2) {
-									// total =
-									// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
-									parentPanel.getWbTxtFldPoints().setText(
-											String.valueOf(0));
 								}
 							}
 						}
@@ -861,47 +892,64 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void insertUpdate(DocumentEvent e) {
-						if (parentPanel.getQuestionListPanel().getWebTable()
-								.getSelectedRow() != -1
-								&& parentPanel.getParentPanel()
-										.isEventsEnabled()) {
-							parentPanel
-									.getQuestionListPanel()
-									.getWebTable()
-									.setValueAt(
-											webTextField_6.getText(),
-											parentPanel.getQuestionListPanel()
-													.getWebTable()
-													.getSelectedRow(), 2);
-							try {
-								parentPanel
-										.getParentPanel()
-										.getCurrentQuestion()
-										.setPoint(
-												Integer.parseInt(webTextField_6
-														.getText()));
-							} catch (Exception ex) {
-								parentPanel.getParentPanel()
-										.getCurrentQuestion().setPoint(0);
-							}
-							if (!parentPanel.getWebCheckBox().isSelected()) {
-								int total = 0;
+						if (parentPanel.getParentPanel().isEventsEnabled()) {
+							if (parentPanel.getWebQuestionListPanel()
+									.getWebTable().getSelectedRow() != -1
+									&& parentPanel.getParentPanel()
+											.isEventsEnabled()) {
+
 								try {
-									for (int i = 0; i < parentPanel
-											.getParentPanel().getCurrentQuiz()
-											.getQuestionList().size(); i++) {
-										total += parentPanel.getParentPanel()
-												.getCurrentQuiz()
-												.getQuestionList().get(i)
-												.getPoint();
+									parentPanel
+											.getParentPanel()
+											.getCurrentQuestion()
+											.setPoint(
+													Integer.parseInt(webTextField_6
+															.getText()));
+									parentPanel
+											.getWebQuestionListPanel()
+											.getWebTable()
+											.setValueAt(
+													webTextField_6.getText(),
+													parentPanel
+															.getWebQuestionListPanel()
+															.getWebTable()
+															.getSelectedRow(),
+													2);
+								} catch (Exception ex) {
+									parentPanel.getParentPanel()
+											.getCurrentQuestion().setPoint(0);
+									parentPanel
+											.getWebQuestionListPanel()
+											.getWebTable()
+											.setValueAt(
+													0,
+													parentPanel
+															.getWebQuestionListPanel()
+															.getWebTable()
+															.getSelectedRow(),
+													2);
+								}
+								if (!parentPanel.getWbchckbxAuto().isSelected()) {
+									int total = 0;
+									try {
+										for (int i = 0; i < parentPanel
+												.getParentPanel()
+												.getCurrentRun().getQuiz()
+												.getQuestionList().size(); i++) {
+											total += parentPanel
+													.getParentPanel()
+													.getCurrentRun().getQuiz()
+													.getQuestionList().get(i)
+													.getPoint();
+										}
+										parentPanel.getWbtxtfldPoints()
+												.setText(String.valueOf(total));
+									} catch (Exception e2) {
+										// total =
+										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
+										parentPanel.getWbtxtfldPoints()
+												.setText(String.valueOf(0));
 									}
-									parentPanel.getWbTxtFldPoints().setText(
-											String.valueOf(total));
-								} catch (Exception e2) {
-									// total =
-									// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
-									parentPanel.getWbTxtFldPoints().setText(
-											String.valueOf(0));
 								}
 							}
 						}
@@ -909,168 +957,187 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 					@Override
 					public void changedUpdate(DocumentEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
 
 		webRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webRadioButton.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webRadioButton.setSelected(false);
+						return;
+					}
+					if (webTextField.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webRadioButton.setSelected(false);
+						return;
+					}
+					webRadioButton.setSelected(true);
+					webRadioButton_1.setSelected(false);
+					webRadioButton_2.setSelected(false);
+					webRadioButton_3.setSelected(false);
+					webRadioButton_4.setSelected(false);
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] {
+											webRadioButton.isSelected(),
+											webRadioButton_1.isSelected(),
+											webRadioButton_2.isSelected(),
+											webRadioButton_3.isSelected(),
+											webRadioButton_4.isSelected() });
 				}
-				if (webTextField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webRadioButton.setSelected(false);
-					return;
-				}
-				webRadioButton.setSelected(true);
-				webRadioButton_1.setSelected(false);
-				webRadioButton_2.setSelected(false);
-				webRadioButton_3.setSelected(false);
-				webRadioButton_4.setSelected(false);
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webRadioButton.isSelected(),
-										webRadioButton_1.isSelected(),
-										webRadioButton_2.isSelected(),
-										webRadioButton_3.isSelected(),
-										webRadioButton_4.isSelected() });
 			}
 		});
 
 		webRadioButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webRadioButton_1.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webRadioButton_1.setSelected(false);
+						return;
+					}
+					if (webTextField_1.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webRadioButton_1.setSelected(false);
+						return;
+					}
+					webRadioButton.setSelected(false);
+					webRadioButton_1.setSelected(true);
+					webRadioButton_2.setSelected(false);
+					webRadioButton_3.setSelected(false);
+					webRadioButton_4.setSelected(false);
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] {
+											webRadioButton.isSelected(),
+											webRadioButton_1.isSelected(),
+											webRadioButton_2.isSelected(),
+											webRadioButton_3.isSelected(),
+											webRadioButton_4.isSelected() });
 				}
-				if (webTextField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webRadioButton_1.setSelected(false);
-					return;
-				}
-				webRadioButton.setSelected(false);
-				webRadioButton_1.setSelected(true);
-				webRadioButton_2.setSelected(false);
-				webRadioButton_3.setSelected(false);
-				webRadioButton_4.setSelected(false);
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webRadioButton.isSelected(),
-										webRadioButton_1.isSelected(),
-										webRadioButton_2.isSelected(),
-										webRadioButton_3.isSelected(),
-										webRadioButton_4.isSelected() });
 			}
 		});
 
 		webRadioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webRadioButton_2.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webRadioButton_2.setSelected(false);
+						return;
+					}
+					if (webTextField_2.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webRadioButton_2.setSelected(false);
+						return;
+					}
+					webRadioButton.setSelected(false);
+					webRadioButton_1.setSelected(false);
+					webRadioButton_2.setSelected(true);
+					webRadioButton_3.setSelected(false);
+					webRadioButton_4.setSelected(false);
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] {
+											webRadioButton.isSelected(),
+											webRadioButton_1.isSelected(),
+											webRadioButton_2.isSelected(),
+											webRadioButton_3.isSelected(),
+											webRadioButton_4.isSelected() });
 				}
-				if (webTextField_2.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webRadioButton_2.setSelected(false);
-					return;
-				}
-				webRadioButton.setSelected(false);
-				webRadioButton_1.setSelected(false);
-				webRadioButton_2.setSelected(true);
-				webRadioButton_3.setSelected(false);
-				webRadioButton_4.setSelected(false);
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webRadioButton.isSelected(),
-										webRadioButton_1.isSelected(),
-										webRadioButton_2.isSelected(),
-										webRadioButton_3.isSelected(),
-										webRadioButton_4.isSelected() });
 			}
 		});
 
 		webRadioButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webRadioButton_3.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webRadioButton_3.setSelected(false);
+						return;
+					}
+					if (webTextField_3.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webRadioButton_3.setSelected(false);
+						return;
+					}
+					webRadioButton.setSelected(false);
+					webRadioButton_1.setSelected(false);
+					webRadioButton_2.setSelected(false);
+					webRadioButton_3.setSelected(true);
+					webRadioButton_4.setSelected(false);
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] {
+											webRadioButton.isSelected(),
+											webRadioButton_1.isSelected(),
+											webRadioButton_2.isSelected(),
+											webRadioButton_3.isSelected(),
+											webRadioButton_4.isSelected() });
 				}
-				if (webTextField_3.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webRadioButton_3.setSelected(false);
-					return;
-				}
-				webRadioButton.setSelected(false);
-				webRadioButton_1.setSelected(false);
-				webRadioButton_2.setSelected(false);
-				webRadioButton_3.setSelected(true);
-				webRadioButton_4.setSelected(false);
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webRadioButton.isSelected(),
-										webRadioButton_1.isSelected(),
-										webRadioButton_2.isSelected(),
-										webRadioButton_3.isSelected(),
-										webRadioButton_4.isSelected() });
 			}
 		});
 
 		webRadioButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webRadioButton_4.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webRadioButton_4.setSelected(false);
+						return;
+					}
+					if (webTextField_4.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webRadioButton_4.setSelected(false);
+						return;
+					}
+					webRadioButton.setSelected(false);
+					webRadioButton_1.setSelected(false);
+					webRadioButton_2.setSelected(false);
+					webRadioButton_3.setSelected(false);
+					webRadioButton_4.setSelected(true);
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] {
+											webRadioButton.isSelected(),
+											webRadioButton_1.isSelected(),
+											webRadioButton_2.isSelected(),
+											webRadioButton_3.isSelected(),
+											webRadioButton_4.isSelected() });
 				}
-				if (webTextField_4.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webRadioButton_4.setSelected(false);
-					return;
-				}
-				webRadioButton.setSelected(false);
-				webRadioButton_1.setSelected(false);
-				webRadioButton_2.setSelected(false);
-				webRadioButton_3.setSelected(false);
-				webRadioButton_4.setSelected(true);
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webRadioButton.isSelected(),
-										webRadioButton_1.isSelected(),
-										webRadioButton_2.isSelected(),
-										webRadioButton_3.isSelected(),
-										webRadioButton_4.isSelected() });
 			}
 		});
 
@@ -1078,28 +1145,31 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webCheckBox.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webCheckBox.setSelected(false);
+						return;
+					}
+					if (webTextField.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webCheckBox.setSelected(false);
+						return;
+					}
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] { webCheckBox.isSelected(),
+											webCheckBox_1.isSelected(),
+											webCheckBox_2.isSelected(),
+											webCheckBox_3.isSelected(),
+											webCheckBox_4.isSelected() });
 				}
-				if (webTextField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webCheckBox.setSelected(false);
-					return;
-				}
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webCheckBox.isSelected(),
-										webCheckBox_1.isSelected(),
-										webCheckBox_2.isSelected(),
-										webCheckBox_3.isSelected(),
-										webCheckBox_4.isSelected() });
 			}
 		});
 
@@ -1107,28 +1177,31 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webCheckBox_1.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webCheckBox_1.setSelected(false);
+						return;
+					}
+					if (webTextField_1.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webCheckBox_1.setSelected(false);
+						return;
+					}
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] { webCheckBox.isSelected(),
+											webCheckBox_1.isSelected(),
+											webCheckBox_2.isSelected(),
+											webCheckBox_3.isSelected(),
+											webCheckBox_4.isSelected() });
 				}
-				if (webTextField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webCheckBox_1.setSelected(false);
-					return;
-				}
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webCheckBox.isSelected(),
-										webCheckBox_1.isSelected(),
-										webCheckBox_2.isSelected(),
-										webCheckBox_3.isSelected(),
-										webCheckBox_4.isSelected() });
 			}
 		});
 
@@ -1136,28 +1209,31 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webCheckBox_2.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webCheckBox_2.setSelected(false);
+						return;
+					}
+					if (webTextField_2.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webCheckBox_2.setSelected(false);
+						return;
+					}
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] { webCheckBox.isSelected(),
+											webCheckBox_1.isSelected(),
+											webCheckBox_2.isSelected(),
+											webCheckBox_3.isSelected(),
+											webCheckBox_4.isSelected() });
 				}
-				if (webTextField_2.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webCheckBox_2.setSelected(false);
-					return;
-				}
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webCheckBox.isSelected(),
-										webCheckBox_1.isSelected(),
-										webCheckBox_2.isSelected(),
-										webCheckBox_3.isSelected(),
-										webCheckBox_4.isSelected() });
 			}
 		});
 
@@ -1165,28 +1241,31 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webCheckBox_3.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webCheckBox_3.setSelected(false);
+						return;
+					}
+					if (webTextField_3.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webCheckBox_3.setSelected(false);
+						return;
+					}
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] { webCheckBox.isSelected(),
+											webCheckBox_1.isSelected(),
+											webCheckBox_2.isSelected(),
+											webCheckBox_3.isSelected(),
+											webCheckBox_4.isSelected() });
 				}
-				if (webTextField_3.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webCheckBox_3.setSelected(false);
-					return;
-				}
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webCheckBox.isSelected(),
-										webCheckBox_1.isSelected(),
-										webCheckBox_2.isSelected(),
-										webCheckBox_3.isSelected(),
-										webCheckBox_4.isSelected() });
 			}
 		});
 
@@ -1194,30 +1273,102 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (webTextArea.getText().equals("")) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Question is empty,please first type in the question!");
-					webCheckBox_4.setSelected(false);
-					return;
+				if (parentPanel.getParentPanel().isEventsEnabled()) {
+					if (webTextArea.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Question is empty,please first type in the question!");
+						webCheckBox_4.setSelected(false);
+						return;
+					}
+					if (webTextField_4.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(null,
+										"Answer is empty,please first type in the answer!");
+						webCheckBox_4.setSelected(false);
+						return;
+					}
+					parentPanel
+							.getParentPanel()
+							.getCurrentQuestion()
+							.setCorrectAnswer(
+									new boolean[] { webCheckBox.isSelected(),
+											webCheckBox_1.isSelected(),
+											webCheckBox_2.isSelected(),
+											webCheckBox_3.isSelected(),
+											webCheckBox_4.isSelected() });
 				}
-				if (webTextField_4.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Answer is empty,please first type in the answer!");
-					webCheckBox_4.setSelected(false);
-					return;
-				}
-				parentPanel
-						.getParentPanel()
-						.getCurrentQuestion()
-						.setCorrectAnswer(
-								new boolean[] { webCheckBox.isSelected(),
-										webCheckBox_1.isSelected(),
-										webCheckBox_2.isSelected(),
-										webCheckBox_3.isSelected(),
-										webCheckBox_4.isSelected() });
 			}
 		});
+
+		wbtnimage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				// int command = filechooser.showDialog();
+				// if(command == 0){
+				// webImage.setImage(Toolkit.getDefaultToolkit().getImage(filechooser.getSelectedFile().getAbsolutePath()));
+				// webImage.show();
+				// }
+			}
+		});
+
+		wbtnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+	}
+
+	public void _itemStateChanged(ItemEvent arg0) {
+		if (parentPanel.getParentPanel().isEventsEnabled()) {
+			CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
+			cl.show(webPanelOptions, (String) arg0.getItem());
+			if (((String) arg0.getItem()).equals("Essay")) {
+				webTextField.setVisible(false);
+				webTextField_1.setVisible(false);
+				webTextField_2.setVisible(false);
+				webTextField_3.setVisible(false);
+				webTextField_4.setVisible(false);
+			} else {
+				webTextField.setVisible(true);
+				webTextField_1.setVisible(true);
+				webTextField_2.setVisible(true);
+				webTextField_3.setVisible(true);
+				webTextField_4.setVisible(true);
+			}
+			webRadioButton.setSelected(false);
+			webRadioButton_1.setSelected(false);
+			webRadioButton_2.setSelected(false);
+			webRadioButton_3.setSelected(false);
+			webRadioButton_4.setSelected(false);
+			webCheckBox.setSelected(false);
+			webCheckBox_1.setSelected(false);
+			webCheckBox_2.setSelected(false);
+			webCheckBox_3.setSelected(false);
+			webCheckBox_4.setSelected(false);
+			if (parentPanel != null
+					&& parentPanel.getParentPanel().getCurrentRun() != null
+					&& parentPanel.getWebQuestionListPanel().getWebTable()
+							.getSelectedRow() != -1
+					&& parentPanel.getParentPanel().isEventsEnabled()) {
+				parentPanel
+						.getWebQuestionListPanel()
+						.getWebTable()
+						.getModel()
+						.setValueAt(
+								webComboBox.getSelectedItem().toString(),
+								parentPanel.getWebQuestionListPanel()
+										.getWebTable().getSelectedRow(), 1);
+				parentPanel
+						.getParentPanel()
+						.getCurrentRun()
+						.getQuiz()
+						.getQuestionList()
+						.get(parentPanel.getWebQuestionListPanel()
+								.getWebTable().getSelectedRow())
+						.setType((byte) webComboBox.getSelectedIndex());
+			}
+		}
 	}
 
 	public WebTextArea getWebTextArea() {
@@ -1300,12 +1451,12 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		this.webCheckBox_2 = webCheckBox_2;
 	}
 
-	public WebCheckBox getWebCheckBox_3() {
-		return webCheckBox_3;
-	}
-
 	public void setWebCheckBox_3(WebCheckBox webCheckBox_3) {
 		this.webCheckBox_3 = webCheckBox_3;
+	}
+
+	public WebCheckBox getWebCheckBox_3() {
+		return webCheckBox_3;
 	}
 
 	public WebCheckBox getWebCheckBox_4() {
@@ -1378,5 +1529,62 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 
 	public void setWebScrollPane(WebScrollPane webScrollPane) {
 		this.webScrollPane = webScrollPane;
+	}
+
+	public void clear() {
+		webTextArea.setText("");
+		webTextField.setText("");
+		webTextField_1.setText("");
+		webTextField_2.setText("");
+		webTextField_3.setText("");
+		webTextField_4.setText("");
+		webTextField_5.setText("");
+		webTextField_6.setText("");
+		webCheckBox.setSelected(false);
+		webCheckBox_1.setSelected(false);
+		webCheckBox_2.setSelected(false);
+		webCheckBox_3.setSelected(false);
+		webCheckBox_4.setSelected(false);
+		webRadioButton.setSelected(false);
+		webRadioButton_1.setSelected(false);
+		webRadioButton_2.setSelected(false);
+		webRadioButton_3.setSelected(false);
+		webRadioButton_4.setSelected(false);
+		webComboBox.setSelectedIndex(0);
+		CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
+		cl.show(webPanelOptions, "Single Choice");
+		webTextField.setVisible(true);
+		webTextField_1.setVisible(true);
+		webTextField_2.setVisible(true);
+		webTextField_3.setVisible(true);
+		webTextField_4.setVisible(true);
+	}
+
+	public void WebComboboxSelectionChanged(String item) {
+		CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
+		cl.show(webPanelOptions, item);
+		if (item.equals("Essay")) {
+			webTextField.setVisible(false);
+			webTextField_1.setVisible(false);
+			webTextField_2.setVisible(false);
+			webTextField_3.setVisible(false);
+			webTextField_4.setVisible(false);
+		} else {
+			webTextField.setVisible(true);
+			webTextField_1.setVisible(true);
+			webTextField_2.setVisible(true);
+			webTextField_3.setVisible(true);
+			webTextField_4.setVisible(true);
+		}
+		webRadioButton.setSelected(false);
+		webRadioButton_1.setSelected(false);
+		webRadioButton_2.setSelected(false);
+		webRadioButton_3.setSelected(false);
+		webRadioButton_4.setSelected(false);
+		webCheckBox.setSelected(false);
+		webCheckBox_1.setSelected(false);
+		webCheckBox_2.setSelected(false);
+		webCheckBox_3.setSelected(false);
+		webCheckBox_4.setSelected(false);
 	}
 }

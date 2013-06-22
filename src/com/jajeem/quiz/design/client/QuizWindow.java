@@ -125,7 +125,7 @@ public class QuizWindow extends WebFrame {
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
-		privateStudent.setFullName(com.jajeem.util.Session.studentName);
+		privateStudent.setFullName(com.jajeem.util.Session.getStudentName());
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		

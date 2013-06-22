@@ -27,8 +27,10 @@ import com.alee.laf.list.WebList;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebPasswordField;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
+import com.jajeem.room.model.Session;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
@@ -52,7 +54,6 @@ public class InstructorLogin extends JDialog {
 
 			@SuppressWarnings("unused")
 			InstructorLogin dialog = new InstructorLogin();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,31 +79,31 @@ public class InstructorLogin extends JDialog {
 
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+		
 
 			}
 
 			@Override
 			public void windowIconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
@@ -113,7 +114,7 @@ public class InstructorLogin extends JDialog {
 
 			@Override
 			public void windowActivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -162,7 +163,7 @@ public class InstructorLogin extends JDialog {
 
 			// get list of courses
 			RoomService rs = new RoomService();
-			ArrayList<Course> courseList = rs.getCourseDAO().list();
+			final ArrayList<Course> courseList = rs.getCourseDAO().list();
 			DefaultListModel listModel2 = new DefaultListModel();
 
 			for (Course courseItem : courseList) {
@@ -249,6 +250,20 @@ public class InstructorLogin extends JDialog {
 												indexOfLastBracket), password
 										.getPassword());
 								if (grant) {
+									Instructor instructor = instructorService.get(user
+											.substring(indexOfOpenBracket + 1,
+													indexOfLastBracket));
+									com.jajeem.util.Session.setInstructor(instructor);
+									
+									// TODO Session initialization which is set to default
+									Session session = new Session();
+									session.setInstructor(instructor);
+									session.setCourse(courseList.get(list2.getSelectedIndex()));
+									com.jajeem.util.Session.setSession(session);
+									// TODO Save Session in database
+									
+									////////////////////////////////
+									
 									setVisible(false);
 									InstructorNoa
 											.main(new String[] {
