@@ -449,10 +449,10 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+				if (getDesktopPane().getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getClientProperty("ip");
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
 
 					try {
 						powerCommand = new PowerCommand(InetAddress
@@ -460,7 +460,7 @@ public class InstructorNoa {
 								.parseInt(Config.getParam("port")), "");
 						powerCommand.setTo(selectedStudent);
 						powerCommand.setType("turnOff");
-						InstructorNoa.getServerService().send(powerCommand);
+						serverService.send(powerCommand);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -474,10 +474,10 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+				if (getDesktopPane().getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getClientProperty("ip");
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
 
 					try {
 						powerCommand = new PowerCommand(InetAddress
@@ -485,24 +485,24 @@ public class InstructorNoa {
 								.parseInt(Config.getParam("port")), "");
 						powerCommand.setTo(selectedStudent);
 						powerCommand.setType("logOff");
-						InstructorNoa.getServerService().send(powerCommand);
+						serverService.send(powerCommand);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
 		});
-		
+
 		WebButton restartButton = new WebButton("Restart");
 		restartButton.putClientProperty("key", "restart");
 		restartButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+				if (getDesktopPane().getSelectedFrame() != null) {
 					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getClientProperty("ip");
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
 
 					try {
 						powerCommand = new PowerCommand(InetAddress
@@ -510,7 +510,7 @@ public class InstructorNoa {
 								.parseInt(Config.getParam("port")), "");
 						powerCommand.setTo(selectedStudent);
 						powerCommand.setType("restart");
-						InstructorNoa.getServerService().send(powerCommand);
+						serverService.send(powerCommand);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -668,20 +668,15 @@ public class InstructorNoa {
 
 				programTableModel.addRow(new Object[] {
 						programTextField.getText(), true });
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getClientProperty("ip");
-					try {
-						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-								InetAddress.getLocalHost().getHostAddress(),
-								selectedStudent, Integer.parseInt(Config
-										.getParam("port")), (programTextField
-										.getText() + ".exe"), true);
-						serverService.send(ic);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				try {
+					WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+							InetAddress.getLocalHost().getHostAddress(), Config
+									.getParam("broadcastingIp"), Integer
+									.parseInt(Config.getParam("port")),
+							(programTextField.getText() + ".exe"), true);
+					serverService.send(ic);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				programTextField.setText("");
 			}
@@ -1032,6 +1027,31 @@ public class InstructorNoa {
 		public void setValueAt(Object value, int row, int col) {
 			data[row][col] = value;
 			fireTableCellUpdated(row, col);
+			if (value instanceof Boolean) {
+				if ((boolean) value) {
+					try {
+						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								Config.getParam("broadcastingIp"),
+								Integer.parseInt(Config.getParam("port")),
+								(data[row][col - 1] + ".exe"), true);
+						serverService.send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								Config.getParam("broadcastingIp"),
+								Integer.parseInt(Config.getParam("port")),
+								(data[row][col - 1] + ".exe"), false);
+						serverService.send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		}
 
 		public void addRow(Object[] row) {

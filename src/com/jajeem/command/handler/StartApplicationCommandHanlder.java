@@ -22,6 +22,7 @@ public class StartApplicationCommandHanlder implements ICommandHandler {
 		final File[] fileList = fileUtil.finder(pathToStartMenu);
 
 		for (int i = 0; i < fileList.length; i++) {
+
 			File file = fileList[i];
 			if (file.getName().indexOf(".") != -1) {
 				if (file.getName().substring(0, file.getName().length() - 4)

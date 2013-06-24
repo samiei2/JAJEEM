@@ -28,7 +28,6 @@ import jrdesktop.viewer.Viewer;
 
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
-import com.alee.extended.panel.WebButtonGroup;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
@@ -50,7 +49,6 @@ import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.utils.SwingUtils;
-import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartUpCommand;
@@ -325,12 +323,28 @@ public class InstructorNoaUtil {
 										.getDesktopPane().getSelectedFrame()
 										.getClientProperty("ip");
 								try {
-									Chat currentChat = new Chat(
-											selectedStudent, Integer
-													.parseInt(Config
+									Chat currentChat = null;
+									if (!InstructorNoa.getChatList().isEmpty()) {
+										for (Chat chat : InstructorNoa
+												.getChatList()) {
+											if (chat.getTo().equals(
+													selectedStudent)) {
+												currentChat = chat;
+												currentChat.setVisible(true);
+												break;
+											}
+										}
+									} else {
+										if (currentChat == null) {
+											currentChat = new Chat(
+													selectedStudent,
+													Integer.parseInt(Config
 															.getParam("port")));
-									InstructorNoa.getChatList()
-											.add(currentChat);
+											InstructorNoa.getChatList().add(
+													currentChat);
+										}
+									}
+
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
