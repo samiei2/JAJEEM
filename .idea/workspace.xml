@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="265344af-7001-44a5-9bcf-99bc9b1ad7d1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Jajeem.iml" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid5024.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid5104.log" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6132.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6584.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid6740.log" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7288.log" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7632.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7652.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\hs_err_pid7912.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\jajeem.db.lock.db" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\lib\screen_converter.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\lib\screen_player.jar" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\src\com\jajeem\videoplayer\design\vlclib.zip" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\libvlc.dll" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\libvlccore.dll" afterPath="" />
@@ -309,22 +304,16 @@
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\visualization\libprojectm_plugin.dll" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Armin\Desktop\Kar\jajeem\vlclib\vlclib\plugins\visualization\libvisual_plugin.dll" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jajeem.db.h2.db" afterPath="$PROJECT_DIR$/jajeem.db.h2.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Points_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Points_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Question_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Question_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Student_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/QuizTab_2_Student_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyMain.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Question_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Question_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Student_View.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/SurveyTab_2_Student_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/survey/design/client/SurveyWindow.java" afterPath="$PROJECT_DIR$/src/com/jajeem/survey/design/client/SurveyWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jajeem.db.trace.db" afterPath="$PROJECT_DIR$/jajeem.db.trace.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewer.conf" afterPath="$PROJECT_DIR$/viewer.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_FirstPage.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_FirstPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_Main.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_QuestionDesignPanel.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_QuestionDesignPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/model/Run.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/model/Run.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/jajeem/quiz/dao/h2/RunDAO.java" afterPath="$PROJECT_DIR$/src/com/jajeem/quiz/dao/h2/RunDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jajeem.db.lock.db" afterPath="$PROJECT_DIR$/jajeem.db.lock.db" />
     </list>
     <ignored path="Jajeem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="265344af-7001-44a5-9bcf-99bc9b1ad7d1" time="1371569606070" ignored="false" />
+    <file path="/Dummy.txt" changelist="265344af-7001-44a5-9bcf-99bc9b1ad7d1" time="1371921649178" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -384,26 +373,7 @@
     <favorites_list name="Jajeem" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="QuizWindow.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="22" selection-start="2282" selection-end="2282" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Survey.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.03526971">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -444,7 +414,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
@@ -493,6 +463,136 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quiz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quiz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="design" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jajeem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quiz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="design" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -509,11 +609,11 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -528,6 +628,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -556,19 +669,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -655,7 +755,7 @@
       <window_info id="Code Graph" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CodeLock" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -663,7 +763,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22329472" sideWeight="0.67107004" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22329472" sideWeight="0.67107004" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -753,14 +853,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="22" selection-start="2282" selection-end="2282" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.03526971">
+        <state line="21" column="22" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/survey/model/Survey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="4" selection-start="1065" selection-end="1065" vertical-scroll-proportion="0.6511628">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/client/QuizWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="22" selection-start="2282" selection-end="2282" vertical-scroll-proportion="0.02367688">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jajeem/quiz/design/alt/Quiz_Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="52" selection-start="1599" selection-end="1599" vertical-scroll-proportion="0.21161826">
           <folding />
         </state>
       </provider>

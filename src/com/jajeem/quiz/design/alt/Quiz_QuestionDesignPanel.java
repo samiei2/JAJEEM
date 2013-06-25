@@ -1346,6 +1346,11 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			webCheckBox_2.setSelected(false);
 			webCheckBox_3.setSelected(false);
 			webCheckBox_4.setSelected(false);
+			parentPanel
+					.getParentPanel()
+					.getCurrentQuestion()
+					.setCorrectAnswer(
+							new boolean[] { false, false, false, false, false });
 			if (parentPanel != null
 					&& parentPanel.getParentPanel().getCurrentRun() != null
 					&& parentPanel.getWebQuestionListPanel().getWebTable()

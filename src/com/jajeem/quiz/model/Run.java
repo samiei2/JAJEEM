@@ -10,10 +10,10 @@ public class Run implements Serializable{
 	
 	//properties
 	private int id; 
-	private Instructor instructor;
-	private Session session;
-	private Quiz quiz;
-	private Student student;
+	private Instructor instructor = new Instructor();
+	private Session session = new Session();
+	private Quiz quiz = new Quiz();
+	private Student student = new Student();
 	private int score;
 	private long start;
 	private long end;

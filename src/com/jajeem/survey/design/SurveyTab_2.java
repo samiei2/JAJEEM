@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -20,6 +21,7 @@ import com.jajeem.events.SurveyFinished;
 //import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
+import com.jajeem.quiz.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
 
@@ -32,6 +34,7 @@ public class SurveyTab_2 extends WebPanel {
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
 	private ArrayList<Run> runResults;
 	private SurveyEvent responseRecieved;
+	private ArrayList<Integer> responseCount;
 	
 	private Survey currentSurvey;
 	/**
@@ -41,6 +44,7 @@ public class SurveyTab_2 extends WebPanel {
 	public SurveyTab_2() {
 		surveyResponse = new ArrayList<>();
 		runResults = new ArrayList<>();
+		responseCount = new ArrayList<>();
 		
 		WebLabel wblblView = new WebLabel();
 		wblblView.setText("View");
@@ -95,6 +99,7 @@ public class SurveyTab_2 extends WebPanel {
 			
 			@Override
 			public void questionAnswered(SurveyResponse e) {
+				
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
 			}

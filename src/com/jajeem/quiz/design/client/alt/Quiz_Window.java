@@ -1,4 +1,4 @@
-package com.jajeem.survey.design.client;
+package com.jajeem.quiz.design.client.alt;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -35,29 +35,30 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
-import com.jajeem.command.model.SendSurveyResponseCommand;
+import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
-import com.jajeem.events.SurveyEvent;
-import com.jajeem.events.SurveyEventListener;
-import com.jajeem.events.SurveyFinished;
-import com.jajeem.events.SurveyResponse;
-import com.jajeem.events.SurveyStop;
-import com.jajeem.survey.model.Question;
-import com.jajeem.survey.model.Survey;
-import com.jajeem.survey.model.Run;
+import com.jajeem.events.QuizEvent;
+import com.jajeem.events.QuizEventListener;
+import com.jajeem.events.QuizFinished;
+import com.jajeem.events.QuizResponse;
+import com.jajeem.events.QuizStop;
+import com.jajeem.quiz.model.Question;
+import com.jajeem.quiz.model.Quiz;
+import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class SurveyWindow extends WebFrame {
+public class Quiz_Window extends WebFrame {
 
 	private WebPanel contentPane;
 	
 	private DefaultListModel model;
+	private WebTextField webTextField_1;
 	private WebList webList;
-	//private Survey currentRun.getSurvey();
+	//private Quiz currentRun.getQuiz();
 	private WebRadioButton webRadioButton;
 	private WebRadioButton webRadioButton_1;
 	private WebRadioButton webRadioButton_2;
@@ -82,11 +83,11 @@ public class SurveyWindow extends WebFrame {
 	
 	protected Question currentQuestion;
 	
-	private SurveyEvent surveyEvent;
+	private QuizEvent quizEvent;
 	private ArrayList<Question> sendQueue = new ArrayList<>();
 	//TODO remove code below
 	private int sid;
-	private Student privateStudent;
+	private Student privateStudent = new Student();
 	private Run currentRun;
 	
 	long remaining; // How many milliseconds remain in the countdown.
@@ -106,7 +107,7 @@ public class SurveyWindow extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					SurveyWindow frame = new SurveyWindow();
+//					QuizWindow frame = new QuizWindow();
 //					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -118,36 +119,59 @@ public class SurveyWindow extends WebFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SurveyWindow(Run run) {
-		setTitle("Survey");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyWindow.class.getResource("/com/jajeem/images/survey.png")));
+	public Quiz_Window(Run run) {
+		setTitle("Quiz");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Quiz_Window.class.getResource("/com/jajeem/images/quiz.png")));
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
-		privateStudent = new Student();
 		privateStudent.setId(sid);
-//		privateStudent.setFullName(com.jajeem.util.Session.getStudent().getFullName());
+		if(com.jajeem.util.Session.getStudent().getFullName()!=null)
+			privateStudent.setFullName(com.jajeem.util.Session.getStudent().getFullName());
+		else
+			privateStudent.setFullName("Anonymous");
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		
-		ClientSession.setSurveyWindowHndl(this);
+		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				if(currentRun.getSurvey() == null || currentRun.getSurvey().getQuestionList().size() == 0){
-					JOptionPane.showMessageDialog(null, "An error occured while opening the survey");
+				if(currentRun.getQuiz() == null || currentRun.getQuiz().getQuestionList().size() == 0){
+					JOptionPane.showMessageDialog(null, "An error occured while opening the quiz");
 					dispose();
 					return;
 				}
 				
 				
-				for (int i = 0; i < currentRun.getSurvey().getQuestionList().size(); i++) {
+				for (int i = 0; i < currentRun.getQuiz().getQuestionList().size(); i++) {
 					model.addElement("Question "+(i+1));
 				}
 				
 				webList.setSelectedIndex(0);
 				
+				/////Setting the timer
+				ActionListener taskPerformer = new ActionListener() {
+				      public void actionPerformed(ActionEvent evt) {
+				     	  updateDisplay();
+				      }
+				};
+				  
+				
+				if(currentRun.getQuiz().getTime() != 0){
+					webTextField_1.setText(String.valueOf(currentRun.getQuiz().getTime()).concat(":00"));
+					remaining = currentRun.getQuiz().getTime()*60000;
+					timer = new Timer(1000,taskPerformer);
+				    timer.setInitialDelay(0);
+				    lastUpdate = System.currentTimeMillis();
+				    timer.start();
+					
+				}
+				else{
+					webTextField_1.setText("");
+				}
+				
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
-				webTextField.setText(currentRun.getSurvey().getTitle());
+				webTextField.setText(currentRun.getQuiz().getTitle());
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -233,12 +257,12 @@ public class SurveyWindow extends WebFrame {
 											sendQueue.remove(0);
 										}
 									}
-									SurveyResponse resp = new SurveyResponse(question);
+									QuizResponse resp = new QuizResponse(question);
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
-									resp.setSurveyRun(currentRun);
-									//new SurveyEvent().fireResponseEvent(resp);
-									SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+									resp.setQuizRun(currentRun);
+									new QuizEvent().fireResponseEvent(resp);
+									SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 									cmd.setEvent(resp);
 								
 									ServerService service = new ServerService();
@@ -658,12 +682,12 @@ public class SurveyWindow extends WebFrame {
 										sendQueue.remove(0);
 									}
 								}
-								SurveyResponse resp = new SurveyResponse(question);
+								QuizResponse resp = new QuizResponse(question);
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
-								resp.setSurveyRun(currentRun);
-								//new SurveyEvent().fireResponseEvent(resp);
-								SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+								resp.setQuizRun(currentRun);
+								//new QuizEvent().fireResponseEvent(resp);
+								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
 								cmd.setEvent(resp);
 							
 								ServerService service = new ServerService();
@@ -681,7 +705,7 @@ public class SurveyWindow extends WebFrame {
 					}).start();
 				}
 				//Load Next Question
-				currentQuestion = currentRun.getSurvey().getQuestionList().get(webList.getSelectedIndex());
+				currentQuestion = currentRun.getQuiz().getQuestionList().get(webList.getSelectedIndex());
 				wblblQuestion.setText("Question " + (webList.getSelectedIndex()+1));
 				webTextArea.setText(currentQuestion.getTitle());
 				
@@ -768,69 +792,109 @@ public class SurveyWindow extends WebFrame {
 		WebLabel wblblAnswered = new WebLabel();
 		wblblAnswered.setText("Answered");
 		
+		WebLabel wblblRemainingTime = new WebLabel();
+		wblblRemainingTime.setText("Remaining Time");
+		
 		WebLabel wblblDirections = new WebLabel();
 		wblblDirections.setText("Directions");
 		
 		webTextField = new WebTextField();
 		webTextField.setEditable(false);
 		webTextField.setEnabled(false);
+		
+		webTextField_1 = new WebTextField();
+		webTextField_1.setEditable(false);
+		webTextField_1.setEnabled(false);
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_webPanel.createParallelGroup(Alignment.LEADING)
-							.addComponent(wblblNumberOfQuestions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wblblAnswered, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
+							.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(wblblNumberOfQuestions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblAnswered, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+							.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(webTextField_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(wblblRemainingTime, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addGroup(gl_webPanel.createSequentialGroup()
 							.addComponent(wblblDirections, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)))
+							.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_webPanel.setVerticalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(wblblNumberOfQuestions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblNumberOfQuestions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wblblRemainingTime, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wblblAnswered, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblAnswered, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wblblDirections, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(60, Short.MAX_VALUE))
 		);
 		webPanel.setLayout(gl_webPanel);
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 		
-		surveyEvent = new SurveyEvent();
-		surveyEvent.addEventListener(new SurveyEventListener() {
+		quizEvent = new QuizEvent();
+		quizEvent.addEventListener(new QuizEventListener() {
 			
 			@Override
-			public void surveyStoped(SurveyStop e) {
-				JOptionPane.showMessageDialog(null, "Survey stopped by the teacher!");
+			public void quizStoped(QuizStop e) {
+				JOptionPane.showMessageDialog(null, "Quiz stopped by the teacher!");
 				dispose();
 			}
 			
 			@Override
-			public void questionAnswered(SurveyResponse e) {
+			public void questionAnswered(QuizResponse e) {
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
-			public void surveyFinished(SurveyFinished e) {
+			public void quizFinished(QuizFinished e) {
 				// TODO Auto-generated method stub
 				
 			}
 		});
 	}
+	
+	void updateDisplay() {
+		  NumberFormat format = NumberFormat.getInstance();
+		  
+	      long now = System.currentTimeMillis(); // current time in ms
+	      long elapsed = now - lastUpdate; // ms elapsed since last update
+	      remaining -= elapsed; // adjust remaining time
+	      lastUpdate = now; // remember this update time
 
-	public void setSurvey(Survey survey) {
-		currentRun.setSurvey(survey);
+	      // Convert remaining milliseconds to mm:ss format and display
+	      if (remaining < 0)
+	          remaining = 0;
+	      int minutes = (int) (remaining / 60000);
+	      int seconds = (int) ((remaining % 60000) / 1000);
+	      webTextField_1.setText(format.format(minutes) + ":" + format.format(seconds));
+
+	    // If we've completed the countdown beep and display new page
+	      if (remaining == 0) {
+	      // Stop updating now.
+	    	  JOptionPane.showMessageDialog(null, "Times Up!");
+	          timer.stop();
+	          dispose();
+	    }
+	  }
+
+	public void setQuiz(Quiz quiz) {
+		currentRun.setQuiz(quiz);
 	}
 
 	public void setServer(String serv) {

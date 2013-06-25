@@ -51,94 +51,6 @@ public class SurveyTab_1 extends WebPanel {
 		this.setParentPanel(surveyMain);
 		WebPanel webPanel = new WebPanel();
 		
-		final WebButton wbBtn_Next = new WebButton();
-		wbBtn_Next.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parentPanel.setEventsEnabled(false);
-				if(parentPanel.getCurrentQuestion() == null)
-                	parentPanel.setCurrentQuestion(new Question());
-//                if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex()==0) {
-//                	if(!getQuestionDesignPanel().getWebRadioButton().isSelected()
-//                			&& !getQuestionDesignPanel().getWebRadioButton_1().isSelected()
-//                			&& !getQuestionDesignPanel().getWebRadioButton_2().isSelected()
-//                			&& !getQuestionDesignPanel().getWebRadioButton_3().isSelected()
-//                			&& !getQuestionDesignPanel().getWebRadioButton_4().isSelected()){
-//                		JOptionPane.showMessageDialog(null, "You must select one correct answer!");
-//                		return;
-//                	}
-//                }
-//                else if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex()==1){
-//                	if(!getQuestionDesignPanel().getWebCheckBox().isSelected() 
-//                			&& !getQuestionDesignPanel().getWebCheckBox_1().isSelected()
-//                			&& !getQuestionDesignPanel().getWebCheckBox_2().isSelected()
-//                			&& !getQuestionDesignPanel().getWebCheckBox_3().isSelected()
-//                			&& !getQuestionDesignPanel().getWebCheckBox_4().isSelected()){
-//                		JOptionPane.showMessageDialog(null, "You must select at least one correct answer!");
-//                		return;
-//                	}
-//                }
-				parentPanel.getCurrentQuestion().setId(id++);
-				parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getCurrentSurvey().getInstructorId());
-                parentPanel.getCurrentQuestion().setSurveyId(parentPanel.getCurrentSurvey().getId());
-				parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());
-				parentPanel.getCurrentQuestion().setAnswer1(getQuestionDesignPanel().getWebTextField().getText());
-				parentPanel.getCurrentQuestion().setAnswer2(getQuestionDesignPanel().getWebTextField_1().getText());
-				parentPanel.getCurrentQuestion().setAnswer3(getQuestionDesignPanel().getWebTextField_2().getText());
-				parentPanel.getCurrentQuestion().setAnswer4(getQuestionDesignPanel().getWebTextField_3().getText());
-				parentPanel.getCurrentQuestion().setAnswer5(getQuestionDesignPanel().getWebTextField_4().getText());
-				//parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
-				try{
-					if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 0){
-						parentPanel.getCurrentQuestion().setType(Byte.parseByte("0"));
-					}
-					else if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 1){
-						parentPanel.getCurrentQuestion().setType(Byte.parseByte("1"));
-					}
-					else if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 2){
-						parentPanel.getCurrentQuestion().setType(Byte.parseByte("2"));
-						
-					}
-				}
-				catch(Exception ex){
-					;
-				}
-				/// Add the question to the current survey and question list
-				if(questionListPanel.getWebTable().getSelectedRow() == -1){ // meaning no question is selected so the changes are made to a new question not an existing one
-					parentPanel.getCurrentSurvey().addQuestion(parentPanel.getCurrentQuestion());
-					if(questionListPanel.getWebTable().getRowCount() != 0)
-					parentPanel.getTablemodel().addRow(
-							new Object[]{
-									Integer.parseInt(String.valueOf(parentPanel.getTablemodel().getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,
-									getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
-									parentPanel.getCurrentQuestion().getTitle()});
-					else
-						parentPanel.getTablemodel().addRow(
-								new Object[]{
-									1,
-									getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
-									parentPanel.getCurrentQuestion().getTitle()});
-				}
-				else{ //changes are made to an existing question because a question is already selected
-					
-				}
-				///empty all fields and ready for new question
-				getQuestionDesignPanel().clear();
-				
-				Question q = new Question();
-				q.setId(id++);
-				q.setInstructorId(parentPanel.getCurrentSurvey().getInstructorId());
-				q.setSurveyId(parentPanel.getCurrentSurvey().getId());
-				parentPanel.getCurrentSurvey().addQuestion(q);
-				parentPanel.getTablemodel().addRow(new Object[]{questionListPanel.getWebTable().getRowCount() + 1,getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),getQuestionDesignPanel().getWebTextArea().getText()});
-				ListSelectionModel m_modelSelection = questionListPanel.getWebTable().getSelectionModel();
-				m_modelSelection.setSelectionInterval(questionListPanel.getWebTable().getRowCount()-1, questionListPanel.getWebTable().getRowCount()-1);
-				
-				
-				parentPanel.setEventsEnabled(true);
-			}
-		});
-		wbBtn_Next.setText("Next");
-		
 		questionDesignPanel = new QuestionDesignPanel(this);
 		getQuestionDesignPanel().setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
@@ -199,8 +111,6 @@ public class SurveyTab_1 extends WebPanel {
                 
                 //System.out.println(model.getDataVector().get(0));
                 
-                
-                wbBtn_Next.setEnabled(true);
                 questionDesignPanel.setEnabled(true);
                 questionDesignPanel.getWebScrollPane().setEnabled(true);
 				questionDesignPanel.getWebTextField().setEnabled(true);
@@ -230,7 +140,6 @@ public class SurveyTab_1 extends WebPanel {
 				
 				
 				if(getQuestionListPanel().getWebTable().getRowCount() == 0){
-					wbBtn_Next.setEnabled(false);
 					questionDesignPanel.getWebScrollPane().setEnabled(false);
 					questionDesignPanel.getWebTextField().setEnabled(false);
 					questionDesignPanel.getWebTextField_1().setEnabled(false);
@@ -362,12 +271,8 @@ public class SurveyTab_1 extends WebPanel {
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel.createSequentialGroup()
-							.addGap(422)
-							.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
-						.addComponent(questionDesignPanel, GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE))
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+					.addComponent(questionDesignPanel, GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_webPanel.createSequentialGroup()
 							.addGap(24)
 							.addComponent(wbBtn_add, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
@@ -375,7 +280,7 @@ public class SurveyTab_1 extends WebPanel {
 							.addComponent(wBtn_delete, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(wBtn_copy, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
+						.addGroup(gl_webPanel.createSequentialGroup()
 							.addGap(12)
 							.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
 								.addComponent(webPanel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -405,7 +310,6 @@ public class SurveyTab_1 extends WebPanel {
 									.addComponent(wBtn_down, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(wbBtn_Next, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbBtn_add, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wBtn_delete, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wBtn_copy, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))

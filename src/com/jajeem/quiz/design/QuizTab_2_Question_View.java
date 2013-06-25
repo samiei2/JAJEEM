@@ -375,17 +375,7 @@ public class QuizTab_2_Question_View extends WebPanel {
 				    if (remaining == 0) {
 				    // Stop updating now.
 				        timer.stop();
-						try {
-							new Config();
-							ServerService serv = new ServerService();
-							StopQuizCommand cmd = new StopQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-							serv.send(cmd);
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						
+						StopQuizCommand();
 				    }
 				}
 			};
@@ -411,6 +401,20 @@ public class QuizTab_2_Question_View extends WebPanel {
 			webComboBox.setSelectedIndex(0);
 			
 		}
+	}
+
+	protected void StopQuizCommand() {
+		try {
+			new Config();
+			ServerService serv = new ServerService();
+			StopQuizCommand cmd = new StopQuizCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+			serv.send(cmd);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public QuizTab_2 getParentPanel() {

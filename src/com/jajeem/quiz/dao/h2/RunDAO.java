@@ -12,6 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IRunDAO;
+import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.util.BaseDAO;
 import com.jajeem.util.H2Connection;
@@ -81,6 +82,15 @@ public class RunDAO implements IRunDAO {
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
+		}
+		
+		try{
+			QuizDAO quizdao = new QuizDAO();
+			Quiz quiz = run.getQuiz();
+			quizdao.create(quiz);
+		}
+		catch(Exception e){
+			
 		}
 
 		return run;

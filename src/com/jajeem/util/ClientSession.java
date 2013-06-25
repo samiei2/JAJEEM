@@ -1,19 +1,19 @@
 package com.jajeem.util;
 
-import com.jajeem.quiz.design.client.QuizWindow;
+import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.survey.design.client.SurveyWindow;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class ClientSession {
-	private static QuizWindow quizWindowHndl;
+	private static Quiz_Window quizWindowHndl;
 	private static SurveyWindow surveyWindowHndl;
 	private static WhiteboardClient whiteboardWindowHndl;
 
-	public static QuizWindow getQuizWindowHndl() {
+	public static Quiz_Window getQuizWindowHndl() {
 		return quizWindowHndl;
 	}
 
-	public static void setQuizWindowHndl(QuizWindow quizWindowHndl) {
+	public static void setQuizWindowHndl(Quiz_Window quizWindowHndl) {
 		ClientSession.quizWindowHndl = quizWindowHndl;
 	}
 

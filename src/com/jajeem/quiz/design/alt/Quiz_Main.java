@@ -32,6 +32,7 @@ import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Instructor;
+import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -76,6 +77,7 @@ public class Quiz_Main extends WebFrame {
 	 * Create the frame.
 	 */
 	public Quiz_Main() {
+		currentRun = new Run();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Quiz_Main.class.getResource("/com/jajeem/images/quiz.png")));
 		setTitle("Quiz");
@@ -94,40 +96,24 @@ public class Quiz_Main extends WebFrame {
 				TitledBorder.TOP, null, null));
 		webPanel_2.setBackground(SystemColor.control);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																webPanel_1,
-																Alignment.CENTER,
-																GroupLayout.PREFERRED_SIZE,
-																0,
-																Short.MAX_VALUE)
-														.addComponent(
-																webPanel_2,
-																Alignment.CENTER,
-																GroupLayout.PREFERRED_SIZE,
-																774,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_contentPane
-						.createSequentialGroup()
-						.addGap(11)
-						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE,
-								51, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE,
-								483, Short.MAX_VALUE).addContainerGap()));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(webPanel_1, Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(webPanel_2, Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 855, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE, 470, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
@@ -145,7 +131,7 @@ public class Quiz_Main extends WebFrame {
 
 		firstPage = new Quiz_FirstPage(this);
 		firstPage.setName("firstPage");
-		secondPage = new Quiz_SecondPage();
+		secondPage = new Quiz_SecondPage(this);
 		secondPage.setName("secondPage");
 
 		webPanel.add(firstPage, "firstPage");
@@ -156,67 +142,50 @@ public class Quiz_Main extends WebFrame {
 				.getResource("/com/jajeem/images/Addx16.png")));
 
 		wbtnOpen = new WebButton();
+		wbtnOpen.setText("Open");
 
 		wbtnSave = new WebButton();
+		wbtnSave.setText("Save");
 
 		wbtnSaveResults = new WebButton();
+		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setVisible(false);
 
 		wbtnStart = new WebButton();
+		wbtnStart.setText("Start");
 
 		wbtnContent = new WebButton();
+		wbtnContent.setText("Content");
 		wbtnContent.setEnabled(false);
+		
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1.setHorizontalGroup(gl_webPanel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel_1
-						.createSequentialGroup()
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 48,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSaveResults,
-								GroupLayout.PREFERRED_SIZE, 48,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 450,
-								Short.MAX_VALUE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE,
-								48, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE,
-								48, GroupLayout.PREFERRED_SIZE)));
-		gl_webPanel_1.setVerticalGroup(gl_webPanel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel_1
-						.createSequentialGroup()
-						.addGroup(
-								gl_webPanel_1
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(wbtnNew,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnOpen,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnSave,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnSaveResults,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnStart,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnContent,
-												GroupLayout.PREFERRED_SIZE, 48,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
+		gl_webPanel_1.setHorizontalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 493, Short.MAX_VALUE)
+					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_webPanel_1.setVerticalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		webPanel_1.setLayout(gl_webPanel_1);
 		contentPane.setLayout(gl_contentPane);
 	
@@ -296,7 +265,7 @@ public class Quiz_Main extends WebFrame {
 					wbtnStart.setEnabled(true);
 
 					eventsEnabled = false;
-//					secondPage.clear();
+					secondPage.clear();
 					eventsEnabled = true;
 				}
 
@@ -335,7 +304,7 @@ public class Quiz_Main extends WebFrame {
 				wbtnStart.setEnabled(true);
 
 				eventsEnabled = false;
-//				secondPage.clear();
+				secondPage.clear();
 				eventsEnabled = true;
 			}
 		});
@@ -426,7 +395,7 @@ public class Quiz_Main extends WebFrame {
 							.getResource("/com/jajeem/images/stop-red.png")));
 					CardLayout cl = (CardLayout) (webPanel.getLayout());
 					cl.show(webPanel, "secondPage");
-
+					secondPage.LoadQuiz(currentQuiz);
 					StartQuizCommand();
 				} // / end wbtnStart.getText() == "Start" if
 				else {
@@ -440,12 +409,12 @@ public class Quiz_Main extends WebFrame {
 		});
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 	}
 
 	protected void newQuizRun() {
-		currentRun = new Run();
 		currentRun.setQuiz(new Quiz());
 		currentRun.getQuiz().addQuestion(new Question());
 
@@ -499,6 +468,8 @@ public class Quiz_Main extends WebFrame {
 			cmd.setRun(currentRun);
 			cmd.setQuiz(currentRun.getQuiz());
 			serv.send(cmd);
+			//Quiz_Window client = new Quiz_Window(currentRun);
+			//client.show();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -553,5 +524,13 @@ public class Quiz_Main extends WebFrame {
 
 	public boolean isEventsEnabled() {
 		return eventsEnabled;
+	}
+
+	public void setCurrentQuiz(Quiz quiz) {
+		currentRun.setQuiz(quiz);
+	}
+
+	public void loadCurrentQuiz() {
+		
 	}
 }

@@ -181,6 +181,4 @@ public class QuizTab_2 extends WebPanel {
 	public void setRunResults(ArrayList<Run> runResults) {
 		this.runResults = runResults;
 	}
-
-	
 }

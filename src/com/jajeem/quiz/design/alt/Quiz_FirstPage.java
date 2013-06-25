@@ -433,7 +433,9 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				q.setQuizId(parentPanel.getCurrentRun().getQuiz().getId());
 				q.setInstructorId(parentPanel.getCurrentInstructor().getId());
 				parentPanel.getCurrentRun().getQuiz().addQuestion(q);
-
+				
+				parentPanel.setEventsEnabled(true);
+				
 				webQuestionListPanel
 						.getWebTable()
 						.getSelectionModel()
@@ -446,8 +448,6 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				// System.out.println(model.getDataVector().get(0));
 
 				CalculateQuestionPoint();
-
-				parentPanel.setEventsEnabled(true);
 
 				webQuestionDesignPanel.setEnabled(true);
 				webQuestionDesignPanel.getWebScrollPane().setEnabled(true);
@@ -500,6 +500,8 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 															.getRowCount() - 1,
 													0))) + 1, type,
 							toCopy.getPoint(), toCopy.getTitle() });
+					
+					parentPanel.setEventsEnabled(true);
 					webQuestionListPanel
 							.getWebTable()
 							.getSelectionModel()
@@ -511,7 +513,6 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 					CalculateQuestionPoint();
 				}
-				parentPanel.setEventsEnabled(true);
 			}
 		});
 		wbtnDelete.addActionListener(new ActionListener() {
@@ -536,7 +537,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 									webQuestionListPanel.getWebTable()
 											.getRowCount() - 1);
 				}
-
+				
 				CalculateQuestionPoint();
 
 				if (webQuestionListPanel.getWebTable().getRowCount() == 0) {

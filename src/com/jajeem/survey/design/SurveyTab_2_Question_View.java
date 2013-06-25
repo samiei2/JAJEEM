@@ -34,6 +34,8 @@ import com.jajeem.events.SurveyResponse;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.util.Config;
+import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class SurveyTab_2_Question_View extends WebPanel {
@@ -51,6 +53,8 @@ public class SurveyTab_2_Question_View extends WebPanel {
 	private SurveyTab_2 parentPanel;
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
 	private Survey currentSurvey;
+	private JLabel lblPercent;
+	private JLabel lblNumberLabel;
 	
 	/**
 	 * Create the panel.
@@ -153,6 +157,9 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		
 		WebLabel wblblQuestion_1 = new WebLabel();
 		wblblQuestion_1.setText("Question");
+		
+		WebPanel webPanel_2 = new WebPanel();
+		webPanel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -173,7 +180,9 @@ public class SurveyTab_2_Question_View extends WebPanel {
 								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
 								.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))
 							.addGap(138)
-							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 483, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 483, GroupLayout.PREFERRED_SIZE)
+								.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE))
 							.addGap(12))))
 		);
 		groupLayout.setVerticalGroup(
@@ -194,11 +203,52 @@ public class SurveyTab_2_Question_View extends WebPanel {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 							.addGap(194))
-						.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
+		
+		JLabel lblOfStudents = new JLabel("# of students selected this : ");
+		
+		lblNumberLabel = new JLabel("Nan");
+		
+		JLabel lblNewLabel_1 = new JLabel("% of students selected this : ");
+		
+		lblPercent = new JLabel("Nan");
+		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
+		gl_webPanel_2.setHorizontalGroup(
+			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_webPanel_2.createSequentialGroup()
+							.addComponent(lblOfStudents)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNumberLabel))
+						.addGroup(gl_webPanel_2.createSequentialGroup()
+							.addComponent(lblNewLabel_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblPercent, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(30, Short.MAX_VALUE))
+		);
+		gl_webPanel_2.setVerticalGroup(
+			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblOfStudents)
+						.addComponent(lblNumberLabel))
+					.addGap(18)
+					.addGroup(gl_webPanel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(lblPercent))
+					.addContainerGap(15, Short.MAX_VALUE))
+		);
+		webPanel_2.setLayout(gl_webPanel_2);
 		
 		WebLabel wblblResults = new WebLabel();
 		wblblResults.setText("Results");
@@ -210,7 +260,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(0))
+					.addGap(1015))
 				.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
 		);
 		gl_webPanel_1.setVerticalGroup(
@@ -219,7 +269,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 					.addContainerGap()
 					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
-					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+					.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		

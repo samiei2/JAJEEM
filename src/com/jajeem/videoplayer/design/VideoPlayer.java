@@ -218,7 +218,7 @@ public class VideoPlayer extends Vlcj {
         
         if(RuntimeUtil.isWindows()) {
             // If running on Windows and you want the mouse/keyboard event hack...
-            videoSurface = new Canvas();
+            videoSurface = new WindowsCanvas();
         }
         else {
             videoSurface = new Canvas();
@@ -292,22 +292,25 @@ public class VideoPlayer extends Vlcj {
         mainFrame.setJMenuBar(buildMenuBar());
         mainFrame.pack();
         mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
+            @SuppressWarnings("deprecation")
+			@Override
             public void windowClosing(WindowEvent evt) {
                 Logger.debug("windowClosing(evt={})", evt);
+                if(mediaPlayer.isPlaying())
+                	mediaPlayer.stop();
 
                 if(videoSurface instanceof WindowsCanvas) {
-                    //((WindowsCanvas)videoSurface).release();
+                    ((WindowsCanvas)videoSurface).release();
                 }
 
                 if(mediaPlayer != null) {
                 	mediaPlayer.stop();
-                    //mediaPlayer.release();
+                    mediaPlayer.release();
                     mediaPlayer = null;
                 }
 
                 if(mediaPlayerFactory != null) {
-                    //mediaPlayerFactory.release();
+                    mediaPlayerFactory.release();
                     mediaPlayerFactory = null;
                 }
             }

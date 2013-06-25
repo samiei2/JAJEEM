@@ -4,7 +4,7 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.events.QuizFinished;
-import com.jajeem.quiz.design.client.QuizWindow;
+import com.jajeem.quiz.design.client.alt.Quiz_Window;
 
 public class FinishedQuizCommandHandler implements ICommandHandler {
 
