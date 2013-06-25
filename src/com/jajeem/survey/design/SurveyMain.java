@@ -89,7 +89,7 @@ public class SurveyMain extends WebFrame {
 		setTitle("Survey");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyMain.class.getResource("/com/jajeem/images/survey.png")));
 		
-		setBounds(100, 0, 1200, 780);
+		setBounds(100, 0, 980, 489);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		frame = this;
@@ -164,21 +164,21 @@ public class SurveyMain extends WebFrame {
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(cards, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1071, Short.MAX_VALUE)
-						.addComponent(panel_top, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE))
+						.addComponent(cards, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE)
+						.addComponent(panel_top, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 616, Short.MAX_VALUE)
+					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 353, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -210,7 +210,7 @@ public class SurveyMain extends WebFrame {
 					wbtnSave.setEnabled(true);
 					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/startx16.png")));
 					wbtnStart.setEnabled(true);
 					panel_bottom_2.ClearSurvey();
 				}
@@ -230,7 +230,7 @@ public class SurveyMain extends WebFrame {
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/Add.png")));
+		wbtnNew.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/Addx16.png")));
 		
 		wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
@@ -243,7 +243,7 @@ public class SurveyMain extends WebFrame {
 		wbtnOpen.setVerticalAlignment(SwingConstants.TOP);
 		wbtnOpen.setText("Open");
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/folder_green_open.png")));
+		wbtnOpen.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/folder_green_open-x16.png")));
 		
 		wbtnSave = new WebButton();
 		wbtnSave.addActionListener(new ActionListener() {
@@ -269,7 +269,7 @@ public class SurveyMain extends WebFrame {
 		wbtnSave.setText("Save");
 		wbtnSave.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSave.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/documentx16.png")));
 		
 		wbtnContent = new WebButton();
 		wbtnContent.addActionListener(new ActionListener() {
@@ -299,14 +299,14 @@ public class SurveyMain extends WebFrame {
 				wbtnSaveResults.setVisible(false);
 				//wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
+				wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/startx16.png")));
 				wbtnStart.setEnabled(true);
 				panel_bottom_2.ClearSurvey();
 				//Broadcast survey stop
 				
 			}
 		});
-		wbtnContent.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/content.png")));
+		wbtnContent.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/contentx16.png")));
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setVerticalAlignment(SwingConstants.TOP);
 		wbtnContent.setText("Content");
@@ -340,7 +340,7 @@ public class SurveyMain extends WebFrame {
 					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/stop-red.png")));
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/stop-redx16.png")));
 					CardLayout cl = (CardLayout)(cards.getLayout());
 			        cl.show(cards, "Page 2");
 			        pageNumber=2;
@@ -387,7 +387,7 @@ public class SurveyMain extends WebFrame {
 					}
 					
 					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
+					wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/startx16.png")));
 					wbtnStart.setEnabled(false);
 					//surveyEvent.fireStopEvent(new SurveyStop(this));
 				}
@@ -407,7 +407,7 @@ public class SurveyMain extends WebFrame {
 		wbtnStart.setText("Start");
 		wbtnStart.setVerticalAlignment(SwingConstants.TOP);
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/start.png")));
+		wbtnStart.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/startx16.png")));
 		
 		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.addActionListener(new ActionListener() {
@@ -417,7 +417,7 @@ public class SurveyMain extends WebFrame {
 				service.create(panel_bottom_2.getSurveyResponse(), results);
 			}
 		});
-		wbtnSaveResults.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/document-save-as.png")));
+		wbtnSaveResults.setIcon(new ImageIcon(SurveyMain.class.getResource("/com/jajeem/images/documentx16.png")));
 		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSaveResults.setVerticalAlignment(SwingConstants.TOP);
 		wbtnSaveResults.setText("Save Results");
@@ -428,30 +428,29 @@ public class SurveyMain extends WebFrame {
 		gl_panel_top.setHorizontalGroup(
 			gl_panel_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_top.createSequentialGroup()
-					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 681, Short.MAX_VALUE)
-					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 796, Short.MAX_VALUE)
+					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_panel_top.setVerticalGroup(
 			gl_panel_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_top.createSequentialGroup()
-					.addGroup(gl_panel_top.createParallelGroup(Alignment.LEADING)
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_top.createParallelGroup(Alignment.BASELINE)
-							.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_panel_top.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(51, Short.MAX_VALUE))
 		);
 		panel_top.setLayout(gl_panel_top);
 		panel.setLayout(gl_panel);

@@ -289,7 +289,7 @@ public class Quiz_Main extends WebFrame {
 					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/start.png")));
+							.getResource("/com/jajeem/images/startx16.png")));
 					wbtnStart.setEnabled(true);
 
 					eventsEnabled = false;
@@ -328,7 +328,7 @@ public class Quiz_Main extends WebFrame {
 				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-						.getResource("/com/jajeem/images/start.png")));
+						.getResource("/com/jajeem/images/startx16.png")));
 				wbtnStart.setEnabled(true);
 
 				eventsEnabled = false;
@@ -520,7 +520,6 @@ public class Quiz_Main extends WebFrame {
 		if (com.jajeem.util.Session.getInstructor() == null) {
 			JOptionPane.showMessageDialog(null,
 					"No instructor has logged in.Please first Log in!");
-			//TODO CHANGE
 			return new Instructor();
 //			dispose();
 		}
@@ -530,7 +529,6 @@ public class Quiz_Main extends WebFrame {
 	Session getCurrentSession() {
 		if (com.jajeem.util.Session.getSession() == null) {
 			JOptionPane.showMessageDialog(null, "No class has started yet!");
-			//TODO CHANGE LINE
 			return new Session();
 //			dispose();
 		}

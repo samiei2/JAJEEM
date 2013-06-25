@@ -1193,6 +1193,11 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 				webTextField_2.setVisible(false);
 				webTextField_3.setVisible(false);
 				webTextField_4.setVisible(false);
+				webTextField.setText("");
+				webTextField_1.setText("");
+				webTextField_2.setText("");
+				webTextField_3.setText("");
+				webTextField_4.setText("");
 			} else {
 				webTextField.setVisible(true);
 				webTextField_1.setVisible(true);
