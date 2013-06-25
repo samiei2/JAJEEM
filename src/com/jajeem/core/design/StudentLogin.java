@@ -29,6 +29,7 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
+import com.jajeem.util.MouseHook;
 
 public class StudentLogin extends JDialog {
 
@@ -40,6 +41,7 @@ public class StudentLogin extends JDialog {
 	private static String serverIp;
 	private static LoginDialog loginDialog;
 	private static KeyHook keyHook;
+	private static MouseHook mouseHook;
 
 	private static ServerService serverService;
 
@@ -132,6 +134,14 @@ public class StudentLogin extends JDialog {
 
 	public static void setServerService(ServerService serverService) {
 		StudentLogin.serverService = serverService;
+	}
+
+	public static MouseHook getMouseHook() {
+		return mouseHook;
+	}
+
+	public static void setMouseHook(MouseHook mouseHook) {
+		StudentLogin.mouseHook = mouseHook;
 	}
 
 	public static class LoginDialog extends WebDialog {

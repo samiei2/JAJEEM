@@ -3,6 +3,7 @@ package com.jajeem.command.handler;
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.util.KeyHook;
+import com.jajeem.util.MouseHook;
 
 public class SetLockCommandHandler implements ICommandHandler {
 
@@ -22,6 +23,22 @@ public class SetLockCommandHandler implements ICommandHandler {
 			} else {
 				StudentLogin.getKeyHook().setIgnoreCallback(true);
 				System.out.println("KeyHook applied.");
+			}
+		}
+
+		if (StudentLogin.getMouseHook() == null) {
+			MouseHook mouseHook = new MouseHook();
+			StudentLogin.setMouseHook(mouseHook);
+			mouseHook.setIgnoreCallback(true);
+			mouseHook.start();
+			System.out.println("MouseHook applied.");
+		} else {
+			if (StudentLogin.getMouseHook().isIgnoreCallback()) {
+				StudentLogin.getMouseHook().setIgnoreCallback(false);
+				System.out.println("MouseHook removed.");
+			} else {
+				StudentLogin.getMouseHook().setIgnoreCallback(true);
+				System.out.println("MouseHook applied.");
 			}
 		}
 	}
