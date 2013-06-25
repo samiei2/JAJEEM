@@ -280,7 +280,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				model.addRow(obj);
 
 				Question q = new Question();
-				q.setId(counter.incrementAndGet());
+				q.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(counter.incrementAndGet())));
 				q.setQuizId(parentPanel.getCurrentRun().getQuiz().getId());
 				q.setInstructorId(parentPanel.getCurrentInstructor().getId());
 				parentPanel.getCurrentRun().getQuiz().addQuestion(q);
@@ -330,6 +330,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 							.getQuestionList()
 							.get(webQuestionListPanel.getWebTable()
 									.getSelectedRow()));
+					toCopy.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(counter.incrementAndGet())));
 					parentPanel.getCurrentRun().getQuiz().addQuestion(toCopy);
 					String type = "";
 					if (toCopy.getType() == 0) {
@@ -655,5 +656,35 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 	public void setWbtxtfldPoints(WebTextField wbtxtfldPoints) {
 		this.wbtxtfldPoints = wbtxtfldPoints;
+	}
+
+	public void loadCurrentQuiz(Quiz currentQuiz) {
+		parentPanel.setEventsEnabled(false);
+		wbtxtfldDirection.setText(currentQuiz.getTitle());
+		wbtxtfldPoints.setText(String.valueOf(currentQuiz.getPoints()));
+		wbtxtfldTime.setText(String.valueOf(currentQuiz.getTime()));
+		
+		DefaultTableModel model = (DefaultTableModel)webQuestionListPanel.getWebTable().getModel();
+		for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {
+			Question question = currentQuiz.getQuestionList().get(i);
+			String type = "";
+			if(question.getType() == 0)
+				type = "Single Choice";
+			else if(question.getType() == 1)
+				type = "Multiple Choice";
+			else
+				type = "Essay";
+			
+			model.addRow(new Object[]{
+					model.getRowCount() == 0 ? 1 : Integer.parseInt(String.valueOf(webQuestionListPanel.getWebTable().getValueAt(webQuestionListPanel.getWebTable().getRowCount()-1, 0)))+1,
+					type,
+					question.getPoint(),
+					question.getTitle()
+			});
+		}
+		
+		parentPanel.setEventsEnabled(true);
+		if(model.getRowCount() != 0)
+			webQuestionListPanel.getWebTable().getSelectionModel().setSelectionInterval(0, 0);
 	}
 }

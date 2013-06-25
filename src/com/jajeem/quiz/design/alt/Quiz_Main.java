@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -64,6 +66,9 @@ public class Quiz_Main extends WebFrame {
 	private Quiz_FirstPage firstPage;
 	private Quiz_SecondPage secondPage;
 	private WebPanel webPanel;
+	private Quiz_Main mainFrame;
+	
+	private static AtomicInteger counter = new AtomicInteger();
 
 	/**
 	 * Launch the application.
@@ -85,6 +90,7 @@ public class Quiz_Main extends WebFrame {
 	 */
 	public Quiz_Main() {
 		currentRun = new Run();
+		mainFrame = this;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Quiz_Main.class.getResource("/com/jajeem/images/quiz.png")));
 		setTitle("Quiz");
@@ -346,6 +352,10 @@ public class Quiz_Main extends WebFrame {
 				if (i == 0) {
 					try {
 						qs.create(currentRun);
+						eventsEnabled = false;
+						firstPage.clear();
+						newQuizRun();
+						eventsEnabled = true;
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -440,13 +450,15 @@ public class Quiz_Main extends WebFrame {
 		});
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Quiz_OpenDialog open = new Quiz_OpenDialog(mainFrame);
+				open.setVisible(true);
 			}
 		});
 	}
 
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
+		currentRun.setQuizId(new Random().nextInt(1000));
 		currentRun.getQuiz().addQuestion(new Question());
 
 		currentRun.setSession(getCurrentSession());
@@ -560,6 +572,7 @@ public class Quiz_Main extends WebFrame {
 	}
 
 	public void loadCurrentQuiz() {
-		
+		firstPage.clear();
+		firstPage.loadCurrentQuiz(currentRun.getQuiz());
 	}
 }
