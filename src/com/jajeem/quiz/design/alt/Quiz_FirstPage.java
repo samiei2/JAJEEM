@@ -73,108 +73,40 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		wbtnDelete = new WebButton();
 		wbtnDelete.setText("Delete");
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(webQuestionDesignPanel,
-												GroupLayout.PREFERRED_SIZE,
-												392, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webQuestionListPanel,
-																GroupLayout.PREFERRED_SIZE,
-																358,
-																Short.MAX_VALUE)
-														.addComponent(
-																webPanel,
-																GroupLayout.DEFAULT_SIZE,
-																358,
-																Short.MAX_VALUE)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnAdd,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnCopy,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnDelete,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				webPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				81,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webQuestionListPanel,
-																				GroupLayout.DEFAULT_SIZE,
-																				461,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.TRAILING)
-																						.addComponent(
-																								wbtnAdd,
-																								GroupLayout.PREFERRED_SIZE,
-																								29,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wbtnCopy,
-																								GroupLayout.PREFERRED_SIZE,
-																								29,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wbtnDelete,
-																								GroupLayout.PREFERRED_SIZE,
-																								29,
-																								GroupLayout.PREFERRED_SIZE)))
-														.addComponent(
-																webQuestionDesignPanel,
-																GroupLayout.PREFERRED_SIZE,
-																583,
-																Short.MAX_VALUE))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webQuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnAdd, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnCopy, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnDelete, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
+						.addComponent(webQuestionListPanel, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+						.addComponent(webPanel, 0, 0, Short.MAX_VALUE))
+					.addGap(6))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(webQuestionDesignPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webQuestionListPanel, GroupLayout.PREFERRED_SIZE, 375, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(wbtnAdd, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnCopy, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnDelete, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 
 		WebLabel wblblDirection = new WebLabel();
 		wblblDirection.setText("Direction : ");
@@ -194,124 +126,43 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		wbchckbxAuto = new WebCheckBox();
 		wbchckbxAuto.setText("Auto");
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel
-				.setHorizontalGroup(gl_webPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				wblblDirection,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtxtfldDirection,
-																				GroupLayout.DEFAULT_SIZE,
-																				278,
-																				Short.MAX_VALUE))
-														.addGroup(
-																gl_webPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				wblblPoints,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				wbtxtfldPoints,
-																				GroupLayout.PREFERRED_SIZE,
-																				60,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				wbchckbxAuto,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				77,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				wblblT,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtxtfldTime,
-																				GroupLayout.PREFERRED_SIZE,
-																				70,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		gl_webPanel
-				.setVerticalGroup(gl_webPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblDirection,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldDirection,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblPoints,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldPoints,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldTime,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wblblT,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbchckbxAuto,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+		gl_webPanel.setHorizontalGroup(
+			gl_webPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_webPanel.createSequentialGroup()
+							.addComponent(wblblDirection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtxtfldDirection, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+						.addGroup(gl_webPanel.createSequentialGroup()
+							.addComponent(wblblPoints, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(wbtxtfldPoints, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(wbchckbxAuto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(44)
+							.addComponent(wblblT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtxtfldTime, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
+					.addGap(6))
+		);
+		gl_webPanel.setVerticalGroup(
+			gl_webPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblDirection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtxtfldDirection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblPoints, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtxtfldPoints, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbchckbxAuto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtxtfldTime, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wblblT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		webPanel.setLayout(gl_webPanel);
 		setLayout(groupLayout);
 
