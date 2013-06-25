@@ -107,7 +107,7 @@ public class InstructorNoa {
 			// setTransmitter(new AVTransmit2("5000", "", "10000"));
 			// setReceiver(new AVReceive2("10010", "", "5010"));
 
-			InstructorNoaUtil.networkSetup();
+//			InstructorNoaUtil.networkSetup();
 
 			initialize();
 
@@ -519,7 +519,7 @@ public class InstructorNoa {
 			}
 		});
 
-		WebButton lockButton = new WebButton("Lock");
+		WebButton lockButton = new WebButton("Lock/Unlock");
 		lockButton.putClientProperty("key", "lock");
 		lockButton.addActionListener(new ActionListener() {
 			@Override
