@@ -73,7 +73,10 @@ public class Chat extends WebFrame {
 	 */
 	public Chat(String to, int port) throws NumberFormatException, Exception {
 		super("Chat");
-		file = new File("/chat_" + to + ".txt");
+		File dir = new File("Messages/");
+		if(!dir.exists())
+			dir.mkdir();
+		file = new File(dir,"/chat_" + to + ".txt");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Chat.class.getResource("/icons/menubar/chat.png")));
 

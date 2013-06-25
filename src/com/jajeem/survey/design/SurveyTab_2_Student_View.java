@@ -179,110 +179,41 @@ public class SurveyTab_2_Student_View extends WebPanel {
 		webScrollPane.setViewportView(webTable);
 		webPanel.setLayout(gl_webPanel);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addContainerGap()
-																										.addComponent(
-																												wblblStudentName,
-																												GroupLayout.PREFERRED_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.PREFERRED_SIZE))
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addGap(22)
-																										.addComponent(
-																												wblblStudent,
-																												GroupLayout.PREFERRED_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.PREFERRED_SIZE)))
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								webComboBox,
-																								GroupLayout.PREFERRED_SIZE,
-																								172,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								textField,
-																								GroupLayout.PREFERRED_SIZE,
-																								223,
-																								GroupLayout.PREFERRED_SIZE)))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				webPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				940,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGap(22)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblStudent,
-																GroupLayout.PREFERRED_SIZE,
-																13,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblStudentName,
-																GroupLayout.PREFERRED_SIZE,
-																22,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																textField,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(webPanel,
-												GroupLayout.PREFERRED_SIZE,
-												258, Short.MAX_VALUE)
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(wblblStudentName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(22)
+									.addComponent(wblblStudent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 601, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(22)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblStudent, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wblblStudentName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE))
+		);
 		setLayout(groupLayout);
 
 	}

@@ -69,6 +69,12 @@ public class QuestionDesignPanel extends WebPanel {
 		        	webTextField_2.setVisible(false);
 		        	webTextField_3.setVisible(false);
 		        	webTextField_4.setVisible(false);
+		        	webTextField.setText("");
+		        	webTextField_1.setText("");
+		        	webTextField_2.setText("");
+		        	webTextField_3.setText("");
+		        	webTextField_4.setText("");
+		        	
 		        }
 		        else{
 		        	webTextField.setVisible(true);
@@ -95,18 +101,21 @@ public class QuestionDesignPanel extends WebPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
 						.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(6)
-							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)))
-					.addContainerGap())
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(webPanel, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addGap(6)
+									.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
+							.addGap(0)))
+					.addGap(5))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -121,7 +130,7 @@ public class QuestionDesignPanel extends WebPanel {
 								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE))
+							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))

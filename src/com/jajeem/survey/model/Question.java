@@ -2,7 +2,6 @@ package com.jajeem.survey.model;
 
 import java.io.Serializable;
 
-
 public class Question implements Serializable{
 	
 	//properties
@@ -20,6 +19,36 @@ public class Question implements Serializable{
 	private String answer5 = "";
 	private Response response = new Response();
 	
+	
+	public Question(Question toCopy) {
+		this.id = toCopy.id;
+		this.instructorId = toCopy.instructorId;
+		this.title = toCopy.title;
+		this.surveyId = toCopy.surveyId;
+		this.type = toCopy.type;
+		this.imagePath = toCopy.imagePath;
+		this.url = toCopy.url;
+		this.answer1 = toCopy.answer1;
+		this.answer2 = toCopy.answer2;
+		this.answer3 = toCopy.answer3;
+		this.answer4 = toCopy.answer4;
+		this.answer5 = toCopy.answer5;
+		
+		if(toCopy.getResponse().getBoolAnswer() != null)
+		this.response.setBoolAnswer(new boolean[] { toCopy.getResponse().getBoolAnswer()[0],
+				toCopy.getResponse().getBoolAnswer()[1], toCopy.getResponse().getBoolAnswer()[2],
+				toCopy.getResponse().getBoolAnswer()[3], toCopy.getResponse().getBoolAnswer()[4] });
+		this.response.setAnswer(toCopy.getResponse().getAnswer());
+		this.response = new Response();
+		this.response.setAnswer(toCopy.response.getAnswer());
+		this.response.setBoolAnswer(toCopy.response.getBoolAnswer());
+		this.response.setId(toCopy.response.getId());
+		this.response.setRunId(toCopy.response.getRunId());
+		this.response.setStudentId(toCopy.response.getStudentId());
+	}
+	public Question() {
+		// TODO Auto-generated constructor stub
+	}
 	//getter & setters
 	public int getId() {
 		return id;
