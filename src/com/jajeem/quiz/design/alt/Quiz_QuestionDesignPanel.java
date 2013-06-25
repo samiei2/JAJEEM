@@ -127,211 +127,76 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		wbtnDelete.setText("- Delete");
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webTextField_5,
-																GroupLayout.DEFAULT_SIZE,
-																335,
-																Short.MAX_VALUE)
-														.addComponent(webPanel,
-																0, 0,
-																Short.MAX_VALUE)
-														.addGroup(
-																groupLayout
-																		.createParallelGroup(
-																				Alignment.LEADING,
-																				false)
-																		.addComponent(
-																				wblblQuestion,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGroup(
-																				groupLayout
-																						.createSequentialGroup()
-																						.addComponent(
-																								wblblQuestionType,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addPreferredGap(
-																								ComponentPlacement.RELATED)
-																						.addComponent(
-																								webComboBox,
-																								GroupLayout.PREFERRED_SIZE,
-																								115,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addPreferredGap(
-																								ComponentPlacement.RELATED,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								wblblPoint,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addPreferredGap(
-																								ComponentPlacement.RELATED)
-																						.addComponent(
-																								webTextField_6,
-																								GroupLayout.PREFERRED_SIZE,
-																								50,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addGroup(
-																				groupLayout
-																						.createSequentialGroup()
-																						.addGap(6)
-																						.addComponent(
-																								wblblQuestion_1,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addPreferredGap(
-																								ComponentPlacement.RELATED)
-																						.addComponent(
-																								webScrollPane,
-																								GroupLayout.PREFERRED_SIZE,
-																								284,
-																								GroupLayout.PREFERRED_SIZE)))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				webPanel_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				150,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								wbtnDelete,
-																								GroupLayout.PREFERRED_SIZE,
-																								95,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wbtnimage,
-																								GroupLayout.PREFERRED_SIZE,
-																								95,
-																								GroupLayout.PREFERRED_SIZE))))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(wblblQuestion,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(22)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								webComboBox,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wblblQuestionType,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								webTextField_6,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wblblPoint,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webScrollPane,
-																				GroupLayout.PREFERRED_SIZE,
-																				131,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(56)
-																		.addComponent(
-																				wblblQuestion_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(webPanel,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webPanel_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				150,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(21)
-																		.addComponent(
-																				wbtnimage,
-																				GroupLayout.PREFERRED_SIZE,
-																				27,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnDelete,
-																				GroupLayout.PREFERRED_SIZE,
-																				27,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(webTextField_5,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(24, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGap(12)
+										.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
+										.addGap(0, 0, Short.MAX_VALUE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(wbtnDelete, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+										.addComponent(wbtnimage, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)))))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGap(4)
+							.addComponent(webPanel, 0, 0, Short.MAX_VALUE)))
+					.addGap(10))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webTextField_5, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+					.addGap(4))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(22)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(56)
+							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnimage, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnDelete, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webTextField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(101, Short.MAX_VALUE))
+		);
 
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		webPanel_1.add(webScrollPane_1, BorderLayout.CENTER);

@@ -89,7 +89,7 @@ public class Quiz_Main extends WebFrame {
 				Quiz_Main.class.getResource("/com/jajeem/images/quiz.png")));
 		setTitle("Quiz");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 891, 600);
+		setBounds(0, 0, 908, 647);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 
@@ -423,7 +423,7 @@ public class Quiz_Main extends WebFrame {
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/stop-red.png")));
+							.getResource("/com/jajeem/images/stop-redx16.png")));
 					CardLayout cl = (CardLayout) (webPanel.getLayout());
 					cl.show(webPanel, "secondPage");
 					secondPage.LoadQuiz(currentQuiz);
@@ -433,7 +433,7 @@ public class Quiz_Main extends WebFrame {
 					StopQuizCommand();
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/start.png")));
+							.getResource("/com/jajeem/images/startx16.png")));
 					wbtnStart.setEnabled(false);
 				} // / end else
 			}
