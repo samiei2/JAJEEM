@@ -175,4 +175,7 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 	public void setCurrentQuiz(Quiz currentQuiz) {
 		this.currentQuiz = currentQuiz;
 	}
+	public ArrayList<Run> getRunResults() {
+		return runResults;
+	}
 }

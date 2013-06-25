@@ -11,10 +11,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,9 +39,14 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.quiz.service.QuizService;
+import com.jajeem.quiz.service.ResultService;
 import com.jajeem.quiz.service.RunService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import javax.swing.SwingConstants;
 
 public class Quiz_Main extends WebFrame {
 
@@ -97,21 +104,21 @@ public class Quiz_Main extends WebFrame {
 		webPanel_2.setBackground(SystemColor.control);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(webPanel_1, Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-						.addComponent(webPanel_2, Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 855, Short.MAX_VALUE))
+						.addComponent(webPanel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 855, Short.MAX_VALUE)
+						.addComponent(webPanel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE, 470, Short.MAX_VALUE)
+					.addComponent(webPanel_2, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
@@ -138,23 +145,42 @@ public class Quiz_Main extends WebFrame {
 		webPanel.add(secondPage, "secondPage");
 
 		wbtnNew = new WebButton();
+		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
+		wbtnNew.setText("Start");
 		wbtnNew.setIcon(new ImageIcon(Quiz_Main.class
 				.getResource("/com/jajeem/images/Addx16.png")));
 
 		wbtnOpen = new WebButton();
+		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnOpen.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/folder_green_open-x16.png")));
 		wbtnOpen.setText("Open");
 
 		wbtnSave = new WebButton();
+		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSave.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/documentx16.png")));
 		wbtnSave.setText("Save");
 
 		wbtnSaveResults = new WebButton();
+		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSaveResults.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/documentx16.png")));
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setVisible(false);
 
 		wbtnStart = new WebButton();
+		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnStart.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/startx16.png")));
 		wbtnStart.setText("Start");
 
 		wbtnContent = new WebButton();
+		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnContent.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/contentx16.png")));
 		wbtnContent.setText("Content");
 		wbtnContent.setEnabled(false);
 		
@@ -162,15 +188,15 @@ public class Quiz_Main extends WebFrame {
 		gl_webPanel_1.setHorizontalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-					.addGap(24)
-					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 493, Short.MAX_VALUE)
-					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
 		);
@@ -178,13 +204,15 @@ public class Quiz_Main extends WebFrame {
 			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(115, Short.MAX_VALUE))
 		);
 		webPanel_1.setLayout(gl_webPanel_1);
 		contentPane.setLayout(gl_contentPane);
@@ -333,6 +361,9 @@ public class Quiz_Main extends WebFrame {
 		});
 		wbtnSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Run> results = secondPage.getRunResults();
+				ResultService service = new ResultService();
+				service.create(secondPage.getQuizResponse(), results);
 			}
 		});
 		wbtnStart.addActionListener(new ActionListener() {

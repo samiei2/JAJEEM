@@ -852,6 +852,9 @@ public class Quiz_Window extends WebFrame {
 			@Override
 			public void quizStoped(QuizStop e) {
 				JOptionPane.showMessageDialog(null, "Quiz stopped by the teacher!");
+				if(timer != null)
+					if(timer.isRunning())
+						timer.stop();
 				dispose();
 			}
 			
