@@ -53,7 +53,6 @@ public class MessageReceive extends JDialog {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -95,7 +94,7 @@ public class MessageReceive extends JDialog {
 			super(owner, "Message");
 			setIconImages(WebLookAndFeel.getImages());
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-			setModal(true);
+//			setModal(true);
 
 			TableLayout layout = new TableLayout(new double[][] {
 					{ TableLayout.PREFERRED, TableLayout.FILL },
@@ -111,7 +110,7 @@ public class MessageReceive extends JDialog {
 			WebButton cancel = new WebButton("Ok");
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
+					dispose();
 				}
 			};
 			cancel.addActionListener(listener);

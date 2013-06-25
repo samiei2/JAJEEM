@@ -2,6 +2,7 @@ package com.jajeem.message.design;
 
 import info.clearthought.layout.TableLayout;
 
+import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +18,15 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.scroll.WebScrollBar;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
-import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.StudentLogin;
+
 import java.awt.Toolkit;
 
 public class MessageSend extends JDialog {
@@ -32,7 +36,7 @@ public class MessageSend extends JDialog {
 	 */
 	private static final long serialVersionUID = 6562220877713666056L;
 
-	final public WebTextArea messageField = new WebTextArea(3, 20);
+	final public WebTextArea messageField = new WebTextArea(5, 30);
 	private ExampleDialog exampleDialog = new ExampleDialog(this);
 	private static String to = "";
 	private static int port;
@@ -41,9 +45,9 @@ public class MessageSend extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		setTo(args[0]);
-		setPort(Integer.parseInt(args[1]));
-		
+		// setTo(args[0]);
+		// setPort(Integer.parseInt(args[1]));
+		//
 		@SuppressWarnings("unused")
 		MessageSend dialog = new MessageSend();
 	}
@@ -52,7 +56,8 @@ public class MessageSend extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageSend() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageSend.class.getResource("/icons/menubar/message.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				MessageSend.class.getResource("/icons/menubar/message.png")));
 
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -106,45 +111,35 @@ public class MessageSend extends JDialog {
 
 		public ExampleDialog(Window owner) {
 			super(owner, "Message");
+			setResizable(false);
 			setIconImages(WebLookAndFeel.getImages());
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-			setModal(true);
 
-			TableLayout layout = new TableLayout(new double[][] {
-					{ TableLayout.PREFERRED, TableLayout.FILL },
-					{ TableLayout.PREFERRED, TableLayout.PREFERRED } });
-			layout.setHGap(5);
-			layout.setVGap(5);
-			WebPanel content = new WebPanel(layout);
+			WebPanel content = new WebPanel();
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
-
-			content.add(messageField, "0,0");
-
+			
 			WebButton cancel = new WebButton("Send");
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
 						MessageCommand messageCommand = new MessageCommand(
 								InetAddress.getLocalHost().getHostAddress(),
-								getTo(), getPort(),
-								messageField.getText());
+								getTo(), getPort(), messageField.getText());
 
-						ServerService serverService = new ServerService();
-						serverService.send(messageCommand);
+						StudentLogin.getServerService().send(messageCommand);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					setVisible(false);
 				}
 			};
 			cancel.addActionListener(listener);
-			content.add(new CenterPanel(new GroupPanel(5, cancel)), "0,1,1,1");
+			content.add(new GroupPanel(5, false, new WebScrollPane(messageField), cancel));
 			SwingUtils.equalizeComponentsWidths(cancel);
 
 			add(content);
-
+			
 			HotkeyManager.registerHotkey(this, cancel, Hotkey.ESCAPE);
 		}
 	}
