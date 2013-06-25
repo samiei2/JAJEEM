@@ -13,7 +13,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.util.Config;

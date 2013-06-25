@@ -1,12 +1,18 @@
 package com.jajeem.core.design;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +20,24 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
-import org.jitsi.service.libjitsi.LibJitsi;
 
+import com.alee.extended.list.WebCheckBoxListModel;
+import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
@@ -31,29 +46,32 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.alee.laf.text.WebTextField;
+import com.alee.managers.popup.PopupWay;
+import com.alee.managers.popup.WebButtonPopup;
+import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.LockCommand;
+import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.WebsiteCommand;
+import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
-import java.awt.CardLayout;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 
 public class InstructorNoa {
 
 	private WebFrame frame;
 	private static WebDesktopPane desktopPane;
 	private static WebPanel centerPanel;
-	private static WebTable studentListTable; 
+	private static WebTable studentListTable;
 
 	private static AVTransmit2 transmitter;
 	private static AVReceive2 receiver;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
+
+	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
 
 	/**
 	 * Launch the application.
@@ -85,9 +103,9 @@ public class InstructorNoa {
 			new Config();
 
 			// Start LibJitsi for first time
-			LibJitsi.start();
-			setTransmitter(new AVTransmit2("5000", "", "10000"));
-//			setReceiver(new AVReceive2("10010", "", "5010"));
+			// LibJitsi.start();
+			// setTransmitter(new AVTransmit2("5000", "", "10000"));
+			// setReceiver(new AVReceive2("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -121,10 +139,10 @@ public class InstructorNoa {
 		centerPanel.add(centerListPanel);
 		centerPanel.setBackground(new Color(255, 255, 255));
 
-		DefaultTableModel model = new DefaultTableModel();  
+		final DefaultTableModel model = new DefaultTableModel();
 
-		model.addColumn("PC IP"); 
-		model.addColumn("Student name"); 
+		model.addColumn("PC IP");
+		model.addColumn("Student name");
 
 		WebTable table = new WebTable(model);
 		setStudentListTable(table);
@@ -136,7 +154,6 @@ public class InstructorNoa {
 		table.setPreferredScrollableViewportSize(new Dimension(300, 100));
 		WebScrollPane scrollPanel = new WebScrollPane(table);
 		scrollPanel.setDrawBorder(false);
-		
 
 		WebPanel rightButtonPanel = new WebPanel();
 		rightButtonPanel.setBackground(new Color(56, 107, 170));
@@ -211,7 +228,7 @@ public class InstructorNoa {
 		languageButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		languageButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		languageButton.setForeground(Color.WHITE);
-		languageButton.setText("EN/FN");
+		languageButton.setText("EN/FA");
 		languageButton.setBottomBgColor(new Color(235, 105, 11));
 		languageButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(languageButton);
@@ -382,7 +399,8 @@ public class InstructorNoa {
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
 		centerListPanel.setBackground(new Color(237, 246, 253));
-		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{desktopPane, centerListPanel}));
+		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
+				new Component[] { desktopPane, centerListPanel }));
 
 		WebButton surveyButton = new WebButton();
 		surveyButton.setIconTextGap(30);
@@ -414,7 +432,7 @@ public class InstructorNoa {
 
 		WebButton powerButton = new WebButton();
 		powerButton.setIconTextGap(30);
-		powerButton.putClientProperty("key", "power");
+		powerButton.putClientProperty("key", "pcController");
 		powerButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		powerButton.setDrawShade(false);
 		powerButton.setRound(10);
@@ -426,7 +444,138 @@ public class InstructorNoa {
 		powerButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(powerButton);
 
+		WebButton powerOffButton = new WebButton("Power Off");
+		powerOffButton.putClientProperty("key", "powerOff");
+		powerOffButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("turnOff");
+						serverService.send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButton logOffButton = new WebButton("Log Off");
+		logOffButton.putClientProperty("key", "logOff");
+		logOffButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("logOff");
+						serverService.send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButton restartButton = new WebButton("Restart");
+		restartButton.putClientProperty("key", "restart");
+		restartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PowerCommand powerCommand;
+				if (getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+
+					try {
+						powerCommand = new PowerCommand(InetAddress
+								.getLocalHost().getHostAddress(), "", Integer
+								.parseInt(Config.getParam("port")), "");
+						powerCommand.setTo(selectedStudent);
+						powerCommand.setType("restart");
+						serverService.send(powerCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButton lockButton = new WebButton("Lock");
+		lockButton.putClientProperty("key", "lock");
+		lockButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				LockCommand lockCommand;
+				if (getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+
+					try {
+						lockCommand = new LockCommand(InetAddress
+								.getLocalHost().getHostAddress(),
+								selectedStudent, Integer.parseInt(Config
+										.getParam("port")));
+						serverService.send(lockCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButtonPopup pcControllerPopupButton = new WebButtonPopup(
+				powerButton, PopupWay.upCenter);
+
+		GroupPanel pcControllerPopupContent = new GroupPanel(5, false,
+				powerOffButton, logOffButton, restartButton, lockButton);
+		pcControllerPopupContent.setMargin(15);
+
+		pcControllerPopupButton.setContent(pcControllerPopupContent);
+
 		WebButton internetButton = new WebButton();
+		internetButton.putClientProperty("key", "internet");
+		WebButtonPopup internetPopupButton = new WebButtonPopup(internetButton,
+				PopupWay.upCenter);
+
+		WebButton internetSendWebsiteButton = new WebButton("Send Website");
+		internetSendWebsiteButton.putClientProperty("key", "internetWebsite");
+		internetSendWebsiteButton.setHorizontalAlignment(SwingConstants.CENTER);
+
+		final WebTextField WebsiteTextField = new WebTextField("", 10);
+		WebsiteTextField.setHorizontalAlignment(SwingConstants.CENTER);
+
+		WebButton internetBlockButton = new WebButton("Block Internet");
+		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
+		internetBlockButton.putClientProperty("key", "internetStop");
+
+		GroupPanel InternetPopupContent = new GroupPanel(5, false,
+				internetBlockButton, WebsiteTextField,
+				internetSendWebsiteButton);
+		InternetPopupContent.setMargin(15);
+
+		internetPopupButton.setContent(InternetPopupContent);
+		internetPopupButton.setDefaultFocusComponent(internetBlockButton);
+
 		internetButton.setIconTextGap(30);
 		internetButton.putClientProperty("key", "internet");
 		internetButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -440,19 +589,124 @@ public class InstructorNoa {
 		internetButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(internetButton);
 
-		WebButton programStopButton = new WebButton();
-		programStopButton.setIconTextGap(30);
-		programStopButton.putClientProperty("key", "programStop");
-		programStopButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		programStopButton.setDrawShade(false);
-		programStopButton.setRound(10);
-		programStopButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		programStopButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		programStopButton.setForeground(Color.WHITE);
-		programStopButton.setText("Allow & Restrict Program");
-		programStopButton.setBottomBgColor(new Color(225, 234, 244));
-		programStopButton.setTopBgColor(new Color(116, 166, 219));
-		bottomButtonPanel.add(programStopButton);
+		internetSendWebsiteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+					throws NumberFormatException {
+				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorNoa.getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+					try {
+						if (!WebsiteTextField.getText().equals("")) {
+							WebsiteCommand wc = new WebsiteCommand(InetAddress
+									.getLocalHost().getHostAddress(),
+									selectedStudent, Integer.parseInt(Config
+											.getParam("port")),
+									WebsiteTextField.getText());
+							InstructorNoa.getServerService().send(wc);
+						} else {
+							return;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		internetBlockButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+					throws NumberFormatException {
+				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) InstructorNoa.getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+					try {
+
+						InternetCommand ic = new InternetCommand(InetAddress
+								.getLocalHost().getHostAddress(),
+								selectedStudent, Integer.parseInt(Config
+										.getParam("port")));
+						InstructorNoa.getServerService().send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		WebButton programButton = new WebButton();
+		WebButtonPopup pogramPopupButton = new WebButtonPopup(programButton,
+				PopupWay.upCenter);
+
+		final WebTextField programTextField = new WebTextField("", 10);
+		WebButton programAddButton = new WebButton("Add");
+		final ProgramListTableModel programTableModel = new ProgramListTableModel();
+		final WebTable ptable = new WebTable(programTableModel);
+		ptable.setOpaque(false);
+		ptable.setPreferredScrollableViewportSize(new Dimension(150, 100));
+
+		programTableModel.addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent arg0) {
+
+			}
+		});
+
+		WebScrollPane programTableScrollPane = new WebScrollPane(ptable);
+		programTableScrollPane.setOpaque(false);
+
+		initColumnSizes(ptable);
+
+		GroupPanel programPopupContent = new GroupPanel(5, false,
+				programTableScrollPane, new GroupPanel(1, true,
+						programTextField, programAddButton));
+
+		programPopupContent.setOpaque(false);
+		programPopupContent.setMargin(15);
+
+		pogramPopupButton.setContent(programPopupContent);
+		pogramPopupButton.setDefaultFocusComponent(programTextField);
+
+		programButton.setIconTextGap(30);
+		programButton.putClientProperty("key", "program");
+		programButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		programButton.setDrawShade(false);
+		programButton.setRound(10);
+		programButton.setTopSelectedBgColor(new Color(75, 113, 158));
+		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+		programButton.setForeground(Color.WHITE);
+		programButton.setText("Allow & Restrict Program");
+		programButton.setBottomBgColor(new Color(225, 234, 244));
+		programButton.setTopBgColor(new Color(116, 166, 219));
+		bottomButtonPanel.add(programButton);
+
+		programAddButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (programTextField.getText().equals("")) {
+					return;
+				}
+
+				programTableModel.addRow(new Object[] {
+						programTextField.getText(), true });
+				try {
+					WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+							InetAddress.getLocalHost().getHostAddress(), Config
+									.getParam("broadcastingIp"), Integer
+									.parseInt(Config.getParam("port")),
+							(programTextField.getText() + ".exe"), true);
+					serverService.send(ic);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				programTextField.setText("");
+			}
+		});
 
 		WebButton programStartButton = new WebButton();
 		programStartButton.setIconTextGap(30);
@@ -675,7 +929,7 @@ public class InstructorNoa {
 		// Add Event Handlers
 		InstructorNoaUtil instructorNoaUtil = new InstructorNoaUtil();
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
-		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel);
+		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel, frame);
 		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
 	}
 
@@ -733,5 +987,109 @@ public class InstructorNoa {
 
 	public static void setStudentListTable(WebTable studentListTable) {
 		InstructorNoa.studentListTable = studentListTable;
+	}
+
+	private void initColumnSizes(JTable table) {
+		ProgramListTableModel model = (ProgramListTableModel) table.getModel();
+		TableColumn column;
+		Component comp;
+		int headerWidth;
+		int cellWidth;
+		Object[] longValues = model.longValues;
+		TableCellRenderer headerRenderer = table.getTableHeader()
+				.getDefaultRenderer();
+
+		for (int i = 0; i < model.getColumnCount(); i++) {
+			column = table.getColumnModel().getColumn(i);
+
+			comp = headerRenderer.getTableCellRendererComponent(null,
+					column.getHeaderValue(), false, false, 0, 0);
+			headerWidth = comp.getPreferredSize().width;
+
+			comp = table.getDefaultRenderer(model.getColumnClass(i))
+					.getTableCellRendererComponent(table, longValues[i], false,
+							false, 0, i);
+			cellWidth = comp.getPreferredSize().width;
+
+			column.setPreferredWidth(Math.max(headerWidth, cellWidth));
+		}
+	}
+
+	private class ProgramListTableModel extends AbstractTableModel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3816337549406126398L;
+		private String[] columnNames = { "Name", "Status" };
+		private Object[][] data = { { "Chrome", false }, { "FireFox", false } };
+
+		public final Object[] longValues = { "Jane", Boolean.TRUE };
+
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		public int getRowCount() {
+			return data.length;
+		}
+
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+
+		public Object getValueAt(int row, int col) {
+			return data[row][col];
+		}
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		public Class getColumnClass(int c) {
+			return longValues[c].getClass();
+		}
+
+		public boolean isCellEditable(int row, int col) {
+			return col >= 1;
+		}
+
+		public void setValueAt(Object value, int row, int col) {
+			data[row][col] = value;
+			fireTableCellUpdated(row, col);
+			if (value instanceof Boolean) {
+				if ((boolean) value) {
+					try {
+						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								Config.getParam("broadcastingIp"),
+								Integer.parseInt(Config.getParam("port")),
+								(data[row][col - 1] + ".exe"), true);
+						serverService.send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								Config.getParam("broadcastingIp"),
+								Integer.parseInt(Config.getParam("port")),
+								(data[row][col - 1] + ".exe"), false);
+						serverService.send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		public void addRow(Object[] row) {
+			Object[][] newData = new Object[getRowCount() + 1][getColumnCount()];
+
+			for (int x = 0; x < data.length; x++) {
+				newData[x] = data[x];
+			}
+
+			newData[getRowCount()] = row;
+			data = newData;
+			fireTableDataChanged();
+		}
 	}
 }

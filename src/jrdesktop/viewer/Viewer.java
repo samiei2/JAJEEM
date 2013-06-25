@@ -168,6 +168,7 @@ public class Viewer extends Thread {
 				recorder.screenPlayer.UpdateScreen(client.rmiServer
 						.getScreenCapture(index));
 		} catch (RemoteException re) {
+			Stop();
 			re.printStackTrace();
 		}
 	}

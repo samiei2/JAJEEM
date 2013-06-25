@@ -28,6 +28,8 @@ import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
+import com.jajeem.util.KeyHook;
+import com.jajeem.util.MouseHook;
 
 public class StudentLogin extends JDialog {
 
@@ -38,6 +40,10 @@ public class StudentLogin extends JDialog {
 
 	private static String serverIp;
 	private static LoginDialog loginDialog;
+	private static KeyHook keyHook;
+	private static MouseHook mouseHook;
+
+	private static ServerService serverService;
 
 	final static WebTextField username = new WebTextField(15);
 	final static WebPasswordField password = new WebPasswordField(15);
@@ -72,6 +78,7 @@ public class StudentLogin extends JDialog {
 
 			@SuppressWarnings("unused")
 			StudentLogin dialog = new StudentLogin();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,6 +93,8 @@ public class StudentLogin extends JDialog {
 	public StudentLogin() throws NumberFormatException, Exception {
 
 		new Config();
+		
+		setServerService(new ServerService());
 
 		ClientService clientServiceTimer = new ClientService(
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
@@ -109,6 +118,30 @@ public class StudentLogin extends JDialog {
 
 		// Restoring frame decoration option
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);
+	}
+
+	public static KeyHook getKeyHook() {
+		return keyHook;
+	}
+
+	public static void setKeyHook(KeyHook keyHook) {
+		StudentLogin.keyHook = keyHook;
+	}
+
+	public static ServerService getServerService() {
+		return serverService;
+	}
+
+	public static void setServerService(ServerService serverService) {
+		StudentLogin.serverService = serverService;
+	}
+
+	public static MouseHook getMouseHook() {
+		return mouseHook;
+	}
+
+	public static void setMouseHook(MouseHook mouseHook) {
+		StudentLogin.mouseHook = mouseHook;
 	}
 
 	public static class LoginDialog extends WebDialog {
@@ -150,7 +183,6 @@ public class StudentLogin extends JDialog {
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						
 						com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
 						student.setFullName(username.getText());
 						com.jajeem.util.Session.setStudent(student);
@@ -161,8 +193,7 @@ public class StudentLogin extends JDialog {
 										.getParam("serverPort")),
 								username.getText(), password.getPassword());
 						name = username.getText();
-						ServerService serverService = new ServerService();
-						serverService.send(authenticateCommand);
+						getServerService().send(authenticateCommand);
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
@@ -177,8 +208,6 @@ public class StudentLogin extends JDialog {
 					com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
 					student.setFullName("Anonymous");
 					com.jajeem.util.Session.setStudent(student);
-					
-					
 					setVisible(false);
 					dispose();
 				}

@@ -4,7 +4,6 @@ import java.net.InetAddress;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartUpCommand;
-import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.design.InstructorNoaUtil;
 import com.jajeem.core.design.StudentLogin;
@@ -22,14 +21,13 @@ public class StartUpCommandHandler implements ICommandHandler {
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
 			StartCaptureCommandHandler startCaptureCommandHandler = new StartCaptureCommandHandler();
 			startCaptureCommandHandler.run(cmd);
-			ServerService serverService = new ServerService();
 			StartUpCommand cmdToSend = new StartUpCommand(InetAddress
 					.getLocalHost().getHostAddress(),
 					((StartUpCommand) cmd).getSender() , port, InetAddress
 							.getLocalHost().getHostAddress(), System.getProperty("user.name"));
 			cmdToSend.setSender(InetAddress.getLocalHost().getHostAddress());
 			cmdToSend.setPort(port);
-			serverService.send(cmdToSend);
+			StudentLogin.getServerService().send(cmdToSend);
 			StudentLogin.setServerIp(((StartUpCommand) cmd).getSender());
 
 		} else if (Integer.parseInt(Config.getParam("server")) == 1

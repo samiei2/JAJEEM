@@ -2,7 +2,7 @@ package com.jajeem.command.handler;
 
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.Instructor;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.design.Student;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;
@@ -38,8 +38,8 @@ public class ChatCommandHanlder implements ICommandHandler {
 			}
 
 		} else {
-			if (!Instructor.getChatList().isEmpty()) {
-				for (Chat chat : Instructor.getChatList()) {
+			if (!InstructorNoa.getChatList().isEmpty()) {
+				for (Chat chat : InstructorNoa.getChatList()) {
 					if (chat.getTo().equals(cmd.getFrom())) {
 						currentChat = chat;
 						currentChat.addLine(((ChatCommand) cmd).getMessage());
@@ -53,7 +53,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 					currentChat = new Chat(cmd.getFrom(),
 							Integer.parseInt(Config.getParam("port")));
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
-					Instructor.getChatList().add(currentChat);
+					InstructorNoa.getChatList().add(currentChat);
 					currentChat.setVisible(true);
 					currentChat.scrollDown();
 				}

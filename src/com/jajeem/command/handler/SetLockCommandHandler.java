@@ -1,24 +1,45 @@
 package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.command.model.LockCommand;
-import com.jajeem.util.KeyboardBlocker;
-import com.jajeem.util.MouseBlocker;
+import com.jajeem.core.design.StudentLogin;
+import com.jajeem.util.KeyHook;
+import com.jajeem.util.MouseHook;
 
 public class SetLockCommandHandler implements ICommandHandler {
 
-	private static MouseBlocker mouseBlocker = new MouseBlocker();
-	private static KeyboardBlocker keyboardBlocker = new KeyboardBlocker();
-
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		if (((LockCommand) cmd).isLock()) {
-			mouseBlocker.stop();
-			keyboardBlocker.stop();
 
+		if (StudentLogin.getKeyHook() == null) {
+			KeyHook keyHook = new KeyHook();
+			StudentLogin.setKeyHook(keyHook);
+			keyHook.setIgnoreCallback(true);
+			keyHook.start();
+			System.out.println("KeyHook applied.");
 		} else {
-				mouseBlocker.start();
-				keyboardBlocker.start();
+			if (StudentLogin.getKeyHook().isIgnoreCallback()) {
+				StudentLogin.getKeyHook().setIgnoreCallback(false);
+				System.out.println("KeyHook removed.");
+			} else {
+				StudentLogin.getKeyHook().setIgnoreCallback(true);
+				System.out.println("KeyHook applied.");
+			}
+		}
+
+		if (StudentLogin.getMouseHook() == null) {
+			MouseHook mouseHook = new MouseHook();
+			StudentLogin.setMouseHook(mouseHook);
+			mouseHook.setIgnoreCallback(true);
+			mouseHook.start();
+			System.out.println("MouseHook applied.");
+		} else {
+			if (StudentLogin.getMouseHook().isIgnoreCallback()) {
+				StudentLogin.getMouseHook().setIgnoreCallback(false);
+				System.out.println("MouseHook removed.");
+			} else {
+				StudentLogin.getMouseHook().setIgnoreCallback(true);
+				System.out.println("MouseHook applied.");
 			}
 		}
 	}
+}

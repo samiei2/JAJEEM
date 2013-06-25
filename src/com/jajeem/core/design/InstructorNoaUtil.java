@@ -7,7 +7,11 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +28,28 @@ import jrdesktop.viewer.Viewer;
 
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
-import com.alee.extended.panel.WebButtonGroup;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.list.WebList;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.slider.WebSlider;
 import com.alee.laf.text.WebTextField;
 import com.alee.laf.toolbar.WebToolBar;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.managers.popup.PopupStyle;
+import com.alee.managers.popup.PopupWay;
+import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.utils.SwingUtils;
-import com.jajeem.command.model.InternetCommand;
-import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StopIntercomCommand;
@@ -57,6 +64,8 @@ import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
+import com.jajeem.util.FileUtil;
+import com.jajeem.util.WinRegistry;
 import com.jajeem.videoplayer.design.VideoPlayer;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
@@ -139,7 +148,7 @@ public class InstructorNoaUtil {
 										// sent stop
 										// command to him
 										InstructorNoa.getTransmitter().stop();
-//										InstructorNoa.getReceiver().close();
+										// InstructorNoa.getReceiver().close();
 										InstructorNoa.getTransmitter()
 												.getRemoteAddr()
 												.getHostAddress();
@@ -167,15 +176,15 @@ public class InstructorNoaUtil {
 													.setRemoteAddr(
 															InetAddress
 																	.getByName(selectedStudent));
-//											InstructorNoa
-//													.getReceiver()
-//													.setRemoteAddr(
-//															InetAddress
-//																	.getByName(selectedStudent));
+											// InstructorNoa
+											// .getReceiver()
+											// .setRemoteAddr(
+											// InetAddress
+											// .getByName(selectedStudent));
 											InstructorNoa.getTransmitter()
 													.start();
-//											InstructorNoa.getReceiver()
-//													.initialize();
+											// InstructorNoa.getReceiver()
+											// .initialize();
 											//
 										}
 									} else {
@@ -197,14 +206,14 @@ public class InstructorNoaUtil {
 												.setRemoteAddr(
 														InetAddress
 																.getByName(selectedStudent));
-//										InstructorNoa
-//												.getReceiver()
-//												.setRemoteAddr(
-//														InetAddress
-//																.getByName(selectedStudent));
+										// InstructorNoa
+										// .getReceiver()
+										// .setRemoteAddr(
+										// InetAddress
+										// .getByName(selectedStudent));
 										InstructorNoa.getTransmitter().start();
-//										InstructorNoa.getReceiver()
-//												.initialize();
+										// InstructorNoa.getReceiver()
+										// .initialize();
 									}
 
 								} catch (Exception e) {
@@ -221,7 +230,7 @@ public class InstructorNoaUtil {
 									// sent stop
 									// command to him
 									InstructorNoa.getTransmitter().stop();
-//									InstructorNoa.getReceiver().close();
+									// InstructorNoa.getReceiver().close();
 									StopIntercomCommand si;
 									try {
 										si = new StopIntercomCommand(
@@ -314,12 +323,28 @@ public class InstructorNoaUtil {
 										.getDesktopPane().getSelectedFrame()
 										.getClientProperty("ip");
 								try {
-									Chat currentChat = new Chat(
-											selectedStudent, Integer
-													.parseInt(Config
+									Chat currentChat = null;
+									if (!InstructorNoa.getChatList().isEmpty()) {
+										for (Chat chat : InstructorNoa
+												.getChatList()) {
+											if (chat.getTo().equals(
+													selectedStudent)) {
+												currentChat = chat;
+												currentChat.setVisible(true);
+												break;
+											}
+										}
+									} else {
+										if (currentChat == null) {
+											currentChat = new Chat(
+													selectedStudent,
+													Integer.parseInt(Config
 															.getParam("port")));
-									InstructorNoa.getChatList()
-											.add(currentChat);
+											InstructorNoa.getChatList().add(
+													currentChat);
+										}
+									}
+
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
@@ -342,7 +367,8 @@ public class InstructorNoaUtil {
 	 * ***************** Bottom Panel Events **************************
 	 */
 
-	public void addEventsBottomPanel(final WebPanel bottomButtonPanel) {
+	public void addEventsBottomPanel(final WebPanel bottomButtonPanel,
+			final WebFrame mainFrame) throws IOException {
 		String key = "";
 
 		for (Component c : bottomButtonPanel.getComponents()) {
@@ -370,102 +396,7 @@ public class InstructorNoaUtil {
 					break;
 
 				case "power":
-					try {
-
-						button.addActionListener(new ActionListener() {
-
-							private PowerCommand powerCommand;
-
-							@Override
-							public void actionPerformed(ActionEvent arg0)
-									throws NumberFormatException {
-								try {
-									powerCommand = new PowerCommand(InetAddress
-											.getLocalHost().getHostAddress(),
-											"", Integer.parseInt(Config
-													.getParam("port")), "");
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-
-								if (InstructorNoa.getDesktopPane()
-										.getSelectedFrame() != null) {
-									String selectedStudent = "";
-									selectedStudent = (String) InstructorNoa
-											.getDesktopPane()
-											.getClientProperty("ip");
-
-									powerCommand.setTo(selectedStudent);
-
-									WebButton turnOffButton = new WebButton(
-											"Turn off");
-									WebButton logOffButton = new WebButton(
-											"Log off");
-									WebButton restartButton = new WebButton(
-											"Restart");
-
-									WebButtonGroup buttonGroup = new WebButtonGroup(
-											true, turnOffButton, logOffButton,
-											restartButton);
-									buttonGroup.setButtonsDrawFocus(false);
-
-									popup.setPopupStyle(PopupStyle.lightSmall);
-									popup.setMargin(5);
-									popup.add(buttonGroup);
-									popup.setRound(0);
-									if (popup.isShowing()) {
-										popup.hidePopup();
-									} else {
-										popup.showPopup(button);
-									}
-
-									turnOffButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("turnOff");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-
-									logOffButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("logOff");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-
-									restartButton
-											.addActionListener(new ActionListener() {
-												@Override
-												public void actionPerformed(
-														ActionEvent arg0) {
-													popup.hidePopup();
-													powerCommand
-															.setType("restart");
-													InstructorNoa
-															.getServerService()
-															.send(powerCommand);
-												}
-											});
-								}
-							}
-						});
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					// in instructor noa!
 					break;
 
 				case "whiteBoard":
@@ -476,56 +407,113 @@ public class InstructorNoaUtil {
 					});
 					break;
 				case "internet":
-					button.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent arg0)
-								throws NumberFormatException {
-							if (InstructorNoa.getDesktopPane()
-									.getSelectedFrame() != null) {
-								String selectedStudent = "";
-								selectedStudent = (String) InstructorNoa
-										.getDesktopPane().getSelectedFrame()
-										.getClientProperty("ip");
-								try {
+					// in instructor noa!
+					break;
 
-									InternetCommand ic = new InternetCommand(
-											InetAddress.getLocalHost()
-													.getHostAddress(),
-											selectedStudent, Integer
-													.parseInt(Config
-															.getParam("port")));
-									InstructorNoa.getServerService().send(ic);
-								} catch (Exception e) {
-									e.printStackTrace();
+				case "program":
+					// in instructor noa!
+					break;
+				case "programStart":
+					try {
+						String pathToStartMenu = WinRegistry
+								.readString(
+										WinRegistry.HKEY_LOCAL_MACHINE,
+										"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
+										"Common Start Menu")
+								+ "\\Programs";
+
+						List<String> fileListModel = new ArrayList<String>();
+
+						FileUtil fileUtil = new FileUtil();
+						final File[] fileList = fileUtil
+								.finder(pathToStartMenu);
+						for (int i = 0; i < fileList.length; i++) {
+							File file = fileList[i];
+							if (file.getName().indexOf(".") != -1) {
+								String extension = file.getName().substring(
+										file.getName().indexOf("."));
+								if (extension.equals(".lnk")) {
+									fileListModel.add(file.getName().substring(
+											0, file.getName().length() - 4));
 								}
 							}
 						}
-					});
-					break;
-				case "programStop":
-					button.addActionListener(new ActionListener() {
 
-						@Override
-						public void actionPerformed(ActionEvent e)
-								throws NumberFormatException {
-							// Enabling dialog decoration
-							boolean decorateFrames = WebLookAndFeel
-									.isDecorateDialogs();
-							WebLookAndFeel.setDecorateDialogs(true);
+						WebList programsList = new WebList(
+								fileListModel.toArray());
+						programsList.setVisibleRowCount(6);
+						programsList.setSelectedIndex(0);
+						programsList.setEditable(false);
 
-							// Opening dialog
-							Dialog dialog = new Dialog(bottomButtonPanel,
-									"application", "Application name", "Block");
-							dialog.pack();
-							dialog.setLocationRelativeTo(bottomButtonPanel);
-							dialog.setVisible(true);
+						WebButtonPopup programPopupButton = new WebButtonPopup(
+								(WebButton) button, PopupWay.upCenter);
+						GroupPanel programPopupContent = new GroupPanel(5,
+								false, new WebScrollPane(programsList));
+						programPopupContent.setMargin(15);
+						programPopupContent.setOpaque(false);
+						programsList.setOpaque(false);
 
-							// Restoring frame decoration option
-							WebLookAndFeel.setDecorateDialogs(decorateFrames);
-						}
-					});
-					break;
-				case "programStart":
+						programPopupButton.setContent(programPopupContent);
+
+						programsList.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								WebList list = (WebList) evt.getSource();
+								if (evt.getClickCount() == 2) {
+									int index = list.locationToIndex(evt
+											.getPoint());
+									for (int i = 0; i < fileList.length; i++) {
+										File file = fileList[i];
+										if (file.getName().indexOf(".") != -1) {
+											if (file.getName()
+													.substring(
+															0,
+															file.getName()
+																	.length() - 4)
+													.equals(list
+															.getModel()
+															.getElementAt(index))) {
+												if (InstructorNoa
+														.getDesktopPane()
+														.getSelectedFrame() != null) {
+													String selectedStudent = "";
+													selectedStudent = (String) InstructorNoa
+															.getDesktopPane()
+															.getSelectedFrame()
+															.getClientProperty(
+																	"ip");
+													StartApplicationCommand sa;
+													try {
+														sa = new StartApplicationCommand(
+																InetAddress
+																		.getLocalHost()
+																		.getHostAddress(),
+																selectedStudent,
+																Integer.parseInt(Config
+																		.getParam("port")),
+																file.getName()
+																		.substring(
+																				0,
+																				file.getName()
+																						.length() - 4));
+														InstructorNoa
+																.getServerService()
+																.send(sa);
+													} catch (Exception e) {
+														e.printStackTrace();
+													}
+
+												}
+											}
+										}
+									}
+								}
+							}
+						});
+
+					} catch (IllegalArgumentException | IllegalAccessException
+							| InvocationTargetException e) {
+						e.printStackTrace();
+					}
 					break;
 
 				default:
@@ -533,7 +521,6 @@ public class InstructorNoaUtil {
 				}
 			}
 		}
-
 	}
 
 	/*
@@ -556,7 +543,8 @@ public class InstructorNoaUtil {
 				switch (key) {
 
 				case "volume":
-					final WebSlider slider1 = new WebSlider(WebSlider.HORIZONTAL);
+					final WebSlider slider1 = new WebSlider(
+							WebSlider.HORIZONTAL);
 					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
@@ -578,7 +566,8 @@ public class InstructorNoaUtil {
 										.getSelectedFrame() != null) {
 									String selectedStudent = "";
 									selectedStudent = (String) InstructorNoa
-											.getDesktopPane().getSelectedFrame()
+											.getDesktopPane()
+											.getSelectedFrame()
 											.getClientProperty("ip");
 									int vol = slider1.getValue();
 									try {
@@ -589,7 +578,8 @@ public class InstructorNoaUtil {
 												Integer.parseInt(Config
 														.getParam("port")),
 												"set", vol * 650);
-										InstructorNoa.getServerService().send(vc);
+										InstructorNoa.getServerService().send(
+												vc);
 									} catch (Exception e) {
 										e.printStackTrace();
 									}
