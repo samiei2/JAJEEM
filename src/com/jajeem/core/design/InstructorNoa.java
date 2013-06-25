@@ -130,7 +130,7 @@ public class InstructorNoa {
 		frame.setTitle("iCalabo");
 		frame.setShowResizeCorner(false);
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
-		frame.setBounds(200, 0, 1021, 656);
+		frame.setBounds(10, 0, 1021, 656);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		WebPanel centerPanel = new WebPanel();
