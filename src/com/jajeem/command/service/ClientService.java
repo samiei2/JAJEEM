@@ -9,7 +9,6 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;

@@ -50,6 +50,7 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.jajeem.command.model.InternetCommand;
+import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
@@ -517,11 +518,36 @@ public class InstructorNoa {
 				}
 			}
 		});
+
+		WebButton lockButton = new WebButton("Lock");
+		lockButton.putClientProperty("key", "lock");
+		lockButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				LockCommand lockCommand;
+				if (getDesktopPane().getSelectedFrame() != null) {
+					String selectedStudent = "";
+					selectedStudent = (String) getDesktopPane()
+							.getSelectedFrame().getClientProperty("ip");
+
+					try {
+						lockCommand = new LockCommand(InetAddress
+								.getLocalHost().getHostAddress(),
+								selectedStudent, Integer.parseInt(Config
+										.getParam("port")));
+						serverService.send(lockCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
 		WebButtonPopup pcControllerPopupButton = new WebButtonPopup(
 				powerButton, PopupWay.upCenter);
 
 		GroupPanel pcControllerPopupContent = new GroupPanel(5, false,
-				powerOffButton, logOffButton, restartButton);
+				powerOffButton, logOffButton, restartButton, lockButton);
 		pcControllerPopupContent.setMargin(15);
 
 		pcControllerPopupButton.setContent(pcControllerPopupContent);
