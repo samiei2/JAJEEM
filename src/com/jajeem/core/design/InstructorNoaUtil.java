@@ -61,6 +61,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.QuizMain;
+import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
@@ -300,7 +301,7 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							QuizMain quiz = new QuizMain();
+							Quiz_Main quiz = new Quiz_Main();
 							quiz.setVisible(true);
 						}
 					});
