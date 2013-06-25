@@ -89,7 +89,7 @@ public class Quiz_Main extends WebFrame {
 				Quiz_Main.class.getResource("/com/jajeem/images/quiz.png")));
 		setTitle("Quiz");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 908, 647);
+		setBounds(0, 0, 987, 683);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 
