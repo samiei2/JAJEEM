@@ -828,20 +828,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webRadioButton.setSelected(false);
-						return;
-					}
-					if (webTextField.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webRadioButton.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webRadioButton.setSelected(false);
+//						return;
+//					}
+//					if (webTextField.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webRadioButton.setSelected(false);
+//						return;
+//					}
 					webRadioButton.setSelected(true);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -864,20 +864,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webRadioButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webRadioButton_1.setSelected(false);
-						return;
-					}
-					if (webTextField_1.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webRadioButton_1.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webRadioButton_1.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_1.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webRadioButton_1.setSelected(false);
+//						return;
+//					}
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(true);
 					webRadioButton_2.setSelected(false);
@@ -900,20 +900,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webRadioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webRadioButton_2.setSelected(false);
-						return;
-					}
-					if (webTextField_2.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webRadioButton_2.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webRadioButton_2.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_2.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webRadioButton_2.setSelected(false);
+//						return;
+//					}
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(true);
@@ -936,20 +936,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webRadioButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webRadioButton_3.setSelected(false);
-						return;
-					}
-					if (webTextField_3.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webRadioButton_3.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webRadioButton_3.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_3.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webRadioButton_3.setSelected(false);
+//						return;
+//					}
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -972,20 +972,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webRadioButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webRadioButton_4.setSelected(false);
-						return;
-					}
-					if (webTextField_4.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webRadioButton_4.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webRadioButton_4.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_4.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webRadioButton_4.setSelected(false);
+//						return;
+//					}
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -1010,20 +1010,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webCheckBox.setSelected(false);
-						return;
-					}
-					if (webTextField.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webCheckBox.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webCheckBox.setSelected(false);
+//						return;
+//					}
+//					if (webTextField.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webCheckBox.setSelected(false);
+//						return;
+//					}
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1042,20 +1042,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webCheckBox_1.setSelected(false);
-						return;
-					}
-					if (webTextField_1.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webCheckBox_1.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webCheckBox_1.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_1.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webCheckBox_1.setSelected(false);
+//						return;
+//					}
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1074,20 +1074,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webCheckBox_2.setSelected(false);
-						return;
-					}
-					if (webTextField_2.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webCheckBox_2.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webCheckBox_2.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_2.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webCheckBox_2.setSelected(false);
+//						return;
+//					}
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1106,20 +1106,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webCheckBox_3.setSelected(false);
-						return;
-					}
-					if (webTextField_3.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webCheckBox_3.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webCheckBox_3.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_3.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webCheckBox_3.setSelected(false);
+//						return;
+//					}
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1138,20 +1138,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					if (webTextArea.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Question is empty,please first type in the question!");
-						webCheckBox_4.setSelected(false);
-						return;
-					}
-					if (webTextField_4.getText().equals("")) {
-						JOptionPane
-								.showMessageDialog(null,
-										"Answer is empty,please first type in the answer!");
-						webCheckBox_4.setSelected(false);
-						return;
-					}
+//					if (webTextArea.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Question is empty,please first type in the question!");
+//						webCheckBox_4.setSelected(false);
+//						return;
+//					}
+//					if (webTextField_4.getText().equals("")) {
+//						JOptionPane
+//								.showMessageDialog(null,
+//										"Answer is empty,please first type in the answer!");
+//						webCheckBox_4.setSelected(false);
+//						return;
+//					}
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
