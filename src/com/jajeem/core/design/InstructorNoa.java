@@ -107,7 +107,7 @@ public class InstructorNoa {
 			// setTransmitter(new AVTransmit2("5000", "", "10000"));
 			// setReceiver(new AVReceive2("10010", "", "5010"));
 
-//			InstructorNoaUtil.networkSetup();
+			InstructorNoaUtil.networkSetup();
 
 			initialize();
 
@@ -390,10 +390,11 @@ public class InstructorNoa {
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		desktopPane.setLayout(gl_desktopPane);
 		centerPanel.setLayout(new CardLayout(0, 0));
+		centerPanel.add(desktopPane, "name_3466416048915");
 		centerPanel.add(centerListPanel, "name_3466370417827");
 		centerListPanel.setLayout(new BorderLayout(0, 0));
 		centerListPanel.add(scrollPanel);
-		centerPanel.add(desktopPane, "name_3466416048915");
+		
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));

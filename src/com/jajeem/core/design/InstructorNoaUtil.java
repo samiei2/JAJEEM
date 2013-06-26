@@ -4,6 +4,7 @@ import info.clearthought.layout.TableLayout;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,7 +61,6 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.message.design.Chat;
-import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
@@ -636,11 +636,6 @@ public class InstructorNoaUtil {
 		final WebInternalFrame internalFrame = new WebInternalFrame(hostName,
 				false, false, false, true);
 
-		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
-				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
-				false, false);
-		final Viewer vnc = new Viewer(con);
-
 		// get current list of students, if some one is new, add him/her
 		JInternalFrame[] frames = desktopPane.getAllFrames();
 		List<String> listOfStudents = new ArrayList<String>();
@@ -648,12 +643,46 @@ public class InstructorNoaUtil {
 			listOfStudents.add((String) frame.getClientProperty("ip"));
 		}
 
+		for (JInternalFrame frame : frames) {
+			if (hostIp.equals((String) frame.getClientProperty("ip"))) {
+				if (!((Viewer) frame.getClientProperty("vnc")).isConnected()) {
+					jrdesktop.Config con = new jrdesktop.Config(false, "",
+							hostIp,
+							Integer.parseInt(Config.getParam("vncPort")),
+							"admin", "admin", false, false);
+					final Viewer vnc = new Viewer(con);
+					vnc.StartThumbs((WebInternalFrame) frame);
+					frame.putClientProperty("vnc", vnc);
+					frame.putClientProperty("live", true);
+					if(frame.isSelected()) {
+						frame.setFrameIcon(new ImageIcon(
+								ImageIO.read(InstructorNoaUtil.class
+										.getResourceAsStream("/icons/menubar/check.png"))));
+					} else {
+						frame.setFrameIcon(new ImageIcon(
+								ImageIO.read(InstructorNoaUtil.class
+										.getResourceAsStream("/icons/menubar/student.png"))));
+					}
+					
+					return null;
+				}
+				break;
+			}
+		}
+
 		if (listOfStudents.contains(hostIp)) {
 			return null;
 		}
 
+		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
+				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
+				false, false);
+		final Viewer vnc = new Viewer(con);
+
+		internalFrame.putClientProperty("vnc", vnc);
 		internalFrame.putClientProperty("ip", hostIp);
 		internalFrame.putClientProperty("username", hostName);
+		internalFrame.putClientProperty("live", true);
 
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorNoaUtil.class
@@ -705,13 +734,16 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-
+				
+				if (!(boolean) internalFrame.getClientProperty("live")) {
+					return;
+				}
+				
 				try {
 					internalFrame.setFrameIcon(new ImageIcon(
 							ImageIO.read(InstructorNoaUtil.class
 									.getResourceAsStream("/icons/menubar/student.png"))));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				checkBox.setSelected(false);
@@ -731,6 +763,10 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void internalFrameActivated(InternalFrameEvent arg0) {
+
+				if (!(boolean) internalFrame.getClientProperty("live")) {
+					return;
+				}
 
 				try {
 					internalFrame.setFrameIcon(new ImageIcon(

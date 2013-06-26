@@ -1,15 +1,23 @@
 package jrdesktop.viewer;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JInternalFrame;
 
 import jrdesktop.Commons;
 import jrdesktop.Config;
@@ -24,6 +32,8 @@ import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.FileMng.FileTransGUI;
 
 import com.alee.laf.desktoppane.WebInternalFrame;
+import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.InstructorNoaUtil;
 
 /**
  * Viewer.java
@@ -50,7 +60,7 @@ public class Viewer extends Thread {
 	}
 
 	public Viewer(Recorder recorder) {
-		this.recorder = recorder;
+		this.setRecorder(recorder);
 	}
 
 	public boolean isConnected() {
@@ -60,8 +70,8 @@ public class Viewer extends Thread {
 	public void Start() {
 		connect();
 		if (connected) {
-			recorder = new Recorder(this, client.clientConfig, false);
-			recorder.viewerGUI.Start();
+			setRecorder(new Recorder(this, client.clientConfig, false));
+			getRecorder().viewerGUI.Start();
 		} else
 			Stop();
 	}
@@ -69,16 +79,32 @@ public class Viewer extends Thread {
 	public void StartThumbs(WebInternalFrame panel) {
 		connect();
 		if (connected) {
-			recorder = new Recorder(this, client.clientConfig, true);
-			recorder.screenPlayer.thumb = true;
-			recorder.viewerGUIThumbs.Start(panel);
+			setRecorder(new Recorder(this, client.clientConfig, true));
+			getRecorder().screenPlayer.thumb = true;
+			getRecorder().viewerGUIThumbs.Start(panel);
 		} else
 			Stop();
 	}
 
 	public void Stop() {
+		JInternalFrame[] frames = InstructorNoa.getDesktopPane().getAllFrames();
+		for (JInternalFrame frame : frames) {
+			if (client.clientConfig.server_address.equals((String) frame
+					.getClientProperty("ip"))) {
+				frame.putClientProperty("live", false);
+				try {
+					frame.setFrameIcon(new ImageIcon(
+							ImageIO.read(Viewer.class
+									.getResourceAsStream("/icons/noa/disconnect.png"))));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
 		disconnect();
 		interrupt();
+
 	}
 
 	public int connect() {
@@ -109,7 +135,8 @@ public class Viewer extends Thread {
 	public void setOption(int option) {
 		try {
 			client.rmiServer.setOption(
-					recorder.viewerOptions.getOption(option), index, option);
+					getRecorder().viewerOptions.getOption(option), index,
+					option);
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}
@@ -117,7 +144,7 @@ public class Viewer extends Thread {
 
 	public void setKeyEvents() {
 		try {
-			client.rmiServer.setKeyEvents(recorder.eventsListener
+			client.rmiServer.setKeyEvents(getRecorder().eventsListener
 					.getKeyEvents());
 		} catch (RemoteException re) {
 			re.printStackTrace();
@@ -127,27 +154,27 @@ public class Viewer extends Thread {
 	public void setMouseEvents() {
 		try {
 			client.rmiServer.setMouseEvents(index,
-					recorder.eventsListener.getMouseEvents());
+					getRecorder().eventsListener.getMouseEvents());
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}
 	}
 
 	public void getClipboardContent() {
-		if (!recorder.viewerOptions.getClipboardTransfer())
+		if (!getRecorder().viewerOptions.getClipboardTransfer())
 			return;
 		try {
 			Object clipContent = client.rmiServer.getClipboardContent();
-			recorder.clipbrdUtility.setContent(clipContent);
+			getRecorder().clipbrdUtility.setContent(clipContent);
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}
 	}
 
 	public void setClipboardContect() {
-		if (!recorder.viewerOptions.getClipboardTransfer())
+		if (!getRecorder().viewerOptions.getClipboardTransfer())
 			return;
-		Object clipContent = recorder.clipbrdUtility.getContent();
+		Object clipContent = getRecorder().clipbrdUtility.getContent();
 		if (clipContent == null)
 			return;
 		try {
@@ -158,17 +185,19 @@ public class Viewer extends Thread {
 	}
 
 	public void getScreenCapture() {
-		// if (!connected) return;
+
 		try {
-			if (recorder.viewerOptions.isScreenCompressionEnabled())
-				recorder.screenPlayer.UpdateScreen(client.rmiServer
-						.getChangedScreenBlocks(index, recorder.viewerOptions
-								.getCapture().isEmpty()));
+			if (getRecorder().viewerOptions.isScreenCompressionEnabled())
+				getRecorder().screenPlayer.UpdateScreen(client.rmiServer
+						.getChangedScreenBlocks(index,
+								getRecorder().viewerOptions.getCapture()
+										.isEmpty()));
 			else
-				recorder.screenPlayer.UpdateScreen(client.rmiServer
+				getRecorder().screenPlayer.UpdateScreen(client.rmiServer
 						.getScreenCapture(index));
 		} catch (RemoteException re) {
 			Stop();
+
 			re.printStackTrace();
 		}
 	}
@@ -183,7 +212,7 @@ public class Viewer extends Thread {
 		if (!connected)
 			return; // try to remove this test
 		try {
-			recorder.viewerOptions.setScreenRect(client.rmiServer
+			getRecorder().viewerOptions.setScreenRect(client.rmiServer
 					.getScreenRect(index));
 		} catch (RemoteException re) {
 			re.printStackTrace();
@@ -225,8 +254,10 @@ public class Viewer extends Thread {
 	}
 
 	public void sendData() {
-		if ((recorder.viewerGUI != null && !recorder.viewerGUI.isActive())
-				|| (recorder.viewerGUIThumbs !=null && !recorder.viewerGUIThumbs.isActive()))
+		if ((getRecorder().viewerGUI != null && !getRecorder().viewerGUI
+				.isActive())
+				|| (getRecorder().viewerGUIThumbs != null && !getRecorder().viewerGUIThumbs
+						.isActive()))
 			return;
 		setMouseEvents();
 		setKeyEvents();
@@ -236,17 +267,19 @@ public class Viewer extends Thread {
 	public void receiveData() {
 		getScreenRect();
 		getScreenCapture();
-		if ((recorder.viewerGUI != null && !recorder.viewerGUI.isActive())
-				|| (recorder.viewerGUIThumbs !=null && !recorder.viewerGUIThumbs.isActive()))
+		if ((getRecorder().viewerGUI != null && !getRecorder().viewerGUI
+				.isActive())
+				|| (getRecorder().viewerGUIThumbs != null && !getRecorder().viewerGUIThumbs
+						.isActive()))
 			return;
 		getClipboardContent();
 	}
 
 	public void SendFiles() {
-		File[] files = recorder.fileManager.getFiles();
+		File[] files = getRecorder().fileManager.getFiles();
 		if (files.length == 0)
 			return;
-		new FileTransGUI(recorder).SendFiles(files);
+		new FileTransGUI(getRecorder()).SendFiles(files);
 	}
 
 	public void ReceiveFiles() {
@@ -258,7 +291,7 @@ public class Viewer extends Thread {
 		}
 		if (fileList == null)
 			return;
-		new FileTransGUI(recorder).ReceiveFiles(fileList);
+		new FileTransGUI(getRecorder()).ReceiveFiles(fileList);
 	}
 
 	public byte[] ReceiveFile(String filename) {
@@ -551,5 +584,13 @@ public class Viewer extends Thread {
 		}
 
 		return hosts;
+	}
+
+	public Recorder getRecorder() {
+		return recorder;
+	}
+
+	public void setRecorder(Recorder recorder) {
+		this.recorder = recorder;
 	}
 }
