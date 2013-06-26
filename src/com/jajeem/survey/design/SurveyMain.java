@@ -41,6 +41,8 @@ import com.jajeem.survey.service.SurveyService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
 import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class SurveyMain extends WebFrame {
 
@@ -86,6 +88,7 @@ public class SurveyMain extends WebFrame {
 	 * Create the frame.
 	 */
 	public SurveyMain() {
+		getContentPane().setBackground(SystemColor.control);
 		setTitle("Survey");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyMain.class.getResource("/com/jajeem/images/survey.png")));
 		
@@ -95,7 +98,6 @@ public class SurveyMain extends WebFrame {
 		frame = this;
 
 		WebPanel webPanel = new WebPanel();
-		getContentPane().add(webPanel, BorderLayout.CENTER);
 		
 		
 		new Config();
@@ -142,6 +144,7 @@ public class SurveyMain extends WebFrame {
 		panel_top.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
 		cards = new WebPanel(new CardLayout());
+		cards.setBackground(SystemColor.control);
 		
 		panel_bottom_1 = new SurveyTab_1(this);
 		setTablemodel((DefaultTableModel)panel_bottom_1.getQuestionListPanel().getWebTable().getModel());
@@ -161,26 +164,6 @@ public class SurveyMain extends WebFrame {
 				.addGap(0, 570, Short.MAX_VALUE)
 		);
 		panel_bottom_3.setLayout(gl_panel_bottom_3);
-		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(cards, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE)
-						.addComponent(panel_top, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 353, Short.MAX_VALUE)
-					.addContainerGap())
-		);
 		
 		WebButton wbtnNew = new WebButton();
 		wbtnNew.addActionListener(new ActionListener() {
@@ -468,9 +451,40 @@ public class SurveyMain extends WebFrame {
 					.addContainerGap(51, Short.MAX_VALUE))
 		);
 		panel_top.setLayout(gl_panel_top);
-		panel.setLayout(gl_panel);
 		
 		webPanel.add(panel);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE)
+						.addComponent(cards, GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE))
+					.addGap(10))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(cards, GroupLayout.PREFERRED_SIZE, 372, Short.MAX_VALUE)
+					.addGap(11))
+		);
+		panel.setLayout(gl_panel);
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+					.addGap(0))
+		);
+		getContentPane().setLayout(groupLayout);
 	}
 
 	public com.jajeem.survey.model.Survey getCurrentSurvey() {

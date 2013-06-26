@@ -289,6 +289,7 @@ public class PlayerControlsPanel extends JPanel {
 		// ImageIcon(getClass().getClassLoader().getResource("icons/camera.png")));
 		captureButton.setToolTipText("Take picture");
 		bottomPanel.add(captureButton);
+		
 
 		if (!player.isClient())
 			bottomPanel.add(connectButton);

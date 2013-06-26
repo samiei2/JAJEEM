@@ -52,6 +52,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 	private int total;
 	private SurveyTab_2 parentPanel;
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
+	private ArrayList<Student> studentList;
 	private Survey currentSurvey;
 	private JLabel lblPercent;
 	private JLabel lblNumberLabel;
@@ -63,6 +64,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		this.parentPanel = Panel_Bottom_2;
 		surveyResponse = parentPanel.getSurveyResponse();
 		currentSurvey = parentPanel.getCurrentSurvey();
+		studentList = new ArrayList<>();
 		webComboBox = new WebComboBox();
 		webComboBox.addItemListener(new ItemListener() {
 			
@@ -127,11 +129,54 @@ public class SurveyTab_2_Question_View extends WebPanel {
 						
 						
 						
-						model.addRow(new Object[]{
-								student.getId(),
-								student.getFullName(),
-								StudentOption
-						});
+						if(currentSurvey.getQuestionList().get(webComboBox.getSelectedIndex()).getType() == 0 ||
+								currentSurvey.getQuestionList().get(webComboBox.getSelectedIndex()).getType() == 1){
+								webTable.setModel(new WebTableModel(
+										new Object[][] {
+										},
+										new String[] {
+											"#", "Rates"
+										}
+									));
+									webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
+								int totalNumofStudents = studentList.size();
+								for (int k = 1; k <= 5; k++) { // for each choice of the
+									int rate = 0;
+									for (int j = 0; j < surveyResponse.get(webComboBox.getSelectedIndex()).size(); j++) { //for each students answer of that question
+										if(k == 1 && StudentOption.equals("First Option"))
+											rate++;
+										if(k == 2 && StudentOption.equals("Second Option"))
+											rate++;	
+										if(k == 3 && StudentOption.equals("Third Option"))
+											rate++;	
+										if(k == 4 && StudentOption.equals("Fourth Option"))
+											rate++;	
+										if(k == 5 && StudentOption.equals("Fifth Option"))
+											rate++;	
+									}
+									model.addRow(new Object[]{
+											"Choice " + k,
+											rate + " of " + totalNumofStudents
+									});
+								}
+							}
+							else{
+								webTable.setModel(new WebTableModel(
+										new Object[][] {
+										},
+										new String[] {
+											"#", "Answer"
+										}
+									));
+									webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
+								for (int k = 0; k < surveyResponse.get(webComboBox.getSelectedIndex()).size(); k++) {
+									System.out.println(student.getId());
+									model.addRow(new Object[]{
+											k+1,
+											StudentOption
+									});
+								}
+							}
 					}
 				}
 				}
@@ -165,12 +210,12 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		wblblResults.setText("Results");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(webPanel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 732, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -193,8 +238,8 @@ public class SurveyTab_2_Question_View extends WebPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -209,7 +254,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 								.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
 							.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 							.addGap(51)
 							.addComponent(webPanel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)))
@@ -354,6 +399,14 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		Question question = e.getQuestion();
 		Student student = e.getStudent();
 		boolean found = false;
+		for (int i = 0; i < studentList.size(); i++) {
+			if(student.getId() == studentList.get(i).getId())
+				found = true;
+		}
+		if(!found)
+			studentList.add(student);
+		
+		found = false;
 
 		if(currentQuestion != null && question != null && student != null){
 			int index = -1;
@@ -416,17 +469,63 @@ public class SurveyTab_2_Question_View extends WebPanel {
 					model.removeRow(i);
 				}
 				
-				
-				for (int i = 0; i < surveyResponse.get(index).size(); i++) {
-					System.out.println(student.getId());
-					model.addRow(new Object[]{
-							String.valueOf(student.getId()),
-							student.getFullName(),
-							StudentOption
-					});
+				if(currentSurvey.getQuestionList().get(index).getType() == 0 ||
+					currentSurvey.getQuestionList().get(index).getType() == 1){
+					webTable.setModel(new WebTableModel(
+							new Object[][] {
+							},
+							new String[] {
+								"#", "Rates"
+							}
+						));
+						webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
+					int totalNumofStudents = studentList.size();
+					for (int i = 1; i <= 5; i++) { // for each choice of the
+						int rate = 0;
+						for (int j = 0; j < surveyResponse.get(index).size(); j++) { //for each students answer of that question
+							if(i == 1 && StudentOption.equals("First Option"))
+								rate++;
+							if(i == 2 && StudentOption.equals("Second Option"))
+								rate++;	
+							if(i == 3 && StudentOption.equals("Third Option"))
+								rate++;	
+							if(i == 4 && StudentOption.equals("Fourth Option"))
+								rate++;	
+							if(i == 5 && StudentOption.equals("Fifth Option"))
+								rate++;	
+						}
+						model.addRow(new Object[]{
+								"Choice " + i,
+								rate + " of " + totalNumofStudents
+						});
+					}
 				}
+				else{
+					webTable.setModel(new WebTableModel(
+							new Object[][] {
+							},
+							new String[] {
+								"#", "Answer"
+							}
+						));
+						webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
+					for (int i = 0; i < surveyResponse.get(index).size(); i++) {
+						System.out.println(student.getId());
+						model.addRow(new Object[]{
+								i+1,
+								StudentOption
+						});
+					}
+				}
+				
+				
 			}
 		}
+	}
+	
+	public void QA(SurveyResponse e){
+		Student student = e.getStudent();
+		
 	}
 	
 	@SuppressWarnings("serial")
@@ -463,6 +562,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 		currentSurvey = null;
 		currentQuestion = null;
 		surveyResponse.clear();
+		studentList.clear();
 		surveyResponse = null;
 		webComboBox.removeAllItems();
 		

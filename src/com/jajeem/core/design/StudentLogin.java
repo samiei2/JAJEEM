@@ -38,6 +38,7 @@ public class StudentLogin extends JDialog {
 	 */
 	private static final long serialVersionUID = -5121321476236877112L;
 
+	
 	private static String serverIp;
 	private static LoginDialog loginDialog;
 	private static KeyHook keyHook;

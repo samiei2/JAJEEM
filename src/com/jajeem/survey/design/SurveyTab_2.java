@@ -56,7 +56,7 @@ public class SurveyTab_2 extends WebPanel {
 		cards.add(panel_bottom_22,"Student");
 		
 		final WebComboBox webComboBox = new WebComboBox();
-		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question"}));
+		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student", "Overall"}));
 		webComboBox.addItemListener(new ItemListener() {
 			
 			@Override
@@ -74,7 +74,7 @@ public class SurveyTab_2 extends WebPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(21)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(cards, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+						.addComponent(cards, GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -89,7 +89,7 @@ public class SurveyTab_2 extends WebPanel {
 						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
