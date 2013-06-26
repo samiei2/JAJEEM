@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -107,7 +108,7 @@ public class InstructorNoa {
 			// setTransmitter(new AVTransmit2("5000", "", "10000"));
 			// setReceiver(new AVReceive2("10010", "", "5010"));
 
-//			InstructorNoaUtil.networkSetup();
+			InstructorNoaUtil.networkSetup();
 
 			initialize();
 
@@ -390,10 +391,11 @@ public class InstructorNoa {
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		desktopPane.setLayout(gl_desktopPane);
 		centerPanel.setLayout(new CardLayout(0, 0));
+		centerPanel.add(desktopPane, "name_3466416048915");
 		centerPanel.add(centerListPanel, "name_3466370417827");
 		centerListPanel.setLayout(new BorderLayout(0, 0));
 		centerListPanel.add(scrollPanel);
-		centerPanel.add(desktopPane, "name_3466416048915");
+
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
@@ -529,13 +531,45 @@ public class InstructorNoa {
 					String selectedStudent = "";
 					selectedStudent = (String) getDesktopPane()
 							.getSelectedFrame().getClientProperty("ip");
-
 					try {
 						lockCommand = new LockCommand(InetAddress
 								.getLocalHost().getHostAddress(),
 								selectedStudent, Integer.parseInt(Config
 										.getParam("port")));
 						serverService.send(lockCommand);
+						if (!(boolean) getDesktopPane().getSelectedFrame()
+								.getClientProperty("lock")) {
+							getDesktopPane().getSelectedFrame()
+									.putClientProperty("lock", true);
+							getDesktopPane()
+									.getSelectedFrame()
+									.setFrameIcon(
+											new ImageIcon(
+													ImageIO.read(InstructorNoa.class
+															.getResourceAsStream("/icons/noa/lock.png"))));
+
+						} else {
+							getDesktopPane().getSelectedFrame()
+									.putClientProperty("lock", false);
+							if (getDesktopPane().getSelectedFrame()
+									.isSelected()) {
+								getDesktopPane()
+										.getSelectedFrame()
+										.setFrameIcon(
+												new ImageIcon(
+														ImageIO.read(InstructorNoa.class
+																.getResourceAsStream("/icons/menubar/check.png"))));
+							} else {
+								getDesktopPane()
+										.getSelectedFrame()
+										.setFrameIcon(
+												new ImageIcon(
+														ImageIO.read(InstructorNoa.class
+																.getResourceAsStream("/icons/menubar/student.png"))));
+							}
+						}
+						getDesktopPane().getSelectedFrame().updateUI();
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
