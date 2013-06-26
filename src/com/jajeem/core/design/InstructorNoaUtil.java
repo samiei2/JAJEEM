@@ -663,6 +663,7 @@ public class InstructorNoaUtil {
 								ImageIO.read(InstructorNoaUtil.class
 										.getResourceAsStream("/icons/menubar/student.png"))));
 					}
+					frame.updateUI();
 					
 					return null;
 				}

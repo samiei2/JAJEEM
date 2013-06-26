@@ -547,6 +547,7 @@ public class InstructorNoa {
 											new ImageIcon(
 													ImageIO.read(InstructorNoa.class
 															.getResourceAsStream("/icons/noa/lock.png"))));
+
 						} else {
 							getDesktopPane().getSelectedFrame()
 									.putClientProperty("lock", false);
@@ -567,6 +568,7 @@ public class InstructorNoa {
 																.getResourceAsStream("/icons/menubar/student.png"))));
 							}
 						}
+						getDesktopPane().getSelectedFrame().updateUI();
 
 					} catch (Exception e) {
 						e.printStackTrace();
