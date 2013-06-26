@@ -93,7 +93,7 @@ public class WhiteboardListener implements Runnable{
                     JOptionPane.showMessageDialog(null,
                        "Error happens while closing this session.",
                        "Error", JOptionPane.ERROR_MESSAGE);
-                    System.exit(0);
+//                    System.exit(0);
                 }
             }
         }

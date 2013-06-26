@@ -66,7 +66,7 @@ public class JavaBellsSample {
 	public static void usage(String name) {
 		System.out.println( "Usage: " + name + " action username password host" );
 		System.out.println( "\t action: may be CALL, ANSWER or CALL_AND_ANSWER" );
-		System.exit(1);
+//		System.exit(1);
 	}
 	
 	/**
@@ -331,7 +331,7 @@ public class JavaBellsSample {
 				} catch ( Exception e ) {
 					System.out.println( CALLER + ": " + e );
 					e.printStackTrace();
-					System.exit(1);
+//					System.exit(1);
 				}
 			}
 		};

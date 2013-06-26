@@ -54,7 +54,7 @@ public class UserListPanel extends JPanel {
             JOptionPane.showMessageDialog(null,
                 "Error happens while reading the list of user information.",
                 "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
+//            System.exit(0);
         }
         tableModel = new DefaultTableModel(data,columnNames);
         // create the table and change it editable to disable
