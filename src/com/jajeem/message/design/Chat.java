@@ -125,7 +125,7 @@ public class Chat extends WebFrame {
 
 		final WebTextArea textArea = new WebTextArea();
 		textArea.requestFocus();
-		splitPane.setRightComponent(textArea);
+		splitPane.setRightComponent(new WebScrollPane(textArea));
 
 		textArea.addKeyListener(new KeyAdapter() {
 			@Override
