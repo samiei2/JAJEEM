@@ -89,7 +89,7 @@ public class WhiteboardImpl extends UnicastRemoteObject
         userList[0][0] = adminName;
         userList[0][1] = "Administrator";
         this.password = password;
-        userList[0][2] = "¡Ì";
+        userList[0][2] = "Granted";
         currentRightAt = 0;
         isAdministratorLeave = false;
         numUsers++;        
@@ -236,7 +236,7 @@ public class WhiteboardImpl extends UnicastRemoteObject
             userList[currentRightAt][2] = "";
             // set the current right to the specific user
             currentRightAt = index;
-            userList[currentRightAt][2] = "¡Ì";
+            userList[currentRightAt][2] = "Granted";
             notifyAllUserListUpdated();
         }
     }
@@ -249,7 +249,7 @@ public class WhiteboardImpl extends UnicastRemoteObject
             userList[currentRightAt][2] = "";
             // set the current right to the administrator
             currentRightAt = 0;
-            userList[currentRightAt][2] = "¡Ì";
+            userList[currentRightAt][2] = "Granted";
             notifyAllUserListUpdated();
         }
     }

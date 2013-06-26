@@ -49,7 +49,7 @@ public class SessionsListener implements Runnable{
                 JOptionPane.showMessageDialog(null,
                        "Error happens while updating the session list.",
                        "Error", JOptionPane.ERROR_MESSAGE);
-                System.exit(0);
+//                System.exit(0);
             }
         }
     }

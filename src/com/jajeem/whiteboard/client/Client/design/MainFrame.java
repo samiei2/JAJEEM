@@ -65,7 +65,8 @@ public class MainFrame extends JFrame {
             // if this session is not a local whiteboard
             try {
                 // sets the title of this session
-                this.setTitle("Session Name: "+ sessions.getSessionName(sessionID));
+//                this.setTitle("Session Name: "+ sessions.getSessionName(sessionID));
+            	this.setTitle("Whiteboard");
             } catch(Exception ex) {
                 JOptionPane.showMessageDialog(null,
                        "Error happens while getting the name of the session.",
@@ -135,7 +136,7 @@ public class MainFrame extends JFrame {
                        "Error happens while starting the listener thread," +
                        "this frame will be closed.",
                        "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
+//            System.exit(0);
         }
 
         // add the method to listen the event of closing

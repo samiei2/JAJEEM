@@ -255,7 +255,7 @@ public class WhiteboardClient extends WebFrame {
 
     /** Leave the application */
     private void btnCancel_ActionPerformed(ActionEvent e) {
-        System.exit(0);
+//        System.exit(0);
     }
 
     /** Update the list of session */
@@ -313,9 +313,9 @@ public class WhiteboardClient extends WebFrame {
     /** The main entry of the client */
     public static void main(String[] args) {
     	Policy.setPolicy(new MinimalPolicy());
-    	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
-    	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
-    	System.setProperty("javax.net.ssl.keyStorePassword", "client");
+//    	System.setProperty("javax.net.ssl.trustStore","C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
+//    	System.setProperty("javax.net.ssl.keyStore", "C:\\Users\\Armin\\Desktop\\Kar\\whiteboard\\build\\ThreeBytesPaintClient\\client.keystore");
+//    	System.setProperty("javax.net.ssl.keyStorePassword", "client");
 
         // Create and install a security manager
         if (System.getSecurityManager() == null) {

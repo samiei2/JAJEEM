@@ -125,11 +125,11 @@ public class QuizWindow extends WebFrame {
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
-		privateStudent.setFullName(com.jajeem.util.Session.getStudentName());
+//		privateStudent.setFullName(com.jajeem.util.Session.getStudentName());
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		
-		ClientSession.setQuizWindowHndl(this);
+//		ClientSession.setQuizWindowHndl(this);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {

@@ -9,11 +9,11 @@ import com.jajeem.survey.model.Response;
 public class Survey implements Serializable{
 	
 	//properties
-	private int id;
-	private int instructorId;
-	private String title;
-	private String category;
-	private String description;
+	private int id=-1;
+	private int instructorId=-1;
+	private String title="";
+	private String category="";
+	private String description="";
 	private Response response = new Response();
 	private ArrayList<Question> questions = new ArrayList<>();
 	

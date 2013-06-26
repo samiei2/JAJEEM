@@ -253,16 +253,35 @@ public class SurveyMain extends WebFrame {
 				if (i == 0){
 					try {
 						qs.create(currentSurvey);
+						eventsEnabled = false;
+						panel_bottom_1.clear();
+						newQuizRun();
+						eventsEnabled = true;
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 				else if (i == 1){
-					//TODO dispose currentsurvey
+					eventsEnabled = false;
+					panel_bottom_1.clear();
+					newQuizRun();
+					eventsEnabled = true;
 				}
 				else{
 					
 				}
+			}
+
+			private void newQuizRun() {
+				setCurrentSurvey(new Survey());
+                getCurrentSurvey().addQuestion(new Question());
+                // TODO remove these lines
+                getCurrentSurvey().getQuestionList().get(0).setInstructorId(1);
+                getCurrentSurvey().setInstructorId(1);
+                /////////////////////
+                getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
+                ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
+				m_modelSelection.setSelectionInterval(0,0);
 			}
 		});
 		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -363,10 +382,8 @@ public class SurveyMain extends WebFrame {
 						cmd.setSurvey(currentSurvey);
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -379,10 +396,8 @@ public class SurveyMain extends WebFrame {
 						StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
 						serv.send(cmd);
 					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -491,7 +506,6 @@ public class SurveyMain extends WebFrame {
 	}
 
 	public int getInstructorId() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

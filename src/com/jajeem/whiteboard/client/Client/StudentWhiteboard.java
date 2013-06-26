@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import com.jajeem.util.Session;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
@@ -103,7 +104,10 @@ public class StudentWhiteboard {
 	}
 
 	private String getUserName() {
-		return "Test";
+		if(Session.getStudent().getFullName() == null || Session.getStudent().getFullName().equals(""))
+			return "Anonymous";
+		else
+			return Session.getStudent().getFullName();
 	}
 
 	/**

@@ -36,9 +36,6 @@ import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class SurveyOpenDialog extends JDialog {
-
-	private WebComboBox wbCmbBxOption;
-	private WebComboBox wbCmbBxSelection;
 	private WebTable wbTblQuestion;
 	private WebTable wbTblSurvey;
 	private ArrayList<Survey> surveyList = new ArrayList<>();
@@ -78,16 +75,21 @@ public class SurveyOpenDialog extends JDialog {
 						for (int i = 0; i < list.size(); i++) {
 							Survey z = list.get(i);
 							surveyList.add(z);
+							String title = z.getTitle();
+							if(title == null || title.equals(""))
+								title = "No Title";
 							if(wbTblSurvey.getRowCount() == 0){
 								model.addRow(new Object[]{
 										1,
-										z.getTitle()
+										title,
+										z.getQuestionList().size()
 								});
 							}
 							else{
 								model.addRow(new Object[]{
 										Integer.parseInt(String.valueOf(model.getValueAt(wbTblSurvey.getRowCount()-1, 0)))+1,
-										z.getTitle()
+										title,
+										z.getQuestionList().size()
 								});
 							}
 						}
@@ -95,7 +97,6 @@ public class SurveyOpenDialog extends JDialog {
 					if(wbTblSurvey.getRowCount() != 0)
 						wbTblSurvey.getSelectionModel().setSelectionInterval(0, 0);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -153,107 +154,34 @@ public class SurveyOpenDialog extends JDialog {
 					.addContainerGap())
 		);
 		
-		WebLabel wblblSearch = new WebLabel();
-		wblblSearch.setText("Search");
-		
-		WebTextField webTextField = new WebTextField();
-		webTextField.setEnabled(false);
-		webTextField.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		WebLabel wblblCategory = new WebLabel();
-		wblblCategory.setText("Select");
-		
-		wbCmbBxSelection = new WebComboBox();
-		wbCmbBxSelection.setEnabled(false);
-		wbCmbBxSelection.setModel(new DefaultComboBoxModel(new String[] {"Category", "Question Type", "Instructor"}));
-		wbCmbBxSelection.addItemListener(new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				wbCmbBxOption.setVisible(true);
-				if (wbCmbBxSelection.getSelectedIndex() == 0) {
-					
-				}
-				else if(wbCmbBxSelection.getSelectedIndex() == 1){
-					
-				}
-				else if(wbCmbBxSelection.getSelectedIndex() == 2){
-					
-				}
-			}
-		});
-		
 		WebLabel wblblResults = new WebLabel();
 		wblblResults.setText("Results");
 		
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
-		
-		wbCmbBxOption = new WebComboBox();
-		wbCmbBxOption.setEnabled(false);
-		wbCmbBxOption.setVisible(false);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addComponent(wblblSearch, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addComponent(wblblCategory, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(wbCmbBxSelection, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(wbCmbBxOption, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE))
-						.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(Alignment.TRAILING, gl_webPanel_1.createSequentialGroup()
-							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_webPanel_1.setVerticalGroup(
 			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wblblSearch, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+					.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addGap(36)
-							.addComponent(wblblResults, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(wbCmbBxSelection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wblblCategory, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbCmbBxOption, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-						.addComponent(webScrollPane_1, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
+						.addComponent(webScrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))
 					.addGap(14))
 		);
 		
@@ -266,7 +194,8 @@ public class SurveyOpenDialog extends JDialog {
 				"#", "Title"
 			}
 		));
-		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(33);
+		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(43);
+		wbTblQuestion.getColumnModel().getColumn(0).setMaxWidth(43);
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
 		wbTblSurvey = new WebTable();
@@ -275,9 +204,13 @@ public class SurveyOpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Name"
+				"#", "Name","# of Questions"
 			}
 		));
+		wbTblSurvey.getColumnModel().getColumn(0).setPreferredWidth(33);
+		wbTblSurvey.getColumnModel().getColumn(0).setMaxWidth(33);
+		wbTblSurvey.getColumnModel().getColumn(2).setPreferredWidth(93);
+		wbTblSurvey.getColumnModel().getColumn(2).setMaxWidth(93);
 		wbTblSurvey.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override

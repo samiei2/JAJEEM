@@ -40,7 +40,7 @@ public class WhiteboardServer {
 
     /** The main entry of the Server */
     public static void main(String[] args) {
-//    	Policy.setPolicy(new MinimalPolicy());
+    	Policy.setPolicy(new MinimalPolicy());
 //    	try {
 //			com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));
 //		} catch (IOException e) {
@@ -51,10 +51,10 @@ public class WhiteboardServer {
 //    	System.setProperty("javax.net.ssl.keyStore", "cert/server.keystore");
 //    	System.setProperty("javax.net.ssl.keyStorePassword", "server");
         // Create and install a security manager
-//        if (System.getSecurityManager() == null) {
-//            SecurityManager manager = new SecurityManager();
-//            System.setSecurityManager(manager);
-//        }
+        if (System.getSecurityManager() == null) {
+            SecurityManager manager = new SecurityManager();
+            System.setSecurityManager(manager);
+        }
         
         int sessionsNum = SESSIONS_MAX_NUMBER;
         if( args.length == 1) {
@@ -115,7 +115,8 @@ public class WhiteboardServer {
                         // if the user input the quit command
                         // then exit the program
                         if(msg.equals("quit"))
-                            System.exit(0);
+                        	;
+//                            System.exit(0);;
                         System.out.print(">");
                     }
                 }
