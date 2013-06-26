@@ -681,6 +681,7 @@ public class InstructorNoaUtil {
 
 		internalFrame.putClientProperty("vnc", vnc);
 		internalFrame.putClientProperty("ip", hostIp);
+		internalFrame.putClientProperty("lock", false);
 		internalFrame.putClientProperty("username", hostName);
 		internalFrame.putClientProperty("live", true);
 
@@ -773,7 +774,6 @@ public class InstructorNoaUtil {
 							ImageIO.read(InstructorNoaUtil.class
 									.getResourceAsStream("/icons/menubar/check.png"))));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				checkBox.setSelected(true);

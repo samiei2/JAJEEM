@@ -53,15 +53,12 @@ public class MouseHook implements Runnable {
 		return new LowLevelMouseProc() {
 			@Override
 			public LRESULT callback(int nCode, WPARAM wParam, LPARAM info) {
-				if (nCode >= 0) {
-					if (isIgnoreCallback()) {
-						return new LRESULT(1);
-					} else {
-						return lib.CallNextHookEx(hhk, nCode, wParam,
-								info.toPointer());
-					}
+				if (isIgnoreCallback()) {
+					return new LRESULT(1);
+				} else {
+					return lib.CallNextHookEx(hhk, nCode, wParam,
+							info.toPointer());
 				}
-				return lib.CallNextHookEx(hhk, nCode, wParam, info.toPointer());
 				/*
 				 * if (nCode >= 0) { switch (wParam.intValue()) { case
 				 * MouseBlocker.WM_LBUTTONDOWN: break; case
