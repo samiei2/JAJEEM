@@ -87,19 +87,22 @@ public class Viewer extends Thread {
 	}
 
 	public void Stop() {
-		JInternalFrame[] frames = InstructorNoa.getDesktopPane().getAllFrames();
-		for (JInternalFrame frame : frames) {
-			if (client.clientConfig.server_address.equals((String) frame
-					.getClientProperty("ip"))) {
-				frame.putClientProperty("live", false);
-				try {
-					frame.setFrameIcon(new ImageIcon(
-							ImageIO.read(Viewer.class
-									.getResourceAsStream("/icons/noa/disconnect.png"))));
-				} catch (IOException e) {
-					e.printStackTrace();
+		if (getRecorder().screenPlayer.thumb) {
+			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
+					.getAllFrames();
+			for (JInternalFrame frame : frames) {
+				if (client.clientConfig.server_address.equals((String) frame
+						.getClientProperty("ip"))) {
+					frame.putClientProperty("live", false);
+					try {
+						frame.setFrameIcon(new ImageIcon(
+								ImageIO.read(Viewer.class
+										.getResourceAsStream("/icons/noa/disconnect.png"))));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
 				}
-				break;
 			}
 		}
 		disconnect();
