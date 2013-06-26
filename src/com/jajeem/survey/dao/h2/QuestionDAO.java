@@ -32,8 +32,8 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyQuestion (instructorId, title, type, imagePath, url," +
-				" answer1, answer2, answer3, answer4, answer5, responseid) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?);");
+				" answer1, answer2, answer3, answer4, answer5, responseid, surveyid) "
+				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?);");
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
 		ps.setByte(3, question.getType());
@@ -45,6 +45,7 @@ public class QuestionDAO implements IQuestionDAO {
 		ps.setString(9, question.getAnswer4());
 		ps.setString(10, question.getAnswer5());
 		ps.setInt(11, question.getResponse().getId());
+		ps.setInt(12, question.getSurveyId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -312,7 +313,7 @@ public class QuestionDAO implements IQuestionDAO {
 		
 		Connection con = BaseDAO.getConnection();
 		try {
-			ps = con.prepareStatement("SELECT * FROM SurveyQuestion where SurveyQuestion.Surveyid=? ;");
+			ps = con.prepareStatement("SELECT * FROM SurveyQuestion where surveyid=? ;");
 			ps.setInt(1, id);
 
 		
@@ -323,7 +324,7 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setId(rs.getInt("id"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
-				question.setSurveyId(rs.getInt("quizId"));
+				question.setSurveyId(rs.getInt("surveyid"));
 				question.setType(rs.getByte("type"));
 				question.setImagePath(rs.getString("imagePath"));
 				question.setUrl(rs.getString("url"));
