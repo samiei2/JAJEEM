@@ -36,6 +36,7 @@ import javax.swing.table.TableColumn;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
+import org.jitsi.service.libjitsi.LibJitsi;
 
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
@@ -104,9 +105,9 @@ public class InstructorNoa {
 			new Config();
 
 			// Start LibJitsi for first time
-			// LibJitsi.start();
-			// setTransmitter(new AVTransmit2("5000", "", "10000"));
-			// setReceiver(new AVReceive2("10010", "", "5010"));
+			 LibJitsi.start();
+			 setTransmitter(new AVTransmit2("5000", "", "10000"));
+//			 setReceiver(new AVReceive2("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -1055,7 +1056,8 @@ public class InstructorNoa {
 		 */
 		private static final long serialVersionUID = -3816337549406126398L;
 		private String[] columnNames = { "Name", "Status" };
-		private Object[][] data = { { "Chrome", false }, { "FireFox", false } };
+		private Object[][] data = { { "Chrome", false }, { "Firefox", false },
+				{ "IExplore", false }, { "WMplayer", false }};
 
 		public final Object[] longValues = { "Jane", Boolean.TRUE };
 

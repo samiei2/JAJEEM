@@ -140,82 +140,78 @@ public class InstructorNoaUtil {
 										.getDesktopPane().getSelectedFrame()
 										.getClientProperty("ip");
 								try {
+									StartIntercomCommand si = new StartIntercomCommand(
+											InetAddress.getLocalHost()
+													.getHostAddress(),
+											selectedStudent, Integer
+													.parseInt(Config
+															.getParam("port")));
+									InstructorNoa.getServerService().send(si);
+
+									InstructorNoa
+											.getTransmitter()
+											.setRemoteAddr(
+													InetAddress
+															.getByName(selectedStudent));
+									InstructorNoa.getTransmitter().start();
+
 									// "--remote-host=127.0.0.1 --remote-port-base=10000"
-
-									if (InstructorNoa.getTransmitter()
-											.isTransmitting()) {
-
-										// Stop transmitting to prev student and
-										// sent stop
-										// command to him
-										InstructorNoa.getTransmitter().stop();
-										// InstructorNoa.getReceiver().close();
-										InstructorNoa.getTransmitter()
-												.getRemoteAddr()
-												.getHostAddress();
-										StopIntercomCommand si = new StopIntercomCommand(
-												InetAddress.getLocalHost()
-														.getHostAddress(),
-												InstructorNoa.getTransmitter()
-														.getRemoteAddr()
-														.getHostAddress(),
-												Integer.parseInt(Config
-														.getParam("port")));
-										InstructorNoa.getServerService().send(
-												si);
-
-										// if selected new student, start
-										// talking to him
-										if (!InstructorNoa.getTransmitter()
-												.getRemoteAddr()
-												.getHostAddress()
-												.equals(selectedStudent)) {
-
-											// Start transmitting to new student
-											InstructorNoa
-													.getTransmitter()
-													.setRemoteAddr(
-															InetAddress
-																	.getByName(selectedStudent));
-											// InstructorNoa
-											// .getReceiver()
-											// .setRemoteAddr(
-											// InetAddress
-											// .getByName(selectedStudent));
-											InstructorNoa.getTransmitter()
-													.start();
-											// InstructorNoa.getReceiver()
-											// .initialize();
-											//
-										}
-									} else {
-
-										// Send start receiver to selected
-										// student and start
-										// transmitter
-										StartIntercomCommand si = new StartIntercomCommand(
-												InetAddress.getLocalHost()
-														.getHostAddress(),
-												selectedStudent,
-												Integer.parseInt(Config
-														.getParam("port")));
-										InstructorNoa.getServerService().send(
-												si);
-
-										InstructorNoa
-												.getTransmitter()
-												.setRemoteAddr(
-														InetAddress
-																.getByName(selectedStudent));
-										// InstructorNoa
-										// .getReceiver()
-										// .setRemoteAddr(
-										// InetAddress
-										// .getByName(selectedStudent));
-										InstructorNoa.getTransmitter().start();
-										// InstructorNoa.getReceiver()
-										// .initialize();
-									}
+									/*
+									 * if (InstructorNoa.getTransmitter()
+									 * .isTransmitting()) {
+									 * 
+									 * // Stop transmitting to prev student and
+									 * // sent stop // command to him
+									 * InstructorNoa.getTransmitter().stop();
+									 * StopIntercomCommand si = new
+									 * StopIntercomCommand(
+									 * InetAddress.getLocalHost()
+									 * .getHostAddress(),
+									 * InstructorNoa.getTransmitter()
+									 * .getRemoteAddr() .getHostAddress(),
+									 * Integer.parseInt(Config
+									 * .getParam("port")));
+									 * InstructorNoa.getServerService().send(
+									 * si);
+									 * 
+									 * // if selected new student, start //
+									 * talking to him if
+									 * (!InstructorNoa.getTransmitter()
+									 * .getRemoteAddr() .getHostAddress()
+									 * .equals(selectedStudent)) {
+									 * 
+									 * // Start transmitting to new student
+									 * InstructorNoa .getTransmitter()
+									 * .setRemoteAddr( InetAddress
+									 * .getByName(selectedStudent)); //
+									 * InstructorNoa // .getReceiver() //
+									 * .setRemoteAddr( // InetAddress //
+									 * .getByName(selectedStudent));
+									 * InstructorNoa.getTransmitter() .start();
+									 * // InstructorNoa.getReceiver() //
+									 * .initialize(); // } } else {
+									 * 
+									 * // Send start receiver to selected //
+									 * student and start // transmitter
+									 * StartIntercomCommand si = new
+									 * StartIntercomCommand(
+									 * InetAddress.getLocalHost()
+									 * .getHostAddress(), selectedStudent,
+									 * Integer.parseInt(Config
+									 * .getParam("port")));
+									 * InstructorNoa.getServerService().send(
+									 * si);
+									 * 
+									 * InstructorNoa .getTransmitter()
+									 * .setRemoteAddr( InetAddress
+									 * .getByName(selectedStudent)); //
+									 * InstructorNoa // .getReceiver() //
+									 * .setRemoteAddr( // InetAddress //
+									 * .getByName(selectedStudent));
+									 * InstructorNoa.getTransmitter().start();
+									 * // InstructorNoa.getReceiver() //
+									 * .initialize(); }
+									 */
 
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -654,7 +650,7 @@ public class InstructorNoaUtil {
 					vnc.StartThumbs((WebInternalFrame) frame);
 					frame.putClientProperty("vnc", vnc);
 					frame.putClientProperty("live", true);
-					if(frame.isSelected()) {
+					if (frame.isSelected()) {
 						frame.setFrameIcon(new ImageIcon(
 								ImageIO.read(InstructorNoaUtil.class
 										.getResourceAsStream("/icons/menubar/check.png"))));
@@ -664,7 +660,7 @@ public class InstructorNoaUtil {
 										.getResourceAsStream("/icons/menubar/student.png"))));
 					}
 					frame.updateUI();
-					
+
 					return null;
 				}
 				break;
@@ -736,11 +732,11 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
-				
+
 				if (!(boolean) internalFrame.getClientProperty("live")) {
 					return;
 				}
-				
+
 				try {
 					internalFrame.setFrameIcon(new ImageIcon(
 							ImageIO.read(InstructorNoaUtil.class
