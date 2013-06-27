@@ -266,6 +266,11 @@ public class Quiz_Main extends WebFrame {
 			public void windowOpened(WindowEvent arg0) {
 				newQuizRun();
 			}
+			
+			@Override
+			public void windowClosing(WindowEvent arg0){
+				StopQuizCommand();
+			}
 		});
 		wbtnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -456,6 +461,7 @@ public class Quiz_Main extends WebFrame {
 		});
 	}
 
+	
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
 		currentRun.setQuizId(new Random().nextInt(1000));

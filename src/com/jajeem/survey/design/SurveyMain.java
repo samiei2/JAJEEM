@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -68,6 +70,8 @@ public class SurveyMain extends WebFrame {
 	private WebButton wbtnOpen;
 	private WebButton wbtnSave;
 	private WebButton wbtnSaveResults;
+	
+	public static AtomicInteger counter = new AtomicInteger();
 	/**
 	 * Launch the application.
 	 */
@@ -130,6 +134,7 @@ public class SurveyMain extends WebFrame {
                 getCurrentSurvey().addQuestion(new Question());
                 // TODO remove these lines
                 getCurrentSurvey().getQuestionList().get(0).setInstructorId(1);
+                getCurrentSurvey().getQuestionList().get(0).setId(counter.incrementAndGet());
                 getCurrentSurvey().setInstructorId(1);
                 /////////////////////
                 getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
@@ -202,6 +207,7 @@ public class SurveyMain extends WebFrame {
                 // TODO remove these lines
                 getCurrentSurvey().getQuestionList().get(0).setInstructorId(1);
                 getCurrentSurvey().setInstructorId(1);
+                getCurrentSurvey().getQuestionList().get(0).setId(counter.incrementAndGet());
                 /////////////////////
                 panel_bottom_1.clear();
                 getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
@@ -485,6 +491,22 @@ public class SurveyMain extends WebFrame {
 					.addGap(0))
 		);
 		getContentPane().setLayout(groupLayout);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					new Config();
+					ServerService serv = new ServerService();
+					StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+					serv.send(cmd);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public com.jajeem.survey.model.Survey getCurrentSurvey() {
