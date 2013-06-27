@@ -37,6 +37,7 @@ import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.SurveyEvent;
 import com.jajeem.events.SurveyEventListener;
@@ -241,7 +242,11 @@ public class SurveyWindow extends WebFrame {
 									SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
 									cmd.setEvent(resp);
 								
-									ServerService service = new ServerService();
+									ServerService service;
+									if(InstructorNoa.getServerService() == null)
+										service = new ServerService();
+									else
+										service = InstructorNoa.getServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
 									e.printStackTrace();
@@ -689,11 +694,29 @@ public class SurveyWindow extends WebFrame {
 					CardLayout cl = (CardLayout)(mainPanel.getLayout());
 			        cl.show(mainPanel, "0");
 			        //lblInputAnswer.setText("Select an answer");
+			        webRadioButton.setEnabled(true);
+			        webRadioButton_1.setEnabled(true);
+			        webRadioButton_2.setEnabled(true);
+			        webRadioButton_3.setEnabled(true);
+			        webRadioButton_4.setEnabled(true);
+			        
 			        webTextField_2.setText(currentQuestion.getAnswer1());
 			        webTextField_3.setText(currentQuestion.getAnswer2());
 			        webTextField_4.setText(currentQuestion.getAnswer3());
 			        webTextField_5.setText(currentQuestion.getAnswer4());
 			        webTextField_6.setText(currentQuestion.getAnswer5());
+			        
+			        if(currentQuestion.getAnswer1().equals(""))
+			        	webRadioButton.setEnabled(false);
+			        if(currentQuestion.getAnswer2().equals(""))
+			        	webRadioButton_1.setEnabled(false);
+			        if(currentQuestion.getAnswer3().equals(""))
+			        	webRadioButton_2.setEnabled(false);
+			        if(currentQuestion.getAnswer4().equals(""))
+			        	webRadioButton_3.setEnabled(false);
+			        if(currentQuestion.getAnswer5().equals(""))
+			        	webRadioButton_4.setEnabled(false);
+			        
 			        boolean[] answers = currentQuestion.getStudentAnswer();
 			        if(answers != null){
 			        	webRadioButton.setSelected(answers[0]);
@@ -714,11 +737,29 @@ public class SurveyWindow extends WebFrame {
 					CardLayout cl = (CardLayout)(mainPanel.getLayout());
 			        cl.show(mainPanel, "1");
 			        //lblInputAnswer.setText("Select answer");
+			        webCheckBox.setEnabled(true);
+			        webCheckBox_1.setEnabled(true);
+			        webCheckBox_2.setEnabled(true);
+			        webCheckBox_3.setEnabled(true);
+			        webCheckBox_4.setEnabled(true);
+			        
 			        webTextField_12.setText(currentQuestion.getAnswer1());
 			        webTextField_13.setText(currentQuestion.getAnswer2());
 			        webTextField_14.setText(currentQuestion.getAnswer3());
 			        webTextField_15.setText(currentQuestion.getAnswer4());
 			        webTextField_16.setText(currentQuestion.getAnswer5());
+			        
+			        if(currentQuestion.getAnswer1().equals(""))
+			        	webCheckBox.setEnabled(false);
+			        if(currentQuestion.getAnswer2().equals(""))
+			        	webCheckBox_1.setEnabled(false);
+			        if(currentQuestion.getAnswer3().equals(""))
+			        	webCheckBox_2.setEnabled(false);
+			        if(currentQuestion.getAnswer4().equals(""))
+			        	webCheckBox_3.setEnabled(false);
+			        if(currentQuestion.getAnswer5().equals(""))
+			        	webCheckBox_4.setEnabled(false);
+			        
 			        boolean[] answers = currentQuestion.getStudentAnswer();
 			        if(answers != null){
 			        	webCheckBox.setSelected(answers[0]);

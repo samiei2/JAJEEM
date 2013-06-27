@@ -101,8 +101,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 				}
 			}
 			model.addRow(new Object[]{
-//					student.getFirstName() + " " + student.getLastName(),
-					student.getId(),
+					student.getFullName(),
 					score
 			});
 		}

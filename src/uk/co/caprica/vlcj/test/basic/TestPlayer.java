@@ -207,7 +207,7 @@ public class TestPlayer extends VlcjTest {
         mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
         mainFrame.setJMenuBar(buildMenuBar());
         mainFrame.pack();
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {

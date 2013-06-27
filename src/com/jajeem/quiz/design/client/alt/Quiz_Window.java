@@ -125,10 +125,12 @@ public class Quiz_Window extends WebFrame {
 		//TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
-		if(com.jajeem.util.Session.getStudent().getFullName()!=null)
-			privateStudent.setFullName(com.jajeem.util.Session.getStudent().getFullName());
+		if(com.jajeem.util.Session.getStudent()!=null)
+			if(com.jajeem.util.Session.getStudent().getFullName()!=null)
+				privateStudent.setFullName(com.jajeem.util.Session.getStudent().getFullName());
 		else
 			privateStudent.setFullName("Anonymous");
+		
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 		
@@ -713,11 +715,28 @@ public class Quiz_Window extends WebFrame {
 					CardLayout cl = (CardLayout)(mainPanel.getLayout());
 			        cl.show(mainPanel, "0");
 			        //lblInputAnswer.setText("Select an answer");
+			        webRadioButton.setEnabled(true);
+			        webRadioButton_1.setEnabled(true);
+			        webRadioButton_2.setEnabled(true);
+			        webRadioButton_3.setEnabled(true);
+			        webRadioButton_4.setEnabled(true);
 			        webTextField_2.setText(currentQuestion.getAnswer1());
 			        webTextField_3.setText(currentQuestion.getAnswer2());
 			        webTextField_4.setText(currentQuestion.getAnswer3());
 			        webTextField_5.setText(currentQuestion.getAnswer4());
 			        webTextField_6.setText(currentQuestion.getAnswer5());
+			        
+			        if(currentQuestion.getAnswer1().equals(""))
+			        	webRadioButton.setEnabled(false);
+			        if(currentQuestion.getAnswer2().equals(""))
+			        	webRadioButton_1.setEnabled(false);
+			        if(currentQuestion.getAnswer3().equals(""))
+			        	webRadioButton_2.setEnabled(false);
+			        if(currentQuestion.getAnswer4().equals(""))
+			        	webRadioButton_3.setEnabled(false);
+			        if(currentQuestion.getAnswer5().equals(""))
+			        	webRadioButton_4.setEnabled(false);
+			        
 			        boolean[] answers = currentQuestion.getStudentAnswer();
 			        if(answers != null){
 			        	webRadioButton.setSelected(answers[0]);
@@ -738,11 +757,28 @@ public class Quiz_Window extends WebFrame {
 					CardLayout cl = (CardLayout)(mainPanel.getLayout());
 			        cl.show(mainPanel, "1");
 			        //lblInputAnswer.setText("Select answer");
+			        webCheckBox.setEnabled(true);
+			        webCheckBox_1.setEnabled(true);
+			        webCheckBox_2.setEnabled(true);
+			        webCheckBox_3.setEnabled(true);
+			        webCheckBox_4.setEnabled(true);
+			        
 			        webTextField_12.setText(currentQuestion.getAnswer1());
 			        webTextField_13.setText(currentQuestion.getAnswer2());
 			        webTextField_14.setText(currentQuestion.getAnswer3());
 			        webTextField_15.setText(currentQuestion.getAnswer4());
 			        webTextField_16.setText(currentQuestion.getAnswer5());
+			        
+			        if(currentQuestion.getAnswer1().equals(""))
+			        	webCheckBox.setEnabled(false);
+			        if(currentQuestion.getAnswer2().equals(""))
+			        	webCheckBox_1.setEnabled(false);
+			        if(currentQuestion.getAnswer3().equals(""))
+			        	webCheckBox_2.setEnabled(false);
+			        if(currentQuestion.getAnswer4().equals(""))
+			        	webCheckBox_3.setEnabled(false);
+			        if(currentQuestion.getAnswer5().equals(""))
+			        	webCheckBox_4.setEnabled(false);
 			        boolean[] answers = currentQuestion.getStudentAnswer();
 			        if(answers != null){
 			        	webCheckBox.setSelected(answers[0]);

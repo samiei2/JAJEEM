@@ -46,6 +46,8 @@ public class SurveyTab_2_Student_View extends WebPanel {
 	 */
 	public SurveyTab_2_Student_View(SurveyTab_2 panel_Bottom_2) {
 		this.parentPanel = panel_Bottom_2;
+		surveyResponse = parentPanel.getSurveyResponse();
+		currentSurvey = parentPanel.getCurrentSurvey();
 
 		WebLabel wblblStudent = new WebLabel();
 		wblblStudent.setText("Student");
@@ -172,10 +174,8 @@ public class SurveyTab_2_Student_View extends WebPanel {
 								209, Short.MAX_VALUE).addContainerGap()));
 
 		webTable = new WebTable();
-		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
+		webTable.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
 				"Question", "Student Answer" }));
-		webTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-		webTable.getColumnModel().getColumn(0).setMaxWidth(30);
 		webScrollPane.setViewportView(webTable);
 		webPanel.setLayout(gl_webPanel);
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -295,7 +295,7 @@ public class SurveyTab_2_Student_View extends WebPanel {
 															// id then show it's
 															// result otherwise
 															// just save it
-				WebTableModel model = (WebTableModel) webTable.getModel();
+				DefaultTableModel model = (DefaultTableModel) webTable.getModel();
 				model.getDataVector().removeAllElements();
 				model.fireTableDataChanged();
 				for (int i = 0; i < surveyResponse.size(); i++) { // iterate
@@ -350,22 +350,9 @@ public class SurveyTab_2_Student_View extends WebPanel {
 		}
 	}
 
-	@SuppressWarnings("serial")
-	class WebTableModel extends DefaultTableModel {
-		public WebTableModel(Object[][] objects, String[] strings) {
-			super(objects, strings);
-		}
-
-		@Override
-		public Class<?> getColumnClass(int arg0) {
-			if (arg0 == 0)
-				return Icon.class;
-			return super.getColumnClass(arg0);
-		}
-	}
-
 	public void LoadSurvey(Survey currentSurvey2) {
 		currentSurvey = currentSurvey2;
+		surveyResponse = parentPanel.getSurveyResponse();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -380,6 +367,5 @@ public class SurveyTab_2_Student_View extends WebPanel {
 		currentSurvey = null;
 		currentStudent = null;
 		surveyResponse.clear();
-		surveyResponse = null;
 	}
 }

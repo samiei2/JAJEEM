@@ -114,7 +114,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		wbtxtfldDirection = new WebTextField();
 
 		WebLabel wblblPoints = new WebLabel();
-		wblblPoints.setText("Points : ");
+		wblblPoints.setText("Total : ");
 
 		wbtxtfldPoints = new WebTextField();
 

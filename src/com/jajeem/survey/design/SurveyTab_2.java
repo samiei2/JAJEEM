@@ -56,7 +56,7 @@ public class SurveyTab_2 extends WebPanel {
 		cards.add(panel_bottom_22,"Student");
 		
 		final WebComboBox webComboBox = new WebComboBox();
-		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student", "Overall"}));
+		webComboBox.setModel(new DefaultComboBoxModel(new String[] {"Question", "Student"}));
 		webComboBox.addItemListener(new ItemListener() {
 			
 			@Override
@@ -119,6 +119,7 @@ public class SurveyTab_2 extends WebPanel {
 
 	public void LoadSurvey(Survey currentSurvey) {
 		this.currentSurvey = currentSurvey;
+		surveyResponse.clear();
 		for (int i = 0; i < currentSurvey.getQuestionList().size(); i++) {
 			surveyResponse.add(new ArrayList<SurveyResponse>());
 		}

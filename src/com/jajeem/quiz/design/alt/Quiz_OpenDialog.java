@@ -103,7 +103,7 @@ public class Quiz_OpenDialog extends JDialog {
 		});
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setBounds(100, 0, 800, 720);
+		setBounds(100, 0, 653, 479);
 		setLocationByPlatform(true);
 		
 		WebPanel webPanel = new WebPanel();
@@ -134,9 +134,9 @@ public class Quiz_OpenDialog extends JDialog {
 			gl_webPanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(webPanel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_webPanel.createSequentialGroup()
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(webPanel_1, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
 							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(wbtnCancel, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
@@ -144,14 +144,14 @@ public class Quiz_OpenDialog extends JDialog {
 		);
 		gl_webPanel.setVerticalGroup(
 			gl_webPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_webPanel.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_webPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webPanel_1, GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 387, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(wbtnCancel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addContainerGap(254, Short.MAX_VALUE))
 		);
 		
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
@@ -159,12 +159,12 @@ public class Quiz_OpenDialog extends JDialog {
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(
-			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_webPanel_1.createSequentialGroup()
+			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webScrollPane_1, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_webPanel_1.setVerticalGroup(
@@ -172,8 +172,8 @@ public class Quiz_OpenDialog extends JDialog {
 				.addGroup(gl_webPanel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(webScrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
+						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+						.addComponent(webScrollPane_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
 					.addGap(14))
 		);
 		

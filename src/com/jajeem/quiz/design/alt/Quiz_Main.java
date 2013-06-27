@@ -35,6 +35,7 @@ import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.quiz.model.Question;
@@ -379,6 +380,7 @@ public class Quiz_Main extends WebFrame {
 				ArrayList<Run> results = secondPage.getRunResults();
 				ResultService service = new ResultService();
 				service.create(secondPage.getQuizResponse(), results);
+				JOptionPane.showMessageDialog(null, "Results Saved!");
 			}
 		});
 		wbtnStart.addActionListener(new ActionListener() {
@@ -491,12 +493,16 @@ public class Quiz_Main extends WebFrame {
 	private void StopQuizCommand() {
 		try {
 			new Config();
-			ServerService serv = new ServerService();
+			ServerService service;
+			if(InstructorNoa.getServerService() == null)
+				service = new ServerService();
+			else
+				service = InstructorNoa.getServerService();
 			StopQuizCommand cmd = new StopQuizCommand(InetAddress
 					.getLocalHost().getHostAddress(),
 					Config.getParam("broadcastingIp"), Integer.parseInt(Config
 							.getParam("port")));
-			serv.send(cmd);
+			service.send(cmd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -506,7 +512,11 @@ public class Quiz_Main extends WebFrame {
 		try {
 			currentRun.setStart(System.currentTimeMillis());
 			new Config();
-			ServerService serv = new ServerService();
+			ServerService service;
+			if(InstructorNoa.getServerService() == null)
+				service = new ServerService();
+			else
+				service = InstructorNoa.getServerService();
 			StartQuizCommand cmd = new StartQuizCommand(InetAddress
 					.getLocalHost().getHostAddress(),
 					Config.getParam("broadcastingIp"), Integer.parseInt(Config
@@ -516,7 +526,7 @@ public class Quiz_Main extends WebFrame {
 			cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 			cmd.setRun(currentRun);
 			cmd.setQuiz(currentRun.getQuiz());
-			serv.send(cmd);
+			service.send(cmd);
 			//Quiz_Window client = new Quiz_Window(currentRun);
 			//client.show();
 		} catch (Exception ex) {

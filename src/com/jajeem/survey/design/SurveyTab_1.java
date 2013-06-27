@@ -42,10 +42,8 @@ public class SurveyTab_1 extends WebPanel {
 		try {
 			id = Integer.parseInt(com.jajeem.util.Config.getParam("qid"));
 		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		this.setParentPanel(surveyMain);
@@ -60,7 +58,7 @@ public class SurveyTab_1 extends WebPanel {
 				//System.out.println(paren.getModel().getClass());
 				parentPanel.setEventsEnabled(false);
 				if(parentPanel.getCurrentQuestion() != null){
-					parentPanel.getCurrentQuestion().setId(id++);
+					parentPanel.getCurrentQuestion().setId(SurveyMain.counter.incrementAndGet());
 					parentPanel.getCurrentQuestion().setInstructorId(parentPanel.getCurrentSurvey().getInstructorId());
 					parentPanel.getCurrentQuestion().setSurveyId(parentPanel.getCurrentSurvey().getId());
 					parentPanel.getCurrentQuestion().setTitle(getQuestionDesignPanel().getWebTextArea().getText());
@@ -113,6 +111,7 @@ public class SurveyTab_1 extends WebPanel {
                 
                 questionDesignPanel.setEnabled(true);
                 questionDesignPanel.getWebScrollPane().setEnabled(true);
+                questionDesignPanel.getWebTextArea().setEnabled(true);
 				questionDesignPanel.getWebTextField().setEnabled(true);
 				questionDesignPanel.getWebTextField_1().setEnabled(true);
 				questionDesignPanel.getWebTextField_2().setEnabled(true);
