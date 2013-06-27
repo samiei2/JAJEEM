@@ -91,18 +91,18 @@ public class SurveyTab_1 extends WebPanel {
                 if(questionListPanel.getWebTable().getRowCount() != 0)
                 	obj = new Object[]{
                 		Integer.parseInt(String.valueOf(model.getValueAt(questionListPanel.getWebTable().getRowCount()-1, 0)))+1,
-                		getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
+                		"Single Choice",
                 		""
                 		};
                 else
                 	obj = new Object[]{
                 		1,
-                		getQuestionDesignPanel().getWebComboBox().getSelectedItem().toString(),
+                		"Single Choice",
                 		""
                 		};
 				model.addRow(obj);
 				Question q = new Question();
-				q.setId(id++);
+				q.setId(SurveyMain.counter.incrementAndGet());
 				q.setSurveyId(parentPanel.getCurrentSurvey().getId());
 				q.setInstructorId(parentPanel.getCurrentSurvey().getInstructorId());
                 getParentPanel().getCurrentSurvey().addQuestion(q);
@@ -141,6 +141,7 @@ public class SurveyTab_1 extends WebPanel {
 				
 				if(getQuestionListPanel().getWebTable().getRowCount() == 0){
 					questionDesignPanel.getWebScrollPane().setEnabled(false);
+					questionDesignPanel.getWebTextArea().setEnabled(false);
 					questionDesignPanel.getWebTextField().setEnabled(false);
 					questionDesignPanel.getWebTextField_1().setEnabled(false);
 					questionDesignPanel.getWebTextField_2().setEnabled(false);
@@ -158,6 +159,7 @@ public class SurveyTab_1 extends WebPanel {
 				parentPanel.setEventsEnabled(false);
 				if(parentPanel.getCurrentSurvey().getQuestionList().size() != 0 && questionListPanel.getWebTable().getRowCount() != 0){
 					Question toCopy = new Question(parentPanel.getCurrentSurvey().getQuestionList().get(questionListPanel.getWebTable().getSelectedRow()));
+					toCopy.setId(SurveyMain.counter.incrementAndGet());
 					parentPanel.getCurrentSurvey().addQuestion(toCopy);
 					String type = "";
 					if(toCopy.getType()==0){

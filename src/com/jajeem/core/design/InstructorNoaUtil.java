@@ -25,6 +25,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
+import uk.co.caprica.vlcj.test.basic.TestPlayer;
+
 import jrdesktop.viewer.Viewer;
 
 import com.alee.extended.panel.CenterPanel;
@@ -287,7 +289,7 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							new VideoPlayer("", false);
+							new TestPlayer("", false);
 						}
 					});
 
