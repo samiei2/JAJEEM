@@ -175,3 +175,21 @@ INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 >>>>>>> 4988e1472cee21ad300e706733dc8cadc3023586
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+INFO  ServerServiceTimer.class: Server started, sending startUpCommand every: 5000
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.117
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.117
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.117
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.117
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.117
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+INFO  ServerServiceTimer.class: Server started, sending startUpCommand every: 5000
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.120
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+INFO  ServerServiceTimer.class: Server started, sending startUpCommand every: 5000
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.120
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+INFO  ServerServiceTimer.class: Server started, sending startUpCommand every: 5000
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.120
