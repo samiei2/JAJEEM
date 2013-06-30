@@ -103,6 +103,8 @@ public class StudentLogin extends JDialog {
 		if(!new File("util").exists())
 			Unzipper.unzip("util.zip");
 		
+		LibJitsi.start();
+		
 		setServerService(new ServerService());
 
 		ClientService clientServiceTimer = new ClientService(
