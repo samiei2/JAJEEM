@@ -20,7 +20,6 @@ import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -38,8 +37,6 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
-
-import uk.co.caprica.vlcj.test.basic.TestPlayer;
 
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
@@ -108,8 +105,8 @@ public class InstructorNoa {
 			new Config();
 
 			// Start LibJitsi for first time
-//			 LibJitsi.start();
-//			 setTransmitter(new AVTransmit2("5000", "", "10000"));
+			 LibJitsi.start();
+			 setTransmitter(new AVTransmit2("5000", "", "10000"));
 //			 setReceiver(new AVReceive2("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();

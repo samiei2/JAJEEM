@@ -85,8 +85,8 @@ public class Student {
 			new Config();
 			
 			// initiate Libjitsi for intercom
-//			LibJitsi.start();
-//			setTransmitter(new AVTransmit2("10000", "", "5000"));
+			
+			setTransmitter(new AVTransmit2("10000", "", "5000"));
 //			setReceiver(new AVReceive2("10000", "", "5000"));
 
 		} catch (Throwable e) {
