@@ -31,6 +31,7 @@ import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.util.Config;
@@ -100,7 +101,7 @@ public class QuizTab_2_Question_View extends WebPanel {
 												.getResourceAsStream("/icons/bullet-green.png")));
 						}
 						catch(Exception exp){
-							
+							JajeemExcetionHandler.logError(exp);
 						}
 						
 						String StudentOption = "";
@@ -529,7 +530,7 @@ public class QuizTab_2_Question_View extends WebPanel {
 										.getResourceAsStream("/icons/bullet-green.png")));
 				}
 				catch(Exception exp){
-					
+					JajeemExcetionHandler.logError(exp);
 				}
 				
 				for (int i = 0; i < webTable.getRowCount(); i++) {

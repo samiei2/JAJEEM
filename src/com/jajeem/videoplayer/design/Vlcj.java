@@ -26,6 +26,7 @@ import uk.co.caprica.vlcj.logger.Logger;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.x.LibXUtil;
 
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.sun.jna.NativeLibrary;
 
 /**
@@ -101,6 +102,7 @@ public abstract class Vlcj {
             UIManager.setLookAndFeel(lookAndFeelClassName);
         }
         catch(Exception e) {
+        	JajeemExcetionHandler.logError(e);
             // Silently fail, it doesn't matter
         }
     }

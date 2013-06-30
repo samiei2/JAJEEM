@@ -37,6 +37,7 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
@@ -68,6 +69,7 @@ public class Quiz_Main extends WebFrame {
 	private Quiz_SecondPage secondPage;
 	private WebPanel webPanel;
 	private Quiz_Main mainFrame;
+	private static boolean isPreviouslyOpened = false;
 	
 	private static AtomicInteger counter = new AtomicInteger();
 
@@ -80,6 +82,7 @@ public class Quiz_Main extends WebFrame {
 				try {
 					Quiz_Main frame = new Quiz_Main();
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -254,8 +257,10 @@ public class Quiz_Main extends WebFrame {
 					Config.getParam("broadcastingIp"), Integer.parseInt(Config
 							.getParam("quizport")));
 		} catch (NumberFormatException e2) {
+			JajeemExcetionHandler.logError(e2);
 			e2.printStackTrace();
 		} catch (Exception e2) {
+			JajeemExcetionHandler.logError(e2);
 			e2.printStackTrace();
 		}
 		clientService2.start();
@@ -287,6 +292,7 @@ public class Quiz_Main extends WebFrame {
 						try {
 							StopQuizCommand();
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					} else {
@@ -326,6 +332,7 @@ public class Quiz_Main extends WebFrame {
 					try {
 						StopQuizCommand();
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else {
@@ -363,6 +370,7 @@ public class Quiz_Main extends WebFrame {
 						newQuizRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
+						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 				} else if (i == 1) {
@@ -504,6 +512,7 @@ public class Quiz_Main extends WebFrame {
 							.getParam("port")));
 			service.send(cmd);
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -530,6 +539,7 @@ public class Quiz_Main extends WebFrame {
 			//Quiz_Window client = new Quiz_Window(currentRun);
 			//client.show();
 		} catch (Exception ex) {
+			JajeemExcetionHandler.logError(ex);
 			ex.printStackTrace();
 		}
 	}

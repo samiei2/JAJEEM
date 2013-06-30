@@ -20,6 +20,8 @@ import com.alee.laf.rootpane.WebDialog;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
+import com.jajeem.exception.JajeemExcetionHandler;
+
 import java.awt.Toolkit;
 
 public class MessageReceive extends JDialog {
@@ -53,6 +55,7 @@ public class MessageReceive extends JDialog {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 		

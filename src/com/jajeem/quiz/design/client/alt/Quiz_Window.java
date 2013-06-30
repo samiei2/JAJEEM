@@ -43,6 +43,7 @@ import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizFinished;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -110,6 +111,7 @@ public class Quiz_Window extends WebFrame {
 //					QuizWindow frame = new QuizWindow();
 //					frame.setVisible(true);
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -270,8 +272,10 @@ public class Quiz_Window extends WebFrame {
 									ServerService service = new ServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
+									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
 								} catch (Exception e) {
+									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
 								}
 							}
@@ -695,8 +699,10 @@ public class Quiz_Window extends WebFrame {
 								ServerService service = new ServerService();
 								service.send(cmd);
 							} catch (NumberFormatException e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}

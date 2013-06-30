@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
@@ -76,6 +77,7 @@ public class InstructorNoaUtil {
 
 	private static ServerServiceTimer serverServiceTimer;
 	final static WebPopup popup = new WebPopup();
+	
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -297,6 +299,9 @@ public class InstructorNoaUtil {
 				case "quiz":
 					((JButton) c).addActionListener(new ActionListener() {
 
+						
+
+						@SuppressWarnings({ "unused", "null" })
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							Quiz_Main quiz = new Quiz_Main();

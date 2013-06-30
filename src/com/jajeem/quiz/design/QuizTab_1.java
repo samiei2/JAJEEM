@@ -21,6 +21,7 @@ import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -95,7 +96,7 @@ public class QuizTab_1 extends WebPanel {
 					parentPanel.getCurrentQuestion().setPoint(Integer.parseInt(getQuestionDesignPanel().getWebTextField_6().getText()));
 				}
 				catch(Exception ex){
-					;
+					JajeemExcetionHandler.logError(ex);
 				}
 				try{
 					if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 0){
@@ -124,7 +125,7 @@ public class QuizTab_1 extends WebPanel {
 					}
 				}
 				catch(Exception ex){
-					;
+					JajeemExcetionHandler.logError(ex);
 				}
 				/// Add the question to the current quiz and question list
 				if(questionListPanel.getWebTable().getSelectedRow() == -1){ // meaning no question is selected so the changes are made to a new question not an existing one
@@ -202,7 +203,7 @@ public class QuizTab_1 extends WebPanel {
 						parentPanel.getCurrentQuestion().setPoint(Integer.parseInt(getQuestionDesignPanel().getWebTextField_6().getText()));
 					}
 					catch(Exception ex){
-						;
+						JajeemExcetionHandler.logError(ex);
 					}
 					try{
 						if(getQuestionDesignPanel().getWebComboBox().getSelectedIndex() == 0){
@@ -231,7 +232,7 @@ public class QuizTab_1 extends WebPanel {
 						}
 					}
 					catch(Exception ex){
-						;
+						JajeemExcetionHandler.logError(ex);
 					}
 				}
 				DefaultTableModel model = (DefaultTableModel) questionListPanel.getWebTable().getModel();
@@ -511,6 +512,7 @@ public class QuizTab_1 extends WebPanel {
 					}
 					catch(Exception ex){
 						//JOptionPane.showMessageDialog(null, ex.getMessage());
+						JajeemExcetionHandler.logError(ex);
 					}
 				}
 			}
@@ -523,6 +525,7 @@ public class QuizTab_1 extends WebPanel {
 					}
 					catch(Exception ex){
 						JOptionPane.showMessageDialog(null, "Invalid value!");
+						JajeemExcetionHandler.logError(ex);
 					}
 				}
 			}

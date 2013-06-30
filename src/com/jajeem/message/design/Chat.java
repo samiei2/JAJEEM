@@ -32,6 +32,7 @@ import com.alee.laf.splitpane.WebSplitPane;
 import com.alee.laf.text.WebTextArea;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class Chat extends WebFrame {
 
@@ -59,6 +60,7 @@ public class Chat extends WebFrame {
 					Chat frame = new Chat("", 0);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -88,6 +90,7 @@ public class Chat extends WebFrame {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 		boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
@@ -146,6 +149,7 @@ public class Chat extends WebFrame {
 								getPort(), textArea.getText());
 						serverService.send(chatCommand);
 					} catch (UnknownHostException e1) {
+						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 
@@ -173,6 +177,7 @@ public class Chat extends WebFrame {
 					}
 					bw.close();
 				} catch (IOException e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 

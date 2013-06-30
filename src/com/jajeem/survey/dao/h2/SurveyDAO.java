@@ -90,7 +90,7 @@ public class SurveyDAO implements ISurveyDAO {
 				qdao.create(q);
 			}
 		}catch(Exception e){
-			new JajeemExcetionHandler(e);
+			JajeemExcetionHandler.logError(e);
 		}
 
 
@@ -296,7 +296,7 @@ public class SurveyDAO implements ISurveyDAO {
 				q.getQuestionList().addAll(qdao.list(q.getId()));
 			}
 		} catch(Exception ex){
-			
+			JajeemExcetionHandler.logError(ex);
 		}
 
 		return allSurveys;

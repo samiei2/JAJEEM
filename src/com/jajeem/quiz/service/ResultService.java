@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.jajeem.events.QuizResponse;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.h2.ResponseDAO;
 import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Response;
@@ -18,6 +19,7 @@ public class ResultService {
 				rundao.create(run.get(i));
 			}
 		} catch (SQLException e1) {
+			JajeemExcetionHandler.logError(e1);
 			e1.printStackTrace();
 		}
 		for (int i = 0; i < e.size(); i++) {
@@ -26,7 +28,7 @@ public class ResultService {
 				try {
 					responsedao.create(resp);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}

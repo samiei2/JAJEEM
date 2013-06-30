@@ -97,6 +97,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsCanvas;
 
 import com.alee.utils.zip.UnzipListener;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.util.Unzipper;
 import com.sun.awt.AWTUtilities;
@@ -389,6 +390,7 @@ public class VideoPlayer extends Vlcj {
         }
         catch(Exception e) {
             transparentWindowsSupport = false;
+            JajeemExcetionHandler.logError(e);
         }
 
         Logger.debug("transparentWindowsSupport={}", transparentWindowsSupport);

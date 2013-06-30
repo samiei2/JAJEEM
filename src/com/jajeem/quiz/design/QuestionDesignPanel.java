@@ -26,6 +26,7 @@ import com.alee.laf.radiobutton.WebRadioButton;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class QuestionDesignPanel extends WebPanel {
 	private WebTextField webTextField;
@@ -126,6 +127,7 @@ public class QuestionDesignPanel extends WebPanel {
 					}
 					catch(Exception ex){
 						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
+						JajeemExcetionHandler.logError(ex);
 					}
 					if(!parentPanel.getWebCheckBox().isSelected()){
 						int total = 0;
@@ -151,6 +153,7 @@ public class QuestionDesignPanel extends WebPanel {
 					}
 					catch(Exception ex){
 						parentPanel.getParentPanel().getCurrentQuestion().setPoint(0);
+						JajeemExcetionHandler.logError(ex);
 					}
 					if(!parentPanel.getWebCheckBox().isSelected()){
 						int total = 0;

@@ -35,6 +35,7 @@ import com.alee.laf.radiobutton.WebRadioButton;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
 
 import javax.swing.border.SoftBevelBorder;
@@ -686,6 +687,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 															.getWebTable()
 															.getSelectedRow(),
 													2);
+									JajeemExcetionHandler.logError(ex);
 								}
 								if (!parentPanel.getWbchckbxAuto().isSelected()) {
 									int total = 0;
@@ -707,6 +709,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
 										parentPanel.getWbtxtfldPoints()
 												.setText(String.valueOf(0));
+										JajeemExcetionHandler.logError(e2);
 									}
 								}
 							}
@@ -751,6 +754,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 															.getWebTable()
 															.getSelectedRow(),
 													2);
+									JajeemExcetionHandler.logError(ex);
 								}
 								if (!parentPanel.getWbchckbxAuto().isSelected()) {
 									int total = 0;
@@ -772,6 +776,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
 										parentPanel.getWbtxtfldPoints()
 												.setText(String.valueOf(0));
+										JajeemExcetionHandler.logError(e2);
 									}
 								}
 							}

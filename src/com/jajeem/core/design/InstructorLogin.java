@@ -29,6 +29,7 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebPasswordField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.model.Session;
 import com.jajeem.room.service.RoomService;
@@ -50,6 +51,7 @@ public class InstructorLogin extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
+			JajeemExcetionHandler.logMessage("Application Started!",InstructorLogin.class);
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			@SuppressWarnings("unused")

@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.text.WebTextField;
 import com.alee.laf.button.WebButton;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.alee.laf.checkbox.WebCheckBox;
@@ -204,7 +205,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								Integer.parseInt(webQuestionDesignPanel
 										.getWebTextField_6().getText()));
 					} catch (Exception ex) {
-						;
+						JajeemExcetionHandler.logError(ex);
 					}
 					try {
 						if (webQuestionDesignPanel.getWebComboBox()
@@ -256,7 +257,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 						}
 					} catch (Exception ex) {
-						;
+						JajeemExcetionHandler.logError(ex);
 					}
 				}// end if
 
@@ -456,6 +457,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 												Integer.parseInt(wbtxtfldPoints
 														.getText()));
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								// JOptionPane.showMessageDialog(null,
 								// e.getMessage());
 							}
@@ -477,6 +479,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 												Integer.parseInt(wbtxtfldPoints
 														.getText()));
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								JOptionPane.showMessageDialog(null,
 										e.getMessage());
 							}
@@ -551,6 +554,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								.setTime(
 										Integer.parseInt(wbtxtfldTime.getText()));
 					} catch (Exception ex) {
+						JajeemExcetionHandler.logError(ex);
 						// JOptionPane.showMessageDialog(null, ex.getMessage());
 					}
 				}
@@ -567,6 +571,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								.setTime(
 										Integer.parseInt(wbtxtfldTime.getText()));
 					} catch (Exception ex) {
+						JajeemExcetionHandler.logError(ex);
 						JOptionPane.showMessageDialog(null, "Invalid value!");
 					}
 				}

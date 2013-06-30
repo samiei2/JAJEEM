@@ -30,6 +30,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 import java.awt.Toolkit;
@@ -49,6 +50,7 @@ public class Quiz_OpenDialog extends JDialog {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -97,6 +99,7 @@ public class Quiz_OpenDialog extends JDialog {
 					if(wbTblQuiz.getRowCount() != 0)
 						wbTblQuiz.getSelectionModel().setSelectionInterval(0, 0);
 				} catch (SQLException e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}

@@ -6,6 +6,7 @@ import org.jitsi.service.libjitsi.LibJitsi;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class StartIntercomCommandHandler implements ICommandHandler {
 
@@ -29,6 +30,7 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 

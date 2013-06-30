@@ -21,6 +21,7 @@ import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 
@@ -81,7 +82,7 @@ public class SurveyTab_1 extends WebPanel {
 						}
 					}
 					catch(Exception ex){
-						;
+						JajeemExcetionHandler.logError(ex);
 					}
 				}
 				DefaultTableModel model = (DefaultTableModel) questionListPanel.getWebTable().getModel();

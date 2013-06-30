@@ -22,6 +22,7 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.core.design.StudentLogin;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class MessageSend extends JDialog {
 
@@ -58,6 +59,7 @@ public class MessageSend extends JDialog {
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			// TODO Auto-generated catch block
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 
@@ -123,6 +125,7 @@ public class MessageSend extends JDialog {
 
 						StudentLogin.getServerService().send(messageCommand);
 					} catch (Exception e1) {
+						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 					setVisible(false);

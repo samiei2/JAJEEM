@@ -63,6 +63,7 @@ import com.jajeem.command.model.StopWhiteBoardCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -132,6 +133,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				process(d);
 
 			} catch (IOException ex) {
+				JajeemExcetionHandler.logError(ex);
 				ex.printStackTrace();
 			}
 		}
@@ -273,10 +275,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 
 			} catch (Exception ex) {
+				JajeemExcetionHandler.logError(ex);
 				System.err.println("Unknown message:" + ex.toString());
 			}
 
 		} catch (IOException ex) {
+			JajeemExcetionHandler.logError(ex);
 			ex.printStackTrace();
 		}
 

@@ -30,6 +30,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.util.Config;
@@ -477,7 +478,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 											ImageIO.read(Quiz_SecondPage_Question_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
 							} catch (Exception exp) {
-
+								JajeemExcetionHandler.logError(exp);
 							}
 
 							String StudentOption = "";
@@ -612,8 +613,10 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 						try {
 							StopQuizCommand();
 						} catch (NumberFormatException e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 
@@ -653,8 +656,10 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 							.getParam("port")));
 			serv.send(cmd);
 		} catch (NumberFormatException e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 
@@ -801,7 +806,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 								ImageIO.read(Quiz_SecondPage_Question_View.class
 										.getResourceAsStream("/icons/bullet-green.png")));
 				} catch (Exception exp) {
-
+					JajeemExcetionHandler.logError(exp);
 				}
 
 				for (int i = 0; i < webTable.getRowCount(); i++) {

@@ -2,6 +2,7 @@ package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.WebsiteCommand;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 public class OpenWebsiteCommandHandler implements ICommandHandler {
 
@@ -44,6 +45,7 @@ public class OpenWebsiteCommandHandler implements ICommandHandler {
 				return;
 			}
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			return;
 		}
 	}

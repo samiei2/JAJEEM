@@ -93,7 +93,7 @@ public class QuizDAO implements IQuizDAO {
 				qdao.create(q);
 			}
 		}catch(Exception e){
-			new JajeemExcetionHandler(e);
+			JajeemExcetionHandler.logError(e);
 		}
 
 		return quiz;
@@ -155,7 +155,7 @@ public class QuizDAO implements IQuizDAO {
 			quiz.getQuestionList().addAll(qdao.list(quiz.getId()));
 			
 		} catch(Exception ex){
-			
+			JajeemExcetionHandler.logError(ex);
 		}
 
 		return quiz;
@@ -290,25 +290,25 @@ public class QuizDAO implements IQuizDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			JajeemExcetionHandler.logError(e);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				JajeemExcetionHandler.logError(e);
 			}
 			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				JajeemExcetionHandler.logError(e);
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				JajeemExcetionHandler.logError(e);
 			}
 		}
 		
@@ -319,7 +319,7 @@ public class QuizDAO implements IQuizDAO {
 				q.getQuestionList().addAll(qdao.list(q.getId()));
 			}
 		} catch(Exception ex){
-			
+			JajeemExcetionHandler.logError(ex);
 		}
 
 		return allQuizs;

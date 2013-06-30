@@ -22,6 +22,7 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.design.QuizTab_2_Student_View;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
@@ -307,7 +308,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 												ImageIO.read(QuizTab_2_Student_View.class
 														.getResourceAsStream("/icons/bullet-green.png")));
 								} catch (Exception exp) {
-
+									JajeemExcetionHandler.logError(exp);
 								}
 
 								String StudentOption = "";
@@ -568,7 +569,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 											ImageIO.read(QuizTab_2_Student_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
 							} catch (Exception exp) {
-
+								JajeemExcetionHandler.logError(exp);
 							}
 
 							model.addRow(new Object[] { imgToolTip,
