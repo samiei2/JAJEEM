@@ -403,6 +403,7 @@ Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the ap
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 21 more
 <<<<<<< HEAD
+<<<<<<< HEAD
 07-01 11:49:24 jdbc[3]: null
 =======
 06-30 16:03:25 jdbc[3]: null
@@ -541,3 +542,5 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-171]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
 	... 21 more
+=======
+>>>>>>> parent of 73f6bf3... Nothing

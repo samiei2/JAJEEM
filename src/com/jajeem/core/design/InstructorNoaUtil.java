@@ -335,7 +335,7 @@ public class InstructorNoaUtil {
 							// Run a java app in a separate system process
 							Process proc = null;
 							try {
-								proc = Runtime.getRuntime().exec("java -jar videoplayer.jar",null,new File("util/"));
+								proc = Runtime.getRuntime().exec("java -jar util/videoplayer.jar");
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

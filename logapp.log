@@ -173,6 +173,7 @@ INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model
 INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.235
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
+<<<<<<< HEAD
 <<<<<<< .mineERROR com.jajeem.exception.JajeemExcetionHandler: 
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
@@ -355,3 +356,6 @@ INFO  ServerServiceTimer.class: Server started, sending startUpCommand every: 50
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.120
 >>>>>>> .theirs
+=======
+>>>>>>> 4988e1472cee21ad300e706733dc8cadc3023586
+>>>>>>> parent of 73f6bf3... Nothing
