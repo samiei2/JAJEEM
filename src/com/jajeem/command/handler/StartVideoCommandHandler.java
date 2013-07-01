@@ -1,6 +1,7 @@
 package com.jajeem.command.handler;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +20,7 @@ public class StartVideoCommandHandler implements ICommandHandler {
 		// Run a java app in a separate system process
 		Process proc = null;
 		try {
-			proc = Runtime.getRuntime().exec("java -jar /util/videoplayer.jar "+command.getStreamAddress()+" "+command.isClient());
+			proc = Runtime.getRuntime().exec("java -jar videoplayer.jar "+command.getStreamAddress()+" "+command.isClient(),null,new File("util/"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

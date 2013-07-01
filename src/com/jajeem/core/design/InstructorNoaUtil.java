@@ -341,13 +341,28 @@ public class InstructorNoaUtil {
 							// Run a java app in a separate system process
 							Process proc = null;
 							try {
-								proc = Runtime.getRuntime().exec("java -jar util/videoplayer.jar");
+								System.out.println(new File("util/","videoplayer.jar").exists());
+								proc = Runtime.getRuntime().exec("java -jar videoplayer.jar",null,new File("util/"));
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 							// Then retreive the process output
 							InputStream in = proc.getInputStream();
 							InputStream err = proc.getErrorStream();
+							int i=0;
+							try {
+								while((i=err.read())!=-1){
+									try {
+										System.out.println(err.read());
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					});
 
