@@ -50,6 +50,7 @@ import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import java.awt.Toolkit;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class Quiz_Window extends WebFrame {
@@ -90,6 +91,7 @@ public class Quiz_Window extends WebFrame {
 	private int sid;
 	private Student privateStudent = new Student();
 	private Run currentRun;
+	private ActionListener taskPerformer;
 	
 	long remaining; // How many milliseconds remain in the countdown.
 
@@ -128,7 +130,8 @@ public class Quiz_Window extends WebFrame {
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);
 		if(com.jajeem.util.Session.getStudent()!=null)
-			if(com.jajeem.util.Session.getStudent().getFullName()!=null)
+			if(com.jajeem.util.Session.getStudent().getFullName()!=null &&
+					com.jajeem.util.Session.getStudent().getFullName()!="")
 				privateStudent.setFullName(com.jajeem.util.Session.getStudent().getFullName());
 		else
 			privateStudent.setFullName("Anonymous");
@@ -154,7 +157,7 @@ public class Quiz_Window extends WebFrame {
 				webList.setSelectedIndex(0);
 				
 				/////Setting the timer
-				ActionListener taskPerformer = new ActionListener() {
+				taskPerformer = new ActionListener() {
 				      public void actionPerformed(ActionEvent evt) {
 				     	  updateDisplay();
 				      }
@@ -176,6 +179,15 @@ public class Quiz_Window extends WebFrame {
 				
 				//webTextField_1.setText(String.valueOf(new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(Calendar.getInstance().getTime())));
 				webTextField.setText(currentRun.getQuiz().getTitle());
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent arg0){
+				if(timer!=null)
+					if(timer.isRunning()){
+						timer.stop();
+						timer.removeActionListener(taskPerformer);
+					}
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -349,22 +361,27 @@ public class Quiz_Window extends WebFrame {
 		);
 		
 		webTextField_2 = new WebTextField();
+		webTextField_2.setInputPromptForeground(Color.BLACK);
 		webTextField_2.setEnabled(false);
 		webTextField_2.setEditable(false);
 		
 		webTextField_3 = new WebTextField();
+		webTextField_3.setInputPromptForeground(Color.BLACK);
 		webTextField_3.setEditable(false);
 		webTextField_3.setEnabled(false);
 		
 		webTextField_4 = new WebTextField();
+		webTextField_4.setInputPromptForeground(Color.BLACK);
 		webTextField_4.setEditable(false);
 		webTextField_4.setEnabled(false);
 		
 		webTextField_5 = new WebTextField();
+		webTextField_5.setInputPromptForeground(Color.BLACK);
 		webTextField_5.setEditable(false);
 		webTextField_5.setEnabled(false);
 		
 		webTextField_6 = new WebTextField();
+		webTextField_6.setInputPromptForeground(Color.BLACK);
 		webTextField_6.setEditable(false);
 		webTextField_6.setEnabled(false);
 		

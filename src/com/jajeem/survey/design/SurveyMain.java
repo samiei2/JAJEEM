@@ -131,6 +131,7 @@ public class SurveyMain extends WebFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
+				com.jajeem.util.Session.setSurveyWindowOpen(true);
                 setCurrentSurvey(new Survey());
                 getCurrentSurvey().addQuestion(new Question());
                 // TODO remove these lines
@@ -141,6 +142,11 @@ public class SurveyMain extends WebFrame {
                 getTablemodel().addRow(new Object[]{1,"Single Choice",0,""});
                 ListSelectionModel m_modelSelection =  panel_bottom_1.getQuestionListPanel().getWebTable().getSelectionModel();
 				m_modelSelection.setSelectionInterval(0,0);
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent arg0){
+				com.jajeem.util.Session.setSurveyWindowOpen(false);
 			}
 		});
 		

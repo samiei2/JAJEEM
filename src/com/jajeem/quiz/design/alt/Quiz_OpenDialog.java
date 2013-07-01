@@ -186,7 +186,7 @@ public class Quiz_OpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Quiz Title","Point"
+				"#", "Question Title","Point"
 			}
 		));
 		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(33);
@@ -201,7 +201,7 @@ public class Quiz_OpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Name","# of Questions"
+				"#", "Direction","# of Questions"
 			}
 		));
 		wbTblQuiz.getColumnModel().getColumn(0).setPreferredWidth(33);

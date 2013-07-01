@@ -812,14 +812,36 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 				for (int i = 0; i < webTable.getRowCount(); i++) {
 					model.removeRow(i);
 				}
+				
+				model.fireTableDataChanged();
+				webTable.repaint();
 
 				for (int i = 0; i < quizResponse.get(index).size(); i++) {
 					model.addRow(new Object[] { imgToolTip, student.getId(),
 							student.getFullName(), QuestionOption,
 							StudentOption });
 				}
+				
+				model.fireTableDataChanged();
+				webTable.repaint();
 			}
 		}
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public WebTextField getWebTextField_1() {
+		return webTextField_1;
+	}
+
+	public void setWebTextField_1(WebTextField webTextField_1) {
+		this.webTextField_1 = webTextField_1;
 	}
 
 	@SuppressWarnings("serial")

@@ -178,4 +178,10 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 	public ArrayList<Run> getRunResults() {
 		return runResults;
 	}
+	public Quiz_SecondPage_Question_View getPanel_bottom_21() {
+		return panel_bottom_21;
+	}
+	public void setPanel_bottom_21(Quiz_SecondPage_Question_View panel_bottom_21) {
+		this.panel_bottom_21 = panel_bottom_21;
+	}
 }

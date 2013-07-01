@@ -16,6 +16,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.util.Session;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import javax.swing.*;
@@ -25,6 +26,9 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FilePermission;
 import java.net.Socket;
 import java.net.SocketPermission;
@@ -190,6 +194,18 @@ public class WhiteboardClient extends WebFrame {
         this.sessionsPanel.add(btnConnect);
         getContentPane().add(sessionsPanel);
         this.setVisible(false);
+        
+        addWindowListener(new WindowAdapter() {
+        	@Override
+        	public void windowOpened(WindowEvent arg0){
+        		Session.setWhiteboardWindowOpen(true);
+        	}
+        	
+        	@Override
+        	public void windowClosing(WindowEvent arg0){
+        		Session.setWhiteboardWindowOpen(false);
+        	}
+		});
         
         try{
 //        	Policy.setPolicy(new MinimalPolicy());

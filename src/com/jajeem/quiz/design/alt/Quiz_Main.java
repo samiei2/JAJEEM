@@ -158,7 +158,7 @@ public class Quiz_Main extends WebFrame {
 		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setText("Start");
+		wbtnNew.setText("New");
 		wbtnNew.setIcon(new ImageIcon(Quiz_Main.class
 				.getResource("/com/jajeem/images/Addx16.png")));
 
@@ -229,22 +229,32 @@ public class Quiz_Main extends WebFrame {
 	
 		initEvents();
 		initQuizEventListener();
-//		if(!ValidateSession())
-//			return;
+		if(!ValidateSession())
+			return;
 		setVisible(true);
+		
 	}
 
 	private boolean ValidateSession() {
 		if (com.jajeem.util.Session.getSession() == null) {
-			JOptionPane.showMessageDialog(null, "No class has started yet!");
-			dispose();
-			return false;
+			int i = JOptionPane.showConfirmDialog(null,
+					"No class has started yet!\n Do you want to continue?");
+			if(i==0)
+				return true;
+			else{
+				dispose();
+				return false;
+			}
 		}	
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			JOptionPane.showMessageDialog(null,
-					"No instructor has logged in.Please first Log in!");
-			dispose();
-			return false;
+			int i = JOptionPane.showConfirmDialog(null,
+					"No instructor has logged in.Please first Log in!\n Do you want to continue?");
+			if(i==0)
+				return true;
+			else{
+				dispose();
+				return false;
+			}
 		}
 		return true;
 	}
@@ -270,11 +280,13 @@ public class Quiz_Main extends WebFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
+				com.jajeem.util.Session.setQuizWindowOpen(true);
 				newQuizRun();
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
+				com.jajeem.util.Session.setQuizWindowOpen(false);
 				StopQuizCommand();
 			}
 		});
@@ -456,6 +468,12 @@ public class Quiz_Main extends WebFrame {
 				} // / end wbtnStart.getText() == "Start" if
 				else {
 					StopQuizCommand();
+					if(secondPage.getPanel_bottom_21().getTimer()!=null){
+						if(secondPage.getPanel_bottom_21().getTimer().isRunning()){
+							secondPage.getPanel_bottom_21().getTimer().stop();
+							secondPage.getPanel_bottom_21().getWebTextField_1().setText("");
+						}
+					}
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
 							.getResource("/com/jajeem/images/startx16.png")));
@@ -556,19 +574,25 @@ public class Quiz_Main extends WebFrame {
 
 	Instructor getCurrentInstructor() {
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			JOptionPane.showMessageDialog(null,
-					"No instructor has logged in.Please first Log in!");
-			return new Instructor();
-//			dispose();
+//			int i = JOptionPane.showConfirmDialog(null,
+//					"No instructor has logged in.Please first Log in!\n Do you want to continue?");
+//			if(i==0)
+				return new Instructor();
+//			else{
+//				dispose();
+//			}
 		}
 		return com.jajeem.util.Session.getInstructor();
 	}
 
 	Session getCurrentSession() {
 		if (com.jajeem.util.Session.getSession() == null) {
-			JOptionPane.showMessageDialog(null, "No class has started yet!");
-			return new Session();
-//			dispose();
+//			int i = JOptionPane.showConfirmDialog(null, "No class has started yet!\n Do you want to continue?");
+//			if(i==0)
+				return new Session();
+//			else{
+//				dispose();
+//			}
 		}
 		return com.jajeem.util.Session.getSession();
 	}

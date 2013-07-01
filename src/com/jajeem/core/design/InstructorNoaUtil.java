@@ -68,6 +68,7 @@ import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
+import com.jajeem.util.Session;
 import com.jajeem.util.WinRegistry;
 import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
@@ -75,6 +76,11 @@ public class InstructorNoaUtil {
 
 	private static ServerServiceTimer serverServiceTimer;
 	final static WebPopup popup = new WebPopup();
+	
+	static Quiz_Main quiz = null;
+	static com.jajeem.survey.design.SurveyMain survey = null;
+	static WhiteboardClient client = null;
+	
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -353,8 +359,20 @@ public class InstructorNoaUtil {
 						@SuppressWarnings({ "unused", "null" })
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							Quiz_Main quiz = new Quiz_Main();
-							quiz.setVisible(true);
+							if(Session.isQuizWindowOpen()){
+								if(quiz == null){
+									quiz = new Quiz_Main();
+									quiz.setVisible(true);
+								}
+								else{
+									quiz.toFront();
+									quiz.repaint();
+								}
+							}
+							else{
+								quiz = new Quiz_Main();
+								quiz.setVisible(true);
+							}
 						}
 					});
 					break;
@@ -441,8 +459,22 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							com.jajeem.survey.design.SurveyMain survey = new com.jajeem.survey.design.SurveyMain();
-							survey.setVisible(true);
+							
+							if(Session.isSurveyWindowOpen()){
+								if(survey == null){
+									survey = new com.jajeem.survey.design.SurveyMain();
+									survey.setVisible(true);
+								}
+								else{
+									survey.toFront();
+									survey.repaint();
+								}
+							}
+							else{
+								survey = new com.jajeem.survey.design.SurveyMain();
+								survey.setVisible(true);
+							}
+							
 						}
 					});
 
@@ -455,7 +487,20 @@ public class InstructorNoaUtil {
 				case "whiteBoard":
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							new WhiteboardClient();
+							
+							if(Session.isWhiteboardWindowOpen()){
+								if(client == null){
+									client = new WhiteboardClient();
+								}
+								else{
+									client.toFront();
+									client.repaint();
+								}
+							}
+							else{
+								client = new WhiteboardClient();
+							}
+							
 						}
 					});
 					break;

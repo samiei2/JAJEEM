@@ -97,6 +97,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 						if(quizResponse.get(j).get(k).getQuestion().isResponseValid()){
 							score += quizResponse.get(j).get(k).getQuestion().getPoint();
 						}
+						break;
 					}
 				}
 			}
