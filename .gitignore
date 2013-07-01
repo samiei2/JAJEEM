@@ -7,6 +7,12 @@ local.properties
 log/*
 !log/.keepme
 nbproject/*
-/bin
-/util
-/libvlc
+bin/
+util/*
+libvlc/
+
+
+jajeem.db.*
+logapp.log
+viewer.conf
+server.conf
