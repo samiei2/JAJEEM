@@ -72,6 +72,8 @@ public class InstructorNoa {
 	private static AVReceive2 receiver;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
+	
+	static WebButton intercomButton = new WebButton();
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
 
@@ -776,7 +778,6 @@ public class InstructorNoa {
 		monitorButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(monitorButton);
 
-		WebButton intercomButton = new WebButton();
 		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
 		intercomButton.setIcon(new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa/right_panel/intercom.png")));
@@ -1022,6 +1023,10 @@ public class InstructorNoa {
 
 	public static void setStudentListTable(WebTable studentListTable) {
 		InstructorNoa.studentListTable = studentListTable;
+	}
+	
+	public static void setIntercomText(String text) {
+		intercomButton.setText(text);
 	}
 
 	private void initColumnSizes(JTable table) {

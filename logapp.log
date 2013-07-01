@@ -55,3 +55,165 @@ ERROR com.jajeem.exception.JajeemExcetionHandler:
 INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.235
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
 ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  com.jajeem.core.design.InstructorLogin: Application Started!
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.56
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.GrantCommand, from: 192.168.0.56
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.119
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.119
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
+ERROR com.jajeem.exception.JajeemExcetionHandler: 
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StartIntercomCommand, from: 192.168.0.119
+INFO  ServerService.class: Sending: Message type: class com.jajeem.command.model.StopIntercomCommand, from: 192.168.0.119
