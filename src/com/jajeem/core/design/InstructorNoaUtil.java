@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -331,7 +332,17 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							new TestPlayer("", false);
+							// Run a java app in a separate system process
+							Process proc = null;
+							try {
+								proc = Runtime.getRuntime().exec("java -jar videoplayer.jar",null,new File("util/"));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							// Then retreive the process output
+							InputStream in = proc.getInputStream();
+							InputStream err = proc.getErrorStream();
 						}
 					});
 

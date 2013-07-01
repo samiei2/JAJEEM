@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.net.InetAddress;
 
 import javax.swing.JDialog;
@@ -32,6 +33,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
+import com.jajeem.util.Unzipper;
 
 public class StudentLogin extends JDialog {
 
@@ -98,6 +100,10 @@ public class StudentLogin extends JDialog {
 	public StudentLogin() throws NumberFormatException, Exception {
 
 		new Config();
+		LibJitsi.start();
+		
+		if(!new File("util").exists())
+			Unzipper.unzip("util.zip");
 		
 		LibJitsi.start();
 		
