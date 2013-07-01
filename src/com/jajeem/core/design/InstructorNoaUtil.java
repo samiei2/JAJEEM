@@ -343,7 +343,6 @@ public class InstructorNoaUtil {
 							try {
 								proc = Runtime.getRuntime().exec("java -jar util/videoplayer.jar");
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							// Then retreive the process output
