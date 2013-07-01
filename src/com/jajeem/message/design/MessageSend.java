@@ -23,6 +23,7 @@ import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.Config;
 
 public class MessageSend extends JDialog {
 
@@ -114,14 +115,16 @@ public class MessageSend extends JDialog {
 			WebPanel content = new WebPanel();
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
-			
+
 			WebButton cancel = new WebButton("Send");
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
 						MessageCommand messageCommand = new MessageCommand(
 								InetAddress.getLocalHost().getHostAddress(),
-								getTo(), getPort(), messageField.getText());
+								StudentLogin.getServerIp(),
+								Integer.parseInt(Config.getParam("serverPort")),
+								messageField.getText());
 
 						StudentLogin.getServerService().send(messageCommand);
 					} catch (Exception e1) {
@@ -132,11 +135,12 @@ public class MessageSend extends JDialog {
 				}
 			};
 			cancel.addActionListener(listener);
-			content.add(new GroupPanel(5, false, new WebScrollPane(messageField), cancel));
+			content.add(new GroupPanel(5, false,
+					new WebScrollPane(messageField), cancel));
 			SwingUtils.equalizeComponentsWidths(cancel);
 
 			add(content);
-			
+
 			HotkeyManager.registerHotkey(this, cancel, Hotkey.ESCAPE);
 		}
 	}
