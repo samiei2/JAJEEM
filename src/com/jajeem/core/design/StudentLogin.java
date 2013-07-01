@@ -45,6 +45,8 @@ public class StudentLogin extends JDialog {
 	private static LoginDialog loginDialog;
 	private static KeyHook keyHook;
 	private static MouseHook mouseHook;
+	
+	private static Student student;
 
 	private static ServerService serverService;
 
@@ -148,6 +150,16 @@ public class StudentLogin extends JDialog {
 	public static void setMouseHook(MouseHook mouseHook) {
 		StudentLogin.mouseHook = mouseHook;
 	}
+
+
+	public static Student getStudent() {
+		return student;
+	}
+
+	public static void setStudent(Student student) {
+		StudentLogin.student = student;
+	}
+
 
 	public static class LoginDialog extends WebDialog {
 		/**

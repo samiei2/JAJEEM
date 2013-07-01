@@ -13,10 +13,14 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (((GrantCommand) cmd).isGranted()) {
-			Student student = new Student();
-			student.main(null);
-			StudentLogin.setLoginDialogVisible(false);
-			
+			if (StudentLogin.getStudent() == null) {
+				Student student = new Student();
+				StudentLogin.setStudent(student);
+				student.main(null);
+				StudentLogin.setLoginDialogVisible(false);
+			} else {
+				StudentLogin.setLoginDialogVisible(false);
+			}
 		} else {
 			StudentLogin.setFieldsColor(Color.decode("#FAD9D9"));
 			StudentLogin.setLoginDialogVisible(true);

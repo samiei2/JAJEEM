@@ -21,7 +21,6 @@ import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceive2;
 import org.jitsi.examples.AVTransmit2;
-import org.jitsi.service.libjitsi.LibJitsi;
 
 //import org.apache.log4j.PropertyConfigurator;
 
