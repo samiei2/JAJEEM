@@ -2,9 +2,6 @@ package com.jajeem.quiz.design.alt;
 
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Frame;
-import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -12,21 +9,13 @@ import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileFilter;
 
-import com.alee.extended.filechooser.WebFileChooser;
-import com.alee.extended.filechooser.WebFileChooserField;
-import com.alee.extended.filefilter.DefaultFileFilter;
-import com.alee.extended.image.WebImage;
-import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
@@ -36,18 +25,7 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
 
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import java.awt.BorderLayout;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.UIManager;
-
-import sun.awt.image.ToolkitImage;
 
 public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 	/**

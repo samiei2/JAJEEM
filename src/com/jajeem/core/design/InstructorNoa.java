@@ -72,6 +72,7 @@ public class InstructorNoa {
 	private static AVReceive2 receiver;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
+	private static ArrayList<String> selectedStudentIPs = new ArrayList<>();
 	
 	static WebButton intercomButton = new WebButton();
 
@@ -1053,6 +1054,14 @@ public class InstructorNoa {
 
 			column.setPreferredWidth(Math.max(headerWidth, cellWidth));
 		}
+	}
+
+	public static ArrayList<String> getSelectedStudentIPs() {
+		return selectedStudentIPs;
+	}
+
+	public static void setSelectedStudentIPs(ArrayList<String> selectedStudentIPs) {
+		InstructorNoa.selectedStudentIPs = selectedStudentIPs;
 	}
 
 	private class ProgramListTableModel extends AbstractTableModel {
