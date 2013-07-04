@@ -13,6 +13,7 @@ import com.alee.laf.table.WebTable;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
+import com.jajeem.filemanager.InstructorServer;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
@@ -107,13 +108,13 @@ public class FileInbox extends WebPanel {
 	private void initEvents() {
 		wbtnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new FileTransferEvent().fireAcceptFileRequest(fileSendRequestList.get(webTable.getSelectedRow()));
+				new FileTransferEvent().fireAcceptFileRequest(fileSendRequestList.get(webTable.getSelectedRow()), InstructorServer.class);
 			}
 		});
 		
 		wbtnRejectFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(webTable.getSelectedRow()));
+				new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(webTable.getSelectedRow()), InstructorServer.class);
 				fileSendRequestList.remove(webTable.getSelectedRow());
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.removeRow(webTable.getSelectedRow());
@@ -131,7 +132,7 @@ public class FileInbox extends WebPanel {
 		wbtnDismissAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < fileSendRequestList.size(); i++) {
-					new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(i));
+					new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(i), InstructorServer.class);
 				}
 				
 				fileSendRequestList.clear();
@@ -149,22 +150,26 @@ public class FileInbox extends WebPanel {
 		fileEvent.addEventListener(new FileTransferEventListener() {
 			
 			@Override
-			public void success(FileTransferObject evt) {
+			public void success(FileTransferObject evt, Class t) {
+				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+				model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
+				model.setValueAt("Success", webTable.getSelectedRow(), 3);
+			}
+			
+			@Override
+			public void progress(FileTransferObject evt, Class t) {
 				
 			}
 			
 			@Override
-			public void progress(FileTransferObject evt) {
-				
-			}
-			
-			@Override
-			public void fail(FileTransferObject evt) {
+			public void fail(FileTransferObject evt, Class t) {
 				
 			}
 
 			@Override
-			public void fileSendRequest(FileTransferObject evt) {
+			public void fileSendRequest(FileTransferObject evt, Class t) {
+				if(t!=FileInbox.class)
+					return;
 				fileSendRequestList.add(evt);
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.addRow(new Object[]{
@@ -179,16 +184,14 @@ public class FileInbox extends WebPanel {
 			}
 
 			@Override
-			public void fileAcceptRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileAcceptRequest(FileTransferObject evt, Class t) {
 				
 			}
 
 			@Override
-			public void fileRejectRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileRejectRequest(FileTransferObject evt, Class t) {
 				
 			}
-		});
+		}, FileInbox.class);
 	}
 }

@@ -15,6 +15,7 @@ import java.awt.Component;
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.alee.laf.table.WebTable;
+import com.jajeem.filemanager.InstructorServer;
 
 /**
  *
@@ -25,6 +26,7 @@ public class FileManagerMain extends javax.swing.JFrame {
     private FileSendTab fileSendTab;
 	private FileCollect fileCollectTab;
 	private FileInbox fileInboxTab;
+	private FileAssignmentTab fileAssignmentTab;
 	/**
      * Creates new form FileManagerMain
      */
@@ -45,13 +47,16 @@ public class FileManagerMain extends javax.swing.JFrame {
         fileSendTab = new FileSendTab();
         fileCollectTab = new FileCollect();
         fileInboxTab = new FileInbox();
+        fileAssignmentTab = new FileAssignmentTab();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         webTabbedPane = new WebTabbedPane();
         webTabbedPane.addTab("File Send", fileSendTab);
+        webTabbedPane.addTab("File Assignments", fileAssignmentTab);
         webTabbedPane.addTab("File Collect", fileCollectTab);
         webTabbedPane.addTab("File Inbox", fileInboxTab);
+        
 
         javax.swing.GroupLayout webPanel1Layout = new javax.swing.GroupLayout(webPanel1);
         webPanel1Layout.setHorizontalGroup(

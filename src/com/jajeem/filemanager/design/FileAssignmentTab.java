@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,14 +29,19 @@ import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.command.model.SendFileAssignmentCommand;
+import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.Packet;
+import com.jajeem.util.Config;
+import com.alee.laf.text.WebTextField;
+import javax.swing.ListSelectionModel;
 
-public class FileSendTab extends WebPanel {
+public class FileAssignmentTab extends WebPanel {
 	/**
 	 * 
 	 */
@@ -44,7 +50,7 @@ public class FileSendTab extends WebPanel {
 	private WebButton wbtnBrowse;
 	private WebButton wbtnSend;
 	private WebButton wbtnClear;
-	private FileSendTab currentPanel;
+	private FileAssignmentTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
 	private int currentIndex;
@@ -52,7 +58,7 @@ public class FileSendTab extends WebPanel {
 	/**
 	 * Create the panel.
 	 */
-	public FileSendTab() {
+	public FileAssignmentTab() {
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		
@@ -65,19 +71,19 @@ public class FileSendTab extends WebPanel {
 		
 		wbtnSend = new WebButton();
 		wbtnSend.setEnabled(false);
-		wbtnSend.setText("Send");
+		wbtnSend.setText("Send Assignment");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 430, Short.MAX_VALUE)
+							.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 425, Short.MAX_VALUE)
 							.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
@@ -85,18 +91,19 @@ public class FileSendTab extends WebPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGap(36))
 		);
 		
 		webTable = new WebTable();
+		webTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", "File Name", "Status" }) {
+				new String[] { "#", "File Name", "Time" }) {
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -105,8 +112,8 @@ public class FileSendTab extends WebPanel {
 		});
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(45);
 		webTable.getColumnModel().getColumn(0).setMaxWidth(45);
-		webTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-		webTable.getColumnModel().getColumn(2).setMaxWidth(100);
+		webTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+		webTable.getColumnModel().getColumn(2).setMaxWidth(120);
 		webScrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
 		initEvents();
@@ -115,37 +122,33 @@ public class FileSendTab extends WebPanel {
 	private void initEvents() {
 		wbtnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String fileName = "";
 				JFileChooser chooser = new JFileChooser();
-				chooser.setMultiSelectionEnabled(true);
-				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				chooser.setMultiSelectionEnabled(false);
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int result = chooser.showOpenDialog(currentPanel);
 				if(result == JFileChooser.APPROVE_OPTION){
-					File[] files = chooser.getSelectedFiles();
-					for (int i = 0; i < files.length; i++) {
-						if(files[i].isDirectory())
-							fileNames.addAll(getPath(getDirectoryContent(files[i])));
-						else
-							fileNames.add(files[i].getAbsolutePath());
+					fileName = chooser.getSelectedFile().getAbsolutePath();
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					String time = "";
+					while(true){
+						time = JOptionPane.showInputDialog("Please Set Time : ", 0);
+						try{
+							Integer.parseInt(time);
+							break;
+						}
+						catch(Exception e1){
+							JOptionPane.showMessageDialog(null, "Invalid time.Please enter a correct one!");
+						}
 					}
-					if(fileNames.size() != 0){
-						wbtnSend.setEnabled(true);
-						wbtnClear.setEnabled(true);
-					}
-					Collections.sort(fileNames);
-				}
-				
-				
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.getDataVector().clear();
-				model.fireTableDataChanged();
-				webTable.repaint();
-				webTable.updateUI();
-				for (int i = 0; i < fileNames.size(); i++) {
 					model.addRow(new Object[]{
-							webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-							fileNames.get(i),
-							"Idle"
+								webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+								fileName,
+								time + " Min"
 					});
+					fileNames.add(fileName);
+					wbtnSend.setEnabled(true);
+					wbtnClear.setEnabled(true);
 				}
 			}
 		});
@@ -165,21 +168,11 @@ public class FileSendTab extends WebPanel {
 		
 		wbtnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> listOfFiles = new ArrayList<>();
-				int[] list = webTable.getSelectedRows();
-				for (int i = 0; i < list.length; i++) {
-					listOfFiles.add(fileNames.get(list[i]));
-				}
-				for (int i = 0; i < listOfFiles.size(); i++) {
-					File file = new File(listOfFiles.get(i));
-					if(file.exists()){
-						currentIndex = list[i];
+				String fileName = fileNames.get(webTable.getSelectedRow());
+				File file = new File(fileName);
+				if(file.exists())
+					if(!file.isDirectory())
 						SendFile(file);
-					}
-					else{
-						//Set Status in table to Not Exists
-					}
-				}
 			}
 		});
 		
@@ -187,15 +180,17 @@ public class FileSendTab extends WebPanel {
 			
 			@Override
 			public void success(FileTransferObject evt, Class t) {
-				if(t!=FileSendTab.class)
+				if(t!=FileAssignmentTab.class)
 					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Success", currentIndex, 2);
+				String file = model.getValueAt(webTable.getSelectedRow(), 1).toString();
+				String time = model.getValueAt(webTable.getSelectedRow(), 2).toString().split(" ")[0];
+				SendFileAssignmentCMD(file,time);
 			}
 			
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				if(t!=FileSendTab.class)
+				if(t!=FileAssignmentTab.class)
 					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
@@ -203,7 +198,7 @@ public class FileSendTab extends WebPanel {
 			
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				if(t!=FileSendTab.class)
+				if(t!=FileAssignmentTab.class)
 					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt("Failed", currentIndex, 2);
@@ -226,7 +221,28 @@ public class FileSendTab extends WebPanel {
 				// 
 				
 			}
-		}, FileSendTab.class);
+		}, FileAssignmentTab.class);
+	}
+
+	protected void SendFileAssignmentCMD(String file,String time) {
+		try{
+			new Config();
+			ServerService service;
+			if(InstructorNoa.getServerService() == null)
+				service = new ServerService();
+			else
+				service = InstructorNoa.getServerService();
+			SendFileAssignmentCommand cmd = new SendFileAssignmentCommand(InetAddress
+						.getLocalHost().getHostAddress(),
+						Config.getParam("broadcastingIp"), Integer.parseInt(Config
+								.getParam("port")));
+			cmd.setTime(time);
+			cmd.setFile(file);
+			service.send(cmd);
+		}
+		catch(Exception e){
+			
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -277,16 +293,16 @@ public class FileSendTab extends WebPanel {
 						    	bytesRead += x;
 						    	FileTransferObject evt = new FileTransferObject(this);
 						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,FileSendTab.class);
+						        new FileTransferEvent().fireProgress(evt,FileAssignmentTab.class);
 						    }
 						    out.close();
 						    fis.close();
 						}
-						new FileTransferEvent().fireSuccess(null, FileSendTab.class);
+						new FileTransferEvent().fireSuccess(null, FileAssignmentTab.class);
 						confirmationDialog.dispose();
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e,FileSendTab.class);
-						new FileTransferEvent().fireFailure(null, FileSendTab.class);
+						JajeemExcetionHandler.logError(e,FileAssignmentTab.class);
+						new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
 						confirmationDialog.dispose();
 					}
 				}
@@ -301,7 +317,7 @@ public class FileSendTab extends WebPanel {
 		}
 		catch(Exception e){
 			JajeemExcetionHandler.logError(e);
-			new FileTransferEvent().fireFailure(null, FileSendTab.class);
+			new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
 			e.printStackTrace();
 		}
 	}

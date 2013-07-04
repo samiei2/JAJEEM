@@ -30,6 +30,7 @@ import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.filemanager.client.ClientServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
@@ -101,6 +102,15 @@ public class StudentLogin extends JDialog {
 
 		new Config();
 		LibJitsi.start();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				new ClientServer().Startup();
+			}
+		}).start();
 		
 		if(!new File("util").exists())
 			Unzipper.unzip("util.zip");

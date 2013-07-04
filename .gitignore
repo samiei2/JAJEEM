@@ -12,6 +12,8 @@ util/*
 libvlc/*
 Deploy/*
 .idea/*
+Inbox/*
+Outbox/*
 
 
 jajeem.db.*

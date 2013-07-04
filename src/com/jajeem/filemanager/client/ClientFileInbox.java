@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class ClientFileInbox extends WebPanel {
 	private WebTable webTable;
 	private WebButton wbtnOpen;
-	private FileTransferEvent fileEvents = new FileTransferEvent();
+	private FileTransferEvent fileEvents;
 	private ArrayList<String> fileList = new ArrayList<>();
 
 	/**
@@ -77,8 +77,8 @@ public class ClientFileInbox extends WebPanel {
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(55);
 		webTable.getColumnModel().getColumn(0).setMinWidth(55);
 		webTable.getColumnModel().getColumn(0).setMaxWidth(55);
-		webTable.getColumnModel().getColumn(3).setMinWidth(55);
-		webTable.getColumnModel().getColumn(3).setMaxWidth(55);
+		webTable.getColumnModel().getColumn(2).setMinWidth(55);
+		webTable.getColumnModel().getColumn(2).setMaxWidth(55);
 		
 		webScrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
@@ -100,10 +100,13 @@ public class ClientFileInbox extends WebPanel {
 			}
 		});
 		
+		fileEvents = new FileTransferEvent();
 		fileEvents.addEventListener(new FileTransferEventListener() {
 			
 			@Override
-			public void success(FileTransferObject evt) {
+			public void success(FileTransferObject evt, Class t) {
+				if(t!=ClientFileInbox.class)
+					return;
 				fileList.add(evt.getFileName());
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.addRow(new Object[]{
@@ -114,34 +117,33 @@ public class ClientFileInbox extends WebPanel {
 			}
 			
 			@Override
-			public void progress(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void progress(FileTransferObject evt, Class t) {
 				
 			}
 			
 			@Override
-			public void fileSendRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileSendRequest(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 			
 			@Override
-			public void fileRejectRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileRejectRequest(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 			
 			@Override
-			public void fileAcceptRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileAcceptRequest(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 			
 			@Override
-			public void fail(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fail(FileTransferObject evt, Class t) {
+				// 
 				
 			}
-		});
+		}, ClientFileInbox.class);
 	}
 }

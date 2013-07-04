@@ -2,10 +2,10 @@ package com.jajeem.command.model;
 
 import java.io.File;
 
-public class SendFileCommand extends Command{
+public class SendFileCollectCommand extends Command{
 
 	File file;
-	public SendFileCommand(String from, String to, int port) {
+	public SendFileCollectCommand(String from, String to, int port) {
 		super(from, to, port);
 		// TODO Auto-generated constructor stub
 	}

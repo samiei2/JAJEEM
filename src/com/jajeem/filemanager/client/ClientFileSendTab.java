@@ -34,6 +34,7 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Session;
+import javax.swing.JButton;
 
 public class ClientFileSendTab extends WebPanel {
 	/**
@@ -74,18 +75,19 @@ public class ClientFileSendTab extends WebPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
-						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+								.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+							.addComponent(wbtnSend, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -187,43 +189,48 @@ public class ClientFileSendTab extends WebPanel {
 		fileTransferEvent.addEventListener(new FileTransferEventListener() {
 			
 			@Override
-			public void success(FileTransferObject evt) {
+			public void success(FileTransferObject evt, Class t) {
+				if(t!=ClientFileSendTab.class)
+					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt("Success", currentIndex, 2);
 			}
 			
 			@Override
-			public void progress(FileTransferObject evt) {
+			public void progress(FileTransferObject evt, Class t) {
+				if(t!=ClientFileSendTab.class)
+					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
 			}
 			
 			@Override
-			public void fail(FileTransferObject evt) {
+			public void fail(FileTransferObject evt, Class t) {
+				if(t!=ClientFileSendTab.class)
+					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt("Failed", currentIndex, 2);
 			}
 
 			@Override
-			public void fileSendRequest(FileTransferObject evt) {
+			public void fileSendRequest(FileTransferObject evt, Class t) {
 				
 			}
 
 			@Override
-			public void fileAcceptRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileAcceptRequest(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 
 			@Override
-			public void fileRejectRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileRejectRequest(FileTransferObject evt, Class t) {
+				// 
 				
 			}
-		});
+		}, ClientFileSendTab.class);
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void SendFile(final File file) {
 		try{
 			JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
@@ -235,9 +242,10 @@ public class ClientFileSendTab extends WebPanel {
 					ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
 					
 					try {
-//						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
+						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
+							System.out.println("Sending file to : "+ips.get(0));
 							Socket clientSocket=new Socket(StudentLogin.getServerIp(),54321);
-//							Socket clientSocket=new Socket("127.0.0.1",12345);
+//							Socket clientSocket=new Socket("127.0.0.1",54321);
 							OutputStream out=clientSocket.getOutputStream();
 						    FileInputStream fis=new FileInputStream(file);
 						    byte[] info = new byte[2048];
@@ -253,20 +261,34 @@ public class ClientFileSendTab extends WebPanel {
 						    for (int k=len; k < 2048; k++) info[k]=0x00;
 						    out.write(info, 0, 2048);
 						    
+						    FileInputStream inp = new FileInputStream(file);
+						    long fileLength = inp.available();
+						    len = String.valueOf(inp.available()).length();
+						    temp = String.valueOf(inp.available()).getBytes();
+						    for (int k=0; k < len; k++) info[k]=temp[k];
+						    for (int k=len; k < 2048; k++) info[k]=0x00;
+						    out.write(info, 0, 2048);
+						    inp.close();
+						    
 						    int x;
 						    byte[] b = new byte[4194304];
+						    long bytesRead = 0;
 						    while((x=fis.read(b)) > 0)
 						    {
 						    	out.write(b, 0, x);
+						    	bytesRead += x;
+						    	FileTransferObject evt = new FileTransferObject(this);
+						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt,ClientFileSendTab.class);
 						    }
 						    out.close();
 						    fis.close();
-//						}
-						new FileTransferEvent().fireSuccess(null);
+						}
+						new FileTransferEvent().fireSuccess(null, ClientFileSendTab.class);
 						confirmationDialog.dispose();
 					} catch (Exception e) {
 						JajeemExcetionHandler.logError(e,ClientFileSendTab.class);
-						new FileTransferEvent().fireFailure(null);
+						new FileTransferEvent().fireFailure(null, ClientFileSendTab.class);
 						confirmationDialog.dispose();
 					}
 				}
@@ -281,7 +303,7 @@ public class ClientFileSendTab extends WebPanel {
 		}
 		catch(Exception e){
 			JajeemExcetionHandler.logError(e);
-			new FileTransferEvent().fireFailure(null);
+			new FileTransferEvent().fireFailure(null, ClientFileSendTab.class);
 			e.printStackTrace();
 		}
 	}

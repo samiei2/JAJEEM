@@ -7,10 +7,15 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.filemanager.design.FileCollect;
+import com.jajeem.filemanager.design.FileInbox;
 
 public class InstructorServer {
 	static long requestNumber = 0;
@@ -19,30 +24,34 @@ public class InstructorServer {
 		fileEvents.addEventListener(new FileTransferEventListener() {
 			
 			@Override
-			public void success(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void success(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 			
 			@Override
-			public void progress(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void progress(FileTransferObject evt, Class t) {
+				// 
 				
 			}
 			
 			@Override
-			public void fileSendRequest(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fileSendRequest(FileTransferObject evt, Class t) {
+				//
 				
 			}
 			
 			@Override
-			public void fileAcceptRequest(final FileTransferObject evt) {
+			public void fileAcceptRequest(final FileTransferObject evt, Class t) {
+				if(t!=InstructorServer.class)
+					return;
 				final Socket client = evt.getClientSocket();
 				if(client.isConnected() && client.isClosed()){
-					new FileTransferEvent().fireFailure(evt);
+					new FileTransferEvent().fireFailure(evt,FileInbox.class);
 					return;
 				}
+				JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
+				final JDialog confirmationDialog = dialog.createDialog("File Transfer");
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -52,10 +61,16 @@ public class InstructorServer {
 						    
 						    byte[] path = new byte[2048];
 						    in.read(path, 0, 2048);
-						    String pathStr = new String(path);
+						    @SuppressWarnings("unused")
+							String pathStr = new String(path);
 						    byte[] name = new byte[2048];
 						    in.read(name, 0, 2048);
 						    String nameStr = new String(name);
+						    byte[] filelen = new byte[2048];
+						    in.read(filelen, 0, 2048);
+						    String temp = new String(filelen).trim();
+						    int fileLength = Integer.parseInt(temp);
+						    
 						    File inbox = new File("inbox");
 						    inbox.mkdir();
 						    File file = new File(inbox,client.getInetAddress().getHostAddress());
@@ -65,31 +80,39 @@ public class InstructorServer {
 						    
 						    int x=0;
 						    byte[] b = new byte[4194304];
+						    long bytesRead = 0;
 						    while((x = in.read(b)) > 0)
 						    {
 						        fos.write(b, 0, x);
+						        bytesRead += x;
+						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
 						    }
 						    fos.close();
-						    //TODO add filetransferobject object
+						    
 						    evt.setFileName(output.getAbsolutePath());
-						    new FileTransferEvent().fireSuccess(null);
+						    new FileTransferEvent().fireSuccess(evt,FileInbox.class);
+						    confirmationDialog.dispose();
 						}
 						catch(Exception e){
 							JajeemExcetionHandler.logError(e,InstructorServer.class);
-							new FileTransferEvent().fireFailure(null);
+							new FileTransferEvent().fireFailure(null,FileInbox.class);
+							confirmationDialog.dispose();
 						}
 					}
 				}).start();
+				confirmationDialog.setVisible(true);
 			}
 			
 			@Override
-			public void fail(FileTransferObject evt) {
-				// TODO Auto-generated method stub
+			public void fail(FileTransferObject evt, Class t) {
 				
 			}
 
 			@Override
-			public void fileRejectRequest(FileTransferObject evt) {
+			public void fileRejectRequest(FileTransferObject evt, Class t) {
+				if(t!=InstructorServer.class)
+					return;
 				try {
 					evt.getClientSocket().close();
 				} catch (IOException e) {
@@ -97,7 +120,7 @@ public class InstructorServer {
 					e.printStackTrace();
 				}
 			}
-		});
+		}, InstructorServer.class);
 		StartFileListenerServer();
 	}
 
@@ -109,7 +132,8 @@ public class InstructorServer {
 				FileTransferObject obj = new FileTransferObject(this);
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
-				new FileTransferEvent().fireFileSendRequest(obj);
+				new FileTransferEvent().fireFileSendRequest(obj,FileInbox.class);
+				new FileTransferEvent().fireFileSendRequest(obj,FileCollect.class);
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);
