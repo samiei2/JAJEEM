@@ -30,8 +30,8 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 		String time = command.getTime();
 		JOptionPane.showMessageDialog(null, "Please answer "+file+" in "+ time +" minutes and then put it in your outbox.");
 		AssignmentTimer timer = new AssignmentTimer();
-		timer.setVisible(true);
 		timer.start(time);
 		timer.setLocationRelativeTo(Student.getMainFram());
+		timer.setVisible(true);
 	}
 }

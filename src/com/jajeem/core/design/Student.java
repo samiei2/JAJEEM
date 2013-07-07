@@ -162,7 +162,7 @@ public class Student {
 		
 		ImageIcon imgFile = new ImageIcon(
 				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
+						.getResourceAsStream(("/com/jajeem/images/file_upload.png"))));
 		WebButton fileButton = new WebButton(imgFile);
 		TooltipManager.setTooltip(fileButton, imgToolTip,
 				"Send a file to your instructor.", TooltipWay.down);
