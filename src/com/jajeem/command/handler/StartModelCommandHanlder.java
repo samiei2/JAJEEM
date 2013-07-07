@@ -12,7 +12,7 @@ public class StartModelCommandHanlder implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		if (!InetAddress.getLocalHost().getHostAddress().equals(((StartModelCommand) cmd).getLeader())) {
+		if (InetAddress.getLocalHost().getHostAddress().equals(((StartModelCommand) cmd).getLeader())) {
 
 			// i am the supreme leader!
 			return;
@@ -28,8 +28,8 @@ public class StartModelCommandHanlder implements ICommandHandler {
 				e.printStackTrace();
 			}
 			VNCCaptureService vnc = new VNCCaptureService();
-			vnc.getViewer().getRecorder().setViewOnly(true);
 			vnc.startClient(conf);
+			vnc.getViewer().getRecorder().setViewOnly(true);
 			Student.setVncViewer(vnc);
 		}
 	}
