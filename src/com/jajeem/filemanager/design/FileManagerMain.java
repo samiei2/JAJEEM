@@ -8,13 +8,18 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.SingleSelectionModel;
+import javax.swing.UIManager;
+
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import com.alee.laf.table.WebTable;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
 
 /**
@@ -27,6 +32,10 @@ public class FileManagerMain extends javax.swing.JFrame {
 	private FileCollect fileCollectTab;
 	private FileInbox fileInboxTab;
 	private FileAssignmentTab fileAssignmentTab;
+	
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.alee.laf.panel.WebPanel webPanel1;
+    private WebTabbedPane webTabbedPane;
 	/**
      * Creates new form FileManagerMain
      */
@@ -42,7 +51,7 @@ public class FileManagerMain extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	setLookAndFeel();
         webPanel1 = new com.alee.laf.panel.WebPanel();
         fileSendTab = new FileSendTab();
         fileCollectTab = new FileCollect();
@@ -100,7 +109,24 @@ public class FileManagerMain extends javax.swing.JFrame {
             }
         });
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.alee.laf.panel.WebPanel webPanel1;
-    private WebTabbedPane webTabbedPane;
+    
+    
+    protected static final void setLookAndFeel() {
+        String lookAndFeelClassName = null;
+        LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+        for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
+            if("Windows".equals(lookAndFeel.getName())) {
+                lookAndFeelClassName = lookAndFeel.getClassName();
+            }
+        }
+        if(lookAndFeelClassName == null) {
+            lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+        }
+        try {
+            UIManager.setLookAndFeel(lookAndFeelClassName);
+        }
+        catch(Exception e) {
+        	JajeemExcetionHandler.logError(e);
+        }
+    }
 }

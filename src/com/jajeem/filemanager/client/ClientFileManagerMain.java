@@ -1,8 +1,11 @@
 package com.jajeem.filemanager.client;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
+import com.jajeem.exception.JajeemExcetionHandler;
 
 /**
  *
@@ -12,6 +15,10 @@ public class ClientFileManagerMain extends javax.swing.JFrame {
 
     private ClientFileSendTab fileSendTab;
 	private ClientFileInbox fileInboxTab;
+	
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.alee.laf.panel.WebPanel webPanel1;
+    private WebTabbedPane webTabbedPane;
 	/**
      * Creates new form FileManagerMain
      */
@@ -27,7 +34,7 @@ public class ClientFileManagerMain extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	setLookAndFeel();
         webPanel1 = new com.alee.laf.panel.WebPanel();
         fileSendTab = new ClientFileSendTab();
         fileInboxTab = new ClientFileInbox();
@@ -80,7 +87,24 @@ public class ClientFileManagerMain extends javax.swing.JFrame {
             }
         });
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.alee.laf.panel.WebPanel webPanel1;
-    private WebTabbedPane webTabbedPane;
+    
+    
+    protected static final void setLookAndFeel() {
+        String lookAndFeelClassName = null;
+        LookAndFeelInfo[] lookAndFeelInfos = UIManager.getInstalledLookAndFeels();
+        for(LookAndFeelInfo lookAndFeel : lookAndFeelInfos) {
+            if("Windows".equals(lookAndFeel.getName())) {
+                lookAndFeelClassName = lookAndFeel.getClassName();
+            }
+        }
+        if(lookAndFeelClassName == null) {
+            lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+        }
+        try {
+            UIManager.setLookAndFeel(lookAndFeelClassName);
+        }
+        catch(Exception e) {
+        	JajeemExcetionHandler.logError(e);
+        }
+    }
 }
