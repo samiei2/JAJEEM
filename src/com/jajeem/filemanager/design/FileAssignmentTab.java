@@ -56,6 +56,7 @@ public class FileAssignmentTab extends WebPanel {
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
 	private int currentIndex;
+	private FileManagerMain parentFrame;
 	
 	/**
 	 * Create the panel.
@@ -172,9 +173,17 @@ public class FileAssignmentTab extends WebPanel {
 			public void actionPerformed(ActionEvent e) {
 				String fileName = fileNames.get(webTable.getSelectedRow());
 				File file = new File(fileName);
-				if(file.exists())
-					if(!file.isDirectory());
-//						SendFile(file);
+				try{
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					final String time = model.getValueAt(webTable.getSelectedRow(), 2).toString().split(" ")[0];
+					Integer.parseInt(time);
+					if(file.exists())
+						if(!file.isDirectory())
+							SendFile(file);
+				}
+				catch(Exception ex){
+					
+				}
 			}
 		});
 		
@@ -223,8 +232,9 @@ public class FileAssignmentTab extends WebPanel {
 								// page
 								if (remaining == 0) {
 									// Stop updating now.
+									parentFrame.invokeFileCollect();
 									timer.stop();
-									model.setValueAt(timetemp + "Min", currentrow, 2);
+									model.setValueAt(timetemp + " Min", currentrow, 2);
 								}
 							}
 						};
@@ -238,15 +248,15 @@ public class FileAssignmentTab extends WebPanel {
 							timer.start();
 						}
 					}
-				});
+				}).start();
 			}
 			
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				if(t!=FileAssignmentTab.class)
-					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
+//				if(t!=FileAssignmentTab.class)
+//					return;
+//				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+//				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
 			}
 			
 			@Override
@@ -396,6 +406,10 @@ public class FileAssignmentTab extends WebPanel {
 			list.add(directoryContent.get(i).getPath());
 		}
 		return list;
+	}
+
+	public void setParent(FileManagerMain fileManagerMain) {
+		this.parentFrame = fileManagerMain;
 	}
 }
 

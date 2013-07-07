@@ -116,23 +116,7 @@ public class FileCollect extends WebPanel {
 		wbtnCollectFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-					model.getDataVector().clear();
-					model.fireTableDataChanged();
-					webTable.repaint();
-					webTable.updateUI();
-					
-					new Config();
-					ServerService service;
-					if(InstructorNoa.getServerService() == null)
-						service = new ServerService();
-					else
-						service = InstructorNoa.getServerService();
-					SendFileCollectCommand cmd  = new SendFileCollectCommand(InetAddress
-						.getLocalHost().getHostAddress(),
-						Config.getParam("broadcastingIp"), Integer.parseInt(Config
-								.getParam("port")));
-					service.send(cmd);
+					CollectFiles();
 				}
 				catch(Exception e){
 					
@@ -225,5 +209,33 @@ public class FileCollect extends WebPanel {
 				
 			}
 		}, FileCollect.class);
+	}
+	
+	public void CollectFiles(){
+		DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		webTable.repaint();
+		webTable.updateUI();
+		
+		try{
+			new Config();
+			ServerService service;
+			if(InstructorNoa.getServerService() == null)
+				service = new ServerService();
+			else
+				service = InstructorNoa.getServerService();
+			ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+			for (int i = 0; i < ips.size(); i++) {
+				SendFileCollectCommand cmd  = new SendFileCollectCommand(InetAddress
+					.getLocalHost().getHostAddress(),
+					ips.get(i), Integer.parseInt(Config
+							.getParam("port")));
+				service.send(cmd);
+			}
+		}
+		catch(Exception e){
+			
+		}
 	}
 }

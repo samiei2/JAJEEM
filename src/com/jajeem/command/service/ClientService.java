@@ -115,7 +115,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 	}
 
 	private byte[] getDatagram() throws IOException {
-
 		int size = socket.getReceiveBufferSize();
 		byte[] buffer = new byte[size];
 

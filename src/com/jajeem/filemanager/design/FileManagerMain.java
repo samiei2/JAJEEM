@@ -57,6 +57,8 @@ public class FileManagerMain extends javax.swing.JFrame {
         fileCollectTab = new FileCollect();
         fileInboxTab = new FileInbox();
         fileAssignmentTab = new FileAssignmentTab();
+        
+        fileAssignmentTab.setParent(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
@@ -129,4 +131,8 @@ public class FileManagerMain extends javax.swing.JFrame {
         	JajeemExcetionHandler.logError(e);
         }
     }
+
+	public void invokeFileCollect() {
+		fileCollectTab.CollectFiles();
+	}
 }
