@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Jajeem">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Jajeem.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/commons-dbcp-1.4.jar"/>
+        <pathelement location="lib/commons-pool-1.5.6.jar"/>
+        <pathelement location="lib/guava-14.0.1.jar"/>
+        <pathelement location="lib/h2-1.3.171.jar"/>
+        <pathelement location="lib/h2-latest.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="lib/hsqldb.jar"/>
+        <pathelement location="lib/jasperreports-5.1.0.jar"/>
+        <pathelement location="lib/jna-3.5.2.jar"/>
+        <pathelement location="lib/junit-4.11.jar"/>
+        <pathelement location="lib/log4j-1.2.7.jar"/>
+        <pathelement location="lib/platform-3.5.2.jar"/>
+        <pathelement location="lib/seaglasslookandfeel-0.2.jar"/>
+        <pathelement location="lib/Sources.zip"/>
+        <pathelement location="lib/vlcj-2.3.1.jar"/>
+        <pathelement location="lib/WebLookAndFeel.jar"/>
+        <pathelement location="lib/bccontrib-1.0-SNAPSHOT.jar"/>
+        <pathelement location="lib/bcprov-jdk15on-148.jar"/>
+        <pathelement location="lib/fmj.jar"/>
+        <pathelement location="lib/ice4j.jar"/>
+        <pathelement location="lib/jain-sdp.jar"/>
+        <pathelement location="lib/json-simple-1.1.1.jar"/>
+        <pathelement location="lib/jspeex.jar"/>
+        <pathelement location="lib/osgi.core.jar"/>
+        <pathelement location="lib/sdes4j.jar"/>
+        <pathelement location="lib/zrtp4j-light.jar"/>
+        <pathelement location="lib/xuggle-xuggler-5.4.zip"/>
+        <pathelement location="lib/installer-exclude/cpptasks.jar"/>
+        <pathelement location="lib/customizer.jar"/>
+        <pathelement location="lib/dnsjava.jar"/>
+        <pathelement location="lib/felix.jar"/>
+        <pathelement location="lib/jmf.jar"/>
+        <pathelement location="lib/jtransforms-2.4.0.jar"/>
+        <pathelement location="lib/juv-rtsp-client-1.0.0.jar"/>
+        <pathelement location="lib/libjitsi.jar"/>
+        <pathelement location="lib/mediaplayer.jar"/>
+        <pathelement location="lib/mjsip.jar"/>
+        <pathelement location="lib/multiplayer.jar"/>
+        <pathelement location="lib/sdes4j-1.1.1.jar"/>
+        <pathelement location="lib/slf4j-api-1.7.5.jar"/>
+        <pathelement location="lib/slf4j-simple-1.7.5.jar"/>
+        <pathelement location="lib/smack-3.3.0.jar"/>
+        <pathelement location="lib/smackx-3.3.0.jar"/>
+        <pathelement location="lib/javaQuery 1.0.jar"/>
+        <pathelement location="lib/screen_converter.jar"/>
+        <pathelement location="lib/screen_player.jar"/>
+        <pathelement location="lib/win32-x86-64.jar"/>
+        <pathelement location="lib/win32-x86.jar"/>
+        <pathelement location="lib/native/windows-64"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Jajeem.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target name="AudioCapture">
+        <java classname="AudioCapture" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="AVReceive2">
+        <java classname="org.jitsi.examples.AVReceive2" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="AVTransmit2 (1)">
+        <java classname="org.jitsi.examples.AVTransmit2" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="AVTransmit2">
+        <java classname="AVTransmit2" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Chat">
+        <java classname="com.jajeem.message.design.Chat" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Clientconn">
+        <java classname="Clientconn" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="InstNeo">
+        <java classname="com.jajeem.core.design.InstructorNoa" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Instructor">
+        <java classname="com.jajeem.core.design.Instructor" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="InstructorLogin">
+        <java classname="com.jajeem.core.design.InstructorLogin" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="InstructorNoa">
+        <java classname="com.jajeem.core.design.InstructorNoa" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="KeyHook">
+        <java classname="com.jajeem.util.KeyHook" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="MessageReceive">
+        <java classname="com.jajeem.message.design.MessageReceive" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="MessageSend">
+        <java classname="com.jajeem.message.design.MessageSend" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Quiz_Main">
+        <java classname="com.jajeem.quiz.design.alt.Quiz_Main" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Recorder">
+        <java classname="com.jajeem.recorder.design.Recorder" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Serverconn">
+        <java classname="Serverconn" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="SimpleVoiceTransmiter">
+        <java classname="SimpleVoiceTransmiter" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Student">
+        <java classname="com.jajeem.core.design.Student" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="StudentLogin">
+        <java classname="com.jajeem.core.design.StudentLogin" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Threadconn">
+        <java classname="Threadconn" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="VideoPlayer">
+        <java classname="com.jajeem.videoplayer.design.VideoPlayer" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="VoiceTest">
+        <java classname="VoiceTest" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="WhiteboardClient">
+        <java classname="com.jajeem.whiteboard.client.Client.WhiteboardClient" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+</project>

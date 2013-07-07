@@ -11,19 +11,27 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.AbstractListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComponent;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TableModelEvent;
@@ -43,7 +51,14 @@ import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
+import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.list.DefaultListModel;
+import com.alee.laf.list.WebList;
+import com.alee.laf.menu.WebMenu;
+import com.alee.laf.menu.WebMenuBar;
+import com.alee.laf.menu.WebMenuItem;
+import com.alee.laf.menu.WebPopupMenu;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
@@ -57,6 +72,7 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
@@ -72,8 +88,10 @@ public class InstructorNoa {
 	private static AVReceive2 receiver;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
-	
+	private static List<Group> groups = new ArrayList<Group>();
+
 	static WebButton intercomButton = new WebButton();
+	private static WebList groupList = new WebList();
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
 
@@ -107,9 +125,9 @@ public class InstructorNoa {
 			new Config();
 
 			// Start LibJitsi for first time
-			 LibJitsi.start();
-			 setTransmitter(new AVTransmit2("5000", "", "10000"));
-//			 setReceiver(new AVReceive2("10010", "", "5010"));
+			LibJitsi.start();
+			setTransmitter(new AVTransmit2("5000", "", "10000"));
+			// setReceiver(new AVReceive2("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -126,6 +144,7 @@ public class InstructorNoa {
 	 * 
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	private void initialize() throws IOException {
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -142,6 +161,8 @@ public class InstructorNoa {
 		WebPanel centerListPanel = new WebPanel();
 		centerPanel.add(centerListPanel);
 		centerPanel.setBackground(new Color(255, 255, 255));
+		WebPanel centerGroupPanel = new WebPanel();
+		centerGroupPanel.setBackground(new Color(255, 255, 255));
 
 		final DefaultTableModel model = new DefaultTableModel();
 
@@ -158,6 +179,41 @@ public class InstructorNoa {
 		table.setPreferredScrollableViewportSize(new Dimension(300, 100));
 		WebScrollPane scrollPanel = new WebScrollPane(table);
 		scrollPanel.setDrawBorder(false);
+
+		WebPopupMenu groupPopup = new WebPopupMenu();
+		groupPopup.add(new WebMenuItem("Empty"));
+		getGroupList().setComponentPopupMenu(groupPopup);
+
+		final DefaultListModel groupListModel = new DefaultListModel();
+		getGroupList().setModel(groupListModel);
+
+		getGroupList().setModel(new AbstractListModel() {
+			String[] values = new String[] { "Group A", "Group B", "Group C",
+					"Group D", "Group E", "Group F", "Group G", "Group H",
+					"Group I", "Group J" };
+
+			public int getSize() {
+				return values.length;
+			}
+
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+
+		groups.add(new Group("Group A", 0, "#FF0000"));
+		groups.add(new Group("Group B", 1, "#00FFFF"));
+		groups.add(new Group("Group C", 2, "#0000FF"));
+		groups.add(new Group("Group D", 3, "#0000A0"));
+		groups.add(new Group("Group E", 4, "#800080"));
+		groups.add(new Group("Group F", 5, "#FFFF00"));
+		groups.add(new Group("Group G", 6, "#00FF00"));
+		groups.add(new Group("Group H", 7, "#FF00FF"));
+		groups.add(new Group("Group I", 8, "#800000"));
+		groups.add(new Group("Group J", 9, "#F52887"));
+
+		WebScrollPane scrollGroupPanel = new WebScrollPane(getGroupList());
+		scrollGroupPanel.setDrawBorder(false);
 
 		WebPanel rightButtonPanel = new WebPanel();
 		rightButtonPanel.setBackground(new Color(56, 107, 170));
@@ -184,19 +240,6 @@ public class InstructorNoa {
 		volumeButton.setBottomBgColor(new Color(235, 105, 11));
 		volumeButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(volumeButton);
-
-		WebButton attendanceButton = new WebButton();
-		attendanceButton.putClientProperty("key", "attendance");
-		attendanceButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		attendanceButton.setDrawShade(false);
-		attendanceButton.setRound(10);
-		attendanceButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		attendanceButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		attendanceButton.setForeground(Color.WHITE);
-		attendanceButton.setText("Attendance Summary");
-		attendanceButton.setBottomBgColor(new Color(235, 105, 11));
-		attendanceButton.setTopBgColor(new Color(235, 105, 11));
-		topButtonPanel.add(attendanceButton);
 
 		WebButton callAllButton = new WebButton();
 		callAllButton.putClientProperty("key", "callAll");
@@ -394,18 +437,29 @@ public class InstructorNoa {
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		desktopPane.setLayout(gl_desktopPane);
 		centerPanel.setLayout(new CardLayout(0, 0));
-		centerPanel.add(desktopPane, "name_3466416048915");
-		centerPanel.add(centerListPanel, "name_3466370417827");
+		desktopPane.putClientProperty("viewMode", "thumbView");
+		centerListPanel.putClientProperty("viewMode", "listView");
+		centerGroupPanel.putClientProperty("viewMode", "groupView");
+		centerPanel.add(desktopPane, "thumbsView");
+		centerPanel.add(centerListPanel, "listView");
+		centerPanel.add(centerGroupPanel, "groupView");
 		centerListPanel.setLayout(new BorderLayout(0, 0));
+		centerGroupPanel.setLayout(new BorderLayout(0, 0));
+		centerGroupPanel.add(scrollGroupPanel);
+
 		centerListPanel.add(scrollPanel);
 
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
-		topButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
+		topButtonPanel.setLayout(new GridLayout(0, 4, 0, 0));
 		centerListPanel.setBackground(new Color(237, 246, 253));
+		centerGroupPanel.setBackground(new Color(237, 246, 253));
+		scrollGroupPanel.setBackground(new Color(237, 246, 253));
+		getGroupList().setBackground(new Color(237, 246, 253));
 		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[] { desktopPane, centerListPanel }));
+				new Component[] { desktopPane, centerListPanel,
+						centerGroupPanel }));
 
 		WebButton surveyButton = new WebButton();
 		surveyButton.setIconTextGap(30);
@@ -455,23 +509,61 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
+					}
+				}
 
-					try {
-						powerCommand = new PowerCommand(InetAddress
-								.getLocalHost().getHostAddress(), "", Integer
-								.parseInt(Config.getParam("port")), "");
-						powerCommand.setTo(selectedStudent);
-						powerCommand.setType("turnOff");
-						serverService.send(powerCommand);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					if (getDesktopPane().getSelectedFrame() != null) {
+						String selectedStudent = "";
+						selectedStudent = (String) getDesktopPane()
+								.getSelectedFrame().getClientProperty("ip");
+
+						try {
+							powerCommand = new PowerCommand(InetAddress
+									.getLocalHost().getHostAddress(), "",
+									Integer.parseInt(Config.getParam("port")),
+									"");
+							powerCommand.setTo(selectedStudent);
+							powerCommand.setType("turnOff");
+							serverService.send(powerCommand);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!groupList.isSelectionEmpty()) {
+						int groupIndex = groupList.getSelectedIndex();
+
+						Group group = groups.get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							return;
+						} else {
+							try {
+								powerCommand = new PowerCommand(InetAddress
+										.getLocalHost().getHostAddress(), "",
+										Integer.parseInt(Config
+												.getParam("port")), "");
+								powerCommand.setType("logOff");
+
+								for (String studentIp : group.getStudentIps()) {
+									powerCommand.setTo(studentIp);
+									serverService.send(powerCommand);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			}
+
 		});
 
 		WebButton logOffButton = new WebButton("Log Off");
@@ -480,20 +572,57 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
+					}
+				}
 
-					try {
-						powerCommand = new PowerCommand(InetAddress
-								.getLocalHost().getHostAddress(), "", Integer
-								.parseInt(Config.getParam("port")), "");
-						powerCommand.setTo(selectedStudent);
-						powerCommand.setType("logOff");
-						serverService.send(powerCommand);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					if (getDesktopPane().getSelectedFrame() != null) {
+						String selectedStudent = "";
+						selectedStudent = (String) getDesktopPane()
+								.getSelectedFrame().getClientProperty("ip");
+
+						try {
+							powerCommand = new PowerCommand(InetAddress
+									.getLocalHost().getHostAddress(), "",
+									Integer.parseInt(Config.getParam("port")),
+									"");
+							powerCommand.setTo(selectedStudent);
+							powerCommand.setType("logOff");
+							serverService.send(powerCommand);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!groupList.isSelectionEmpty()) {
+						int groupIndex = groupList.getSelectedIndex();
+
+						Group group = groups.get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							return;
+						} else {
+							try {
+								powerCommand = new PowerCommand(InetAddress
+										.getLocalHost().getHostAddress(), "",
+										Integer.parseInt(Config
+												.getParam("port")), "");
+								powerCommand.setType("logOff");
+
+								for (String studentIp : group.getStudentIps()) {
+									powerCommand.setTo(studentIp);
+									serverService.send(powerCommand);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			}
@@ -505,23 +634,61 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PowerCommand powerCommand;
-				if (getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
+					}
+				}
 
-					try {
-						powerCommand = new PowerCommand(InetAddress
-								.getLocalHost().getHostAddress(), "", Integer
-								.parseInt(Config.getParam("port")), "");
-						powerCommand.setTo(selectedStudent);
-						powerCommand.setType("restart");
-						serverService.send(powerCommand);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					if (getDesktopPane().getSelectedFrame() != null) {
+						String selectedStudent = "";
+						selectedStudent = (String) getDesktopPane()
+								.getSelectedFrame().getClientProperty("ip");
+
+						try {
+							powerCommand = new PowerCommand(InetAddress
+									.getLocalHost().getHostAddress(), "",
+									Integer.parseInt(Config.getParam("port")),
+									"");
+							powerCommand.setTo(selectedStudent);
+							powerCommand.setType("logOff");
+							serverService.send(powerCommand);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!groupList.isSelectionEmpty()) {
+						int groupIndex = groupList.getSelectedIndex();
+
+						Group group = groups.get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							return;
+						} else {
+							try {
+								powerCommand = new PowerCommand(InetAddress
+										.getLocalHost().getHostAddress(), "",
+										Integer.parseInt(Config
+												.getParam("port")), "");
+								powerCommand.setType("restart");
+
+								for (String studentIp : group.getStudentIps()) {
+									powerCommand.setTo(studentIp);
+									serverService.send(powerCommand);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			}
+
 		});
 
 		WebButton lockButton = new WebButton("Lock/Unlock");
@@ -630,25 +797,71 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
-					try {
-						if (!WebsiteTextField.getText().equals("")) {
-							WebsiteCommand wc = new WebsiteCommand(InetAddress
-									.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")),
-									WebsiteTextField.getText());
-							InstructorNoa.getServerService().send(wc);
-						} else {
-							return;
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
 					}
 				}
+
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					if (getDesktopPane().getSelectedFrame() != null) {
+						String selectedStudent = "";
+						selectedStudent = (String) getDesktopPane()
+								.getSelectedFrame().getClientProperty("ip");
+
+						try {
+							if (!WebsiteTextField.getText().equals("")) {
+								WebsiteCommand wc = new WebsiteCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
+										selectedStudent, Integer
+												.parseInt(Config
+														.getParam("port")),
+										WebsiteTextField.getText());
+								serverService.send(wc);
+							} else {
+								return;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!groupList.isSelectionEmpty()) {
+						int groupIndex = groupList.getSelectedIndex();
+
+						Group group = groups.get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							return;
+						} else {
+							try {
+								if (!WebsiteTextField.getText().equals("")) {
+									WebsiteCommand wc = new WebsiteCommand(
+											InetAddress.getLocalHost()
+													.getHostAddress(), "",
+											Integer.parseInt(Config
+													.getParam("port")),
+											WebsiteTextField.getText());
+									for (String studentIp : group
+											.getStudentIps()) {
+										wc.setTo(studentIp);
+										serverService.send(wc);
+									}
+								} else {
+									return;
+								}
+
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+				WebsiteTextField.setText("");
 			}
 		});
 
@@ -656,22 +869,60 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 					throws NumberFormatException {
-				if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) InstructorNoa.getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
-					try {
 
-						InternetCommand ic = new InternetCommand(InetAddress
-								.getLocalHost().getHostAddress(),
-								selectedStudent, Integer.parseInt(Config
-										.getParam("port")));
-						InstructorNoa.getServerService().send(ic);
-					} catch (Exception e) {
-						e.printStackTrace();
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
+					}
+				}
+
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					if (getDesktopPane().getSelectedFrame() != null) {
+						String selectedStudent = "";
+						selectedStudent = (String) getDesktopPane()
+								.getSelectedFrame().getClientProperty("ip");
+
+						try {
+							InternetCommand ic = new InternetCommand(
+									InetAddress.getLocalHost().getHostAddress(),
+									selectedStudent, Integer.parseInt(Config
+											.getParam("port")));
+							serverService.send(ic);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!groupList.isSelectionEmpty()) {
+						int groupIndex = InstructorNoa.getGroupList()
+								.getSelectedIndex();
+
+						Group group = groups.get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							return;
+						} else {
+							try {
+								InternetCommand ic = new InternetCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(), "", Integer
+												.parseInt(Config
+														.getParam("port")));
+								for (String studentIp : group.getStudentIps()) {
+									ic.setTo(studentIp);
+									serverService.send(ic);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			}
+
 		});
 
 		WebButton programButton = new WebButton();
@@ -728,18 +979,64 @@ public class InstructorNoa {
 				if (programTextField.getText().equals("")) {
 					return;
 				}
+				Component card = null;
+				for (Component comp : InstructorNoa.getCenterPanel()
+						.getComponents()) {
+					if (comp.isVisible() == true) {
+						card = comp;
+					}
+				}
 
-				programTableModel.addRow(new Object[] {
-						programTextField.getText(), true });
-				try {
-					WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-							InetAddress.getLocalHost().getHostAddress(), Config
-									.getParam("broadcastingIp"), Integer
-									.parseInt(Config.getParam("port")),
-							(programTextField.getText() + ".exe"), true);
-					serverService.send(ic);
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (((JComponent) card).getClientProperty("viewMode").equals(
+						"thumbView")) {
+					programTableModel.addRow(new Object[] {
+							programTextField.getText(), true });
+					try {
+						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								Config.getParam("broadcastingIp"), Integer
+										.parseInt(Config.getParam("port")),
+								(programTextField.getText() + ".exe"), true);
+						serverService.send(ic);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (((JComponent) card).getClientProperty("viewMode")
+						.equals("groupView")) {
+					if (!InstructorNoa.getGroupList().isSelectionEmpty()) {
+						int groupIndex = InstructorNoa.getGroupList()
+								.getSelectedIndex();
+
+						Group group = InstructorNoa.getGroups().get(groupIndex);
+						if (group.getStudentIps().isEmpty()) {
+							programTableModel.addRow(new Object[] {
+									programTextField.getText(), false });
+							return;
+						} else {
+							programTableModel.addRow(new Object[] {
+									programTextField.getText(), true });
+
+							try {
+								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(), "", Integer
+												.parseInt(Config
+														.getParam("port")),
+										(programTextField.getText() + ".exe"),
+										true);
+								for (String studentIp : group.getStudentIps()) {
+									ic.setTo(studentIp);
+									serverService.send(ic);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+						}
+					} else {
+						programTableModel.addRow(new Object[] {
+								programTextField.getText(), false });
+					}
 				}
 				programTextField.setText("");
 			}
@@ -930,6 +1227,62 @@ public class InstructorNoa {
 		accountButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(accountButton);
 
+		accountButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				// How many frames do we have?
+				JInternalFrame[] allframes = getDesktopPane()
+						.getAllFrames();
+				int count = allframes.length;
+				if (count == 0)
+					return;
+
+				// Determine the necessary grid size
+				int sqrt = (int) Math.sqrt(count);
+				int rows = sqrt;
+				int cols = sqrt;
+				if (rows * cols < count) {
+					cols++;
+					if (rows * cols < count) {
+						rows++;
+					}
+				}
+
+				// Define some initial values for size & location.
+				Dimension size = getDesktopPane().getSize();
+
+				int w = size.width / cols;
+				int h = size.height / rows;
+				int x = 0;
+				int y = 0;
+
+				// Iterate over the frames, deiconifying any iconified frames
+				// and then relocating & resizing each.
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols && ((i * cols) + j < count); j++) {
+						JInternalFrame f = allframes[(i * cols) + j];
+
+						if (!f.isClosed() && f.isIcon()) {
+							try {
+								f.setIcon(false);
+							} catch (PropertyVetoException e) {
+								e.printStackTrace();
+							}
+						}
+
+						getDesktopPane().getDesktopManager().resizeFrame(f, x,
+								y, w, h);
+						x += w;
+					}
+					y += h; // start the next row
+					x = 0;
+				}
+			}
+
+		});
+
 		WebButton chatButton = new WebButton();
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
 		chatButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -967,6 +1320,33 @@ public class InstructorNoa {
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
 		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel, frame);
 		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
+
+		getGroupList().addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				WebList list = (WebList) e.getSource();
+				int index = list.locationToIndex(e.getPoint());
+
+				if (e.getClickCount() == 2
+						&& SwingUtilities.isLeftMouseButton(e)) {
+					return;
+				} else if (SwingUtilities.isRightMouseButton(e)) {
+					WebPopupMenu popup = (WebPopupMenu) list
+							.getComponentPopupMenu();
+					popup.removeAll();
+					List<String> studentNames = getGroups().get(index)
+							.getStudentNames();
+					if (studentNames.isEmpty()) {
+						popup.add(new WebMenuItem("Empty"));
+						return;
+					} else {
+						for (String studentName : studentNames) {
+							popup.add(new WebMenuItem(studentName));
+						}
+					}
+				}
+			}
+		});
+
 	}
 
 	public static WebDesktopPane getDesktopPane() {
@@ -1024,7 +1404,7 @@ public class InstructorNoa {
 	public static void setStudentListTable(WebTable studentListTable) {
 		InstructorNoa.studentListTable = studentListTable;
 	}
-	
+
 	public static void setIntercomText(String text) {
 		intercomButton.setText(text);
 	}
@@ -1055,6 +1435,22 @@ public class InstructorNoa {
 		}
 	}
 
+	public static WebList getGroupList() {
+		return groupList;
+	}
+
+	public static void setGroupList(WebList groupList) {
+		InstructorNoa.groupList = groupList;
+	}
+
+	public static List<Group> getGroups() {
+		return groups;
+	}
+
+	public static void setGroups(List<Group> groups) {
+		InstructorNoa.groups = groups;
+	}
+
 	private class ProgramListTableModel extends AbstractTableModel {
 		/**
 		 * 
@@ -1062,7 +1458,7 @@ public class InstructorNoa {
 		private static final long serialVersionUID = -3816337549406126398L;
 		private String[] columnNames = { "Name", "Status" };
 		private Object[][] data = { { "Chrome", false }, { "Firefox", false },
-				{ "IExplore", false }, { "WMplayer", false }};
+				{ "IExplore", false }, { "WMplayer", false } };
 
 		public final Object[] longValues = { "Jane", Boolean.TRUE };
 
@@ -1097,23 +1493,121 @@ public class InstructorNoa {
 			if (value instanceof Boolean) {
 				if ((boolean) value) {
 					try {
-						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-								InetAddress.getLocalHost().getHostAddress(),
-								Config.getParam("broadcastingIp"),
-								Integer.parseInt(Config.getParam("port")),
-								(data[row][col - 1] + ".exe"), true);
-						serverService.send(ic);
+
+						Component card = null;
+						for (Component comp : InstructorNoa.getCenterPanel()
+								.getComponents()) {
+							if (comp.isVisible() == true) {
+								card = comp;
+							}
+						}
+
+						if (((JComponent) card).getClientProperty("viewMode")
+								.equals("thumbView")) {
+
+							try {
+								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
+										Config.getParam("broadcastingIp"),
+										Integer.parseInt(Config
+												.getParam("port")),
+										(data[row][col - 1] + ".exe"), true);
+								serverService.send(ic);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						} else if (((JComponent) card).getClientProperty(
+								"viewMode").equals("groupView")) {
+							if (!groupList.isSelectionEmpty()) {
+								int groupIndex = InstructorNoa.getGroupList()
+										.getSelectedIndex();
+
+								Group group = groups.get(groupIndex);
+								if (group.getStudentIps().isEmpty()) {
+									return;
+								} else {
+									try {
+										WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(), "",
+												Integer.parseInt(Config
+														.getParam("port")),
+												(data[row][col - 1] + ".exe"),
+												true);
+
+										for (String studentIp : group
+												.getStudentIps()) {
+											ic.setTo(studentIp);
+											serverService.send(ic);
+										}
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				} else {
 					try {
-						WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-								InetAddress.getLocalHost().getHostAddress(),
-								Config.getParam("broadcastingIp"),
-								Integer.parseInt(Config.getParam("port")),
-								(data[row][col - 1] + ".exe"), false);
-						serverService.send(ic);
+
+						Component card = null;
+						for (Component comp : InstructorNoa.getCenterPanel()
+								.getComponents()) {
+							if (comp.isVisible() == true) {
+								card = comp;
+							}
+						}
+
+						if (((JComponent) card).getClientProperty("viewMode")
+								.equals("thumbView")) {
+
+							try {
+								WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(),
+										Config.getParam("broadcastingIp"),
+										Integer.parseInt(Config
+												.getParam("port")),
+										(data[row][col - 1] + ".exe"), false);
+								serverService.send(ic);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						} else if (((JComponent) card).getClientProperty(
+								"viewMode").equals("groupView")) {
+							if (!groupList.isSelectionEmpty()) {
+								int groupIndex = InstructorNoa.getGroupList()
+										.getSelectedIndex();
+
+								Group group = groups.get(groupIndex);
+								if (group.getStudentIps().isEmpty()) {
+									return;
+								} else {
+									try {
+										WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(), "",
+												Integer.parseInt(Config
+														.getParam("port")),
+												(data[row][col - 1] + ".exe"),
+												false);
+
+										for (String studentIp : group
+												.getStudentIps()) {
+											ic.setTo(studentIp);
+											serverService.send(ic);
+										}
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1132,5 +1626,6 @@ public class InstructorNoa {
 			data = newData;
 			fireTableDataChanged();
 		}
+
 	}
 }

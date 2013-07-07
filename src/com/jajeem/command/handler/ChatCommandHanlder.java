@@ -29,7 +29,8 @@ public class ChatCommandHanlder implements ICommandHandler {
 			} else {
 				if (currentChat == null) {
 					currentChat = new Chat(cmd.getFrom(),
-							Integer.parseInt(Config.getParam("serverPort")));
+							Integer.parseInt(Config.getParam("serverPort")),
+							((ChatCommand) cmd).isMutli());
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
 					Student.getChatList().add(currentChat);
 					currentChat.setVisible(true);
@@ -51,7 +52,8 @@ public class ChatCommandHanlder implements ICommandHandler {
 			} else {
 				if (currentChat == null) {
 					currentChat = new Chat(cmd.getFrom(),
-							Integer.parseInt(Config.getParam("port")));
+							Integer.parseInt(Config.getParam("port")),
+							((ChatCommand) cmd).isMutli());
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
 					InstructorNoa.getChatList().add(currentChat);
 					currentChat.setVisible(true);

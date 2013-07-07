@@ -99,20 +99,14 @@ public class InstructorCenter {
 
 			@Override
 			public void internalFrameOpened(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void internalFrameIconified(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void internalFrameDeiconified(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -123,7 +117,6 @@ public class InstructorCenter {
 							ImageIO.read(InstructorCenter.class
 									.getResourceAsStream("/icons/menubar/student.png"))));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				checkBox.setSelected(false);
@@ -131,14 +124,10 @@ public class InstructorCenter {
 
 			@Override
 			public void internalFrameClosing(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void internalFrameClosed(InternalFrameEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -149,7 +138,6 @@ public class InstructorCenter {
 							ImageIO.read(InstructorCenter.class
 									.getResourceAsStream("/icons/menubar/tick.png"))));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				checkBox.setSelected(true);

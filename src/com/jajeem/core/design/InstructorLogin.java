@@ -36,8 +36,6 @@ import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
 
-//import org.apache.log4j.PropertyConfigurator;
-
 public class InstructorLogin extends JDialog {
 
 	/**
@@ -51,7 +49,8 @@ public class InstructorLogin extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			JajeemExcetionHandler.logMessage("Application Started!",InstructorLogin.class);
+			JajeemExcetionHandler.logMessage("Application Started!",
+					InstructorLogin.class);
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			@SuppressWarnings("unused")
@@ -81,31 +80,26 @@ public class InstructorLogin extends JDialog {
 
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-		
 
 			}
 
 			@Override
 			public void windowIconified(WindowEvent arg0) {
-				
 
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent arg0) {
-				
 
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent arg0) {
-				
 
 			}
 
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				
 
 			}
 
@@ -116,7 +110,6 @@ public class InstructorLogin extends JDialog {
 
 			@Override
 			public void windowActivated(WindowEvent arg0) {
-				
 
 			}
 		});
@@ -252,20 +245,24 @@ public class InstructorLogin extends JDialog {
 												indexOfLastBracket), password
 										.getPassword());
 								if (grant) {
-									Instructor instructor = instructorService.get(user
-											.substring(indexOfOpenBracket + 1,
+									Instructor instructor = instructorService
+											.get(user.substring(
+													indexOfOpenBracket + 1,
 													indexOfLastBracket));
-									com.jajeem.util.Session.setInstructor(instructor);
-									
-									// TODO Session initialization which is set to default
+									com.jajeem.util.Session
+											.setInstructor(instructor);
+
+									// TODO Session initialization which is set
+									// to default
 									Session session = new Session();
 									session.setInstructor(instructor);
-									session.setCourse(courseList.get(list2.getSelectedIndex()));
+									session.setCourse(courseList.get(list2
+											.getSelectedIndex()));
 									com.jajeem.util.Session.setSession(session);
 									// TODO Save Session in database
-									
-									////////////////////////////////
-									
+
+									// //////////////////////////////
+
 									setVisible(false);
 									InstructorNoa
 											.main(new String[] {

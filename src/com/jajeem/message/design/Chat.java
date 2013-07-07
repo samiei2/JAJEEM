@@ -31,8 +31,9 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.splitpane.WebSplitPane;
 import com.alee.laf.text.WebTextArea;
 import com.jajeem.command.model.ChatCommand;
-import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.groupwork.model.Group;
 
 public class Chat extends WebFrame {
 
@@ -41,14 +42,14 @@ public class Chat extends WebFrame {
 	 */
 	private static final long serialVersionUID = -2055942118955727767L;
 	private JPanel contentPane;
-	private DefaultListModel listModel = new DefaultListModel();
+	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private WebList list = new WebList(getListModel());
 	private WebScrollPane scrollPane = new WebScrollPane(getList());
-	private static ServerService serverService;
 	private File file;
 
 	private String to = "";
 	private int port;
+	private boolean multi = false;
 
 	/**
 	 * Launch the application.
@@ -57,7 +58,7 @@ public class Chat extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Chat frame = new Chat("", 0);
+					Chat frame = new Chat("", 0, false);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
@@ -73,19 +74,19 @@ public class Chat extends WebFrame {
 	 * @throws Exception
 	 * @throws NumberFormatException
 	 */
-	public Chat(String to, int port) throws NumberFormatException, Exception {
+	public Chat(String to, int port, boolean multi)
+			throws NumberFormatException, Exception {
 		super("Chat");
 		File dir = new File("Messages/");
-		if(!dir.exists())
+		if (!dir.exists())
 			dir.mkdir();
-		file = new File(dir,"/chat_" + to + ".txt");
+		file = new File(dir, "/chat_" + to + ".txt");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Chat.class.getResource("/icons/menubar/chat.png")));
 
 		setTo(to);
 		setPort(port);
-
-		serverService = new ServerService();
+		setMulti(multi);
 
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -142,12 +143,26 @@ public class Chat extends WebFrame {
 									scrollPane.getVerticalScrollBar()
 											.getMaximum() + 10000);
 
-					ChatCommand chatCommand;
+					ChatCommand chatCommand = null;
 					try {
-						chatCommand = new ChatCommand(InetAddress
-								.getLocalHost().getHostAddress(), getTo(),
-								getPort(), textArea.getText());
-						serverService.send(chatCommand);
+						if (isMulti()) {
+							chatCommand = new ChatCommand(InetAddress
+									.getLocalHost().getHostAddress(), "",
+									getPort(), textArea.getText(), isMulti());
+							Group group = InstructorNoa.getGroups().get(
+									Integer.parseInt(getTo()));
+							for (String studentIp : group.getStudentIps()) {
+								chatCommand.setTo(studentIp);
+								InstructorNoa.getServerService().send(
+										chatCommand);
+							}
+						} else {
+
+							chatCommand = new ChatCommand(InetAddress
+									.getLocalHost().getHostAddress(), getTo(),
+									getPort(), textArea.getText(), isMulti());
+							InstructorNoa.getServerService().send(chatCommand);
+						}
 					} catch (UnknownHostException e1) {
 						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
@@ -169,7 +184,7 @@ public class Chat extends WebFrame {
 					FileWriter fw;
 					fw = new FileWriter(file.getAbsoluteFile(), true);
 					BufferedWriter bw = new BufferedWriter(fw);
-					DefaultListModel myList = getListModel();
+					DefaultListModel<String> myList = getListModel();
 					int lsize = myList.size();
 					for (int i = 0; i < lsize; i++) {
 						Object o = myList.get(i);
@@ -209,6 +224,14 @@ public class Chat extends WebFrame {
 		this.port = port;
 	}
 
+	public boolean isMulti() {
+		return multi;
+	}
+
+	public void setMulti(boolean multi) {
+		this.multi = multi;
+	}
+
 	public void scrollDown() {
 		scrollPane.getVerticalScrollBar().setValue(
 				scrollPane.getVerticalScrollBar().getMaximum());
@@ -222,11 +245,11 @@ public class Chat extends WebFrame {
 		this.list = list;
 	}
 
-	public DefaultListModel getListModel() {
+	public DefaultListModel<String> getListModel() {
 		return listModel;
 	}
 
-	public void setListModel(DefaultListModel listModel) {
+	public void setListModel(DefaultListModel<String> listModel) {
 		this.listModel = listModel;
 	}
 
