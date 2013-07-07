@@ -9,7 +9,11 @@ log/*
 nbproject/*
 bin/
 util/*
-libvlc/
+libvlc/*
+Deploy/*
+.idea/*
+Inbox/*
+Outbox/*
 
 
 jajeem.db.*

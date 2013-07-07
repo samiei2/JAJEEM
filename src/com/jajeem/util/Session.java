@@ -1,5 +1,6 @@
 package com.jajeem.util;
 
+import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 

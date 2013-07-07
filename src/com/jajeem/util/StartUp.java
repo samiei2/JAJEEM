@@ -9,6 +9,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.utils.SystemUtils;
+import com.jajeem.filemanager.InstructorServer;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
@@ -22,6 +23,14 @@ public class StartUp {
 		initDatabase.initialize();
 		if(!new File("util").exists())
 			Unzipper.unzip("util.zip");
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				new InstructorServer().Startup();
+			}
+		}).start();
 		
 //		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),
 //				"util/windows/");

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="bccontrib-1.0-SNAPSHOT.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/bccontrib-1.0-SNAPSHOT.jar!/"/>
+	</lib>
+	<lib name="bcprov-jdk15on-148.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/bcprov-jdk15on-148.jar!/"/>
+	</lib>
+	<lib name="commons-dbcp-1.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/commons-dbcp-1.4.jar!/"/>
+	</lib>
+	<lib name="commons-pool-1.5.6.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/commons-pool-1.5.6.jar!/"/>
+	</lib>
+	<lib name="customizer.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/customizer.jar!/"/>
+	</lib>
+	<lib name="dnsjava.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/dnsjava.jar!/"/>
+	</lib>
+	<lib name="felix.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/felix.jar!/"/>
+	</lib>
+	<lib name="fmj.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/fmj.jar!/"/>
+	</lib>
+	<lib name="guava-14.0.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/guava-14.0.1.jar!/"/>
+	</lib>
+	<lib name="h2-1.3.171.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/h2-1.3.171.jar!/"/>
+	</lib>
+	<lib name="h2-latest.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/h2-latest.jar!/"/>
+	</lib>
+	<lib name="hamcrest-core-1.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/"/>
+	</lib>
+	<lib name="hsqldb.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/hsqldb.jar!/"/>
+	</lib>
+	<lib name="ice4j.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/ice4j.jar!/"/>
+	</lib>
+	<lib name="jain-sdp.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jain-sdp.jar!/"/>
+	</lib>
+	<lib name="jasperreports-5.1.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jasperreports-5.1.0.jar!/"/>
+	</lib>
+	<lib name="jmf.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jmf.jar!/"/>
+	</lib>
+	<lib name="jna-3.5.2.jar" scope="COMPILE">
+		<srcroot url="jar://$MAVEN_REPOSITORY$/net/java/dev/jna/jna/3.5.2/jna-3.5.2-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jna-3.5.2.jar!/"/>
+	</lib>
+	<lib name="json-simple-1.1.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/json-simple-1.1.1.jar!/"/>
+	</lib>
+	<lib name="jspeex.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jspeex.jar!/"/>
+	</lib>
+	<lib name="junit-4.11.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/junit-4.11.jar!/"/>
+	</lib>
+	<lib name="log4j-1.2.7.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/log4j-1.2.7.jar!/"/>
+	</lib>
+	<lib name="mediaplayer.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/mediaplayer.jar!/"/>
+	</lib>
+	<lib name="multiplayer.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/multiplayer.jar!/"/>
+	</lib>
+	<lib name="osgi.core.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/osgi.core.jar!/"/>
+	</lib>
+	<lib name="platform-3.5.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/platform-3.5.2.jar!/"/>
+	</lib>
+	<lib name="sdes4j-1.1.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/sdes4j-1.1.1.jar!/"/>
+	</lib>
+	<lib name="sdes4j.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/sdes4j.jar!/"/>
+	</lib>
+	<lib name="seaglasslookandfeel-0.2.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/seaglasslookandfeel-0.2.jar!/"/>
+	</lib>
+	<lib name="slf4j-api-1.7.5.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.5.jar!/"/>
+	</lib>
+	<lib name="slf4j-simple-1.7.5.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/slf4j-simple-1.7.5.jar!/"/>
+	</lib>
+	<lib name="smack-3.3.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/smack-3.3.0.jar!/"/>
+	</lib>
+	<lib name="smackx-3.3.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/smackx-3.3.0.jar!/"/>
+	</lib>
+	<lib name="vlcj-2.3.1.jar" scope="COMPILE">
+		<srcroot url="jar://$MAVEN_REPOSITORY$/uk/co/caprica/vlcj/2.3.1/vlcj-2.3.1-sources.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/vlcj-2.3.1.jar!/"/>
+	</lib>
+	<lib name="WebLookAndFeel.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/WebLookAndFeel.jar!/"/>
+	</lib>
+	<lib name="zrtp4j-light.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/zrtp4j-light.jar!/"/>
+	</lib>
+	<lib name="jtransforms-2.4.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jtransforms-2.4.0.jar!/"/>
+	</lib>
+	<lib name="xuggle-xuggler-5.4.zip" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/xuggle-xuggler-5.4.zip!/"/>
+	</lib>
+	<lib name="javaQuery 1.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/javaQuery 1.0.jar!/"/>
+	</lib>
+	<lib name="lua" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/lua"/>
+	</lib>
+	<lib name="native" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/lib/native"/>
+	</lib>
+</component>
