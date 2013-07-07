@@ -62,6 +62,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
@@ -338,31 +339,20 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							// Run a java app in a separate system process
-							Process proc = null;
-							try {
-								System.out.println(new File("util/","videoplayer.jar").exists());
-								proc = Runtime.getRuntime().exec("java -jar videoplayer.jar",null,new File("util/"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							// Then retreive the process output
-							InputStream in = proc.getInputStream();
-							InputStream err = proc.getErrorStream();
-							int i=0;
-							try {
-								while((i=err.read())!=-1){
-									try {
-										System.out.println(err.read());
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+//							// Run a java app in a separate system process
+//							Process proc = null;
+//							try {
+//								System.out.println(new File("util/","videoplayer.jar").exists());
+//								proc = Runtime.getRuntime().exec("java -jar videoplayer.jar",null,new File("util/"));
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//							// Then retreive the process output
+//							InputStream in = proc.getInputStream();
+//							InputStream err = proc.getErrorStream();
+							FileManagerMain main = new FileManagerMain();
+							main.setVisible(true);
+							
 						}
 					});
 

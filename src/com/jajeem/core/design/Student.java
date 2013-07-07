@@ -31,6 +31,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.Config;
@@ -155,6 +156,14 @@ public class Student {
 		TooltipManager.setTooltip(messageButton, imgToolTip,
 				"Send a message to your instructor.", TooltipWay.down);
 		panel.add(messageButton);
+		
+		ImageIcon imgFile = new ImageIcon(
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
+		WebButton fileButton = new WebButton(imgFile);
+		TooltipManager.setTooltip(fileButton, imgToolTip,
+				"Send a file to your instructor.", TooltipWay.down);
+		panel.add(fileButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
@@ -183,7 +192,19 @@ public class Student {
 					MessageSend.main(new String[] { StudentLogin.getServerIp(),
 							Config.getParam("serverPort") });
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		fileButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ClientFileManagerMain main = new ClientFileManagerMain();
+					main.setVisible(true);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
