@@ -56,6 +56,7 @@ import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.alt.Quiz_Main;
@@ -331,20 +332,8 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							// Run a java app in a separate system process
-							Process proc = null;
-							try {
-								System.out.println(new File("util/",
-										"videoplayer.jar").exists());
-								proc = Runtime.getRuntime().exec(
-										"java -jar videoplayer.jar", null,
-										new File("util/"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							// Then retrieve the process output
-							InputStream in = proc.getInputStream();
-							InputStream err = proc.getErrorStream();
+							FileManagerMain main = new FileManagerMain();
+							main.setVisible(true);
 						}
 					});
 
@@ -373,7 +362,26 @@ public class InstructorNoaUtil {
 
 					break;
 				case "account":
-
+					((JButton)c).addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							// Run a java app in a separate system process
+							Process proc = null;
+							try {
+								System.out.println(new File("util/",
+										"videoplayer.jar").exists());
+								proc = Runtime.getRuntime().exec(
+										"java -jar videoplayer.jar", null,
+										new File("util/"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							// Then retrieve the process output
+							InputStream in = proc.getInputStream();
+							InputStream err = proc.getErrorStream();
+						}
+					});
 					break;
 				case "chat":
 					((JButton) c).addActionListener(new ActionListener() {
