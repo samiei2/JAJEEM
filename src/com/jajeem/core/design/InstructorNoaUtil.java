@@ -362,8 +362,8 @@ public class InstructorNoaUtil {
 
 					break;
 				case "account":
-					((JButton)c).addActionListener(new ActionListener() {
-						
+					((JButton) c).addActionListener(new ActionListener() {
+
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							// Run a java app in a separate system process
@@ -418,6 +418,19 @@ public class InstructorNoaUtil {
 												break;
 											}
 										}
+										if (currentChat == null) {
+											try {
+												currentChat = new Chat(
+														selectedStudent,
+														Integer.parseInt(Config
+																.getParam("port")),
+														false);
+												InstructorNoa.getChatList()
+														.add(currentChat);
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+										}
 									} else {
 										if (currentChat == null) {
 											try {
@@ -459,6 +472,22 @@ public class InstructorNoaUtil {
 														currentChat
 																.setVisible(true);
 														break;
+													}
+												}
+												if (currentChat == null) {
+													try {
+														currentChat = new Chat(
+																"",
+																Integer.parseInt(Config
+																		.getParam("port")),
+																true);
+														currentChat.setTo(String
+																.valueOf(groupIndex));
+														InstructorNoa
+																.getChatList()
+																.add(currentChat);
+													} catch (Exception e) {
+														e.printStackTrace();
 													}
 												}
 											} else {
