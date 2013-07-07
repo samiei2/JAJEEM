@@ -1630,7 +1630,11 @@ public class InstructorNoa {
 	}
 
 	public static ArrayList<String> getSelectedStudentIPs() {
-		
-		return null;
+		JInternalFrame[] frames = desktopPane.getAllFrames();
+		List<String> listOfStudents = new ArrayList<String>();
+		for (JInternalFrame frame : frames) {
+			listOfStudents.add((String) frame.getClientProperty("ip"));
+		}
+		return new ArrayList<>(listOfStudents);
 	}
 }
