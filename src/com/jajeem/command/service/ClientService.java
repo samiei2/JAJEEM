@@ -27,6 +27,7 @@ import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
 import com.jajeem.command.handler.StartApplicationCommandHanlder;
 import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartIntercomCommandHandler;
+import com.jajeem.command.handler.StartModelCommandHanlder;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
@@ -52,6 +53,7 @@ import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartIntercomCommand;
+import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
@@ -279,6 +281,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if(cmd instanceof SendFileCollectCommand){
 					SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
 					sendfileCommandHandler.run(cmd);
+				}
+				
+				else if(cmd instanceof StartModelCommand){
+					StartModelCommandHanlder startModelCommandHanlder = new StartModelCommandHanlder();
+					startModelCommandHanlder.run(cmd);
 				}
 
 			} catch (Exception ex) {

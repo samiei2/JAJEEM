@@ -35,6 +35,7 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
+import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
 public class Student {
@@ -46,8 +47,10 @@ public class Student {
 
 	private static AVReceive2 receiver;
 	private static AVTransmit2 transmitter;
-
+	
 	private static boolean black;
+	
+	private static VNCCaptureService vncViewer;
 
 	public static boolean isBlack() {
 		return black;
@@ -244,6 +247,14 @@ public class Student {
 
 	public static void setTransmitter(AVTransmit2 transmitter) throws Exception {
 		Student.transmitter = transmitter;
+	}
+
+	public static VNCCaptureService getVncViewer() {
+		return vncViewer;
+	}
+
+	public static void setVncViewer(VNCCaptureService vncViewer) {
+		Student.vncViewer = vncViewer;
 	}
 
 	public static JFrame getMainFram() {

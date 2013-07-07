@@ -936,7 +936,6 @@ public class InstructorNoa {
 
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
-
 			}
 		});
 
