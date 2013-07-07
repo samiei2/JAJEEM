@@ -197,10 +197,10 @@ public class ClientFileSendTab extends WebPanel {
 			
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				if(t!=ClientFileSendTab.class)
-					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
+//				if(t!=ClientFileSendTab.class)
+//					return;
+//				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+//				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
 			}
 			
 			@Override

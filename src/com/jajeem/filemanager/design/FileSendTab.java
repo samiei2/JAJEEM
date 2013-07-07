@@ -195,10 +195,10 @@ public class FileSendTab extends WebPanel {
 			
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				if(t!=FileSendTab.class)
-					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
+//				if(t!=FileSendTab.class)
+//					return;
+//				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+//				model.setValueAt(String.format("%." + 2 + "f\n", evt.getProgressValue())+" %", currentIndex, 2);
 			}
 			
 			@Override
@@ -283,7 +283,8 @@ public class FileSendTab extends WebPanel {
 						    out.close();
 						    fis.close();
 						}
-						new FileTransferEvent().fireSuccess(null, FileSendTab.class);
+						if(ips.size()!=0)
+							new FileTransferEvent().fireSuccess(null, FileSendTab.class);
 						confirmationDialog.dispose();
 					} catch (Exception e) {
 						JajeemExcetionHandler.logError(e,FileSendTab.class);
