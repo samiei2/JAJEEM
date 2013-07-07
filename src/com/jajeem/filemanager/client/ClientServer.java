@@ -15,14 +15,13 @@ import com.jajeem.util.StartUp;
 
 public class ClientServer {
 	public void Startup(){
-		StartServer();
-		
 		File file = new File("Outbox");
 		if(!file.exists())
 			file.mkdir();
 		file = new File("Inbox");
 		if(!file.exists())
 			file.mkdir();
+		StartServer();
 	}
 
 	private void StartServer() {

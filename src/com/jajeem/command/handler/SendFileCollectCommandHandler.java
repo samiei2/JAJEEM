@@ -28,7 +28,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 			ArrayList<File> filesList = getDirectoryContent(file);
 			for (int i = 0; i < filesList.size(); i++) {
 				if(filesList.get(i).exists())
-					SendFile(filesList.get(i), sendFileCommand.getFrom());
+					SendFileCollect(filesList.get(i), sendFileCommand.getFrom());
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
@@ -55,14 +55,14 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 		return list;
 	}
 
-	protected void SendFile(final File file,final String server) {
+	protected void SendFileCollect(final File file,final String server) {
 		try {
 			Thread fileSender = new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 					try {
-						Socket clientSocket = new Socket(server, 54321);
+						Socket clientSocket = new Socket(server, 54322);
 						OutputStream out = clientSocket.getOutputStream();
 						FileInputStream fis = new FileInputStream(file);
 						byte[] info = new byte[2048];

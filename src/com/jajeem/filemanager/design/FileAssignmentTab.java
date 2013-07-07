@@ -232,13 +232,17 @@ public class FileAssignmentTab extends WebPanel {
 				service = new ServerService();
 			else
 				service = InstructorNoa.getServerService();
-			SendFileAssignmentCommand cmd = new SendFileAssignmentCommand(InetAddress
+			SendFileAssignmentCommand cmd;
+			ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+			for (int i = 0; i < ips.size(); i++) {
+				cmd = new SendFileAssignmentCommand(InetAddress
 						.getLocalHost().getHostAddress(),
-						Config.getParam("broadcastingIp"), Integer.parseInt(Config
+						ips.get(i), Integer.parseInt(Config
 								.getParam("port")));
-			cmd.setTime(time);
-			cmd.setFile(file);
-			service.send(cmd);
+				cmd.setTime(time);
+				cmd.setFile(file);
+				service.send(cmd);
+			}
 		}
 		catch(Exception e){
 			

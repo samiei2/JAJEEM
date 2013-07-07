@@ -158,6 +158,10 @@ public class FileCollect extends WebPanel {
 				model.fireTableDataChanged();
 				webTable.repaint();
 				webTable.updateUI();
+				if(webTable.getRowCount()!=0){
+					wbtnDeleteCollectedFiles.setEnabled(false);
+					wbtnOpen.setEnabled(false);
+				}
 			}
 		});
 		
@@ -184,6 +188,10 @@ public class FileCollect extends WebPanel {
 					"Received"
 				});
 				files.add(evt.getFileName());
+				if(webTable.getRowCount()!=0){
+					wbtnDeleteCollectedFiles.setEnabled(true);
+					wbtnOpen.setEnabled(true);
+				}
 			}
 			
 			@Override

@@ -17,6 +17,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceive2;
@@ -39,6 +40,7 @@ import com.jajeem.util.Config;
 public class Student {
 
 	private JFrame frmJajeemProject;
+	private static JFrame mainFram;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -105,6 +107,7 @@ public class Student {
 	private void initialize() throws IOException {
 		WebLookAndFeel.setDecorateFrames(true);
 		frmJajeemProject = new WebFrame();
+		mainFram = frmJajeemProject;
 		frmJajeemProject.setResizable(false);
 		frmJajeemProject.setUndecorated(true);
 		frmJajeemProject.setAlwaysOnTop(true);
@@ -241,5 +244,13 @@ public class Student {
 
 	public static void setTransmitter(AVTransmit2 transmitter) throws Exception {
 		Student.transmitter = transmitter;
+	}
+
+	public static JFrame getMainFram() {
+		return mainFram;
+	}
+
+	public void setMainFram(JFrame frmJajeemProject) {
+		this.mainFram = frmJajeemProject;
 	}
 }

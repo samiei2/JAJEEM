@@ -151,6 +151,8 @@ public class FileInbox extends WebPanel {
 			
 			@Override
 			public void success(FileTransferObject evt, Class t) {
+				if(t!=FileInbox.class)
+					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
 				model.setValueAt("Success", webTable.getSelectedRow(), 3);

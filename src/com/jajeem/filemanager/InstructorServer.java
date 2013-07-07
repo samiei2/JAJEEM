@@ -85,13 +85,16 @@ public class InstructorServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
+//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+//						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
 						    }
 						    fos.close();
 						    
 						    evt.setFileName(output.getAbsolutePath());
-						    new FileTransferEvent().fireSuccess(evt,FileInbox.class);
+						    if(evt.getClientSocket().getLocalPort()==54321)
+						    	new FileTransferEvent().fireSuccess(evt,FileInbox.class);
+						    if(evt.getClientSocket().getLocalPort()==54322)
+						    	new FileTransferEvent().fireSuccess(evt,FileCollect.class);
 						    confirmationDialog.dispose();
 						}
 						catch(Exception e){
@@ -121,7 +124,22 @@ public class InstructorServer {
 				}
 			}
 		}, InstructorServer.class);
-		StartFileListenerServer();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				StartFileListenerServer();
+			}
+		}).start(); 
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				StartFileCollectionListenerServer();
+			}
+		}).start(); 
 	}
 
 	private void StartFileListenerServer() {
@@ -133,12 +151,27 @@ public class InstructorServer {
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
 				new FileTransferEvent().fireFileSendRequest(obj,FileInbox.class);
+			}
+		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e,InstructorServer.class);
+		}
+	}
+	
+	private void StartFileCollectionListenerServer() {
+		try {
+			ServerSocket ss=new ServerSocket(54322);
+			while(true){
+				final Socket client = ss.accept();
+				FileTransferObject obj = new FileTransferObject(this);
+				obj.setClientSocket(client);
+				obj.setRequestNumber(requestNumber++);
 				new FileTransferEvent().fireFileSendRequest(obj,FileCollect.class);
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);
 		}
 	}
+	
 	
 	public static void main(String[] list){
 		new InstructorServer().StartFileListenerServer();
