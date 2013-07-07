@@ -1,6 +1,5 @@
 package com.jajeem.core.design;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,7 +30,6 @@ import jrdesktop.viewer.Viewer;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.list.WebList;
@@ -41,15 +39,14 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.slider.WebSlider;
-import com.alee.laf.toolbar.WebToolBar;
 import com.alee.managers.popup.PopupStyle;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
+import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.VolumeCommand;
@@ -301,7 +298,46 @@ public class InstructorNoaUtil {
 
 					break;
 				case "model":
+					((JButton) c).addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
+								}
+							}
 
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("thumbView")) {
+								
+								if (InstructorNoa.getDesktopPane()
+										.getSelectedFrame() != null) {
+									String selectedStudent = "";
+									selectedStudent = (String) InstructorNoa
+											.getDesktopPane()
+											.getSelectedFrame()
+											.getClientProperty("ip");
+								try {
+									StartModelCommand sm = new StartModelCommand(
+											InetAddress.getLocalHost()
+													.getHostAddress(),
+											Config.getParam("broadcastingIp"),
+											Integer.parseInt(Config
+													.getParam("port")), selectedStudent);
+									InstructorNoa.getServerService().send(sm);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								} else {
+									return;
+								}
+							} else if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
+							}
+						}
+					});
 					break;
 				case "record":
 					((JButton) c).addActionListener(new ActionListener() {

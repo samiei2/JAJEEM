@@ -573,20 +573,6 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (InstructorCenter.desktopPane.getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) InstructorCenter.desktopPane
-							.getSelectedFrame().getClientProperty("ip");
-					try {
-						Chat currentChat = new Chat(selectedStudent, Integer
-								.parseInt(Config.getParam("port")));
-						Instructor.getChatList().add(currentChat);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else {
-
-				}
 			}
 		});
 

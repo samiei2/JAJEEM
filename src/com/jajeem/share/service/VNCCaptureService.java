@@ -7,6 +7,8 @@ import jrdesktop.viewer.Viewer;
 
 public class VNCCaptureService implements ICaptureService {
 
+	private Viewer viewer;
+
 	@Override
 	public void startServer() {
 		Server.Start();
@@ -19,15 +21,24 @@ public class VNCCaptureService implements ICaptureService {
 
 	@Override
 	public void startClient(Config viewerConfig) {
-		new Viewer(viewerConfig).Start();
+		setViewer(new Viewer(viewerConfig));
+		getViewer().Start();
 	}
 
 	@Override
 	public void stopClient() {
-		
+		viewer.Stop();
 	}
 	
 	public void startClientDialog() {
 		ConnectionDialog.showOptions();
+	}
+
+	public Viewer getViewer() {
+		return viewer;
+	}
+
+	public void setViewer(Viewer viewer) {
+		this.viewer = viewer;
 	}
 }
