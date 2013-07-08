@@ -7,6 +7,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Desktop;
+
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.alee.laf.table.WebTable;
@@ -20,6 +23,9 @@ import java.io.IOException;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+
+import org.hsqldb.lib.InOutUtil;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -27,8 +33,10 @@ import java.util.ArrayList;
 public class ClientFileInbox extends WebPanel {
 	private WebTable webTable;
 	private WebButton wbtnOpen;
+	private WebButton wbtnRefresh;
 	private FileTransferEvent fileEvents;
 	private ArrayList<String> fileList = new ArrayList<>();
+	private ArrayList<File> files = new ArrayList<>();
 
 	/**
 	 * Create the panel.
@@ -39,6 +47,9 @@ public class ClientFileInbox extends WebPanel {
 		
 		wbtnOpen = new WebButton();
 		wbtnOpen.setText("Open");
+		
+		wbtnRefresh = new WebButton();
+		wbtnRefresh.setText("Refresh");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -46,7 +57,10 @@ public class ClientFileInbox extends WebPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-						.addComponent(wbtnOpen, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -55,7 +69,9 @@ public class ClientFileInbox extends WebPanel {
 					.addContainerGap()
 					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 					.addGap(11)
-					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		
@@ -83,6 +99,23 @@ public class ClientFileInbox extends WebPanel {
 		webScrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
 		initEvents();
+		PopulateInbox();
+	}
+
+	private void PopulateInbox() {
+		File inbox = new File("inbox");
+		if(inbox.exists()){
+			File[] list = inbox.listFiles();
+			DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+			for (int i = 0; i < list.length; i++) {
+				files.add(list[i]);
+				model.addRow(new Object[]{
+						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+						list[i].getAbsolutePath(),
+						"Received"
+				});
+			}
+		}
 	}
 
 	private void initEvents() {
@@ -90,13 +123,25 @@ public class ClientFileInbox extends WebPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					Runtime.getRuntime().exec(new String[]
-					        {"rundll32 url.dll,FileProtocolHandler",
-					        	new File(fileList.get(webTable.getSelectedRow())).getAbsolutePath()});
+					Desktop.getDesktop().open(files.get(webTable.getSelectedRow()));
+//					Runtime.getRuntime().exec(new String[]
+//					        {"rundll32 url.dll,FileProtocolHandler",
+//					        	new File(fileList.get(webTable.getSelectedRow())).getAbsolutePath()});
 				} catch (IOException e1) {
 					JajeemExcetionHandler.logError(e1,ClientFileInbox.class);
 					e1.printStackTrace();
 				}
+			}
+		});
+		
+		wbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+				model.getDataVector().clear();
+				model.fireTableDataChanged();
+				webTable.repaint();
+				webTable.updateUI();
+				PopulateInbox();
 			}
 		});
 		

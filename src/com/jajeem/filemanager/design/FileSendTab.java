@@ -244,7 +244,7 @@ public class FileSendTab extends WebPanel {
 						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
 							System.out.println("Ip : "+ips.get(i));
 							Socket clientSocket=new Socket(ips.get(i),12345);
-//							Socket clientSocket=new Socket("127.0.0.1",12345);
+						//	Socket clientSocket=new Socket("127.0.0.1",12345);
 							OutputStream out=clientSocket.getOutputStream();
 						    FileInputStream fis=new FileInputStream(file);
 						    byte[] info = new byte[2048];
@@ -283,10 +283,15 @@ public class FileSendTab extends WebPanel {
 						    out.close();
 						    fis.close();
 						}
-						if(ips.size()!=0)
+						if(ips.size()!=0){
 							new FileTransferEvent().fireSuccess(null, FileSendTab.class);
+						}
+						else{
+							new FileTransferEvent().fireFailure(null, FileSendTab.class);
+						}
 						confirmationDialog.dispose();
 					} catch (Exception e) {
+						System.out.println(e.getMessage());
 						JajeemExcetionHandler.logError(e,FileSendTab.class);
 						new FileTransferEvent().fireFailure(null, FileSendTab.class);
 						confirmationDialog.dispose();
@@ -302,6 +307,7 @@ public class FileSendTab extends WebPanel {
 			System.out.println(fileSender.isAlive()+":"+command);
 		}
 		catch(Exception e){
+			System.out.println(e.getMessage());
 			JajeemExcetionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileSendTab.class);
 			e.printStackTrace();

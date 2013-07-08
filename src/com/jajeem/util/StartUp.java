@@ -61,7 +61,7 @@ public class StartUp {
 		
 		
 //		new initServices();
-		com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
+//		com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
 		
 		try
 		{

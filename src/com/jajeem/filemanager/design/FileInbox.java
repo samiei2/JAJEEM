@@ -18,6 +18,7 @@ import com.jajeem.filemanager.InstructorServer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 public class FileInbox extends WebPanel {
@@ -27,6 +28,7 @@ public class FileInbox extends WebPanel {
 	private WebButton wbtnAccept;
 	private FileTransferEvent fileEvent = new FileTransferEvent();
 	private ArrayList<FileTransferObject> fileSendRequestList = new ArrayList<>();
+	private WebButton wbtnRefresh;
 
 	/**
 	 * Create the panel.
@@ -46,17 +48,22 @@ public class FileInbox extends WebPanel {
 		wbtnDismissAll = new WebButton();
 		wbtnDismissAll.setEnabled(false);
 		wbtnDismissAll.setText("Dismiss All");
+		
+		wbtnRefresh = new WebButton();
+		wbtnRefresh.setText("Refresh");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
 						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE))
 					.addContainerGap())
@@ -65,12 +72,14 @@ public class FileInbox extends WebPanel {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+						.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		
@@ -100,9 +109,24 @@ public class FileInbox extends WebPanel {
 		webScrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
 		initEvents();
-		
-		
-		
+		PopulateInbox();
+	}
+	
+	private void PopulateInbox() {
+		File inbox = new File("inbox");
+		if(inbox.exists()){
+			File[] list = inbox.listFiles();
+			DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+			for (int i = 0; i < list.length; i++) {
+//				files.add(list[i]);
+				model.addRow(new Object[]{
+						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+						list[i].getAbsolutePath(),
+						"N/A",
+						"Received"
+				});
+			}
+		}
 	}
 
 	private void initEvents() {
@@ -126,6 +150,17 @@ public class FileInbox extends WebPanel {
 					wbtnDismissAll.setEnabled(false);
 					wbtnRejectFile.setEnabled(false);
 				}
+			}
+		});
+		
+		wbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+				model.getDataVector().clear();
+				model.fireTableDataChanged();
+				webTable.repaint();
+				webTable.updateUI();
+				PopulateInbox();
 			}
 		});
 		

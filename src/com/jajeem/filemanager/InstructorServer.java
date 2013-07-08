@@ -151,6 +151,7 @@ public class InstructorServer {
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
 				new FileTransferEvent().fireFileSendRequest(obj,FileInbox.class);
+				JOptionPane.showMessageDialog(null, client.getInetAddress().getHostAddress() + " has sent you a file,you can check it in your File Manager Inbox!");
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);

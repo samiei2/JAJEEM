@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
@@ -67,6 +69,7 @@ public class ClientServer {
 						    FileTransferObject obj = new FileTransferObject(this);
 						    obj.setFileName(output.getAbsolutePath());
 						    new FileTransferEvent().fireSuccess(obj, ClientFileInbox.class);
+						    JOptionPane.showMessageDialog(null, "Teacher has sent you a file.you can find it in your inbox!");
 						}
 						catch(Exception e){
 							JajeemExcetionHandler.logError(e,ClientServer.class);

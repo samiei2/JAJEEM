@@ -166,6 +166,7 @@ public class FileAssignmentTab extends WebPanel {
 				webTable.updateUI();
 				wbtnSend.setEnabled(false);
 				wbtnClear.setEnabled(false);
+				JOptionPane.showMessageDialog(null, "Note: Running assignments will keep running until they end!");
 			}
 		});
 		
@@ -264,8 +265,9 @@ public class FileAssignmentTab extends WebPanel {
 			public void fail(FileTransferObject evt, Class t) {
 				if(t!=FileAssignmentTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Failed", currentIndex, 2);
+//				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+//				model.setValueAt("Failed", currentIndex, 2);
+				JOptionPane.showMessageDialog(null, "Sending assignment failed!");
 			}
 
 			@Override
@@ -359,15 +361,17 @@ public class FileAssignmentTab extends WebPanel {
 						    {
 						    	out.write(b, 0, x);
 						    	bytesRead += x;
-						    	FileTransferObject evt = new FileTransferObject(this);
-						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,FileAssignmentTab.class);
+//						    	FileTransferObject evt = new FileTransferObject(this);
+//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+//						        new FileTransferEvent().fireProgress(evt,FileAssignmentTab.class);
 						    }
 						    out.close();
 						    fis.close();
 						}
 						if(ips.size()!=0)
 							new FileTransferEvent().fireSuccess(null, FileAssignmentTab.class);
+						else
+							new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
 						confirmationDialog.dispose();
 					} catch (Exception e) {
 						JajeemExcetionHandler.logError(e,FileAssignmentTab.class);

@@ -619,6 +619,8 @@ public class InstructorNoaUtil {
 					break;
 
 				case "whiteBoard":
+//					com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
+
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 
