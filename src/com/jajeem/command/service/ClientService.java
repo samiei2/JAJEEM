@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
+import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
 import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
@@ -47,6 +48,7 @@ import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.model.SendSurveyResponseCommand;
@@ -280,6 +282,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if(cmd instanceof SendFileCollectCommand){
 					SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
 					sendfileCommandHandler.run(cmd);
+				}
+				
+				else if(cmd instanceof SendFileAssignmentCommand){
+					SendFileAssignmentCommandHandler sendfileassignmentCommandHandler = new SendFileAssignmentCommandHandler();
+					sendfileassignmentCommandHandler.run(cmd);
 				}
 				
 				else if(cmd instanceof StartModelCommand){

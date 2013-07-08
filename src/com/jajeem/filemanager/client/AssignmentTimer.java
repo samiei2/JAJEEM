@@ -14,6 +14,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.button.WebButton;
+import com.jajeem.whiteboard.client.Client.design.MainFrame;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,6 +30,8 @@ public class AssignmentTimer extends JDialog {
 	private long lastUpdate; // When count was last updated
 	private int total;
 	private WebLabel webLabel;
+
+	private AssignmentTimer MainFrame;
 
 	/**
 	 * Launch the application.
@@ -51,11 +55,10 @@ public class AssignmentTimer extends JDialog {
 	 * Create the frame.
 	 */
 	public AssignmentTimer() {
-		setResizable(false);
-		setType(Type.POPUP);
+		MainFrame = this;
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 321, 81);
+		setResizable(false);
+		setBounds(100, 100, 173, 81);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -115,6 +118,7 @@ public class AssignmentTimer extends JDialog {
 					// Stop updating now.
 					timer.stop();
 					JOptionPane.showMessageDialog(null, "Times Up!");
+					MainFrame.dispose();
 				}
 			}
 		};

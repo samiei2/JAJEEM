@@ -195,8 +195,9 @@ public class FileAssignmentTab extends WebPanel {
 					return;
 				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 				String file = model.getValueAt(webTable.getSelectedRow(), 1).toString();
+				
 				final String time = model.getValueAt(webTable.getSelectedRow(), 2).toString().split(" ")[0];
-				SendFileAssignmentCMD(file,time);
+				SendFileAssignmentCMD(new File(file).getName(),time);
 				final int currentrow = webTable.getSelectedRow();
 				new Thread(new Runnable() {
 					private Timer timer; // Updates the count every second
@@ -365,7 +366,8 @@ public class FileAssignmentTab extends WebPanel {
 						    out.close();
 						    fis.close();
 						}
-						new FileTransferEvent().fireSuccess(null, FileAssignmentTab.class);
+						if(ips.size()!=0)
+							new FileTransferEvent().fireSuccess(null, FileAssignmentTab.class);
 						confirmationDialog.dispose();
 					} catch (Exception e) {
 						JajeemExcetionHandler.logError(e,FileAssignmentTab.class);
