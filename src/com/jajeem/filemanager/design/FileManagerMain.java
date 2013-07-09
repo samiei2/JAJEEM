@@ -14,6 +14,10 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -98,6 +102,8 @@ public class FileManagerMain extends javax.swing.JFrame {
         );
 
         pack();
+        
+        initEvents();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -112,6 +118,14 @@ public class FileManagerMain extends javax.swing.JFrame {
         });
     }
     
+    public void initEvents(){
+    	addWindowListener(new WindowAdapter() {
+    		@Override
+			public void windowClosing(WindowEvent arg0) {
+				fileInboxTab.SaveRequests();
+			}
+		});
+    }
     
     protected static final void setLookAndFeel() {
         String lookAndFeelClassName = null;

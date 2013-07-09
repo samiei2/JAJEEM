@@ -152,7 +152,8 @@ public class FileCollect extends WebPanel {
 		wbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop().open(new File(files.get(webTable.getSelectedRow())));
+					Desktop.getDesktop().open(new File((String)webTable.getValueAt(webTable.getSelectedRow(), 1)));
+//					Desktop.getDesktop().open(new File(files.get(webTable.getSelectedRow())));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -165,16 +166,19 @@ public class FileCollect extends WebPanel {
 			public void success(FileTransferObject evt, Class t) {
 				if(t!=FileCollect.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.addRow(new Object[]{
-					webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-					evt.getFileName(),
-					"Received"
-				});
-				files.add(evt.getFileName());
-				if(webTable.getRowCount()!=0){
-					wbtnDeleteCollectedFiles.setEnabled(true);
-					wbtnOpen.setEnabled(true);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.addRow(new Object[]{
+						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+						evt.getFileName(),
+						"Received"
+					});
+					files.add(evt.getFileName());
+					if(webTable.getRowCount()!=0){
+						wbtnDeleteCollectedFiles.setEnabled(true);
+						wbtnOpen.setEnabled(true);
+					}
+				} catch (Exception e) {
 				}
 			}
 			
@@ -188,7 +192,10 @@ public class FileCollect extends WebPanel {
 			public void fileSendRequest(FileTransferObject evt, Class t) {
 				if(t!=FileCollect.class)
 					return;
-				new FileTransferEvent().fireAcceptFileRequest(evt, InstructorServer.class);
+				try {
+					new FileTransferEvent().fireAcceptFileRequest(evt, InstructorServer.class);
+				} catch (Exception e) {
+				}
 			}
 			
 			@Override
