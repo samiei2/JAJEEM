@@ -25,7 +25,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.jasperreports.engine.data.ListOfArrayDataSource;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;

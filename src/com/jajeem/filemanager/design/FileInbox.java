@@ -211,8 +211,13 @@ public class FileInbox extends WebPanel {
 			public void valueChanged(ListSelectionEvent arg0) {
 				int selectedRow = webTable.getSelectedRow();
 				if(selectedRow!=-1){
-					if(fileSendRequestList.get(selectedRow)!=null){
-						
+					if(fileSendRequestList.get(selectedRow)==null){
+						wbtnAccept.setEnabled(false);
+						wbtnRejectFile.setEnabled(false);
+					}
+					else{
+						wbtnAccept.setEnabled(true);
+						wbtnRejectFile.setEnabled(true);
 					}
 				}	
 			}

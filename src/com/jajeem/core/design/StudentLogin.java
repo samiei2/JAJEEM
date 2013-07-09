@@ -11,6 +11,7 @@ import java.io.File;
 import java.net.InetAddress;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import org.jitsi.service.libjitsi.LibJitsi;
@@ -112,8 +113,11 @@ public class StudentLogin extends JDialog {
 			}
 		}).start();
 		
-		if(!new File("util").exists())
-			Unzipper.unzip("util.zip");
+		if(!new File("util").exists()){
+//			Unzipper.unzip("util.zip");
+			JOptionPane.showMessageDialog(null, "util folder does not exist.Please call your administrator!\nShutting Down!");
+			System.exit(1);
+		}
 		
 		LibJitsi.start();
 		
