@@ -14,6 +14,7 @@ public class QuizResponse extends EventObject implements Serializable{
 	private Response response;
 	private Question question;
 	private Run quizRun;
+	private int receivingPort;
 	public QuizResponse(Object source) {
 	    super(source);
 	}
@@ -37,5 +38,11 @@ public class QuizResponse extends EventObject implements Serializable{
 	}
 	public void setQuizRun(Run quizRun) {
 		this.quizRun = quizRun;
+	}
+	public void setListeningPort(int listenPort) {
+		receivingPort = listenPort;
+	}
+	public int getListeningPort(){
+		return receivingPort;
 	}
 }

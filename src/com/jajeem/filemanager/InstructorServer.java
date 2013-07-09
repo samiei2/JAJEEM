@@ -16,6 +16,7 @@ import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileCollect;
 import com.jajeem.filemanager.design.FileInbox;
+import com.jajeem.util.Session;
 
 public class InstructorServer {
 	static long requestNumber = 0;
@@ -152,6 +153,7 @@ public class InstructorServer {
 				obj.setRequestNumber(requestNumber++);
 				new FileTransferEvent().fireFileSendRequest(obj,FileInbox.class);
 				JOptionPane.showMessageDialog(null, client.getInetAddress().getHostAddress() + " has sent you a file,you can check it in your File Manager Inbox!");
+				Session.getFileRequestList().add(obj);
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);

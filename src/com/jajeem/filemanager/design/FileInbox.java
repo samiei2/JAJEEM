@@ -14,6 +14,7 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.filemanager.InstructorServer;
+import com.jajeem.util.Session;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
@@ -126,6 +127,19 @@ public class FileInbox extends WebPanel {
 						"Received"
 				});
 			}
+			for (int i = 0; i < Session.getFileRequestList().size(); i++) {
+				fileSendRequestList.add((FileTransferObject) Session.getFileRequestList().get(i));
+				model.addRow(new Object[]{
+						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+						"Cannot show file name until accept",
+						((FileTransferObject) Session.getFileRequestList().get(i)).getClientSocket().getInetAddress().getHostAddress(),
+						"Pending"
+				});
+				wbtnAccept.setEnabled(true);
+				wbtnRejectFile.setEnabled(true);
+				wbtnDismissAll.setEnabled(true);
+			}
+			Session.getFileRequestList().clear();
 		}
 	}
 
@@ -200,7 +214,10 @@ public class FileInbox extends WebPanel {
 			
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				
+				if(t!=FileInbox.class)
+					return;
+				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+				model.setValueAt("Failed", webTable.getSelectedRow(), 3);
 			}
 
 			@Override
@@ -218,6 +235,7 @@ public class FileInbox extends WebPanel {
 				wbtnAccept.setEnabled(true);
 				wbtnRejectFile.setEnabled(true);
 				wbtnDismissAll.setEnabled(true);
+				Session.getFileRequestList().clear();
 			}
 
 			@Override

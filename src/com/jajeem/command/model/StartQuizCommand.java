@@ -11,6 +11,7 @@ public class StartQuizCommand extends Command {
 	private Quiz quiz;
 	private String server;
 	private Run run;
+	private int receivePort;
 	public StartQuizCommand(String from, String to, int port) {
 		super(from, to, port);
 		
@@ -38,6 +39,14 @@ public class StartQuizCommand extends Command {
 	
 	public Run getRun(){
 		return run;
+	}
+
+	public void setReceivePort(int i) {
+		receivePort = i;
+	}
+	
+	public int getReceivePort(){
+		return receivePort;
 	}
 
 }

@@ -11,6 +11,7 @@ public class StartSurveyCommand extends Command {
 	private Survey survey;
 	private String server;
 	private Run run;
+	private int receivingPort;
 	private static final long serialVersionUID = -692510020782073836L;
 
 	public StartSurveyCommand(String from, String to, int port) {
@@ -39,6 +40,14 @@ public class StartSurveyCommand extends Command {
 	
 	public Run getRun(){
 		return run;
+	}
+
+	public void setReceivingPort(int i) {
+		receivingPort = i;
+	}
+	
+	public int getReceivingPort(){
+		return receivingPort;
 	}
 
 }

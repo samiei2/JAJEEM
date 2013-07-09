@@ -14,7 +14,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.button.WebButton;
-import com.jajeem.whiteboard.client.Client.design.MainFrame;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;

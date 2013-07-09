@@ -103,6 +103,8 @@ public class Quiz_Window extends WebFrame {
 
 	private String server;
 
+	private int listenPort;
+
 	/**
 	 * Launch the application.
 	 */
@@ -148,7 +150,6 @@ public class Quiz_Window extends WebFrame {
 					dispose();
 					return;
 				}
-				
 				
 				for (int i = 0; i < currentRun.getQuiz().getQuestionList().size(); i++) {
 					model.addElement("Question "+(i+1));
@@ -277,10 +278,14 @@ public class Quiz_Window extends WebFrame {
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
 									resp.setQuizRun(currentRun);
+									resp.setListeningPort(listenPort);
 									new QuizEvent().fireResponseEvent(resp);
-									SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
+									SendQuizResponseCommand cmd = new SendQuizResponseCommand(
+											InetAddress.getLocalHost().getHostAddress(),
+											server, 
+											listenPort);
 									cmd.setEvent(resp);
-								
+									
 									ServerService service = new ServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
@@ -710,7 +715,10 @@ public class Quiz_Window extends WebFrame {
 								resp.setStudent(getStudent());
 								resp.setQuizRun(currentRun);
 								//new QuizEvent().fireResponseEvent(resp);
-								SendQuizResponseCommand cmd = new SendQuizResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("quizport")));
+								SendQuizResponseCommand cmd = new SendQuizResponseCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										server, 
+										listenPort);
 								cmd.setEvent(resp);
 							
 								ServerService service = new ServerService();
@@ -961,5 +969,9 @@ public class Quiz_Window extends WebFrame {
 
 	public void setServer(String serv) {
 		server = serv;
+	}
+
+	public void setReceivePort(int receivePort) {
+		listenPort = receivePort;
 	}
 }

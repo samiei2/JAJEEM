@@ -1,5 +1,7 @@
 package com.jajeem.util;
 
+import java.util.ArrayList;
+
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
@@ -12,6 +14,10 @@ public class Session {
 	private static boolean isQuizWindowOpen = false;
 	private static boolean isSurveyWindowOpen = false;
 	private static boolean isWhiteboardWindowOpen = false;
+	private static ArrayList<Object> fileRequestList = new ArrayList<>();
+	private static boolean[] isQuizWindowsOpen = new boolean[10];
+	private static boolean[] isSurveyWindowsOpen = new boolean[10];
+	private static boolean[] isWhiteboardWindowsOpen = new boolean[10];
 	
 	public static void setInstructor(Instructor instructor) {
 		Session.instructor = instructor;
@@ -59,6 +65,39 @@ public class Session {
 
 	public static void setWhiteboardWindowOpen(boolean isWhiteboardWindowOpen) {
 		Session.isWhiteboardWindowOpen = isWhiteboardWindowOpen;
+	}
+
+	public static ArrayList<Object> getFileRequestList() {
+		return fileRequestList;
+	}
+
+	public static void setFileRequestList(ArrayList<Object> fileRequestList) {
+		Session.fileRequestList = fileRequestList;
+	}
+
+	public static boolean[] getIsQuizWindowsOpen() {
+		return isQuizWindowsOpen;
+	}
+
+	public static void setIsQuizWindowsOpen(boolean[] isQuizWindowsOpen) {
+		Session.isQuizWindowsOpen = isQuizWindowsOpen;
+	}
+
+	public static boolean[] getIsSurveyWindowsOpen() {
+		return isSurveyWindowsOpen;
+	}
+
+	public static void setIsSurveyWindowsOpen(boolean[] isSurveyWindowsOpen) {
+		Session.isSurveyWindowsOpen = isSurveyWindowsOpen;
+	}
+
+	public static boolean[] getIsWhiteboardWindowsOpen() {
+		return isWhiteboardWindowsOpen;
+	}
+
+	public static void setIsWhiteboardWindowsOpen(
+			boolean[] isWhiteboardWindowsOpen) {
+		Session.isWhiteboardWindowsOpen = isWhiteboardWindowsOpen;
 	}
 
 }

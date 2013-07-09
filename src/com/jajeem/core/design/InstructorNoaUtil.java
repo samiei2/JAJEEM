@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.service.ClientService;
@@ -65,7 +68,6 @@ import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 import com.jajeem.util.WinRegistry;
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class InstructorNoaUtil {
 
@@ -74,7 +76,6 @@ public class InstructorNoaUtil {
 
 	static Quiz_Main quiz = null;
 	static com.jajeem.survey.design.SurveyMain survey = null;
-	static WhiteboardClient client = null;
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -427,17 +428,52 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							if (Session.isQuizWindowOpen()) {
-								if (quiz == null) {
-									quiz = new Quiz_Main();
-									quiz.setVisible(true);
-								} else {
-									quiz.toFront();
-									quiz.repaint();
+							
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
 								}
-							} else {
-								quiz = new Quiz_Main();
-								quiz.setVisible(true);
+							}
+							
+							if (((JComponent) card)
+									.getClientProperty("viewMode").equals(
+											"groupView")) {
+								if (!InstructorNoa.getGroupList()
+										.isSelectionEmpty()) {
+									int groupIndex = InstructorNoa
+											.getGroupList()
+											.getSelectedIndex();
+									
+									Group group = InstructorNoa.getGroups()
+											.get(groupIndex);
+									if (group.getStudentIps().isEmpty()) {
+										return;
+									} else {
+										try {
+											Quiz_Main qui =  new Quiz_Main(
+													groupIndex,
+													group.getStudentIps());
+											
+										} catch (Exception e) {
+										}
+									}
+								}
+							}
+							else{
+								if (Session.isQuizWindowOpen()) {
+									if (quiz == null) {
+										quiz = new Quiz_Main(-1,null);
+										quiz.setVisible(true);
+									} else {
+										quiz.toFront();
+										quiz.repaint();
+									}
+								} else {
+									quiz = new Quiz_Main(-1,null);
+									quiz.setVisible(true);
+								}
 							}
 						}
 					});
@@ -644,19 +680,53 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 
-							if (Session.isSurveyWindowOpen()) {
-								if (survey == null) {
-									survey = new com.jajeem.survey.design.SurveyMain();
-									survey.setVisible(true);
-								} else {
-									survey.toFront();
-									survey.repaint();
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
 								}
-							} else {
-								survey = new com.jajeem.survey.design.SurveyMain();
-								survey.setVisible(true);
 							}
-
+							
+							if (((JComponent) card)
+									.getClientProperty("viewMode").equals(
+											"groupView")) {
+								if (!InstructorNoa.getGroupList()
+										.isSelectionEmpty()) {
+									int groupIndex = InstructorNoa
+											.getGroupList()
+											.getSelectedIndex();
+									
+									Group group = InstructorNoa.getGroups()
+											.get(groupIndex);
+									if (group.getStudentIps().isEmpty()) {
+										return;
+									} else {
+										try {
+											com.jajeem.survey.design.SurveyMain surv =  new com.jajeem.survey.design.SurveyMain(
+													groupIndex,
+													group.getStudentIps());
+											
+											
+										} catch (Exception e) {
+										}
+									}
+								}
+							}
+							else{
+								if (Session.isSurveyWindowOpen()) {
+									if (survey == null) {
+										survey = new com.jajeem.survey.design.SurveyMain(-1,null);
+										survey.setVisible(true);
+									} else {
+										survey.toFront();
+										survey.repaint();
+									}
+								} else {
+									survey = new com.jajeem.survey.design.SurveyMain(-1,null);
+									survey.setVisible(true);
+								}
+							}
 						}
 					});
 
@@ -667,22 +737,118 @@ public class InstructorNoaUtil {
 					break;
 
 				case "whiteBoard":
-					// com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new
-					// String[0]);
-
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 
-							if (Session.isWhiteboardWindowOpen()) {
-								if (client == null) {
-									client = new WhiteboardClient();
-								} else {
-									client.toFront();
-									client.repaint();
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
 								}
-							} else {
-								client = new WhiteboardClient();
 							}
+							
+							if (((JComponent) card)
+									.getClientProperty("viewMode").equals(
+											"groupView")) {
+								if (!InstructorNoa.getGroupList()
+										.isSelectionEmpty()) {
+									int groupIndex = InstructorNoa
+											.getGroupList()
+											.getSelectedIndex();
+									//Starting Whiteboard Server
+									String SessionPort = String.valueOf(2000+(groupIndex*2));
+									String WhiteboardPort = String.valueOf(2000+(groupIndex*2+1));
+									try {
+						    			final Process proc = Runtime
+						    					.getRuntime()
+						    					.exec("java -jar WhiteboardServer.jar "
+						    					+SessionPort+" "+WhiteboardPort,null,new File("util/"));
+						    			new Thread(new Runnable() {
+						    				
+						    				@Override
+						    				public void run() {
+						    					try {
+						    						BufferedReader in = new BufferedReader(  
+						    	                            new InputStreamReader(proc.getInputStream()));  
+						    					        String line = null;  
+						    					        while ((line = in.readLine()) != null) {  
+						    					            System.out.println(line);  
+						    					        }  
+						    					} catch (Exception e) {
+						    						// TODO: handle exception
+						    					}
+						    				}
+						    			}).start();
+						    		} catch (IOException e) {
+						    			e.printStackTrace();
+						    		}
+									
+									Group group = InstructorNoa.getGroups()
+											.get(groupIndex);
+									if (group.getStudentIps().isEmpty()) {
+										return;
+									} else {
+										try {
+											//Start Teacher Whiteboard
+											try {
+								    			final Process proc = Runtime
+								    					.getRuntime()
+								    					.exec("java -jar WhiteboardTeacher.jar "+SessionPort+" "+WhiteboardPort,null,new File("util/"));
+								    			new Thread(new Runnable() {
+								    				
+								    				@Override
+								    				public void run() {
+								    					try {
+								    						BufferedReader in = new BufferedReader(  
+								    	                            new InputStreamReader(proc.getInputStream()));  
+								    					        String line = null;  
+								    					        while ((line = in.readLine()) != null) {  
+								    					            System.out.println(line);  
+								    					        }  
+								    					} catch (Exception e) {
+								    					}
+								    				}
+								    			}).start();
+								    		} catch (IOException e) {
+								    			e.printStackTrace();
+								    		}
+											
+											StartWhiteBoardCommand vc = new StartWhiteBoardCommand(
+													InetAddress
+															.getLocalHost()
+															.getHostAddress(),
+													"",
+													Integer.parseInt(Config
+															.getParam("port")));
+											
+											vc.setSessionPort(SessionPort);
+											vc.setWhiteboardPort(WhiteboardPort);
+											
+											for (String studentIp : group
+													.getStudentIps()) {
+												vc.setTo(studentIp);
+												InstructorNoa
+														.getServerService()
+														.send(vc);
+											}
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+									}
+								}
+							}
+							
+//							if (Session.isWhiteboardWindowOpen()) {
+//								if (client == null) {
+//									client = new WhiteboardClient();
+//								} else {
+//									client.toFront();
+//									client.repaint();
+//								}
+//							} else {
+//								client = new WhiteboardClient();
+//							}
 
 						}
 					});

@@ -40,7 +40,7 @@ import javax.swing.border.TitledBorder;
 @SuppressWarnings("serial")
 public class SurveyTab_2_Question_View extends WebPanel {
 
-	private Question currentQuestion;
+	public Question currentQuestion;
 	private WebTextField webTextField;
 	private WebTextArea webTextArea;
 	private WebComboBox webComboBox;
@@ -365,7 +365,6 @@ public class SurveyTab_2_Question_View extends WebPanel {
 			}
 			
 			webComboBox.setSelectedIndex(0);
-			
 		}
 	}
 
@@ -389,7 +388,7 @@ public class SurveyTab_2_Question_View extends WebPanel {
 			studentList.add(student);
 		
 		found = false;
-
+		
 		if(currentQuestion != null && question != null && student != null){
 			int index = -1;
 //			System.out.println(currentSurvey.getQuestionList().size());

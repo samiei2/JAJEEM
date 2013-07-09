@@ -1,6 +1,5 @@
 package com.jajeem.command.model;
 
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class StartWhiteBoardCommand extends Command {
 	/**
@@ -10,6 +9,9 @@ public class StartWhiteBoardCommand extends Command {
 	
 	private int sessionID;
 	private String server;
+
+	private String SessionPort;
+	private String WhiteboardPort;
 	public StartWhiteBoardCommand(String from, String to, int port) {
 		super(from, to, port);
 		
@@ -30,4 +32,21 @@ public class StartWhiteBoardCommand extends Command {
 	public int getSessionID(){
 		return sessionID;
 	}
+
+	public void setSessionPort(String sessionPort) {
+		this.SessionPort = sessionPort;
+	}
+	
+	public String getSessionPort(){
+		return this.SessionPort;
+	}
+
+	public String getWhiteboardPort() {
+		return WhiteboardPort;
+	}
+
+	public void setWhiteboardPort(String whiteboardPort) {
+		WhiteboardPort = whiteboardPort;
+	}
+
 }

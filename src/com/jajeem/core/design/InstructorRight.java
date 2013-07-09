@@ -42,7 +42,6 @@ import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.videoplayer.design.VideoPlayer;
-import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class InstructorRight {
 
@@ -425,8 +424,8 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				com.jajeem.survey.design.SurveyMain survey = new com.jajeem.survey.design.SurveyMain();
-				survey.setVisible(true);
+//				com.jajeem.survey.design.SurveyMain survey = new com.jajeem.survey.design.SurveyMain();
+//				survey.setVisible(true);
 			}
 		});
 
@@ -543,7 +542,7 @@ public class InstructorRight {
 				// WebFileChooser file = new WebFileChooser(new
 				// java.awt.Frame());
 				// file.showDialog();
-				WhiteboardClient whiteboard = new WhiteboardClient();
+//				WhiteboardClient whiteboard = new WhiteboardClient();
 				// whiteboard.main(null);
 			}
 		});
