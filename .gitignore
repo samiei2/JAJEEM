@@ -20,3 +20,4 @@ jajeem.db.*
 logapp.log
 viewer.conf
 server.conf
+conf.properties

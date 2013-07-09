@@ -28,6 +28,7 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.jitsi.examples.AVReceiveOnly;
+import org.jitsi.examples.AVSendOnly;
 
 import jrdesktop.viewer.Viewer;
 
@@ -49,6 +50,7 @@ import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
 import com.jajeem.command.model.StartApplicationCommand;
+import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartUpCommand;
@@ -431,7 +433,7 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							
+
 							Component card = null;
 							for (Component comp : InstructorNoa
 									.getCenterPanel().getComponents()) {
@@ -439,53 +441,56 @@ public class InstructorNoaUtil {
 									card = comp;
 								}
 							}
-							
-							if (((JComponent) card)
-									.getClientProperty("viewMode").equals(
-											"groupView")) {
+
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
 								if (!InstructorNoa.getGroupList()
 										.isSelectionEmpty()) {
 									int groupIndex = InstructorNoa
-											.getGroupList()
-											.getSelectedIndex();
-									
+											.getGroupList().getSelectedIndex();
+
 									Group group = InstructorNoa.getGroups()
 											.get(groupIndex);
 									if (group.getStudentIps().isEmpty()) {
 										return;
 									} else {
 										try {
-											if(Session.getIsQuizWindowsOpen()[groupIndex] == true){
-												if(groupsQuizWindows[groupIndex]==null){
-													groupsQuizWindows[groupIndex] = new Quiz_Main(groupIndex, group.getStudentIps());
-													groupsQuizWindows[groupIndex].setVisible(true);
+											if (Session.getIsQuizWindowsOpen()[groupIndex] == true) {
+												if (groupsQuizWindows[groupIndex] == null) {
+													groupsQuizWindows[groupIndex] = new Quiz_Main(
+															groupIndex,
+															group.getStudentIps());
+													groupsQuizWindows[groupIndex]
+															.setVisible(true);
+												} else {
+													groupsQuizWindows[groupIndex]
+															.toFront();
+													groupsQuizWindows[groupIndex]
+															.repaint();
 												}
-												else{
-													groupsQuizWindows[groupIndex].toFront();
-													groupsQuizWindows[groupIndex].repaint();
-												}
+											} else {
+												groupsQuizWindows[groupIndex] = new Quiz_Main(
+														groupIndex,
+														group.getStudentIps());
+												groupsQuizWindows[groupIndex]
+														.setVisible(true);
 											}
-											else{
-												groupsQuizWindows[groupIndex] = new Quiz_Main(groupIndex, group.getStudentIps());
-												groupsQuizWindows[groupIndex].setVisible(true);
-											}
-											
+
 										} catch (Exception e) {
 										}
 									}
 								}
-							}
-							else{
+							} else {
 								if (Session.isQuizWindowOpen()) {
 									if (quiz == null) {
-										quiz = new Quiz_Main(-1,null);
+										quiz = new Quiz_Main(-1, null);
 										quiz.setVisible(true);
 									} else {
 										quiz.toFront();
 										quiz.repaint();
 									}
 								} else {
-									quiz = new Quiz_Main(-1,null);
+									quiz = new Quiz_Main(-1, null);
 									quiz.setVisible(true);
 								}
 							}
@@ -614,7 +619,8 @@ public class InstructorNoaUtil {
 																"",
 																Integer.parseInt(Config
 																		.getParam("port")),
-																true, groupIndex);
+																true,
+																groupIndex);
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -631,7 +637,8 @@ public class InstructorNoaUtil {
 																"",
 																Integer.parseInt(Config
 																		.getParam("port")),
-																true, groupIndex);
+																true,
+																groupIndex);
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -701,54 +708,59 @@ public class InstructorNoaUtil {
 									card = comp;
 								}
 							}
-							
-							if (((JComponent) card)
-									.getClientProperty("viewMode").equals(
-											"groupView")) {
+
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
 								if (!InstructorNoa.getGroupList()
 										.isSelectionEmpty()) {
 									int groupIndex = InstructorNoa
-											.getGroupList()
-											.getSelectedIndex();
-									
+											.getGroupList().getSelectedIndex();
+
 									Group group = InstructorNoa.getGroups()
 											.get(groupIndex);
 									if (group.getStudentIps().isEmpty()) {
 										return;
 									} else {
 										try {
-											if(Session.getIsSurveyWindowsOpen()[groupIndex] == true){
-												 if(groupsSurveyWindows[groupIndex] == null){
-													 groupsSurveyWindows[groupIndex] = new SurveyMain(groupIndex, group.getStudentIps());
-													 groupsSurveyWindows[groupIndex].setVisible(true);
-												 }
-												 else{
-													 groupsSurveyWindows[groupIndex].toFront();
-													 groupsSurveyWindows[groupIndex].repaint();
-												 }
+											if (Session
+													.getIsSurveyWindowsOpen()[groupIndex] == true) {
+												if (groupsSurveyWindows[groupIndex] == null) {
+													groupsSurveyWindows[groupIndex] = new SurveyMain(
+															groupIndex,
+															group.getStudentIps());
+													groupsSurveyWindows[groupIndex]
+															.setVisible(true);
+												} else {
+													groupsSurveyWindows[groupIndex]
+															.toFront();
+													groupsSurveyWindows[groupIndex]
+															.repaint();
+												}
+											} else {
+												groupsSurveyWindows[groupIndex] = new SurveyMain(
+														groupIndex,
+														group.getStudentIps());
+												groupsSurveyWindows[groupIndex]
+														.setVisible(true);
 											}
-											else{
-												groupsSurveyWindows[groupIndex] = new SurveyMain(groupIndex, group.getStudentIps());
-												groupsSurveyWindows[groupIndex].setVisible(true);
-											}
-											
-											
+
 										} catch (Exception e) {
 										}
 									}
 								}
-							}
-							else{
+							} else {
 								if (Session.isSurveyWindowOpen()) {
 									if (survey == null) {
-										survey = new com.jajeem.survey.design.SurveyMain(-1,null);
+										survey = new com.jajeem.survey.design.SurveyMain(
+												-1, null);
 										survey.setVisible(true);
 									} else {
 										survey.toFront();
 										survey.repaint();
 									}
 								} else {
-									survey = new com.jajeem.survey.design.SurveyMain(-1,null);
+									survey = new com.jajeem.survey.design.SurveyMain(
+											-1, null);
 									survey.setVisible(true);
 								}
 							}
@@ -772,84 +784,97 @@ public class InstructorNoaUtil {
 									card = comp;
 								}
 							}
-							
-							if (((JComponent) card)
-									.getClientProperty("viewMode").equals(
-											"groupView")) {
+
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
 								if (!InstructorNoa.getGroupList()
 										.isSelectionEmpty()) {
 									int groupIndex = InstructorNoa
-											.getGroupList()
-											.getSelectedIndex();
-									//Starting Whiteboard Server
-									String SessionPort = String.valueOf(2000+(groupIndex*2));
-									String WhiteboardPort = String.valueOf(2000+(groupIndex*2+1));
+											.getGroupList().getSelectedIndex();
+									// Starting Whiteboard Server
+									String SessionPort = String
+											.valueOf(2000 + (groupIndex * 2));
+									String WhiteboardPort = String
+											.valueOf(2000 + (groupIndex * 2 + 1));
 									try {
-						    			final Process proc = Runtime
-						    					.getRuntime()
-						    					.exec("java -jar WhiteboardServer.jar "
-						    					+SessionPort+" "+WhiteboardPort,null,new File("util/"));
-						    			new Thread(new Runnable() {
-						    				
-						    				@Override
-						    				public void run() {
-						    					try {
-						    						BufferedReader in = new BufferedReader(  
-						    	                            new InputStreamReader(proc.getInputStream()));  
-						    					        String line = null;  
-						    					        while ((line = in.readLine()) != null) {  
-						    					            System.out.println(line);  
-						    					        }  
-						    					} catch (Exception e) {
-						    						// TODO: handle exception
-						    					}
-						    				}
-						    			}).start();
-						    		} catch (IOException e) {
-						    			e.printStackTrace();
-						    		}
-									
+										final Process proc = Runtime
+												.getRuntime()
+												.exec("java -jar WhiteboardServer.jar "
+														+ SessionPort
+														+ " "
+														+ WhiteboardPort, null,
+														new File("util/"));
+										new Thread(new Runnable() {
+
+											@Override
+											public void run() {
+												try {
+													BufferedReader in = new BufferedReader(
+															new InputStreamReader(
+																	proc.getInputStream()));
+													String line = null;
+													while ((line = in
+															.readLine()) != null) {
+														System.out
+																.println(line);
+													}
+												} catch (Exception e) {
+													// TODO: handle exception
+												}
+											}
+										}).start();
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+
 									Group group = InstructorNoa.getGroups()
 											.get(groupIndex);
 									if (group.getStudentIps().isEmpty()) {
 										return;
 									} else {
 										try {
-											//Start Teacher Whiteboard
+											// Start Teacher Whiteboard
 											try {
-								    			final Process proc = Runtime
-								    					.getRuntime()
-								    					.exec("java -jar WhiteboardTeacher.jar "+SessionPort+" "+WhiteboardPort,null,new File("util/"));
-								    			new Thread(new Runnable() {
-								    				
-								    				@Override
-								    				public void run() {
-								    					try {
-								    						BufferedReader in = new BufferedReader(  
-								    	                            new InputStreamReader(proc.getInputStream()));  
-								    					        String line = null;  
-								    					        while ((line = in.readLine()) != null) {  
-								    					            System.out.println(line);  
-								    					        }  
-								    					} catch (Exception e) {
-								    					}
-								    				}
-								    			}).start();
-								    		} catch (IOException e) {
-								    			e.printStackTrace();
-								    		}
-											
+												final Process proc = Runtime
+														.getRuntime()
+														.exec("java -jar WhiteboardTeacher.jar "
+																+ SessionPort
+																+ " "
+																+ WhiteboardPort,
+																null,
+																new File(
+																		"util/"));
+												new Thread(new Runnable() {
+
+													@Override
+													public void run() {
+														try {
+															BufferedReader in = new BufferedReader(
+																	new InputStreamReader(
+																			proc.getInputStream()));
+															String line = null;
+															while ((line = in
+																	.readLine()) != null) {
+																System.out
+																		.println(line);
+															}
+														} catch (Exception e) {
+														}
+													}
+												}).start();
+											} catch (IOException e) {
+												e.printStackTrace();
+											}
+
 											StartWhiteBoardCommand vc = new StartWhiteBoardCommand(
-													InetAddress
-															.getLocalHost()
+													InetAddress.getLocalHost()
 															.getHostAddress(),
-													"",
-													Integer.parseInt(Config
+													"", Integer.parseInt(Config
 															.getParam("port")));
-											
+
 											vc.setSessionPort(SessionPort);
 											vc.setWhiteboardPort(WhiteboardPort);
-											
+
 											for (String studentIp : group
 													.getStudentIps()) {
 												vc.setTo(studentIp);
@@ -863,17 +888,17 @@ public class InstructorNoaUtil {
 									}
 								}
 							}
-							
-//							if (Session.isWhiteboardWindowOpen()) {
-//								if (client == null) {
-//									client = new WhiteboardClient();
-//								} else {
-//									client.toFront();
-//									client.repaint();
-//								}
-//							} else {
-//								client = new WhiteboardClient();
-//							}
+
+							// if (Session.isWhiteboardWindowOpen()) {
+							// if (client == null) {
+							// client = new WhiteboardClient();
+							// } else {
+							// client.toFront();
+							// client.repaint();
+							// }
+							// } else {
+							// client = new WhiteboardClient();
+							// }
 
 						}
 					});
@@ -1111,12 +1136,37 @@ public class InstructorNoaUtil {
 							} else {
 								popup.showPopup(button);
 							}
-
 						}
-
 					});
 					break;
 				case "callAll":
+					button.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							try {
+								StartCallAllCommand sm = new StartCallAllCommand(
+										InetAddress.getLocalHost()
+												.getHostAddress(), Config
+												.getParam("broadcastingIp"),
+										Integer.parseInt(Config
+												.getParam("port")));
+								InstructorNoa.getServerService().send(sm);
+
+								if (InstructorNoa.getSendOnly() == null) {
+									AVSendOnly as;
+									as = new AVSendOnly("5010", "224.5.6.7",
+											"10010");
+									InstructorNoa.setSendOnly(as);
+									as.start();
+								} else {
+									InstructorNoa.getSendOnly().start();
+								}
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}
+					});
 
 					break;
 				case "viewMode":
