@@ -60,7 +60,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 									chat.getGroupId());
 							chatCommand = new ChatCommand(InetAddress
 									.getLocalHost().getHostAddress(), "",
-									((ChatCommand) cmd).getPort(),
+									Integer.parseInt(Config.getParam("port")),
 									((ChatCommand) cmd).getMessage(),
 									((ChatCommand) cmd).isMutli(),
 									group.getId());

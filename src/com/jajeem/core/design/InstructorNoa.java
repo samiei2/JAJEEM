@@ -42,6 +42,7 @@ import javax.swing.table.TableColumn;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceiveOnly;
+import org.jitsi.examples.AVSendOnly;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
@@ -82,6 +83,7 @@ public class InstructorNoa {
 
 	private static AVTransmit2 transmitter;
 	private static AVReceiveOnly receiverOnly;
+	private static AVSendOnly sendOnly;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
 	private static List<Group> groups = new ArrayList<Group>();
@@ -1630,5 +1632,13 @@ public class InstructorNoa {
 
 	public static void setReceiverOnly(AVReceiveOnly receiverOnly) {
 		InstructorNoa.receiverOnly = receiverOnly;
+	}
+
+	public static AVSendOnly getSendOnly() {
+		return sendOnly;
+	}
+
+	public static void setSendOnly(AVSendOnly sendOnly) {
+		InstructorNoa.sendOnly = sendOnly;
 	}
 }
