@@ -32,8 +32,10 @@ import com.alee.laf.splitpane.WebSplitPane;
 import com.alee.laf.text.WebTextArea;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
+import com.jajeem.util.Config;
 
 public class Chat extends WebFrame {
 
@@ -49,7 +51,8 @@ public class Chat extends WebFrame {
 
 	private String to = "";
 	private int port;
-	private boolean multi = false;
+	private boolean multi = false; // redundant!
+	private int groupId = -1;
 
 	/**
 	 * Launch the application.
@@ -58,7 +61,7 @@ public class Chat extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Chat frame = new Chat("", 0, false);
+					Chat frame = new Chat("", 0, false, -1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
@@ -74,9 +77,10 @@ public class Chat extends WebFrame {
 	 * @throws Exception
 	 * @throws NumberFormatException
 	 */
-	public Chat(String to, int port, boolean multi)
+	public Chat(String to, int port, boolean multi, int groupId)
 			throws NumberFormatException, Exception {
 		super("Chat");
+		new Config();
 		File dir = new File("Messages/");
 		if (!dir.exists())
 			dir.mkdir();
@@ -87,6 +91,7 @@ public class Chat extends WebFrame {
 		setTo(to);
 		setPort(port);
 		setMulti(multi);
+		setGroupId(groupId);
 
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -144,30 +149,40 @@ public class Chat extends WebFrame {
 											.getMaximum() + 10000);
 
 					ChatCommand chatCommand = null;
+
 					try {
-						if (isMulti()) {
-							chatCommand = new ChatCommand(InetAddress
-									.getLocalHost().getHostAddress(), "",
-									getPort(), textArea.getText(), isMulti());
-							Group group = InstructorNoa.getGroups().get(
-									Integer.parseInt(getTo()));
-							for (String studentIp : group.getStudentIps()) {
-								chatCommand.setTo(studentIp);
+						if (Integer.parseInt(Config.getParam("server")) == 1) {
+							if (isMulti()) {
+								Group group = InstructorNoa.getGroups().get(
+										Integer.parseInt(getTo()));
+								chatCommand = new ChatCommand(InetAddress
+										.getLocalHost().getHostAddress(), "",
+										getPort(), textArea.getText(),
+										isMulti(), group.getId());
+								for (String studentIp : group.getStudentIps()) {
+									chatCommand.setTo(studentIp);
+									InstructorNoa.getServerService().send(
+											chatCommand);
+								}
+							} else {
+
+								chatCommand = new ChatCommand(InetAddress
+										.getLocalHost().getHostAddress(),
+										getTo(), getPort(), textArea.getText(),
+										isMulti(), -1);
 								InstructorNoa.getServerService().send(
 										chatCommand);
 							}
 						} else {
-
 							chatCommand = new ChatCommand(InetAddress
-									.getLocalHost().getHostAddress(), getTo(),
-									getPort(), textArea.getText(), isMulti());
-							InstructorNoa.getServerService().send(chatCommand);
+									.getLocalHost().getHostAddress(),
+									StudentLogin.getServerIp(), getPort(),
+									textArea.getText(), isMulti(), getGroupId());
+							StudentLogin.getServerService().send(chatCommand);
 						}
-					} catch (UnknownHostException e1) {
-						JajeemExcetionHandler.logError(e1);
-						e1.printStackTrace();
+					} catch (Exception e2) {
+						e2.printStackTrace();
 					}
-
 					textArea.setText("");
 				}
 			}
@@ -251,6 +266,14 @@ public class Chat extends WebFrame {
 
 	public void setListModel(DefaultListModel<String> listModel) {
 		this.listModel = listModel;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 
 }

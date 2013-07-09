@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
-import org.jitsi.examples.AVReceive2;
+import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
@@ -46,7 +46,7 @@ public class Instructor implements SwingConstants {
 	private static ServerServiceTimer serverServiceTimer;
 
 	private static AVTransmit2 transmitter;
-	private static AVReceive2 receiver;
+	private static AVReceiveOnly receiver;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -96,7 +96,7 @@ public class Instructor implements SwingConstants {
 			LibJitsi.start();
 
 			setTransmitter(new AVTransmit2("5000", "", "10000"));
-			setReceiver(new AVReceive2("10010", "", "5010"));
+			setReceiver(new AVReceiveOnly("10010", "", "5010"));
 
 		} catch (Throwable e) {
 		}
@@ -284,11 +284,11 @@ public class Instructor implements SwingConstants {
 		Instructor.chatList = chatList;
 	}
 
-	public static AVReceive2 getReceiver() {
+	public static AVReceiveOnly getReceiver() {
 		return receiver;
 	}
 
-	public static void setReceiver(AVReceive2 receiver) {
+	public static void setReceiver(AVReceiveOnly receiver) {
 		Instructor.receiver = receiver;
 	}
 

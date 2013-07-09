@@ -21,15 +21,11 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 
 			LibJitsi.start();
 
-//			Student.getReceiver().setRemoteAddr(
-//					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().start();
-//			Student.getReceiver().initialize();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}

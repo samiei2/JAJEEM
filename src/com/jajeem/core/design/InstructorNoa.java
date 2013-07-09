@@ -41,7 +41,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import org.jitsi.examples.AVReceive2;
+import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 
@@ -81,7 +81,7 @@ public class InstructorNoa {
 	private static WebTable studentListTable;
 
 	private static AVTransmit2 transmitter;
-	private static AVReceive2 receiver;
+	private static AVReceiveOnly receiverOnly;
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
 	private static List<Group> groups = new ArrayList<Group>();
@@ -123,7 +123,7 @@ public class InstructorNoa {
 			// Start LibJitsi for first time
 			LibJitsi.start();
 			setTransmitter(new AVTransmit2("5000", "", "10000"));
-			// setReceiver(new AVReceive2("10010", "", "5010"));
+//			setReceiver(new AVReceiveOnly("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -734,7 +734,7 @@ public class InstructorNoa {
 																.getResourceAsStream("/icons/menubar/student.png"))));
 							}
 						}
-						getDesktopPane().getSelectedFrame().updateUI();
+						// getDesktopPane().getSelectedFrame().updateUI();
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -1098,7 +1098,7 @@ public class InstructorNoa {
 		groupButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		groupButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		groupButton.setForeground(Color.WHITE);
-		groupButton.setText("Grouping");
+		groupButton.setText("Groups");
 		groupButton.setBottomBgColor(new Color(225, 234, 244));
 		groupButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(groupButton);
@@ -1228,8 +1228,7 @@ public class InstructorNoa {
 			public void actionPerformed(ActionEvent arg0) {
 
 				// How many frames do we have?
-				JInternalFrame[] allframes = getDesktopPane()
-						.getAllFrames();
+				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
 				int count = allframes.length;
 				if (count == 0)
 					return;
@@ -1358,14 +1357,6 @@ public class InstructorNoa {
 
 	public static void setTransmitter(AVTransmit2 transmitter) {
 		InstructorNoa.transmitter = transmitter;
-	}
-
-	public static AVReceive2 getReceiver() {
-		return receiver;
-	}
-
-	public static void setReceiver(AVReceive2 receiver) {
-		InstructorNoa.receiver = receiver;
 	}
 
 	public static List<Chat> getChatList() {
@@ -1631,5 +1622,13 @@ public class InstructorNoa {
 			listOfStudents.add((String) frame.getClientProperty("ip"));
 		}
 		return new ArrayList<>(listOfStudents);
+	}
+
+	public static AVReceiveOnly getReceiverOnly() {
+		return receiverOnly;
+	}
+
+	public static void setReceiverOnly(AVReceiveOnly receiverOnly) {
+		InstructorNoa.receiverOnly = receiverOnly;
 	}
 }

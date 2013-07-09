@@ -37,8 +37,8 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 			for (JInternalFrame frame : frames) {
 				if (cmd.getFrom().compareTo((String) frame.getClientProperty("ip")) == 0) {
 					frame.putClientProperty("username", ((AuthenticateCommand) cmd).getUsername());
-					frame.setTitle(((AuthenticateCommand) cmd).getUsername());
-					frame.updateUI();
+ 					frame.setTitle(((AuthenticateCommand) cmd).getUsername());
+//					frame.updateUI();
 					break;
 				}
 			}

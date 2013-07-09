@@ -22,7 +22,7 @@ import org.jitsi.service.neomedia.format.*;
  *
  * @author Lyubomir Marinov
  */
-public class AVReceive2
+public class AVReceiveOnly
 {
     /**
      * The port which is the target of the transmission i.e. on which the media
@@ -66,7 +66,7 @@ public class AVReceive2
      * @throws Exception if any error arises during the parsing of the specified
      * <tt>localPortBase</tt>, <tt>remoteHost</tt> and <tt>remotePortBase</tt>
      */
-    public AVReceive2(
+    public AVReceiveOnly(
             String localPortBase,
             String remoteHost, String remotePortBase)
         throws Exception
@@ -119,7 +119,7 @@ public class AVReceive2
              * only. In a call, the MediaStream's direction will most commonly
              * be set to SENDRECV.
              */
-            mediaStream.setDirection(MediaDirection.SENDRECV);
+            mediaStream.setDirection(MediaDirection.RECVONLY);
 
             // format
             String encoding;
@@ -331,8 +331,8 @@ public class AVReceive2
             LibJitsi.start();
             try
             {
-                AVReceive2 avReceive
-                    = new AVReceive2("5000","192.168.0.234", "10000" );
+                AVReceiveOnly avReceive
+                    = new AVReceiveOnly("5000","192.168.0.234", "10000" );
 
                 if (avReceive.initialize())
                 {
@@ -385,7 +385,7 @@ public class AVReceive2
     {
         PrintStream err = System.err;
 
-        err.println("Usage: " + AVReceive2.class.getName() + " <args>");
+        err.println("Usage: " + AVReceiveOnly.class.getName() + " <args>");
         err.println("Valid args:");
         for (String[] arg : ARGS)
             err.println("  " + arg[0] + " " + arg[1]);

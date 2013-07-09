@@ -25,6 +25,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.jitsi.examples.AVReceiveOnly;
+
 import jrdesktop.viewer.Viewer;
 
 import com.alee.extended.panel.GroupPanel;
@@ -295,6 +297,22 @@ public class InstructorNoaUtil {
 
 					break;
 				case "group":
+					((JButton) c).addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								comp.setVisible(false);
+							}
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (((JComponent) comp).getClientProperty(
+										"viewMode").equals("groupView")) {
+									comp.setVisible(true);
+								}
+							}
+						}
+					});
 
 					break;
 				case "model":
@@ -311,7 +329,7 @@ public class InstructorNoaUtil {
 
 							if (((JComponent) card).getClientProperty(
 									"viewMode").equals("thumbView")) {
-								
+
 								if (InstructorNoa.getDesktopPane()
 										.getSelectedFrame() != null) {
 									String selectedStudent = "";
@@ -319,17 +337,47 @@ public class InstructorNoaUtil {
 											.getDesktopPane()
 											.getSelectedFrame()
 											.getClientProperty("ip");
-								try {
-									StartModelCommand sm = new StartModelCommand(
-											InetAddress.getLocalHost()
-													.getHostAddress(),
-											Config.getParam("broadcastingIp"),
-											Integer.parseInt(Config
-													.getParam("port")), selectedStudent);
-									InstructorNoa.getServerService().send(sm);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
+									try {
+										StartModelCommand sm = new StartModelCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(),
+												Config.getParam("broadcastingIp"),
+												Integer.parseInt(Config
+														.getParam("port")),
+												selectedStudent);
+										InstructorNoa.getServerService().send(
+												sm);
+
+										if (InstructorNoa.getReceiverOnly() == null) {
+											AVReceiveOnly ar = new AVReceiveOnly(
+													"10010", selectedStudent,
+													"5010");
+											ar.initialize();
+											InstructorNoa.setReceiverOnly(ar);
+										} else {
+											InstructorNoa
+													.getReceiverOnly()
+													.setRemoteAddr(
+															InetAddress
+																	.getByName(selectedStudent));
+											InstructorNoa.getReceiverOnly()
+													.initialize();
+										}
+
+										jrdesktop.Config conf = null;
+										conf = new jrdesktop.Config(false, "",
+												selectedStudent,
+												Integer.parseInt(Config
+														.getParam("vncPort")),
+												"admin", "admin", false, false);
+
+										VNCCaptureService vnc = new VNCCaptureService();
+										vnc.startClient(conf);
+
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+
 								} else {
 									return;
 								}
@@ -460,7 +508,7 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false);
+														false, -1);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -474,7 +522,7 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false);
+														false, -1);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -516,7 +564,7 @@ public class InstructorNoaUtil {
 																"",
 																Integer.parseInt(Config
 																		.getParam("port")),
-																true);
+																true, groupIndex);
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -533,7 +581,7 @@ public class InstructorNoaUtil {
 																"",
 																Integer.parseInt(Config
 																		.getParam("port")),
-																true);
+																true, groupIndex);
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -619,7 +667,8 @@ public class InstructorNoaUtil {
 					break;
 
 				case "whiteBoard":
-//					com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new String[0]);
+					// com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new
+					// String[0]);
 
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
@@ -942,7 +991,7 @@ public class InstructorNoaUtil {
 								ImageIO.read(InstructorNoaUtil.class
 										.getResourceAsStream("/icons/menubar/student.png"))));
 					}
-					frame.updateUI();
+					// frame.updateUI();
 
 					return null;
 				}
