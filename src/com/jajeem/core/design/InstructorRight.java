@@ -41,7 +41,6 @@ import com.jajeem.message.design.MessageSend;
 import com.jajeem.quiz.design.QuizMain;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
-import com.jajeem.videoplayer.design.VideoPlayer;
 
 public class InstructorRight {
 
@@ -434,7 +433,7 @@ public class InstructorRight {
 			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VideoPlayer player = new VideoPlayer("", false);
+//				VideoPlayer player = new VideoPlayer("", false);
 			}
 		});
 

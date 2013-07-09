@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import uk.co.caprica.vlcj.test.basic.TestPlayer;
-
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartVideoCommand;
 

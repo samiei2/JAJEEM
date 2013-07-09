@@ -11,7 +11,6 @@ import java.util.zip.ZipFile;
 
 import javax.naming.spi.DirectoryManager;
 
-import com.jajeem.videoplayer.design.VideoPlayer;
 
 public class Unzipper {
 
