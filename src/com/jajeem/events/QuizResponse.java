@@ -12,7 +12,6 @@ public class QuizResponse extends EventObject implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 100;
 	private Student student;
 	private Response response;
 	private Question question;

@@ -832,7 +832,6 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 					}
 					
 					StudentOption = "";
-					QuestionOption = "";
 					if (temp.getQuestion().getType() == 0) { // setting student's answer
 						if (temp.getQuestion().getStudentAnswer()[0])
 							StudentOption = "First Option";

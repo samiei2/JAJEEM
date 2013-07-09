@@ -253,7 +253,7 @@ public class Quiz_Main extends WebFrame {
 					try {
 						clientService2 = new ClientService(
 								Config.getParam("broadcastingIp"), Integer.parseInt(Config
-										.getParam("quizport"))+gIndex);
+										.getParam("quizport"))+gIndex+1);
 					} catch (NumberFormatException e2) {
 						JajeemExcetionHandler.logError(e2);
 						e2.printStackTrace();
