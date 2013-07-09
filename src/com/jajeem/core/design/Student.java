@@ -20,7 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
-import org.jitsi.examples.AVReceive2;
+import org.jitsi.examples.AVReceiveOnly;
+import org.jitsi.examples.AVSendOnly;
 import org.jitsi.examples.AVTransmit2;
 
 //import org.apache.log4j.PropertyConfigurator;
@@ -45,7 +46,8 @@ public class Student {
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
-	private static AVReceive2 receiver;
+	private static AVReceiveOnly receiverOnly;
+	private static AVSendOnly sendOnly;
 	private static AVTransmit2 transmitter;
 	
 	private static boolean black;
@@ -227,17 +229,6 @@ public class Student {
 		Student.chatList = chatList;
 	}
 
-	public static AVReceive2 getReceiver() throws Exception {
-		if(receiver == null){
-			 receiver = new AVReceive2("10000", "", "5000");
-		}
-		return receiver;
-	}
-
-	public void setReceiver(AVReceive2 receiver) {
-		Student.receiver = receiver;
-	}
-
 	public static AVTransmit2 getTransmitter() throws Exception {
 		if(transmitter== null){
 			transmitter = new AVTransmit2("10000", "", "5000");
@@ -263,5 +254,21 @@ public class Student {
 
 	public void setMainFram(JFrame frmJajeemProject) {
 		this.mainFram = frmJajeemProject;
+	}
+
+	public static AVReceiveOnly getReceiverOnly() {
+		return receiverOnly;
+	}
+
+	public static void setReceiverOnly(AVReceiveOnly receiverOnly) {
+		Student.receiverOnly = receiverOnly;
+	}
+
+	public static AVSendOnly getSendOnly() {
+		return sendOnly;
+	}
+
+	public static void setSendOnly(AVSendOnly sendOnly) {
+		Student.sendOnly = sendOnly;
 	}
 }
