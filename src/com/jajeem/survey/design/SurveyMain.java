@@ -113,7 +113,10 @@ public class SurveyMain extends WebFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				com.jajeem.util.Session.setSurveyWindowOpen(true);
+				if(gindex==-1)
+					com.jajeem.util.Session.setSurveyWindowOpen(true);
+				else
+					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gindex] = true;
                 setCurrentSurvey(new Survey());
                 getCurrentSurvey().addQuestion(new Question());
                 // TODO remove these lines
@@ -128,7 +131,10 @@ public class SurveyMain extends WebFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
-				com.jajeem.util.Session.setSurveyWindowOpen(false);
+				if(gindex==-1)
+					com.jajeem.util.Session.setSurveyWindowOpen(false);
+				else
+					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gindex] = false;
 			}
 		});
 		

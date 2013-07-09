@@ -1,6 +1,7 @@
 package com.jajeem.util;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.model.Instructor;
@@ -15,6 +16,7 @@ public class Session {
 	private static boolean isSurveyWindowOpen = false;
 	private static boolean isWhiteboardWindowOpen = false;
 	private static ArrayList<Object> fileRequestList = new ArrayList<>();
+//	private static Map<int, boolean> s = 
 	private static boolean[] isQuizWindowsOpen = new boolean[10];
 	private static boolean[] isSurveyWindowsOpen = new boolean[10];
 	private static boolean[] isWhiteboardWindowsOpen = new boolean[10];

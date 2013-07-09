@@ -13,6 +13,7 @@ import com.alee.laf.table.WebTable;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Session;
 
@@ -146,7 +147,12 @@ public class FileInbox extends WebPanel {
 	private void initEvents() {
 		wbtnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new FileTransferEvent().fireAcceptFileRequest(fileSendRequestList.get(webTable.getSelectedRow()), InstructorServer.class);
+				try{
+					new FileTransferEvent().fireAcceptFileRequest(fileSendRequestList.get(webTable.getSelectedRow()), InstructorServer.class);
+				}
+				catch(Exception e){
+					JajeemExcetionHandler.logError(e);
+				}
 			}
 		});
 		

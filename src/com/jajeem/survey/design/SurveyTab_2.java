@@ -114,7 +114,6 @@ public class SurveyTab_2 extends WebPanel {
 				runResults.add(e.getSurveyRun());
 			}
 		});
-
 	}
 
 	public void LoadSurvey(Survey currentSurvey) {

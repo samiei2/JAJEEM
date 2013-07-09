@@ -33,7 +33,6 @@ public class InstructorServer {
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
 				// 
-				
 			}
 			
 			@Override

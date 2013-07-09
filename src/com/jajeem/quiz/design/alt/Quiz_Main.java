@@ -313,6 +313,8 @@ public class Quiz_Main extends WebFrame {
 			public void windowOpened(WindowEvent arg0) {
 				if(gIndex==-1)
 					com.jajeem.util.Session.setQuizWindowOpen(true);
+				else
+					com.jajeem.util.Session.getIsQuizWindowsOpen()[gIndex] = true;
 				newQuizRun();
 			}
 			
@@ -320,6 +322,8 @@ public class Quiz_Main extends WebFrame {
 			public void windowClosing(WindowEvent arg0){
 				if(gIndex==-1)
 					com.jajeem.util.Session.setQuizWindowOpen(false);
+				else
+					com.jajeem.util.Session.getIsQuizWindowsOpen()[gIndex] = false;
 				StopQuizCommand();
 			}
 		});
@@ -522,7 +526,6 @@ public class Quiz_Main extends WebFrame {
 		});
 	}
 
-	
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
 		currentRun.setQuizId(new Random().nextInt(1000));

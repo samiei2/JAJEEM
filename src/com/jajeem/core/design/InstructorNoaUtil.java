@@ -62,6 +62,7 @@ import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
+import com.jajeem.survey.design.SurveyMain;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
@@ -74,6 +75,8 @@ public class InstructorNoaUtil {
 
 	static Quiz_Main quiz = null;
 	static com.jajeem.survey.design.SurveyMain survey = null;
+	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[10];
+	static com.jajeem.survey.design.SurveyMain[] groupsSurveyWindows = new com.jajeem.survey.design.SurveyMain[10];
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -404,9 +407,20 @@ public class InstructorNoaUtil {
 										return;
 									} else {
 										try {
-											Quiz_Main qui =  new Quiz_Main(
-													groupIndex,
-													group.getStudentIps());
+											if(Session.getIsQuizWindowsOpen()[groupIndex] == true){
+												if(groupsQuizWindows[groupIndex]==null){
+													groupsQuizWindows[groupIndex] = new Quiz_Main(groupIndex, group.getStudentIps());
+													groupsQuizWindows[groupIndex].setVisible(true);
+												}
+												else{
+													groupsQuizWindows[groupIndex].toFront();
+													groupsQuizWindows[groupIndex].repaint();
+												}
+											}
+											else{
+												groupsQuizWindows[groupIndex] = new Quiz_Main(groupIndex, group.getStudentIps());
+												groupsQuizWindows[groupIndex].setVisible(true);
+											}
 											
 										} catch (Exception e) {
 										}
@@ -655,9 +669,20 @@ public class InstructorNoaUtil {
 										return;
 									} else {
 										try {
-											com.jajeem.survey.design.SurveyMain surv =  new com.jajeem.survey.design.SurveyMain(
-													groupIndex,
-													group.getStudentIps());
+											if(Session.getIsSurveyWindowsOpen()[groupIndex] == true){
+												 if(groupsSurveyWindows[groupIndex] == null){
+													 groupsSurveyWindows[groupIndex] = new SurveyMain(groupIndex, group.getStudentIps());
+													 groupsSurveyWindows[groupIndex].setVisible(true);
+												 }
+												 else{
+													 groupsSurveyWindows[groupIndex].toFront();
+													 groupsSurveyWindows[groupIndex].repaint();
+												 }
+											}
+											else{
+												groupsSurveyWindows[groupIndex] = new SurveyMain(groupIndex, group.getStudentIps());
+												groupsSurveyWindows[groupIndex].setVisible(true);
+											}
 											
 											
 										} catch (Exception e) {

@@ -49,7 +49,6 @@ import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 import com.jajeem.videoplayer.design.StreamRtp;
-import com.jajeem.whiteboard.client.Client.design.MyFileFilter;
 import com.xuggle.mediatool.IMediaReader;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
