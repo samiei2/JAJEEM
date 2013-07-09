@@ -22,7 +22,6 @@ import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.jasperreports.engine.data.ListOfArrayDataSource;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
@@ -189,8 +188,12 @@ public class FileSendTab extends WebPanel {
 			public void success(FileTransferObject evt, Class t) {
 				if(t!=FileSendTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Success", currentIndex, 2);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					System.out.println(currentIndex);
+					model.setValueAt("Success", currentIndex, 2);
+				} catch (Exception e) {
+				}
 			}
 			
 			@Override
@@ -205,8 +208,12 @@ public class FileSendTab extends WebPanel {
 			public void fail(FileTransferObject evt, Class t) {
 				if(t!=FileSendTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Failed", currentIndex, 2);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.setValueAt("Failed", currentIndex, 2);
+				} catch (Exception e) {
+					
+				}
 			}
 
 			@Override
@@ -276,25 +283,26 @@ public class FileSendTab extends WebPanel {
 						    {
 						    	out.write(b, 0, x);
 						    	bytesRead += x;
-						    	FileTransferObject evt = new FileTransferObject(this);
-						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,FileSendTab.class);
+//						    	FileTransferObject evt = new FileTransferObject(this);
+//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+//						        new FileTransferEvent().fireProgress(evt,FileSendTab.class);
 						    }
 						    out.close();
 						    fis.close();
 						}
+						confirmationDialog.dispose();
 						if(ips.size()!=0){
 							new FileTransferEvent().fireSuccess(null, FileSendTab.class);
 						}
 						else{
 							new FileTransferEvent().fireFailure(null, FileSendTab.class);
 						}
-						confirmationDialog.dispose();
 					} catch (Exception e) {
+						confirmationDialog.dispose();
 						System.out.println(e.getMessage());
 						JajeemExcetionHandler.logError(e,FileSendTab.class);
 						new FileTransferEvent().fireFailure(null, FileSendTab.class);
-						confirmationDialog.dispose();
+						
 					}
 				}
 			});

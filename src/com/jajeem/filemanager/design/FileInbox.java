@@ -10,6 +10,7 @@ import java.awt.Component;
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.alee.laf.table.WebTable;
+import com.google.common.io.Files;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -51,10 +52,11 @@ public class FileInbox extends WebPanel {
 		
 		wbtnDismissAll = new WebButton();
 		wbtnDismissAll.setEnabled(false);
-		wbtnDismissAll.setText("Dismiss All");
+		wbtnDismissAll.setText("Clear");
 		
 		wbtnRefresh = new WebButton();
 		wbtnRefresh.setText("Refresh");
+		wbtnRefresh.setVisible(false);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -190,7 +192,8 @@ public class FileInbox extends WebPanel {
 		wbtnDismissAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < fileSendRequestList.size(); i++) {
-					new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(i), InstructorServer.class);
+					if(fileSendRequestList.get(i)!=null)
+						new FileTransferEvent().fireRejectFileRequest(fileSendRequestList.get(i), InstructorServer.class);
 				}
 				
 				fileSendRequestList.clear();
@@ -211,8 +214,13 @@ public class FileInbox extends WebPanel {
 			public void valueChanged(ListSelectionEvent arg0) {
 				int selectedRow = webTable.getSelectedRow();
 				if(selectedRow!=-1){
-					if(fileSendRequestList.get(selectedRow)!=null){
-						
+					if(fileSendRequestList.get(selectedRow)==null){
+						wbtnAccept.setEnabled(false);
+						wbtnRejectFile.setEnabled(false);
+					}
+					else{
+						wbtnAccept.setEnabled(true);
+						wbtnRejectFile.setEnabled(true);
 					}
 				}	
 			}
@@ -224,9 +232,12 @@ public class FileInbox extends WebPanel {
 			public void success(FileTransferObject evt, Class t) {
 				if(t!=FileInbox.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
-				model.setValueAt("Success", webTable.getSelectedRow(), 3);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
+					model.setValueAt("Success", webTable.getSelectedRow(), 3);
+				} catch (Exception e) {
+				}
 			}
 			
 			@Override
@@ -238,26 +249,34 @@ public class FileInbox extends WebPanel {
 			public void fail(FileTransferObject evt, Class t) {
 				if(t!=FileInbox.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Failed", webTable.getSelectedRow(), 3);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.setValueAt("N/A", webTable.getSelectedRow(), 1);
+					System.out.println(webTable.getSelectedRow());
+					model.setValueAt("Failed", webTable.getSelectedRow(), 3);
+				} catch (Exception e) {
+				}
 			}
 
 			@Override
 			public void fileSendRequest(FileTransferObject evt, Class t) {
 				if(t!=FileInbox.class)
 					return;
-				fileSendRequestList.add(evt);
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.addRow(new Object[]{
-						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-						"Cannot show file name until accept",
-						evt.getClientSocket().getInetAddress().getHostAddress(),
-						"Pending"
-				});
-				wbtnAccept.setEnabled(true);
-				wbtnRejectFile.setEnabled(true);
-				wbtnDismissAll.setEnabled(true);
-				Session.getFileRequestList().clear();
+				try {
+					fileSendRequestList.add(evt);
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.addRow(new Object[]{
+							webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+							"Cannot show file name until accept",
+							evt.getClientSocket().getInetAddress().getHostAddress(),
+							"Pending"
+					});
+					wbtnAccept.setEnabled(true);
+					wbtnRejectFile.setEnabled(true);
+					wbtnDismissAll.setEnabled(true);
+					Session.getFileRequestList().clear();
+				} catch (Exception e) {
+				}
 			}
 
 			@Override
@@ -270,5 +289,13 @@ public class FileInbox extends WebPanel {
 				
 			}
 		}, FileInbox.class);
+	}
+
+	public void SaveRequests() {
+		for (int i = 0; i < fileSendRequestList.size(); i++) {
+			if(fileSendRequestList.get(i)!=null){
+				Session.getFileRequestList().add(fileSendRequestList.get(i));
+			}
+		}
 	}
 }

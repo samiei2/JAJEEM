@@ -153,12 +153,15 @@ public class ClientFileInbox extends WebPanel {
 				if(t!=ClientFileInbox.class)
 					return;
 				fileList.add(evt.getFileName());
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.addRow(new Object[]{
-						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-						evt.getFileName(),
-						"Received"
-				});
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.addRow(new Object[]{
+							webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
+							evt.getFileName(),
+							"Received"
+					});
+				} catch (Exception e) {
+				}
 			}
 			
 			@Override

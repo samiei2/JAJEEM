@@ -25,7 +25,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.jasperreports.engine.data.ListOfArrayDataSource;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
@@ -194,63 +193,67 @@ public class FileAssignmentTab extends WebPanel {
 			public void success(FileTransferObject evt, Class t) {
 				if(t!=FileAssignmentTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				String file = model.getValueAt(webTable.getSelectedRow(), 1).toString();
-				
-				final String time = model.getValueAt(webTable.getSelectedRow(), 2).toString().split(" ")[0];
-				SendFileAssignmentCMD(new File(file).getName(),time);
-				final int currentrow = webTable.getSelectedRow();
-				new Thread(new Runnable() {
-					private Timer timer; // Updates the count every second
-					private long remaining; // How many milliseconds remain in the countdown.
-					private long lastUpdate; // When count was last updated
-					String timetemp = time;
+				try {
 					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-					@Override
-					public void run() {
-						ActionListener taskPerformer = new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								updateDisplay();
-							}
-
-							private void updateDisplay() {
-								NumberFormat format = NumberFormat.getInstance();
-
-								long now = System.currentTimeMillis(); // current time in ms
-								long elapsed = now - lastUpdate; // ms elapsed since last
-																	// update
-								remaining -= elapsed; // adjust remaining time
-								lastUpdate = now; // remember this update time
-								// Convert remaining milliseconds to mm:ss format and
-								// display
-								if (remaining < 0)
-									remaining = 0;
-								int minutes = (int) (remaining / 60000);
-								int seconds = (int) ((remaining % 60000) / 1000);
-								model.setValueAt(format.format(minutes) + ":"
-										+ format.format(seconds), currentrow, 2);
-
-								// If we've completed the countdown beep and display new
-								// page
-								if (remaining == 0) {
-									// Stop updating now.
-									parentFrame.invokeFileCollect();
-									timer.stop();
-									model.setValueAt(timetemp + " Min", currentrow, 2);
+					String file = model.getValueAt(webTable.getSelectedRow(), 1).toString();
+					
+					final String time = model.getValueAt(webTable.getSelectedRow(), 2).toString().split(" ")[0];
+					SendFileAssignmentCMD(new File(file).getName(),time);
+					final int currentrow = webTable.getSelectedRow();
+					new Thread(new Runnable() {
+						private Timer timer; // Updates the count every second
+						private long remaining; // How many milliseconds remain in the countdown.
+						private long lastUpdate; // When count was last updated
+						String timetemp = time;
+						DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+						@Override
+						public void run() {
+							ActionListener taskPerformer = new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									updateDisplay();
 								}
+
+								private void updateDisplay() {
+									NumberFormat format = NumberFormat.getInstance();
+
+									long now = System.currentTimeMillis(); // current time in ms
+									long elapsed = now - lastUpdate; // ms elapsed since last
+																		// update
+									remaining -= elapsed; // adjust remaining time
+									lastUpdate = now; // remember this update time
+									// Convert remaining milliseconds to mm:ss format and
+									// display
+									if (remaining < 0)
+										remaining = 0;
+									int minutes = (int) (remaining / 60000);
+									int seconds = (int) ((remaining % 60000) / 1000);
+									model.setValueAt(format.format(minutes) + ":"
+											+ format.format(seconds), currentrow, 2);
+
+									// If we've completed the countdown beep and display new
+									// page
+									if (remaining == 0) {
+										// Stop updating now.
+										parentFrame.invokeFileCollect();
+										timer.stop();
+										model.setValueAt(timetemp + " Min", currentrow, 2);
+									}
+								}
+							};
+							
+							if (!time.equals("0")) {
+								model.setValueAt( time+":00",currentrow,2);
+								remaining = Integer.parseInt(time) * 60000;
+								timer = new Timer(1000, taskPerformer);
+								timer.setInitialDelay(0);
+								lastUpdate = System.currentTimeMillis();
+								timer.start();
 							}
-						};
-						
-						if (!time.equals("0")) {
-							model.setValueAt( time+":00",currentrow,2);
-							remaining = Integer.parseInt(time) * 60000;
-							timer = new Timer(1000, taskPerformer);
-							timer.setInitialDelay(0);
-							lastUpdate = System.currentTimeMillis();
-							timer.start();
 						}
-					}
-				}).start();
+					}).start();
+				} catch (Exception e) {
+					
+				}
 			}
 			
 			@Override
@@ -368,15 +371,15 @@ public class FileAssignmentTab extends WebPanel {
 						    out.close();
 						    fis.close();
 						}
+						confirmationDialog.dispose();
 						if(ips.size()!=0)
 							new FileTransferEvent().fireSuccess(null, FileAssignmentTab.class);
 						else
 							new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
-						confirmationDialog.dispose();
 					} catch (Exception e) {
+						confirmationDialog.dispose();
 						JajeemExcetionHandler.logError(e,FileAssignmentTab.class);
 						new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
-						confirmationDialog.dispose();
 					}
 				}
 			});

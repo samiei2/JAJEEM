@@ -98,9 +98,9 @@ public class InstructorServer {
 						    confirmationDialog.dispose();
 						}
 						catch(Exception e){
+							confirmationDialog.dispose();
 							JajeemExcetionHandler.logError(e,InstructorServer.class);
 							new FileTransferEvent().fireFailure(null,FileInbox.class);
-							confirmationDialog.dispose();
 						}
 					}
 				}).start();

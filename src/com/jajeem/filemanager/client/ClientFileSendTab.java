@@ -21,8 +21,6 @@ import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.jasperreports.engine.data.ListOfArrayDataSource;
-
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
@@ -191,8 +189,12 @@ public class ClientFileSendTab extends WebPanel {
 			public void success(FileTransferObject evt, Class t) {
 				if(t!=ClientFileSendTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Success", currentIndex, 2);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.setValueAt("Success", currentIndex, 2);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 			
 			@Override
@@ -207,8 +209,11 @@ public class ClientFileSendTab extends WebPanel {
 			public void fail(FileTransferObject evt, Class t) {
 				if(t!=ClientFileSendTab.class)
 					return;
-				DefaultTableModel model = (DefaultTableModel)webTable.getModel();
-				model.setValueAt("Failed", currentIndex, 2);
+				try {
+					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+					model.setValueAt("Failed", currentIndex, 2);
+				} catch (Exception e) {
+				}
 			}
 
 			@Override
@@ -283,12 +288,13 @@ public class ClientFileSendTab extends WebPanel {
 						    out.close();
 						    fis.close();
 //						}
-						new FileTransferEvent().fireSuccess(null, ClientFileSendTab.class);
 						confirmationDialog.dispose();
+						new FileTransferEvent().fireSuccess(null, ClientFileSendTab.class);
+						
 					} catch (Exception e) {
+						confirmationDialog.dispose();
 						JajeemExcetionHandler.logError(e,ClientFileSendTab.class);
 						new FileTransferEvent().fireFailure(null, ClientFileSendTab.class);
-						confirmationDialog.dispose();
 					}
 				}
 			});
