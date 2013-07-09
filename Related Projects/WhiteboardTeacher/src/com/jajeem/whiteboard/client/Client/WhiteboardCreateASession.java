@@ -213,11 +213,11 @@ public class WhiteboardCreateASession extends JFrame {
                     sessionID,whiteboard,userid,adminName);
             
             try{
-            	new Config();
-            	ServerService server = new ServerService();
-            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-            	cmd.setSessionID(0);
-            	server.send(cmd);
+//            	new Config();
+//            	ServerService server = new ServerService();
+//            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+//            	cmd.setSessionID(0);
+//            	server.send(cmd);
             }
             catch(Exception ex){
             	System.out.println(getClass().getName()+" : "+ex.getMessage());

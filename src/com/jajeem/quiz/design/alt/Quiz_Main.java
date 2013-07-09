@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,6 +53,8 @@ import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 
+import sun.net.www.content.image.gif;
+
 public class Quiz_Main extends WebFrame {
 
 	private JPanel contentPane;
@@ -69,6 +72,8 @@ public class Quiz_Main extends WebFrame {
 	private Quiz_SecondPage secondPage;
 	private WebPanel webPanel;
 	private Quiz_Main mainFrame;
+	private List<String> studentIps;
+	private int gIndex;
 	private static boolean isPreviouslyOpened = false;
 	
 	private static AtomicInteger counter = new AtomicInteger();
@@ -80,7 +85,7 @@ public class Quiz_Main extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Quiz_Main frame = new Quiz_Main();
+					Quiz_Main frame = new Quiz_Main(-1,null);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
@@ -91,8 +96,12 @@ public class Quiz_Main extends WebFrame {
 
 	/**
 	 * Create the frame.
+	 * @param list 
+	 * @param groupIndex 
 	 */
-	public Quiz_Main() {
+	public Quiz_Main(int groupIndex, List<String> list) {
+		studentIps = list;
+		gIndex = groupIndex;
 		currentRun = new Run();
 		mainFrame = this;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -235,6 +244,45 @@ public class Quiz_Main extends WebFrame {
 		
 	}
 
+	private void initQuizEventListener() {
+		if(gIndex!=-1){
+			if(studentIps != null){
+				if(studentIps.size()!=0){
+					new Config();
+					ClientService clientService2 = null;
+					try {
+						clientService2 = new ClientService(
+								Config.getParam("broadcastingIp"), Integer.parseInt(Config
+										.getParam("quizport"))+gIndex);
+					} catch (NumberFormatException e2) {
+						JajeemExcetionHandler.logError(e2);
+						e2.printStackTrace();
+					} catch (Exception e2) {
+						JajeemExcetionHandler.logError(e2);
+						e2.printStackTrace();
+					}
+					clientService2.start();
+				}
+			}
+		}
+		else{
+			new Config();
+			ClientService clientService2 = null;
+			try {
+				clientService2 = new ClientService(
+						Config.getParam("broadcastingIp"), Integer.parseInt(Config
+								.getParam("quizport")));
+			} catch (NumberFormatException e2) {
+				JajeemExcetionHandler.logError(e2);
+				e2.printStackTrace();
+			} catch (Exception e2) {
+				JajeemExcetionHandler.logError(e2);
+				e2.printStackTrace();
+			}
+			clientService2.start();
+		}
+	}
+
 	private boolean ValidateSession() {
 		if (com.jajeem.util.Session.getSession() == null) {
 			int i = JOptionPane.showConfirmDialog(null,
@@ -259,34 +307,19 @@ public class Quiz_Main extends WebFrame {
 		return true;
 	}
 
-	private void initQuizEventListener() {
-		new Config();
-		ClientService clientService2 = null;
-		try {
-			clientService2 = new ClientService(
-					Config.getParam("broadcastingIp"), Integer.parseInt(Config
-							.getParam("quizport")));
-		} catch (NumberFormatException e2) {
-			JajeemExcetionHandler.logError(e2);
-			e2.printStackTrace();
-		} catch (Exception e2) {
-			JajeemExcetionHandler.logError(e2);
-			e2.printStackTrace();
-		}
-		clientService2.start();
-	}
-
 	private void initEvents() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				com.jajeem.util.Session.setQuizWindowOpen(true);
+				if(gIndex==-1)
+					com.jajeem.util.Session.setQuizWindowOpen(true);
 				newQuizRun();
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
-				com.jajeem.util.Session.setQuizWindowOpen(false);
+				if(gIndex==-1)
+					com.jajeem.util.Session.setQuizWindowOpen(false);
 				StopQuizCommand();
 			}
 		});
@@ -518,17 +551,39 @@ public class Quiz_Main extends WebFrame {
 	@SuppressWarnings("unused")
 	private void StopQuizCommand() {
 		try {
-			new Config();
-			ServerService service;
-			if(InstructorNoa.getServerService() == null)
-				service = new ServerService();
-			else
-				service = InstructorNoa.getServerService();
-			StopQuizCommand cmd = new StopQuizCommand(InetAddress
-					.getLocalHost().getHostAddress(),
-					Config.getParam("broadcastingIp"), Integer.parseInt(Config
-							.getParam("port")));
-			service.send(cmd);
+			if(gIndex!=-1){
+				if(studentIps!=null){
+					if(studentIps.size()!=0){
+						new Config();
+						ServerService service;
+						if(InstructorNoa.getServerService() == null)
+							service = new ServerService();
+						else
+							service = InstructorNoa.getServerService();
+						for (int i = 0; i < studentIps.size(); i++) {
+							StopQuizCommand cmd = new StopQuizCommand(InetAddress
+									.getLocalHost().getHostAddress(),
+									studentIps.get(i), Integer.parseInt(Config
+											.getParam("port")));
+							service.send(cmd);
+						}
+					}
+				}
+			}
+			else{
+				new Config();
+				ServerService service;
+				if(InstructorNoa.getServerService() == null)
+					service = new ServerService();
+				else
+					service = InstructorNoa.getServerService();
+				StopQuizCommand cmd = new StopQuizCommand(InetAddress
+						.getLocalHost().getHostAddress(),
+						Config.getParam("broadcastingIp"), Integer.parseInt(Config
+								.getParam("port")));
+				service.send(cmd);
+			}
+			
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
@@ -537,25 +592,48 @@ public class Quiz_Main extends WebFrame {
 
 	protected void StartQuizCommand() {
 		try {
-			currentRun.setStart(System.currentTimeMillis());
-			new Config();
-			ServerService service;
-			if(InstructorNoa.getServerService() == null)
-				service = new ServerService();
-			else
-				service = InstructorNoa.getServerService();
-			StartQuizCommand cmd = new StartQuizCommand(InetAddress
-					.getLocalHost().getHostAddress(),
-					Config.getParam("broadcastingIp"), Integer.parseInt(Config
-							.getParam("port")));
-			// StartQuizCommand cmd = new StartQuizCommand("","127.0.0.1",
-			// 9090);
-			cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-			cmd.setRun(currentRun);
-			cmd.setQuiz(currentRun.getQuiz());
-			service.send(cmd);
-			//Quiz_Window client = new Quiz_Window(currentRun);
-			//client.show();
+			if(gIndex!=-1){
+				if(studentIps!=null){
+					if(!studentIps.isEmpty()){
+						currentRun.setStart(System.currentTimeMillis());
+						new Config();
+						ServerService service;
+						if(InstructorNoa.getServerService() == null)
+							service = new ServerService();
+						else
+							service = InstructorNoa.getServerService();
+						for (int i = 0; i < studentIps.size(); i++) {
+							StartQuizCommand cmd = new StartQuizCommand(InetAddress
+									.getLocalHost().getHostAddress(),
+									studentIps.get(i), Integer.parseInt(Config
+											.getParam("port")));
+
+							cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+							cmd.setRun(currentRun);
+							cmd.setQuiz(currentRun.getQuiz());
+							cmd.setReceivePort(Integer.parseInt(Config.getParam("quizport"))+gIndex);
+							service.send(cmd);
+						}
+					}
+				}
+			}
+			else{
+				currentRun.setStart(System.currentTimeMillis());
+				new Config();
+				ServerService service;
+				if(InstructorNoa.getServerService() == null)
+					service = new ServerService();
+				else
+					service = InstructorNoa.getServerService();
+				StartQuizCommand cmd = new StartQuizCommand(InetAddress
+						.getLocalHost().getHostAddress(),
+						Config.getParam("broadcastingIp"), Integer.parseInt(Config
+								.getParam("port")));
+				cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+				cmd.setRun(currentRun);
+				cmd.setQuiz(currentRun.getQuiz());
+				service.send(cmd);
+			}
 		} catch (Exception ex) {
 			JajeemExcetionHandler.logError(ex);
 			ex.printStackTrace();
@@ -624,5 +702,16 @@ public class Quiz_Main extends WebFrame {
 	public void loadCurrentQuiz() {
 		firstPage.clear();
 		firstPage.loadCurrentQuiz(currentRun.getQuiz());
+	}
+
+	public int listeningPort() {
+		try {
+			return Integer.parseInt(Config.getParam("quizport"))+gIndex;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

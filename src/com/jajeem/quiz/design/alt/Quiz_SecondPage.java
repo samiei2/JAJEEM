@@ -103,6 +103,8 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 			
 			@Override
 			public void questionAnswered(QuizResponse e) {
+				if(e.getListeningPort()!=parentPanel.listeningPort())
+					return;
 				boolean valid = false;
 				Question question = e.getQuestion();
 				for (int i = 0; i < parentPanel.getCurrentRun().getQuiz().getQuestionList().size(); i++) {

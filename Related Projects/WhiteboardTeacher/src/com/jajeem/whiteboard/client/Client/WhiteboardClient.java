@@ -97,6 +97,7 @@ public class WhiteboardClient extends WebFrame {
     		JOptionPane.showMessageDialog(null, "Invalid port number!");
     		return;
     	}
+    	System.out.println("Whiteboard Teacher with ports : "+SESSIONS_PORT+" , "+WHITEBOARD_PORT+" has Started!");
         // create a table model
         tableModel = new DefaultTableModel(data,columnNames);
         // create a table and set its editable to disable

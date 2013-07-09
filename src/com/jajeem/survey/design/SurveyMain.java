@@ -12,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.GroupLayout;
@@ -70,6 +71,8 @@ public class SurveyMain extends WebFrame {
 	private WebButton wbtnOpen;
 	private WebButton wbtnSave;
 	private WebButton wbtnSaveResults;
+	private int gindex;
+	private List<String> studentIps;
 	
 	public static AtomicInteger counter = new AtomicInteger();
 	/**
@@ -79,7 +82,7 @@ public class SurveyMain extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SurveyMain frame = new SurveyMain();
+					SurveyMain frame = new SurveyMain(-1,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,8 +93,12 @@ public class SurveyMain extends WebFrame {
 
 	/**
 	 * Create the frame.
+	 * @param list 
+	 * @param groupIndex 
 	 */
-	public SurveyMain() {
+	public SurveyMain(int groupIndex, List<String> list) {
+		gindex = groupIndex;
+		studentIps = list;
 		getContentPane().setBackground(SystemColor.control);
 		setTitle("Survey");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SurveyMain.class.getResource("/com/jajeem/images/survey.png")));
@@ -102,30 +109,6 @@ public class SurveyMain extends WebFrame {
 		frame = this;
 
 		WebPanel webPanel = new WebPanel();
-		
-		
-		new Config();
-		ClientService clientService2 = null;
-		try {
-			clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("surveyport")));
-		} catch (NumberFormatException e2) {
-			e2.printStackTrace();
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-		clientService2.start();
-		
-//		new Config();
-//		ClientService clientService = null;
-//		try {
-//			clientService = new ClientService(Config.getParam("broadcastingIp"), 9090);
-//		} catch (NumberFormatException e2) {
-//			e2.printStackTrace();
-//		} catch (Exception e2) {
-//			e2.printStackTrace();
-//		}
-//		clientService.start();
-		
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -183,10 +166,35 @@ public class SurveyMain extends WebFrame {
 					int i = JOptionPane.showConfirmDialog(null, "If you leave this page the survey will stop and results will be lost.Are you sure you want to continue?");
 					if(i == 0){
 						try {
-							new Config();
-							ServerService serv = new ServerService();
-							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-							serv.send(cmd);
+							if(gindex!=-1){
+								if(studentIps!=null){
+									if(!studentIps.isEmpty()){
+										new Config();
+										ServerService service;
+										if(InstructorNoa.getServerService() == null)
+											service = new ServerService();
+										else
+											service = InstructorNoa.getServerService();
+										for (int j = 0; j < studentIps.size(); j++) {
+											StopSurveyCommand cmd = new StopSurveyCommand(
+													InetAddress.getLocalHost().getHostAddress(),
+													studentIps.get(i), 
+													Integer.parseInt(Config.getParam("port")));
+											service.send(cmd);
+										}
+									}
+								}
+							}
+							else{
+								new Config();
+								ServerService service;
+								if(InstructorNoa.getServerService() == null)
+									service = new ServerService();
+								else
+									service = InstructorNoa.getServerService();
+								StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+								service.send(cmd);
+							}
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -291,10 +299,35 @@ public class SurveyMain extends WebFrame {
 				int i = JOptionPane.showConfirmDialog(null, "If you leave this page the survey will stop and results will be lost.Are you sure you want to continue?");
 				if(i == 0){
 					try {
-						new Config();
-						ServerService serv = new ServerService();
-						StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						serv.send(cmd);
+						if(gindex!=-1){
+							if(studentIps!=null){
+								if(!studentIps.isEmpty()){
+									new Config();
+									ServerService service;
+									if(InstructorNoa.getServerService() == null)
+										service = new ServerService();
+									else
+										service = InstructorNoa.getServerService();
+									for (int j = 0; j < studentIps.size(); j++) {
+										StopSurveyCommand cmd = new StopSurveyCommand(
+												InetAddress.getLocalHost().getHostAddress(),
+												studentIps.get(i), 
+												Integer.parseInt(Config.getParam("port")));
+										service.send(cmd);
+									}
+								}
+							}
+						}
+						else{
+							new Config();
+							ServerService service;
+							if(InstructorNoa.getServerService() == null)
+								service = new ServerService();
+							else
+								service = InstructorNoa.getServerService();
+							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+							service.send(cmd);
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -368,18 +401,42 @@ public class SurveyMain extends WebFrame {
 			        	run.setStart(System.currentTimeMillis());
 			        	//SurveyWindow wind =new SurveyWindow(run);
 			        	
-			        	new Config();
-			        	ServerService service;
-						if(InstructorNoa.getServerService() == null)
-							service = new ServerService();
-						else
-							service = InstructorNoa.getServerService();
-						StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						//StartSurveyCommand cmd = new StartSurveyCommand("","127.0.0.1", 9090);
-						cmd.setServer(InetAddress.getLocalHost().getHostAddress());
-						cmd.setRun(run);
-						cmd.setSurvey(currentSurvey);
-						service.send(cmd);
+			        	if(gindex!=-1){
+			        		if(studentIps!=null){
+			        			if(!studentIps.isEmpty()){
+			        				new Config();
+						        	ServerService service;
+									if(InstructorNoa.getServerService() == null)
+										service = new ServerService();
+									else
+										service = InstructorNoa.getServerService();
+									for (int i = 0; i < studentIps.size(); i++) {
+										StartSurveyCommand cmd = new StartSurveyCommand(
+												InetAddress.getLocalHost().getHostAddress(),
+												studentIps.get(i), 
+												Integer.parseInt(Config.getParam("port")));
+										cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+										cmd.setReceivingPort(Integer.parseInt(Config.getParam("surveyport"))+gindex);
+										cmd.setRun(run);
+										cmd.setSurvey(currentSurvey);
+										service.send(cmd);
+									}
+			        			}
+			        		}
+			        	}
+			        	else{
+			        		new Config();
+				        	ServerService service;
+							if(InstructorNoa.getServerService() == null)
+								service = new ServerService();
+							else
+								service = InstructorNoa.getServerService();
+							StartSurveyCommand cmd = new StartSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+							cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+							cmd.setRun(run);
+							cmd.setSurvey(currentSurvey);
+							service.send(cmd);
+			        	}
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					} catch (Exception e) {
@@ -390,14 +447,35 @@ public class SurveyMain extends WebFrame {
 				}
 				else{
 					try {
-						new Config();
-						ServerService service;
-						if(InstructorNoa.getServerService() == null)
-							service = new ServerService();
-						else
-							service = InstructorNoa.getServerService();
-						StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-						service.send(cmd);
+						if(gindex!=-1){
+							if(studentIps!=null){
+								if(!studentIps.isEmpty()){
+									new Config();
+									ServerService service;
+									if(InstructorNoa.getServerService() == null)
+										service = new ServerService();
+									else
+										service = InstructorNoa.getServerService();
+									for (int i = 0; i < studentIps.size(); i++) {
+										StopSurveyCommand cmd = new StopSurveyCommand(
+												InetAddress.getLocalHost().getHostAddress(),
+												studentIps.get(i), 
+												Integer.parseInt(Config.getParam("port")));
+										service.send(cmd);
+									}
+								}
+							}
+						}
+						else{
+							new Config();
+							ServerService service;
+							if(InstructorNoa.getServerService() == null)
+								service = new ServerService();
+							else
+								service = InstructorNoa.getServerService();
+							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+							service.send(cmd);
+						}
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					} catch (Exception e) {
@@ -511,14 +589,35 @@ public class SurveyMain extends WebFrame {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				try {
-					new Config();
-					ServerService service;
-					if(InstructorNoa.getServerService() == null)
-						service = new ServerService();
-					else
-						service = InstructorNoa.getServerService();
-					StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-					service.send(cmd);
+					if(gindex!=-1){
+						if(studentIps!=null){
+							if(!studentIps.isEmpty()){
+								new Config();
+								ServerService service;
+								if(InstructorNoa.getServerService() == null)
+									service = new ServerService();
+								else
+									service = InstructorNoa.getServerService();
+								for (int i = 0; i < studentIps.size(); i++) {
+									StopSurveyCommand cmd = new StopSurveyCommand(
+											InetAddress.getLocalHost().getHostAddress(),
+											studentIps.get(i), 
+											Integer.parseInt(Config.getParam("port")));
+									service.send(cmd);
+								}
+							}
+						}
+					}
+					else{
+						new Config();
+						ServerService service;
+						if(InstructorNoa.getServerService() == null)
+							service = new ServerService();
+						else
+							service = InstructorNoa.getServerService();
+						StopSurveyCommand cmd = new StopSurveyCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+						service.send(cmd);
+					}
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -526,6 +625,37 @@ public class SurveyMain extends WebFrame {
 				}
 			}
 		});
+		
+		initSurveyListener();
+		
+		setVisible(true);
+	}
+
+	private void initSurveyListener() {
+		if(gindex!=-1){
+			new Config();
+			ClientService clientService2 = null;
+			try {
+				clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("surveyport"))+gindex);
+			} catch (NumberFormatException e2) {
+				e2.printStackTrace();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			clientService2.start();
+		}
+		else{
+			new Config();
+			ClientService clientService2 = null;
+			try {
+				clientService2 = new ClientService(Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("surveyport")));
+			} catch (NumberFormatException e2) {
+				e2.printStackTrace();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			clientService2.start();
+		}
 	}
 
 	public com.jajeem.survey.model.Survey getCurrentSurvey() {

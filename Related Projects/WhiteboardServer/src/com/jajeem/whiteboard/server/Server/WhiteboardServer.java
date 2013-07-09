@@ -49,6 +49,7 @@ public class WhiteboardServer {
 			JOptionPane.showMessageDialog(null, "Invalid Port Number!");
 			System.exit(1);
 		}
+    	System.out.println("Whiteboard Server with ports "+SESSIONS_PORT + " and "+WHITEBOARD_PORT+" has Started!");
     	Policy.setPolicy(new MinimalPolicy());
 //    	try {
 //			com.google.common.io.Files.copy(new File("cert/server.keystore"), new File("c:/server.keystore"));

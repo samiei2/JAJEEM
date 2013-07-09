@@ -9,7 +9,7 @@ package com.jajeem.whiteboard.client.Client;
  */
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Config;
+//import com.jajeem.util.Config;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
@@ -213,11 +213,11 @@ public class WhiteboardCreateASession extends JFrame {
                     sessionID,whiteboard,userid,adminName);
             
             try{
-            	new Config();
-            	ServerService server = new ServerService();
-            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
-            	cmd.setSessionID(0);
-            	server.send(cmd);
+//            	new Config();
+//            	ServerService server = new ServerService();
+//            	StartWhiteBoardCommand cmd=  new StartWhiteBoardCommand(InetAddress.getLocalHost().getHostAddress(),Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+//            	cmd.setSessionID(0);
+//            	server.send(cmd);
             }
             catch(Exception ex){
             	System.out.println(getClass().getName()+" : "+ex.getMessage());

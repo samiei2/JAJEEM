@@ -100,6 +100,8 @@ public class SurveyWindow extends WebFrame {
 
 	private String server;
 
+	private int listeingPort;
+
 	/**
 	 * Launch the application.
 	 */
@@ -239,7 +241,10 @@ public class SurveyWindow extends WebFrame {
 									resp.setStudent(getStudent());
 									resp.setSurveyRun(currentRun);
 									//new SurveyEvent().fireResponseEvent(resp);
-									SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+									SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(
+											InetAddress.getLocalHost().getHostAddress(),
+											server, 
+											listeingPort);
 									cmd.setEvent(resp);
 								
 									ServerService service;
@@ -668,7 +673,10 @@ public class SurveyWindow extends WebFrame {
 								resp.setStudent(getStudent());
 								resp.setSurveyRun(currentRun);
 								//new SurveyEvent().fireResponseEvent(resp);
-								SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(InetAddress.getLocalHost().getHostAddress(),server, Integer.parseInt(Config.getParam("surveyport")));
+								SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										server, 
+										listeingPort);
 								cmd.setEvent(resp);
 							
 								ServerService service = new ServerService();
@@ -876,5 +884,9 @@ public class SurveyWindow extends WebFrame {
 
 	public void setServer(String serv) {
 		server = serv;
+	}
+
+	public void setReceivingPort(int receivingPort) {
+		listeingPort = receivingPort;
 	}
 }
