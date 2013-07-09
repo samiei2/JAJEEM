@@ -17,6 +17,8 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Session;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -120,6 +122,7 @@ public class FileInbox extends WebPanel {
 			File[] list = inbox.listFiles();
 			DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 			for (int i = 0; i < list.length; i++) {
+				fileSendRequestList.add(null);
 //				files.add(list[i]);
 				model.addRow(new Object[]{
 						webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
@@ -199,6 +202,19 @@ public class FileInbox extends WebPanel {
 				wbtnAccept.setEnabled(false);
 				wbtnDismissAll.setEnabled(false);
 				wbtnRejectFile.setEnabled(false);
+			}
+		});
+		
+		webTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				int selectedRow = webTable.getSelectedRow();
+				if(selectedRow!=-1){
+					if(fileSendRequestList.get(selectedRow)!=null){
+						
+					}
+				}	
 			}
 		});
 		
