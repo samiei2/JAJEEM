@@ -614,7 +614,7 @@ public class Quiz_Main extends WebFrame {
 							cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 							cmd.setRun(currentRun);
 							cmd.setQuiz(currentRun.getQuiz());
-							cmd.setReceivePort(Integer.parseInt(Config.getParam("quizport"))+gIndex);
+							cmd.setReceivePort(Integer.parseInt(Config.getParam("quizport"))+gIndex+1);
 							service.send(cmd);
 						}
 					}
@@ -635,6 +635,7 @@ public class Quiz_Main extends WebFrame {
 				cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 				cmd.setRun(currentRun);
 				cmd.setQuiz(currentRun.getQuiz());
+				cmd.setReceivePort(Integer.parseInt(Config.getParam("quizport")));
 				service.send(cmd);
 			}
 		} catch (Exception ex) {
@@ -709,7 +710,7 @@ public class Quiz_Main extends WebFrame {
 
 	public int listeningPort() {
 		try {
-			return Integer.parseInt(Config.getParam("quizport"))+gIndex;
+			return Integer.parseInt(Config.getParam("quizport"))+gIndex+1;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

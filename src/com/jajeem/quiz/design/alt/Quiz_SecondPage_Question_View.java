@@ -815,15 +815,61 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 				
 				model.fireTableDataChanged();
 				webTable.repaint();
+				webTable.updateUI();
 
 				for (int i = 0; i < quizResponse.get(index).size(); i++) {
-					model.addRow(new Object[] { imgToolTip, student.getId(),
-							student.getFullName(), QuestionOption,
+					QuizResponse temp = quizResponse.get(index).get(i);
+					try {
+						imgToolTip = new ImageIcon(
+								ImageIO.read(Quiz_SecondPage_Question_View.class
+										.getResourceAsStream("/icons/bullet-red.png")));
+						if (temp.getQuestion().isResponseValid())
+							imgToolTip = new ImageIcon(
+									ImageIO.read(Quiz_SecondPage_Question_View.class
+											.getResourceAsStream("/icons/bullet-green.png")));
+					} catch (Exception exp) {
+						JajeemExcetionHandler.logError(exp);
+					}
+					
+					StudentOption = "";
+					QuestionOption = "";
+					if (temp.getQuestion().getType() == 0) { // setting student's answer
+						if (temp.getQuestion().getStudentAnswer()[0])
+							StudentOption = "First Option";
+						if (temp.getQuestion().getStudentAnswer()[1])
+							StudentOption = "Second Option";
+						if (temp.getQuestion().getStudentAnswer()[2])
+							StudentOption = "Third Option";
+						if (temp.getQuestion().getStudentAnswer()[3])
+							StudentOption = "Fourth Option";
+						if (temp.getQuestion().getStudentAnswer()[4])
+							StudentOption = "Fifth Option";
+						if (StudentOption == "")
+							StudentOption = "None Selected";
+					} else if (temp.getQuestion().getType() == 1) {
+						if (temp.getQuestion().getStudentAnswer()[0])
+							StudentOption += "First Option,";
+						if (temp.getQuestion().getStudentAnswer()[1])
+							StudentOption += "Second Option,";
+						if (temp.getQuestion().getStudentAnswer()[2])
+							StudentOption += "Third Option,";
+						if (temp.getQuestion().getStudentAnswer()[3])
+							StudentOption += "Fourth Option,";
+						if (temp.getQuestion().getStudentAnswer()[4])
+							StudentOption += "Fifth Option";
+						if (StudentOption == "")
+							StudentOption = "None Selected";
+					} else
+						StudentOption = temp.getQuestion().getStudentTextAnswer();
+					
+					model.addRow(new Object[] { imgToolTip, temp.getStudent().getId(),
+							temp.getStudent().getFullName(), QuestionOption,
 							StudentOption });
 				}
 				
 				model.fireTableDataChanged();
 				webTable.repaint();
+				webTable.updateUI();
 			}
 		}
 	}

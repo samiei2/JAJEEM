@@ -8,8 +8,11 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Response;
 import com.jajeem.quiz.model.Run;
 
-@SuppressWarnings("serial")
 public class QuizResponse extends EventObject implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 100;
 	private Student student;
 	private Response response;
 	private Question question;
