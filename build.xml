@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- WARNING: Eclipse auto-generated file.
               Any modifications will be overwritten.
@@ -6,6 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="Jajeem">
     <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="C:/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
@@ -15,16 +15,13 @@
         <pathelement location="lib/commons-pool-1.5.6.jar"/>
         <pathelement location="lib/guava-14.0.1.jar"/>
         <pathelement location="lib/h2-1.3.171.jar"/>
-        <pathelement location="lib/h2-latest.jar"/>
         <pathelement location="lib/hamcrest-core-1.3.jar"/>
         <pathelement location="lib/hsqldb.jar"/>
-        <pathelement location="lib/jasperreports-5.1.0.jar"/>
         <pathelement location="lib/jna-3.5.2.jar"/>
         <pathelement location="lib/junit-4.11.jar"/>
         <pathelement location="lib/log4j-1.2.7.jar"/>
         <pathelement location="lib/platform-3.5.2.jar"/>
         <pathelement location="lib/seaglasslookandfeel-0.2.jar"/>
-        <pathelement location="lib/Sources.zip"/>
         <pathelement location="lib/vlcj-2.3.1.jar"/>
         <pathelement location="lib/WebLookAndFeel.jar"/>
         <pathelement location="lib/bccontrib-1.0-SNAPSHOT.jar"/>
@@ -44,21 +41,13 @@
         <pathelement location="lib/felix.jar"/>
         <pathelement location="lib/jmf.jar"/>
         <pathelement location="lib/jtransforms-2.4.0.jar"/>
-        <pathelement location="lib/juv-rtsp-client-1.0.0.jar"/>
         <pathelement location="lib/libjitsi.jar"/>
-        <pathelement location="lib/mediaplayer.jar"/>
-        <pathelement location="lib/mjsip.jar"/>
-        <pathelement location="lib/multiplayer.jar"/>
         <pathelement location="lib/sdes4j-1.1.1.jar"/>
         <pathelement location="lib/slf4j-api-1.7.5.jar"/>
         <pathelement location="lib/slf4j-simple-1.7.5.jar"/>
         <pathelement location="lib/smack-3.3.0.jar"/>
         <pathelement location="lib/smackx-3.3.0.jar"/>
         <pathelement location="lib/javaQuery 1.0.jar"/>
-        <pathelement location="lib/screen_converter.jar"/>
-        <pathelement location="lib/screen_player.jar"/>
-        <pathelement location="lib/win32-x86-64.jar"/>
-        <pathelement location="lib/win32-x86.jar"/>
         <pathelement location="lib/native/windows-64"/>
     </path>
     <target name="init">
@@ -84,13 +73,31 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
     <target name="AudioCapture">
         <java classname="AudioCapture" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
-    <target name="AVReceive2">
-        <java classname="org.jitsi.examples.AVReceive2" failonerror="true" fork="yes">
+    <target name="AVReceiveOnly">
+        <java classname="org.jitsi.examples.AVReceiveOnly" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="AVSendOnly">
+        <java classname="org.jitsi.examples.AVSendOnly" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
@@ -127,6 +134,7 @@
     <target name="InstructorLogin">
         <java classname="com.jajeem.core.design.InstructorLogin" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
+			<sysproperty key="java.library.path" value="lib/native/windows-64"/>
         </java>
     </target>
     <target name="InstructorNoa">
@@ -199,79 +207,4 @@
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
-<project name="Jajeem" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Jajeem.</description>
-    <import file="nbproject/build-impl.xml"/>
-    <!--
-
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
-
-      -pre-init:                 called before initialization of project properties
-      -post-init:                called after initialization of project properties
-      -pre-compile:              called before javac compilation
-      -post-compile:             called after javac compilation
-      -pre-compile-single:       called before javac compilation of single file
-      -post-compile-single:      called after javac compilation of single file
-      -pre-compile-test:         called before javac compilation of JUnit tests
-      -post-compile-test:        called after javac compilation of JUnit tests
-      -pre-compile-test-single:  called before javac compilation of single JUnit test
-      -post-compile-test-single: called after javac compilation of single JUunit test
-      -pre-jar:                  called before JAR building
-      -post-jar:                 called after JAR building
-      -post-clean:               called after cleaning build products
-
-    (Targets beginning with '-' are not intended to be called on their own.)
-
-    Example of inserting an obfuscator after compilation could look like this:
-
-        <target name="-post-compile">
-            <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
-            </obfuscate>
-        </target>
-
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
-
-
-    Another way to customize the build is by overriding existing main targets.
-    The targets of interest are: 
-
-      -init-macrodef-javac:     defines macro for javac compilation
-      -init-macrodef-junit:     defines macro for junit execution
-      -init-macrodef-debug:     defines macro for class debugging
-      -init-macrodef-java:      defines macro for class execution
-      -do-jar-with-manifest:    JAR building (if you are using a manifest)
-      -do-jar-without-manifest: JAR building (if you are not using a manifest)
-      run:                      execution of project 
-      -javadoc-build:           Javadoc generation
-      test-report:              JUnit report generation
-
-    An example of overriding the target for project execution could look like this:
-
-        <target name="run" depends="Jajeem-impl.jar">
-            <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
-            </exec>
-        </target>
-
-    Notice that the overridden target depends on the jar target and not only on 
-    the compile target as the regular run target does. Again, for a list of available 
-    properties which you can use, check the target you are overriding in the
-    nbproject/build-impl.xml file. 
-
-    -->
->>>>>>> 03b3498dc91d120911657cda01c2df6be81085ab
 </project>
