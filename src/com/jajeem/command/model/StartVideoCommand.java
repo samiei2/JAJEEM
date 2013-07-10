@@ -4,7 +4,7 @@ public class StartVideoCommand extends Command {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4014963068838321817L;
+	private static final long serialVersionUID = 1L;
 	
 	private String streamServer;
 	private String streamPort;

@@ -7,7 +7,7 @@ public class Command implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5200765941186849924L;
+	private static final long serialVersionUID = 1L;
 	private String to;
 	private String from;
 	private int port;
