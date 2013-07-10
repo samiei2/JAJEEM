@@ -7,6 +7,6 @@ public class Student extends User implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3220005938758426567L;
+	private static final long serialVersionUID = 1L;
 
 }

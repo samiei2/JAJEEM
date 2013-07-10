@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.jajeem.core.model.Instructor;
 
 public class Session implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
 	//properties
 	private int id;
 	private Room room;

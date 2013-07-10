@@ -5,9 +5,9 @@ import java.util.EventObject;
 
 import com.jajeem.quiz.model.Run;
 
-@SuppressWarnings("serial")
 public class QuizFinished extends EventObject implements Serializable{
 	private Run quizRun;
+	private static final long serialVersionUID = 1L;
 	public QuizFinished(Object source) {
 	    super(source);
 	}

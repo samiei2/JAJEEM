@@ -5,8 +5,8 @@ import java.util.EventObject;
 
 import com.jajeem.survey.model.Run;
 
-@SuppressWarnings("serial")
 public class SurveyFinished extends EventObject implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Run surveyRun;
 	public SurveyFinished(Object source) {
 	    super(source);

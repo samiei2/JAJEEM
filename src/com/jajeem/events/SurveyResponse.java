@@ -8,8 +8,8 @@ import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Response;
 import com.jajeem.survey.model.Run;
 
-@SuppressWarnings("serial")
 public class SurveyResponse extends EventObject implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Student student;
 	private Response response;
 	private Question question;
