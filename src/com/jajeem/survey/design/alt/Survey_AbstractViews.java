@@ -2,8 +2,6 @@ package com.jajeem.survey.design.alt;
 
 
 import com.alee.laf.panel.WebPanel;
-import com.jajeem.quiz.model.Quiz;
-import com.jajeem.quiz.model.Run;
 
 public class Survey_AbstractViews extends WebPanel {
 

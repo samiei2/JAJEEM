@@ -2,19 +2,14 @@ package com.jajeem.survey.design.alt;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.net.InetAddress;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
@@ -47,9 +42,6 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 	private WebTextField webTextField_2;
 
 	private Timer timer; // Updates the count every second
-	private long remaining; // How many milliseconds remain in the countdown.
-	private long lastUpdate; // When count was last updated
-	private int total;
 	private ArrayList<ArrayList<SurveyResponse>> surveyResponse;
 	private ArrayList<Student> studentList;
 	private Survey currentSurvey;
@@ -109,14 +101,6 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		webTable = new WebTable();
 		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
 				"#", "Answer" }));
-		webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
-		webTable.getColumnModel().getColumn(0).setMaxWidth(35);
-		webTable.getColumnModel().getColumn(1).setPreferredWidth(55);
-		webTable.getColumnModel().getColumn(1).setMaxWidth(217);
-		webTable.getColumnModel().getColumn(2).setPreferredWidth(105);
-		webTable.getColumnModel().getColumn(2).setMaxWidth(217);
-		webTable.getColumnModel().getColumn(3).setPreferredWidth(55);
-		webTable.getColumnModel().getColumn(3).setMaxWidth(217);
 		webScrollPane_1.setViewportView(webTable);
 
 		WebPanel webPanel_1 = new WebPanel();
@@ -376,7 +360,6 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 						Question question = ex.getQuestion();
 						
 						String StudentOption = "";
-						String QuestionOption = "";
 						if(question.getType() == 0){ // setting student's answer
 							if(question.getStudentAnswer()[0])
 								StudentOption = "First Option";
@@ -690,7 +673,6 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		this.timer = timer;
 	}
 	
-	@SuppressWarnings("serial")
 	class WebTableModel extends DefaultTableModel {
 		public WebTableModel(Object[][] objects, String[] strings) {
 			super(objects, strings);

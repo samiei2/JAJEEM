@@ -12,7 +12,11 @@ import javax.swing.event.EventListenerList;
  * To change this template use File | Settings | File Templates.
  */
 public class SurveyEvent implements Serializable{
-    protected static EventListenerList listenerList = new EventListenerList();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected static EventListenerList listenerList = new EventListenerList();
 
     public void addEventListener(SurveyEventListener listener) {
         listenerList.add(SurveyEventListener.class, listener);

@@ -48,7 +48,6 @@ import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
 import com.jajeem.util.ClientSession;
-import com.jajeem.util.Config;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")

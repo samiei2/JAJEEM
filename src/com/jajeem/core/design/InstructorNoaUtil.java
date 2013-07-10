@@ -66,7 +66,7 @@ import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
-import com.jajeem.survey.design.SurveyMain;
+import com.jajeem.survey.design.alt.Survey_Main;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
@@ -78,9 +78,9 @@ public class InstructorNoaUtil {
 	final static WebPopup popup = new WebPopup();
 
 	static Quiz_Main quiz = null;
-	static com.jajeem.survey.design.SurveyMain survey = null;
+	static Survey_Main survey = null;
 	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[10];
-	static com.jajeem.survey.design.SurveyMain[] groupsSurveyWindows = new com.jajeem.survey.design.SurveyMain[10];
+	static Survey_Main[] groupsSurveyWindows = new Survey_Main[10];
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -725,7 +725,7 @@ public class InstructorNoaUtil {
 											if (Session
 													.getIsSurveyWindowsOpen()[groupIndex] == true) {
 												if (groupsSurveyWindows[groupIndex] == null) {
-													groupsSurveyWindows[groupIndex] = new SurveyMain(
+													groupsSurveyWindows[groupIndex] = new Survey_Main(
 															groupIndex,
 															group.getStudentIps());
 													groupsSurveyWindows[groupIndex]
@@ -737,7 +737,7 @@ public class InstructorNoaUtil {
 															.repaint();
 												}
 											} else {
-												groupsSurveyWindows[groupIndex] = new SurveyMain(
+												groupsSurveyWindows[groupIndex] = new Survey_Main(
 														groupIndex,
 														group.getStudentIps());
 												groupsSurveyWindows[groupIndex]
@@ -751,7 +751,7 @@ public class InstructorNoaUtil {
 							} else {
 								if (Session.isSurveyWindowOpen()) {
 									if (survey == null) {
-										survey = new com.jajeem.survey.design.SurveyMain(
+										survey = new Survey_Main(
 												-1, null);
 										survey.setVisible(true);
 									} else {
@@ -759,7 +759,7 @@ public class InstructorNoaUtil {
 										survey.repaint();
 									}
 								} else {
-									survey = new com.jajeem.survey.design.SurveyMain(
+									survey = new Survey_Main(
 											-1, null);
 									survey.setVisible(true);
 								}

@@ -1,34 +1,29 @@
 package com.jajeem.survey.design.alt;
 
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
-
-import javax.swing.GroupLayout;
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.UIManager;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.text.WebTextField;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebFrame;
+import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
-import com.alee.laf.checkbox.WebCheckBox;
 
 public class Survey_FirstPage extends Survey_AbstractViews {
 	/**

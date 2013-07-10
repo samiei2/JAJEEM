@@ -5,12 +5,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
@@ -22,12 +19,14 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.SurveyResponse;
-import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.survey.design.SurveyTab_2_Student_View;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 
 public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private WebTable webTable;
 	private WebComboBox webComboBox;
@@ -96,8 +95,6 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		webTable.getColumnModel().getColumn(1).setMaxWidth(217);
 		webTable.getColumnModel().getColumn(2).setPreferredWidth(85);
 		webTable.getColumnModel().getColumn(2).setMaxWidth(217);
-		webTable.getColumnModel().getColumn(3).setPreferredWidth(55);
-		webTable.getColumnModel().getColumn(3).setMaxWidth(217);
 		webScrollPane.setViewportView(webTable);
 		webPanel.setLayout(gl_webPanel);
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -419,7 +416,6 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		surveyResponse = parentPanel.getSurveyResponse();
 	}
 
-	@SuppressWarnings("rawtypes")
 	public void clearSurvey() {
 		WebTableModel model = (WebTableModel) webTable.getModel();
 		model.getDataVector().clear();
@@ -431,6 +427,14 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		surveyResponse = null;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@SuppressWarnings("serial")
 	class WebTableModel extends DefaultTableModel {
 		public WebTableModel(Object[][] objects, String[] strings) {
