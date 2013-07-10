@@ -15,6 +15,7 @@ public class SurveyResponse extends EventObject implements Serializable{
 	private Response response;
 	private Question question;
 	private Run SurveyRun;
+	private int listenPort;
 	public SurveyResponse(Object source) {
 	    super(source);
 	}
@@ -38,5 +39,11 @@ public class SurveyResponse extends EventObject implements Serializable{
 	}
 	public void setSurveyRun(Run SurveyRun) {
 		this.SurveyRun = SurveyRun;
+	}
+	public int getListeningPort() {
+		return listenPort;
+	}
+	public void setListeningPort(int i){
+		listenPort = i;
 	}
 }

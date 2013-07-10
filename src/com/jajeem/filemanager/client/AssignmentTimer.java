@@ -116,8 +116,14 @@ public class AssignmentTimer extends JDialog {
 				if (remaining == 0) {
 					// Stop updating now.
 					timer.stop();
-					JOptionPane.showMessageDialog(null, "Times Up!");
 					MainFrame.dispose();
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							JOptionPane.showMessageDialog(null, "Times Up!");
+						}
+					}).start();
 				}
 			}
 		};
