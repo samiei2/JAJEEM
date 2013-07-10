@@ -8,6 +8,7 @@ public class initDatabase {
 
 	public static void initialize() {
 
+		new Config();
 		Connection con;
 		new Config();
 		try {

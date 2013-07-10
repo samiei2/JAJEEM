@@ -563,7 +563,8 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false, -1, selectedStudent);
+														false, -1,
+														selectedStudent);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -577,7 +578,8 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false, -1, selectedStudent);
+														false, -1,
+														selectedStudent);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -620,7 +622,8 @@ public class InstructorNoaUtil {
 																Integer.parseInt(Config
 																		.getParam("port")),
 																true,
-																groupIndex, group.getName());
+																groupIndex,
+																group.getName());
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -638,7 +641,8 @@ public class InstructorNoaUtil {
 																Integer.parseInt(Config
 																		.getParam("port")),
 																true,
-																groupIndex, group.getName());
+																groupIndex,
+																group.getName());
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -751,16 +755,14 @@ public class InstructorNoaUtil {
 							} else {
 								if (Session.isSurveyWindowOpen()) {
 									if (survey == null) {
-										survey = new Survey_Main(
-												-1, null);
+										survey = new Survey_Main(-1, null);
 										survey.setVisible(true);
 									} else {
 										survey.toFront();
 										survey.repaint();
 									}
 								} else {
-									survey = new Survey_Main(
-											-1, null);
+									survey = new Survey_Main(-1, null);
 									survey.setVisible(true);
 								}
 							}
@@ -969,38 +971,102 @@ public class InstructorNoaUtil {
 													.equals(list
 															.getModel()
 															.getElementAt(index))) {
-												if (InstructorNoa
-														.getDesktopPane()
-														.getSelectedFrame() != null) {
-													String selectedStudent = "";
-													selectedStudent = (String) InstructorNoa
-															.getDesktopPane()
-															.getSelectedFrame()
-															.getClientProperty(
-																	"ip");
-													StartApplicationCommand sa;
-													try {
-														sa = new StartApplicationCommand(
-																InetAddress
-																		.getLocalHost()
-																		.getHostAddress(),
-																selectedStudent,
-																Integer.parseInt(Config
-																		.getParam("port")),
-																file.getName()
-																		.substring(
-																				0,
-																				file.getName()
-																						.length() - 4));
-														InstructorNoa
-																.getServerService()
-																.send(sa);
-													} catch (Exception e) {
-														e.printStackTrace();
-													}
 
+												Component card = null;
+												for (Component comp : InstructorNoa
+														.getCenterPanel()
+														.getComponents()) {
+													if (comp.isVisible() == true) {
+														card = comp;
+													}
+												}
+
+												if (((JComponent) card)
+														.getClientProperty(
+																"viewMode")
+														.equals("thumbView")) {
+													if (InstructorNoa
+															.getDesktopPane()
+															.getSelectedFrame() != null) {
+														String selectedStudent = "";
+														selectedStudent = (String) InstructorNoa
+																.getDesktopPane()
+																.getSelectedFrame()
+																.getClientProperty(
+																		"ip");
+
+														StartApplicationCommand sa;
+														try {
+															sa = new StartApplicationCommand(
+																	InetAddress
+																			.getLocalHost()
+																			.getHostAddress(),
+																	selectedStudent,
+																	Integer.parseInt(Config
+																			.getParam("port")),
+																	file.getName()
+																			.substring(
+																					0,
+																					file.getName()
+																							.length() - 4));
+															InstructorNoa
+																	.getServerService()
+																	.send(sa);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}
+													}
+												} else if (((JComponent) card)
+														.getClientProperty(
+																"viewMode")
+														.equals("groupView")) {
+													if (!InstructorNoa
+															.getGroupList()
+															.isSelectionEmpty()) {
+														int groupIndex = InstructorNoa
+																.getGroupList()
+																.getSelectedIndex();
+
+														Group group = InstructorNoa
+																.getGroups()
+																.get(groupIndex);
+														if (group
+																.getStudentIps()
+																.isEmpty()) {
+															return;
+														} else {
+															
+															StartApplicationCommand sa;
+															try {
+																sa = new StartApplicationCommand(
+																		InetAddress
+																				.getLocalHost()
+																				.getHostAddress(),
+																		"",
+																		Integer.parseInt(Config
+																				.getParam("port")),
+																		file.getName()
+																				.substring(
+																						0,
+																						file.getName()
+																								.length() - 4));
+																for (String studentIp : group
+																		.getStudentIps()) {
+																	sa.setTo(studentIp);
+																	InstructorNoa
+																	.getServerService()
+																	.send(sa);
+																}
+																
+															} catch (Exception e) {
+																e.printStackTrace();
+															}
+															
+														}
+													}
 												}
 											}
+
 										}
 									}
 								}
