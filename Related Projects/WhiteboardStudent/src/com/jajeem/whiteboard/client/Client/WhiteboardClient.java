@@ -120,7 +120,7 @@ public class WhiteboardClient extends WebFrame {
         this.chooseSessionsLabel.setForeground(Color.RED);
         this.chooseSessionsLabel.setBounds(250,5,120,20);
 
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600,330);
         // set the display position to the center of screen 
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();

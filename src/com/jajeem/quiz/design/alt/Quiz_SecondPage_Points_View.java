@@ -22,7 +22,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 	private WebTable webTable;
 	private Quiz_SecondPage parentPanel;
 	
-	private ArrayList<Student> studentList = new ArrayList<>();
+	private ArrayList<Student> studentList;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
 	/**
@@ -32,7 +32,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 	 */
 	public Quiz_SecondPage_Points_View(Quiz_SecondPage parent) {
 		parentPanel = parent;
-		
+		studentList = new ArrayList<>();
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -51,7 +51,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 		);
 		
 		webTable = new WebTable();
-		webTable.setModel(new WebTableModel(
+		webTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -72,22 +72,22 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 	}
 	
 	public void QuestionAnswered(QuizResponse e) {
-		((WebTableModel)webTable.getModel()).getDataVector().clear();
-		((WebTableModel)webTable.getModel()).fireTableDataChanged();
-		if(studentList.size() == 0){
+		((DefaultTableModel)webTable.getModel()).getDataVector().clear();
+		((DefaultTableModel)webTable.getModel()).fireTableDataChanged();
+		boolean found = false;
+		for (int i = 0; i < studentList.size(); i++) {
+			if(e.getStudent().getId() == studentList.get(i).getId())
+				found = true;
+		}
+		if(!found)
 			studentList.add(e.getStudent());
-		}
-		else{
-			for (int i = 0; i < studentList.size(); i++) {
-				if(studentList.get(i).getId() != e.getStudent().getId() && i == studentList.size()){
-					studentList.add(e.getStudent());
-				}
-			}
-		}
 		
 		
 		
-		WebTableModel model = (WebTableModel)webTable.getModel();
+		DefaultTableModel model = (DefaultTableModel)webTable.getModel();
+		model.getDataVector().clear();
+		model.fireTableDataChanged();
+		webTable.updateUI();
 		for (int i = 0; i < studentList.size(); i++) {
 			int score = 0;
 			Student student = studentList.get(i);
@@ -100,6 +100,7 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 					}
 				}
 			}
+			
 			model.addRow(new Object[]{
 					student.getFullName(),
 					score
@@ -109,12 +110,13 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 	}
 
 	public void clearQuiz() {
+		studentList.clear();
 		clearTable();
 	}
 	
 	public void clearTable(){
-		((WebTableModel)webTable.getModel()).getDataVector().clear();
-		((WebTableModel)webTable.getModel()).fireTableDataChanged();
+		((DefaultTableModel)webTable.getModel()).getDataVector().clear();
+		((DefaultTableModel)webTable.getModel()).fireTableDataChanged();
 		currentQuiz = null;
 		quizResponse.clear();
 		quizResponse = null;

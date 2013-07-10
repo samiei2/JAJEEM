@@ -457,16 +457,15 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
-					for (int i = 0; i < webTable.getRowCount(); i++) {
-						model.removeRow(i);
-					}
+					model.getDataVector().clear();
+					model.fireTableDataChanged();
+					webTable.updateUI();
 
 					if (webComboBox.getSelectedIndex() != -1
 							&& quizResponse.size() != 0) {
-						for (int i = 0; i < quizResponse.get(
-								webComboBox.getSelectedIndex()).size(); i++) {
-							QuizResponse ex = quizResponse.get(
-									webComboBox.getSelectedIndex()).get(i);
+						for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
+							System.out.println(webComboBox.getSelectedIndex());
+							QuizResponse ex = quizResponse.get(webComboBox.getSelectedIndex()).get(i);
 							Student student = ex.getStudent();
 							Question question = ex.getQuestion();
 							ImageIcon imgToolTip = null;
@@ -673,54 +672,18 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		if (currentQuestion != null && question != null && student != null) {
 			int index = -1;
-			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find
-																			// question
-																			// index
-																			// in
-																			// the
-																			// response
-																			// list
+			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find question index in the response list
 				if (currentQuiz.getQuestionList().get(i).getId() == question
 						.getId()) {
 					index = i;
 					break;
 				}
 			}
-			for (int i = 0; i < quizResponse.size(); i++) {// search in
-															// results,if this
-															// question is
-															// already answered
-															// by this
-															// student,then
-															// update,otherwise
-															// save
-				for (int j = 0; j < quizResponse.get(i).size(); j++) { // search
-																		// in
-																		// student's
-																		// response
-																		// list
-																		// of
-																		// the
-																		// question
-																		// quizresponse.get(i)
-																		// =
-																		// list
-																		// of
-																		// responses
-																		// of
-																		// students
-																		// who
-																		// answered
-																		// this
-																		// question
-					if (quizResponse.get(i).get(j).getStudent().getId() == student
-							.getId()
-							&& quizResponse.get(i).get(j).getQuestion().getId() == question
-									.getId()) {
-						quizResponse.get(i).set(j, e);
-						found = true;
-						break;
-					}
+			for (int j = 0; j < quizResponse.get(index).size(); j++) {
+				if (quizResponse.get(index).get(j).getStudent().getId() == student.getId()) {
+					quizResponse.get(index).set(j, e);
+					found = true;
+					break;
 				}
 			}
 			if (!found)
@@ -810,10 +773,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 					JajeemExcetionHandler.logError(exp);
 				}
 
-				for (int i = 0; i < webTable.getRowCount(); i++) {
-					model.removeRow(i);
-				}
-				
+				model.getDataVector().clear();
 				model.fireTableDataChanged();
 				webTable.repaint();
 				webTable.updateUI();
