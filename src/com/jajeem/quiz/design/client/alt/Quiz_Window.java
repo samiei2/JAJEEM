@@ -714,6 +714,7 @@ public class Quiz_Window extends WebFrame {
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								resp.setQuizRun(currentRun);
+								resp.setListeningPort(listenPort);
 								//new QuizEvent().fireResponseEvent(resp);
 								SendQuizResponseCommand cmd = new SendQuizResponseCommand(
 										InetAddress.getLocalHost().getHostAddress(),

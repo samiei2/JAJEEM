@@ -102,13 +102,6 @@ public class Survey_SecondPage extends Survey_AbstractViews {
 			public void questionAnswered(SurveyResponse e) {
 				if(e.getListeningPort()!=parentPanel.listeningPort())
 					return;
-				Question question = e.getQuestion();
-				for (int i = 0; i < parentPanel.getCurrentRun().getSurvey().getQuestionList().size(); i++) {
-					Question temp = parentPanel.getCurrentRun().getSurvey().getQuestionList().get(i);
-					if(temp.getId() == question.getId()){
-						
-					}
-				}
 				
 				panel_bottom_21.QuestionAnswered(e);
 				panel_bottom_22.QuestionAnswered(e);
