@@ -60,7 +60,7 @@ public class Chat extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Chat frame = new Chat("", 0, false, -1);
+					Chat frame = new Chat("", 0, false, -1, "");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
@@ -76,9 +76,9 @@ public class Chat extends WebFrame {
 	 * @throws Exception
 	 * @throws NumberFormatException
 	 */
-	public Chat(String to, int port, boolean multi, int groupId)
+	public Chat(String to, int port, boolean multi, int groupId, String title)
 			throws NumberFormatException, Exception {
-		super("Chat");
+		super("Chat - " + title); 
 		new Config();
 		File dir = new File("Messages/");
 		if (!dir.exists())

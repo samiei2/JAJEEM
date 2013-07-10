@@ -19,29 +19,28 @@ public class ChatCommandHanlder implements ICommandHandler {
 		Chat currentChat = null;
 
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
-			if (!Student.getChatList().isEmpty()) {
-				for (Chat chat : Student.getChatList()) {
-					if (chat.getTo().equals(cmd.getFrom())) {
-						currentChat = chat;
-						currentChat.addLine(((ChatCommand) cmd).getMessage());
-						currentChat.scrollDown();
-						currentChat.setVisible(true);
-						break;
-					}
-				}
-			} else {
-				if (currentChat == null) {
-					currentChat = new Chat(cmd.getFrom(),
-							Integer.parseInt(Config.getParam("serverPort")),
-							((ChatCommand) cmd).isMutli(),
-							((ChatCommand) cmd).getGroupId());
+			
+			for (Chat chat : Student.getChatList()) {
+				if (chat.getGroupId() == ((ChatCommand) cmd).getGroupId()) {
+					currentChat = chat;
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
-					Student.getChatList().add(currentChat);
-					currentChat.setVisible(true);
 					currentChat.scrollDown();
+					currentChat.setVisible(true);
+					break;
 				}
 			}
 
+			if (currentChat == null) {
+				currentChat = new Chat(String.valueOf(((ChatCommand) cmd)
+						.getGroupId()), Integer.parseInt(Config
+						.getParam("serverPort")),
+						((ChatCommand) cmd).isMutli(),
+						((ChatCommand) cmd).getGroupId(), cmd.getFrom());
+				currentChat.addLine(((ChatCommand) cmd).getMessage());
+				Student.getChatList().add(currentChat);
+				currentChat.setVisible(true);
+				currentChat.scrollDown();
+			}
 		} else {
 			if (!InstructorNoa.getChatList().isEmpty()) {
 				if (((ChatCommand) cmd).getGroupId() > -1) {
@@ -95,7 +94,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 					currentChat = new Chat(cmd.getFrom(),
 							Integer.parseInt(Config.getParam("port")),
 							((ChatCommand) cmd).isMutli(),
-							((ChatCommand) cmd).getGroupId());
+							((ChatCommand) cmd).getGroupId(), cmd.getFrom());
 					currentChat.addLine(((ChatCommand) cmd).getMessage());
 					InstructorNoa.getChatList().add(currentChat);
 					currentChat.setVisible(true);
