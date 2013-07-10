@@ -28,7 +28,7 @@ public class ClientServer {
 
 	private void StartServer() {
 		try {
-			ServerSocket ss=new ServerSocket(12345);
+			ServerSocket ss = new ServerSocket(12345);
 			while(true){
 				final Socket client = ss.accept();
 		        new Thread(new Runnable() {
@@ -60,11 +60,13 @@ public class ClientServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-						        FileTransferObject evt = new FileTransferObject(this);
-						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt, ClientFileInbox.class);
+//						        FileTransferObject evt = new FileTransferObject(this);
+//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+//						        new FileTransferEvent().fireProgress(evt, ClientFileInbox.class);
 						    }
 						    fos.close();
+						    in.close();
+						    client.close();
 						    //TODO add filetransferobject object 
 						    FileTransferObject obj = new FileTransferObject(this);
 						    obj.setFileName(output.getAbsolutePath());

@@ -99,6 +99,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		webPanel_4.add(webScrollPane_1, BorderLayout.CENTER);
 
 		webTable = new WebTable();
+		webTable.setEditable(false);
 		webTable.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
 				"#", "Answer" }));
 		webScrollPane_1.setViewportView(webTable);

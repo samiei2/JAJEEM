@@ -11,8 +11,11 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.quiz.dao.h2.QuizDAO;
+import com.jajeem.quiz.model.Quiz;
 import com.jajeem.survey.dao.IRunDAO;
 import com.jajeem.survey.model.Run;
+import com.jajeem.survey.model.Survey;
 import com.jajeem.util.BaseDAO;
 
 public class RunDAO implements IRunDAO {
@@ -77,6 +80,15 @@ public class RunDAO implements IRunDAO {
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
+		}
+		
+		try{
+			SurveyDAO surveydao = new SurveyDAO();
+			Survey survey = run.getSurvey();
+			surveydao.create(survey);
+		}
+		catch(Exception e){
+			
 		}
 
 		return run;

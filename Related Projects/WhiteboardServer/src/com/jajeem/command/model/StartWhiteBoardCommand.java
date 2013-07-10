@@ -6,7 +6,10 @@ public class StartWhiteBoardCommand extends Command {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4014963068838321817L;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	
 	private int sessionID;
 	private String server;

@@ -89,6 +89,8 @@ public class InstructorServer {
 //						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
 						    }
 						    fos.close();
+						    in.close();
+						    client.close();
 						    
 						    evt.setFileName(output.getAbsolutePath());
 						    if(evt.getClientSocket().getLocalPort()==54321)

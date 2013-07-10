@@ -106,6 +106,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 		webPanel_4.add(webScrollPane_1, BorderLayout.CENTER);
 
 		webTable = new WebTable();
+		webTable.setEditable(false);
 		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
 				"#", "Id", "Name", "Correct Answer", "Answer" }));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(35);

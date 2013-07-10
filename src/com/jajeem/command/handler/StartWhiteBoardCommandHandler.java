@@ -22,7 +22,11 @@ public class StartWhiteBoardCommandHandler implements ICommandHandler {
 			
 			@Override
 			public void run() {
-				String userName = com.jajeem.util.Session.getStudent().getFullName();
+				String userName;
+				if(com.jajeem.util.Session.getStudent() != null)
+					userName = com.jajeem.util.Session.getStudent().getFullName();
+				else
+					userName = "Anonymous";
 				if(userName == "" || userName == null){
 					userName = "Anonymous";
 				}
