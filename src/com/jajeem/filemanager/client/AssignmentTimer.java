@@ -55,9 +55,10 @@ public class AssignmentTimer extends JDialog {
 	 */
 	public AssignmentTimer() {
 		MainFrame = this;
-		setModal(true);
+		setModal(false);
 		setResizable(false);
-		setBounds(100, 100, 173, 81);
+		setAlwaysOnTop(true);
+		setBounds(0, 0, 173, 81);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

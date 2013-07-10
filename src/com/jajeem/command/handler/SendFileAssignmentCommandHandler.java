@@ -43,6 +43,7 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 				timer.start(time);
 				timer.setLocationRelativeTo(Student.getMainFram());
 				timer.setVisible(true);
+				
 			}
 		}).start();
 		
