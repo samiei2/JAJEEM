@@ -563,7 +563,7 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false, -1);
+														false, -1, selectedStudent);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -577,7 +577,7 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false, -1);
+														false, -1, selectedStudent);
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
@@ -620,7 +620,7 @@ public class InstructorNoaUtil {
 																Integer.parseInt(Config
 																		.getParam("port")),
 																true,
-																groupIndex);
+																groupIndex, group.getName());
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
@@ -638,7 +638,7 @@ public class InstructorNoaUtil {
 																Integer.parseInt(Config
 																		.getParam("port")),
 																true,
-																groupIndex);
+																groupIndex, group.getName());
 														currentChat.setTo(String
 																.valueOf(groupIndex));
 														InstructorNoa
