@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -889,6 +890,89 @@ public class InstructorNoaUtil {
 										}
 									}
 								}
+							}
+							else{
+								try {
+									final Process proc = Runtime
+											.getRuntime()
+											.exec("java -jar WhiteboardServer.jar "
+													+ "1998"
+													+ " "
+													+ "1999", null,
+													new File("util/"));
+									new Thread(new Runnable() {
+
+										@Override
+										public void run() {
+											try {
+												BufferedReader in = new BufferedReader(
+														new InputStreamReader(
+																proc.getInputStream()));
+												String line = null;
+												while ((line = in
+														.readLine()) != null) {
+													System.out
+															.println(line);
+												}
+											} catch (Exception e) {
+												// TODO: handle exception
+											}
+										}
+									}).start();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								
+								// Start Teacher Whiteboard
+								try {
+									final Process proc = Runtime
+											.getRuntime()
+											.exec("java -jar WhiteboardTeacher.jar "
+													+ "1998"
+													+ " "
+													+ "1999",
+													null,
+													new File(
+															"util/"));
+									new Thread(new Runnable() {
+
+										@Override
+										public void run() {
+											try {
+												BufferedReader in = new BufferedReader(
+														new InputStreamReader(
+																proc.getInputStream()));
+												String line = null;
+												while ((line = in
+														.readLine()) != null) {
+													System.out
+															.println(line);
+												}
+											} catch (Exception e) {
+											}
+										}
+									}).start();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								
+								StartWhiteBoardCommand vc;
+								try {
+									new Config();
+									vc = new StartWhiteBoardCommand(
+											InetAddress.getLocalHost()
+													.getHostAddress(),
+											Config.getParam("broadcastingIp"), Integer.parseInt(Config
+													.getParam("port")));
+									vc.setSessionPort("1998");
+									vc.setWhiteboardPort("1999");
+									InstructorNoa.getServerService().send(vc);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+								
 							}
 
 							// if (Session.isWhiteboardWindowOpen()) {
