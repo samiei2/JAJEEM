@@ -151,6 +151,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 										.addContainerGap()));
 
 		webTable = new WebTable();
+		webTable.setEditable(false);
 		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
 				"#", "Title", "Correct Answer", "Answer" }));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(35);

@@ -87,14 +87,13 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		);
 
 		webTable = new WebTable();
+		webTable.setEditable(false);
 		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
 				"#", "Title", "Answer" }));
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(35);
 		webTable.getColumnModel().getColumn(0).setMaxWidth(35);
 		webTable.getColumnModel().getColumn(1).setPreferredWidth(105);
 		webTable.getColumnModel().getColumn(1).setMaxWidth(217);
-		webTable.getColumnModel().getColumn(2).setPreferredWidth(85);
-		webTable.getColumnModel().getColumn(2).setMaxWidth(217);
 		webScrollPane.setViewportView(webTable);
 		webPanel.setLayout(gl_webPanel);
 		GroupLayout groupLayout = new GroupLayout(this);
