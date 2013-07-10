@@ -5,6 +5,10 @@ import java.io.Serializable;
 import javax.swing.event.EventListenerList;
 
 public class FileTransferEvent implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected static EventListenerList listenerList = new EventListenerList();
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

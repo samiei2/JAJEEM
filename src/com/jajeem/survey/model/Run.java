@@ -8,6 +8,10 @@ import com.jajeem.room.model.Session;
 
 public class Run implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//properties
 	private int id; 
 	private Instructor instructor;

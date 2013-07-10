@@ -1,6 +1,5 @@
 package com.jajeem.util;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,11 +7,10 @@ import java.sql.Statement;
 public class initDatabase {
 
 	public static void initialize() {
-		Config conf = new Config();
 
 		Connection con;
 		try {
-			String s = conf.getParam("server");
+			String s = Config.getParam("server");
 				if (s.equals("1")) {
 
 				con = BaseDAO.getConnection();
@@ -24,7 +22,7 @@ public class initDatabase {
 
 						"CREATE TABLE IF NOT EXISTS SurveyReponse (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, studentId int NOT NULL, ResponseQuestionid int NOT NULL, PRIMARY KEY (id));"
 						+ "CREATE TABLE IF NOT EXISTS SurveyQuestion (id int DEFAULT 0 NOT NULL AUTO_INCREMENT,surveyid int NOT NULL, responseId int NOT NULL, title varchar(5000), type tinyint NOT NULL, imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), instructorid int NOT NULL, PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS SurveyRun (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, surveyid int NOT NULL, Instructorid int NOT NULL, start datetime, end datetime, score int, Studentid int NOT NULL, sessionid int NOT NULL, PRIMARY KEY (id));"
+						+ "CREATE TABLE IF NOT EXISTS SurveyRun (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, surveyid int NOT NULL, Instructorid int NOT NULL, start bigint, end bigint, score int, Studentid int NOT NULL, sessionid int NOT NULL, PRIMARY KEY (id));"
 						+ "CREATE TABLE IF NOT EXISTS Survey (id int DEFAULT 0 NOT NULL AUTO_INCREMENT, instructorid int NOT NULL, type tinyint, category varchar(255), description varchar(1000), pointing int, title varchar(255), PRIMARY KEY (id));"
 						+
 						
@@ -63,16 +61,19 @@ public class initDatabase {
 				statement.executeUpdate(query);
 
 				// TODO just for sample data
-				
-					query = "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'majid','majid','Majid','Ghasemi','none');";
-					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'armin','armin','Armin','Samiei','farsi');";
-					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mohammad','mohammad','Mohammad','Tahaei','eng');";
+//				
+//					query = "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'majid','majid','Majid','Ghasemi','none');";
+//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'armin','armin','Armin','Samiei','farsi');";
+//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mohammad','mohammad','Mohammad','Tahaei','eng');";
 //					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(4,'jajeem','jajeem','Jajeem','Jajeem','none');";
-					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');";
+//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');";
+				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
+				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
+				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
 					
 					query += "Insert into student(username,password,firstname,lastname,language) values('ali','ali','Ali','Mohammadi','none');";
-					query += "Insert into student(username,password,firstname,lastname,language) values('kazem','kazem','Kazem','Akbari','none');";
-					query += "Insert into student(username,password,firstname,lastname,language) values('john','john','John','Smith','none');";
+					query += "Insert into student(username,password,firstname,lastname,language) values('student1','student1','Student 1','','none');";
+					query += "Insert into student(username,password,firstname,lastname,language) values('student2','student2','Student 2','','none');";
 	
 					query += "Insert into room(name,seatsize) values('a',10);";
 					query += "Insert into room(name,seatsize) values('b',20);";

@@ -8,6 +8,10 @@ import com.jajeem.survey.model.Response;
 
 public class Survey implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//properties
 	private int id=-1;
 	private int instructorId=-1;

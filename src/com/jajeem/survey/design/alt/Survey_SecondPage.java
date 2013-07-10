@@ -19,7 +19,6 @@ import com.jajeem.events.SurveyEventListener;
 import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
-import com.jajeem.survey.design.SurveyTab_2_Student_View;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
@@ -40,6 +39,7 @@ public class Survey_SecondPage extends Survey_AbstractViews {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Survey_SecondPage(Survey_Main parent) {
 		parentPanel = parent;
 		currentSurvey = parentPanel.getCurrentRun().getSurvey();
@@ -102,7 +102,6 @@ public class Survey_SecondPage extends Survey_AbstractViews {
 			public void questionAnswered(SurveyResponse e) {
 				if(e.getListeningPort()!=parentPanel.listeningPort())
 					return;
-				boolean valid = false;
 				Question question = e.getQuestion();
 				for (int i = 0; i < parentPanel.getCurrentRun().getSurvey().getQuestionList().size(); i++) {
 					Question temp = parentPanel.getCurrentRun().getSurvey().getQuestionList().get(i);

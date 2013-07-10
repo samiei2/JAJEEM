@@ -14,17 +14,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,24 +38,20 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.survey.design.client.alt.Survey_Window;
+import com.jajeem.room.model.Session;
 import com.jajeem.survey.model.Question;
-import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
-import com.jajeem.survey.service.SurveyService;
+import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.ResultService;
 import com.jajeem.survey.service.RunService;
-import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-
-import sun.net.www.content.image.gif;
 
 public class Survey_Main extends WebFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private WebButton wbtnNew;
 	private WebButton wbtnContent;
@@ -74,9 +69,7 @@ public class Survey_Main extends WebFrame {
 	private Survey_Main mainFrame;
 	private List<String> studentIps;
 	private int gIndex;
-	private static boolean isPreviouslyOpened = false;
 	
-	private static AtomicInteger counter = new AtomicInteger();
 
 	/**
 	 * Launch the application.
@@ -85,6 +78,7 @@ public class Survey_Main extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					@SuppressWarnings("unused")
 					Survey_Main frame = new Survey_Main(-1,null);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
@@ -537,7 +531,6 @@ public class Survey_Main extends WebFrame {
 		m_modelSelection.setSelectionInterval(0, 0);
 	}
 
-	@SuppressWarnings("unused")
 	private void StopSurveyCommand() {
 		try {
 			if(gIndex!=-1){

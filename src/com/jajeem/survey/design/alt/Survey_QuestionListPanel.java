@@ -1,6 +1,5 @@
 package com.jajeem.survey.design.alt;
 
-import java.awt.CardLayout;
 import java.awt.Component;
 
 import javax.swing.GroupLayout;

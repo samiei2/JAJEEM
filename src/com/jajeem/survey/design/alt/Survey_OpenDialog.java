@@ -2,38 +2,30 @@ package com.jajeem.survey.design.alt;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.combobox.WebComboBox;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
-import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.SurveyService;
-import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class Survey_OpenDialog extends JDialog {
@@ -59,7 +51,6 @@ public class Survey_OpenDialog extends JDialog {
 	 * Create the dialog.
 	 * @param actionListener 
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Survey_OpenDialog(Survey_Main frame) {
 		setTitle("Open");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Survey_OpenDialog.class.getResource("/com/jajeem/images/survey.png")));

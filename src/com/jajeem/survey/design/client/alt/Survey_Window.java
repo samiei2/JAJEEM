@@ -1,14 +1,15 @@
 package com.jajeem.survey.design.client.alt;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -45,12 +45,9 @@ import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Question;
-import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
+import com.jajeem.survey.model.Survey;
 import com.jajeem.util.ClientSession;
-import com.jajeem.util.Config;
-import java.awt.Toolkit;
-import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class Survey_Window extends WebFrame {

@@ -90,7 +90,7 @@ public class FileCollect extends WebPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "File Name", "From"
+				"#", "File Name", "Status"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
