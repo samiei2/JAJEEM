@@ -99,7 +99,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		webPanel_4.add(webScrollPane_1, BorderLayout.CENTER);
 
 		webTable = new WebTable();
-		webTable.setModel(new WebTableModel(new Object[][] {}, new String[] {
+		webTable.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
 				"#", "Answer" }));
 		webScrollPane_1.setViewportView(webTable);
 
@@ -485,7 +485,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		webTextArea.clear();
 		webTextField.clear();
 		webTextField_2.clear();
-		WebTableModel model = (WebTableModel) webTable.getModel();
+		DefaultTableModel model = (DefaultTableModel) webTable.getModel();
 		model.getDataVector().clear();
 		model.fireTableDataChanged();
 		webTable.updateUI();

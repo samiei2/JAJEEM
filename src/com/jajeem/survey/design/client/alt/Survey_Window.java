@@ -677,6 +677,7 @@ public class Survey_Window extends WebFrame {
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								resp.setSurveyRun(currentRun);
+								resp.setListeningPort(listenPort);
 								//new SurveyEvent().fireResponseEvent(resp);
 								SendSurveyResponseCommand cmd = new SendSurveyResponseCommand(
 										InetAddress.getLocalHost().getHostAddress(),
