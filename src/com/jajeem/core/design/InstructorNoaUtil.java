@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -680,13 +679,6 @@ public class InstructorNoaUtil {
 	public void addEventsBottomPanel(final WebPanel bottomButtonPanel,
 			final WebFrame mainFrame) throws IOException {
 		String key = "";
-
-		Component card = null;
-		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
-			if (comp.isVisible() == true) {
-				card = comp;
-			}
-		}
 
 		for (Component c : bottomButtonPanel.getComponents()) {
 			if (c instanceof JButton) {

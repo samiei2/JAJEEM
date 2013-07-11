@@ -2,7 +2,6 @@ package com.jajeem.command.handler;
 
 import java.net.InetAddress;
 
-import com.alee.laf.button.WebButton;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartIntercomCommand;
