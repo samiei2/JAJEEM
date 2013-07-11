@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
@@ -49,9 +51,9 @@ public class Student {
 	private static AVReceiveOnly receiverOnly;
 	private static AVSendOnly sendOnly;
 	private static AVTransmit2 transmitter;
-	
+
 	private static boolean black;
-	
+
 	private static VNCCaptureService vncViewer;
 
 	public static boolean isBlack() {
@@ -90,11 +92,11 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
-			
+
 			// initiate Libjitsi for intercom
-//			LibJitsi.start();
+			// LibJitsi.start();
 			setTransmitter(new AVTransmit2("10000", "", "5000"));
-//			setReceiver(new AVReceive2("10000", "", "5000"));
+			// setReceiver(new AVReceive2("10000", "", "5000"));
 
 		} catch (Throwable e) {
 			// Something went wrong
@@ -164,14 +166,21 @@ public class Student {
 		TooltipManager.setTooltip(messageButton, imgToolTip,
 				"Send a message to your instructor.", TooltipWay.down);
 		panel.add(messageButton);
-		
-		ImageIcon imgFile = new ImageIcon(
-				ImageIO.read(Student.class
-						.getResourceAsStream(("/com/jajeem/images/file_upload.png"))));
+
+		ImageIcon imgFile = new ImageIcon(ImageIO.read(Student.class
+				.getResourceAsStream(("/com/jajeem/images/file_upload.png"))));
 		WebButton fileButton = new WebButton(imgFile);
 		TooltipManager.setTooltip(fileButton, imgToolTip,
 				"Send a file to your instructor.", TooltipWay.down);
 		panel.add(fileButton);
+
+		ImageIcon imgIntercom = new ImageIcon(
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/icons/applications_style1/call_teacher.png"))));
+		WebButton intercomButton = new WebButton(imgIntercom);
+		TooltipManager.setTooltip(intercomButton, imgToolTip,
+				"Call Instructor.", TooltipWay.down);
+		panel.add(intercomButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
@@ -204,7 +213,7 @@ public class Student {
 				}
 			}
 		});
-		
+
 		fileButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -212,6 +221,22 @@ public class Student {
 				try {
 					ClientFileManagerMain main = new ClientFileManagerMain();
 					main.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		intercomButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					IntercomRequestCommand irc = new IntercomRequestCommand(
+							InetAddress.getLocalHost().getHostAddress(),
+							StudentLogin.getServerIp(), Integer.parseInt(Config
+									.getParam("serverPort")));
+					StudentLogin.getServerService().send(irc);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -230,7 +255,7 @@ public class Student {
 	}
 
 	public static AVTransmit2 getTransmitter() throws Exception {
-		if(transmitter== null){
+		if (transmitter == null) {
 			transmitter = new AVTransmit2("10000", "", "5000");
 		}
 		return transmitter;
