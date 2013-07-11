@@ -60,9 +60,9 @@ public class ClientServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-//						        FileTransferObject evt = new FileTransferObject(this);
-//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-//						        new FileTransferEvent().fireProgress(evt, ClientFileInbox.class);
+						        FileTransferObject evt = new FileTransferObject(this);
+						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt, ClientProgressWindow.class);
 						    }
 						    fos.close();
 						    in.close();

@@ -85,8 +85,8 @@ public class InstructorServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-//						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
+						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt,InstructorProgressWindow.class);
 						    }
 						    fos.close();
 						    in.close();

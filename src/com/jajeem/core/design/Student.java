@@ -10,7 +10,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,6 +175,14 @@ public class Student {
 		TooltipManager.setTooltip(fileButton, imgToolTip,
 				"Send a file to your instructor.", TooltipWay.down);
 		panel.add(fileButton);
+		
+		ImageIcon videoFile = new ImageIcon(
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/com/jajeem/images/MPlayer.png"))));
+		WebButton videoButton = new WebButton(videoFile);
+		TooltipManager.setTooltip(videoButton, imgToolTip,
+				"Video Player", TooltipWay.down);
+		panel.add(videoButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
@@ -214,6 +225,40 @@ public class Student {
 					main.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+				}
+			}
+		});
+		
+		videoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					final Process proc;
+					System.out.println(new File("util/",
+							"videoplayer.jar").exists());
+					proc = Runtime.getRuntime().exec(
+							"java -jar videoplayer.jar", null,
+							new File("util/"));
+					// Then retrieve the process output
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							try {
+								BufferedReader in = new BufferedReader(  
+			                            new InputStreamReader(proc.getInputStream()));  
+							        String line = null;  
+							        while ((line = in.readLine()) != null) {  
+							            System.out.println(line);  
+							        }  
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+						}
+					}).start();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
 			}
 		});

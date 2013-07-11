@@ -248,8 +248,8 @@ public class ClientFileSendTab extends WebPanel {
 					try {
 //						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
 //							System.out.println("Sending file to : "+ips.get(0));
-							Socket clientSocket=new Socket(StudentLogin.getServerIp(),54321);
-//							Socket clientSocket=new Socket("127.0.0.1",54321);
+//							Socket clientSocket=new Socket(StudentLogin.getServerIp(),54321);
+							Socket clientSocket=new Socket("127.0.0.1",54321);
 							OutputStream out=clientSocket.getOutputStream();
 						    FileInputStream fis=new FileInputStream(file);
 						    byte[] info = new byte[2048];
@@ -282,8 +282,8 @@ public class ClientFileSendTab extends WebPanel {
 						    	out.write(b, 0, x);
 						    	bytesRead += x;
 						    	FileTransferObject evt = new FileTransferObject(this);
-						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,ClientFileSendTab.class);
+						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt,ClientSendFileProgressWindow.class);
 						    }
 						    out.close();
 						    fis.close();
