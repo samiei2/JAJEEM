@@ -252,7 +252,6 @@ public class FileSendTab extends WebPanel {
 						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
 							System.out.println("Ip : "+ips.get(i));
 							Socket clientSocket=new Socket(ips.get(i),12345);
-							progwin.setVisible(true);
 //							Socket clientSocket=new Socket("127.0.0.1",12345);
 							OutputStream out=clientSocket.getOutputStream();
 						    FileInputStream fis=new FileInputStream(file);
@@ -289,8 +288,10 @@ public class FileSendTab extends WebPanel {
 						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
 						        new FileTransferEvent().fireProgress(evt,FileSendProgressWindow.class);
 						    }
+						    out.flush();
 						    out.close();
 						    fis.close();
+						    progwin.reset();
 						}
 						progwin.dispose();
 //						confirmationDialog.dispose();
@@ -311,6 +312,7 @@ public class FileSendTab extends WebPanel {
 				}
 			});
 			fileSender.start();
+			progwin.setVisible(true);
 //			confirmationDialog.setVisible(true);
 //			System.out.println(dialog.getValue().toString());
 //			int command = dialog.getValue() instanceof String && dialog.getValue().toString().equals("Cancel") ? 0 : -1;

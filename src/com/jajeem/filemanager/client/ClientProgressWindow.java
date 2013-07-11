@@ -18,12 +18,13 @@ import com.jajeem.events.FileTransferObject;
 import com.jajeem.filemanager.design.FileSendProgressWindow;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Dialog.ModalityType;
 
 public class ClientProgressWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private WebProgressBar webProgressBar;
-	private FileTransferEvent event;
+	private FileTransferEvent event = new FileTransferEvent();
 
 	/**
 	 * Launch the application.
@@ -42,6 +43,8 @@ public class ClientProgressWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public ClientProgressWindow() {
+		setModalityType(ModalityType.DOCUMENT_MODAL);
+		setAlwaysOnTop(true);
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 534, 96);

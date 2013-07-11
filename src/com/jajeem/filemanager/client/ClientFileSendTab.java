@@ -237,8 +237,9 @@ public class ClientFileSendTab extends WebPanel {
 
 	protected void SendFile(final File file) {
 		try{
-			JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
-			final JDialog confirmationDialog = dialog.createDialog(this, "File Transfer");
+//			JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
+//			final JDialog confirmationDialog = dialog.createDialog(this, "File Transfer");
+			final ClientSendFileProgressWindow progwin = new ClientSendFileProgressWindow();
 			Thread fileSender = new Thread(new Runnable() {
 				
 				@Override
@@ -248,8 +249,8 @@ public class ClientFileSendTab extends WebPanel {
 					try {
 //						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
 //							System.out.println("Sending file to : "+ips.get(0));
-//							Socket clientSocket=new Socket(StudentLogin.getServerIp(),54321);
-							Socket clientSocket=new Socket("127.0.0.1",54321);
+							Socket clientSocket=new Socket(StudentLogin.getServerIp(),54321);
+//							Socket clientSocket=new Socket("127.0.0.1",54321);
 							OutputStream out=clientSocket.getOutputStream();
 						    FileInputStream fis=new FileInputStream(file);
 						    byte[] info = new byte[2048];
@@ -285,26 +286,30 @@ public class ClientFileSendTab extends WebPanel {
 						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
 						        new FileTransferEvent().fireProgress(evt,ClientSendFileProgressWindow.class);
 						    }
+						    out.flush();
 						    out.close();
 						    fis.close();
 //						}
-						confirmationDialog.dispose();
+						progwin.dispose();
+//						confirmationDialog.dispose();
 						new FileTransferEvent().fireSuccess(null, ClientFileSendTab.class);
 						
 					} catch (Exception e) {
-						confirmationDialog.dispose();
+						progwin.dispose();
+//						confirmationDialog.dispose();
 						JajeemExcetionHandler.logError(e,ClientFileSendTab.class);
 						new FileTransferEvent().fireFailure(null, ClientFileSendTab.class);
 					}
 				}
 			});
 			fileSender.start();
-			confirmationDialog.setVisible(true);
-			System.out.println(dialog.getValue().toString());
-			int command = dialog.getValue() instanceof String && dialog.getValue().toString().equals("Cancel") ? 0 : -1;
-			if(command==0 && !fileSender.isInterrupted())
-				fileSender.interrupt();
-			System.out.println(fileSender.isAlive()+":"+command);
+//			confirmationDialog.setVisible(true);
+			progwin.setVisible(true);
+//			System.out.println(dialog.getValue().toString());
+//			int command = dialog.getValue() instanceof String && dialog.getValue().toString().equals("Cancel") ? 0 : -1;
+//			if(command==0 && !fileSender.isInterrupted())
+//				fileSender.interrupt();
+//			System.out.println(fileSender.isAlive()+":"+command);
 		}
 		catch(Exception e){
 			JajeemExcetionHandler.logError(e);

@@ -11,6 +11,7 @@ import java.net.MulticastSocket;
 import org.apache.log4j.Logger;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
+import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
@@ -44,6 +45,7 @@ import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GrantCommand;
+import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.MessageCommand;
@@ -159,10 +161,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				Command cmd = (Command) o;
 
-				System.out.println("Receiving ----> Command: " + cmd.getClass() + " from: " + cmd.getFrom());
-				
-//				logger.info("Receiving: Message type: " + cmd.getClass()
-//						+ ", from: " + cmd.getTo());
+				System.out.println("Receiving ----> Command: " + cmd.getClass()
+						+ " from: " + cmd.getFrom());
+
+				// logger.info("Receiving: Message type: " + cmd.getClass()
+				// + ", from: " + cmd.getTo());
 
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
@@ -238,7 +241,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof StartWhiteBoardCommand) {
 					StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
 					whiteboardHandler.run(cmd);
-					
+
 				} else if (cmd instanceof StopWhiteBoardCommand) {
 					StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
 					whiteboardHandler.run(cmd);
@@ -253,45 +256,50 @@ public class ClientService implements IConnectorSevice, Runnable {
 					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
 					setGrantCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof MessageCommand) {
 					MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
 					messageCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof ChatCommand) {
 					ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
 					chatCommandHanlder.run(cmd);
 				}
-				
-				else if(cmd instanceof StartVideoCommand){
+
+				else if (cmd instanceof StartVideoCommand) {
 					StartVideoCommandHandler videoCommandHandler = new StartVideoCommandHandler();
 					videoCommandHandler.run(cmd);
 				}
-				
-				else if(cmd instanceof StartIntercomCommand){
+
+				else if (cmd instanceof StartIntercomCommand) {
 					StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
 					startIntercomCommandHandler.run(cmd);
 				}
-				
-				else if(cmd instanceof StartApplicationCommand){
+
+				else if (cmd instanceof StartApplicationCommand) {
 					StartApplicationCommandHanlder startApplicationCommandHandler = new StartApplicationCommandHanlder();
 					startApplicationCommandHandler.run(cmd);
 				}
-				
-				else if(cmd instanceof SendFileCollectCommand){
+
+				else if (cmd instanceof SendFileCollectCommand) {
 					SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
 					sendfileCommandHandler.run(cmd);
 				}
-				
-				else if(cmd instanceof SendFileAssignmentCommand){
+
+				else if (cmd instanceof SendFileAssignmentCommand) {
 					SendFileAssignmentCommandHandler sendfileassignmentCommandHandler = new SendFileAssignmentCommandHandler();
 					sendfileassignmentCommandHandler.run(cmd);
 				}
-				
-				else if(cmd instanceof StartModelCommand){
+
+				else if (cmd instanceof StartModelCommand) {
 					StartModelCommandHanlder startModelCommandHanlder = new StartModelCommandHanlder();
 					startModelCommandHanlder.run(cmd);
+				}
+
+				else if (cmd instanceof IntercomRequestCommand) {
+					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
+					intercomRequestCommandHanlder.run(cmd);
 				}
 
 			} catch (Exception ex) {

@@ -1,4 +1,4 @@
-package com.jajeem.filemanager.client;
+package com.jajeem.filemanager.design;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,12 +15,14 @@ import com.alee.laf.label.WebLabel;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.filemanager.design.FileSendProgressWindow;
+import com.sun.jna.platform.FileMonitor.FileEvent;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.bouncycastle.crypto.tls.AlwaysValidVerifyer;
 import java.awt.Dialog.ModalityType;
 
-public class ClientSendFileProgressWindow extends JDialog {
+public class FileAssignmentProgressWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private WebProgressBar webProgressBar;
@@ -31,7 +33,7 @@ public class ClientSendFileProgressWindow extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ClientSendFileProgressWindow dialog = new ClientSendFileProgressWindow();
+			FileAssignmentProgressWindow dialog = new FileAssignmentProgressWindow();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -42,11 +44,10 @@ public class ClientSendFileProgressWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ClientSendFileProgressWindow() {
-		setAlwaysOnTop(true);
+	public FileAssignmentProgressWindow() {
 		setModalityType(ModalityType.DOCUMENT_MODAL);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
+		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 534, 96);
 		getContentPane().setLayout(new BorderLayout());
@@ -90,7 +91,7 @@ public class ClientSendFileProgressWindow extends JDialog {
 			
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				if(t!=ClientSendFileProgressWindow.class)
+				if(t!=FileAssignmentProgressWindow.class)
 					return;
 				setProgressValue((int)evt.getProgressValue());
 			}
@@ -118,10 +119,14 @@ public class ClientSendFileProgressWindow extends JDialog {
 				// TODO Auto-generated method stub
 				
 			}
-		}, FileSendProgressWindow.class);
+		}, FileAssignmentProgressWindow.class);
 	}
 	
 	public void setProgressValue(int i){
 		webProgressBar.setValue(i);
+	}
+
+	public void reset() {
+		webProgressBar.setValue(0);
 	}
 }

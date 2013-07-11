@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -142,7 +141,7 @@ public class InstructorNoa {
 	 * 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
+
 	private void initialize() throws IOException {
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -1240,61 +1239,6 @@ public class InstructorNoa {
 		accountButton.setBottomBgColor(new Color(225, 234, 244));
 		accountButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(accountButton);
-
-		accountButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				// How many frames do we have?
-				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
-				int count = allframes.length;
-				if (count == 0)
-					return;
-
-				// Determine the necessary grid size
-				int sqrt = (int) Math.sqrt(count);
-				int rows = sqrt;
-				int cols = sqrt;
-				if (rows * cols < count) {
-					cols++;
-					if (rows * cols < count) {
-						rows++;
-					}
-				}
-
-				// Define some initial values for size & location.
-				Dimension size = getDesktopPane().getSize();
-
-				int w = size.width / cols;
-				int h = size.height / rows;
-				int x = 0;
-				int y = 0;
-
-				// Iterate over the frames, deiconifying any iconified frames
-				// and then relocating & resizing each.
-				for (int i = 0; i < rows; i++) {
-					for (int j = 0; j < cols && ((i * cols) + j < count); j++) {
-						JInternalFrame f = allframes[(i * cols) + j];
-
-						if (!f.isClosed() && f.isIcon()) {
-							try {
-								f.setIcon(false);
-							} catch (PropertyVetoException e) {
-								e.printStackTrace();
-							}
-						}
-
-						getDesktopPane().getDesktopManager().resizeFrame(f, x,
-								y, w, h);
-						x += w;
-					}
-					y += h; // start the next row
-					x = 0;
-				}
-			}
-
-		});
 
 		WebButton chatButton = new WebButton();
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);

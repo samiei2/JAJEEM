@@ -20,6 +20,7 @@ import com.sun.jna.platform.FileMonitor.FileEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import org.bouncycastle.crypto.tls.AlwaysValidVerifyer;
+import java.awt.Dialog.ModalityType;
 
 public class FileSendProgressWindow extends JDialog {
 
@@ -44,7 +45,8 @@ public class FileSendProgressWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public FileSendProgressWindow() {
-		setModal(false);
+		setModalityType(ModalityType.DOCUMENT_MODAL);
+		setModal(true);
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 534, 96);
@@ -122,5 +124,9 @@ public class FileSendProgressWindow extends JDialog {
 	
 	public void setProgressValue(int i){
 		webProgressBar.setValue(i);
+	}
+
+	public void reset() {
+		webProgressBar.setValue(0);
 	}
 }
