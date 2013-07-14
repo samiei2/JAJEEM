@@ -31,6 +31,7 @@ public class ClientServer {
 			ServerSocket ss = new ServerSocket(12345);
 			while(true){
 				final Socket client = ss.accept();
+				final ClientProgressWindow progwin = new ClientProgressWindow();
 		        new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -60,25 +61,29 @@ public class ClientServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-//						        FileTransferObject evt = new FileTransferObject(this);
-//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-//						        new FileTransferEvent().fireProgress(evt, ClientFileInbox.class);
+						        FileTransferObject evt = new FileTransferObject(this);
+						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt, ClientProgressWindow.class);
 						    }
+						    fos.flush();
 						    fos.close();
 						    in.close();
 						    client.close();
 						    //TODO add filetransferobject object 
+						    progwin.dispose();
 						    FileTransferObject obj = new FileTransferObject(this);
 						    obj.setFileName(output.getAbsolutePath());
 						    new FileTransferEvent().fireSuccess(obj, ClientFileInbox.class);
 						    JOptionPane.showMessageDialog(null, "Teacher has sent you a file.you can find it in your inbox!");
 						}
 						catch(Exception e){
+							progwin.dispose();
 							JajeemExcetionHandler.logError(e,ClientServer.class);
 							new FileTransferEvent().fireFailure(null, ClientFileInbox.class);
 						}
 					}
 				}).start();
+		        progwin.setVisible(true);
 			}
 	        
 		} catch (Exception e) {

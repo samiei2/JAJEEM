@@ -1188,6 +1188,23 @@ public class InstructorNoa {
 		quizButton.setBottomBgColor(new Color(225, 234, 244));
 		quizButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(quizButton);
+		
+		WebButton videoButton = new WebButton();
+		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
+		videoButton.setIcon(new ImageIcon(InstructorNoa.class
+				.getResource("/com/jajeem/images/Media_Player.png")));
+		videoButton.setIconTextGap(30);
+		videoButton.putClientProperty("key", "movieplayer");
+		videoButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		videoButton.setDrawShade(false);
+		videoButton.setRound(10);
+		videoButton.setTopSelectedBgColor(new Color(75, 113, 158));
+		videoButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+		videoButton.setForeground(Color.WHITE);
+		videoButton.setText("Movie Player");
+		videoButton.setBottomBgColor(new Color(225, 234, 244));
+		videoButton.setTopBgColor(new Color(116, 166, 219));
+		rightButtonPanel.add(videoButton);
 
 		WebButton reportButton = new WebButton();
 		reportButton.setHorizontalAlignment(SwingConstants.LEADING);

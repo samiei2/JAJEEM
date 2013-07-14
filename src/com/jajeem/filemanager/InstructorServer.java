@@ -50,8 +50,9 @@ public class InstructorServer {
 					new FileTransferEvent().fireFailure(evt,FileInbox.class);
 					return;
 				}
-				JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
-				final JDialog confirmationDialog = dialog.createDialog("File Transfer");
+//				JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
+//				final JDialog confirmationDialog = dialog.createDialog("File Transfer");
+				final InstructorProgressWindow progwin = new InstructorProgressWindow();
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -85,9 +86,10 @@ public class InstructorServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
-//						        evt.setProgressValue(((double)bytesRead*100/(double)fileLength)*100.0);
-//						        new FileTransferEvent().fireProgress(evt,FileInbox.class);
+						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
+						        new FileTransferEvent().fireProgress(evt,InstructorProgressWindow.class);
 						    }
+						    fos.flush();
 						    fos.close();
 						    in.close();
 						    client.close();
@@ -97,16 +99,19 @@ public class InstructorServer {
 						    	new FileTransferEvent().fireSuccess(evt,FileInbox.class);
 						    if(evt.getClientSocket().getLocalPort()==54322)
 						    	new FileTransferEvent().fireSuccess(evt,FileCollect.class);
-						    confirmationDialog.dispose();
+//						    confirmationDialog.dispose();
+						    progwin.dispose();
 						}
 						catch(Exception e){
-							confirmationDialog.dispose();
+							progwin.dispose();
+//							confirmationDialog.dispose();
 							JajeemExcetionHandler.logError(e,InstructorServer.class);
 							new FileTransferEvent().fireFailure(null,FileInbox.class);
 						}
 					}
 				}).start();
-				confirmationDialog.setVisible(true);
+//				confirmationDialog.setVisible(true);
+				progwin.setVisible(true);
 			}
 			
 			@Override

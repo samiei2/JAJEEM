@@ -497,6 +497,41 @@ public class InstructorNoaUtil {
 						}
 					});
 					break;
+				case "movieplayer":
+					((JButton) c).addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// Run a java app in a separate system process
+							try {
+								final Process proc;
+								System.out.println(new File("util/",
+										"videoplayer.jar").exists());
+								proc = Runtime.getRuntime().exec(
+										"java -jar videoplayer.jar", null,
+										new File("util/"));
+								// Then retrieve the process output
+								new Thread(new Runnable() {
+									
+									@Override
+									public void run() {
+										try {
+											BufferedReader in = new BufferedReader(  
+						                            new InputStreamReader(proc.getInputStream()));  
+										        String line = null;  
+										        while ((line = in.readLine()) != null) {  
+										            System.out.println(line);  
+										        }  
+										} catch (Exception e) {
+										}
+									}
+								}).start();
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+						}
+					});
+					break;
 				case "report":
 
 					break;
@@ -505,20 +540,7 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							// Run a java app in a separate system process
-							Process proc = null;
-							try {
-								System.out.println(new File("util/",
-										"videoplayer.jar").exists());
-								proc = Runtime.getRuntime().exec(
-										"java -jar videoplayer.jar", null,
-										new File("util/"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							// Then retrieve the process output
-							InputStream in = proc.getInputStream();
-							InputStream err = proc.getErrorStream();
+							
 						}
 					});
 					break;
