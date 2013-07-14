@@ -7,7 +7,7 @@ public class StartQuizCommand extends Command {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4014963068838321817L;
+	private static final long serialVersionUID = 1L;
 	private Quiz quiz;
 	private String server;
 	private Run run;

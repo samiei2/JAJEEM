@@ -17,6 +17,7 @@ import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -40,6 +41,7 @@ public class FileManagerMain extends javax.swing.JFrame {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private com.alee.laf.panel.WebPanel webPanel1;
     private WebTabbedPane webTabbedPane;
+	private ArrayList<String> receivingIps;
 	/**
      * Creates new form FileManagerMain
      */
@@ -57,10 +59,10 @@ public class FileManagerMain extends javax.swing.JFrame {
     private void initComponents() {
     	setLookAndFeel();
         webPanel1 = new com.alee.laf.panel.WebPanel();
-        fileSendTab = new FileSendTab();
+        fileSendTab = new FileSendTab(this);
         fileCollectTab = new FileCollect();
         fileInboxTab = new FileInbox();
-        fileAssignmentTab = new FileAssignmentTab();
+        fileAssignmentTab = new FileAssignmentTab(this);
         
         fileAssignmentTab.setParent(this);
 
@@ -148,5 +150,14 @@ public class FileManagerMain extends javax.swing.JFrame {
 
 	public void invokeFileCollect() {
 		fileCollectTab.CollectFiles();
+	}
+
+	public void setReceivingIps(ArrayList<String> arrayList) {
+		receivingIps = arrayList;
+	}
+	
+	public ArrayList<String> getReceivingIps()
+	{
+		return receivingIps;
 	}
 }

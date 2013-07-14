@@ -35,7 +35,6 @@ import com.jajeem.filemanager.client.ClientServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
-import com.jajeem.util.Unzipper;
 
 public class StudentLogin extends JDialog {
 

@@ -53,6 +53,7 @@ public class Recorder extends WebDialog {
 	 * Create the frame.
 	 */
 	public Recorder() {
+		setAlwaysOnTop(true);
 		// setAlwaysOnTop(true);
 		setModal(true);
 		setRound(0);

@@ -31,6 +31,7 @@ import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartIntercomCommandHandler;
 import com.jajeem.command.handler.StartModelCommandHanlder;
 import com.jajeem.command.handler.StartQuizCommandHandler;
+import com.jajeem.command.handler.StartRecorderCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartVideoCommandHandler;
@@ -38,6 +39,7 @@ import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
+import com.jajeem.command.handler.StopRecorderCommandHandler;
 import com.jajeem.command.handler.StopSurveyCommandHanlder;
 import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
 import com.jajeem.command.model.AuthenticateCommand;
@@ -59,6 +61,7 @@ import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartVideoCommand;
@@ -66,6 +69,7 @@ import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCaptureCommand;
 import com.jajeem.command.model.StopQuizCommand;
+import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.model.StopWhiteBoardCommand;
 import com.jajeem.command.model.VolumeCommand;
@@ -300,6 +304,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof IntercomRequestCommand) {
 					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
 					intercomRequestCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof StartStudentRecordCommand) {
+					StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
+					startRecorderCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof StopStudentRecordCommand) {
+					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
+					stopRecorderCommandHanlder.run(cmd);
 				}
 
 			} catch (Exception ex) {

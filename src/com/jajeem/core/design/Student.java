@@ -41,6 +41,7 @@ import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
+import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
@@ -124,7 +125,7 @@ public class Student {
 		frmJajeemProject.setTitle("iCalabo");
 		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Student.class.getResource("/icons/menubar/jajeem.jpg")));
-		frmJajeemProject.setBounds(0, 400, 280, 400);
+		frmJajeemProject.setBounds(0, 400, 280, 500);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -192,6 +193,14 @@ public class Student {
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				"Call Instructor.", TooltipWay.down);
 		panel.add(intercomButton);
+		
+		ImageIcon recordIntercom = new ImageIcon(
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/icons/noa/right_panel/record.png"))));
+		WebButton recordButton = new WebButton(recordIntercom);
+		TooltipManager.setTooltip(recordButton, imgToolTip,
+				"Call Instructor.", TooltipWay.down);
+		panel.add(recordButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
@@ -285,6 +294,24 @@ public class Student {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+		});
+		
+		recordButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Enabling dialog decoration
+				boolean decorateFrames = WebLookAndFeel
+						.isDecorateDialogs();
+				WebLookAndFeel.setDecorateDialogs(true);
+
+				Recorder recorder = new Recorder();
+				recorder.setLocationRelativeTo(frmJajeemProject);
+				recorder.setVisible(true);
+
+				// Restoring frame decoration option
+				WebLookAndFeel.setDecorateDialogs(decorateFrames);
 			}
 		});
 
