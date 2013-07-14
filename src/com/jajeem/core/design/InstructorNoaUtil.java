@@ -422,8 +422,39 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							FileManagerMain main = new FileManagerMain();
-							main.setVisible(true);
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
+								}
+							}
+
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
+								if (!InstructorNoa.getGroupList()
+										.isSelectionEmpty()) {
+									int groupIndex = InstructorNoa
+											.getGroupList().getSelectedIndex();
+
+									Group group = InstructorNoa.getGroups()
+											.get(groupIndex);
+									if (group.getStudentIps().isEmpty()) {
+										return;
+									} else {
+										try {
+											FileManagerMain main = new FileManagerMain();
+											main.setReceivingIps(new ArrayList<>(group.getStudentIps()));
+											main.setVisible(true);
+										} catch (Exception e) {
+										}
+									}
+								}
+							} else {
+								FileManagerMain main = new FileManagerMain();
+								main.setReceivingIps(InstructorNoa.getAllStudentIPs());
+								main.setVisible(true);
+							}
 						}
 					});
 

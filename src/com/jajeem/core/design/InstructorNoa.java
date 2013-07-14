@@ -1575,10 +1575,9 @@ public class InstructorNoa {
 			data = newData;
 			fireTableDataChanged();
 		}
-
 	}
 
-	public static ArrayList<String> getSelectedStudentIPs() {
+	public static ArrayList<String> getAllStudentIPs() {
 		JInternalFrame[] frames = desktopPane.getAllFrames();
 		List<String> listOfStudents = new ArrayList<String>();
 		for (JInternalFrame frame : frames) {

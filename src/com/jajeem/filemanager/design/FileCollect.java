@@ -232,7 +232,7 @@ public class FileCollect extends WebPanel {
 				service = new ServerService();
 			else
 				service = InstructorNoa.getServerService();
-			ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+			ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
 			for (int i = 0; i < ips.size(); i++) {
 				SendFileCollectCommand cmd  = new SendFileCollectCommand(InetAddress
 					.getLocalHost().getHostAddress(),

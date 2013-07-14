@@ -59,8 +59,10 @@ public class FileAssignmentTab extends WebPanel {
 	
 	/**
 	 * Create the panel.
+	 * @param fileManagerMain 
 	 */
-	public FileAssignmentTab() {
+	public FileAssignmentTab(FileManagerMain fileManagerMain) {
+		parentFrame = fileManagerMain;
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		
@@ -302,7 +304,7 @@ public class FileAssignmentTab extends WebPanel {
 			else
 				service = InstructorNoa.getServerService();
 			SendFileAssignmentCommand cmd;
-			ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+			ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
 			for (int i = 0; i < ips.size(); i++) {
 				cmd = new SendFileAssignmentCommand(InetAddress
 						.getLocalHost().getHostAddress(),
@@ -328,7 +330,7 @@ public class FileAssignmentTab extends WebPanel {
 				
 				@Override
 				public void run() {
-					ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+					ArrayList<String> ips = parentFrame.getReceivingIps();
 					try {
 						
 						for (int i = 0; i < ips.size(); i++) { // send for all selected clients

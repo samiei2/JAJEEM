@@ -47,11 +47,13 @@ public class FileSendTab extends WebPanel {
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
 	private int currentIndex;
+	private FileManagerMain parentPanel;
 	
 	/**
 	 * Create the panel.
 	 */
-	public FileSendTab() {
+	public FileSendTab(FileManagerMain main) {
+		parentPanel = main;
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		
@@ -246,7 +248,7 @@ public class FileSendTab extends WebPanel {
 				
 				@Override
 				public void run() {
-					ArrayList<String> ips = InstructorNoa.getSelectedStudentIPs();
+					ArrayList<String> ips = parentPanel.getReceivingIps();
 					System.out.println("Ips Count : "+ips.size());
 					try {
 						for (int i = 0; i < ips.size(); i++) { // send for all selected clients

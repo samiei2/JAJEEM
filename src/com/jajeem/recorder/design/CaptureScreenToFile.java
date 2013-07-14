@@ -58,6 +58,7 @@ public class CaptureScreenToFile {
 	private static IRational FRAME_RATE = IRational.make(30, 1);
 	private static final int SECONDS_TO_RUN_FOR = 15;
 	private static boolean running = false;
+	private static String filename;
 
 	/**
 	 * Takes a screen shot of your entire screen and writes it to output.flv
@@ -76,7 +77,7 @@ public class CaptureScreenToFile {
 	}
 
 	public static void main(String[] args) {
-		StartCaputre("temp.mp4");
+		StartCaputreWithAudio("temp.mp4");
 		try {
 			Thread.sleep(30000);
 		} catch (InterruptedException e) {
@@ -91,6 +92,8 @@ public class CaptureScreenToFile {
 			if(file == "")
 				file = "temp.mp4";
 			final String outFile;
+			if(!new File("Recordings").exists())
+				new File("Recordings").mkdir();
 			outFile = "Recordings/recording - "+System.currentTimeMillis()+".avi";
 			running = true;
 			// This is the robot for taking a snapshot of the
@@ -164,6 +167,8 @@ public class CaptureScreenToFile {
 	public static void StartCaputreWithAudio(String file) {
 		try {
 			final String outFile;
+			if(!new File("Recordings").exists())
+				new File("Recordings").mkdir();
 			outFile = "Recordings/temp.mp4";
 			running = true;
 			// This is the robot for taking a snapshot of the
@@ -331,8 +336,10 @@ public class CaptureScreenToFile {
 		// you can change
 		// extension
 
+		String fileName = "Recordings/recording - "+System.currentTimeMillis()+".mp4";
+		setFileName(fileName);
 		IMediaWriter mWriter = ToolFactory
-				.makeWriter("Recordings/recording - "+System.currentTimeMillis()+".mp4"); // output
+				.makeWriter(fileName); // output
 		// file
 
 		IContainer containerVideo = IContainer.make();
@@ -458,6 +465,14 @@ public class CaptureScreenToFile {
 		mWriter.close();
 		new File("Recordings/temp.mp4").delete();
 		new File("Recordings/temp.mp3").delete();
+	}
+
+	public static void setFileName(String fileName) {
+		filename = fileName;
+	}
+	
+	public static String getFileName(){
+		return filename;
 	}
 	
 }
