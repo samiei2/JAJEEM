@@ -1452,8 +1452,6 @@ public class InstructorNoaUtil {
 
 		internalFrame.open();
 		
-		InstructorNoa.getDesktopPaneScroll().add(internalFrame);
-
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
 			@Override
@@ -1633,7 +1631,10 @@ public class InstructorNoaUtil {
 		DefaultTableModel model = (DefaultTableModel) InstructorNoa
 				.getStudentListTable().getModel();
 		model.addRow(new Object[] { hostIp, hostName });
-
+		
+		
+		InstructorNoa.getDesktopPaneScroll().add(internalFrame);
+		
 		return internalFrame;
 	}
 

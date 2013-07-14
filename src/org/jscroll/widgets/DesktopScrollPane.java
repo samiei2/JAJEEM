@@ -78,7 +78,7 @@ public class DesktopScrollPane extends JScrollPane {
         ImageIcon icon, JPanel frameContents, boolean isClosable, int x, int y) {
         JScrollInternalFrame f = new JScrollInternalFrame(title, icon,
                 frameContents, isClosable);
-        f.addComponentListener(dListener);
+//        f.addComponentListener(dListener);
 
         initAndAddFrame(f, x, y);
 
@@ -96,7 +96,7 @@ public class DesktopScrollPane extends JScrollPane {
      *    <code>-1</code> indicates the virtual desktop is to determine the position
      */
     public void add(DesktopListener dListener, JInternalFrame f, int x, int y) {
-        f.addComponentListener(dListener);
+//        f.addComponentListener(dListener);
         initAndAddFrame(f, x, y);
     }
 
