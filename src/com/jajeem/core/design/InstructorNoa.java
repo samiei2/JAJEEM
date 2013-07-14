@@ -26,6 +26,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -44,6 +47,10 @@ import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
 import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
+import org.jscroll.JScrollDesktopPane;
+import org.jscroll.widgets.RootDesktopPane;
+
+import sun.org.mozilla.javascript.internal.annotations.JSConstructor;
 
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
@@ -76,7 +83,8 @@ import com.jajeem.util.Config;
 public class InstructorNoa {
 
 	private WebFrame frame;
-	private static WebDesktopPane desktopPane;
+	private static RootDesktopPane desktopPane;
+	private static JScrollDesktopPane desktopPaneScroll;
 	private static WebPanel centerPanel;
 	private static WebTable studentListTable;
 
@@ -124,7 +132,7 @@ public class InstructorNoa {
 			// Start LibJitsi for first time
 			LibJitsi.start();
 			setTransmitter(new AVTransmit2("5000", "", "10000"));
-//			setReceiver(new AVReceiveOnly("10010", "", "5010"));
+			// setReceiver(new AVReceiveOnly("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -421,23 +429,24 @@ public class InstructorNoa {
 		gl_topPanel.setVerticalGroup(gl_topPanel.createParallelGroup(
 				Alignment.LEADING).addGap(0, 107, Short.MAX_VALUE));
 		topPanel.setLayout(gl_topPanel);
-
-		WebDesktopPane desktopPane = new WebDesktopPane();
-		setDesktopPane(desktopPane);
-
-		desktopPane.setBackground(new Color(237, 246, 253));
+		// create the scrollable desktop instance and add it to the JFrame
+		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
+		setDesktopPaneScroll(scrollableDesktop);
+		
+//		desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
-		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
+		GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
+		gl_desktopPane.setAutoCreateContainerGaps(true);
+		gl_desktopPane.setAutoCreateGaps(true);
 		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		gl_desktopPane.setVerticalGroup(gl_desktopPane.createParallelGroup(
 				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
-		desktopPane.setLayout(gl_desktopPane);
 		centerPanel.setLayout(new CardLayout(0, 0));
-		desktopPane.putClientProperty("viewMode", "thumbView");
+		getDesktopPaneScroll().putClientProperty("viewMode", "thumbView");
 		centerListPanel.putClientProperty("viewMode", "listView");
 		centerGroupPanel.putClientProperty("viewMode", "groupView");
-		centerPanel.add(desktopPane, "thumbsView");
+		centerPanel.add(scrollableDesktop, "thumbsView");
 		centerPanel.add(centerListPanel, "listView");
 		centerPanel.add(centerGroupPanel, "groupView");
 		centerListPanel.setLayout(new BorderLayout(0, 0));
@@ -455,7 +464,7 @@ public class InstructorNoa {
 		scrollGroupPanel.setBackground(new Color(237, 246, 253));
 		getGroupList().setBackground(new Color(237, 246, 253));
 		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
-				new Component[] { desktopPane, centerListPanel,
+				new Component[] { getDesktopPaneScroll(), centerListPanel,
 						centerGroupPanel }));
 
 		WebButton surveyButton = new WebButton();
@@ -1188,7 +1197,7 @@ public class InstructorNoa {
 		quizButton.setBottomBgColor(new Color(225, 234, 244));
 		quizButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(quizButton);
-		
+
 		WebButton videoButton = new WebButton();
 		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
 		videoButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -1304,14 +1313,6 @@ public class InstructorNoa {
 			}
 		});
 
-	}
-
-	public static WebDesktopPane getDesktopPane() {
-		return desktopPane;
-	}
-
-	public void setDesktopPane(WebDesktopPane desktopPane) {
-		InstructorNoa.desktopPane = desktopPane;
 	}
 
 	public static AVTransmit2 getTransmitter() {
@@ -1578,7 +1579,7 @@ public class InstructorNoa {
 	}
 
 	public static ArrayList<String> getAllStudentIPs() {
-		JInternalFrame[] frames = desktopPane.getAllFrames();
+		JInternalFrame[] frames = getDesktopPane().getAllFrames();
 		List<String> listOfStudents = new ArrayList<String>();
 		for (JInternalFrame frame : frames) {
 			listOfStudents.add((String) frame.getClientProperty("ip"));
@@ -1600,5 +1601,21 @@ public class InstructorNoa {
 
 	public static void setSendOnly(AVSendOnly sendOnly) {
 		InstructorNoa.sendOnly = sendOnly;
+	}
+
+	public static RootDesktopPane getDesktopPane() {
+		return getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane();
+	}
+
+	public static void setDesktopPane(RootDesktopPane desktopPane) {
+		InstructorNoa.desktopPane = desktopPane;
+	}
+
+	public static JScrollDesktopPane getDesktopPaneScroll() {
+		return desktopPaneScroll;
+	}
+
+	public static void setDesktopPaneScroll(JScrollDesktopPane desktopPaneScroll) {
+		InstructorNoa.desktopPaneScroll = desktopPaneScroll;
 	}
 }

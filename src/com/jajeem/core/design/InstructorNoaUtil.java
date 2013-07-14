@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
@@ -29,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
+import org.jscroll.JScrollDesktopPane;
+import org.jscroll.widgets.RootDesktopPane;
 
 import jrdesktop.viewer.Viewer;
 
@@ -37,6 +38,7 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.menu.WebMenuItem;
 import com.alee.laf.menu.WebPopupMenu;
@@ -444,7 +446,8 @@ public class InstructorNoaUtil {
 									} else {
 										try {
 											FileManagerMain main = new FileManagerMain();
-											main.setReceivingIps(new ArrayList<>(group.getStudentIps()));
+											main.setReceivingIps(new ArrayList<>(
+													group.getStudentIps()));
 											main.setVisible(true);
 										} catch (Exception e) {
 										}
@@ -452,7 +455,8 @@ public class InstructorNoaUtil {
 								}
 							} else {
 								FileManagerMain main = new FileManagerMain();
-								main.setReceivingIps(InstructorNoa.getAllStudentIPs());
+								main.setReceivingIps(InstructorNoa
+										.getAllStudentIPs());
 								main.setVisible(true);
 							}
 						}
@@ -530,7 +534,7 @@ public class InstructorNoaUtil {
 					break;
 				case "movieplayer":
 					((JButton) c).addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							// Run a java app in a separate system process
@@ -543,16 +547,17 @@ public class InstructorNoaUtil {
 										new File("util/"));
 								// Then retrieve the process output
 								new Thread(new Runnable() {
-									
+
 									@Override
 									public void run() {
 										try {
-											BufferedReader in = new BufferedReader(  
-						                            new InputStreamReader(proc.getInputStream()));  
-										        String line = null;  
-										        while ((line = in.readLine()) != null) {  
-										            System.out.println(line);  
-										        }  
+											BufferedReader in = new BufferedReader(
+													new InputStreamReader(proc
+															.getInputStream()));
+											String line = null;
+											while ((line = in.readLine()) != null) {
+												System.out.println(line);
+											}
 										} catch (Exception e) {
 										}
 									}
@@ -571,7 +576,7 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							
+
 						}
 					});
 					break;
@@ -591,7 +596,7 @@ public class InstructorNoaUtil {
 
 							if (((JComponent) card).getClientProperty(
 									"viewMode").equals("thumbView")) {
-
+								InstructorNoa.getDesktopPaneScroll().getSelectedFrame();
 								if (InstructorNoa.getDesktopPane()
 										.getSelectedFrame() != null) {
 									String selectedStudent = "";
@@ -935,16 +940,13 @@ public class InstructorNoaUtil {
 										}
 									}
 								}
-							}
-							else{
+							} else {
 								try {
 									final Process proc = Runtime
 											.getRuntime()
 											.exec("java -jar WhiteboardServer.jar "
-													+ "1998"
-													+ " "
-													+ "1999", null,
-													new File("util/"));
+													+ "1998" + " " + "1999",
+													null, new File("util/"));
 									new Thread(new Runnable() {
 
 										@Override
@@ -954,10 +956,8 @@ public class InstructorNoaUtil {
 														new InputStreamReader(
 																proc.getInputStream()));
 												String line = null;
-												while ((line = in
-														.readLine()) != null) {
-													System.out
-															.println(line);
+												while ((line = in.readLine()) != null) {
+													System.out.println(line);
 												}
 											} catch (Exception e) {
 												// TODO: handle exception
@@ -967,18 +967,14 @@ public class InstructorNoaUtil {
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
-								
+
 								// Start Teacher Whiteboard
 								try {
 									final Process proc = Runtime
 											.getRuntime()
 											.exec("java -jar WhiteboardTeacher.jar "
-													+ "1998"
-													+ " "
-													+ "1999",
-													null,
-													new File(
-															"util/"));
+													+ "1998" + " " + "1999",
+													null, new File("util/"));
 									new Thread(new Runnable() {
 
 										@Override
@@ -988,10 +984,8 @@ public class InstructorNoaUtil {
 														new InputStreamReader(
 																proc.getInputStream()));
 												String line = null;
-												while ((line = in
-														.readLine()) != null) {
-													System.out
-															.println(line);
+												while ((line = in.readLine()) != null) {
+													System.out.println(line);
 												}
 											} catch (Exception e) {
 											}
@@ -1000,14 +994,14 @@ public class InstructorNoaUtil {
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
-								
+
 								StartWhiteBoardCommand vc;
 								try {
 									new Config();
-									vc = new StartWhiteBoardCommand(
-											InetAddress.getLocalHost()
-													.getHostAddress(),
-											Config.getParam("broadcastingIp"), Integer.parseInt(Config
+									vc = new StartWhiteBoardCommand(InetAddress
+											.getLocalHost().getHostAddress(),
+											Config.getParam("broadcastingIp"),
+											Integer.parseInt(Config
 													.getParam("port")));
 									vc.setSessionPort("1998");
 									vc.setWhiteboardPort("1999");
@@ -1017,7 +1011,6 @@ public class InstructorNoaUtil {
 									e.printStackTrace();
 								}
 
-								
 							}
 
 							// if (Session.isWhiteboardWindowOpen()) {
@@ -1164,7 +1157,7 @@ public class InstructorNoaUtil {
 																.isEmpty()) {
 															return;
 														} else {
-															
+
 															StartApplicationCommand sa;
 															try {
 																sa = new StartApplicationCommand(
@@ -1183,14 +1176,14 @@ public class InstructorNoaUtil {
 																		.getStudentIps()) {
 																	sa.setTo(studentIp);
 																	InstructorNoa
-																	.getServerService()
-																	.send(sa);
+																			.getServerService()
+																			.send(sa);
 																}
-																
+
 															} catch (Exception e) {
 																e.printStackTrace();
 															}
-															
+
 														}
 													}
 												}
@@ -1395,7 +1388,7 @@ public class InstructorNoaUtil {
 	 *            String
 	 */
 	public static WebInternalFrame createFrame(
-			final WebDesktopPane desktopPane, final String hostIp,
+			final RootDesktopPane desktopPane, final String hostIp,
 			final String hostName) throws NumberFormatException, Exception {
 		final WebInternalFrame internalFrame = new WebInternalFrame(hostName,
 				false, false, false, true);
@@ -1454,13 +1447,12 @@ public class InstructorNoaUtil {
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorNoaUtil.class
 						.getResourceAsStream("/icons/menubar/student.png"))));
+		internalFrame.setSize(200, 200);
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
-		desktopPane.add(internalFrame);
-
-		internalFrame.setBounds(0 + (desktopPane.getComponentCount() * 200), 0,
-				200, 200);
+		
+		InstructorNoa.getDesktopPaneScroll().add(internalFrame);
 
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
