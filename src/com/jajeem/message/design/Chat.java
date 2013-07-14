@@ -35,6 +35,8 @@ import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class Chat extends WebFrame {
 
@@ -78,7 +80,7 @@ public class Chat extends WebFrame {
 	 */
 	public Chat(String to, int port, boolean multi, int groupId, String title)
 			throws NumberFormatException, Exception {
-		super("Chat - " + title); 
+		super("Chat - " + title);
 		new Config();
 		File dir = new File("Messages/");
 		if (!dir.exists())
@@ -116,7 +118,7 @@ public class Chat extends WebFrame {
 
 		WebButton btnSave = new WebButton("Save");
 		btnSave.setRound(0);
-		panel.add(btnSave);
+		// panel.add(btnSave);
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -133,7 +135,64 @@ public class Chat extends WebFrame {
 
 		final WebTextArea textArea = new WebTextArea();
 		textArea.requestFocus();
-		splitPane.setRightComponent(new WebScrollPane(textArea));
+		WebScrollPane webScrollPane = new WebScrollPane(textArea);
+		splitPane.setRightComponent(webScrollPane);
+
+		JButton sendButton = new JButton("Send");
+		sendButton.setHorizontalAlignment(SwingConstants.TRAILING);
+		webScrollPane.setRowHeaderView(sendButton);
+
+		sendButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((!textArea.getText().equals(""))
+						&& (textArea.getText() != null)) {
+					getListModel().addElement("me: " + textArea.getText());
+					scrollPane.getVerticalScrollBar()
+							.setValue(
+									scrollPane.getVerticalScrollBar()
+											.getMaximum() + 10000);
+
+					ChatCommand chatCommand = null;
+
+					try {
+						if (Integer.parseInt(Config.getParam("server")) == 1) {
+							if (isMulti()) {
+								Group group = InstructorNoa.getGroups().get(
+										Integer.parseInt(getTo()));
+								chatCommand = new ChatCommand(InetAddress
+										.getLocalHost().getHostAddress(), "",
+										getPort(), textArea.getText(),
+										isMulti(), group.getId());
+								for (String studentIp : group.getStudentIps()) {
+									chatCommand.setTo(studentIp);
+									InstructorNoa.getServerService().send(
+											chatCommand);
+								}
+							} else {
+
+								chatCommand = new ChatCommand(InetAddress
+										.getLocalHost().getHostAddress(),
+										getTo(), getPort(), textArea.getText(),
+										isMulti(), -1);
+								InstructorNoa.getServerService().send(
+										chatCommand);
+							}
+						} else {
+							chatCommand = new ChatCommand(InetAddress
+									.getLocalHost().getHostAddress(),
+									StudentLogin.getServerIp(), getPort(),
+									textArea.getText(), isMulti(), getGroupId());
+							StudentLogin.getServerService().send(chatCommand);
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					textArea.setText("");
+				}
+			}
+		});
 
 		textArea.addKeyListener(new KeyAdapter() {
 			@Override
