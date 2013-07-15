@@ -123,8 +123,8 @@ public class Student {
 		frmJajeemProject.setUndecorated(true);
 		frmJajeemProject.setAlwaysOnTop(true);
 		frmJajeemProject.setTitle("iCalabo");
-		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Student.class.getResource("/icons/menubar/jajeem.jpg")));
+//		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
+//				Student.class.getResource("/icons/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(0, 400, 280, 500);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
@@ -196,7 +196,7 @@ public class Student {
 		
 		ImageIcon recordIntercom = new ImageIcon(
 				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/noa/right_panel/record.png"))));
+						.getResourceAsStream(("/icons/noa/right_panel/mic_student.png"))));
 		WebButton recordButton = new WebButton(recordIntercom);
 		TooltipManager.setTooltip(recordButton, imgToolTip,
 				"Call Instructor.", TooltipWay.down);
@@ -206,20 +206,6 @@ public class Student {
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
 
-		WebPanel southPanel = new WebPanel();
-		southPanel.setDrawSides(true, true, false, false);
-
-		BufferedImage myPicture = ImageIO.read(Instructor.class
-				.getResourceAsStream(("/icons/buttom.jpg")));
-		WebLabel picLabel = new WebLabel(new ImageIcon(myPicture));
-		TooltipManager
-				.setTooltip(
-						picLabel,
-						imgToolTip,
-						"Jajeem is an Iranian handicraft, mainly made by nomads in rural areas of Iran.",
-						TooltipWay.up);
-		southPanel.add(picLabel);
-		panel2.add(southPanel, BorderLayout.SOUTH);
 
 		messageButton.addActionListener(new ActionListener() {
 

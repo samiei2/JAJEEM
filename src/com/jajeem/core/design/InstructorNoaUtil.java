@@ -26,19 +26,16 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
+import jrdesktop.viewer.Viewer;
+
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
-import org.jscroll.JScrollDesktopPane;
 import org.jscroll.widgets.RootDesktopPane;
-
-import jrdesktop.viewer.Viewer;
 
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.desktoppane.WebInternalFrame;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.menu.WebMenuItem;
 import com.alee.laf.menu.WebPopupMenu;
@@ -58,6 +55,7 @@ import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopIntercomCommand;
+import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
@@ -104,10 +102,12 @@ public class InstructorNoaUtil {
 					return;
 				}
 
+				final JButton button = ((JButton) c);
+
 				switch (key) {
 
 				case "monitor":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0)
@@ -136,7 +136,7 @@ public class InstructorNoaUtil {
 
 					break;
 				case "intercom":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0)
@@ -306,7 +306,7 @@ public class InstructorNoaUtil {
 
 					break;
 				case "group":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							for (Component comp : InstructorNoa
@@ -325,7 +325,7 @@ public class InstructorNoaUtil {
 
 					break;
 				case "model":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							Component card = null;
@@ -347,42 +347,63 @@ public class InstructorNoaUtil {
 											.getSelectedFrame()
 											.getClientProperty("ip");
 									try {
-										StartModelCommand sm = new StartModelCommand(
-												InetAddress.getLocalHost()
-														.getHostAddress(),
-												Config.getParam("broadcastingIp"),
-												Integer.parseInt(Config
-														.getParam("port")),
-												selectedStudent);
-										InstructorNoa.getServerService().send(
-												sm);
+										if (!InstructorNoa.isModeling()) {
+											StartModelCommand sm = new StartModelCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config
+															.getParam("port")),
+													selectedStudent);
+											InstructorNoa.getServerService()
+													.send(sm);
 
-										if (InstructorNoa.getReceiverOnly() == null) {
-											AVReceiveOnly ar = new AVReceiveOnly(
-													"10010", selectedStudent,
-													"5010");
-											ar.initialize();
-											InstructorNoa.setReceiverOnly(ar);
+											if (InstructorNoa.getReceiverOnly() == null) {
+												AVReceiveOnly ar = new AVReceiveOnly(
+														"10010",
+														selectedStudent, "5010");
+												ar.initialize();
+												InstructorNoa
+														.setReceiverOnly(ar);
+											} else {
+												InstructorNoa
+														.getReceiverOnly()
+														.setRemoteAddr(
+																InetAddress
+																		.getByName(selectedStudent));
+												InstructorNoa.getReceiverOnly()
+														.initialize();
+											}
+
+											jrdesktop.Config conf = null;
+											conf = new jrdesktop.Config(
+													false,
+													"",
+													selectedStudent,
+													Integer.parseInt(Config
+															.getParam("vncPort")),
+													"admin", "admin", false,
+													false);
+
+											VNCCaptureService vnc = new VNCCaptureService();
+											vnc.startClient(conf);
+											button.setText("Stop");
+											
+											InstructorNoa.setModeling(true);
 										} else {
-											InstructorNoa
-													.getReceiverOnly()
-													.setRemoteAddr(
-															InetAddress
-																	.getByName(selectedStudent));
+											StopModelCommand sm = new StopModelCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config
+															.getParam("port")));
+											InstructorNoa.getServerService()
+													.send(sm);
 											InstructorNoa.getReceiverOnly()
-													.initialize();
+													.close();
+											button.setText("Modeling");
+											InstructorNoa.setModeling(false);
 										}
-
-										jrdesktop.Config conf = null;
-										conf = new jrdesktop.Config(false, "",
-												selectedStudent,
-												Integer.parseInt(Config
-														.getParam("vncPort")),
-												"admin", "admin", false, false);
-
-										VNCCaptureService vnc = new VNCCaptureService();
-										vnc.startClient(conf);
-
 									} catch (Exception e) {
 										e.printStackTrace();
 									}
@@ -392,6 +413,7 @@ public class InstructorNoaUtil {
 								}
 							} else if (((JComponent) card).getClientProperty(
 									"viewMode").equals("groupView")) {
+								return;
 							}
 						}
 					});
@@ -640,7 +662,8 @@ public class InstructorNoaUtil {
 
 							if (((JComponent) card).getClientProperty(
 									"viewMode").equals("thumbView")) {
-								InstructorNoa.getDesktopPaneScroll().getSelectedFrame();
+								InstructorNoa.getDesktopPaneScroll()
+										.getSelectedFrame();
 								if (InstructorNoa.getDesktopPane()
 										.getSelectedFrame() != null) {
 									String selectedStudent = "";
@@ -1495,7 +1518,7 @@ public class InstructorNoaUtil {
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
-		
+
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
 			@Override
@@ -1675,10 +1698,9 @@ public class InstructorNoaUtil {
 		DefaultTableModel model = (DefaultTableModel) InstructorNoa
 				.getStudentListTable().getModel();
 		model.addRow(new Object[] { hostIp, hostName });
-		
-		
+
 		InstructorNoa.getDesktopPaneScroll().add(internalFrame);
-		
+
 		return internalFrame;
 	}
 

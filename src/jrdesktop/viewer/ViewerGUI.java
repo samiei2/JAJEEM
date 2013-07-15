@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import jrdesktop.Commons;
@@ -140,6 +141,8 @@ public class ViewerGUI extends javax.swing.JFrame {
 			}
 		});
 		// jPopupMenuHelp.add(jMenuItemAbout);
+
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		setTitle(" iCalabo Viewer");

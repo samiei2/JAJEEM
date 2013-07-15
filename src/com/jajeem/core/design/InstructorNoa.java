@@ -26,9 +26,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -50,13 +47,10 @@ import org.jitsi.service.libjitsi.LibJitsi;
 import org.jscroll.JScrollDesktopPane;
 import org.jscroll.widgets.RootDesktopPane;
 
-import sun.org.mozilla.javascript.internal.annotations.JSConstructor;
-
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.desktoppane.WebDesktopPane;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
@@ -83,7 +77,6 @@ import com.jajeem.util.Config;
 public class InstructorNoa {
 
 	private WebFrame frame;
-	private static RootDesktopPane desktopPane;
 	private static JScrollDesktopPane desktopPaneScroll;
 	private static WebPanel centerPanel;
 	private static WebTable studentListTable;
@@ -97,6 +90,7 @@ public class InstructorNoa {
 
 	static WebButton intercomButton = new WebButton();
 	private static WebList groupList = new WebList();
+	private static boolean modeling = false;
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
 
@@ -150,6 +144,7 @@ public class InstructorNoa {
 	 * @throws IOException
 	 */
 
+	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 	private void initialize() throws IOException {
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -1607,15 +1602,19 @@ public class InstructorNoa {
 		return getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane();
 	}
 
-	public static void setDesktopPane(RootDesktopPane desktopPane) {
-		InstructorNoa.desktopPane = desktopPane;
-	}
-
 	public static JScrollDesktopPane getDesktopPaneScroll() {
 		return desktopPaneScroll;
 	}
 
 	public static void setDesktopPaneScroll(JScrollDesktopPane desktopPaneScroll) {
 		InstructorNoa.desktopPaneScroll = desktopPaneScroll;
+	}
+
+	public static boolean isModeling() {
+		return modeling;
+	}
+
+	public static void setModeling(boolean modeling) {
+		InstructorNoa.modeling = modeling;
 	}
 }

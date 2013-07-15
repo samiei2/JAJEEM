@@ -38,6 +38,7 @@ import com.jajeem.command.handler.StartVideoCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
+import com.jajeem.command.handler.StopModelCommandHanlder;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
 import com.jajeem.command.handler.StopRecorderCommandHandler;
 import com.jajeem.command.handler.StopSurveyCommandHanlder;
@@ -68,6 +69,7 @@ import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCaptureCommand;
+import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.model.StopSurveyCommand;
@@ -315,10 +317,15 @@ public class ClientService implements IConnectorSevice, Runnable {
 					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
 					stopRecorderCommandHanlder.run(cmd);
 				}
+				
+				else if (cmd instanceof StopModelCommand) {
+					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+					stopModelCommandHanlder.run(cmd);
+				}
 
 			} catch (Exception ex) {
 				JajeemExcetionHandler.logError(ex);
-				System.err.println("Unknown message:" + ex.toString());
+				System.err.println("Unknown message: " + ex.toString());
 			}
 
 		} catch (IOException ex) {
@@ -334,8 +341,5 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 	@Override
 	public void send(Command cmd) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

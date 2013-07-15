@@ -107,7 +107,6 @@ public class StudentLogin extends JDialog {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				new ClientServer().Startup();
 			}
 		}).start();
