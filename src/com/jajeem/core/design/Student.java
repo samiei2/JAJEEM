@@ -306,7 +306,7 @@ public class Student {
 						.isDecorateDialogs();
 				WebLookAndFeel.setDecorateDialogs(true);
 
-				Recorder recorder = new Recorder();
+				Recorder recorder = new Recorder(new ArrayList<String>(),false,false);
 				recorder.setLocationRelativeTo(frmJajeemProject);
 				recorder.setVisible(true);
 

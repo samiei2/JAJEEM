@@ -83,6 +83,7 @@ public class InstructorNoaUtil {
 	static Survey_Main survey = null;
 	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[10];
 	static Survey_Main[] groupsSurveyWindows = new Survey_Main[10];
+	public static ArrayList<String> recordingsList = new ArrayList<>();
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -401,17 +402,60 @@ public class InstructorNoaUtil {
 						@Override
 						// recorder action
 						public void actionPerformed(ActionEvent arg0) {
-							// Enabling dialog decoration
-							boolean decorateFrames = WebLookAndFeel
-									.isDecorateDialogs();
-							WebLookAndFeel.setDecorateDialogs(true);
+							
+							Component card = null;
+							for (Component comp : InstructorNoa
+									.getCenterPanel().getComponents()) {
+								if (comp.isVisible() == true) {
+									card = comp;
+								}
+							}
 
-							Recorder recorder = new Recorder();
-							recorder.setLocationRelativeTo(rightButtonPanel);
-							recorder.setVisible(true);
+							if (((JComponent) card).getClientProperty(
+									"viewMode").equals("groupView")) {
+								if (!InstructorNoa.getGroupList()
+										.isSelectionEmpty()) {
+									int groupIndex = InstructorNoa
+											.getGroupList().getSelectedIndex();
 
-							// Restoring frame decoration option
-							WebLookAndFeel.setDecorateDialogs(decorateFrames);
+									Group group = InstructorNoa.getGroups()
+											.get(groupIndex);
+									if (group.getStudentIps().isEmpty()) {
+										return;
+									} else {
+										try {
+											// Enabling dialog decoration
+											boolean decorateFrames = WebLookAndFeel
+													.isDecorateDialogs();
+											WebLookAndFeel.setDecorateDialogs(true);
+
+											Recorder recorder = new Recorder(new ArrayList<>(group.getStudentIps()),true,true);
+											recorder.setLocationRelativeTo(rightButtonPanel);
+											recorder.setVisible(true);
+
+											// Restoring frame decoration option
+											WebLookAndFeel.setDecorateDialogs(decorateFrames);
+										} catch (Exception e) {
+										}
+									}
+								}
+							} else {
+								// Enabling dialog decoration
+								boolean decorateFrames = WebLookAndFeel
+										.isDecorateDialogs();
+								WebLookAndFeel.setDecorateDialogs(true);
+
+								ArrayList<String> temp = new ArrayList<>();
+								if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null)
+									temp.add(InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString());
+								Recorder recorder = new Recorder(temp,false,true);
+								recorder.setLocationRelativeTo(rightButtonPanel);
+								recorder.setVisible(true);
+
+								// Restoring frame decoration option
+								WebLookAndFeel.setDecorateDialogs(decorateFrames);
+							}
+							
 						}
 					});
 

@@ -453,7 +453,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 									}
 									((DefaultTableModel)webTable.getModel()).addRow(new Object[]{
 											"Choice " + k,
-											rate + " of " + totalNumofStudents
+											String.format("%.2f", ((double)rate/(double)totalNumofStudents)) + " (" + rate + " of " + totalNumofStudents +")"
 									});
 								}
 							}
@@ -640,7 +640,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 						}
 						((DefaultTableModel)webTable.getModel()).addRow(new Object[]{
 								"Choice " + i,
-								rate + " of " + totalNumofStudents
+								String.format("%.2f", ((double)rate/(double)totalNumofStudents)) + " (" + rate + " of " + totalNumofStudents + ")"
 						});
 					}
 				}

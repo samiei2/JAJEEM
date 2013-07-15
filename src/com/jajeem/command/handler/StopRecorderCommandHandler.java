@@ -26,6 +26,7 @@ public class StopRecorderCommandHandler implements ICommandHandler {
 			recorder.StopCapture();
 		
 		String server = command.getFrom();
+		Thread.sleep(100);
 		if(new File(fileName).exists())
 			SendFileCollect(new File(fileName), server);
 	}
