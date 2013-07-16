@@ -114,7 +114,7 @@ public class Recorder extends WebDialog {
 							SendStartRecordCommandTo(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
-							dispose();
+							frame.dispose();
 						}
 					}
 				}

@@ -79,8 +79,8 @@ public class InstructorNoaUtil {
 
 	static Quiz_Main quiz = null;
 	static Survey_Main survey = null;
-	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[10];
-	static Survey_Main[] groupsSurveyWindows = new Survey_Main[10];
+	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[15];
+	static Survey_Main[] groupsSurveyWindows = new Survey_Main[15];
 	public static ArrayList<String> recordingsList = new ArrayList<>();
 
 	/*
