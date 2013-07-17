@@ -56,6 +56,8 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
+import com.jajeem.command.model.SendRecordingErrorCommand;
+import com.jajeem.command.model.SendRecordingSuccessCommand;
 import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCaptureCommand;
@@ -319,6 +321,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 				
 				else if (cmd instanceof StopModelCommand) {
+					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+					stopModelCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof SendRecordingErrorCommand) {
+					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+					stopModelCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof SendRecordingSuccessCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}

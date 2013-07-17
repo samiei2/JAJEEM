@@ -20,6 +20,7 @@ public class Session {
 	private static boolean[] isQuizWindowsOpen = new boolean[15];
 	private static boolean[] isSurveyWindowsOpen = new boolean[15];
 	private static boolean[] isWhiteboardWindowsOpen = new boolean[15];
+	private static ArrayList<String> recordingList = new ArrayList<>();
 	
 	
 	public static void setInstructor(Instructor instructor) {
@@ -101,6 +102,10 @@ public class Session {
 	public static void setIsWhiteboardWindowsOpen(
 			boolean[] isWhiteboardWindowsOpen) {
 		Session.isWhiteboardWindowsOpen = isWhiteboardWindowsOpen;
+	}
+
+	public static ArrayList<String> getRecordingList() {
+		return recordingList;
 	}
 
 

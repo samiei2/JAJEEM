@@ -539,7 +539,7 @@ public class CaptureScreenToFile {
 						fis.close();
 
 						System.out.println(file.getAbsolutePath() + " Sent to " + server);
-						SendSuccessCommand();
+						SendSuccessCommand(server);
 					} catch (Exception e) {
 						SendErrorCommand(server);
 						JajeemExcetionHandler.logError(e, SendFileCollectCommandHandler.class);
@@ -560,14 +560,23 @@ public class CaptureScreenToFile {
 			ServerService service = StudentLogin.getServerService();
 			SendRecordingErrorCommand cmd = 
 					new SendRecordingErrorCommand(Inet4Address.getLocalHost().getAddress().toString(), server, Integer.parseInt(Config.getParam("port")));
+			
+			service.send(cmd);
 		} catch (Exception e) {
 			
 		}
 	}
 
-	protected static void SendSuccessCommand() {
-		// TODO Auto-generated method stub
-		
+	protected static void SendSuccessCommand(String server) {
+		try {
+			ServerService service = StudentLogin.getServerService();
+			SendRecordingErrorCommand cmd = 
+					new SendRecordingErrorCommand(Inet4Address.getLocalHost().getAddress().toString(), server, Integer.parseInt(Config.getParam("port")));
+			
+			service.send(cmd);
+		} catch (Exception e) {
+			
+		}
 	}
 
 	protected void SendFileCollect(final File file,final String server) {
