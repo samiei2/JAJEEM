@@ -211,6 +211,11 @@ public class InstructorNoa {
 		groups.add(new Group("Group H", 7, "#FF00FF"));
 		groups.add(new Group("Group I", 8, "#800000"));
 		groups.add(new Group("Group J", 9, "#F52887"));
+		groups.add(new Group("Group K", 10, "#F52887"));
+		groups.add(new Group("Group L", 11, "#F52887"));
+		groups.add(new Group("Group M", 12, "#F52887"));
+		groups.add(new Group("Group N", 13, "#F52887"));
+		groups.add(new Group("Group O", 14, "#F52887"));
 
 		WebScrollPane scrollGroupPanel = new WebScrollPane(getGroupList());
 		scrollGroupPanel.setDrawBorder(false);
