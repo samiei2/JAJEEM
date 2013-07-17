@@ -3,6 +3,7 @@ package com.jajeem.core.design;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -483,7 +484,17 @@ public class InstructorNoaUtil {
 
 					break;
 				case "speech":
+					((JButton) c).addActionListener(new ActionListener() {
 
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							try {
+								Desktop.getDesktop().open(new File("util/iCalabo/iCalabo.exe"));
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+						}
+					});
 					break;
 				case "file":
 					((JButton) c).addActionListener(new ActionListener() {

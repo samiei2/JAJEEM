@@ -72,7 +72,6 @@ public class Recorder extends WebDialog {
 		selectedStudent = selections;
 		isGroupSelected = isGroup;
 		setAlwaysOnTop(true);
-		// setAlwaysOnTop(true);
 		setModal(false);
 //		setRound(0);
 
@@ -122,7 +121,7 @@ public class Recorder extends WebDialog {
 		});
 		wbtnRecordStudent.setText("Record Student");
 		wbtnRecordStudent.setBounds(10, 131, 146, 29);
-//		if(isInstructor)
+		if(isInstructor)
 			getContentPane().add(wbtnRecordStudent);
 		
 		wbtnPlay = new WebButton();

@@ -17,9 +17,10 @@ public class Session {
 	private static boolean isWhiteboardWindowOpen = false;
 	private static ArrayList<Object> fileRequestList = new ArrayList<>();
 //	private static Map<int, boolean> s = 
-	private static boolean[] isQuizWindowsOpen = new boolean[10];
-	private static boolean[] isSurveyWindowsOpen = new boolean[10];
-	private static boolean[] isWhiteboardWindowsOpen = new boolean[10];
+	private static boolean[] isQuizWindowsOpen = new boolean[15];
+	private static boolean[] isSurveyWindowsOpen = new boolean[15];
+	private static boolean[] isWhiteboardWindowsOpen = new boolean[15];
+	
 	
 	public static void setInstructor(Instructor instructor) {
 		Session.instructor = instructor;
@@ -101,5 +102,6 @@ public class Session {
 			boolean[] isWhiteboardWindowsOpen) {
 		Session.isWhiteboardWindowsOpen = isWhiteboardWindowsOpen;
 	}
+
 
 }

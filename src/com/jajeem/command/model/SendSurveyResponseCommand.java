@@ -6,7 +6,7 @@ public class SendSurveyResponseCommand extends Command {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5868787236750407407L;
+	private static final long serialVersionUID = 1L;
 	SurveyResponse event;
 	public SendSurveyResponseCommand(String from, String to, int port) {
 		super(from, to,  port);

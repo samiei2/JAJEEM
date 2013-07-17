@@ -11,6 +11,8 @@ public class ClientSession {
 	private static Survey_Window surveyWindowHndl;
 	private static SurveyWindow surveyWindowHndl1;
 	private static CaptureScreenToFile recorder;
+	private static String recordingFileName;
+	private static String recordingServerAddress;
 //	private static WhiteboardClient whiteboardWindowHndl;
 
 	public static Quiz_Window getQuizWindowHndl() {
@@ -43,6 +45,23 @@ public class ClientSession {
 
 	public static void setRecorder(CaptureScreenToFile recorder) {
 		ClientSession.recorder = recorder;
+	}
+	
+
+	public static void setRecordedFileName(String fileName) {
+		recordingFileName = fileName;
+	}
+	
+	public static String getRecordedFileName(){
+		return recordingFileName;
+	}
+
+	public static void setReturnRecordedFileServer(String from) {
+		recordingServerAddress = from;
+	}
+	
+	public static String getReturnRecordedFileServer(){
+		return recordingServerAddress;
 	}
 
 }
