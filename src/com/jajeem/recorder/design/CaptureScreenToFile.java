@@ -27,13 +27,25 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.net.Inet4Address;
+import java.net.Socket;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 
+import com.jajeem.command.handler.SendFileCollectCommandHandler;
+import com.jajeem.command.model.SendRecordingErrorCommand;
+import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.Student;
+import com.jajeem.core.design.StudentLogin;
+import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.ClientSession;
+import com.jajeem.util.Config;
 import com.xuggle.mediatool.IMediaCoder;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
@@ -59,6 +71,7 @@ public class CaptureScreenToFile {
 	private static final int SECONDS_TO_RUN_FOR = 15;
 	private static boolean running = false;
 	private static String filename;
+	private static boolean isClient;
 
 	/**
 	 * Takes a screen shot of your entire screen and writes it to output.flv
@@ -251,7 +264,11 @@ public class CaptureScreenToFile {
 	}
 
 	public static void StopCapture() {
-		running = false;
+		try {
+			running = false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
@@ -465,14 +482,121 @@ public class CaptureScreenToFile {
 		mWriter.close();
 		new File("Recordings/temp.mp4").delete();
 		new File("Recordings/temp.mp3").delete();
+		
+		if(isClient)
+			ReturnFileToServer();
 	}
 
+	private static void ReturnFileToServer() {
+		final String server = ClientSession.getReturnRecordedFileServer();
+		final File file = new File(ClientSession.getRecordedFileName());
+		if(file==null || !file.exists() || server==null || server=="")
+			SendErrorCommand(server);
+		try {
+			Thread fileSender = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						System.out.println("Sending recorded screen to " + server);
+						Socket clientSocket = new Socket(server, 54322);
+						OutputStream out = clientSocket.getOutputStream();
+						FileInputStream fis = new FileInputStream(file);
+						byte[] info = new byte[2048];
+						byte[] temp = file.getPath().getBytes();
+						int len = file.getPath().length();
+						for (int k = 0; k < len; k++)
+							info[k] = temp[k];
+						for (int k = len; k < 2048; k++)
+							info[k] = 0x00;
+						out.write(info, 0, 2048);
+
+						len = file.getName().length();
+						temp = file.getName().getBytes();
+						for (int k = 0; k < len; k++)
+							info[k] = temp[k];
+						for (int k = len; k < 2048; k++)
+							info[k] = 0x00;
+						out.write(info, 0, 2048);
+
+						FileInputStream inp = new FileInputStream(file);
+						len = String.valueOf(inp.available()).length();
+						temp = String.valueOf(inp.available()).getBytes();
+						for (int k = 0; k < len; k++)
+							info[k] = temp[k];
+						for (int k = len; k < 2048; k++)
+							info[k] = 0x00;
+						out.write(info, 0, 2048);
+						inp.close();
+
+						int x;
+						byte[] b = new byte[4194304];
+						while ((x = fis.read(b)) > 0) {
+							out.write(b, 0, x);
+						}
+						out.flush();
+						out.close();
+						fis.close();
+
+						System.out.println(file.getAbsolutePath() + " Sent to " + server);
+						SendSuccessCommand(server);
+					} catch (Exception e) {
+						SendErrorCommand(server);
+						JajeemExcetionHandler.logError(e, SendFileCollectCommandHandler.class);
+						System.out.println(file.getAbsolutePath() + " Failed");
+					}
+				}
+			});
+			fileSender.start();
+		} catch (Exception e) {
+			SendErrorCommand(server);
+			JajeemExcetionHandler.logError(e);
+			System.out.println(file.getAbsolutePath() + " Failed");
+		}
+	}
+
+	protected static void SendErrorCommand(String server) {
+		try {
+			ServerService service = StudentLogin.getServerService();
+			SendRecordingErrorCommand cmd = 
+					new SendRecordingErrorCommand(Inet4Address.getLocalHost().getAddress().toString(), server, Integer.parseInt(Config.getParam("port")));
+			
+			service.send(cmd);
+		} catch (Exception e) {
+			
+		}
+	}
+
+	protected static void SendSuccessCommand(String server) {
+		try {
+			ServerService service = StudentLogin.getServerService();
+			SendRecordingErrorCommand cmd = 
+					new SendRecordingErrorCommand(Inet4Address.getLocalHost().getAddress().toString(), server, Integer.parseInt(Config.getParam("port")));
+			
+			service.send(cmd);
+		} catch (Exception e) {
+			
+		}
+	}
+
+	protected void SendFileCollect(final File file,final String server) {
+		
+	}
+	
 	public static void setFileName(String fileName) {
 		filename = fileName;
 	}
 	
 	public static String getFileName(){
 		return filename;
+	}
+
+	public void setClient(boolean b) {
+		isClient = b;
+	}
+	
+	public boolean getClient(){
+		return isClient;
 	}
 	
 }

@@ -15,6 +15,7 @@ public class StartRecorderCommandHandler implements ICommandHandler {
 		StartStudentRecordCommand command = (StartStudentRecordCommand)cmd;
 		
 		CaptureScreenToFile recorder = new CaptureScreenToFile();
+		recorder.setClient(true);
 		ClientSession.setRecorder(recorder);
 		recorder.StartCaputreWithAudio("");
 	}

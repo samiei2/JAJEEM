@@ -27,6 +27,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.design.InstructorNoaUtil;
 import com.jajeem.util.Config;
+import com.jajeem.util.Session;
 
 public class Recorder extends WebDialog {
 
@@ -36,7 +37,7 @@ public class Recorder extends WebDialog {
 	private static boolean isRecording = false;
 
 	private AudioInputStream audioInputStream;
-	private static ArrayList<String> recordingsList = new ArrayList<>();
+	private static ArrayList<String> recordingsList = Session.getRecordingList();
 
 	Capture capt = new Capture();
 
@@ -72,7 +73,6 @@ public class Recorder extends WebDialog {
 		selectedStudent = selections;
 		isGroupSelected = isGroup;
 		setAlwaysOnTop(true);
-		// setAlwaysOnTop(true);
 		setModal(false);
 //		setRound(0);
 
@@ -85,10 +85,10 @@ public class Recorder extends WebDialog {
 		wbtnRecordStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(isGroupSelected){
-					for (int i = 0; i < recordingsList.size(); i++) {
+					for (int i = 0; i < selectedStudent.size(); i++) {
 						if(recordingsList.contains(selectedStudent.get(i))){
 							SendStopRecordCommandTo(selectedStudent.get(i));
-							recordingsList.remove(selectedStudent.get(i));
+//							recordingsList.remove(selectedStudent.get(i));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
 						}
@@ -105,7 +105,7 @@ public class Recorder extends WebDialog {
 					if(selectedStudent.size()!=0){
 						if(recordingsList.contains(selectedStudent.get(0))){
 							SendStopRecordCommandTo(selectedStudent.get(0));
-							recordingsList.remove(selectedStudent.get(0));
+//							recordingsList.remove(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
 						}
@@ -114,7 +114,7 @@ public class Recorder extends WebDialog {
 							SendStartRecordCommandTo(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
-							dispose();
+							frame.dispose();
 						}
 					}
 				}
@@ -122,7 +122,7 @@ public class Recorder extends WebDialog {
 		});
 		wbtnRecordStudent.setText("Record Student");
 		wbtnRecordStudent.setBounds(10, 131, 146, 29);
-//		if(isInstructor)
+		if(isInstructor)
 			getContentPane().add(wbtnRecordStudent);
 		
 		wbtnPlay = new WebButton();

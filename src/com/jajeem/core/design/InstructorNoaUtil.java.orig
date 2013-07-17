@@ -3,8 +3,11 @@ package com.jajeem.core.design;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+<<<<<<< HEAD
 import java.awt.Window;
+=======
 import java.awt.Desktop;
+>>>>>>> 87186f389494565261e1460726f48db0b74b8e65
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
