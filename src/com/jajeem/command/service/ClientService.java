@@ -4,11 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StringWriter;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import org.apache.log4j.Logger;
+
+import sun.misc.IOUtils;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
@@ -133,6 +136,20 @@ public class ClientService implements IConnectorSevice, Runnable {
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
 
+		// only for C!
+		String message = "";
+		message += new String(buffer, "UTF8");
+		if (message.contains("fromC!")) {
+			message = message.replaceAll("fromC!", "");
+			logger.info("From C, file path is: " + message);
+			
+			// write your code here :)
+			// message is string that contains full path to our file
+			// plz write a command handler like the other ones, passing message (path)
+			// send it to all
+			
+			return message.getBytes();
+		}
 		return packet.getData();
 	}
 
@@ -144,7 +161,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				ByteArrayInputStream b = new ByteArrayInputStream(packet);
 				DataInputStream d = new DataInputStream(b);
-
 				process(d);
 
 			} catch (IOException ex) {
@@ -309,27 +325,27 @@ public class ClientService implements IConnectorSevice, Runnable {
 					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
 					intercomRequestCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StartStudentRecordCommand) {
 					StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
 					startRecorderCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopStudentRecordCommand) {
 					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
 					stopRecorderCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopModelCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof SendRecordingErrorCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof SendRecordingSuccessCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
