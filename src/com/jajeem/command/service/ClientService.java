@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.DatagramPacket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+
+import sun.misc.IOUtils;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
@@ -159,7 +162,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 			
 			return message.getBytes();
 		}
-
+		
 		return packet.getData();
 	}
 
@@ -225,7 +228,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				ByteArrayInputStream b = new ByteArrayInputStream(packet);
 				DataInputStream d = new DataInputStream(b);
-
 				process(d);
 
 			} catch (IOException ex) {
@@ -390,27 +392,27 @@ public class ClientService implements IConnectorSevice, Runnable {
 					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
 					intercomRequestCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StartStudentRecordCommand) {
 					StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
 					startRecorderCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopStudentRecordCommand) {
 					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
 					stopRecorderCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopModelCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof SendRecordingErrorCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof SendRecordingSuccessCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
