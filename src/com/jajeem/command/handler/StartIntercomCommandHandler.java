@@ -24,7 +24,8 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 			Student.getTransmitter().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().start();
-
+			Student.setIntercomButtonStop();
+			
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();

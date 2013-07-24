@@ -6,10 +6,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -21,23 +19,20 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
 import org.jitsi.examples.AVTransmit2;
 
-//import org.apache.log4j.PropertyConfigurator;
-
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.IntercomRequestCommand;
+import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
@@ -45,10 +40,13 @@ import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
+//import org.apache.log4j.PropertyConfigurator;
+
 public class Student {
 
 	private JFrame frmJajeemProject;
 	private static JFrame mainFram;
+	private static WebButton intercomButton;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -123,8 +121,8 @@ public class Student {
 		frmJajeemProject.setUndecorated(true);
 		frmJajeemProject.setAlwaysOnTop(true);
 		frmJajeemProject.setTitle("iCalabo");
-//		frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
-//				Student.class.getResource("/icons/menubar/jajeem.jpg")));
+		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
+		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
 		frmJajeemProject.setBounds(0, 400, 280, 500);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
@@ -177,35 +175,34 @@ public class Student {
 		TooltipManager.setTooltip(fileButton, imgToolTip,
 				"Send a file to your instructor.", TooltipWay.down);
 		panel.add(fileButton);
-		
-		ImageIcon videoFile = new ImageIcon(
-				ImageIO.read(Student.class
-						.getResourceAsStream(("/com/jajeem/images/MPlayer.png"))));
+
+		ImageIcon videoFile = new ImageIcon(ImageIO.read(Student.class
+				.getResourceAsStream(("/com/jajeem/images/MPlayer.png"))));
 		WebButton videoButton = new WebButton(videoFile);
-		TooltipManager.setTooltip(videoButton, imgToolTip,
-				"Video Player", TooltipWay.down);
+		TooltipManager.setTooltip(videoButton, imgToolTip, "Video Player",
+				TooltipWay.down);
 		panel.add(videoButton);
 
 		ImageIcon imgIntercom = new ImageIcon(
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/applications_style1/call_teacher.png"))));
-		WebButton intercomButton = new WebButton(imgIntercom);
+		intercomButton = new WebButton(imgIntercom);
+
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				"Call Instructor.", TooltipWay.down);
 		panel.add(intercomButton);
-		
+
 		ImageIcon recordIntercom = new ImageIcon(
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/noa/right_panel/mic_student.png"))));
 		WebButton recordButton = new WebButton(recordIntercom);
-		TooltipManager.setTooltip(recordButton, imgToolTip,
-				"Call Instructor.", TooltipWay.down);
+		TooltipManager.setTooltip(recordButton, imgToolTip, "Call Instructor.",
+				TooltipWay.down);
 		panel.add(recordButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
 		panel2.add(panel, BorderLayout.NORTH);
-
 
 		messageButton.addActionListener(new ActionListener() {
 
@@ -232,30 +229,31 @@ public class Student {
 				}
 			}
 		});
-		
+
 		videoButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					final Process proc;
-					System.out.println(new File("util/",
-							"videoplayer.jar").exists());
+					System.out.println(new File("util/", "videoplayer.jar")
+							.exists());
 					proc = Runtime.getRuntime().exec(
 							"java -jar videoplayer.jar", null,
 							new File("util/"));
 					// Then retrieve the process output
 					new Thread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							try {
-								BufferedReader in = new BufferedReader(  
-			                            new InputStreamReader(proc.getInputStream()));  
-							        String line = null;  
-							        while ((line = in.readLine()) != null) {  
-							            System.out.println(line);  
-							        }  
+								BufferedReader in = new BufferedReader(
+										new InputStreamReader(proc
+												.getInputStream()));
+								String line = null;
+								while ((line = in.readLine()) != null) {
+									System.out.println(line);
+								}
 							} catch (Exception e) {
 								// TODO: handle exception
 							}
@@ -272,27 +270,40 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					IntercomRequestCommand irc = new IntercomRequestCommand(
-							InetAddress.getLocalHost().getHostAddress(),
-							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")));
-					StudentLogin.getServerService().send(irc);
+					if (Student.getTransmitter().isTransmitting()) {
+						intercomButton.setIcon(new ImageIcon(
+								ImageIO.read(Student.class
+										.getResourceAsStream(("/icons/noa/right_panel/mic_student.png")))));
+						getTransmitter().stop();
+
+						StopIntercomCommand sic = new StopIntercomCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								StudentLogin.getServerIp(),
+								Integer.parseInt(Config.getParam("serverPort")));
+						StudentLogin.getServerService().send(sic);
+					} else {
+						IntercomRequestCommand irc = new IntercomRequestCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								StudentLogin.getServerIp(),
+								Integer.parseInt(Config.getParam("serverPort")));
+						StudentLogin.getServerService().send(irc);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		recordButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Enabling dialog decoration
-				boolean decorateFrames = WebLookAndFeel
-						.isDecorateDialogs();
+				boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
 				WebLookAndFeel.setDecorateDialogs(true);
 
-				Recorder recorder = new Recorder(new ArrayList<String>(),false,false);
+				Recorder recorder = new Recorder(new ArrayList<String>(),
+						false, false);
 				recorder.setLocationRelativeTo(frmJajeemProject);
 				recorder.setVisible(true);
 
@@ -353,5 +364,16 @@ public class Student {
 
 	public static void setSendOnly(AVSendOnly sendOnly) {
 		Student.sendOnly = sendOnly;
+	}
+
+	public static void setIntercomButtonText(String text) {
+		intercomButton.setText(text);
+	}
+
+	public static void setIntercomButtonStop() throws IOException {
+		intercomButton.setIcon(new ImageIcon(
+				ImageIO.read(Student.class
+						.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
+		
 	}
 }
