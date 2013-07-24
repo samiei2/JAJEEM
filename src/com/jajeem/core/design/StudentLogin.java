@@ -31,7 +31,7 @@ import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.filemanager.client.ClientServer;
+import com.jajeem.filemanager.client.ClientFileServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
@@ -107,7 +107,7 @@ public class StudentLogin extends JDialog {
 			
 			@Override
 			public void run() {
-				new ClientServer().Startup();
+				new ClientFileServer().Startup();
 			}
 		}).start();
 		

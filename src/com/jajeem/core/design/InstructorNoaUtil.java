@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
+import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopIntercomCommand;
@@ -589,9 +591,17 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								Desktop.getDesktop().open(new File("util/iCalabo/iCalabo.exe"));
-							} catch (IOException ex) {
-								ex.printStackTrace();
+//								Desktop.getDesktop().open(new File("util/iCalabo/iCalabo.exe"));
+								Process proc = Runtime.getRuntime().exec("util/iCalabo/iCalabo.exe");
+								
+								new Config();
+								ServerService serv = InstructorNoa.getServerService();
+								StartSpeechCommand cmd = new StartSpeechCommand(
+										Inet4Address.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+								serv.send(cmd);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 						}
 					});

@@ -2,11 +2,19 @@ package com.jajeem.command.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.net.DatagramPacket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +25,7 @@ import com.jajeem.command.handler.OpenWebsiteCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
+import com.jajeem.command.handler.SendSpeechFileCommandHandler;
 import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
 import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
 import com.jajeem.command.handler.SetBlackoutCommandHandler;
@@ -32,6 +41,7 @@ import com.jajeem.command.handler.StartIntercomCommandHandler;
 import com.jajeem.command.handler.StartModelCommandHanlder;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.handler.StartRecorderCommandHandler;
+import com.jajeem.command.handler.StartSpeechCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartVideoCommandHandler;
@@ -58,12 +68,14 @@ import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.model.SendRecordingErrorCommand;
 import com.jajeem.command.model.SendRecordingSuccessCommand;
+import com.jajeem.command.model.SendSpeechFileCommand;
 import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
@@ -79,7 +91,10 @@ import com.jajeem.command.model.StopWhiteBoardCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.filemanager.design.FileSendProgressWindow;
+import com.jajeem.util.Config;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -132,8 +147,74 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
+		
+		// only for C!
+		String message = "";
+		message += new String(buffer, "UTF8");
+		if (message.contains("fromC!")) {
+			message = message.replaceAll("fromC!", "");
+			logger.info("From C, file path is: " + message);
+			
+			SendSpeechFile(message);
+			
+			return message.getBytes();
+		}
 
 		return packet.getData();
+	}
+
+	private void SendSpeechFile(final String message) {
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					String fileName= message.substring(message.lastIndexOf("\\")+1, message.length());
+					SendFileToAll(new File(message));
+					new Config();
+					ServerService serv = InstructorNoa.getServerService();
+					SendSpeechFileCommand cmd;
+					cmd = new SendSpeechFileCommand(
+							Inet4Address.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+					
+					cmd.setFile(fileName);
+					serv.send(cmd);
+					JOptionPane.showMessageDialog(null, "Speech Recognition started for all users!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "An error occured in sending speech file to users!");
+					JajeemExcetionHandler.logError(e);
+				}
+			}
+		});
+	}
+	
+	
+	protected void SendFileToAll(final File file) {
+		try{
+			Thread fileSender = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					final ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
+					System.out.println("Ips Count : "+ips.size());
+					try {
+						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
+							Runnable r = new MyThread(file,ips.get(i));
+							new Thread(r).start();
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				}
+			});
+			fileSender.start();
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			JajeemExcetionHandler.logError(e);
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -334,6 +415,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
+				
+				else if(cmd instanceof StartSpeechCommand){
+					StartSpeechCommandHandler hnldr = new StartSpeechCommandHandler();
+					hnldr.run(cmd);
+				}
+				
+				else if(cmd instanceof SendSpeechFileCommand){
+					SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
+					hnldr.run(cmd);
+				}
 
 			} catch (Exception ex) {
 				JajeemExcetionHandler.logError(ex);
@@ -355,3 +446,60 @@ public class ClientService implements IConnectorSevice, Runnable {
 	public void send(Command cmd) {
 	}
 }
+
+class MyThread implements Runnable {
+	
+	File file;
+	String ip;
+	public MyThread(File fileInp,String inp) {
+		file = fileInp;
+		ip = inp;
+	}
+
+	public void run() {
+		   try {
+				System.out.println("Ip : "+ip);
+				Socket clientSocket=new Socket(ip,12345);
+//				Socket clientSocket=new Socket("127.0.0.1",12345);
+				OutputStream out=clientSocket.getOutputStream();
+			    FileInputStream fis=new FileInputStream(file);
+			    byte[] info = new byte[2048];
+			    byte[] temp = file.getPath().getBytes();
+			    int len = file.getPath().length();
+			    for (int k=0; k < len; k++) info[k]=temp[k];
+			    for (int k=len; k < 2048; k++) info[k]=0x00;
+			    out.write(info, 0, 2048);
+			    
+			    len = file.getName().length();
+			    temp = file.getName().getBytes();
+			    for (int k=0; k < len; k++) info[k]=temp[k];
+			    for (int k=len; k < 2048; k++) info[k]=0x00;
+			    out.write(info, 0, 2048);
+			    
+			    FileInputStream inp = new FileInputStream(file);
+			    long fileLength = inp.available();
+			    len = String.valueOf(inp.available()).length();
+			    temp = String.valueOf(inp.available()).getBytes();
+			    for (int k=0; k < len; k++) info[k]=temp[k];
+			    for (int k=len; k < 2048; k++) info[k]=0x00;
+			    out.write(info, 0, 2048);
+			    inp.close();
+			    
+			    int x;
+			    byte[] b = new byte[4194304];
+			    long bytesRead = 0;
+			    while((x=fis.read(b)) > 0)
+			    {
+			    	out.write(b, 0, x);
+			    	bytesRead += x;
+			    }
+			    out.flush();
+			    out.close();
+			    fis.close();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				JajeemExcetionHandler.logError(e);
+				e.printStackTrace();
+			}
+	   }
+	}

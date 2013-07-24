@@ -15,7 +15,7 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.Packet;
 import com.jajeem.util.StartUp;
 
-public class ClientServer {
+public class ClientFileServer {
 	public void Startup(){
 		File file = new File("Outbox");
 		if(!file.exists())
@@ -78,7 +78,7 @@ public class ClientServer {
 						}
 						catch(Exception e){
 							progwin.dispose();
-							JajeemExcetionHandler.logError(e,ClientServer.class);
+							JajeemExcetionHandler.logError(e,ClientFileServer.class);
 							new FileTransferEvent().fireFailure(null, ClientFileInbox.class);
 						}
 					}
@@ -87,11 +87,11 @@ public class ClientServer {
 			}
 	        
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e,ClientServer.class);
+			JajeemExcetionHandler.logError(e,ClientFileServer.class);
 		}
 	}
 	
 	public static void main(String[] args){
-		new ClientServer().Startup();
+		new ClientFileServer().Startup();
 	}
 }

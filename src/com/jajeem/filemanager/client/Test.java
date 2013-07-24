@@ -10,7 +10,7 @@ public class Test {
 			
 			@Override
 			public void run() {
-				new ClientServer().Startup();
+				new ClientFileServer().Startup();
 			}
 		}).start();
 		new ClientFileManagerMain().setVisible(true);

@@ -13,6 +13,7 @@ public class StartSpeechCommandHandler implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StartSpeechCommand command = (StartSpeechCommand)cmd;
+		Process proc = Runtime.getRuntime().exec("util/iCalabo/iCalabo.exe");
 	}
 	
 	public static void main(String[] arg){
