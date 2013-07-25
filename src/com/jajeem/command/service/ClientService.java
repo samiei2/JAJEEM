@@ -174,44 +174,32 @@ public class ClientService implements IConnectorSevice, Runnable {
 				
 				try {
 					String fileName= message.substring(message.lastIndexOf("\\")+1, message.length());
-					SendFileToAll(new File(message));
-					new Config();
-					ServerService serv = InstructorNoa.getServerService();
-					SendSpeechFileCommand cmd;
-					cmd = new SendSpeechFileCommand(
-							Inet4Address.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+					SendFileToAll(new File(message),fileName);
 					
-					cmd.setFile(fileName);
-					serv.send(cmd);
-					JOptionPane.showMessageDialog(null, "Speech Recognition started for all users!");
+//					JOptionPane.showMessageDialog(null, "Speech Recognition started for all users!");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "An error occured in sending speech file to users!");
 					JajeemExcetionHandler.logError(e);
 				}
 			}
 		});
+		t.start();
 	}
 	
 	
-	protected void SendFileToAll(final File file) {
+	protected void SendFileToAll(final File file,String fileName) {
 		try{
-			Thread fileSender = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					final ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
-					System.out.println("Ips Count : "+ips.size());
-					try {
-						for (int i = 0; i < ips.size(); i++) { // send for all selected clients
-							Runnable r = new MyThread(file,ips.get(i));
-							new Thread(r).start();
-						}
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
+			final ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
+			System.out.println("Ips Count : "+ips.size());
+			try {
+				for (int i = 0; i < ips.size(); i++) { // send for all selected clients
+					Runnable r = new MyThread(file,ips.get(i),fileName);
+					new Thread(r).start();
 				}
-			});
-			fileSender.start();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
@@ -453,9 +441,11 @@ class MyThread implements Runnable {
 	
 	File file;
 	String ip;
-	public MyThread(File fileInp,String inp) {
+	String fileName;
+	public MyThread(File fileInp,String inp,String fname) {
 		file = fileInp;
 		ip = inp;
+		fileName = fname;
 	}
 
 	public void run() {
@@ -466,14 +456,14 @@ class MyThread implements Runnable {
 				OutputStream out=clientSocket.getOutputStream();
 			    FileInputStream fis=new FileInputStream(file);
 			    byte[] info = new byte[2048];
-			    byte[] temp = file.getPath().getBytes();
-			    int len = file.getPath().length();
+			    byte[] temp = file.getPath().trim().getBytes();
+			    int len = file.getPath().trim().length();
 			    for (int k=0; k < len; k++) info[k]=temp[k];
 			    for (int k=len; k < 2048; k++) info[k]=0x00;
 			    out.write(info, 0, 2048);
 			    
-			    len = file.getName().length();
-			    temp = file.getName().getBytes();
+			    len = file.getName().trim().length();
+			    temp = file.getName().trim().getBytes();
 			    for (int k=0; k < len; k++) info[k]=temp[k];
 			    for (int k=len; k < 2048; k++) info[k]=0x00;
 			    out.write(info, 0, 2048);
@@ -498,6 +488,15 @@ class MyThread implements Runnable {
 			    out.flush();
 			    out.close();
 			    fis.close();
+			    
+			    new Config();
+				ServerService serv = InstructorNoa.getServerService();
+				SendSpeechFileCommand cmd;
+				cmd = new SendSpeechFileCommand(
+						Inet4Address.getLocalHost().getHostAddress(), ip, Integer.parseInt(Config.getParam("port")));
+				
+				cmd.setFile(fileName);
+				serv.send(cmd);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				JajeemExcetionHandler.logError(e);
