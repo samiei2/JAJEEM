@@ -51,7 +51,7 @@ public class SendSpeechFileCommandHandler implements ICommandHandler {
 			clientSocket.send(sendPacket);
 			clientSocket.close();
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 	}

@@ -492,9 +492,9 @@ class MyThread implements Runnable {
 			    new Config();
 				ServerService serv = InstructorNoa.getServerService();
 				SendSpeechFileCommand cmd = new SendSpeechFileCommand(
-						Inet4Address.getLocalHost().getHostAddress(), ip, Integer.parseInt(Config.getParam("port")));
+						InetAddress.getLocalHost().getHostAddress(), ip, Integer.parseInt(Config.getParam("port")));
 				
-				cmd.setFile(fileName);
+				cmd.setFile(fileName.trim());
 				serv.send(cmd);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
