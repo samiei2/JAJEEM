@@ -44,7 +44,7 @@ import com.jajeem.util.Config;
 
 public class Student {
 
-	private JFrame frmJajeemProject;
+	private static JFrame frmJajeemProject;
 	private static JFrame mainFram;
 	private static WebButton intercomButton;
 
@@ -74,7 +74,7 @@ public class Student {
 			public void run() {
 				try {
 					Student window = new Student();
-					window.frmJajeemProject.setVisible(true);
+					window.getFrmJajeemProject().setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -115,28 +115,28 @@ public class Student {
 	 */
 	private void initialize() throws IOException {
 		WebLookAndFeel.setDecorateFrames(true);
-		frmJajeemProject = new WebFrame();
-		mainFram = frmJajeemProject;
-		frmJajeemProject.setResizable(false);
-		frmJajeemProject.setUndecorated(true);
-		frmJajeemProject.setAlwaysOnTop(true);
-		frmJajeemProject.setTitle("iCalabo");
+		setFrmJajeemProject(new WebFrame());
+		mainFram = getFrmJajeemProject();
+		getFrmJajeemProject().setResizable(false);
+		getFrmJajeemProject().setUndecorated(true);
+		getFrmJajeemProject().setAlwaysOnTop(true);
+		getFrmJajeemProject().setTitle("iCalabo");
 		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
-		frmJajeemProject.setBounds(0, 400, 280, 500);
+		getFrmJajeemProject().setBounds(0, 400, 280, 500);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
 		GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
-		int x = (int) rect.getMaxX() - frmJajeemProject.getWidth();
-		int y = (int) ((rect.getMaxY() - frmJajeemProject.getHeight()));
-		frmJajeemProject.setLocation(x, y - 200);
+		int x = (int) rect.getMaxX() - getFrmJajeemProject().getWidth();
+		int y = (int) ((rect.getMaxY() - getFrmJajeemProject().getHeight()));
+		getFrmJajeemProject().setLocation(x, y - 200);
 		WebPanel panel = new WebPanel();
 		panel = createPanel();
-		frmJajeemProject.getContentPane().add(panel);
+		getFrmJajeemProject().getContentPane().add(panel);
 
-		frmJajeemProject.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
@@ -304,7 +304,7 @@ public class Student {
 
 				Recorder recorder = new Recorder(new ArrayList<String>(),
 						false, false);
-				recorder.setLocationRelativeTo(frmJajeemProject);
+				recorder.setLocationRelativeTo(getFrmJajeemProject());
 				recorder.setVisible(true);
 
 				// Restoring frame decoration option
@@ -375,5 +375,13 @@ public class Student {
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
 		
+	}
+
+	public static JFrame getFrmJajeemProject() {
+		return frmJajeemProject;
+	}
+
+	public static void setFrmJajeemProject(JFrame frmJajeemProject) {
+		Student.frmJajeemProject = frmJajeemProject;
 	}
 }
