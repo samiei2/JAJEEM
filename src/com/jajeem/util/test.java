@@ -7,6 +7,7 @@ package com.jajeem.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.sql.Connection;
@@ -27,6 +28,25 @@ public class test {
     
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
+        	String myDocuments = null;
+
+        	try {
+        	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+        	    p.waitFor();
+
+        	    InputStream in = p.getInputStream();
+        	    byte[] b = new byte[in.available()];
+        	    in.read(b);
+        	    in.close();
+
+        	    myDocuments = new String(b);
+        	    myDocuments = myDocuments.split("\\s\\s+")[4];
+
+        	} catch(Throwable t) {
+        	    t.printStackTrace();
+        	}
+
+        	System.out.println(myDocuments);
 //        	try {
 //    			final Process proc = Runtime
 //    					.getRuntime()
@@ -77,27 +97,27 @@ public class test {
 //    			e.printStackTrace();
 //    		}
     		
-    		try {
-    			final Process proc = Runtime.getRuntime().exec("java -jar WhiteboardStudent.jar "+ "192.168.227.129 " + "2003 " + "2004 " + "Armin " + "0",null,new File("util/"));
-    			new Thread(new Runnable() {
-    				
-    				@Override
-    				public void run() {
-    					try {
-    						BufferedReader in = new BufferedReader(  
-    	                            new InputStreamReader(proc.getInputStream()));  
-    					        String line = null;  
-    					        while ((line = in.readLine()) != null) {  
-    					            System.out.println(line);  
-    					        }  
-    					} catch (Exception e) {
-    						// TODO: handle exception
-    					}
-    				}
-    			}).start();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
+//    		try {
+//    			final Process proc = Runtime.getRuntime().exec("java -jar WhiteboardStudent.jar "+ "192.168.227.129 " + "2003 " + "2004 " + "Armin " + "0",null,new File("util/"));
+//    			new Thread(new Runnable() {
+//    				
+//    				@Override
+//    				public void run() {
+//    					try {
+//    						BufferedReader in = new BufferedReader(  
+//    	                            new InputStreamReader(proc.getInputStream()));  
+//    					        String line = null;  
+//    					        while ((line = in.readLine()) != null) {  
+//    					            System.out.println(line);  
+//    					        }  
+//    					} catch (Exception e) {
+//    						// TODO: handle exception
+//    					}
+//    				}
+//    			}).start();
+//    		} catch (IOException e) {
+//    			e.printStackTrace();
+//    		}
     		
     		
     		

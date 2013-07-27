@@ -32,6 +32,10 @@ public class Session {
 	}
 
 	public static Student getStudent() {
+		if(student == null || student.getFullName().equals("")){
+			Student temp = new Student();
+			temp.setFullName(System.getProperty("user.name"));
+		}
 		return student;
 	}
 

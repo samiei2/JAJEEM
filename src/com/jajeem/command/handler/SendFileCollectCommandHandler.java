@@ -3,6 +3,7 @@ package com.jajeem.command.handler;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,7 +23,27 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		SendFileCollectCommand sendFileCommand = (SendFileCollectCommand) cmd;
 		try {
-			File file = new File("Outbox");
+			String myDocuments = null;
+
+	    	try {
+	    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+	    	    p.waitFor();
+
+	    	    InputStream in = p.getInputStream();
+	    	    byte[] b = new byte[in.available()];
+	    	    in.read(b);
+	    	    in.close();
+
+	    	    myDocuments = new String(b);
+	    	    myDocuments = myDocuments.split("\\s\\s+")[4];
+
+	    	} catch(Throwable t) {
+	    	    t.printStackTrace();
+	    	}
+
+	    	System.out.println(myDocuments);
+			String outboxPath = myDocuments + "\\Outbox";
+			File file = new File(outboxPath);
 			if (!file.exists())
 				return;
 			ArrayList<File> filesList = getDirectoryContent(file);

@@ -17,10 +17,31 @@ import com.jajeem.util.StartUp;
 
 public class ClientFileServer {
 	public void Startup(){
-		File file = new File("Outbox");
+		String myDocuments = null;
+
+    	try {
+    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+    	    p.waitFor();
+
+    	    InputStream in = p.getInputStream();
+    	    byte[] b = new byte[in.available()];
+    	    in.read(b);
+    	    in.close();
+
+    	    myDocuments = new String(b);
+    	    myDocuments = myDocuments.split("\\s\\s+")[4];
+
+    	} catch(Throwable t) {
+    	    t.printStackTrace();
+    	}
+
+    	System.out.println(myDocuments);
+		String inboxPath = myDocuments + "\\Inbox";
+		String outboxPath = myDocuments + "\\Outbox";
+		File file = new File(outboxPath);
 		if(!file.exists())
 			file.mkdir();
-		file = new File("Inbox");
+		file = new File(inboxPath);
 		if(!file.exists())
 			file.mkdir();
 		StartServer();
@@ -47,8 +68,28 @@ public class ClientFileServer {
 						    in.read(filelen, 0, 2048);
 						    String temp = new String(filelen).trim();
 						    int fileLength = Integer.parseInt(temp.trim());
+						    String myDocuments = null;
+
+					    	try {
+					    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+					    	    p.waitFor();
+
+					    	    InputStream inp = p.getInputStream();
+					    	    byte[] b = new byte[inp.available()];
+					    	    inp.read(b);
+					    	    inp.close();
+
+					    	    myDocuments = new String(b);
+					    	    myDocuments = myDocuments.split("\\s\\s+")[4];
+
+					    	} catch(Throwable t) {
+					    	    t.printStackTrace();
+					    	}
+
+					    	System.out.println(myDocuments);
+							String inboxPath = myDocuments + "\\Inbox";
 						    String nameStr = new String(name);
-						    File inbox = new File("Inbox");
+						    File inbox = new File(inboxPath);
 						    if(!inbox.exists())
 						    	inbox.mkdir();
 						    File output = new File(inbox, nameStr);

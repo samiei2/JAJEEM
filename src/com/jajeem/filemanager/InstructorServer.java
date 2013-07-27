@@ -72,7 +72,27 @@ public class InstructorServer {
 						    String temp = new String(filelen).trim();
 						    int fileLength = Integer.parseInt(temp);
 						    
-						    File inbox = new File("inbox");
+						    String myDocuments = null;
+
+					    	try {
+					    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+					    	    p.waitFor();
+
+					    	    InputStream in = p.getInputStream();
+					    	    byte[] b = new byte[in.available()];
+					    	    in.read(b);
+					    	    in.close();
+
+					    	    myDocuments = new String(b);
+					    	    myDocuments = myDocuments.split("\\s\\s+")[4];
+
+					    	} catch(Throwable t) {
+					    	    t.printStackTrace();
+					    	}
+
+					    	System.out.println(myDocuments);
+							String inboxPath = myDocuments + "\\Inbox";
+						    File inbox = new File(inboxPath);
 						    inbox.mkdir();
 						    File file = new File(inbox,client.getInetAddress().getHostAddress());
 						    file.mkdir();
