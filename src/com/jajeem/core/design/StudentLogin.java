@@ -86,6 +86,12 @@ public class StudentLogin extends JDialog {
 
 			@SuppressWarnings("unused")
 			StudentLogin dialog = new StudentLogin();
+			
+			Student student = new Student();
+			StudentLogin.setStudent(student);
+			student.main(null);
+			StudentLogin.setLoginDialogVisible(false);
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,7 +145,7 @@ public class StudentLogin extends JDialog {
 		loginDialog = new LoginDialog(this);
 		loginDialog.pack();
 		loginDialog.setLocationRelativeTo(this);
-		loginDialog.setVisible(true);
+		loginDialog.setVisible(false);
 
 		// Restoring frame decoration option
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);

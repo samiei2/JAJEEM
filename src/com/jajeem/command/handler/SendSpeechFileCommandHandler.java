@@ -57,7 +57,7 @@ public class SendSpeechFileCommandHandler implements ICommandHandler {
 			String inbox = myDocuments + "\\Inbox";
 			File receivedFile = new File(new File(inbox),command.getFile());
 			if(receivedFile.exists()){
-				filePath = receivedFile.getAbsolutePath();
+				filePath = receivedFile.getAbsolutePath().trim();
 			}
 			
 			DatagramSocket clientSocket = new DatagramSocket();
