@@ -65,6 +65,7 @@ import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.VolumeCommand;
@@ -1559,24 +1560,42 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								StartCallAllCommand sm = new StartCallAllCommand(
-										InetAddress.getLocalHost()
-												.getHostAddress(), Config
-												.getParam("broadcastingIp"),
-										Integer.parseInt(Config
-												.getParam("port")));
-								InstructorNoa.getServerService().send(sm);
-
-								if (InstructorNoa.getSendOnly() == null) {
-									AVSendOnly as;
-									as = new AVSendOnly("5010", "224.5.6.7",
-											"10010");
-									InstructorNoa.setSendOnly(as);
-									as.start();
-								} else {
-									InstructorNoa.getSendOnly().start();
+								if(button.getText().equals("Stop")){
+									StopCallAllCommand sm = new StopCallAllCommand(
+											InetAddress.getLocalHost()
+											.getHostAddress(), Config
+											.getParam("broadcastingIp"),
+											Integer.parseInt(Config
+													.getParam("port")));
+									InstructorNoa.getServerService().send(sm);
+									
+									if (InstructorNoa.getSendOnly() != null) {
+										InstructorNoa.getSendOnly().stop();
+										InstructorNoa.setSendOnly(null);
+									}
+									button.setText("Call All");
 								}
-								button.setText("Stop");
+								else{
+									StartCallAllCommand sm = new StartCallAllCommand(
+											InetAddress.getLocalHost()
+													.getHostAddress(), Config
+													.getParam("broadcastingIp"),
+											Integer.parseInt(Config
+													.getParam("port")));
+									InstructorNoa.getServerService().send(sm);
+
+									if (InstructorNoa.getSendOnly() == null) {
+										AVSendOnly as;
+										as = new AVSendOnly("5010", "234.0.0.1",
+												"10010");
+										InstructorNoa.setSendOnly(as);
+										as.start();
+										button.setText("Stop");
+									} else {
+										InstructorNoa.getSendOnly().start();
+										button.setText("Stop");
+									}
+								}
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}

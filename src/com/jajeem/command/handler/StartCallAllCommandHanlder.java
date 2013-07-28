@@ -14,7 +14,7 @@ public class StartCallAllCommandHanlder implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (Student.getReceiverOnly() == null) {
 			AVReceiveOnly ar = new AVReceiveOnly("10010",
-					StudentLogin.getServerIp(), "5010");
+					"192.168.0.235", "5010");
 			ar.initialize();
 			Student.setReceiverOnly(ar);
 		} else {
