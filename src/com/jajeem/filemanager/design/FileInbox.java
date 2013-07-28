@@ -16,6 +16,7 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
+import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 
 import javax.swing.event.ListSelectionEvent;
@@ -120,27 +121,11 @@ public class FileInbox extends WebPanel {
 	}
 	
 	private void PopulateInbox() {
-		String myDocuments = null;
-
-    	try {
-    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-    	    p.waitFor();
-
-    	    InputStream in = p.getInputStream();
-    	    byte[] b = new byte[in.available()];
-    	    in.read(b);
-    	    in.close();
-
-    	    myDocuments = new String(b);
-    	    myDocuments = myDocuments.split("\\s\\s+")[4];
-
-    	} catch(Throwable t) {
-    	    t.printStackTrace();
-    	}
-
-    	System.out.println(myDocuments);
-		String inboxPath = myDocuments + "\\Inbox";
+		
+		String inboxPath = FileUtil.getInboxPath();
 		File inbox = new File(inboxPath);
+		if(!inbox.exists())
+			inbox.mkdirs();
 		if(inbox.exists()){
 			File[] list = inbox.listFiles();
 			DefaultTableModel model = (DefaultTableModel)webTable.getModel();

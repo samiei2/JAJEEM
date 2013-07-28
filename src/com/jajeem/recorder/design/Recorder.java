@@ -178,7 +178,7 @@ public class Recorder extends WebDialog {
 							}
 						File output = new File("Recordings","recording - "+System.currentTimeMillis()+".mp3");
 						FileOutputStream file = new FileOutputStream(output);
-						AudioSystem.write(capt.audioInputStream, AudioFileFormat.Type.AIFF, file);
+						AudioSystem.write(capt.audioInputStream, AudioFileFormat.Type.WAVE, file);
 						file.flush();
 						file.close();
 						

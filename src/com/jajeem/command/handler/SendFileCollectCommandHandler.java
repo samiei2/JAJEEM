@@ -12,6 +12,7 @@ import java.util.Collection;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.FileUtil;
 
 public class SendFileCollectCommandHandler implements ICommandHandler {
 
@@ -38,10 +39,10 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 	    	}
 
 	    	System.out.println(myDocuments);
-			String outboxPath = myDocuments + "\\Outbox";
+			String outboxPath = FileUtil.getOutboxPath();
 			File file = new File(outboxPath);
 			if (!file.exists())
-				return;
+				file.mkdirs();
 			ArrayList<File> filesList = getDirectoryContent(file);
 			for (int i = 0; i < filesList.size(); i++) {
 				if(filesList.get(i).exists())
