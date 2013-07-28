@@ -36,7 +36,7 @@ public class TransformUDPInputStream
      *
      * @param socket the UDP socket the new instance is to receive data from
      */
-    public TransformUDPInputStream(DatagramSocket socket)
+    public TransformUDPInputStream(MulticastSocket socket)
     {
         super(socket);
     }

@@ -32,7 +32,7 @@ public class RTCPConnectorInputStream
      *
      * @param socket the UDP socket the new instance is to receive data from
      */
-    public RTCPConnectorInputStream(DatagramSocket socket)
+    public RTCPConnectorInputStream(MulticastSocket socket)
     {
         super(socket);
     }

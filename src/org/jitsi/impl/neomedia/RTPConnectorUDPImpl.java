@@ -22,12 +22,12 @@ public class RTPConnectorUDPImpl
     /**
      * The UDP socket this instance uses to send and receive RTP packets.
      */
-    private DatagramSocket dataSocket;
+    private MulticastSocket dataSocket;
 
     /**
      * The UDP socket this instance uses to send and receive RTCP packets.
      */
-    private DatagramSocket controlSocket;
+    private MulticastSocket controlSocket;
 
     /**
      * Initializes a new <tt>RTPConnectorUDPImpl</tt> which is to use a given
@@ -47,7 +47,7 @@ public class RTPConnectorUDPImpl
      *
      * @return the UDP socket this instance uses to send and receive RTP packets
      */
-    public DatagramSocket getDataSocket()
+    public MulticastSocket getDataSocket()
     {
         if (dataSocket == null)
             dataSocket = connector.getDataSocket();
@@ -60,7 +60,7 @@ public class RTPConnectorUDPImpl
      * @return the UDP Socket this instance uses to send and receive RTCP
      * packets
      */
-    public DatagramSocket getControlSocket()
+    public MulticastSocket getControlSocket()
     {
         if (controlSocket == null)
             controlSocket = connector.getControlSocket();

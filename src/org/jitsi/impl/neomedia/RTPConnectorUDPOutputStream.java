@@ -24,14 +24,14 @@ public class RTPConnectorUDPOutputStream
     /**
      * UDP socket used to send packet data
      */
-    private final DatagramSocket socket;
+    private final MulticastSocket socket;
 
     /**
      * Initializes a new <tt>RTPConnectorUDPOutputStream</tt>.
      *
      * @param socket a <tt>DatagramSocket</tt>
      */
-    public RTPConnectorUDPOutputStream(DatagramSocket socket)
+    public RTPConnectorUDPOutputStream(MulticastSocket socket)
     {
         this.socket = socket;
     }
@@ -71,7 +71,7 @@ public class RTPConnectorUDPOutputStream
     {
         // Do not log the packet if this one has been processed (and already
         // logged) by the ice4j stack.
-        if(socket instanceof MultiplexingDatagramSocket)
+        if(socket instanceof MulticastSocket)
             return;
 
         PacketLoggingService packetLogging = LibJitsi.getPacketLoggingService();

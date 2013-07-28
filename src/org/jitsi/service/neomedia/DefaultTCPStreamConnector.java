@@ -102,7 +102,7 @@ public class DefaultTCPStreamConnector
      * use for control data (e.g. RTCP) traffic
      * @see StreamConnector#getControlSocket()
      */
-    public DatagramSocket getControlSocket()
+    public MulticastSocket getControlSocket()
     {
         return null;
     }
@@ -115,7 +115,7 @@ public class DefaultTCPStreamConnector
      * use for data (e.g. RTP) traffic
      * @see StreamConnector#getDataSocket()
      */
-    public DatagramSocket getDataSocket()
+    public MulticastSocket getDataSocket()
     {
         return null;
     }

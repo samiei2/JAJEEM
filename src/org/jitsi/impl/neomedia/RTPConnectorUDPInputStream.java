@@ -24,7 +24,7 @@ public class RTPConnectorUDPInputStream
     /**
      * UDP socket used to receive data.
      */
-    private final DatagramSocket socket;
+    private final MulticastSocket socket;
 
     /**
      * Receive size configured flag.
@@ -37,7 +37,7 @@ public class RTPConnectorUDPInputStream
      *
      * @param socket the UDP socket the new instance is to receive data from
      */
-    public RTPConnectorUDPInputStream(DatagramSocket socket)
+    public RTPConnectorUDPInputStream(MulticastSocket socket)
     {
         this.socket = socket;
 
@@ -75,7 +75,7 @@ public class RTPConnectorUDPInputStream
 
         // Do not log the packet if this one has been processed (and already
         // logged) by the ice4j stack.
-        if(socket instanceof MultiplexingDatagramSocket)
+        if(socket instanceof MulticastSocket)
             return;
 
         PacketLoggingService packetLogging = LibJitsi.getPacketLoggingService();

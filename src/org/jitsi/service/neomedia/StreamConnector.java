@@ -45,7 +45,7 @@ public interface StreamConnector
      * use for data (e.g. RTP) traffic or <tt>null</tt> if this
      * <tt>StreamConnector</tt> does not handle UDP sockets.
      */
-    public DatagramSocket getDataSocket();
+    public MulticastSocket getDataSocket();
 
     /**
      * Returns a reference to the <tt>DatagramSocket</tt> that a stream should
@@ -55,7 +55,7 @@ public interface StreamConnector
      * use for control data (e.g. RTCP) or <tt>null</tt> if this
      * <tt>StreamConnector</tt> does not handle UDP sockets.
      */
-    public DatagramSocket getControlSocket();
+    public MulticastSocket getControlSocket();
 
     /**
      * Returns a reference to the <tt>Socket</tt> that a stream should
