@@ -13,32 +13,14 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.Packet;
+import com.jajeem.util.FileUtil;
 import com.jajeem.util.StartUp;
 
 public class ClientFileServer {
 	public void Startup(){
-		String myDocuments = null;
-
-    	try {
-    		
-    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-    	    p.waitFor();
-
-    	    InputStream in = p.getInputStream();
-    	    byte[] b = new byte[in.available()];
-    	    in.read(b);
-    	    in.close();
-
-    	    myDocuments = new String(b);
-    	    myDocuments = myDocuments.split("\\s\\s+")[4];
-
-    	} catch(Throwable t) {
-    	    t.printStackTrace();
-    	}
-
-    	System.out.println(myDocuments);
-		String inboxPath = myDocuments + "\\iCalabo\\Inbox";
-		String outboxPath = myDocuments + "\\iCalabo\\Outbox";
+		
+		String inboxPath = FileUtil.getInboxPath();
+		String outboxPath = FileUtil.getOutboxPath();
 		File file = new File(outboxPath);
 		if(!file.exists())
 			file.mkdirs();
@@ -69,26 +51,8 @@ public class ClientFileServer {
 						    in.read(filelen, 0, 2048);
 						    String temp = new String(filelen).trim();
 						    int fileLength = Integer.parseInt(temp.trim());
-						    String myDocuments = null;
-
-					    	try {
-					    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-					    	    p.waitFor();
-
-					    	    InputStream inp = p.getInputStream();
-					    	    byte[] b = new byte[inp.available()];
-					    	    inp.read(b);
-					    	    inp.close();
-
-					    	    myDocuments = new String(b);
-					    	    myDocuments = myDocuments.split("\\s\\s+")[4];
-
-					    	} catch(Throwable t) {
-					    	    t.printStackTrace();
-					    	}
-
-					    	System.out.println(myDocuments);
-							String inboxPath = myDocuments + "\\iCalabo\\Inbox";
+						    
+							String inboxPath = FileUtil.getInboxPath();
 						    String nameStr = new String(name);
 						    File inbox = new File(inboxPath);
 						    if(!inbox.exists())

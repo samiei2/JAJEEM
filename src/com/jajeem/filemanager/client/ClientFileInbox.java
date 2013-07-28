@@ -17,6 +17,7 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,26 +105,7 @@ public class ClientFileInbox extends WebPanel {
 	}
 
 	private void PopulateInbox() {
-		String myDocuments = null;
-
-    	try {
-    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-    	    p.waitFor();
-
-    	    InputStream in = p.getInputStream();
-    	    byte[] b = new byte[in.available()];
-    	    in.read(b);
-    	    in.close();
-
-    	    myDocuments = new String(b);
-    	    myDocuments = myDocuments.split("\\s\\s+")[4];
-
-    	} catch(Throwable t) {
-    	    t.printStackTrace();
-    	}
-
-    	System.out.println(myDocuments);
-		String inboxPath = myDocuments + "\\iCalabo\\Inbox";
+		String inboxPath = FileUtil.getInboxPath();
 		File inbox = new File(inboxPath);
 		if(!inbox.exists())
 			inbox.mkdirs();

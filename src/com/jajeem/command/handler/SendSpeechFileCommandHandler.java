@@ -27,6 +27,7 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.client.AssignmentTimer;
 import com.jajeem.util.Config;
+import com.jajeem.util.FileUtil;
 
 public class SendSpeechFileCommandHandler implements ICommandHandler {
 
@@ -35,26 +36,7 @@ public class SendSpeechFileCommandHandler implements ICommandHandler {
 		SendSpeechFileCommand command = (SendSpeechFileCommand)cmd;
 		String filePath = null;
 		try {
-			String myDocuments = null;
-
-        	try {
-        	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-        	    p.waitFor();
-
-        	    InputStream in = p.getInputStream();
-        	    byte[] b = new byte[in.available()];
-        	    in.read(b);
-        	    in.close();
-
-        	    myDocuments = new String(b);
-        	    myDocuments = myDocuments.split("\\s\\s+")[4];
-
-        	} catch(Throwable t) {
-        	    t.printStackTrace();
-        	}
-
-        	System.out.println(myDocuments);
-			String inbox = myDocuments + "iCalabo\\Inbox";
+			String inbox = FileUtil.getInboxPath();
 			File inb = new File(inbox);
 			if(!inb.exists())
 				inb.mkdirs();
