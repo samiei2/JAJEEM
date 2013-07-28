@@ -20,6 +20,7 @@ public class ClientFileServer {
 		String myDocuments = null;
 
     	try {
+    		
     	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
     	    p.waitFor();
 
@@ -36,14 +37,14 @@ public class ClientFileServer {
     	}
 
     	System.out.println(myDocuments);
-		String inboxPath = myDocuments + "\\Inbox";
-		String outboxPath = myDocuments + "\\Outbox";
+		String inboxPath = myDocuments + "\\iCalabo\\Inbox";
+		String outboxPath = myDocuments + "\\iCalabo\\Outbox";
 		File file = new File(outboxPath);
 		if(!file.exists())
-			file.mkdir();
+			file.mkdirs();
 		file = new File(inboxPath);
 		if(!file.exists())
-			file.mkdir();
+			file.mkdirs();
 		StartServer();
 	}
 
@@ -87,11 +88,11 @@ public class ClientFileServer {
 					    	}
 
 					    	System.out.println(myDocuments);
-							String inboxPath = myDocuments + "\\Inbox";
+							String inboxPath = myDocuments + "\\iCalabo\\Inbox";
 						    String nameStr = new String(name);
 						    File inbox = new File(inboxPath);
 						    if(!inbox.exists())
-						    	inbox.mkdir();
+						    	inbox.mkdirs();
 						    File output = new File(inbox, nameStr);
 						    FileOutputStream fos = new FileOutputStream(output);
 						    

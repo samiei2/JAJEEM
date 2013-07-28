@@ -139,8 +139,10 @@ public class FileInbox extends WebPanel {
     	}
 
     	System.out.println(myDocuments);
-		String inboxPath = myDocuments + "\\Inbox";
+		String inboxPath = myDocuments + "\\iCalabo\\Inbox";
 		File inbox = new File(inboxPath);
+		if(!inbox.exists())
+			inbox.mkdirs();
 		if(inbox.exists()){
 			File[] list = inbox.listFiles();
 			DefaultTableModel model = (DefaultTableModel)webTable.getModel();

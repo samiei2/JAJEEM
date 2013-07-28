@@ -54,8 +54,11 @@ public class SendSpeechFileCommandHandler implements ICommandHandler {
         	}
 
         	System.out.println(myDocuments);
-			String inbox = myDocuments + "\\Inbox";
-			File receivedFile = new File(new File(inbox),command.getFile());
+			String inbox = myDocuments + "iCalabo\\Inbox";
+			File inb = new File(inbox);
+			if(!inb.exists())
+				inb.mkdirs();
+			File receivedFile = new File(inb,command.getFile());
 			if(receivedFile.exists()){
 				filePath = receivedFile.getAbsolutePath().trim();
 			}

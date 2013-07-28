@@ -78,10 +78,10 @@ public class InstructorServer {
 					    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
 					    	    p.waitFor();
 
-					    	    InputStream in = p.getInputStream();
-					    	    byte[] b = new byte[in.available()];
-					    	    in.read(b);
-					    	    in.close();
+					    	    InputStream inp = p.getInputStream();
+					    	    byte[] b = new byte[inp.available()];
+					    	    inp.read(b);
+					    	    inp.close();
 
 					    	    myDocuments = new String(b);
 					    	    myDocuments = myDocuments.split("\\s\\s+")[4];
@@ -91,9 +91,9 @@ public class InstructorServer {
 					    	}
 
 					    	System.out.println(myDocuments);
-							String inboxPath = myDocuments + "\\Inbox";
+							String inboxPath = myDocuments + "\\iCalabo\\Inbox";
 						    File inbox = new File(inboxPath);
-						    inbox.mkdir();
+						    inbox.mkdirs();
 						    File file = new File(inbox,client.getInetAddress().getHostAddress());
 						    file.mkdir();
 						    File output = new File(file,nameStr);

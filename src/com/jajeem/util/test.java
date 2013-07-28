@@ -29,7 +29,7 @@ public class test {
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
         	String myDocuments = null;
-
+System.out.println(System.getProperty("os.name"));
         	try {
         	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
         	    p.waitFor();
@@ -40,7 +40,7 @@ public class test {
         	    in.close();
 
         	    myDocuments = new String(b);
-        	    myDocuments = myDocuments.split("\\s\\s+")[4];
+        	    myDocuments = myDocuments.split("\\s\\s+")[myDocuments.split("\\s\\s+").length-1];
 
         	} catch(Throwable t) {
         	    t.printStackTrace();

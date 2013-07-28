@@ -42,10 +42,10 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 	    	}
 
 	    	System.out.println(myDocuments);
-			String outboxPath = myDocuments + "\\Outbox";
+			String outboxPath = myDocuments + "\\iCalabo\\Outbox";
 			File file = new File(outboxPath);
 			if (!file.exists())
-				return;
+				file.mkdirs();
 			ArrayList<File> filesList = getDirectoryContent(file);
 			for (int i = 0; i < filesList.size(); i++) {
 				if(filesList.get(i).exists())
