@@ -15,7 +15,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -51,6 +53,7 @@ import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
@@ -73,6 +76,7 @@ import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
+import com.jajeem.util.JasperReport;
 
 public class InstructorNoa {
 
@@ -190,7 +194,7 @@ public class InstructorNoa {
 		getGroupList().setModel(new AbstractListModel() {
 			String[] values = new String[] { "Group A", "Group B", "Group C",
 					"Group D", "Group E", "Group F", "Group G", "Group H",
-					"Group I", "Group J" };
+					"Group I", "Group J", "Group K", "Group L", "Group M", "Group N", "Group O" };
 
 			public int getSize() {
 				return values.length;
@@ -432,8 +436,8 @@ public class InstructorNoa {
 		// create the scrollable desktop instance and add it to the JFrame
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
 		setDesktopPaneScroll(scrollableDesktop);
-		
-//		desktopPane.setBackground(new Color(237, 246, 253));
+
+		// desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
 		GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
 		gl_desktopPane.setAutoCreateContainerGaps(true);
@@ -1232,6 +1236,31 @@ public class InstructorNoa {
 		reportButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(reportButton);
 
+		WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
+				PopupWay.leftCenter);
+
+		String[] items = { "Report type 1", "Report type 2", "Report type 3" };
+		final WebComboBox reportComboBox = new WebComboBox(items);
+
+		WebButton reportGoButton = new WebButton("Go");
+		reportGoButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Object selectedItem = reportComboBox.getSelectedItem();
+				String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm")
+						.format(Calendar.getInstance().getTime());
+				JasperReport.generate(selectedItem.toString(),
+						(selectedItem.toString()+ " _"+ timeStamp));
+			}
+		});
+
+		GroupPanel reportPopupContent = new GroupPanel(5, false,
+				reportComboBox, reportGoButton);
+		reportPopupContent.setMargin(15);
+
+		reportPopupButton.setContent(reportPopupContent);
+
 		WebButton accountButton = new WebButton();
 		accountButton.setHorizontalAlignment(SwingConstants.LEADING);
 		accountButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -1604,7 +1633,8 @@ public class InstructorNoa {
 	}
 
 	public static RootDesktopPane getDesktopPane() {
-		return getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane();
+		return getDesktopPaneScroll().getDesktopMediator()
+				.getDesktopScrollpane().getDesktopPane();
 	}
 
 	public static JScrollDesktopPane getDesktopPaneScroll() {

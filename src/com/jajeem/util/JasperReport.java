@@ -3,20 +3,16 @@ package com.jajeem.util;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.*;
 
-import java.io.File;
 import java.sql.Connection;
 import java.util.*;
 
 public class JasperReport {
 
-	public static void main(String args[]) {
-		generate("test.jasper", "test.pdf");
-	}
 
 	public static void generate(String templateName, String outputName) {
 		String fileName = FileUtil.getJapserTemplatesPath() + templateName;
 		String outFileName = FileUtil.getReportsPath()
-				+ outputName;
+				+ outputName + ".pdf";
 		HashMap hm = new HashMap();
 		try {
 
