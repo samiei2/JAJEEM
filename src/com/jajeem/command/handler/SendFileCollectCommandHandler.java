@@ -2,7 +2,6 @@ package com.jajeem.command.handler;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -10,12 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.alee.extended.filechooser.FileListCellEditor;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
-import com.jajeem.events.FileTransferEvent;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.util.Config;
 
 public class SendFileCollectCommandHandler implements ICommandHandler {
 
