@@ -28,6 +28,10 @@ public class StartUp {
 				new InstructorServer().Startup();
 			}
 		}).start();
+		
+		
+		// create folders
+		FileUtil.createDirectories();
 
 		// new initServices();
 		// com.jajeem.whiteboard.server.Server.WhiteboardServer.main(new
