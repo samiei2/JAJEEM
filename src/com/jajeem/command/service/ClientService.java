@@ -39,6 +39,7 @@ import com.jajeem.command.handler.SetPowerCommandHandler;
 import com.jajeem.command.handler.SetVolumeCommandHandler;
 import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
 import com.jajeem.command.handler.StartApplicationCommandHanlder;
+import com.jajeem.command.handler.StartCallAllCommandHanlder;
 import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartIntercomCommandHandler;
 import com.jajeem.command.handler.StartModelCommandHanlder;
@@ -74,6 +75,7 @@ import com.jajeem.command.model.SendRecordingSuccessCommand;
 import com.jajeem.command.model.SendSpeechFileCommand;
 import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartApplicationCommand;
+import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
@@ -404,6 +406,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof SendRecordingSuccessCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof StartCallAllCommand) {
+					StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
+					startCallAllCommandHanlder.run(cmd);
 				}
 				
 				else if(cmd instanceof StartSpeechCommand){

@@ -591,13 +591,20 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-//								Desktop.getDesktop().open(new File("util/iCalabo/iCalabo.exe"));
-								Process proc = Runtime.getRuntime().exec("util/iCalabo/iCalabo.exe");
-								
+								// Desktop.getDesktop().open(new
+								// File("util/iCalabo/iCalabo.exe"));
+								Process proc = Runtime.getRuntime().exec(
+										"util/iCalabo/iCalabo.exe");
+
 								new Config();
-								ServerService serv = InstructorNoa.getServerService();
+								ServerService serv = InstructorNoa
+										.getServerService();
 								StartSpeechCommand cmd = new StartSpeechCommand(
-										Inet4Address.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+										Inet4Address.getLocalHost()
+												.getHostAddress(), Config
+												.getParam("broadcastingIp"),
+										Integer.parseInt(Config
+												.getParam("port")));
 								serv.send(cmd);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
@@ -1569,6 +1576,7 @@ public class InstructorNoaUtil {
 								} else {
 									InstructorNoa.getSendOnly().start();
 								}
+								button.setText("Stop");
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
