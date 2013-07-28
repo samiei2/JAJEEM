@@ -30,8 +30,8 @@ public class ConfCall {
 		StreamConnector connector = null;
 		try {
 			connector = new DefaultStreamConnector(
-					new DatagramSocket(8000),
-			        new DatagramSocket(8001));
+					new MulticastSocket(8000),
+			        new MulticastSocket(8001));
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

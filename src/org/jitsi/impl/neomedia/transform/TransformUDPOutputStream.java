@@ -35,7 +35,7 @@ public class TransformUDPOutputStream
      *
      * @param socket the UDP socket used to send packet data out
      */
-    public TransformUDPOutputStream(DatagramSocket socket)
+    public TransformUDPOutputStream(MulticastSocket socket)
     {
         super(socket);
     }

@@ -188,8 +188,8 @@ public class AVSendOnly
 
                 connector
                     = new DefaultStreamConnector(
-                            new DatagramSocket(localRTPPort),
-                            new DatagramSocket(localRTCPPort));
+                            new MulticastSocket(localRTPPort),
+                            new MulticastSocket(localRTCPPort));
             }
             mediaStream.setConnector(connector);
 

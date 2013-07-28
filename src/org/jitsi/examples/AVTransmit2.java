@@ -185,11 +185,15 @@ public class AVTransmit2
             {
                 int localRTPPort = localPort++;
                 int localRTCPPort = localPort++;
-
+                
+                MulticastSocket s1 = new MulticastSocket(localRTPPort);
+            	
+            	
+            	MulticastSocket s2 = new MulticastSocket(localRTCPPort);
+            	
+                
                 connector
-                    = new DefaultStreamConnector(
-                            new DatagramSocket(localRTPPort),
-                            new DatagramSocket(localRTCPPort));
+                    = new DefaultStreamConnector(s1, s2);
             }
             mediaStream.setConnector(connector);
 

@@ -51,7 +51,7 @@ public class StreamConnectorDelegate<T extends StreamConnector>
         streamConnector.close();
     }
 
-    public DatagramSocket getControlSocket()
+    public MulticastSocket getControlSocket()
     {
         return streamConnector.getControlSocket();
     }
@@ -61,7 +61,7 @@ public class StreamConnectorDelegate<T extends StreamConnector>
         return streamConnector.getControlTCPSocket();
     }
 
-    public DatagramSocket getDataSocket()
+    public MulticastSocket getDataSocket()
     {
         return streamConnector.getDataSocket();
     }

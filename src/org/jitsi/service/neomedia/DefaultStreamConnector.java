@@ -6,6 +6,7 @@
  */
 package org.jitsi.service.neomedia;
 
+import java.io.IOException;
 import java.net.*;
 
 import org.jitsi.service.configuration.*;
@@ -81,13 +82,13 @@ public class DefaultStreamConnector
      * The <tt>DatagramSocket</tt> that a stream should use for control data
      * (e.g. RTCP) traffic.
      */
-    protected DatagramSocket controlSocket;
+    protected MulticastSocket controlSocket;
 
     /**
      * The <tt>DatagramSocket</tt> that a stream should use for data (e.g. RTP)
      * traffic.
      */
-    protected DatagramSocket dataSocket;
+    protected MulticastSocket dataSocket;
 
     /**
      * Initializes a new <tt>DefaultStreamConnector</tt> instance with no
@@ -116,7 +117,7 @@ public class DefaultStreamConnector
      * @return a new <tt>DatagramSocket</tt> instance bound to the specified
      * local <tt>InetAddress</tt>
      */
-    private static synchronized DatagramSocket createDatagramSocket(
+    private static synchronized MulticastSocket createDatagramSocket(
             InetAddress bindAddr)
     {
         ConfigurationService cfg = LibJitsi.getConfigurationService();
@@ -147,12 +148,16 @@ public class DefaultStreamConnector
 
             try
             {
+            	 MulticastSocket s3 = new MulticastSocket(port);
+            	 s3.joinGroup(bindAddr);
+            	 MulticastSocket s4 = new MulticastSocket(port);
+            	 s4.joinGroup(bindAddr);
                 return
                     (bindAddr == null)
-                        ? new DatagramSocket(port)
-                        : new DatagramSocket(port, bindAddr);
+                        ? s4
+                        : s3;
             }
-            catch (SocketException se)
+            catch (IOException se)
             {
                 logger.warn(
                     "Retrying a bind because of a failure to bind to address "
@@ -192,15 +197,16 @@ public class DefaultStreamConnector
      * data (e.g. RTCP) traffic
      */
     public DefaultStreamConnector(
-            DatagramSocket dataSocket,
-            DatagramSocket controlSocket)
+    		MulticastSocket dataSocket,
+    		MulticastSocket controlSocket)
     {
-        this.controlSocket = controlSocket;
+    	
+    	this.controlSocket = controlSocket;
         this.dataSocket = dataSocket;
         this.bindAddr = null;
     }
 
-    /**
+	/**
      * Releases the resources allocated by this instance in the course of its
      * execution and prepares it to be garbage collected.
      *
@@ -222,7 +228,7 @@ public class DefaultStreamConnector
      * use for control data (e.g. RTCP) traffic
      * @see StreamConnector#getControlSocket()
      */
-    public DatagramSocket getControlSocket()
+    public MulticastSocket getControlSocket()
     {
         if ((controlSocket == null) && (bindAddr != null))
             controlSocket = createDatagramSocket(bindAddr);
@@ -237,7 +243,7 @@ public class DefaultStreamConnector
      * use for data (e.g. RTP) traffic
      * @see StreamConnector#getDataSocket()
      */
-    public DatagramSocket getDataSocket()
+    public MulticastSocket getDataSocket()
     {
         if ((dataSocket == null) && (bindAddr != null))
             dataSocket = createDatagramSocket(bindAddr);
