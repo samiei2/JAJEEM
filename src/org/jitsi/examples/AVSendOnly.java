@@ -339,7 +339,7 @@ public class AVSendOnly
             {
                 // Create a audio transmit object with the specified params.
                 AVSendOnly at
-                    = new AVSendOnly("5000", "224.1.1.1", "10000");
+                    = new AVSendOnly("5000", "255.255.255.255", "10000");
                 // Start the transmission
                 String result = at.start();
 

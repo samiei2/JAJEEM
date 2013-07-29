@@ -333,7 +333,7 @@ public class AVReceiveOnly
             try
             {
                 AVReceiveOnly avReceive
-                    = new AVReceiveOnly("10000", "224.1.1.1", "5000");
+                    = new AVReceiveOnly("10000", "194.168.0.235", "5000");
 
                 if (avReceive.initialize())
                 {

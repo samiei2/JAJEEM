@@ -1586,7 +1586,9 @@ public class InstructorNoaUtil {
 
 									if (InstructorNoa.getSendOnly() == null) {
 										AVSendOnly as;
-										as = new AVSendOnly("5010", "234.0.0.1",
+										String ip = InetAddress.getLocalHost().getHostAddress().toString();
+										ip = ip.substring(0,ip.lastIndexOf(".")) + ".255";
+										as = new AVSendOnly("5010", ip,
 												"10010");
 										InstructorNoa.setSendOnly(as);
 										as.start();
