@@ -1674,7 +1674,7 @@ public class InstructorNoaUtil {
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorNoaUtil.class
 						.getResourceAsStream("/icons/menubar/student.png"))));
-		internalFrame.setSize(200, 200);
+		internalFrame.setSize(150, 150);
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();

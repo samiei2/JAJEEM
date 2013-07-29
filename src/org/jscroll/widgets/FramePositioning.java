@@ -220,8 +220,8 @@ public class FramePositioning implements DesktopConstants {
                         i++;
                     }
 
-                    frames[i].setBounds(curCol * 200,
-                        curRow * 200, 200, 200);
+                    frames[i].setBounds(curCol * 150,
+                        curRow * 150, 150, 150);
 
                     i++;
                 }

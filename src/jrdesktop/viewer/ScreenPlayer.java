@@ -118,7 +118,7 @@ public class ScreenPlayer extends JLabel {
 	@Override
 	public void paint(Graphics g) {
 		if (this.thumb) {
-			g.drawImage(screenImage, 0, 0, 200, 200, this);
+			g.drawImage(screenImage, 0, 0, 100, 100, this);
 			DrawSelectingRect(g);
 		} else {
 			g.drawImage(screenImage, 0, 0,

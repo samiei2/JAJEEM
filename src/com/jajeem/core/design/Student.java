@@ -196,7 +196,7 @@ public class Student {
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/noa/right_panel/mic_student.png"))));
 		WebButton recordButton = new WebButton(recordIntercom);
-		TooltipManager.setTooltip(recordButton, imgToolTip, "Call Instructor.",
+		TooltipManager.setTooltip(recordButton, imgToolTip, "Recorder",
 				TooltipWay.down);
 		panel.add(recordButton);
 

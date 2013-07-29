@@ -1239,7 +1239,7 @@ public class InstructorNoa {
 		WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
 				PopupWay.leftCenter);
 
-		String[] items = { "Report type 1", "Report type 2", "Report type 3" };
+		String[] items = { "SummaryofStudents", "Report type 2", "Report type 3" };
 		final WebComboBox reportComboBox = new WebComboBox(items);
 
 		WebButton reportGoButton = new WebButton("Go");
@@ -1251,7 +1251,7 @@ public class InstructorNoa {
 				String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm")
 						.format(Calendar.getInstance().getTime());
 				JasperReport.generate(selectedItem.toString(),
-						(selectedItem.toString()+ " _"+ timeStamp));
+						(selectedItem.toString()+ " _"));
 			}
 		});
 
