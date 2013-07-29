@@ -24,6 +24,7 @@ import org.jitsi.service.neomedia.format.*;
  */
 public class AVReceiveOnly
 {
+	
     /**
      * The port which is the target of the transmission i.e. on which the media
      * is to be received.
@@ -332,7 +333,7 @@ public class AVReceiveOnly
             try
             {
                 AVReceiveOnly avReceive
-                    = new AVReceiveOnly("5000","192.168.0.234", "10000" );
+                    = new AVReceiveOnly("10000", "194.168.0.235", "5000");
 
                 if (avReceive.initialize())
                 {

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -28,6 +29,7 @@ public class test {
     
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         try {
+        	
         	String myDocuments = null;
 System.out.println(System.getProperty("os.name"));
         	try {

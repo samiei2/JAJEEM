@@ -51,6 +51,7 @@ import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartVideoCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
+import com.jajeem.command.handler.StopCallAllCommandHanlder;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
 import com.jajeem.command.handler.StopModelCommandHanlder;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
@@ -87,6 +88,7 @@ import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopCaptureCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopQuizCommand;
@@ -411,6 +413,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof StartCallAllCommand) {
 					StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
 					startCallAllCommandHanlder.run(cmd);
+				}
+				
+				else if (cmd instanceof StopCallAllCommand) {
+					StopCallAllCommandHanlder stopCallAllCommandHanlder = new StopCallAllCommandHanlder();
+					stopCallAllCommandHanlder.run(cmd);
 				}
 				
 				else if(cmd instanceof StartSpeechCommand){
