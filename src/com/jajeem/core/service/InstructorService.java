@@ -34,6 +34,12 @@ public class InstructorService implements IInstructorService{
 			return instructordao.get(user);
 		return null;
 	}
+	
+	public Instructor getById(int id) {
+		if(instructordao!=null)
+			return instructordao.getById(id);
+		return null;
+	}
 
 	@Override
 	public boolean update(Instructor instruct) throws SQLException {

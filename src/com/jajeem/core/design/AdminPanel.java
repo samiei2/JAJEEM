@@ -57,12 +57,18 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
+import com.jajeem.core.dao.h2.InstructorDAO;
+import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
+import com.jajeem.room.service.RoomService;
+
 import java.awt.Insets;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.jajeem.util.*;
 import javax.swing.JButton;
@@ -79,6 +85,9 @@ public class AdminPanel extends WebFrame {
 
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
+
+	private EventList<com.jajeem.core.model.Instructor> instructorList = new BasicEventList<com.jajeem.core.model.Instructor>();
+	private EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel;
 
 	/**
 	 * Launch the application.
@@ -98,8 +107,10 @@ public class AdminPanel extends WebFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws SQLException
 	 */
-	public AdminPanel() {
+	public AdminPanel() throws SQLException {
 		setTitle("Admin Panel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
@@ -131,28 +142,22 @@ public class AdminPanel extends WebFrame {
 
 	}
 
-	private void loadData() {
+	private void loadData() throws SQLException {
 
-		getCourseList().add(
-				new Course("Math3", "Mohammad", "A", "B", 24, 3, "Sat", 12, 22,
-						"Sat", 12, 22, "0", 12, 22, "Sat", 12, 22, "Sat", 12,
-						22));
-		getCourseList().add(
-				new Course("Math4", "Ali", "A", "H", 4324, 3, "Wen", 12, 22,
-						"Sat", 12, 22, "Sat", 12, 22, "Sat", 12, 22, "Sat", 12,
-						22));
-		getCourseList().add(
-				new Course("Math555", "Hossein", "A", "D", 324, 3, "Tue", 12,
-						22, "Sat", 12, 22, "Sat", 12, 22, "Sat", 12, 22, "", 0,
-						0));
-		getCourseList().add(
-				new Course("Math222", "Hassan", "A", "C", 324324, 3, "Sat", 12,
-						22, "Sat", 12, 22, "", 12, 22, "Sat", 12, 22, "Sat",
-						12, 22));
-		getCourseList().add(
-				new Course("Math222", "Mohammad", "A", "C", 324324, 3, "Sat",
-						12, 22, "Sat", 12, 22, "Sat", 12, 22, "Sat", 12, 22,
-						"Sat", 12, 22));
+		InstructorService instructorService = new InstructorService();
+		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
+				.list();
+		getInstructorList().addAll(instructorList);
+		
+		RoomService rs = new RoomService();
+		ArrayList<Course> courseList = rs.getCourseDAO().list();
+		
+		for (Course course : courseList) {
+			course.setInstructor(instructorService.getById(course.getInstructorId()).getUsername());
+			getCourseList().add(course);
+		}
+
+		
 	}
 
 	@SuppressWarnings("deprecation")
@@ -183,7 +188,7 @@ public class AdminPanel extends WebFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddNewCourseDialog(courseList);
+				new AddNewCourseDialog(courseList, getInstructorList());
 			}
 		});
 
@@ -198,9 +203,17 @@ public class AdminPanel extends WebFrame {
 						WebOptionPane.QUESTION_MESSAGE);
 				if (resp == 0) {
 					if (!courseSelectionModel.isSelectionEmpty()) {
-						// TODO: Remove from DB here
+						RoomService rs = new RoomService();
+						for (Course course : courseSelectionModel.getSelected()) {
+							try {
+								rs.getCourseDAO().delete(course);
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						}
 						getCourseList().removeAll(
 								courseSelectionModel.getSelected());
+
 					}
 				}
 			}
@@ -211,10 +224,12 @@ public class AdminPanel extends WebFrame {
 		editButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					Course course = courseSelectionModel.getSelected().get(0);
-					new AddNewCourseDialog(courseList, course);
+					new AddNewCourseDialog(courseList, course,
+							courseSelectionModel.getSelected(),
+							getInstructorList());
 				}
 			}
 		});
@@ -263,6 +278,10 @@ public class AdminPanel extends WebFrame {
 				list.add(c.getInstructor());
 				list.add(c.getLevel());
 				list.add(c.getDay1());
+				list.add(c.getDay2());
+				list.add(c.getDay3());
+				list.add(c.getDay4());
+				list.add(c.getDay5());
 				list.add(c.getSession());
 				list.add(c.getClassType());
 				list.add(c.getStartDate());
@@ -306,6 +325,24 @@ public class AdminPanel extends WebFrame {
 
 	public void setCourseList(EventList<Course> courseList) {
 		this.courseList = courseList;
+	}
+
+	public EventList<com.jajeem.core.model.Instructor> getInstructorList() {
+		return instructorList;
+	}
+
+	public void setInstructorList(
+			EventList<com.jajeem.core.model.Instructor> instructorList) {
+		this.instructorList = instructorList;
+	}
+
+	public EventSelectionModel<com.jajeem.core.model.Instructor> getInstructorSelectionModel() {
+		return instructorSelectionModel;
+	}
+
+	public void setInstructorSelectionModel(
+			EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel) {
+		this.instructorSelectionModel = instructorSelectionModel;
 	}
 
 	public class CourseTableFormat implements TableFormat<Course>,
@@ -356,10 +393,26 @@ public class AdminPanel extends WebFrame {
 				ArrayList<String> daysCell = new ArrayList<String>();
 
 				for (int i = 0; i < 5; i++) {
-					if (!course.getDay1().equals("")) {
-						daysCell.add((course.getDay+(i)() + ", "
+					if (i == 0 && !course.getDay1().equals("")) {
+						daysCell.add((course.getDay1() + ", "
 								+ course.getStartTime1() + "-" + course
 								.getEndTime1()));
+					} else if (i == 1 && !course.getDay2().equals("")) {
+						daysCell.add((course.getDay2() + ", "
+								+ course.getStartTime2() + "-" + course
+								.getEndTime2()));
+					} else if (i == 2 && !course.getDay3().equals("")) {
+						daysCell.add((course.getDay3() + ", "
+								+ course.getStartTime3() + "-" + course
+								.getEndTime3()));
+					} else if (i == 3 && !course.getDay4().equals("")) {
+						daysCell.add((course.getDay4() + ", "
+								+ course.getStartTime4() + "-" + course
+								.getEndTime4()));
+					} else if (i == 4 && !course.getDay5().equals("")) {
+						daysCell.add((course.getDay5() + ", "
+								+ course.getStartTime5() + "-" + course
+								.getEndTime5()));
 					}
 				}
 

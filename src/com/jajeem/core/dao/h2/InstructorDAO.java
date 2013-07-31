@@ -201,6 +201,61 @@ public class InstructorDAO implements IInstructorDAO {
 		return instructor;
 	}
 	
+	public Instructor getById(int id) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Connection con = null;
+		try {
+			con = BaseDAO.getConnection();
+			ps = con.prepareStatement("SELECT * FROM Instructor WHERE Instructor.id = ?;");
+			ps.setInt(1, id);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+
+		Instructor instructor = null;
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				instructor = new Instructor();
+				instructor.setId(rs.getInt("id"));
+				instructor.setFirstName(rs.getString("firstName"));
+				instructor.setMiddleName(rs.getString("middleName"));
+				instructor.setLastName(rs.getString("lastName"));
+				instructor.setUsername(rs.getString("username"));
+				instructor.setPassword(rs.getString("password"));
+				instructor.setLanguage(rs.getString("language"));
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return instructor;
+	}
+
+	
 	public Instructor get(String user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
