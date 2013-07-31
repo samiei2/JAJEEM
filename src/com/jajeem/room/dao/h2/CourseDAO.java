@@ -172,10 +172,33 @@ public class CourseDAO implements ICourseDAO {
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
+		
+		ps = con.prepareStatement("UPDATE Course SET instructorId=?, name=? , classType=?, level=?, session=?, startDate=?,"
+				+ " day1=?, startTime1=?, endTime1=?,day2=?, startTime2=?, endTime2=?,day3=?, startTime3=?, endTime3=?,day4=?, startTime4=?, endTime4=?,day5=?, startTime5=?, endTime5=? "
+				+ " WHERE id=?");
 
-		ps = con.prepareStatement("UPDATE Course SET name=? WHERE id = ?");
-
-		ps.setString(1, course.getName());
+		ps.setInt(1, course.getInstructorId());
+		ps.setString(2, course.getName());
+		ps.setString(3, course.getClassType());
+		ps.setString(4, course.getLevel());
+		ps.setInt(5, course.getSession());
+		ps.setLong(6, course.getStartDate());
+		ps.setString(7, course.getDay1());
+		ps.setInt(8, course.getStartTime1());
+		ps.setInt(9,  course.getEndTime1());
+		ps.setString(10, course.getDay2());
+		ps.setInt(11, course.getStartTime2());
+		ps.setInt(12,  course.getEndTime2());
+		ps.setString(13, course.getDay3());
+		ps.setInt(14, course.getStartTime3());
+		ps.setInt(15,  course.getEndTime3());
+		ps.setString(16, course.getDay4());
+		ps.setInt(17, course.getStartTime4());
+		ps.setInt(18,  course.getEndTime4());
+		ps.setString(19, course.getDay5());
+		ps.setInt(20, course.getStartTime5());
+		ps.setInt(21,  course.getEndTime5());
+		ps.setInt(22,  course.getId());
 
 		try {
 			rs = ps.executeUpdate();

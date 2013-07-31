@@ -23,6 +23,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 
@@ -82,7 +83,8 @@ public class AddNewCourseDialog extends JDialog {
 	 * @param courseList
 	 * @wbp.parser.constructor
 	 */
-	public AddNewCourseDialog(final EventList<Course> courseList) {
+	public AddNewCourseDialog(final EventList<Course> courseList,
+			final EventList<Instructor> instructorList) {
 		setTitle("Add new course");
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -127,8 +129,12 @@ public class AddNewCourseDialog extends JDialog {
 		contentPanel.add(instructorNameLabel);
 		{
 			instructorNameCombo = new WebComboBox();
-			instructorNameCombo.setModel(new DefaultComboBoxModel(new String[] {
-					"Ali", "Hassan" }));
+			ArrayList<String> insList = new ArrayList<String>();
+			for (Instructor ins : instructorList) {
+				insList.add(ins.getUsername());
+			}
+
+			instructorNameCombo.setModel(new DefaultComboBoxModel(insList.toArray()));
 			contentPanel.add(instructorNameCombo);
 		}
 		{
@@ -391,7 +397,7 @@ public class AddNewCourseDialog extends JDialog {
 								endTime5 = Integer.parseInt((String) endTimeTF5
 										.getSelectedItem());
 							}
-							
+
 							Course course = new Course(courseName,
 									instructorName, classType, level,
 									startDate, sessionCount, day1, startTime1,
@@ -400,9 +406,15 @@ public class AddNewCourseDialog extends JDialog {
 									endTime4, day5, startTime5, endTime5);
 							courseList.add(course);
 							
+							for (Instructor instructor : instructorList) {
+								if(course.getInstructor().equals(instructor.getUsername())) {
+									course.setInstructorId(instructor.getId());
+								}
+							}
+							
 							RoomService rs = new RoomService();
 							rs.getCourseDAO().create(course);
-							
+
 							dispose();
 						} catch (Exception e1) {
 							e1.printStackTrace();
@@ -438,12 +450,14 @@ public class AddNewCourseDialog extends JDialog {
 	 * 
 	 * @param courseList
 	 * @param course
+	 * @param instructorList
 	 * @param selected
 	 *            courseList
 	 * 
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList,
-			final Course course, final EventList<Course> selectedCourse) {
+			final Course course, final EventList<Course> selectedCourse,
+			EventList<Instructor> instructorList) {
 		setTitle("Edit course");
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -488,8 +502,12 @@ public class AddNewCourseDialog extends JDialog {
 		contentPanel.add(instructorNameLabel);
 		{
 			instructorNameCombo = new WebComboBox();
-			instructorNameCombo.setModel(new DefaultComboBoxModel(new String[] {
-					"Ali", "Hassan" }));
+			ArrayList<String> insList = new ArrayList<String>();
+			for (Instructor ins : instructorList) {
+				insList.add(ins.getUsername());
+			}
+
+			instructorNameCombo.setModel(new DefaultComboBoxModel(insList.toArray()));
 			contentPanel.add(instructorNameCombo);
 		}
 		{
@@ -762,7 +780,8 @@ public class AddNewCourseDialog extends JDialog {
 									endTime4, day5, startTime5, endTime5);
 							courseList.add(course);
 
-							// TODO: update this course here
+							RoomService rs = new RoomService();
+							rs.getCourseDAO().update(course);
 
 							dispose();
 						} catch (Exception e1) {

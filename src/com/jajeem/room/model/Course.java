@@ -6,7 +6,7 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// properties
 	private int id;
-	private int instructorId = 0;
+	private int instructorId;
 	private String name;
 	private String classType;
 	private String level;

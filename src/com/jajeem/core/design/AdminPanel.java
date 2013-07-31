@@ -57,6 +57,8 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
+import com.jajeem.core.dao.h2.InstructorDAO;
+import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 
@@ -83,6 +85,9 @@ public class AdminPanel extends WebFrame {
 
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
+
+	private EventList<com.jajeem.core.model.Instructor> instructorList = new BasicEventList<com.jajeem.core.model.Instructor>();
+	private EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel;
 
 	/**
 	 * Launch the application.
@@ -139,12 +144,20 @@ public class AdminPanel extends WebFrame {
 
 	private void loadData() throws SQLException {
 
+		InstructorService instructorService = new InstructorService();
+		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
+				.list();
+		getInstructorList().addAll(instructorList);
+		
 		RoomService rs = new RoomService();
 		ArrayList<Course> courseList = rs.getCourseDAO().list();
-
-		for (Course courseItem : courseList) {
-			getCourseList().add(courseItem);
+		
+		for (Course course : courseList) {
+			course.setInstructor(instructorService.getById(course.getInstructorId()).getUsername());
+			getCourseList().add(course);
 		}
+
+		
 	}
 
 	@SuppressWarnings("deprecation")
@@ -175,7 +188,7 @@ public class AdminPanel extends WebFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddNewCourseDialog(courseList);
+				new AddNewCourseDialog(courseList, getInstructorList());
 			}
 		});
 
@@ -215,7 +228,8 @@ public class AdminPanel extends WebFrame {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					Course course = courseSelectionModel.getSelected().get(0);
 					new AddNewCourseDialog(courseList, course,
-							courseSelectionModel.getSelected());
+							courseSelectionModel.getSelected(),
+							getInstructorList());
 				}
 			}
 		});
@@ -311,6 +325,24 @@ public class AdminPanel extends WebFrame {
 
 	public void setCourseList(EventList<Course> courseList) {
 		this.courseList = courseList;
+	}
+
+	public EventList<com.jajeem.core.model.Instructor> getInstructorList() {
+		return instructorList;
+	}
+
+	public void setInstructorList(
+			EventList<com.jajeem.core.model.Instructor> instructorList) {
+		this.instructorList = instructorList;
+	}
+
+	public EventSelectionModel<com.jajeem.core.model.Instructor> getInstructorSelectionModel() {
+		return instructorSelectionModel;
+	}
+
+	public void setInstructorSelectionModel(
+			EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel) {
+		this.instructorSelectionModel = instructorSelectionModel;
 	}
 
 	public class CourseTableFormat implements TableFormat<Course>,

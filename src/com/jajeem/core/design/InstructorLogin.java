@@ -175,7 +175,6 @@ public class InstructorLogin extends JDialog {
 			sPanel2.setRound(0);
 			sPanel2.setViewportBorder(new TitledBorder(null, "Courses",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			//
 
 			getContentPane().setLayout(new BorderLayout());
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
