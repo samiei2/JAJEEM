@@ -16,31 +16,177 @@ public class initDatabase {
 				if (s.equals("1")) {
 
 				con = BaseDAO.getConnection();
-				String query = "CREATE TABLE IF NOT EXISTS QuizReponse (id int DEFAULT 0   AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, answerValid boolean, studentId int  , QuizQuestionid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS QuizQuestion (id int DEFAULT 0   AUTO_INCREMENT, quizId int  , title varchar(5000), type tinyint  , point int, imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, instructorid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS QuizRun (id int DEFAULT 0   AUTO_INCREMENT, quizid int  , Instructorid int  , start bigint, end bigint, score int, Studentid int  , sessionid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS Quiz (id int DEFAULT 0   AUTO_INCREMENT, instructorid int  , type tinyint, category varchar(255), description varchar(1000), pointing int, points int, time int, shuffle tinyint, title varchar(255), PRIMARY KEY (id));"
-						+
-
-						"CREATE TABLE IF NOT EXISTS SurveyReponse (id int DEFAULT 0   AUTO_INCREMENT, answer varchar(555), bool1 boolean, bool2 boolean, bool3 boolean, bool4 boolean, bool5 boolean, studentId int  , ResponseQuestionid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS SurveyQuestion (id int DEFAULT 0   AUTO_INCREMENT,surveyid int  , responseId int  , title varchar(5000), type tinyint  , imagepath varchar(1000), url varchar(555), answer1 varchar(555), answer2 varchar(555), answer3 varchar(555), answer4 varchar(555), answer5 varchar(555), instructorid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS SURVEYRUN (id int DEFAULT 0   AUTO_INCREMENT, surveyId int  , instructorId int  , start bigint, end bigint, Studentid int, sessionId int , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS Survey (id int DEFAULT 0   AUTO_INCREMENT, instructorid int  , type tinyint, category varchar(255), description varchar(1000), pointing int, title varchar(255), PRIMARY KEY (id));"
+				String query = 
+						  "CREATE TABLE IF NOT EXISTS QuizReponse (" +
+						  "id int DEFAULT 0   AUTO_INCREMENT, " +
+						  "answer varchar(555), " +
+						  "bool1 boolean, " +
+						  "bool2 boolean, " +
+						  "bool3 boolean, " +
+						  "bool4 boolean, " +
+						  "bool5 boolean, " +
+						  "answerValid boolean, " +
+						  "studentId int  , " +
+						  "QuizQuestionid int  , " +
+						  "PRIMARY KEY (id));"
+						  
+						+ "CREATE TABLE IF NOT EXISTS QuizQuestion (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"quizId int  , " +
+						"title varchar(5000), " +
+						"type tinyint  , " +
+						"point int, " +
+						"imagepath varchar(1000), " +
+						"url varchar(555), " +
+						"answer1 varchar(555), " +
+						"answer2 varchar(555), " +
+						"answer3 varchar(555), " +
+						"answer4 varchar(555), " +
+						"answer5 varchar(555), " +
+						"bool1 boolean, " +
+						"bool2 boolean, " +
+						"bool3 boolean, " +
+						"bool4 boolean, " +
+						"bool5 boolean, " +
+						"instructorid int  , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS QuizRun (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"quizid int  , " +
+						"Instructorid int  , " +
+						"start bigint, " +
+						"end bigint, " +
+						"score int, " +
+						"Studentid int  , " +
+						"sessionid int  , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Quiz (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"instructorid int  , " +
+						"type tinyint, " +
+						"category varchar(255), " +
+						"description varchar(1000), " +
+						"pointing int, " +
+						"points int, " +
+						"time int, " +
+						"shuffle tinyint, " +
+						"title varchar(255), " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS SurveyReponse (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"answer varchar(555), " +
+						"bool1 boolean, " +
+						"bool2 boolean, " +
+						"bool3 boolean, " +
+						"bool4 boolean, " +
+						"bool5 boolean, " +
+						"studentId int  , " +
+						"ResponseQuestionid int  , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS SurveyQuestion (" +
+						"id int DEFAULT 0   AUTO_INCREMENT," +
+						"surveyid int  , " +
+						"responseId int  , " +
+						"title varchar(5000), " +
+						"type tinyint  , " +
+						"imagepath varchar(1000), " +
+						"url varchar(555), " +
+						"answer1 varchar(555), " +
+						"answer2 varchar(555), " +
+						"answer3 varchar(555), " +
+						"answer4 varchar(555), " +
+						"answer5 varchar(555), " +
+						"instructorid int  , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS SURVEYRUN (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"surveyId int  , " +
+						"instructorId int  , " +
+						"start bigint, " +
+						"end bigint, " +
+						"Studentid int, " +
+						"sessionId int , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Survey (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"instructorid int  , " +
+						"type tinyint, " +
+						"category varchar(255), " +
+						"description varchar(1000), " +
+						"pointing int, " +
+						"title varchar(255), " +
+						"PRIMARY KEY (id));"
+						
+						
 						+
 						
 						"DROP TABLE IF EXISTS Instructor;" +
 						"DROP TABLE IF EXISTS Student;" +
-						"CREATE TABLE IF NOT EXISTS Instructor (id int DEFAULT 0   AUTO_INCREMENT, Username varchar(255)   UNIQUE, Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (ID));"
-						+ "CREATE TABLE IF NOT EXISTS Student (id int DEFAULT 0   AUTO_INCREMENT, Username varchar(255)  , Password varchar(255), FirstName varchar(255), MiddleName varchar(255), LastName varchar(255), Language varchar(255), PRIMARY KEY (id));"
+						"CREATE TABLE IF NOT EXISTS Instructor (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"Username varchar(255)   UNIQUE, " +
+						"Password varchar(255), " +
+						"FirstName varchar(255), " +
+						"MiddleName varchar(255), " +
+						"LastName varchar(255), " +
+						"Language varchar(255), " +
+						"PRIMARY KEY (ID));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Student (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"Username varchar(255)  , " +
+						"Password varchar(255), " +
+						"FirstName varchar(255), " +
+						"MiddleName varchar(255), " +
+						"LastName varchar(255), " +
+						"Language varchar(255), " +
+						"PRIMARY KEY (id));"
 						+
 
 						"DROP TABLE IF EXISTS Course;" +
-						"CREATE TABLE IF NOT EXISTS Room (id int DEFAULT 0   AUTO_INCREMENT,name varchar(255)  , attendancetype tinyint, signintype tinyint, seatSize int, PRIMARY KEY (id));"
+						
+						"CREATE TABLE IF NOT EXISTS Room (" +
+						"id int DEFAULT 0   AUTO_INCREMENT," +
+						"name varchar(255)  , " +
+						"attendancetype tinyint, " +
+						"signintype tinyint, " +
+						"seatSize int, " +
+						"PRIMARY KEY (id));"
+						
 						+"DROP TABLE IF EXISTS Session;" 
-						+ "CREATE TABLE IF NOT EXISTS Session (id int DEFAULT 0   AUTO_INCREMENT, Instructorid int  , Roomid int  , Attendantid int, Courseid int, PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS Attendant (id int DEFAULT 0   AUTO_INCREMENT, Sessionid int  , Seatid int  , studentid int  , PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS Course (id int DEFAULT 0   AUTO_INCREMENT, name varchar(255), PRIMARY KEY (id));"
-						+ "CREATE TABLE IF NOT EXISTS Seat (id int DEFAULT 0   AUTO_INCREMENT, Roomid int  , name varchar(255), row int, col int, PRIMARY KEY (id));";
+						+ "CREATE TABLE IF NOT EXISTS Session (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"Instructorid int  , " +
+						"Roomid int  , " +
+						"Attendantid int, " +
+						"Courseid int, " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Attendant (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"Sessionid int  , " +
+						"Seatid int  , " +
+						"studentid int  , " +
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Course (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"name varchar(255), " +
+						"instructorId int"+
+						"PRIMARY KEY (id));"
+						
+						+ "CREATE TABLE IF NOT EXISTS Seat (" +
+						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"Roomid int  , " +
+						"name varchar(255), " +
+						"row int, col int, " +
+						"PRIMARY KEY (id));";
 						
 //						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
 //						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
