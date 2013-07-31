@@ -6,6 +6,7 @@ import java.util.Map;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
+import com.jajeem.room.model.Course;
 
 public class Session {
 
@@ -21,6 +22,7 @@ public class Session {
 	private static boolean[] isSurveyWindowsOpen = new boolean[15];
 	private static boolean[] isWhiteboardWindowsOpen = new boolean[15];
 	private static ArrayList<String> recordingList = new ArrayList<>();
+	private static Course course;
 	
 	
 	public static void setInstructor(Instructor instructor) {
@@ -112,5 +114,11 @@ public class Session {
 		return recordingList;
 	}
 
+	public static Course getCurrentCourse() {
+		return Session.course;
+	}
 
+	public static void setCurrentCourse(Course temp){
+		Session.course = temp;
+	}
 }

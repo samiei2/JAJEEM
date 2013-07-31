@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
+import com.jajeem.room.model.Course;
 import com.jajeem.room.model.Session;
 
 public class Run implements Serializable{
@@ -21,6 +22,7 @@ public class Run implements Serializable{
 	private int score;
 	private long start;
 	private long end;
+	private Course course;
 	
 	//getter & setters
 	public int getId() {
@@ -94,5 +96,17 @@ public class Run implements Serializable{
 	}
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	public void setCourse(Course currentCourse) {
+		this.course = currentCourse;
+	}
+	public Course getCourse(){
+		return this.course;
+	}
+	public void setCourseId(int courseid) {
+		this.course.setId(courseid);
+	}
+	public int getCourseId(){
+		return this.course.getId();
 	}
 }

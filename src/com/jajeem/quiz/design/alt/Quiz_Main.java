@@ -13,18 +13,17 @@ import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,7 +38,6 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -48,15 +46,13 @@ import com.jajeem.quiz.service.ResultService;
 import com.jajeem.quiz.service.RunService;
 import com.jajeem.room.model.Session;
 import com.jajeem.util.Config;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-
-import sun.net.www.content.image.gif;
 
 public class Quiz_Main extends WebFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private WebButton wbtnNew;
 	private WebButton wbtnContent;
@@ -76,8 +72,6 @@ public class Quiz_Main extends WebFrame {
 	private int gIndex;
 	private static boolean isPreviouslyOpened = false;
 	
-	private static AtomicInteger counter = new AtomicInteger();
-
 	/**
 	 * Launch the application.
 	 */
@@ -410,13 +404,13 @@ public class Quiz_Main extends WebFrame {
 						.showConfirmDialog(
 								null,
 								"Are you sure you want to save current quiz?\nNote:If you select No current quiz will be disposed.");
-				RunService qs = new RunService();
+				QuizService qs = new QuizService();
 				if (i == 0) {
 					try {
-						qs.create(currentRun);
+						qs.create(currentRun.getQuiz());
 						eventsEnabled = false;
 						firstPage.clear();
-						newQuizRun();
+//						newQuizRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
 						JajeemExcetionHandler.logError(e1);
@@ -425,7 +419,7 @@ public class Quiz_Main extends WebFrame {
 				} else if (i == 1) {
 					eventsEnabled = false;
 					firstPage.clear();
-					newQuizRun();
+//					newQuizRun();
 					eventsEnabled = true;
 				} else {
 					return;
@@ -528,7 +522,9 @@ public class Quiz_Main extends WebFrame {
 
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
-		currentRun.setQuizId(new Random().nextInt(1000));
+		currentRun.setCourse(com.jajeem.util.Session.getCurrentCourse());
+		UUID.randomUUID().
+		currentRun.setQuizId(UUID.randomUUID().clockSequence());
 		currentRun.getQuiz().addQuestion(new Question());
 
 		currentRun.setSession(getCurrentSession());
@@ -599,6 +595,8 @@ public class Quiz_Main extends WebFrame {
 				if(studentIps!=null){
 					if(!studentIps.isEmpty()){
 						currentRun.setStart(System.currentTimeMillis());
+						currentRun.setId(UUID.randomUUID().clockSequence());
+						
 						new Config();
 						ServerService service;
 						if(InstructorNoa.getServerService() == null)
@@ -621,6 +619,7 @@ public class Quiz_Main extends WebFrame {
 				}
 			}
 			else{
+				currentRun.setId(UUID.randomUUID().clockSequence());
 				currentRun.setStart(System.currentTimeMillis());
 				new Config();
 				ServerService service;

@@ -35,6 +35,7 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
@@ -48,7 +49,6 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
-import com.jajeem.util.Config;
 import java.awt.Toolkit;
 import java.awt.Color;
 
@@ -189,6 +189,20 @@ public class Quiz_Window extends WebFrame {
 						timer.stop();
 						timer.removeActionListener(taskPerformer);
 					}
+				
+				try{
+					FinishedQuizCommand cmd = new FinishedQuizCommand(
+							InetAddress.getLocalHost().getHostAddress(),
+							server, 
+							listenPort);
+					cmd.setRun(currentRun);
+					
+					ServerService service = new ServerService();
+					service.send(cmd);
+				}
+				catch(Exception e){
+					JajeemExcetionHandler.logError(e,Quiz_Window.class);
+				}
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

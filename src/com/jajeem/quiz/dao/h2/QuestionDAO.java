@@ -104,7 +104,7 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE Question.id = ?;");
+		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE id = ?;");
 		ps.setInt(1, question.getId());
 
 		try {
@@ -233,7 +233,7 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM QuizQuestion WHERE Question.id = ?;");
+		ps = con.prepareStatement("DELETE FROM QuizQuestion WHERE QuizQuestion.id = ?;");
 		ps.setInt(1, question.getId());
 
 		try {
@@ -345,7 +345,7 @@ public class QuestionDAO implements IQuestionDAO {
 		
 		Connection con = BaseDAO.getConnection();
 		try {
-			ps = con.prepareStatement("SELECT * FROM QuizQuestion where QuizQuestion.Quizid=? ;");
+			ps = con.prepareStatement("SELECT * FROM QuizQuestion where Quizid=? ;");
 			ps.setInt(1, id);
 
 		
@@ -402,6 +402,46 @@ public class QuestionDAO implements IQuestionDAO {
 		}
 
 		return allQuestions;
+	}
+
+	public boolean Contains(Question question) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE id = ?;");
+		ps.setInt(1, question.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+		return false;
 	}
 
 }

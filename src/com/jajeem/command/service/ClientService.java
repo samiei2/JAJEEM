@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import sun.misc.IOUtils;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
+import com.jajeem.command.handler.FinishedQuizCommandHandler;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
@@ -62,6 +63,7 @@ import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
+import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
@@ -427,6 +429,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 				
 				else if(cmd instanceof SendSpeechFileCommand){
 					SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
+					hnldr.run(cmd);
+				}
+				
+				else if(cmd instanceof FinishedQuizCommand){
+					FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
 					hnldr.run(cmd);
 				}
 

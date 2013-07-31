@@ -17,13 +17,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -44,6 +47,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.bouncycastle.jcajce.provider.asymmetric.dsa.DSASigner.stdDSA;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
@@ -51,6 +55,9 @@ import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 import org.jscroll.JScrollDesktopPane;
 import org.jscroll.widgets.RootDesktopPane;
+import org.junit.runner.notification.RunListener;
+
+import system.DateTime;
 
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
@@ -67,6 +74,7 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
+import com.alee.managers.popup.PopupListener;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.jajeem.command.model.InternetCommand;
@@ -75,8 +83,11 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
+import com.jajeem.quiz.dao.h2.RunDAO;
+import com.jajeem.quiz.model.Run;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
@@ -100,6 +111,9 @@ public class InstructorNoa {
 	static WebButton intercomButton = new WebButton();
 	private static WebList groupList = new WebList();
 	private static boolean modeling = false;
+	
+	ArrayList<Run> reportRunList = new ArrayList<>();
+	ArrayList<com.jajeem.core.model.Student> reportStudentList = new ArrayList<>();
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
 
@@ -1243,7 +1257,7 @@ public class InstructorNoa {
 
 		final WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
 				PopupWay.downCenter);
-
+		
 		
 		///////////////////// Report Combo
 		
@@ -1268,7 +1282,61 @@ public class InstructorNoa {
 			}
 		});
 		
-		String[] items = { "SummaryofStudents", "StudentResult", "PointChart" ,"AnswerRate"};
+		
+		reportPopupButton.addPopupListener(new PopupListener() {
+			
+			@Override
+			public void popupWillBeOpened() {
+			}
+			
+			@Override
+			public void popupWillBeClosed() {
+			}
+			
+			@Override
+			public void popupOpened() {
+				PopulateQuizCombobox();
+				PopulateStudentCombobox();
+			}
+			
+			private void PopulateStudentCombobox() {
+				ArrayList<com.jajeem.core.model.Student> stdList;
+				try {
+					stdList = new StudentDAO().list();
+					reportStudentList.clear();
+					for (int i = 0; i < stdList.size(); i++) {
+						com.jajeem.core.model.Student st = stdList.get(i);
+						reportStudentComboBox.addItem(st.getFullName() + " ("+st.getId()+")");
+						reportStudentList.add(st);
+					}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			private void PopulateQuizCombobox() {
+				ArrayList<com.jajeem.quiz.model.Run> quizList;
+				try {
+					quizList = new RunDAO().list(com.jajeem.util.Session.getCurrentCourse().getId());
+//					quizList = new RunDAO().list();
+					for (int i = 0; i < quizList.size(); i++) {
+						Run run = quizList.get(i);
+						reportQuizComboBox.addItem(run.getId()+" ("+new Date(run.getStart())+")");
+						reportRunList.add(run);
+					}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void popupClosed() {
+			}
+		});
+		
+		final String[] items = { "SummaryofStudents", "StudentResult", "PointChart" ,"AnswerRate"};
 		final WebComboBox reportComboBox = new WebComboBox(new String[]{"Summary of Students","Student Result","Point Chart","Answer Rate"});
 		
 		final WebButton reportGoButton = new WebButton("Go");
@@ -1279,8 +1347,21 @@ public class InstructorNoa {
 				Object selectedItem = reportComboBox.getSelectedItem();
 				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
 						.format(Calendar.getInstance().getTime());
-				JasperReport.generate(selectedItem.toString(),
-						(selectedItem.toString()+ "_"+ timeStamp), Query.SummaryOfStudents(1));
+				if(reportComboBox.getSelectedItem().equals("Summary of Students")){
+					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
+							(selectedItem.toString()+ "_"+ timeStamp), Query.SummaryOfStudents(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId()));
+				}
+				if(reportComboBox.getSelectedItem().equals("Student Result")){
+					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
+							(selectedItem.toString()+ "_"+ timeStamp), 
+							Query.StudentResult(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId(),
+									reportStudentList.get(reportStudentComboBox.getSelectedIndex()).getId()));
+				}
+				if(reportComboBox.getSelectedItem().equals("Answer Rate")){
+					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
+							(selectedItem.toString()+ "_"+ timeStamp), 
+							Query.AnswerRate(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId()));
+				}
 			}
 		});
 		
@@ -1288,7 +1369,6 @@ public class InstructorNoa {
 			
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				System.out.println(reportComboBox.getSelectedItem().toString());
 				if(reportComboBox.getSelectedItem().toString().equals("Summary of Students")){
 					reportPopupContent.removeAll();
 					reportPopupContent.add(reportComboBox);

@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.border.TitledBorder;
@@ -46,7 +47,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 	private Quiz_Main parentPanel;
 	private WebCheckBox wbchckbxAuto;
 
-	private static final AtomicInteger counter = new AtomicInteger();
+	//private static final AtomicInteger counter = new AtomicInteger();
 
 	/**
 	 * Create the panel.
@@ -178,7 +179,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				parentPanel.setEventsEnabled(false);
 				if (parentPanel.getCurrentQuestion() != null) {
 					parentPanel.getCurrentQuestion().setId(
-							counter.incrementAndGet());
+							UUID.randomUUID().clockSequence());
 					parentPanel.getCurrentQuestion().setQuizId(
 							parentPanel.getCurrentRun().getQuiz().getId());
 					parentPanel.getCurrentQuestion().setInstructorId(
@@ -281,7 +282,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				model.addRow(obj);
 
 				Question q = new Question();
-				q.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(counter.incrementAndGet())));
+				q.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(UUID.randomUUID().clockSequence())));
 				q.setQuizId(parentPanel.getCurrentRun().getQuiz().getId());
 				q.setInstructorId(parentPanel.getCurrentInstructor().getId());
 				parentPanel.getCurrentRun().getQuiz().addQuestion(q);
@@ -331,7 +332,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 							.getQuestionList()
 							.get(webQuestionListPanel.getWebTable()
 									.getSelectedRow()));
-					toCopy.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(counter.incrementAndGet())));
+					toCopy.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(UUID.randomUUID().clockSequence())));
 					parentPanel.getCurrentRun().getQuiz().addQuestion(toCopy);
 					String type = "";
 					if (toCopy.getType() == 0) {

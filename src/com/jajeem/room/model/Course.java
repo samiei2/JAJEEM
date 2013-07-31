@@ -70,6 +70,10 @@ public class Course implements Serializable {
 	public Course() {
 	}
 
+	public Course(int i) {
+		this.id = i;
+	}
+
 	public int getEndTime2() {
 		return endTime2;
 	}
