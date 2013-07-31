@@ -71,9 +71,11 @@ public class initDatabase {
 					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(4,'jajeem','jajeem','Jajeem','Jajeem','none');";
 					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');";
 					*/
+				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
+				
 					
 					query += "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
 					query += "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
