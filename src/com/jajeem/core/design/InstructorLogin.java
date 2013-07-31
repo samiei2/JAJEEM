@@ -2,7 +2,6 @@ package com.jajeem.core.design;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +21,10 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.button.WebButton;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
+import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebPasswordField;
@@ -125,9 +126,9 @@ public class InstructorLogin extends JDialog {
 
 		public loginDialog(Window owner) throws SQLException {
 			super(owner, "Welcome to iCalabo");
-			setIconImage(Toolkit.getDefaultToolkit().getImage(
-					InstructorLogin.class
-							.getResource("/icons/menubar/jajeem.jpg")));
+			// setIconImage(Toolkit.getDefaultToolkit().getImage(
+			// InstructorLogin.class
+			// .getResource("/icons/menubar/jajeem.jpg")));
 			try {
 				new Config();
 
@@ -142,9 +143,11 @@ public class InstructorLogin extends JDialog {
 			DefaultListModel listModel1 = new DefaultListModel();
 
 			for (com.jajeem.core.model.Instructor instructorItem : instructorList) {
-				listModel1.addElement(instructorItem.getFirstName() + " "
-						+ instructorItem.getLastName() + " ("
-						+ instructorItem.getUsername() + ")");
+				if (!instructorItem.getUsername().equals("admin")) {
+					listModel1.addElement(instructorItem.getFirstName() + " "
+							+ instructorItem.getLastName() + " ("
+							+ instructorItem.getUsername() + ")");
+				}
 			}
 
 			final WebList list1 = new WebList(listModel1);
@@ -206,7 +209,9 @@ public class InstructorLogin extends JDialog {
 				JPanel buttonPane = new JPanel();
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				{
-					JButton okButton = new JButton("Login");
+					WebButton okButton = new WebButton("Login");
+					WebButton adminButton = new WebButton(
+							"Login as Administrator");
 					okButton.setActionCommand("OK");
 					getRootPane().setDefaultButton(okButton);
 					GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
@@ -221,6 +226,16 @@ public class InstructorLogin extends JDialog {
 															Short.MAX_VALUE)
 													.addComponent(okButton)
 													.addGap(190)));
+					gl_buttonPane.setHorizontalGroup(gl_buttonPane
+							.createParallelGroup(Alignment.TRAILING).addGroup(
+									Alignment.TRAILING,
+									gl_buttonPane
+											.createSequentialGroup()
+											.addContainerGap(197,
+													Short.MAX_VALUE)
+											.addComponent(adminButton)
+											.addGap(190)));
+
 					gl_buttonPane.setVerticalGroup(gl_buttonPane
 							.createParallelGroup(Alignment.LEADING).addGroup(
 									gl_buttonPane
@@ -229,9 +244,16 @@ public class InstructorLogin extends JDialog {
 											.addContainerGap(
 													GroupLayout.DEFAULT_SIZE,
 													Short.MAX_VALUE)));
-					buttonPane.setLayout(gl_buttonPane);
+					gl_buttonPane.setVerticalGroup(gl_buttonPane
+							.createParallelGroup(Alignment.LEADING).addGroup(
+									gl_buttonPane
+											.createSequentialGroup()
+											.addComponent(adminButton)
+											.addContainerGap(
+													GroupLayout.DEFAULT_SIZE,
+													Short.MAX_VALUE)));
 
-					ActionListener listener = new ActionListener() {
+					ActionListener okButtonListener = new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							try {
 								boolean grant = false;
@@ -280,7 +302,31 @@ public class InstructorLogin extends JDialog {
 							}
 						}
 					};
-					okButton.addActionListener(listener);
+
+					ActionListener adminButtonListener = new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							try {
+								boolean grant = false;
+								String user = "admin";
+								InstructorService instructorService = new InstructorService();
+								grant = instructorService.authenticate(user,
+										password.getPassword());
+								if (grant) {
+									AdminPanel frame = new AdminPanel();
+									frame.setVisible(true);
+									setVisible(false);
+								} else {
+									password.setBackground(Color
+											.decode("#FAD9D9"));
+								}
+							} catch (Exception e2) {
+								e2.printStackTrace();
+							}
+						}
+					};
+
+					okButton.addActionListener(okButtonListener);
+					adminButton.addActionListener(adminButtonListener);
 				}
 
 			}

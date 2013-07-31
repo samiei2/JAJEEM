@@ -64,15 +64,18 @@ public class initDatabase {
 				statement.executeUpdate(query);
 
 				// TODO just for sample data
-//				
-//					query = "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'majid','majid','Majid','Ghasemi','none');";
-//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'armin','armin','Armin','Samiei','farsi');";
-//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mohammad','mohammad','Mohammad','Tahaei','eng');";
-//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(4,'jajeem','jajeem','Jajeem','Jajeem','none');";
-//					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');";
+				
+	/*				query = "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'majid','majid','Majid','Ghasemi','none');";
+					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'armin','armin','Armin','Samiei','farsi');";
+					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mohammad','mohammad','Mohammad','Tahaei','eng');";
+					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(4,'jajeem','jajeem','Jajeem','Jajeem','none');";
+					query += "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');";
+					*/
+				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
 				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
+				
 					
 					query += "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
 					query += "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
@@ -218,10 +221,8 @@ public class initDatabase {
 			
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

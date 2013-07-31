@@ -77,6 +77,7 @@ import com.jajeem.message.design.Chat;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
+import com.jajeem.util.Query;
 
 public class InstructorNoa {
 
@@ -1237,9 +1238,9 @@ public class InstructorNoa {
 		rightButtonPanel.add(reportButton);
 
 		WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
-				PopupWay.leftCenter);
+				PopupWay.downCenter);
 
-		String[] items = { "Report type 1", "Report type 2", "Report type 3" };
+		String[] items = { "SummaryofStudents", "Report type 2", "Report type 3" };
 		final WebComboBox reportComboBox = new WebComboBox(items);
 
 		WebButton reportGoButton = new WebButton("Go");
@@ -1248,10 +1249,10 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Object selectedItem = reportComboBox.getSelectedItem();
-				String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm")
+				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
 						.format(Calendar.getInstance().getTime());
 				JasperReport.generate(selectedItem.toString(),
-						(selectedItem.toString()+ " _"+ timeStamp));
+						(selectedItem.toString()+ "_"+ timeStamp), Query.SummaryOfStudents(1));
 			}
 		});
 
