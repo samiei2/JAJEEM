@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,7 +23,6 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
-import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebPasswordField;
@@ -209,8 +207,10 @@ public class InstructorLogin extends JDialog {
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				{
 					WebButton okButton = new WebButton("Login");
-					WebButton adminButton = new WebButton(
+					final WebButton adminButton = new WebButton(
 							"Login as Administrator");
+					adminButton.setVisible(false);
+					WebButton moreButton = new WebButton("More");
 					okButton.setActionCommand("OK");
 					getRootPane().setDefaultButton(okButton);
 					GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
@@ -235,6 +235,16 @@ public class InstructorLogin extends JDialog {
 											.addComponent(adminButton)
 											.addGap(190)));
 
+					gl_buttonPane.setHorizontalGroup(gl_buttonPane
+							.createParallelGroup(Alignment.TRAILING).addGroup(
+									Alignment.TRAILING,
+									gl_buttonPane
+											.createSequentialGroup()
+											.addContainerGap(197,
+													Short.MAX_VALUE)
+											.addComponent(moreButton)
+											.addGap(190)));
+
 					gl_buttonPane.setVerticalGroup(gl_buttonPane
 							.createParallelGroup(Alignment.LEADING).addGroup(
 									gl_buttonPane
@@ -251,11 +261,24 @@ public class InstructorLogin extends JDialog {
 											.addContainerGap(
 													GroupLayout.DEFAULT_SIZE,
 													Short.MAX_VALUE)));
+					gl_buttonPane.setVerticalGroup(gl_buttonPane
+							.createParallelGroup(Alignment.LEADING).addGroup(
+									gl_buttonPane
+											.createSequentialGroup()
+											.addComponent(moreButton)
+											.addContainerGap(
+													GroupLayout.DEFAULT_SIZE,
+													Short.MAX_VALUE)));
 
 					ActionListener okButtonListener = new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							try {
 								boolean grant = false;
+								if (list1.getSelectedValue() == null
+										|| list2.getSelectedValue() == null) {
+									return;
+								}
+
 								String user = list1.getSelectedValue()
 										.toString();
 								InstructorService instructorService = new InstructorService();
@@ -324,8 +347,19 @@ public class InstructorLogin extends JDialog {
 						}
 					};
 
+					ActionListener moreButtonListener = new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							if (adminButton.isVisible()) {
+								adminButton.setVisible(false);
+							} else {
+								adminButton.setVisible(true);
+							}
+						}
+					};
+
 					okButton.addActionListener(okButtonListener);
 					adminButton.addActionListener(adminButtonListener);
+					moreButton.addActionListener(moreButtonListener);
 				}
 
 			}

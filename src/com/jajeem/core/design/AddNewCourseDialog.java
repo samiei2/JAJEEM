@@ -134,7 +134,8 @@ public class AddNewCourseDialog extends JDialog {
 				insList.add(ins.getUsername());
 			}
 
-			instructorNameCombo.setModel(new DefaultComboBoxModel(insList.toArray()));
+			instructorNameCombo.setModel(new DefaultComboBoxModel(insList
+					.toArray()));
 			contentPanel.add(instructorNameCombo);
 		}
 		{
@@ -364,6 +365,15 @@ public class AddNewCourseDialog extends JDialog {
 												.getSelectedItem());
 								endTime1 = Integer.parseInt((String) endTimeTF1
 										.getSelectedItem());
+								if (startTime1 > endTime1) {
+									WebOptionPane
+											.showMessageDialog(
+													getRootPane(),
+													"Start time cannot be greater that end time!",
+													"Error",
+													WebOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							}
 							if (!dayCombo2.getSelectedItem().equals("")) {
 								day2 = (String) dayCombo2.getSelectedItem();
@@ -372,6 +382,15 @@ public class AddNewCourseDialog extends JDialog {
 												.getSelectedItem());
 								endTime2 = Integer.parseInt((String) endTimeTF2
 										.getSelectedItem());
+								if (startTime2 > endTime2) {
+									WebOptionPane
+											.showMessageDialog(
+													getRootPane(),
+													"Start time cannot be greater that end time!",
+													"Error",
+													WebOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							}
 							if (!dayCombo3.getSelectedItem().equals("")) {
 								day3 = (String) dayCombo3.getSelectedItem();
@@ -380,6 +399,15 @@ public class AddNewCourseDialog extends JDialog {
 												.getSelectedItem());
 								endTime3 = Integer.parseInt((String) endTimeTF3
 										.getSelectedItem());
+								if (startTime3 > endTime3) {
+									WebOptionPane
+											.showMessageDialog(
+													getRootPane(),
+													"Start time cannot be greater that end time!",
+													"Error",
+													WebOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							}
 							if (!dayCombo4.getSelectedItem().equals("")) {
 								day4 = (String) dayCombo4.getSelectedItem();
@@ -388,6 +416,15 @@ public class AddNewCourseDialog extends JDialog {
 												.getSelectedItem());
 								endTime4 = Integer.parseInt((String) endTimeTF4
 										.getSelectedItem());
+								if (startTime4 > endTime4) {
+									WebOptionPane
+											.showMessageDialog(
+													getRootPane(),
+													"Start time cannot be greater that end time!",
+													"Error",
+													WebOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							}
 							if (!dayCombo5.getSelectedItem().equals("")) {
 								day5 = (String) dayCombo5.getSelectedItem();
@@ -396,6 +433,15 @@ public class AddNewCourseDialog extends JDialog {
 												.getSelectedItem());
 								endTime5 = Integer.parseInt((String) endTimeTF5
 										.getSelectedItem());
+								if (startTime5 > endTime5) {
+									WebOptionPane
+											.showMessageDialog(
+													getRootPane(),
+													"Start time cannot be greater that end time!",
+													"Error",
+													WebOptionPane.ERROR_MESSAGE);
+									return;
+								}
 							}
 
 							Course course = new Course(courseName,
@@ -405,13 +451,14 @@ public class AddNewCourseDialog extends JDialog {
 									startTime3, endTime3, day4, startTime4,
 									endTime4, day5, startTime5, endTime5);
 							courseList.add(course);
-							
+
 							for (Instructor instructor : instructorList) {
-								if(course.getInstructor().equals(instructor.getUsername())) {
+								if (course.getInstructor().equals(
+										instructor.getUsername())) {
 									course.setInstructorId(instructor.getId());
 								}
 							}
-							
+
 							RoomService rs = new RoomService();
 							rs.getCourseDAO().create(course);
 
@@ -507,7 +554,8 @@ public class AddNewCourseDialog extends JDialog {
 				insList.add(ins.getUsername());
 			}
 
-			instructorNameCombo.setModel(new DefaultComboBoxModel(insList.toArray()));
+			instructorNameCombo.setModel(new DefaultComboBoxModel(insList
+					.toArray()));
 			contentPanel.add(instructorNameCombo);
 		}
 		{
