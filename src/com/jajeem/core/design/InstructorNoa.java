@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -78,6 +81,7 @@ import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
+import com.sun.org.apache.regexp.internal.REProgram;
 
 public class InstructorNoa {
 
@@ -1237,13 +1241,37 @@ public class InstructorNoa {
 		reportButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(reportButton);
 
-		WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
+		final WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
 				PopupWay.downCenter);
 
-		String[] items = { "SummaryofStudents", "Report type 2", "Report type 3" };
-		final WebComboBox reportComboBox = new WebComboBox(items);
-
-		WebButton reportGoButton = new WebButton("Go");
+		
+		///////////////////// Report Combo
+		
+		final GroupPanel reportPopupContent = new GroupPanel(5, false);
+		reportPopupContent.setMargin(15);
+		
+		final WebComboBox reportStudentComboBox = new WebComboBox();
+		reportStudentComboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				
+			}
+		});
+		
+		final WebComboBox reportQuizComboBox = new WebComboBox();
+		reportQuizComboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				
+			}
+		});
+		
+		String[] items = { "SummaryofStudents", "StudentResult", "PointChart" ,"AnswerRate"};
+		final WebComboBox reportComboBox = new WebComboBox(new String[]{"Summary of Students","Student Result","Point Chart","Answer Rate"});
+		
+		final WebButton reportGoButton = new WebButton("Go");
 		reportGoButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -1255,10 +1283,60 @@ public class InstructorNoa {
 						(selectedItem.toString()+ "_"+ timeStamp), Query.SummaryOfStudents(1));
 			}
 		});
+		
+		reportComboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				System.out.println(reportComboBox.getSelectedItem().toString());
+				if(reportComboBox.getSelectedItem().toString().equals("Summary of Students")){
+					reportPopupContent.removeAll();
+					reportPopupContent.add(reportComboBox);
+					reportPopupContent.add(reportQuizComboBox);
+					reportPopupContent.add(reportGoButton);	
+					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight());
+					reportPopupButton.packPopup();
+					reportPopupButton.revalidate();
+					reportPopupButton.repaint();
+				}
+				else if(reportComboBox.getSelectedItem().toString().equals("Student Result")){
+					reportPopupContent.removeAll();
+					reportPopupContent.add(reportComboBox);
+					reportPopupContent.add(reportStudentComboBox);
+					reportPopupContent.add(reportQuizComboBox);
+					reportPopupContent.add(reportGoButton);
+					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight() + reportStudentComboBox.getHeight());
+					reportPopupButton.packPopup();
+					reportPopupButton.revalidate();
+					reportPopupButton.repaint();
+				}
+				else if(reportComboBox.getSelectedItem().toString().equals("Point Chart")){
+					reportPopupContent.removeAll();
+					reportPopupContent.add(reportComboBox);
+					reportPopupContent.add(reportStudentComboBox);
+					reportPopupContent.add(reportQuizComboBox);
+					reportPopupContent.add(reportGoButton);
+					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight() + reportStudentComboBox.getHeight());
+					reportPopupButton.packPopup();
+					reportPopupButton.revalidate();
+					reportPopupButton.repaint();
+				}
+				else if(reportComboBox.getSelectedItem().toString().equals("Answer Rate")){
+					reportPopupContent.removeAll();
+					reportPopupContent.add(reportComboBox);
+					reportPopupContent.add(reportQuizComboBox);
+					reportPopupContent.add(reportGoButton);
+					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight());
+					reportPopupButton.packPopup();
+					reportPopupButton.revalidate();
+					reportPopupButton.repaint();
+				}
+			}
+		});
 
-		GroupPanel reportPopupContent = new GroupPanel(5, false,
-				reportComboBox, reportGoButton);
-		reportPopupContent.setMargin(15);
+		reportPopupContent.add(reportComboBox);
+		reportPopupContent.add(reportQuizComboBox);
+		reportPopupContent.add(reportGoButton);
 
 		reportPopupButton.setContent(reportPopupContent);
 
