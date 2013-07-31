@@ -54,6 +54,7 @@ public class initDatabase {
 						+ "CREATE TABLE IF NOT EXISTS QuizRun (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
 						"quizid int  , " +
+						"courseid int , "+
 						"Instructorid int  , " +
 						"start bigint, " +
 						"end bigint, " +
@@ -172,6 +173,7 @@ public class initDatabase {
 						"Sessionid int  , " +
 						"Seatid int  , " +
 						"studentid int  , " +
+						"courseid int ,"+
 						"PRIMARY KEY (id));"
 						
 						+ "CREATE TABLE IF NOT EXISTS Course (" +
@@ -199,7 +201,6 @@ public class initDatabase {
 						"endTime5 int, " +
 						"PRIMARY KEY (id));"
 
-						
 						+ "CREATE TABLE IF NOT EXISTS Seat (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
 						"Roomid int  , " +
