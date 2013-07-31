@@ -20,7 +20,7 @@ public class CourseDAO implements ICourseDAO {
 	Logger logger = Logger.getLogger(CourseDAO.class);
 
 	public CourseDAO() {
-		
+
 	}
 
 	@Override
@@ -31,9 +31,31 @@ public class CourseDAO implements ICourseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Course (name) VALUES (?);");
-		ps.setString(1, course.getName());
-
+		ps = con.prepareStatement("INSERT INTO Course (instructorId, name , classType, level, session, startDate,"
+				+ " day1, startTime1, endTime1,day2, startTime2, endTime2,day3, startTime3, endTime3,day4, startTime4, endTime4,day5, startTime5, endTime5) "
+				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?);");
+		ps.setInt(1, course.getInstructorId());
+		ps.setString(2, course.getName());
+		ps.setString(3, course.getClassType());
+		ps.setString(4, course.getLevel());
+		ps.setInt(5, course.getSession());
+		ps.setLong(6, course.getStartDate());
+		ps.setString(7, course.getDay1());
+		ps.setInt(8, course.getStartTime1());
+		ps.setInt(9,  course.getEndTime1());
+		ps.setString(10, course.getDay2());
+		ps.setInt(11, course.getStartTime2());
+		ps.setInt(12,  course.getEndTime2());
+		ps.setString(13, course.getDay3());
+		ps.setInt(14, course.getStartTime3());
+		ps.setInt(15,  course.getEndTime3());
+		ps.setString(16, course.getDay4());
+		ps.setInt(17, course.getStartTime4());
+		ps.setInt(18,  course.getEndTime4());
+		ps.setString(19, course.getDay5());
+		ps.setInt(20, course.getStartTime5());
+		ps.setInt(21,  course.getEndTime5());
+		
 		try {
 			rs = ps.executeUpdate();
 
@@ -91,7 +113,27 @@ public class CourseDAO implements ICourseDAO {
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
+
 				course.setName(rs.getString("name"));
+				course.setClassType(rs.getString("classType"));
+				course.setLevel(rs.getString("level"));
+				course.setStartDate(rs.getLong("startDate"));
+				course.setSession(rs.getInt("session"));
+				course.setDay1(rs.getString("day1"));
+				course.setStartTime1(rs.getInt("startTime1"));
+				course.setEndTime1(rs.getInt("endTime1"));
+				course.setDay2(rs.getString("day2"));
+				course.setStartTime2(rs.getInt("startTime2"));
+				course.setEndTime2(rs.getInt("endTime2"));
+				course.setDay3(rs.getString("day3"));
+				course.setStartTime3(rs.getInt("startTime3"));
+				course.setEndTime3(rs.getInt("endTime3"));
+				course.setDay4(rs.getString("day4"));
+				course.setStartTime4(rs.getInt("startTime4"));
+				course.setEndTime4(rs.getInt("endTime4"));
+				course.setDay5(rs.getString("day5"));
+				course.setStartTime5(rs.getInt("startTime5"));
+				course.setEndTime5(rs.getInt("endTime5"));
 			} else {
 				course.setId(0);
 			}
@@ -231,6 +273,25 @@ public class CourseDAO implements ICourseDAO {
 
 				course.setId(rs.getInt("id"));
 				course.setName(rs.getString("name"));
+				course.setClassType(rs.getString("classType"));
+				course.setLevel(rs.getString("level"));
+				course.setStartDate(rs.getLong("startDate"));
+				course.setSession(rs.getInt("session"));
+				course.setDay1(rs.getString("day1"));
+				course.setStartTime1(rs.getInt("startTime1"));
+				course.setEndTime1(rs.getInt("endTime1"));
+				course.setDay2(rs.getString("day2"));
+				course.setStartTime2(rs.getInt("startTime2"));
+				course.setEndTime2(rs.getInt("endTime2"));
+				course.setDay3(rs.getString("day3"));
+				course.setStartTime3(rs.getInt("startTime3"));
+				course.setEndTime3(rs.getInt("endTime3"));
+				course.setDay4(rs.getString("day4"));
+				course.setStartTime4(rs.getInt("startTime4"));
+				course.setEndTime4(rs.getInt("endTime4"));
+				course.setDay5(rs.getString("day5"));
+				course.setStartTime5(rs.getInt("startTime5"));
+				course.setEndTime5(rs.getInt("endTime5"));
 
 				allCourses.add(course);
 			}

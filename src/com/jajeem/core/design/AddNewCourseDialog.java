@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -23,6 +24,7 @@ import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.room.model.Course;
+import com.jajeem.room.service.RoomService;
 
 public class AddNewCourseDialog extends JDialog {
 
@@ -75,9 +77,10 @@ public class AddNewCourseDialog extends JDialog {
 	private WebComboBox startTimeTF1;
 
 	/**
-	 * Create the dialog.
+	 * Create the dialog. New Course Mode
 	 * 
 	 * @param courseList
+	 * @wbp.parser.constructor
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList) {
 		setTitle("Add new course");
@@ -331,18 +334,75 @@ public class AddNewCourseDialog extends JDialog {
 							long startDate = startDateTF.getDate().getTime();
 							int sessionCount = Integer.parseInt(sessionTF
 									.getText());
-							String day = (String) dayCombo1.getSelectedItem();
-							int startTime = Integer
-									.parseInt((String) startTimeTF1
-											.getSelectedItem());
-							int endTime = Integer.parseInt((String) endTimeTF1
-									.getSelectedItem());
 
-							/*Course course = new Course(courseName,
+							String day1 = "";
+							int startTime1 = -1;
+							int endTime1 = -1;
+							String day2 = "";
+							int startTime2 = -1;
+							int endTime2 = -1;
+							String day3 = "";
+							int startTime3 = -1;
+							int endTime3 = -1;
+							String day4 = "";
+							int startTime4 = -1;
+							int endTime4 = -1;
+							String day5 = "";
+							int startTime5 = -1;
+							int endTime5 = -1;
+
+							if (!dayCombo1.getSelectedItem().equals("")) {
+								day1 = (String) dayCombo1.getSelectedItem();
+								startTime1 = Integer
+										.parseInt((String) startTimeTF1
+												.getSelectedItem());
+								endTime1 = Integer.parseInt((String) endTimeTF1
+										.getSelectedItem());
+							}
+							if (!dayCombo2.getSelectedItem().equals("")) {
+								day2 = (String) dayCombo2.getSelectedItem();
+								startTime2 = Integer
+										.parseInt((String) startTimeTF2
+												.getSelectedItem());
+								endTime2 = Integer.parseInt((String) endTimeTF2
+										.getSelectedItem());
+							}
+							if (!dayCombo3.getSelectedItem().equals("")) {
+								day3 = (String) dayCombo3.getSelectedItem();
+								startTime3 = Integer
+										.parseInt((String) startTimeTF3
+												.getSelectedItem());
+								endTime3 = Integer.parseInt((String) endTimeTF3
+										.getSelectedItem());
+							}
+							if (!dayCombo4.getSelectedItem().equals("")) {
+								day4 = (String) dayCombo4.getSelectedItem();
+								startTime4 = Integer
+										.parseInt((String) startTimeTF4
+												.getSelectedItem());
+								endTime4 = Integer.parseInt((String) endTimeTF4
+										.getSelectedItem());
+							}
+							if (!dayCombo5.getSelectedItem().equals("")) {
+								day5 = (String) dayCombo5.getSelectedItem();
+								startTime5 = Integer
+										.parseInt((String) startTimeTF5
+												.getSelectedItem());
+								endTime5 = Integer.parseInt((String) endTimeTF5
+										.getSelectedItem());
+							}
+							
+							Course course = new Course(courseName,
 									instructorName, classType, level,
-									startDate, sessionCount, day, startTime,
-									endTime);
-							courseList.add(course);*/
+									startDate, sessionCount, day1, startTime1,
+									endTime1, day2, startTime2, endTime2, day3,
+									startTime3, endTime3, day4, startTime4,
+									endTime4, day5, startTime5, endTime5);
+							courseList.add(course);
+							
+							RoomService rs = new RoomService();
+							rs.getCourseDAO().create(course);
+							
 							dispose();
 						} catch (Exception e1) {
 							e1.printStackTrace();
@@ -373,13 +433,17 @@ public class AddNewCourseDialog extends JDialog {
 		}
 	}
 
-	/*
+	/**
+	 * Create the dialog. Edit Course Mode
 	 * 
-	 * * * Edit
+	 * @param courseList
+	 * @param course
+	 * @param selected
+	 *            courseList
+	 * 
 	 */
-
 	public AddNewCourseDialog(final EventList<Course> courseList,
-			final Course course) {
+			final Course course, final EventList<Course> selectedCourse) {
 		setTitle("Edit course");
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -631,19 +695,75 @@ public class AddNewCourseDialog extends JDialog {
 							long startDate = startDateTF.getDate().getTime();
 							int sessionCount = Integer.parseInt(sessionTF
 									.getText());
-							String day = (String) dayCombo1.getSelectedItem();
-							int startTime = Integer
-									.parseInt((String) startTimeTF1
-											.getSelectedItem());
-							int endTime = Integer.parseInt((String) endTimeTF1
-									.getSelectedItem());
 
-							/*Course course = new Course(courseName,
+							String day1 = "";
+							int startTime1 = -1;
+							int endTime1 = -1;
+							String day2 = "";
+							int startTime2 = -1;
+							int endTime2 = -1;
+							String day3 = "";
+							int startTime3 = -1;
+							int endTime3 = -1;
+							String day4 = "";
+							int startTime4 = -1;
+							int endTime4 = -1;
+							String day5 = "";
+							int startTime5 = -1;
+							int endTime5 = -1;
+
+							if (!dayCombo1.getSelectedItem().equals("")) {
+								day1 = (String) dayCombo1.getSelectedItem();
+								startTime1 = Integer
+										.parseInt((String) startTimeTF1
+												.getSelectedItem());
+								endTime1 = Integer.parseInt((String) endTimeTF1
+										.getSelectedItem());
+							}
+							if (!dayCombo2.getSelectedItem().equals("")) {
+								day2 = (String) dayCombo2.getSelectedItem();
+								startTime2 = Integer
+										.parseInt((String) startTimeTF2
+												.getSelectedItem());
+								endTime2 = Integer.parseInt((String) endTimeTF2
+										.getSelectedItem());
+							}
+							if (!dayCombo3.getSelectedItem().equals("")) {
+								day3 = (String) dayCombo3.getSelectedItem();
+								startTime3 = Integer
+										.parseInt((String) startTimeTF3
+												.getSelectedItem());
+								endTime3 = Integer.parseInt((String) endTimeTF3
+										.getSelectedItem());
+							}
+							if (!dayCombo4.getSelectedItem().equals("")) {
+								day4 = (String) dayCombo4.getSelectedItem();
+								startTime4 = Integer
+										.parseInt((String) startTimeTF4
+												.getSelectedItem());
+								endTime4 = Integer.parseInt((String) endTimeTF4
+										.getSelectedItem());
+							}
+							if (!dayCombo5.getSelectedItem().equals("")) {
+								day5 = (String) dayCombo5.getSelectedItem();
+								startTime5 = Integer
+										.parseInt((String) startTimeTF5
+												.getSelectedItem());
+								endTime5 = Integer.parseInt((String) endTimeTF5
+										.getSelectedItem());
+							}
+
+							courseList.removeAll(selectedCourse);
+							Course course = new Course(courseName,
 									instructorName, classType, level,
-									startDate, sessionCount, day, startTime,
-									endTime);
+									startDate, sessionCount, day1, startTime1,
+									endTime1, day2, startTime2, endTime2, day3,
+									startTime3, endTime3, day4, startTime4,
+									endTime4, day5, startTime5, endTime5);
 							courseList.add(course);
-							*/
+
+							// TODO: update this course here
+
 							dispose();
 						} catch (Exception e1) {
 							e1.printStackTrace();
@@ -680,24 +800,24 @@ public class AddNewCourseDialog extends JDialog {
 		Date startDate = new Date(course.getStartDate());
 		startDateTF.setDate(startDate);
 		sessionTF.setText(String.valueOf(course.getSession()));
-		
+
 		dayCombo1.setSelectedItem(course.getDay1());
 		dayCombo2.setSelectedItem(course.getDay2());
 		dayCombo3.setSelectedItem(course.getDay3());
 		dayCombo4.setSelectedItem(course.getDay4());
 		dayCombo5.setSelectedItem(course.getDay5());
-		
-		startTimeTF1.setSelectedItem(course.getStartTime1());
-		startTimeTF2.setSelectedItem(course.getStartTime2());
-		startTimeTF3.setSelectedItem(course.getStartTime3());
-		startTimeTF4.setSelectedItem(course.getStartTime4());
-		startTimeTF5.setSelectedItem(course.getStartTime5());
-		
-		endTimeTF1.setSelectedItem(course.getEndTime1());
-		endTimeTF2.setSelectedItem(course.getEndTime2());
-		endTimeTF3.setSelectedItem(course.getEndTime3());
-		endTimeTF4.setSelectedItem(course.getEndTime4());
-		endTimeTF5.setSelectedItem(course.getEndTime5());
+
+		startTimeTF1.setSelectedItem(String.valueOf(course.getStartTime1()));
+		startTimeTF2.setSelectedItem(String.valueOf(course.getStartTime2()));
+		startTimeTF3.setSelectedItem(String.valueOf(course.getStartTime3()));
+		startTimeTF4.setSelectedItem(String.valueOf(course.getStartTime4()));
+		startTimeTF5.setSelectedItem(String.valueOf(course.getStartTime5()));
+
+		endTimeTF1.setSelectedItem(String.valueOf(course.getEndTime1()));
+		endTimeTF2.setSelectedItem(String.valueOf(course.getEndTime2()));
+		endTimeTF3.setSelectedItem(String.valueOf(course.getEndTime3()));
+		endTimeTF4.setSelectedItem(String.valueOf(course.getEndTime4()));
+		endTimeTF5.setSelectedItem(String.valueOf(course.getEndTime5()));
 	}
 
 }
