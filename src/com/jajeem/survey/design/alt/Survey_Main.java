@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -508,7 +509,7 @@ public class Survey_Main extends WebFrame {
 
 	protected void newSurveyRun() {
 		currentRun.setSurvey(new Survey());
-		currentRun.setSurveyId(new Random().nextInt(1000));
+		currentRun.setSurveyId(UUID.randomUUID());
 		currentRun.getSurvey().addQuestion(new Question());
 
 		currentRun.setSession(getCurrentSession());

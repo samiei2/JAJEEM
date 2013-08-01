@@ -178,8 +178,9 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 			public void actionPerformed(ActionEvent arg0) {
 				parentPanel.setEventsEnabled(false);
 				if (parentPanel.getCurrentQuestion() != null) {
-					parentPanel.getCurrentQuestion().setId(
-							UUID.randomUUID().clockSequence());
+					if(parentPanel.getCurrentQuestion().getId().equals(null))
+						parentPanel.getCurrentQuestion().setId(
+								UUID.randomUUID());
 					parentPanel.getCurrentQuestion().setQuizId(
 							parentPanel.getCurrentRun().getQuiz().getId());
 					parentPanel.getCurrentQuestion().setInstructorId(
@@ -282,7 +283,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				model.addRow(obj);
 
 				Question q = new Question();
-				q.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(UUID.randomUUID().clockSequence())));
+				q.setId(UUID.randomUUID());
 				q.setQuizId(parentPanel.getCurrentRun().getQuiz().getId());
 				q.setInstructorId(parentPanel.getCurrentInstructor().getId());
 				parentPanel.getCurrentRun().getQuiz().addQuestion(q);
@@ -332,7 +333,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 							.getQuestionList()
 							.get(webQuestionListPanel.getWebTable()
 									.getSelectedRow()));
-					toCopy.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getQuiz().getId()) + String.valueOf(UUID.randomUUID().clockSequence())));
+					toCopy.setId(UUID.randomUUID());
 					parentPanel.getCurrentRun().getQuiz().addQuestion(toCopy);
 					String type = "";
 					if (toCopy.getType() == 0) {

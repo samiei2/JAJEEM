@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -33,11 +34,12 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
-					" answer1, answer2, answer3, answer4, answer5, bool1, bool2, bool3, bool4, bool5) "
-					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?, ? ,? ,? ,? ,?);");
+					" answer1, answer2, answer3, answer4, answer5, bool1, bool2, bool3, bool4, bool5,iid) "
+					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?, ? ,? ,? ,? ,?,?);");
+			
 			ps.setInt(1, question.getInstructorId());
 			ps.setString(2, question.getTitle());
-			ps.setInt(3, question.getQuizId());
+			ps.setObject(3, question.getQuizId());
 			ps.setByte(4, question.getType());
 			ps.setInt(5, question.getPoint());
 			ps.setString(6, question.getImagePath());
@@ -52,33 +54,16 @@ public class QuestionDAO implements IQuestionDAO {
 			ps.setBoolean(15, question.getCorrectAnswer()[2]);
 			ps.setBoolean(16, question.getCorrectAnswer()[3]);
 			ps.setBoolean(17, question.getCorrectAnswer()[4]);
+			ps.setObject(18, question.getId());
 
 		
 			rs = ps.executeUpdate();
 
-			// get last id
-			ResultSet maxId = null;
-			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
-				question.setId(maxId.getInt(1));
-			} else {
-				question.setId(0);
-			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-
-				} else {
-					question.setId(-1);
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -104,15 +89,15 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE id = ?;");
-		ps.setInt(1, question.getId());
+		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE iid = ?;");
+		ps.setObject(1, question.getId());
 
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
-				question.setQuizId(rs.getInt("quizId"));
+				question.setQuizId((UUID) rs.getObject("quizId"));
 				question.setType(rs.getByte("type"));
 				question.setPoint(rs.getInt("points"));
 				question.setImagePath(rs.getString("imagePath"));
@@ -132,11 +117,11 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setCorrectAnswer(list);
 
 			} else {
-				question.setId(0);
+				question.setId(null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -167,15 +152,15 @@ public class QuestionDAO implements IQuestionDAO {
 
 		PreparedStatement ps = null;
 		int rs = 0;
-
+		
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizQuestion SET instructorId = ?, title = ?, quizId = ?, type = ?, point = ?, imagePath = ?" +
-				", url, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE id = ?");
+				", url = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
 
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
-		ps.setInt(3, question.getQuizId());
+		ps.setObject(3, question.getQuizId());
 		ps.setByte(4, question.getType());
 		ps.setInt(5, question.getPoint());
 		ps.setString(6, question.getImagePath());
@@ -190,24 +175,15 @@ public class QuestionDAO implements IQuestionDAO {
 		ps.setBoolean(15, question.getCorrectAnswer()[2]);
 		ps.setBoolean(16, question.getCorrectAnswer()[3]);
 		ps.setBoolean(17, question.getCorrectAnswer()[4]);
-		ps.setInt(18, question.getId());
+		ps.setObject(18, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -233,14 +209,14 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM QuizQuestion WHERE QuizQuestion.id = ?;");
-		ps.setInt(1, question.getId());
+		ps = con.prepareStatement("DELETE FROM QuizQuestion WHERE QuizQuestion.iid = ?;");
+		ps.setObject(1, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -286,10 +262,10 @@ public class QuestionDAO implements IQuestionDAO {
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId(rs.getInt("id"));
+				question.setId((UUID) rs.getObject("iid"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
-				question.setQuizId(rs.getInt("quizId"));
+				question.setQuizId((UUID) rs.getObject("quizId"));
 				question.setType(rs.getByte("type"));
 				question.setPoint(rs.getInt("point"));
 				question.setImagePath(rs.getString("imagePath"));
@@ -337,7 +313,7 @@ public class QuestionDAO implements IQuestionDAO {
 		return allQuestions;
 	}
 
-	public Collection<? extends Question> list(int id) throws SQLException {
+	public Collection<? extends Question> list(UUID id) throws SQLException {
 		ArrayList<Question> allQuestions = new ArrayList<>();
 
 		PreparedStatement ps = null;
@@ -346,17 +322,17 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("SELECT * FROM QuizQuestion where Quizid=? ;");
-			ps.setInt(1, id);
+			ps.setObject(1, id);
 
 		
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId(rs.getInt("id"));
+				question.setId((UUID) rs.getObject("iid"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
-				question.setQuizId(rs.getInt("quizId"));
+				question.setQuizId((UUID) rs.getObject("quizId"));
 				question.setType(rs.getByte("type"));
 				question.setPoint(rs.getInt("point"));
 				question.setImagePath(rs.getString("imagePath"));
@@ -410,8 +386,8 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE id = ?;");
-		ps.setInt(1, question.getId());
+		ps = con.prepareStatement("SELECT * FROM QuizQuestion WHERE iid = ?;");
+		ps.setObject(1, question.getId());
 
 		try {
 			rs = ps.executeQuery();

@@ -2,6 +2,7 @@ package com.jajeem.survey.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Response;
@@ -13,7 +14,7 @@ public class Survey implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	//properties
-	private int id=-1;
+	private UUID id;
 	private int instructorId=-1;
 	private String title="";
 	private String category="";
@@ -22,10 +23,10 @@ public class Survey implements Serializable{
 	private ArrayList<Question> questions = new ArrayList<>();
 	
 	//getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public int getInstructorId() {

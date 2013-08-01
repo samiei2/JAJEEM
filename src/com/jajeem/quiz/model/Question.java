@@ -1,6 +1,7 @@
 package com.jajeem.quiz.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Question implements Serializable {
 
@@ -9,10 +10,10 @@ public class Question implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// properties
-	private int id = -1;
+	private UUID id ;
 	private int instructorId = -1;
 	private String title = "";
-	private int quizId = -1;
+	private UUID quizId ;
 	private byte type = 0;
 	private int point = 0;
 	private String imagePath = "";
@@ -31,7 +32,7 @@ public class Question implements Serializable {
 	private boolean validResponse = false;
 	private Response response = new Response();
 
-	public Question(int id2) {
+	public Question(UUID id2) {
 		this.id = id2;
 	}
 
@@ -73,11 +74,11 @@ public class Question implements Serializable {
 	}
 
 	// getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -97,11 +98,11 @@ public class Question implements Serializable {
 		this.title = title;
 	}
 
-	public int getQuizId() {
+	public UUID getQuizId() {
 		return quizId;
 	}
 
-	public void setQuizId(int quizId) {
+	public void setQuizId(UUID quizId) {
 		this.quizId = quizId;
 	}
 

@@ -1,6 +1,7 @@
 package com.jajeem.survey.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Question implements Serializable{
 	
@@ -9,9 +10,9 @@ public class Question implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	//properties
-	private int id = -1;
+	private UUID id ;
 	private int instructorId = -1;
-	private int surveyId = -1;
+	private UUID surveyId ;
 	private String title = "";
 	private byte type;
 	private String imagePath = "";
@@ -54,10 +55,10 @@ public class Question implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	//getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public int getInstructorId() {
@@ -66,10 +67,10 @@ public class Question implements Serializable{
 	public void setInstructorId(int instructorId) {
 		this.instructorId = instructorId;
 	}
-	public int getSurveyId() {
+	public UUID getSurveyId() {
 		return surveyId;
 	}
-	public void setSurveyId(int surveyId) {
+	public void setSurveyId(UUID surveyId) {
 		this.surveyId = surveyId;
 	}
 	public String getTitle() {

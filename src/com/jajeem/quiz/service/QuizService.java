@@ -24,7 +24,10 @@ public class QuizService implements IQuizService{
 		
 		quizDAO = new QuizDAO();//TODO remove this line
 		if(quizDAO != null)
-			return quizDAO.create(quiz);
+			if(quizDAO.Contains(quiz))
+				quizDAO.update(quiz);
+			else
+				quizDAO.create(quiz);
 		return null;
 	}
 

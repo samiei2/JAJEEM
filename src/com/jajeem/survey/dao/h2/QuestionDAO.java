@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -32,8 +33,8 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyQuestion (instructorId, title, type, imagePath, url," +
-				" answer1, answer2, answer3, answer4, answer5, responseid, surveyid) "
-				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?);");
+				" answer1, answer2, answer3, answer4, answer5, responseid, surveyid,id) "
+				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?, ?);");
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
 		ps.setByte(3, question.getType());
@@ -44,35 +45,18 @@ public class QuestionDAO implements IQuestionDAO {
 		ps.setString(8, question.getAnswer3());
 		ps.setString(9, question.getAnswer4());
 		ps.setString(10, question.getAnswer5());
-		ps.setInt(11, question.getResponse().getId());
-		ps.setInt(12, question.getSurveyId());
+		ps.setObject(11, question.getResponse().getId());
+		ps.setObject(12, question.getSurveyId());
+		ps.setObject(13, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
 
-			// get last id
-			ResultSet maxId = null;
-			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
-				question.setId(maxId.getInt(1));
-			} else {
-				question.setId(0);
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-
-				} else {
-					question.setId(-1);
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -99,7 +83,7 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM SurveyQuestion WHERE Question.id = ?;");
-		ps.setInt(1, question.getId());
+		ps.setObject(1, question.getId());
 
 		try {
 			rs = ps.executeQuery();
@@ -116,11 +100,11 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer5(rs.getString("answer5"));
 
 			} else {
-				question.setId(0);
+				question.setId(null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -167,13 +151,13 @@ public class QuestionDAO implements IQuestionDAO {
 		ps.setString(8, question.getAnswer3());
 		ps.setString(9, question.getAnswer4());
 		ps.setString(10, question.getAnswer5());
-		ps.setInt(11, question.getId());
+		ps.setObject(11, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -211,13 +195,13 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM SurveyQuestion WHERE Question.id = ?;");
-		ps.setInt(1, question.getId());
+		ps.setObject(1, question.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			question.setId(-1);
+			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -263,7 +247,7 @@ public class QuestionDAO implements IQuestionDAO {
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId(rs.getInt("id"));
+				question.setId((UUID) rs.getObject("id"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
 				question.setType(rs.getByte("type"));
@@ -305,7 +289,7 @@ public class QuestionDAO implements IQuestionDAO {
 		return allQuestions;
 	}
 	
-	public Collection<? extends Question> list(int id) throws SQLException {
+	public Collection<? extends Question> list(UUID id) throws SQLException {
 		ArrayList<Question> allQuestions = new ArrayList<>();
 
 		PreparedStatement ps = null;
@@ -314,17 +298,17 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("SELECT * FROM SurveyQuestion where surveyid=? ;");
-			ps.setInt(1, id);
+			ps.setObject(1, id);
 
 		
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId(rs.getInt("id"));
+				question.setId((UUID) rs.getObject("id"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
-				question.setSurveyId(rs.getInt("surveyid"));
+				question.setSurveyId((UUID) rs.getObject("surveyid"));
 				question.setType(rs.getByte("type"));
 				question.setImagePath(rs.getString("imagePath"));
 				question.setUrl(rs.getString("url"));

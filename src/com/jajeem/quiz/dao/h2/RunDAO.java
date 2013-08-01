@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -33,43 +34,27 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, studentid,score, start, end) "
-				+ " VALUES (?, ?, ?, ?, ? ,?,?);");
+		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, studentid,score, start, end, iid) "
+				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,?);");
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
-		ps.setInt(3, run.getQuizId());
+		ps.setObject(3, run.getQuizId());
 		ps.setInt(4, run.getStudentId());
 		ps.setInt(5, run.getScore());
 		ps.setLong(6, run.getStart());
 		ps.setLong(7, run.getEnd());
+		ps.setObject(8, run.getId());
 		
 
 		try {
 			rs = ps.executeUpdate();
 
-			// get last id
-			ResultSet maxId = null;
-			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
-				run.setId(maxId.getInt(1));
-			} else {
-				run.setId(0);
-			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			run.setId(-1);
+			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-
-				} else {
-					run.setId(-1);
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -109,26 +94,26 @@ public class RunDAO implements IRunDAO {
 		H2Connection conn = new H2Connection();
 		Connection con = conn.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QuizRun WHERE QuizRun.id = ?;");
-		ps.setInt(1, run.getId());
+		ps = con.prepareStatement("SELECT * FROM QuizRun WHERE QuizRun.iid = ?;");
+		ps.setObject(1, run.getId());
 
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
-				run.setQuizId(rs.getInt("quizId"));
+				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));
 				run.setEnd(rs.getLong("end"));
 
 			} else {
-				run.setId(0);
+				run.setId(null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			run.setId(-1);
+			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -163,33 +148,24 @@ public class RunDAO implements IRunDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizRun SET instructorId = ?, sessionId = ?, "
-				+ "quizId = ?, studentid=?, start = ?, end = ? ,score = ? WHERE id = ?");
+				+ "quizId = ?, studentid=?, start = ?, end = ? ,score = ? WHERE iid = ?");
 
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
-		ps.setInt(3, run.getQuizId());
+		ps.setObject(3, run.getQuizId());
 		ps.setInt(4, run.getStudentId());
 		ps.setLong(5, run.getStart());
 		ps.setLong(6, run.getEnd());
 		ps.setInt(7, run.getScore());
-		ps.setInt(8, run.getId());
+		ps.setObject(8, run.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			run.setId(-1);
+			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -215,14 +191,14 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM QuizRun WHERE QuizRun.id = ?;");
-		ps.setInt(1, run.getId());
+		ps = con.prepareStatement("DELETE FROM QuizRun WHERE QuizRun.iid = ?;");
+		ps.setObject(1, run.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			run.setId(-1);
+			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -268,10 +244,10 @@ public class RunDAO implements IRunDAO {
 			while (rs.next()) {
 				Run run = new Run();
 
-				run.setId(rs.getInt("id"));
+				run.setId((UUID) rs.getObject("iid"));
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
-				run.setQuizId(rs.getInt("quizId"));
+				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));
@@ -322,11 +298,11 @@ public class RunDAO implements IRunDAO {
 			while (rs.next()) {
 				Run run = new Run();
 
-				run.setId(rs.getInt("id"));
+				run.setId((UUID) rs.getObject("iid"));
 				run.setCourseId(Courseid);
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
-				run.setQuizId(rs.getInt("quizId"));
+				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -31,9 +32,9 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5) "
+		ps = con.prepareStatement("INSERT INTO QuizResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid) "
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-		ps.setInt(1, response.getRunId());
+		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
 		ps.setString(3, response.getAnswer());
 		ps.setString(4, String.valueOf(response.getBoolAnswer()[0]));
@@ -41,33 +42,15 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(6, String.valueOf(response.getBoolAnswer()[2]));
 		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
+		ps.setObject(9, response.getId());
 		
 		try {
 			rs = ps.executeUpdate();
-
-			// get last id
-			ResultSet maxId = null;
-			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
-				response.setId(maxId.getInt(1));
-			} else {
-				response.setId(0);
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			response.setId(-1);
+			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-
-				} else {
-					response.setId(-1);
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -93,13 +76,13 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QuizResponse WHERE QuizResponse.id = ?;");
-		ps.setInt(1, response.getId());
+		ps = con.prepareStatement("SELECT * FROM QuizResponse WHERE QuizResponse.iid = ?;");
+		ps.setObject(1, response.getId());
 
 		try {
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				response.setRunId(rs.getInt("runId"));
+				response.setRunId((UUID) rs.getObject("runId"));
 				response.setStudentId(rs.getInt("studentId"));
 				response.setAnswer(rs.getString("answer"));
 				boolean[] list = new boolean[]{
@@ -112,11 +95,11 @@ public class ResponseDAO implements IResponseDAO {
 				response.setBoolAnswer(list);
 
 			} else {
-				response.setId(0);
+				response.setId(null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			response.setId(-1);
+			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -151,9 +134,9 @@ public class ResponseDAO implements IResponseDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizResponse SET runId = ?, studentId = ?, " +
-				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE id = ?");
+				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
 
-		ps.setInt(1, response.getRunId());
+		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
 		ps.setString(3, response.getAnswer());
 		ps.setString(4, String.valueOf(response.getBoolAnswer()[0]));
@@ -161,24 +144,15 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(6, String.valueOf(response.getBoolAnswer()[2]));
 		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
-		ps.setInt(9, response.getId());
+		ps.setObject(9, response.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			response.setId(-1);
+			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -204,14 +178,14 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM QuizResponse WHERE QuizResponse.id = ?;");
-		ps.setInt(1, response.getId());
+		ps = con.prepareStatement("DELETE FROM QuizResponse WHERE QuizResponse.iid = ?;");
+		ps.setObject(1, response.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			response.setId(-1);
+			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -257,8 +231,8 @@ public class ResponseDAO implements IResponseDAO {
 			while (rs.next()) {
 				Response response = new Response();
 
-				response.setId(rs.getInt("id"));
-				response.setRunId(rs.getInt("runId"));
+				response.setId((UUID) rs.getObject("iid"));
+				response.setRunId((UUID) rs.getObject("runId"));
 				response.setStudentId(rs.getInt("studentId"));
 				response.setAnswer(rs.getString("answer"));
 				boolean[] list = new boolean[]{

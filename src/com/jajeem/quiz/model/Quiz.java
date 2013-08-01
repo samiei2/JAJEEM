@@ -2,6 +2,7 @@ package com.jajeem.quiz.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Quiz implements Serializable{
 	
@@ -10,7 +11,7 @@ public class Quiz implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	//properties
-	private int id;
+	private UUID id;
 	private int instructorId;
 	private String title="";
 	private String category="";
@@ -23,10 +24,10 @@ public class Quiz implements Serializable{
 	private ArrayList<Question> questions = new ArrayList<>();
 	
 	//getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public int getInstructorId() {

@@ -18,7 +18,8 @@ public class initDatabase {
 				con = BaseDAO.getConnection();
 				String query = 
 						  "CREATE TABLE IF NOT EXISTS QuizReponse (" +
-						  "id int DEFAULT 0   AUTO_INCREMENT, " +
+						  "id int DEFAULT NULL AUTO_INCREMENT, " +
+						  "iid UUID,"+
 						  "answer varchar(555), " +
 						  "bool1 boolean, " +
 						  "bool2 boolean, " +
@@ -27,12 +28,13 @@ public class initDatabase {
 						  "bool5 boolean, " +
 						  "answerValid boolean, " +
 						  "studentId int  , " +
-						  "QuizQuestionid int  , " +
+						  "QuizQuestionid UUID  , " +
 						  "PRIMARY KEY (id));"
 						  
 						+ "CREATE TABLE IF NOT EXISTS QuizQuestion (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"quizId int  , " +
+						"iid UUID,"+
+						"quizId UUID  , " +
 						"title varchar(5000), " +
 						"type tinyint  , " +
 						"point int, " +
@@ -53,7 +55,8 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS QuizRun (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"quizid int  , " +
+						"iid UUID,"+
+						"quizid UUID  , " +
 						"courseid int , "+
 						"Instructorid int  , " +
 						"start bigint, " +
@@ -65,6 +68,7 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS Quiz (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"instructorid int  , " +
 						"type tinyint, " +
 						"category varchar(255), " +
@@ -77,7 +81,8 @@ public class initDatabase {
 						"PRIMARY KEY (id));"
 						
 						+ "CREATE TABLE IF NOT EXISTS SurveyReponse (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"id int DEFAULT NULL  AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"answer varchar(555), " +
 						"bool1 boolean, " +
 						"bool2 boolean, " +
@@ -85,13 +90,14 @@ public class initDatabase {
 						"bool4 boolean, " +
 						"bool5 boolean, " +
 						"studentId int  , " +
-						"ResponseQuestionid int  , " +
+						"ResponseQuestionid UUID  , " +
 						"PRIMARY KEY (id));"
 						
 						+ "CREATE TABLE IF NOT EXISTS SurveyQuestion (" +
 						"id int DEFAULT 0   AUTO_INCREMENT," +
+						"iid UUID,"+
 						"surveyid int  , " +
-						"responseId int  , " +
+						"responseId UUID  , " +
 						"title varchar(5000), " +
 						"type tinyint  , " +
 						"imagepath varchar(1000), " +
@@ -106,7 +112,8 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS SURVEYRUN (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"surveyId int  , " +
+						"iid UUID,"+
+						"surveyId UUID  , " +
 						"instructorId int  , " +
 						"start bigint, " +
 						"end bigint, " +
@@ -116,6 +123,7 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS Survey (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"instructorid int  , " +
 						"type tinyint, " +
 						"category varchar(255), " +
@@ -130,6 +138,7 @@ public class initDatabase {
 //						"DROP TABLE IF EXISTS Student;" +
 						"CREATE TABLE IF NOT EXISTS Instructor (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"Username varchar(255)   UNIQUE, " +
 						"Password varchar(255), " +
 						"FirstName varchar(255), " +
@@ -153,6 +162,7 @@ public class initDatabase {
 						
 						"CREATE TABLE IF NOT EXISTS Room (" +
 						"id int DEFAULT 0   AUTO_INCREMENT," +
+						"iid UUID,"+
 						"name varchar(255)  , " +
 						"attendancetype tinyint, " +
 						"signintype tinyint, " +
@@ -162,6 +172,7 @@ public class initDatabase {
 //						+"DROP TABLE IF EXISTS Session;" 
 						+ "CREATE TABLE IF NOT EXISTS Session (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"Instructorid int  , " +
 						"Roomid int  , " +
 						"Attendantid int, " +
@@ -170,6 +181,7 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS Attendant (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"Sessionid int  , " +
 						"Seatid int  , " +
 						"studentid int  , " +
@@ -178,6 +190,7 @@ public class initDatabase {
 						
 						+ "CREATE TABLE IF NOT EXISTS Course (" +
 						"id int DEFAULT 0   AUTO_INCREMENT," +
+						"iid UUID,"+
 						"Instructorid int, " +
 						"name varchar(255)," +
 						"classType varchar(255), " +
@@ -203,6 +216,7 @@ public class initDatabase {
 
 						+ "CREATE TABLE IF NOT EXISTS Seat (" +
 						"id int DEFAULT 0   AUTO_INCREMENT, " +
+						"iid UUID,"+
 						"Roomid int  , " +
 						"name varchar(255), " +
 						"row int, col int, " +

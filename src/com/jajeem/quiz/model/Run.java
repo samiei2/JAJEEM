@@ -1,6 +1,7 @@
 package com.jajeem.quiz.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
@@ -14,7 +15,7 @@ public class Run implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	//properties
-	private int id; 
+	private UUID id; 
 	private Instructor instructor = new Instructor();
 	private Session session = new Session();
 	private Quiz quiz = new Quiz();
@@ -25,10 +26,10 @@ public class Run implements Serializable{
 	private Course course;
 	
 	//getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	public int getInstructorId() {
@@ -43,10 +44,10 @@ public class Run implements Serializable{
 	public void setSessionId(int sessionId) {
 		this.session.setId(sessionId);
 	}
-	public int getQuizId() {
+	public UUID getQuizId() {
 		return quiz.getId();
 	}
-	public void setQuizId(int quizId) {
+	public void setQuizId(UUID quizId) {
 		this.quiz.setId(quizId);
 	}
 	public long getStart() {

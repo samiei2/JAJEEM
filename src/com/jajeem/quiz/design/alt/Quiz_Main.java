@@ -409,7 +409,7 @@ public class Quiz_Main extends WebFrame {
 					try {
 						qs.create(currentRun.getQuiz());
 						eventsEnabled = false;
-						firstPage.clear();
+//						firstPage.clear();
 //						newQuizRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
@@ -418,7 +418,7 @@ public class Quiz_Main extends WebFrame {
 					}
 				} else if (i == 1) {
 					eventsEnabled = false;
-					firstPage.clear();
+//					firstPage.clear();
 //					newQuizRun();
 					eventsEnabled = true;
 				} else {
@@ -523,8 +523,7 @@ public class Quiz_Main extends WebFrame {
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
 		currentRun.setCourse(com.jajeem.util.Session.getCurrentCourse());
-		UUID.randomUUID().
-		currentRun.setQuizId(UUID.randomUUID().clockSequence());
+		currentRun.setQuizId(UUID.randomUUID());
 		currentRun.getQuiz().addQuestion(new Question());
 
 		currentRun.setSession(getCurrentSession());
@@ -539,6 +538,7 @@ public class Quiz_Main extends WebFrame {
 				.get(0)
 				.setInstructorId(
 						getCurrentInstructor().getId());
+		currentRun.getQuiz().getQuestionList().get(0).setId(UUID.randomUUID());
 
 		((DefaultTableModel) firstPage.getWebQuestionListPanel().getWebTable()
 				.getModel()).addRow(new Object[] { 1, "Single Choice", 0, "" });
@@ -595,7 +595,7 @@ public class Quiz_Main extends WebFrame {
 				if(studentIps!=null){
 					if(!studentIps.isEmpty()){
 						currentRun.setStart(System.currentTimeMillis());
-						currentRun.setId(UUID.randomUUID().clockSequence());
+						currentRun.setId(UUID.randomUUID());
 						
 						new Config();
 						ServerService service;
@@ -619,7 +619,7 @@ public class Quiz_Main extends WebFrame {
 				}
 			}
 			else{
-				currentRun.setId(UUID.randomUUID().clockSequence());
+				currentRun.setId(UUID.randomUUID());
 				currentRun.setStart(System.currentTimeMillis());
 				new Config();
 				ServerService service;

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -43,26 +44,16 @@ public class SurveyDAO implements ISurveyDAO {
 
 		try {
 			rs = ps.executeUpdate();
-
-			// get last id
-			ResultSet maxId = null;
-			maxId = ps.getGeneratedKeys();
-			if (maxId.next()) {
-				survey.setId(maxId.getInt(1));
-			} else {
-				survey.setId(0);
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			survey.setId(-1);
+			survey.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
 
 				} else {
-					survey.setId(-1);
+					survey.setId(null);
 				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
@@ -106,7 +97,7 @@ public class SurveyDAO implements ISurveyDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.id = ?;");
-		ps.setInt(1, survey.getId());
+		ps.setObject(1, survey.getId());
 
 		try {
 			rs = ps.executeQuery();
@@ -117,11 +108,11 @@ public class SurveyDAO implements ISurveyDAO {
 				survey.setDescription(rs.getString("description"));
 
 			} else {
-				survey.setId(0);
+				survey.setId(null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			survey.setId(-1);
+			survey.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -161,13 +152,13 @@ public class SurveyDAO implements ISurveyDAO {
 		ps.setString(2, survey.getTitle());
 		ps.setString(3, survey.getCategory());
 		ps.setString(4, survey.getDescription());
-		ps.setInt(5, survey.getId());
+		ps.setObject(5, survey.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			survey.setId(-1);
+			survey.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -205,13 +196,13 @@ public class SurveyDAO implements ISurveyDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM Survey WHERE Survey.id = ?;");
-		ps.setInt(1, survey.getId());
+		ps.setObject(1, survey.getId());
 
 		try {
 			rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			survey.setId(-1);
+			survey.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
@@ -257,7 +248,7 @@ public class SurveyDAO implements ISurveyDAO {
 			while (rs.next()) {
 				Survey survey = new Survey();
 
-				survey.setId(rs.getInt("id"));
+				survey.setId((UUID) rs.getObject("id"));
 				survey.setInstructorId(rs.getInt("instructorId"));
 				survey.setTitle(rs.getString("title"));
 				survey.setCategory(rs.getString("category"));

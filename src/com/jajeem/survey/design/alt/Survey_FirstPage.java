@@ -3,6 +3,7 @@ package com.jajeem.survey.design.alt;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.GroupLayout;
@@ -38,7 +39,6 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 	private WebButton wbtnDelete;
 	private Survey_Main parentPanel;
 
-	private static final AtomicInteger counter = new AtomicInteger();
 
 	/**
 	 * Create the panel.
@@ -138,7 +138,7 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 				parentPanel.setEventsEnabled(false);
 				if (parentPanel.getCurrentQuestion() != null) {
 					parentPanel.getCurrentQuestion().setId(
-							counter.incrementAndGet());
+							UUID.randomUUID());
 					parentPanel.getCurrentQuestion().setSurveyId(
 							parentPanel.getCurrentRun().getSurvey().getId());
 					parentPanel.getCurrentQuestion().setInstructorId(
@@ -200,7 +200,7 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 				model.addRow(obj);
 
 				Question q = new Question();
-				q.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getSurvey().getId()) + String.valueOf(counter.incrementAndGet())));
+				q.setId(UUID.randomUUID());
 				q.setSurveyId(parentPanel.getCurrentRun().getSurvey().getId());
 				q.setInstructorId(parentPanel.getCurrentInstructor().getId());
 				parentPanel.getCurrentRun().getSurvey().addQuestion(q);
@@ -241,7 +241,7 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 							.getQuestionList()
 							.get(webQuestionListPanel.getWebTable()
 									.getSelectedRow()));
-					toCopy.setId(Integer.parseInt(String.valueOf(parentPanel.getCurrentRun().getSurvey().getId()) + String.valueOf(counter.incrementAndGet())));
+					toCopy.setId(UUID.randomUUID());
 					parentPanel.getCurrentRun().getSurvey().addQuestion(toCopy);
 					String type = "";
 					if (toCopy.getType() == 0) {

@@ -1,6 +1,7 @@
 package com.jajeem.quiz.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Response implements Serializable {
 	
@@ -9,24 +10,24 @@ public class Response implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	//properties
-	private int id;
-	private int runId;
+	private UUID id;
+	private UUID runId;
 	private int studentId;
 	private String answer;
 	private boolean[] boolAnswer;
 	private boolean answerValid = false;
 	
 	//getter & setters
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
-	public int getRunId() {
+	public UUID getRunId() {
 		return runId;
 	}
-	public void setRunId(int runId) {
+	public void setRunId(UUID runId) {
 		this.runId = runId;
 	}
 	public int getStudentId() {
