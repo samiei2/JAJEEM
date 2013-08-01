@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -85,7 +84,7 @@ public class StudentCourseDialog extends JDialog {
 				flowLayout.setAlignment(FlowLayout.LEADING);
 				buttonPane.add(panel);
 				{
-					JButton addButton = new JButton("Add");
+					WebButton addButton = new WebButton("Add");
 					panel.add(addButton);
 					addButton.addActionListener(new ActionListener() {
 
@@ -100,7 +99,7 @@ public class StudentCourseDialog extends JDialog {
 					});
 				}
 				{
-					JButton deleteButton = new JButton("Delete");
+					WebButton deleteButton = new WebButton("Delete");
 					panel.add(deleteButton);
 					deleteButton.addActionListener(new ActionListener() {
 
@@ -139,6 +138,17 @@ public class StudentCourseDialog extends JDialog {
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
+				{
+					WebButton okButton = new WebButton("Ok");
+					panel.add(okButton);
+					okButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							dispose();
+						}
+					});
+				}
 			}
 		}
 
