@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -60,7 +59,8 @@ public class StudentDialog extends JDialog {
 	 * 
 	 * @throws SQLException
 	 */
-	public StudentDialog(final StudentCourseDialog scDialog) throws SQLException {
+	public StudentDialog(final StudentCourseDialog scDialog)
+			throws SQLException {
 		setTitle("Add students");
 		setVisible(true);
 		setBounds(400, 100, 610, 500);
@@ -78,7 +78,7 @@ public class StudentDialog extends JDialog {
 				flowLayout.setAlignment(FlowLayout.LEADING);
 				buttonPane.add(panel);
 				{
-					JButton addButton = new JButton("Add");
+					WebButton addButton = new WebButton("Add");
 					panel.add(addButton);
 					addButton.addActionListener(new ActionListener() {
 
@@ -103,6 +103,16 @@ public class StudentDialog extends JDialog {
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
+
+				WebButton okButton = new WebButton("Ok");
+				panel.add(okButton);
+				okButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 			}
 		}
 

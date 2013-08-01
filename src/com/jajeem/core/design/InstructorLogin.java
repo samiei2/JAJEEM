@@ -5,19 +5,30 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.FilterList;
+import ca.odell.glazedlists.SortedList;
 
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
@@ -42,6 +53,7 @@ public class InstructorLogin extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 9010296991450692526L;
+	static ArrayList<Course> courseList;
 
 	/**
 	 * Launch the application.
@@ -135,8 +147,14 @@ public class InstructorLogin extends JDialog {
 
 			// get list of instructors
 			InstructorService instructorService = new InstructorService();
-			ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
+			final ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
 					.list();
+			EventList<com.jajeem.core.model.Instructor> insList = new BasicEventList<com.jajeem.core.model.Instructor>();
+			insList.addAll(instructorList);
+			FilterList<Instructor> filterList = new FilterList<Instructor>(
+					insList);
+			SortedList<Instructor> sortedIns = new SortedList<Instructor>(
+					filterList, null);
 
 			DefaultListModel listModel1 = new DefaultListModel();
 
@@ -150,7 +168,7 @@ public class InstructorLogin extends JDialog {
 				instructorService.create(admin);
 			}
 
-			for (com.jajeem.core.model.Instructor instructorItem : instructorList) {
+			for (com.jajeem.core.model.Instructor instructorItem : sortedIns) {
 				if (!instructorItem.getUsername().equals("admin")) {
 					listModel1.addElement(instructorItem.getFirstName() + " "
 							+ instructorItem.getLastName() + " ("
@@ -165,17 +183,8 @@ public class InstructorLogin extends JDialog {
 			sPanel1.setRound(0);
 			sPanel1.setViewportBorder(new TitledBorder(null, "Instructors",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			//
 
-			// get list of courses
-			RoomService rs = new RoomService();
-			final ArrayList<Course> courseList = rs.getCourseDAO().list();
-			DefaultListModel listModel2 = new DefaultListModel();
-
-			for (Course courseItem : courseList) {
-				listModel2.addElement(courseItem.getName());
-			}
-
+			final DefaultListModel listModel2 = new DefaultListModel();
 			final WebList list2 = new WebList(listModel2);
 			WebScrollPane sPanel2 = new WebScrollPane(list2);
 			sPanel2.setDrawBackground(true);
@@ -279,6 +288,50 @@ public class InstructorLogin extends JDialog {
 											.addContainerGap(
 													GroupLayout.DEFAULT_SIZE,
 													Short.MAX_VALUE)));
+
+					list1.getSelectionModel().setSelectionMode(
+							ListSelectionModel.SINGLE_SELECTION);
+
+					list1.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent evt) {
+							JList list = (JList) evt.getSource();
+							if (evt.getClickCount() == 2) {
+								int index = list.locationToIndex(evt.getPoint());
+								ArrayList<Course> courseList1 = null;
+								try {
+									RoomService rs = new RoomService();
+
+									courseList1 = rs.getCourseDAO()
+											.getCoursesByInstructorId(
+													instructorList.get(index)
+															.getId());
+									listModel2.clear();
+									for (Course courseItem : courseList1) {
+										Date startDate = new Date(courseItem
+												.getStartDate());
+										SimpleDateFormat dt = new SimpleDateFormat(
+												"yyyy-MM-dd");
+										listModel2.addElement(courseItem
+												.getName()
+												+ "-"
+												+ courseItem.getLevel()
+												+ " ("
+												+ courseItem.getClassType()
+												+ ", "
+												+ dt.format(startDate)
+												+ ")");
+									}
+									
+									if (courseList1.size() == 0) {
+										listModel2.addElement("No courses available");
+									}
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+								courseList = courseList1;
+							}
+						}
+					});
 
 					ActionListener okButtonListener = new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
