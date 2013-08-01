@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -173,7 +175,12 @@ public class InstructorLogin extends JDialog {
 			DefaultListModel listModel2 = new DefaultListModel();
 
 			for (Course courseItem : courseList) {
-				listModel2.addElement(courseItem.getName());
+				Date startDate = new Date(courseItem.getStartDate());
+				SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+				listModel2.addElement(courseItem.getName() + "-"
+						+ courseItem.getLevel() + " ("
+						+ courseItem.getClassType() + ", "
+						+ dt.format(startDate) + ")");
 			}
 
 			final WebList list2 = new WebList(listModel2);
