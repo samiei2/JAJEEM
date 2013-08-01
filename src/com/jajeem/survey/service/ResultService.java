@@ -15,7 +15,10 @@ public class ResultService {
 		ResponseDAO responsedao = new ResponseDAO();
 		try {
 			for (int i = 0; i < run.size(); i++) {
-				rundao.create(run.get(i));
+				if(rundao.Contains(run.get(i)))
+					rundao.update(run.get(i));
+				else
+					rundao.create(run.get(i));
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -24,7 +27,10 @@ public class ResultService {
 			for (int j = 0; j < e.get(i).size(); j++) {
 				Response resp = e.get(i).get(j).getQuestion().getResponse();
 				try {
-					responsedao.create(resp);
+					if(responsedao.Contains(resp))
+						responsedao.update(resp);
+					else
+						responsedao.create(resp);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
