@@ -19,7 +19,7 @@ public class StudentService implements IStudentService{
 	@Override
 	public Student get(Student student) throws SQLException {
 		if(studentDAO != null)
-			studentDAO.get(student);
+			return studentDAO.get(student);
 		return null;
 	}
 
@@ -33,7 +33,7 @@ public class StudentService implements IStudentService{
 	@Override
 	public boolean update(Student student) throws SQLException {
 		if(studentDAO != null)
-			studentDAO.update(student);
+			return studentDAO.update(student);
 		return false;
 	}
 
@@ -47,7 +47,7 @@ public class StudentService implements IStudentService{
 	@Override
 	public ArrayList<Student> list() throws SQLException {
 		if(studentDAO != null)
-			studentDAO.list();
+			return studentDAO.list();
 		return null;
 	}
 
