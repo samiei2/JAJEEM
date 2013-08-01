@@ -96,7 +96,7 @@ public class initDatabase {
 						+ "CREATE TABLE IF NOT EXISTS SurveyQuestion (" +
 						"id int DEFAULT 0   AUTO_INCREMENT," +
 						"iid UUID,"+
-						"surveyid int  , " +
+						"surveyid UUID  , " +
 						"responseId UUID  , " +
 						"title varchar(5000), " +
 						"type tinyint  , " +

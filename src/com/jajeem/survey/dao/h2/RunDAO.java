@@ -35,7 +35,7 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO SurveyRun (instructorId, sessionId, surveyId, start, end,id) "
+		ps = con.prepareStatement("INSERT INTO SurveyRun (instructorId, sessionId, surveyId, start, end,iid) "
 				+ " VALUES (?, ?, ?, ?, ?, ?);");
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
@@ -69,7 +69,10 @@ public class RunDAO implements IRunDAO {
 		try{
 			SurveyDAO surveydao = new SurveyDAO();
 			Survey survey = run.getSurvey();
-			surveydao.create(survey);
+			if(surveydao.Contains(survey))
+				surveydao.update(survey);
+			else
+				surveydao.create(survey);
 		}
 		catch(Exception e){
 			
@@ -86,7 +89,7 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM SurveyRun WHERE Run.id = ?;");
+		ps = con.prepareStatement("SELECT * FROM SurveyRun WHERE SurveyRun.iid = ?;");
 		ps.setObject(1, run.getId());
 
 		try {
@@ -138,7 +141,7 @@ public class RunDAO implements IRunDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE SurveyRun SET instructorId = ?, sessionId = ?, "
-				+ "surveyId = ?, start = ?, end = ? WHERE id = ?");
+				+ "surveyId = ?, start = ?, end = ? WHERE iid = ?");
 
 		ps.setInt(1, run.getInstructorId());
 		ps.setInt(2, run.getSessionId());
@@ -155,15 +158,6 @@ public class RunDAO implements IRunDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
-			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
@@ -175,6 +169,18 @@ public class RunDAO implements IRunDAO {
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
+		}
+		
+		try{
+			SurveyDAO surveydao = new SurveyDAO();
+			Survey survey = run.getSurvey();
+			if(surveydao.Contains(survey))
+				surveydao.update(survey);
+			else
+				surveydao.create(survey);
+		}
+		catch(Exception e){
+			
 		}
 
 		return false;
@@ -188,7 +194,7 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM SurveyRun WHERE Run.id = ?;");
+		ps = con.prepareStatement("DELETE FROM SurveyRun WHERE SurveyRun.iid = ?;");
 		ps.setObject(1, run.getId());
 
 		try {
@@ -198,15 +204,6 @@ public class RunDAO implements IRunDAO {
 			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -241,7 +238,7 @@ public class RunDAO implements IRunDAO {
 			while (rs.next()) {
 				Run run = new Run();
 
-				run.setId((UUID) rs.getObject("id"));
+				run.setId((UUID) rs.getObject("iid"));
 				run.setInstructorId(rs.getInt("instructorId"));
 				run.setSessionId(rs.getInt("sessionId"));
 				run.setSurveyId((UUID) rs.getObject("surveyId"));
@@ -277,4 +274,45 @@ public class RunDAO implements IRunDAO {
 		return allRuns;
 	}
 
+	public boolean Contains(Run run) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM SurveyRun WHERE SurveyRun.iid = ?;");
+		ps.setObject(1, run.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			run.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return false;
+	}
 }

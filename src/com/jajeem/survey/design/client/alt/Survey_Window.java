@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -35,6 +36,8 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.command.model.FinishedQuizCommand;
+import com.jajeem.command.model.FinishedSurveyCommand;
 import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
@@ -44,6 +47,7 @@ import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
@@ -151,7 +155,21 @@ public class Survey_Window extends WebFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
-				
+				try{
+					FinishedSurveyCommand cmd = new FinishedSurveyCommand(
+							InetAddress.getLocalHost().getHostAddress(),
+							server, 
+							listenPort);
+					currentRun.setEnd(System.currentTimeMillis());
+					currentRun.setId(UUID.randomUUID());
+					cmd.setRun(currentRun);
+					
+					ServerService service = new ServerService();
+					service.send(cmd);
+				}
+				catch(Exception e){
+					JajeemExcetionHandler.logError(e,Quiz_Window.class);
+				}
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

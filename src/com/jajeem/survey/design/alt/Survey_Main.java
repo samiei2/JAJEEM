@@ -45,6 +45,7 @@ import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.ResultService;
 import com.jajeem.survey.service.RunService;
+import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.Config;
 
 public class Survey_Main extends WebFrame {
@@ -405,13 +406,13 @@ public class Survey_Main extends WebFrame {
 						.showConfirmDialog(
 								null,
 								"Are you sure you want to save current survey?\nNote:If you select No current survey will be disposed.");
-				RunService qs = new RunService();
+				SurveyService qs = new SurveyService();
 				if (i == 0) {
 					try {
-						qs.create(currentRun);
+						qs.create(currentRun.getSurvey());
 						eventsEnabled = false;
-						firstPage.clear();
-						newSurveyRun();
+//						firstPage.clear();
+//						newSurveyRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
 						JajeemExcetionHandler.logError(e1);
@@ -419,8 +420,8 @@ public class Survey_Main extends WebFrame {
 					}
 				} else if (i == 1) {
 					eventsEnabled = false;
-					firstPage.clear();
-					newSurveyRun();
+//					firstPage.clear();
+//					newSurveyRun();
 					eventsEnabled = true;
 				} else {
 					return;
@@ -524,6 +525,9 @@ public class Survey_Main extends WebFrame {
 				.get(0)
 				.setInstructorId(
 						getCurrentInstructor().getId());
+		
+		currentRun.getSurvey().getQuestionList()
+		.get(0).setId(UUID.randomUUID());
 
 		((DefaultTableModel) firstPage.getWebQuestionListPanel().getWebTable()
 				.getModel()).addRow(new Object[] { 1, "Single Choice", 0, "" });

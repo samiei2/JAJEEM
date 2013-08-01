@@ -35,12 +35,13 @@ public class SurveyDAO implements ISurveyDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Survey (instructorId, title, category, description) "
-				+ " VALUES (?, ?, ?, ?);");
+		ps = con.prepareStatement("INSERT INTO Survey (instructorId, title, category, description,iid) "
+				+ " VALUES (?, ?, ?, ?, ?);");
 		ps.setInt(1, survey.getInstructorId());
 		ps.setString(2, survey.getTitle());
 		ps.setString(3, survey.getCategory());
 		ps.setString(4, survey.getDescription());
+		ps.setObject(5, survey.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -78,7 +79,10 @@ public class SurveyDAO implements ISurveyDAO {
 			for (int i = 0; i < list.size(); i++) {
 				Question q = list.get(i);
 				q.setSurveyId(survey.getId());
-				qdao.create(q);
+				if(qdao.Contains(q))
+					qdao.update(q);
+				else
+					qdao.create(q);
 			}
 		}catch(Exception e){
 			JajeemExcetionHandler.logError(e);
@@ -96,7 +100,7 @@ public class SurveyDAO implements ISurveyDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.id = ?;");
+		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.iid = ?;");
 		ps.setObject(1, survey.getId());
 
 		try {
@@ -146,7 +150,7 @@ public class SurveyDAO implements ISurveyDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE Survey SET instructorId = ?, title = ?, category = ?, description = ? WHERE id = ?");
+		ps = con.prepareStatement("UPDATE Survey SET instructorId = ?, title = ?, category = ?, description = ? WHERE iid = ?");
 
 		ps.setInt(1, survey.getInstructorId());
 		ps.setString(2, survey.getTitle());
@@ -162,15 +166,6 @@ public class SurveyDAO implements ISurveyDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
-			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
@@ -182,6 +177,21 @@ public class SurveyDAO implements ISurveyDAO {
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
+		}
+		
+		try{
+			QuestionDAO qdao = new QuestionDAO();
+			ArrayList<Question> list = survey.getQuestionList();
+			for (int i = 0; i < list.size(); i++) {
+				Question q = list.get(i);
+				q.setSurveyId(survey.getId());
+				if(qdao.Contains(q))
+					qdao.update(q);
+				else
+					qdao.create(q);
+			}
+		}catch(Exception e){
+			JajeemExcetionHandler.logError(e);
 		}
 
 		return false;
@@ -195,7 +205,7 @@ public class SurveyDAO implements ISurveyDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM Survey WHERE Survey.id = ?;");
+		ps = con.prepareStatement("DELETE FROM Survey WHERE Survey.iid = ?;");
 		ps.setObject(1, survey.getId());
 
 		try {
@@ -205,15 +215,6 @@ public class SurveyDAO implements ISurveyDAO {
 			survey.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -248,7 +249,7 @@ public class SurveyDAO implements ISurveyDAO {
 			while (rs.next()) {
 				Survey survey = new Survey();
 
-				survey.setId((UUID) rs.getObject("id"));
+				survey.setId((UUID) rs.getObject("iid"));
 				survey.setInstructorId(rs.getInt("instructorId"));
 				survey.setTitle(rs.getString("title"));
 				survey.setCategory(rs.getString("category"));
@@ -293,4 +294,45 @@ public class SurveyDAO implements ISurveyDAO {
 		return allSurveys;
 	}
 
+	public boolean Contains(Survey survey) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM Survey WHERE Survey.iid = ?;");
+		ps.setObject(1, survey.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			survey.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return false;
+	}
 }

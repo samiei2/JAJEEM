@@ -20,7 +20,10 @@ public class RunService{
 	public Run create(Run run) throws SQLException {
 		runDAO = new RunDAO();//TODO remove this line
 		if(runDAO != null)
-			return runDAO.create(run);
+			if(runDAO.Contains(run))
+				runDAO.update(run);
+			else
+				runDAO.create(run);
 		return null;
 	}
 	

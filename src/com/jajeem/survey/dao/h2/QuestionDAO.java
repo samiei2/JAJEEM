@@ -33,7 +33,7 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyQuestion (instructorId, title, type, imagePath, url," +
-				" answer1, answer2, answer3, answer4, answer5, responseid, surveyid,id) "
+				" answer1, answer2, answer3, answer4, answer5, responseid, surveyid,iid) "
 				+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ?, ?, ?, ?);");
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
@@ -82,7 +82,7 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM SurveyQuestion WHERE Question.id = ?;");
+		ps = con.prepareStatement("SELECT * FROM SurveyQuestion WHERE SurveyQuestion.iid = ?;");
 		ps.setObject(1, question.getId());
 
 		try {
@@ -139,7 +139,7 @@ public class QuestionDAO implements IQuestionDAO {
 		Connection con = BaseDAO.getConnection();
 		
 		ps = con.prepareStatement("UPDATE SurveyQuestion SET instructorId = ?, title = ?, type = ?, imagePath = ?" +
-				", url, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ? WHERE id = ?");
+				", url = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ? WHERE iid = ?");
 
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
@@ -160,15 +160,6 @@ public class QuestionDAO implements IQuestionDAO {
 			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -194,7 +185,7 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM SurveyQuestion WHERE Question.id = ?;");
+		ps = con.prepareStatement("DELETE FROM SurveyQuestion WHERE SurveyQuestion.iid = ?;");
 		ps.setObject(1, question.getId());
 
 		try {
@@ -204,15 +195,6 @@ public class QuestionDAO implements IQuestionDAO {
 			question.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -247,7 +229,7 @@ public class QuestionDAO implements IQuestionDAO {
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId((UUID) rs.getObject("id"));
+				question.setId((UUID) rs.getObject("iid"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
 				question.setType(rs.getByte("type"));
@@ -305,7 +287,7 @@ public class QuestionDAO implements IQuestionDAO {
 			while (rs.next()) {
 				Question question = new Question();
 
-				question.setId((UUID) rs.getObject("id"));
+				question.setId((UUID) rs.getObject("iid"));
 				question.setInstructorId(rs.getInt("instructorId"));
 				question.setTitle(rs.getString("title"));
 				question.setSurveyId((UUID) rs.getObject("surveyid"));
@@ -345,6 +327,48 @@ public class QuestionDAO implements IQuestionDAO {
 		}
 
 		return allQuestions;
+	}
+	
+	public boolean Contains(Question question) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM SurveyQuestion WHERE SurveyQuestion.iid = ?;");
+		ps.setObject(1, question.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			question.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return false;
 	}
 
 }

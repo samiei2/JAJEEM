@@ -137,8 +137,9 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 			public void actionPerformed(ActionEvent arg0) {
 				parentPanel.setEventsEnabled(false);
 				if (parentPanel.getCurrentQuestion() != null) {
-					parentPanel.getCurrentQuestion().setId(
-							UUID.randomUUID());
+					if(parentPanel.getCurrentQuestion().getId().equals(null))
+						parentPanel.getCurrentQuestion().setId(
+								UUID.randomUUID());
 					parentPanel.getCurrentQuestion().setSurveyId(
 							parentPanel.getCurrentRun().getSurvey().getId());
 					parentPanel.getCurrentQuestion().setInstructorId(

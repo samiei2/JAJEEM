@@ -177,13 +177,11 @@ public class Survey_OpenDialog extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"#", "Question Title","Point"
+				"#", "Question Title"
 			}
 		));
 		wbTblQuestion.getColumnModel().getColumn(0).setPreferredWidth(33);
 		wbTblQuestion.getColumnModel().getColumn(0).setMaxWidth(33);
-		wbTblQuestion.getColumnModel().getColumn(2).setPreferredWidth(53);
-		wbTblQuestion.getColumnModel().getColumn(2).setMaxWidth(53);
 		webScrollPane_1.setViewportView(wbTblQuestion);
 		
 		wbTblSurvey = new WebTable();

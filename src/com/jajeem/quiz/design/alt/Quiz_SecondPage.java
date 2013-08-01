@@ -142,7 +142,14 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 
 			@Override
 			public void quizFinished(QuizFinished e) {
-				runResults.add(e.getQuizRun());
+				Run temp = e.getQuizRun();
+				int score = 0;
+				for (int i = 0; i < temp.getQuiz().getQuestionList().size(); i++) {
+					if(temp.getQuiz().getQuestionList().get(i).isResponseValid())
+						score+=temp.getQuiz().getQuestionList().get(i).getPoint();
+				}
+				temp.setScore(score);
+				runResults.add(temp);
 			}
 		});
 	}

@@ -32,7 +32,7 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,id) "
+		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid) "
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
@@ -77,7 +77,7 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM SurveyResponse WHERE SurveyResponse.id = ?;");
+		ps = con.prepareStatement("SELECT * FROM SurveyResponse WHERE SurveyResponse.iid = ?;");
 		ps.setObject(1, response.getId());
 
 		try {
@@ -135,7 +135,7 @@ public class ResponseDAO implements IResponseDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE SurveyResponse SET runId = ?, studentId = ?, " +
-				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE id = ?");
+				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
 
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
@@ -154,15 +154,6 @@ public class ResponseDAO implements IResponseDAO {
 			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -188,7 +179,7 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("DELETE FROM SurveyResponse WHERE SurveyResponse.id = ?;");
+		ps = con.prepareStatement("DELETE FROM SurveyResponse WHERE SurveyResponse.iid = ?;");
 		ps.setObject(1, response.getId());
 
 		try {
@@ -198,15 +189,6 @@ public class ResponseDAO implements IResponseDAO {
 			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
-			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
 			try {
 				if (ps != null)
 					ps.close();
@@ -241,7 +223,7 @@ public class ResponseDAO implements IResponseDAO {
 			while (rs.next()) {
 				Response response = new Response();
 
-				response.setId((UUID) rs.getObject("id"));
+				response.setId((UUID) rs.getObject("iid"));
 				response.setRunId((UUID) rs.getObject("runId"));
 				response.setStudentId(rs.getInt("studentId"));
 				response.setAnswer(rs.getString("answer"));
@@ -283,4 +265,45 @@ public class ResponseDAO implements IResponseDAO {
 		return allResponses;
 	}
 
+	public boolean Contains(Response response) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM SurveyResponse WHERE SurveyResponse.iid = ?;");
+		ps.setObject(1, response.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			response.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return false;
+	}
 }
