@@ -140,6 +140,16 @@ public class InstructorLogin extends JDialog {
 
 			DefaultListModel listModel1 = new DefaultListModel();
 
+			// we should always have admin user
+			if (instructorService.get("admin") == null) {
+				Instructor admin = new Instructor();
+				admin.setFirstName("admin");
+				admin.setLastName("admin");
+				admin.setUsername("admin");
+				admin.setPassword("admin");
+				instructorService.create(admin);
+			}
+
 			for (com.jajeem.core.model.Instructor instructorItem : instructorList) {
 				if (!instructorItem.getUsername().equals("admin")) {
 					listModel1.addElement(instructorItem.getFirstName() + " "

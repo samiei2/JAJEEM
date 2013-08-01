@@ -141,9 +141,17 @@ public class AdminPanel extends WebFrame {
 		ArrayList<Course> courseList = rs.getCourseDAO().list();
 
 		for (Course course : courseList) {
-			course.setInstructor(instructorService.getById(
-					course.getInstructorId()).getUsername());
-			getCourseList().add(course);
+			Instructor ins = instructorService
+					.getById(course.getInstructorId());
+
+			if (ins != null) {
+				course.setInstructor(instructorService.getById(
+						course.getInstructorId()).getUsername());
+				getCourseList().add(course);
+			} else {
+				course.setInstructor("");
+				getCourseList().add(course);
+			}
 		}
 
 	}
@@ -196,7 +204,9 @@ public class AdminPanel extends WebFrame {
 						RoomService rs = new RoomService();
 						for (Course course : courseSelectionModel.getSelected()) {
 							try {
-								rs.getCourseDAO().delete(course);
+								if (course.getInstructorId() != 0) {
+									rs.getCourseDAO().delete(course);
+								}
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
@@ -220,6 +230,30 @@ public class AdminPanel extends WebFrame {
 					new AddNewCourseDialog(courseList, course,
 							courseSelectionModel.getSelected(),
 							getInstructorList());
+				}
+			}
+		});
+
+		WebButton studentButton = new WebButton("Students");
+		buttonPanel.add(studentButton);
+		studentButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!courseSelectionModel.isSelectionEmpty()) {
+					if (courseSelectionModel.getSelected().size() > 1) {
+						WebOptionPane.showMessageDialog(frame,
+								"Please select one course.", "Message",
+								WebOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Course course = courseSelectionModel.getSelected().get(
+								0);
+						try {
+							new StudentCourseDialog(course);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
 				}
 			}
 		});
@@ -368,12 +402,19 @@ public class AdminPanel extends WebFrame {
 						WebOptionPane.QUESTION_MESSAGE);
 				if (resp == 0) {
 					if (!instructorSelectionModel.isSelectionEmpty()) {
-
 						InstructorService insService = new InstructorService();
 						for (Instructor instructor : instructorSelectionModel
 								.getSelected()) {
 							try {
-								insService.delete(instructor);
+								if (instructor.getUsername().equals("admin")) {
+									WebOptionPane.showMessageDialog(
+											getRootPane(),
+											"You cannot delete admin account!",
+											"Error",
+											WebOptionPane.ERROR_MESSAGE);
+								} else {
+									insService.delete(instructor);
+								}
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
