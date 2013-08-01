@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -195,6 +196,8 @@ public class Quiz_Window extends WebFrame {
 							InetAddress.getLocalHost().getHostAddress(),
 							server, 
 							listenPort);
+					currentRun.setEnd(System.currentTimeMillis());
+					currentRun.setId(UUID.randomUUID());
 					cmd.setRun(currentRun);
 					
 					ServerService service = new ServerService();

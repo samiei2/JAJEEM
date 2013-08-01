@@ -595,7 +595,7 @@ public class Quiz_Main extends WebFrame {
 				if(studentIps!=null){
 					if(!studentIps.isEmpty()){
 						currentRun.setStart(System.currentTimeMillis());
-						currentRun.setId(UUID.randomUUID());
+//						currentRun.setId(UUID.randomUUID());
 						
 						new Config();
 						ServerService service;
@@ -619,7 +619,7 @@ public class Quiz_Main extends WebFrame {
 				}
 			}
 			else{
-				currentRun.setId(UUID.randomUUID());
+//				currentRun.setId(UUID.randomUUID());
 				currentRun.setStart(System.currentTimeMillis());
 				new Config();
 				ServerService service;

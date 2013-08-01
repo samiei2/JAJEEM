@@ -220,7 +220,17 @@ public class initDatabase {
 						"Roomid int  , " +
 						"name varchar(255), " +
 						"row int, col int, " +
-						"PRIMARY KEY (id));";
+						"PRIMARY KEY (id));"
+				
+						+ "CREATE TABLE IF NOT EXISTS StudentCourse ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "studentId int  , "
+						+ "courseId int  , "
+						+ "score int  , "
+						+ "PRIMARY KEY (id));"
+		
+						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (StudentId) REFERENCES Student (id);"
+						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (CourseId) REFERENCES Course (id);";
 						
 //						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
 //						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
@@ -240,6 +250,7 @@ public class initDatabase {
 //						+ "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770536 FOREIGN KEY (studentid) REFERENCES Student (id);"
 //						+ "ALTER TABLE Seat ADD CONSTRAINT IF NOT EXISTS FKSeat323739 FOREIGN KEY (Roomid) REFERENCES Room (id);";
 
+
 				Statement statement = con.createStatement();
 				statement.executeUpdate(query);
 
@@ -258,23 +269,33 @@ public class initDatabase {
 				 * "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');"
 				 * ;
 				 */
-				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
-				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
-				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
-				query += "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
+				// query +=
+				// "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
+				// query +=
+				// "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
+				// query +=
+				// "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
+				// query +=
+				// "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
 
-				query += "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
-				query += "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
-				query += "Insert into student(id,username,password,firstname,lastname,language) values(3,'student2','student2','Student 2','','none');";
+				// query +=
+				// "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
+				// query +=
+				// "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
+				// query +=
+				// "Insert into student(id,username,password,firstname,lastname,language) values(3,'student2','student2','Student 2','','none');";
 
 				query += "Insert into room(name,seatsize) values('a',10);";
 				query += "Insert into room(name,seatsize) values('b',20);";
 				query += "Insert into room(name,seatsize) values('c',30);";
 				query += "Insert into room(name,seatsize) values('d',45);";
 
-//				query += "INSERT INTO Course (name, instructorId, classType, level, session, startDate,"
-//						+ " day1, startTime1, endTime1,day2, startTime2, endTime2,day3, startTime3, endTime3,day4, startTime4, endTime4,day5, startTime5, endTime5) "
-//						+ " VALUES ('Inter', 0, 'Intense', 'B', 3 , 232322, 'Su', 12, 14 , '', null, null, '' , null, null, '', null, null, '', null,null);";
+				// query +=
+				// "INSERT INTO Course (name, instructorId, classType, level, session, startDate,"
+				// +
+				// " day1, startTime1, endTime1,day2, startTime2, endTime2,day3, startTime3, endTime3,day4, startTime4, endTime4,day5, startTime5, endTime5) "
+				// +
+				// " VALUES ('Inter', 0, 'Intense', 'B', 3 , 232322, 'Su', 12, 14 , '', null, null, '' , null, null, '', null, null, '', null,null);";
 
 				query += "Insert into seat(roomid,name,row,col) values(2,'a1',1,1);";
 				query += "Insert into seat(roomid,name,row,col) values(2,'a2',2,1);";

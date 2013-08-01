@@ -189,15 +189,6 @@ public class ResponseDAO implements IResponseDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
-			try {
 				if (ps != null)
 					ps.close();
 			} catch (Exception e) {
@@ -271,6 +262,48 @@ public class ResponseDAO implements IResponseDAO {
 		}
 
 		return allResponses;
+	}
+	
+	public boolean Contains(Response response) throws SQLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM QuizResponse WHERE QuizResponse.iid = ?;");
+		ps.setObject(1, response.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			response.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return false;
 	}
 
 }
