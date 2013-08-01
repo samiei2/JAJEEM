@@ -1355,7 +1355,7 @@ public class InstructorNoa {
 		accountButton.setText("Accounts");
 		accountButton.setBottomBgColor(new Color(225, 234, 244));
 		accountButton.setTopBgColor(new Color(116, 166, 219));
-		rightButtonPanel.add(accountButton);
+//		rightButtonPanel.add(accountButton);
 
 		WebButton chatButton = new WebButton();
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
