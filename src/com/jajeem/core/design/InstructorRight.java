@@ -38,7 +38,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
-import com.jajeem.quiz.design.QuizMain;
+import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 
@@ -414,8 +414,8 @@ public class InstructorRight {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				QuizMain quiz = new QuizMain();
-				quiz.setVisible(true);
+//				Quiz_Main quiz = new Quiz_Main();
+//				quiz.setVisible(true);
 			}
 		});
 

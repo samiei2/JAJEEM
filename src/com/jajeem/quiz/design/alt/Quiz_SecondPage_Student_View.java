@@ -23,7 +23,6 @@ import com.alee.laf.table.WebTable;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.quiz.design.QuizTab_2_Student_View;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 
@@ -302,11 +301,11 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 								ImageIcon imgToolTip = null;
 								try {
 									imgToolTip = new ImageIcon(
-											ImageIO.read(QuizTab_2_Student_View.class
+											ImageIO.read(Quiz_SecondPage_Student_View.class
 													.getResourceAsStream("/icons/bullet-red.png")));
 									if (ex.getQuestion().isResponseValid())
 										imgToolTip = new ImageIcon(
-												ImageIO.read(QuizTab_2_Student_View.class
+												ImageIO.read(Quiz_SecondPage_Student_View.class
 														.getResourceAsStream("/icons/bullet-green.png")));
 								} catch (Exception exp) {
 									JajeemExcetionHandler.logError(exp);
@@ -563,11 +562,11 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 							ImageIcon imgToolTip = null;
 							try {
 								imgToolTip = new ImageIcon(
-										ImageIO.read(QuizTab_2_Student_View.class
+										ImageIO.read(Quiz_SecondPage_Student_View.class
 												.getResourceAsStream("/icons/bullet-red.png")));
 								if (tempq.isResponseValid())
 									imgToolTip = new ImageIcon(
-											ImageIO.read(QuizTab_2_Student_View.class
+											ImageIO.read(Quiz_SecondPage_Student_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
 							} catch (Exception exp) {
 								JajeemExcetionHandler.logError(exp);

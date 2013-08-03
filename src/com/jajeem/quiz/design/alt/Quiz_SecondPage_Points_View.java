@@ -13,7 +13,6 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizResponse;
-import com.jajeem.quiz.design.QuizTab_2;
 import com.jajeem.quiz.model.Quiz;
 
 @SuppressWarnings("serial")

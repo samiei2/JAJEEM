@@ -270,33 +270,33 @@ public class initDatabase {
 				 * "Insert into instructor(id,username,password,firstname,lastname,language) values(5,'john','john','John','Smith','none');"
 				 * ;
 				 */
-				// query +=
-				// "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
-				// query +=
-				// "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
-				// query +=
-				// "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
-				// query +=
-				// "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
+				 query +=
+				 "Insert into instructor(id,username,password,firstname,lastname,language) values(0,'admin','admin','admin','admin','admin');";
+				 query +=
+				 "Insert into instructor(id,username,password,firstname,lastname,language) values(1,'john','john','John','Smith','eng');";
+				 query +=
+				 "Insert into instructor(id,username,password,firstname,lastname,language) values(2,'ali','ali','Ali','Alavi','farsi');";
+				 query +=
+				 "Insert into instructor(id,username,password,firstname,lastname,language) values(3,'mousavi','mousavi','Moosavi','Mousavi','none');";
 
-				// query +=
-				// "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
-				// query +=
-				// "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
-				// query +=
-				// "Insert into student(id,username,password,firstname,lastname,language) values(3,'student2','student2','Student 2','','none');";
+				 query +=
+				 "Insert into student(id,username,password,firstname,lastname,language) values(1,'ali','ali','Ali','Mohammadi','none');";
+				 query +=
+				 "Insert into student(id,username,password,firstname,lastname,language) values(2,'student1','student1','Student 1','','none');";
+				 query +=
+				 "Insert into student(id,username,password,firstname,lastname,language) values(3,'student2','student2','Student 2','','none');";
 
 				query += "Insert into room(name,seatsize) values('a',10);";
 				query += "Insert into room(name,seatsize) values('b',20);";
 				query += "Insert into room(name,seatsize) values('c',30);";
 				query += "Insert into room(name,seatsize) values('d',45);";
 
-				// query +=
-				// "INSERT INTO Course (name, instructorId, classType, level, session, startDate,"
-				// +
-				// " day1, startTime1, endTime1,day2, startTime2, endTime2,day3, startTime3, endTime3,day4, startTime4, endTime4,day5, startTime5, endTime5) "
-				// +
-				// " VALUES ('Inter', 0, 'Intense', 'B', 3 , 232322, 'Su', 12, 14 , '', null, null, '' , null, null, '', null, null, '', null,null);";
+				 query +=
+				 "INSERT INTO Course (name, instructorId, classType, level, session, startDate,"
+				 +
+				 " day1, startTime1, endTime1,day2, startTime2, endTime2,day3, startTime3, endTime3,day4, startTime4, endTime4,day5, startTime5, endTime5) "
+				 +
+				 " VALUES ('Inter', 0, 'Intense', 'B', 3 , 232322, 'Su', 12, 14 , '', null, null, '' , null, null, '', null, null, '', null,null);";
 
 				query += "Insert into seat(roomid,name,row,col) values(2,'a1',1,1);";
 				query += "Insert into seat(roomid,name,row,col) values(2,'a2',2,1);";
@@ -307,206 +307,206 @@ public class initDatabase {
 				query += "Insert into seat(roomid,name,row,col) values(2,'a7',1,4);";
 				query += "Insert into seat(roomid,name,row,col) values(2,'a8',1,5);";
 
-				// query +=
-				// "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
-				// +
-				// "values(1,1,2,0,1);";
-				// query +=
-				// "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
-				// +
-				// "values(2,1,2,0,2);";
-				// query +=
-				// "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
-				// +
-				// "values(3,2,2,0,2);";
-				// query +=
-				// "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
-				// +
-				// "values(4,2,2,0,3);";
+				 query +=
+				 "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
+				 +
+				 "values(1,1,2,0,1);";
+				 query +=
+				 "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
+				 +
+				 "values(2,1,2,0,2);";
+				 query +=
+				 "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
+				 +
+				 "values(3,2,2,0,2);";
+				 query +=
+				 "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
+				 +
+				 "values(4,2,2,0,3);";
 
-				// query +=
-				// "Insert into QuizRun(quizid,instructorid,studentid,sessionid,score,start,end) "
-				// +
-				// "values(1,1,1,1,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into QuizRun(quizid,instructorid,studentid,sessionid,score,start,end) "
-				// +
-				// "values(2,1,1,2,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into QuizRun(quizid,instructorid,studentid,sessionid,score,start,end) "
-				// +
-				// "values(3,2,1,3,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into QuizRun(quizid,instructorid,studentid,sessionid,score,start,end) "
-				// +
-				// "values(4,2,2,4,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				//
-				// query +=
-				// "Insert into quiz(id,instructorid,points,time,title) values(1,1,200,10,'Math');";
-				// query +=
-				// "Insert into quiz(id,instructorid,points,time,title) values(2,1,400,6,'Geo');";
-				// query +=
-				// "Insert into quiz(id,instructorid,points,time,title) values(3,1,100,12,'History');";
-				// query +=
-				// "Insert into quiz(id,instructorid,points,time,title) values(4,1,300,20,'English');";
-				//
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (1,1,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (2,1,'Where were you?',1,10,'','','nomad','there','nowhere','who?where?','',false,true,false,false,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (3,1,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (4,2,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (5,2,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (6,2,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (7,2,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (8,3,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (9,3,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (10,4,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (11,4,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
-				// query +=
-				// "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
-				// "values (12,4,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
-				//
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (1,'yeah.I am from here',true,false,false,false,false,false,1,1);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (2,'Nope,I am from tehran',false,false,false,true,false,true,1,2);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (3,'',false,false,false,true,false,true,1,3);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (4,'yeah.I am from here',true,false,false,false,false,false,2,1);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (5,'Nope,I am from tehran',false,false,false,true,false,false,2,2);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (6,'',false,false,false,true,false,true,1,3);";
-				// query +=
-				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
-				// +
-				// "values (7,'',false,false,false,true,false,true,1,4);";
-				//
-				// query +=
-				// "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
-				// +
-				// "values (1,1,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
-				// +
-				// "values (2,2,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
-				// +
-				// "values (3,2,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
-				// +
-				// "values (4,4,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				// query +=
-				// "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
-				// +
-				// "values (5,3,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
-				//
-				// query+="Insert into Survey (id , instructorid , title)  " +
-				// "values (1,1,'Who is the best student here?');";
-				// query+="Insert into Survey (id , instructorid , title)  " +
-				// "values (2,1,'Who is the best president?');";
-				// query+="Insert into Survey (id , instructorid , title)  " +
-				// "values (3,1,'What is the best picture?');";
-				// query+="Insert into Survey (id , instructorid , title)  " +
-				// "values (4,1,'Who is the best scientist?');";
-				//
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (1,1,1,'Who has the best picture?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (2,1,2,'Who has the best cassette?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (3,1,3,'Who has the best player?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (4,2,4,'Who has the best cell?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (5,2,5,'Who has the best face?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (6,2,6,'Who has the best kid?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (7,3,7,'Who has the best parent?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				// query +=
-				// "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
-				// +
-				// "values (8,3,8,'Who has the best id?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
-				//
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (1,'first picture',true,false,false,false,false,1,1);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (2,'second picture',false,false,true,false,false,1,2);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (3,'third picture',true,false,false,false,false,2,1);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (4,'fourth picture',false,false,true,false,false,2,2);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (5,'fifth picture',true,false,false,false,false,1,3);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (6,'sixth picture',false,true,false,false,false,1,4);";
-				// query +=
-				// "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
-				// +
-				// "values (7,'seventh picture',true,false,false,false,false,1,5);";
+				 query +=
+				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+				 +
+				 "values(1,1,1,1,1,1,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+				 +
+				 "values(2,2,2,1,1,2,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+				 +
+				 "values(3,3,3,2,1,3,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+				 +
+				 "values(4,4,4,2,2,4,20,"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				
+				 query +=
+				 "Insert into quiz(id,instructorid,points,time,title) values(1,1,200,10,'Math');";
+				 query +=
+				 "Insert into quiz(id,instructorid,points,time,title) values(2,1,400,6,'Geo');";
+				 query +=
+				 "Insert into quiz(id,instructorid,points,time,title) values(3,1,100,12,'History');";
+				 query +=
+				 "Insert into quiz(id,instructorid,points,time,title) values(4,1,300,20,'English');";
+				
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (1,1,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (2,1,'Where were you?',1,10,'','','nomad','there','nowhere','who?where?','',false,true,false,false,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (3,1,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (4,2,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (5,2,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (6,2,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (7,2,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (8,3,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (9,3,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (10,4,'Where are you from?',1,10,'','','Tehran','Esfahan','Shiraz','Tabriz','',false,false,false,true,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (11,4,'Where were you?',1,10,'','','here','there','nowhere','who?where?','',false,true,false,false,false,1);";
+				 query +=
+				 "Insert into QuizQuestion (id , quizId , title , type , point , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , bool1 , bool2 , bool3, bool4 , bool5 , instructorid) "+
+				 "values (12,4,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
+				
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (1,1,'yeah.I am from here',true,false,false,false,false,false,1,1);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (2,1,'Nope,I am from tehran',false,false,false,true,false,true,1,2);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (3,4,'',false,false,false,true,false,true,1,3);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (4,2,'yeah.I am from here',true,false,false,false,false,false,2,1);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (5,2,'Nope,I am from tehran',false,false,false,true,false,false,2,2);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (6,2,'',false,false,false,true,false,true,1,3);";
+				 query +=
+				 "Insert into quizresponse (id,runid, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				 +
+				 "values (7,3,'',false,false,false,true,false,true,1,4);";
+				
+				 query +=
+				 "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
+				 +
+				 "values (1,1,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
+				 +
+				 "values (2,2,1,2,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
+				 +
+				 "values (3,2,1,2,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
+				 +
+				 "values (4,4,1,1,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				 query +=
+				 "Insert into SURVEYRUN(id, surveyId  , instructorId  , Studentid, sessionId, start, end) "
+				 +
+				 "values (5,3,1,2,1,+"+System.currentTimeMillis()+","+System.currentTimeMillis()+");";
+				
+				 query+="Insert into Survey (id , instructorid , title)  " +
+				 "values (1,1,'Who is the best student here?');";
+				 query+="Insert into Survey (id , instructorid , title)  " +
+				 "values (2,1,'Who is the best president?');";
+				 query+="Insert into Survey (id , instructorid , title)  " +
+				 "values (3,1,'What is the best picture?');";
+				 query+="Insert into Survey (id , instructorid , title)  " +
+				 "values (4,1,'Who is the best scientist?');";
+				
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (1,1,1,'Who has the best picture?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (2,1,2,'Who has the best cassette?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (3,1,3,'Who has the best player?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (4,2,4,'Who has the best cell?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (5,2,5,'Who has the best face?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (6,2,6,'Who has the best kid?',0,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (7,3,7,'Who has the best parent?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				 query +=
+				 "Insert into SurveyQuestion (id ,surveyid , responseId , title , type , imagepath , url , answer1 , answer2 , answer3 , answer4 , answer5 , instructorid) "
+				 +
+				 "values (8,3,8,'Who has the best id?',1,'','','first picture','second picture','third picture','forth picture','fifth picture',1);";
+				
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (1,'first picture',true,false,false,false,false,1,1);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (2,'second picture',false,false,true,false,false,1,2);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (3,'third picture',true,false,false,false,false,2,1);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (4,'fourth picture',false,false,true,false,false,2,2);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (5,'fifth picture',true,false,false,false,false,1,3);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (6,'sixth picture',false,true,false,false,false,1,4);";
+				 query +=
+				 "Insert into SurveyReponse (id , answer , bool1 , bool2 , bool3 , bool4 , bool5 , studentId , ResponseQuestionid ) "
+				 +
+				 "values (7,'seventh picture',true,false,false,false,false,1,5);";
 
 				statement = con.createStatement();
 				statement.executeUpdate(query);

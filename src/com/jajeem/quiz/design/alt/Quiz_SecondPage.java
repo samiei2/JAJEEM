@@ -19,7 +19,6 @@ import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizFinished;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
-import com.jajeem.quiz.design.QuizTab_2_Student_View;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
