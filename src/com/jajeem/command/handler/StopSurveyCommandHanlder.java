@@ -2,7 +2,6 @@ package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StopSurveyCommand;
-import com.jajeem.survey.design.client.SurveyWindow;
 import com.jajeem.survey.design.client.alt.Survey_Window;
 import com.jajeem.util.ClientSession;
 
