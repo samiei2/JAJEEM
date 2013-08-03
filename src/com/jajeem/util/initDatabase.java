@@ -16,6 +16,7 @@ public class initDatabase {
 			if (s.equals("1")) {
 
 				con = BaseDAO.getConnection();
+
 				String query = 
 						  "CREATE TABLE IF NOT EXISTS QuizResponse (" +
 						  "id int DEFAULT NULL AUTO_INCREMENT, " +
@@ -132,124 +133,140 @@ public class initDatabase {
 						"pointing int, " +
 						"title varchar(255), " +
 						"PRIMARY KEY (id));"
-						
-						
+
 						+
-//						"DROP TABLE IF EXISTS Instructor;" +
-//						"DROP TABLE IF EXISTS Student;" +
-						"CREATE TABLE IF NOT EXISTS Instructor (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"iid UUID,"+
-						"Username varchar(255)   UNIQUE, " +
-						"Password varchar(255), " +
-						"FirstName varchar(255), " +
-						"MiddleName varchar(255), " +
-						"LastName varchar(255), " +
-						"Language varchar(255), " +
-						"PRIMARY KEY (ID));"
-						
-						+ "CREATE TABLE IF NOT EXISTS Student (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"Username varchar(255)  , " +
-						"Password varchar(255), " +
-						"FirstName varchar(255), " +
-						"MiddleName varchar(255), " +
-						"LastName varchar(255), " +
-						"Language varchar(255), " +
-						"PRIMARY KEY (id));"
+						// "DROP TABLE IF EXISTS Instructor;" +
+						// "DROP TABLE IF EXISTS Student;" +
+						"CREATE TABLE IF NOT EXISTS Instructor ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "iid UUID,"
+						+ "Username varchar(255)   UNIQUE, "
+						+ "Password varchar(255), "
+						+ "FirstName varchar(255), "
+						+ "MiddleName varchar(255), "
+						+ "LastName varchar(255), "
+						+ "Language varchar(255), "
+						+ "PRIMARY KEY (ID));"
+
+						+ "CREATE TABLE IF NOT EXISTS Student ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "Username varchar(255)  , "
+						+ "Password varchar(255), "
+						+ "FirstName varchar(255), "
+						+ "MiddleName varchar(255), "
+						+ "LastName varchar(255), "
+						+ "Language varchar(255), "
+						+ "PRIMARY KEY (id));"
 						+
 
-//						"DROP TABLE IF EXISTS Course;" +
-						
-						"CREATE TABLE IF NOT EXISTS Room (" +
-						"id int DEFAULT 0   AUTO_INCREMENT," +
-						"iid UUID,"+
-						"name varchar(255)  , " +
-						"attendancetype tinyint, " +
-						"signintype tinyint, " +
-						"seatSize int, " +
-						"PRIMARY KEY (id));"
-						
-//						+"DROP TABLE IF EXISTS Session;" 
-						+ "CREATE TABLE IF NOT EXISTS Session (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"iid UUID,"+
-						"Instructorid int  , " +
-						"Roomid int  , " +
-						"Attendantid int, " +
-						"Courseid int, " +
-						"PRIMARY KEY (id));"
-						
-						+ "CREATE TABLE IF NOT EXISTS Attendant (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"iid UUID,"+
-						"Sessionid int  , " +
-						"Seatid int  , " +
-						"studentid int  , " +
-						"courseid int ,"+
-						"PRIMARY KEY (id));"
-						
-						+ "CREATE TABLE IF NOT EXISTS Course (" +
-						"id int DEFAULT 0   AUTO_INCREMENT," +
-						"iid UUID,"+
-						"Instructorid int, " +
-						"name varchar(255)," +
-						"classType varchar(255), " +
-						"level varchar(255), " +
-						"session int," +
-						"startDate double, " +
-						"day1 varchar(10)," +
-						"day2 varchar(10)," +
-						"day3 varchar(10)," +
-						"day4 varchar(10)," +
-						"day5 varchar(10) , " +
-						"startTime1 int," +
-						"startTime2 int," +
-						"startTime3 int," +
-						"startTime4 int," +
-						"startTime5 int, " +
-						"endTime1 int," +
-						"endTime2 int," +
-						"endTime3 int," +
-						"endTime4 int," +
-						"endTime5 int, " +
-						"PRIMARY KEY (id));"
+						// "DROP TABLE IF EXISTS Course;" +
 
-						+ "CREATE TABLE IF NOT EXISTS Seat (" +
-						"id int DEFAULT 0   AUTO_INCREMENT, " +
-						"iid UUID,"+
-						"Roomid int  , " +
-						"name varchar(255), " +
-						"row int, col int, " +
-						"PRIMARY KEY (id));"
-				
+						"CREATE TABLE IF NOT EXISTS Room ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT,"
+						+ "iid UUID,"
+						+ "name varchar(255)  , "
+						+ "attendancetype tinyint, "
+						+ "signintype tinyint, "
+						+ "seatSize int, "
+						+ "PRIMARY KEY (id));"
+
+						// +"DROP TABLE IF EXISTS Session;"
+						+ "CREATE TABLE IF NOT EXISTS Session ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "iid UUID,"
+						+ "Instructorid int  , "
+						+ "Roomid int  , "
+						+ "Attendantid int, "
+						+ "Courseid int, "
+						+ "PRIMARY KEY (id));"
+
+						+ "CREATE TABLE IF NOT EXISTS Attendant ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "iid UUID,"
+						+ "Sessionid int  , "
+						+ "Seatid int  , "
+						+ "studentid int  , "
+						+ "courseid int ,"
+						+ "PRIMARY KEY (id));"
+
+						+ "CREATE TABLE IF NOT EXISTS Course ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT,"
+						+ "iid UUID,"
+						+ "Instructorid int, "
+						+ "name varchar(255),"
+						+ "classType varchar(255), "
+						+ "level varchar(255), "
+						+ "session int,"
+						+ "startDate double, "
+						+ "day1 varchar(10),"
+						+ "day2 varchar(10),"
+						+ "day3 varchar(10),"
+						+ "day4 varchar(10),"
+						+ "day5 varchar(10) , "
+						+ "startTime1 int,"
+						+ "startTime2 int,"
+						+ "startTime3 int,"
+						+ "startTime4 int,"
+						+ "startTime5 int, "
+						+ "endTime1 int,"
+						+ "endTime2 int,"
+						+ "endTime3 int,"
+						+ "endTime4 int,"
+						+ "endTime5 int, "
+						+ "PRIMARY KEY (id));"
+
+						+ "CREATE TABLE IF NOT EXISTS Seat ("
+						+ "id int DEFAULT 0   AUTO_INCREMENT, "
+						+ "iid UUID,"
+						+ "Roomid int  , "
+						+ "name varchar(255), "
+						+ "row int, col int, "
+						+ "PRIMARY KEY (id));"
+
 						+ "CREATE TABLE IF NOT EXISTS StudentCourse ("
 						+ "id int DEFAULT 0   AUTO_INCREMENT, "
 						+ "studentId int  , "
 						+ "courseId int  , "
 						+ "score int  , "
 						+ "PRIMARY KEY (id));"
-		
+
+						+ "ALTER TABLE Course ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (InstructorId) REFERENCES Instructor(id);"
 						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (StudentId) REFERENCES Student (id);"
 						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (CourseId) REFERENCES Course (id);";
-						
-//						+ "ALTER TABLE quizresponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
-//						+ "ALTER TABLE quizresponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
-//						+ "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti740493 FOREIGN KEY (quizId) REFERENCES Quiz (id);"
-//						+ "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti13848 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
-//						+ "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun738461 FOREIGN KEY (instructorid) REFERENCES Instructor (id);"
-//						+ "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun166110 FOREIGN KEY (Studentid) REFERENCES Student (id);"
-//						+ "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun478787 FOREIGN KEY (Quizid) REFERENCES Quiz (id);"
-//						+ "ALTER TABLE Quiz ADD CONSTRAINT IF NOT EXISTS FKQuiz212301 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
-//						
-//						+ "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession669271 FOREIGN KEY (Attendantid) REFERENCES Attendant (id);"
-//						+ "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession748148 FOREIGN KEY (Roomid) REFERENCES Room (id);"
-//						+ "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession747599 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
-//						+ "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession228309 FOREIGN KEY (Courseid) REFERENCES Course (id);"
-//						+ "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770036 FOREIGN KEY (Seatid) REFERENCES Seat (id);"
-//						+ "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770436 FOREIGN KEY (Sessionid) REFERENCES Session (id);"
-//						+ "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770536 FOREIGN KEY (studentid) REFERENCES Student (id);"
-//						+ "ALTER TABLE Seat ADD CONSTRAINT IF NOT EXISTS FKSeat323739 FOREIGN KEY (Roomid) REFERENCES Room (id);";
+
+				// +
+				// "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
+				// +
+				// "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
+				// +
+				// "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti740493 FOREIGN KEY (quizId) REFERENCES Quiz (id);"
+				// +
+				// "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti13848 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
+				// +
+				// "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun738461 FOREIGN KEY (instructorid) REFERENCES Instructor (id);"
+				// +
+				// "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun166110 FOREIGN KEY (Studentid) REFERENCES Student (id);"
+				// +
+				// "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun478787 FOREIGN KEY (Quizid) REFERENCES Quiz (id);"
+				// +
+				// "ALTER TABLE Quiz ADD CONSTRAINT IF NOT EXISTS FKQuiz212301 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
+				//
+				// +
+				// "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession669271 FOREIGN KEY (Attendantid) REFERENCES Attendant (id);"
+				// +
+				// "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession748148 FOREIGN KEY (Roomid) REFERENCES Room (id);"
+				// +
+				// "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession747599 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
+				// +
+				// "ALTER TABLE Session ADD CONSTRAINT IF NOT EXISTS FKSession228309 FOREIGN KEY (Courseid) REFERENCES Course (id);"
+				// +
+				// "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770036 FOREIGN KEY (Seatid) REFERENCES Seat (id);"
+				// +
+				// "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770436 FOREIGN KEY (Sessionid) REFERENCES Session (id);"
+				// +
+				// "ALTER TABLE Attendant ADD CONSTRAINT IF NOT EXISTS FKAttendant770536 FOREIGN KEY (studentid) REFERENCES Student (id);"
+				// +
+				// "ALTER TABLE Seat ADD CONSTRAINT IF NOT EXISTS FKSeat323739 FOREIGN KEY (Roomid) REFERENCES Room (id);";
 
 
 				Statement statement = con.createStatement();

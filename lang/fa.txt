@@ -1,0 +1,27 @@
+﻿iCalabo=iCalabo
+volumecontrol=تنظیم صدا
+viewmode=نوع نمایش
+language=زبان
+survey=نظر سنجی
+whiteboard=نخته سیاه
+pccontroller=کنترل رایانه
+internetcontroller=کنترل اینترنت
+programstarter=استارت نرم افزار
+monitoring=مانیتورینگ
+intercom=اینترکام
+groups=گروه
+modelling=مدل سازی
+recording=ضبط
+speechrecognition=تشخیص صدا
+filesharing=تبادل فایل
+exam=Exam
+movieplayer=پخش فیلم
+reports=گزارش گیری
+chat=پیغام
+logo=Logo
+copyright\u00A92013=کپی رایت 2013
+pcip=آی پی
+studentname=نام
+empty=خالی
+groupa=گروه الف
+

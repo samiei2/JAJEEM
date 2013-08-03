@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.Student;
@@ -320,7 +319,6 @@ public class StudentDAO implements IStudentDAO {
 				student.setUsername(rs.getString("username"));
 				student.setPassword(rs.getString("password"));
 				student.setLanguage(rs.getString("language"));
-				logger.info(student.getUsername());
 
 				allStudents.add(student);
 			}

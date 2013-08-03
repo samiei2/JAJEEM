@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,14 +27,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -47,7 +47,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.bouncycastle.jcajce.provider.asymmetric.dsa.DSASigner.stdDSA;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
@@ -55,9 +54,6 @@ import org.jitsi.examples.AVTransmit2;
 import org.jitsi.service.libjitsi.LibJitsi;
 import org.jscroll.JScrollDesktopPane;
 import org.jscroll.widgets.RootDesktopPane;
-import org.junit.runner.notification.RunListener;
-
-import system.DateTime;
 
 import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
@@ -92,7 +88,7 @@ import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
-import com.sun.org.apache.regexp.internal.REProgram;
+import com.jajeem.util.i18n;
 
 public class InstructorNoa {
 
@@ -111,7 +107,9 @@ public class InstructorNoa {
 	static WebButton intercomButton = new WebButton();
 	private static WebList groupList = new WebList();
 	private static boolean modeling = false;
-	
+	private static DefaultListModel langListModel = new DefaultListModel();
+	private static WebList langList = new WebList(langListModel);
+
 	ArrayList<Run> reportRunList = new ArrayList<>();
 	ArrayList<com.jajeem.core.model.Student> reportStudentList = new ArrayList<>();
 
@@ -145,11 +143,13 @@ public class InstructorNoa {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
+			new i18n();
+
+			System.out.println(System.getProperty("file.encoding"));
+			System.out.println(Charset.defaultCharset().name());
 
 			// Start LibJitsi for first time
 			LibJitsi.start();
-//			setTransmitter(new AVTransmit2("5000", "", "10000"));
-			// setReceiver(new AVReceiveOnly("10010", "", "5010"));
 
 			InstructorNoaUtil.networkSetup();
 
@@ -164,11 +164,11 @@ public class InstructorNoa {
 	/**
 	 * Initialize the contents of the frame.
 	 * 
-	 * @throws IOException
+	 * @throws Exception
 	 */
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
-	private void initialize() throws IOException {
+	private void initialize() throws Exception {
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
@@ -178,6 +178,46 @@ public class InstructorNoa {
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
 		frame.setBounds(10, 0, 1021, 656);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		langListModel.addElement("English");
+		langListModel.addElement("فارسی");
+		langList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+					int index = list.locationToIndex(evt.getPoint());
+					try {
+						if (index == 0) {
+							if (!Config.getParam("lang").equals("en")) {
+								Config.setParam("lang", "en");
+								try {
+									ProcessBuilder processBuilder = new ProcessBuilder(
+											"run.exe");
+									processBuilder.start();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+
+								System.exit(0);
+							}
+						} else if (index == 1) {
+							Config.setParam("lang", "fa");
+							try {
+								ProcessBuilder processBuilder = new ProcessBuilder(
+										"run.exe");
+								processBuilder.start();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+							System.exit(0);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 
 		WebPanel centerPanel = new WebPanel();
 		InstructorNoa.setCenterPanel(centerPanel);
@@ -189,8 +229,8 @@ public class InstructorNoa {
 
 		final DefaultTableModel model = new DefaultTableModel();
 
-		model.addColumn("PC IP");
-		model.addColumn("Student name");
+		model.addColumn(i18n.getParam("PC IP"));
+		model.addColumn(i18n.getParam("Student name"));
 
 		WebTable table = new WebTable(model);
 		setStudentListTable(table);
@@ -204,16 +244,17 @@ public class InstructorNoa {
 		scrollPanel.setDrawBorder(false);
 
 		WebPopupMenu groupPopup = new WebPopupMenu();
-		groupPopup.add(new WebMenuItem("Empty"));
+		groupPopup.add(new WebMenuItem(i18n.getParam(("Empty"))));
 		getGroupList().setComponentPopupMenu(groupPopup);
 
 		final DefaultListModel groupListModel = new DefaultListModel();
 		getGroupList().setModel(groupListModel);
 
 		getGroupList().setModel(new AbstractListModel() {
-			String[] values = new String[] { "Group A", "Group B", "Group C",
-					"Group D", "Group E", "Group F", "Group G", "Group H",
-					"Group I", "Group J", "Group K", "Group L", "Group M", "Group N", "Group O" };
+			String[] values = new String[] { i18n.getParam("Group A"),
+					"Group B", "Group C", "Group D", "Group E", "Group F",
+					"Group G", "Group H", "Group I", "Group J", "Group K",
+					"Group L", "Group M", "Group N", "Group O" };
 
 			public int getSize() {
 				return values.length;
@@ -264,7 +305,7 @@ public class InstructorNoa {
 		volumeButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		volumeButton.setForeground(Color.WHITE);
 		volumeButton.putClientProperty("key", "volume");
-		volumeButton.setText("Volume Control");
+		volumeButton.setText(i18n.getParam("Volume Control"));
 		volumeButton.setBottomBgColor(new Color(235, 105, 11));
 		volumeButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(volumeButton);
@@ -277,7 +318,7 @@ public class InstructorNoa {
 		callAllButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		callAllButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		callAllButton.setForeground(Color.WHITE);
-		callAllButton.setText("Call All");
+		callAllButton.setText(i18n.getParam("Call All"));
 		callAllButton.setBottomBgColor(new Color(235, 105, 11));
 		callAllButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(callAllButton);
@@ -290,7 +331,7 @@ public class InstructorNoa {
 		viewModeButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		viewModeButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		viewModeButton.setForeground(Color.WHITE);
-		viewModeButton.setText("View Mode");
+		viewModeButton.setText(i18n.getParam("View Mode"));
 		viewModeButton.setBottomBgColor(new Color(235, 105, 11));
 		viewModeButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(viewModeButton);
@@ -303,10 +344,18 @@ public class InstructorNoa {
 		languageButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		languageButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		languageButton.setForeground(Color.WHITE);
-		languageButton.setText("EN/FA");
+		languageButton.setText(i18n.getParam("Language"));
 		languageButton.setBottomBgColor(new Color(235, 105, 11));
 		languageButton.setTopBgColor(new Color(235, 105, 11));
 		topButtonPanel.add(languageButton);
+
+		WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
+				PopupWay.downCenter);
+
+		GroupPanel langPopupContent = new GroupPanel(5, false, langList);
+		langPopupContent.setMargin(15);
+
+		langPopupButton.setContent(langPopupContent);
 
 		BackgroundPanel topPanel = new BackgroundPanel(Toolkit
 				.getDefaultToolkit().getImage(
@@ -499,7 +548,7 @@ public class InstructorNoa {
 		surveyButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		surveyButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		surveyButton.setForeground(Color.WHITE);
-		surveyButton.setText("Survey");
+		surveyButton.setText(i18n.getParam("Survey"));
 		surveyButton.setBottomBgColor(new Color(225, 234, 244));
 		surveyButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(surveyButton);
@@ -513,7 +562,7 @@ public class InstructorNoa {
 		whiteBoardButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setForeground(Color.WHITE);
-		whiteBoardButton.setText("White board");
+		whiteBoardButton.setText(i18n.getParam("White board"));
 		whiteBoardButton.setBottomBgColor(new Color(225, 234, 244));
 		whiteBoardButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(whiteBoardButton);
@@ -527,12 +576,12 @@ public class InstructorNoa {
 		powerButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setForeground(Color.WHITE);
-		powerButton.setText("PC Controller");
+		powerButton.setText(i18n.getParam("PC Controller"));
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(powerButton);
 
-		WebButton powerOffButton = new WebButton("Power Off");
+		WebButton powerOffButton = new WebButton(i18n.getParam("Power Off"));
 		powerOffButton.putClientProperty("key", "powerOff");
 		powerOffButton.addActionListener(new ActionListener() {
 			@Override
@@ -595,7 +644,7 @@ public class InstructorNoa {
 
 		});
 
-		WebButton logOffButton = new WebButton("Log Off");
+		WebButton logOffButton = new WebButton(i18n.getParam("Log Off"));
 		logOffButton.putClientProperty("key", "logOff");
 		logOffButton.addActionListener(new ActionListener() {
 			@Override
@@ -657,7 +706,7 @@ public class InstructorNoa {
 			}
 		});
 
-		WebButton restartButton = new WebButton("Restart");
+		WebButton restartButton = new WebButton(i18n.getParam("Restart"));
 		restartButton.putClientProperty("key", "restart");
 		restartButton.addActionListener(new ActionListener() {
 			@Override
@@ -720,7 +769,7 @@ public class InstructorNoa {
 
 		});
 
-		WebButton lockButton = new WebButton("Lock/Unlock");
+		WebButton lockButton = new WebButton(i18n.getParam("Lock/Unlock"));
 		lockButton.putClientProperty("key", "lock");
 		lockButton.addActionListener(new ActionListener() {
 			@Override
@@ -790,14 +839,16 @@ public class InstructorNoa {
 		WebButtonPopup internetPopupButton = new WebButtonPopup(internetButton,
 				PopupWay.upCenter);
 
-		WebButton internetSendWebsiteButton = new WebButton("Send Website");
+		WebButton internetSendWebsiteButton = new WebButton(
+				i18n.getParam("Send Website"));
 		internetSendWebsiteButton.putClientProperty("key", "internetWebsite");
 		internetSendWebsiteButton.setHorizontalAlignment(SwingConstants.CENTER);
 
 		final WebTextField WebsiteTextField = new WebTextField("", 10);
 		WebsiteTextField.setHorizontalAlignment(SwingConstants.CENTER);
 
-		WebButton internetBlockButton = new WebButton("Block Internet");
+		WebButton internetBlockButton = new WebButton(
+				i18n.getParam("Block Internet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
 
@@ -817,7 +868,7 @@ public class InstructorNoa {
 		internetButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setForeground(Color.WHITE);
-		internetButton.setText("Internet Controller");
+		internetButton.setText(i18n.getParam("Internet Controller"));
 		internetButton.setBottomBgColor(new Color(225, 234, 244));
 		internetButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(internetButton);
@@ -959,7 +1010,7 @@ public class InstructorNoa {
 				PopupWay.upCenter);
 
 		final WebTextField programTextField = new WebTextField("", 10);
-		WebButton programAddButton = new WebButton("Add");
+		WebButton programAddButton = new WebButton(i18n.getParam("Add"));
 		final ProgramListTableModel programTableModel = new ProgramListTableModel();
 		final WebTable ptable = new WebTable(programTableModel);
 		ptable.setOpaque(false);
@@ -995,7 +1046,7 @@ public class InstructorNoa {
 		programButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programButton.setForeground(Color.WHITE);
-		programButton.setText("Allow & Restrict Program");
+		programButton.setText(i18n.getParam("Allow & Restrict Program"));
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(programButton);
@@ -1079,7 +1130,7 @@ public class InstructorNoa {
 		programStartButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setForeground(Color.WHITE);
-		programStartButton.setText("Program Starter");
+		programStartButton.setText(i18n.getParam("Program Starter"));
 		programStartButton.setBottomBgColor(new Color(225, 234, 244));
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(programStartButton);
@@ -1114,7 +1165,7 @@ public class InstructorNoa {
 		intercomButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		intercomButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		intercomButton.setForeground(Color.WHITE);
-		intercomButton.setText("Intercom");
+		intercomButton.setText(i18n.getParam("Intercom"));
 		intercomButton.setBottomBgColor(new Color(225, 234, 244));
 		intercomButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(intercomButton);
@@ -1131,7 +1182,7 @@ public class InstructorNoa {
 		groupButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		groupButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		groupButton.setForeground(Color.WHITE);
-		groupButton.setText("Groups");
+		groupButton.setText(i18n.getParam("Groups"));
 		groupButton.setBottomBgColor(new Color(225, 234, 244));
 		groupButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(groupButton);
@@ -1148,7 +1199,7 @@ public class InstructorNoa {
 		modelButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		modelButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		modelButton.setForeground(Color.WHITE);
-		modelButton.setText("Modeling");
+		modelButton.setText(i18n.getParam("Modelling"));
 		modelButton.setBottomBgColor(new Color(225, 234, 244));
 		modelButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(modelButton);
@@ -1165,7 +1216,7 @@ public class InstructorNoa {
 		recordButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		recordButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		recordButton.setForeground(Color.WHITE);
-		recordButton.setText("Recording");
+		recordButton.setText(i18n.getParam("Recording"));
 		recordButton.setBottomBgColor(new Color(225, 234, 244));
 		recordButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(recordButton);
@@ -1182,7 +1233,7 @@ public class InstructorNoa {
 		speechButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		speechButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		speechButton.setForeground(Color.WHITE);
-		speechButton.setText("Speech Recognition");
+		speechButton.setText(i18n.getParam("Speech Recognition"));
 		speechButton.setBottomBgColor(new Color(225, 234, 244));
 		speechButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(speechButton);
@@ -1199,7 +1250,7 @@ public class InstructorNoa {
 		fileButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		fileButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		fileButton.setForeground(Color.WHITE);
-		fileButton.setText("File Sharing");
+		fileButton.setText(i18n.getParam("File Sharing"));
 		fileButton.setBottomBgColor(new Color(225, 234, 244));
 		fileButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(fileButton);
@@ -1216,7 +1267,7 @@ public class InstructorNoa {
 		quizButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		quizButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		quizButton.setForeground(Color.WHITE);
-		quizButton.setText("Exam");
+		quizButton.setText(i18n.getParam("Exam"));
 		quizButton.setBottomBgColor(new Color(225, 234, 244));
 		quizButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(quizButton);
@@ -1233,7 +1284,7 @@ public class InstructorNoa {
 		videoButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		videoButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		videoButton.setForeground(Color.WHITE);
-		videoButton.setText("Movie Player");
+		videoButton.setText(i18n.getParam("Movie Player"));
 		videoButton.setBottomBgColor(new Color(225, 234, 244));
 		videoButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(videoButton);
@@ -1250,55 +1301,53 @@ public class InstructorNoa {
 		reportButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		reportButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		reportButton.setForeground(Color.WHITE);
-		reportButton.setText("Reports");
+		reportButton.setText(i18n.getParam("Reports"));
 		reportButton.setBottomBgColor(new Color(225, 234, 244));
 		reportButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(reportButton);
 
-		final WebButtonPopup reportPopupButton = new WebButtonPopup(reportButton,
-				PopupWay.downCenter);
-		
-		
-		///////////////////// Report Combo
-		
+		final WebButtonPopup reportPopupButton = new WebButtonPopup(
+				reportButton, PopupWay.upCenter);
+
+		// /////////////////// Report Combo
+
 		final GroupPanel reportPopupContent = new GroupPanel(5, false);
 		reportPopupContent.setMargin(15);
-		
+
 		final WebComboBox reportStudentComboBox = new WebComboBox();
 		reportStudentComboBox.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				
+
 			}
 		});
-		
+
 		final WebComboBox reportQuizComboBox = new WebComboBox();
 		reportQuizComboBox.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				
+
 			}
 		});
-		
-		
+
 		reportPopupButton.addPopupListener(new PopupListener() {
-			
+
 			@Override
 			public void popupWillBeOpened() {
 			}
-			
+
 			@Override
 			public void popupWillBeClosed() {
 			}
-			
+
 			@Override
 			public void popupOpened() {
 				PopulateQuizCombobox();
 				PopulateStudentCombobox();
 			}
-			
+
 			private void PopulateStudentCombobox() {
 				ArrayList<com.jajeem.core.model.Student> stdList;
 				try {
@@ -1306,10 +1355,11 @@ public class InstructorNoa {
 					reportStudentList.clear();
 					for (int i = 0; i < stdList.size(); i++) {
 						com.jajeem.core.model.Student st = stdList.get(i);
-						reportStudentComboBox.addItem(st.getFullName() + " ("+st.getId()+")");
+						reportStudentComboBox.addItem(st.getFullName() + " ("
+								+ st.getId() + ")");
 						reportStudentList.add(st);
 					}
-					
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -1318,14 +1368,16 @@ public class InstructorNoa {
 			private void PopulateQuizCombobox() {
 				ArrayList<com.jajeem.quiz.model.Run> quizList;
 				try {
-					quizList = new RunDAO().list(com.jajeem.util.Session.getCurrentCourse().getId());
-//					quizList = new RunDAO().list();
+					quizList = new RunDAO().list(com.jajeem.util.Session
+							.getCurrentCourse().getId());
+					// quizList = new RunDAO().list();
 					for (int i = 0; i < quizList.size(); i++) {
 						Run run = quizList.get(i);
-						reportQuizComboBox.addItem(run.getId()+" ("+new Date(run.getStart())+")");
+						reportQuizComboBox.addItem(run.getId() + " ("
+								+ new Date(run.getStart()) + ")");
 						reportRunList.add(run);
 					}
-					
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -1335,11 +1387,14 @@ public class InstructorNoa {
 			public void popupClosed() {
 			}
 		});
-		
-		final String[] items = { "SummaryofStudents", "StudentResult", "PointChart" ,"AnswerRate"};
-		final WebComboBox reportComboBox = new WebComboBox(new String[]{"Summary of Students","Student Result","Point Chart","Answer Rate"});
-		
-		final WebButton reportGoButton = new WebButton("Go");
+
+		final String[] items = { "SummaryofStudents", "StudentResult",
+				"PointChart", "AnswerRate" };
+		final WebComboBox reportComboBox = new WebComboBox(new String[] {
+				"Summary of Students", "Student Result", "Point Chart",
+				"Answer Rate" });
+
+		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
 		reportGoButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -1347,66 +1402,94 @@ public class InstructorNoa {
 				Object selectedItem = reportComboBox.getSelectedItem();
 				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
 						.format(Calendar.getInstance().getTime());
-				if(reportComboBox.getSelectedItem().equals("Summary of Students")){
-					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
-							(selectedItem.toString()+ "_"+ timeStamp), Query.SummaryOfStudents(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId()));
+				if (reportComboBox.getSelectedItem().equals(
+						"Summary of Students")) {
+					JasperReport.generate(items[reportComboBox
+							.getSelectedIndex()], (selectedItem.toString()
+							+ "_" + timeStamp), Query
+							.SummaryOfStudents(reportRunList.get(
+									reportQuizComboBox.getSelectedIndex())
+									.getId()));
 				}
-				if(reportComboBox.getSelectedItem().equals("Student Result")){
-					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
-							(selectedItem.toString()+ "_"+ timeStamp), 
-							Query.StudentResult(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId(),
-									reportStudentList.get(reportStudentComboBox.getSelectedIndex()).getId()));
+				if (reportComboBox.getSelectedItem().equals("Student Result")) {
+					JasperReport.generate(items[reportComboBox
+							.getSelectedIndex()], (selectedItem.toString()
+							+ "_" + timeStamp), Query.StudentResult(
+							reportRunList.get(
+									reportQuizComboBox.getSelectedIndex())
+									.getId(),
+							reportStudentList.get(
+									reportStudentComboBox.getSelectedIndex())
+									.getId()));
 				}
-				if(reportComboBox.getSelectedItem().equals("Answer Rate")){
-					JasperReport.generate(items[reportComboBox.getSelectedIndex()],
-							(selectedItem.toString()+ "_"+ timeStamp), 
-							Query.AnswerRate(reportRunList.get(reportQuizComboBox.getSelectedIndex()).getId()));
+				if (reportComboBox.getSelectedItem().equals("Answer Rate")) {
+					JasperReport.generate(items[reportComboBox
+							.getSelectedIndex()], (selectedItem.toString()
+							+ "_" + timeStamp),
+							Query.AnswerRate(reportRunList.get(
+									reportQuizComboBox.getSelectedIndex())
+									.getId()));
 				}
 			}
 		});
-		
+
 		reportComboBox.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				if(reportComboBox.getSelectedItem().toString().equals("Summary of Students")){
+				if (reportComboBox.getSelectedItem().toString()
+						.equals("Summary of Students")) {
 					reportPopupContent.removeAll();
 					reportPopupContent.add(reportComboBox);
 					reportPopupContent.add(reportQuizComboBox);
-					reportPopupContent.add(reportGoButton);	
-					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight());
+					reportPopupContent.add(reportGoButton);
+					reportPopupContent.setSize(
+							reportPopupContent.getWidth(),
+							reportPopupContent.getHeight()
+									+ reportQuizComboBox.getHeight());
 					reportPopupButton.packPopup();
 					reportPopupButton.revalidate();
 					reportPopupButton.repaint();
-				}
-				else if(reportComboBox.getSelectedItem().toString().equals("Student Result")){
+				} else if (reportComboBox.getSelectedItem().toString()
+						.equals("Student Result")) {
 					reportPopupContent.removeAll();
 					reportPopupContent.add(reportComboBox);
 					reportPopupContent.add(reportStudentComboBox);
 					reportPopupContent.add(reportQuizComboBox);
 					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight() + reportStudentComboBox.getHeight());
+					reportPopupContent.setSize(
+							reportPopupContent.getWidth(),
+							reportPopupContent.getHeight()
+									+ reportQuizComboBox.getHeight()
+									+ reportStudentComboBox.getHeight());
 					reportPopupButton.packPopup();
 					reportPopupButton.revalidate();
 					reportPopupButton.repaint();
-				}
-				else if(reportComboBox.getSelectedItem().toString().equals("Point Chart")){
+				} else if (reportComboBox.getSelectedItem().toString()
+						.equals("Point Chart")) {
 					reportPopupContent.removeAll();
 					reportPopupContent.add(reportComboBox);
 					reportPopupContent.add(reportStudentComboBox);
 					reportPopupContent.add(reportQuizComboBox);
 					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight() + reportStudentComboBox.getHeight());
+					reportPopupContent.setSize(
+							reportPopupContent.getWidth(),
+							reportPopupContent.getHeight()
+									+ reportQuizComboBox.getHeight()
+									+ reportStudentComboBox.getHeight());
 					reportPopupButton.packPopup();
 					reportPopupButton.revalidate();
 					reportPopupButton.repaint();
-				}
-				else if(reportComboBox.getSelectedItem().toString().equals("Answer Rate")){
+				} else if (reportComboBox.getSelectedItem().toString()
+						.equals("Answer Rate")) {
 					reportPopupContent.removeAll();
 					reportPopupContent.add(reportComboBox);
 					reportPopupContent.add(reportQuizComboBox);
 					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(reportPopupContent.getWidth(), reportPopupContent.getHeight() + reportQuizComboBox.getHeight());
+					reportPopupContent.setSize(
+							reportPopupContent.getWidth(),
+							reportPopupContent.getHeight()
+									+ reportQuizComboBox.getHeight());
 					reportPopupButton.packPopup();
 					reportPopupButton.revalidate();
 					reportPopupButton.repaint();
@@ -1432,10 +1515,10 @@ public class InstructorNoa {
 		accountButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		accountButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		accountButton.setForeground(Color.WHITE);
-		accountButton.setText("Accounts");
+		accountButton.setText(i18n.getParam("Accounts"));
 		accountButton.setBottomBgColor(new Color(225, 234, 244));
 		accountButton.setTopBgColor(new Color(116, 166, 219));
-//		rightButtonPanel.add(accountButton);
+		// rightButtonPanel.add(accountButton);
 
 		WebButton chatButton = new WebButton();
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
@@ -1449,7 +1532,7 @@ public class InstructorNoa {
 		chatButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		chatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		chatButton.setForeground(Color.WHITE);
-		chatButton.setText("Chat & Messaging");
+		chatButton.setText(i18n.getParam("Chat & Messaging"));
 		chatButton.setBottomBgColor(new Color(225, 234, 244));
 		chatButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(chatButton);
@@ -1459,10 +1542,10 @@ public class InstructorNoa {
 		bottomLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		bottomLogoLabel.setForeground(new Color(255, 127, 80));
 
-		WebLabel copyRightLabel = new WebLabel("Copy right 2013");
+		WebLabel copyRightLabel = new WebLabel();
 		copyRightLabel.setForeground(Color.WHITE);
 		copyRightLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		copyRightLabel.setText("Copy Right \u00A9 2013");
+		copyRightLabel.setText(i18n.getParam("Copy Right \u00A9 2013"));
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		bottomLogoPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		bottomLogoPanel.add(bottomLogoLabel);
@@ -1490,7 +1573,11 @@ public class InstructorNoa {
 					List<String> studentNames = getGroups().get(index)
 							.getStudentNames();
 					if (studentNames.isEmpty()) {
-						popup.add(new WebMenuItem("Empty"));
+						try {
+							popup.add(new WebMenuItem(i18n.getParam("Empty")));
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 						return;
 					} else {
 						for (String studentName : studentNames) {
