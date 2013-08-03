@@ -57,6 +57,8 @@
         <pathelement location="lib/glazedlists_java15-1.9.0.jar"/>
         <pathelement location="lib/jni/iCalaboInteropServices.j4n.jar"/>
         <pathelement location="lib/jni/jni4net.j-0.8.6.0.jar"/>
+        <pathelement location="lib/icu4j-51_2-src.jar"/>
+        <pathelement location="lib/commons-lang3-3.1.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>

@@ -151,7 +151,6 @@ public class InstructorLogin extends JDialog {
 			InstructorService instructorService = new InstructorService();
 			final ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
 					.list();
-			instructorList.remove(0);
 			EventList<com.jajeem.core.model.Instructor> insList = new BasicEventList<com.jajeem.core.model.Instructor>();
 			insList.addAll(instructorList);
 			FilterList<Instructor> filterList = new FilterList<Instructor>(
@@ -169,7 +168,10 @@ public class InstructorLogin extends JDialog {
 				admin.setUsername("admin");
 				admin.setPassword("admin");
 				instructorService.create(admin);
-			}
+				instructorList.add(admin);
+			} 
+			instructorList.remove(0);
+
 
 			for (com.jajeem.core.model.Instructor instructorItem : sortedIns) {
 				if (!instructorItem.getUsername().equals("admin")) {
