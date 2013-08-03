@@ -539,6 +539,7 @@ public class Quiz_Main extends WebFrame {
 				.setInstructorId(
 						getCurrentInstructor().getId());
 		currentRun.getQuiz().getQuestionList().get(0).setId(UUID.randomUUID());
+		currentQuestion = currentRun.getQuiz().getQuestionList().get(0);
 
 		((DefaultTableModel) firstPage.getWebQuestionListPanel().getWebTable()
 				.getModel()).addRow(new Object[] { 1, "Single Choice", 0, "" });

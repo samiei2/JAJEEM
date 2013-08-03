@@ -453,7 +453,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 									}
 									((DefaultTableModel)webTable.getModel()).addRow(new Object[]{
 											"Choice " + k,
-											String.format("%.2f", ((double)rate/(double)totalNumofStudents)) + " (" + rate + " of " + totalNumofStudents +")"
+											String.format("%.2f", (((double)rate/(double)totalNumofStudents))*100) + " (" + rate + " of " + totalNumofStudents +")"
 									});
 								}
 							}
@@ -498,6 +498,8 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		currentQuestion = null;
 		surveyResponse.clear();
 		surveyResponse = null;
+		studentList.clear();
+//		studentList = null;
 		webComboBox.removeAllItems();
 	}
 
@@ -553,7 +555,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 //			System.out.println(currentSurvey.getQuestionList().size());
 			for (int i = 0; i < currentSurvey.getQuestionList().size(); i++) {// find question index in the response list
 //				System.out.println(i+","+currentSurvey.getQuestionList().get(i).getId()+","+currentSurvey.getQuestionList().size());
-				if(currentSurvey.getQuestionList().get(i).getId() == question.getId()){
+				if(currentSurvey.getQuestionList().get(i).getId().equals(question.getId())){
 					index = i;
 					break;
 				}
@@ -561,7 +563,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 			for (int i = 0; i < surveyResponse.size(); i++) {// search in results,if this question is already answered by this student,then update,otherwise save
 				for (int j = 0; j < surveyResponse.get(i).size(); j++) { // search in student's response list of the question surveyresponse.get(i) = list of responses of students who answered this question
 					if(surveyResponse.get(i).get(j).getStudent().getId() == student.getId() 
-					&& surveyResponse.get(i).get(j).getQuestion().getId() == question.getId()){
+					&& surveyResponse.get(i).get(j).getQuestion().getId().equals(question.getId())){
 						surveyResponse.get(i).set(j, e);
 						found = true;
 						break;
@@ -571,7 +573,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 			if(!found)
 				surveyResponse.get(index).add(e);
 			
-			if(question.getId() == currentQuestion.getId()){// if the student id is equal to current students id then show it's result otherwise just save it
+			if(question.getId().equals(currentQuestion.getId())){// if the student id is equal to current students id then show it's result otherwise just save it
 				DefaultTableModel model = (DefaultTableModel) webTable.getModel(); 
 				String StudentOption = "";
 				for (int i = 0; i < webTable.getRowCount(); i++) {
@@ -640,7 +642,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 						}
 						((DefaultTableModel)webTable.getModel()).addRow(new Object[]{
 								"Choice " + i,
-								String.format("%.2f", ((double)rate/(double)totalNumofStudents)) + " (" + rate + " of " + totalNumofStudents + ")"
+								String.format("%.2f", (((double)rate/(double)totalNumofStudents))*100) + " (" + rate + " of " + totalNumofStudents + ")"
 						});
 					}
 				}

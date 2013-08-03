@@ -40,6 +40,7 @@ import com.alee.laf.text.WebPasswordField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.model.Session;
 import com.jajeem.room.service.RoomService;
@@ -77,6 +78,7 @@ public class InstructorLogin extends JDialog {
 	 * @throws SQLException
 	 */
 	public InstructorLogin() throws SQLException {
+		LicenseValidator.ActiveValidateLicense();
 		@SuppressWarnings("unused")
 		StartUp start = new StartUp();
 		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();

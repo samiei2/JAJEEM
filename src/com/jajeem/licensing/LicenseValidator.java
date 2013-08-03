@@ -52,7 +52,7 @@ public class LicenseValidator {
 		op.SilentValidateLicense();
 		String result = op.getValidationResult();
 		if(result.equals("False"))
-			Console.WriteLine("Invalid License");
+			System.exit(0);
 		Console.WriteLine("Interop Done!");
 	}
 	
@@ -61,7 +61,7 @@ public class LicenseValidator {
 		op.ActiveValidateLicense();
 		String result = op.getValidationResult();
 		if(result.equals("False"))
-			Console.WriteLine("Invalid License");
+			System.exit(0);
 		Console.WriteLine("Interop Done!");
 	}
 

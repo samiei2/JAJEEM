@@ -185,27 +185,7 @@ public class Quiz_Window extends WebFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
-				if(timer!=null)
-					if(timer.isRunning()){
-						timer.stop();
-						timer.removeActionListener(taskPerformer);
-					}
 				
-				try{
-					FinishedQuizCommand cmd = new FinishedQuizCommand(
-							InetAddress.getLocalHost().getHostAddress(),
-							server, 
-							listenPort);
-					currentRun.setEnd(System.currentTimeMillis());
-					currentRun.setId(UUID.randomUUID());
-					cmd.setRun(currentRun);
-					
-					ServerService service = new ServerService();
-					service.send(cmd);
-				}
-				catch(Exception e){
-					JajeemExcetionHandler.logError(e,Quiz_Window.class);
-				}
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -292,6 +272,10 @@ public class Quiz_Window extends WebFrame {
 										}
 									}
 									QuizResponse resp = new QuizResponse(question);
+									if(question.getResponse().getId()==null)
+										question.getResponse().setId(UUID.randomUUID());
+									if(question.getResponse().getRunId()==null)
+										question.getResponse().setRunId(currentRun.getId());
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
 									resp.setQuizRun(currentRun);
@@ -318,6 +302,28 @@ public class Quiz_Window extends WebFrame {
 								return privateStudent;//TODO correct this code
 							}
 						}).start();
+						
+						if(timer!=null)
+							if(timer.isRunning()){
+								timer.stop();
+								timer.removeActionListener(taskPerformer);
+							}
+						
+						try{
+							FinishedQuizCommand cmd = new FinishedQuizCommand(
+									InetAddress.getLocalHost().getHostAddress(),
+									server, 
+									listenPort);
+							currentRun.setEnd(System.currentTimeMillis());
+							currentRun.setId(UUID.randomUUID());
+							cmd.setRun(currentRun);
+							
+							ServerService service = new ServerService();
+							service.send(cmd);
+						}
+						catch(Exception ex){
+							JajeemExcetionHandler.logError(ex,Quiz_Window.class);
+						}
 					}
 					dispose();
 				}
@@ -728,6 +734,10 @@ public class Quiz_Window extends WebFrame {
 									}
 								}
 								QuizResponse resp = new QuizResponse(question);
+								if(question.getResponse().getId()==null)
+									question.getResponse().setId(UUID.randomUUID());
+								if(question.getResponse().getRunId()==null)
+									question.getResponse().setRunId(currentRun.getId());
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								resp.setQuizRun(currentRun);
@@ -757,6 +767,10 @@ public class Quiz_Window extends WebFrame {
 				}
 				//Load Next Question
 				currentQuestion = currentRun.getQuiz().getQuestionList().get(webList.getSelectedIndex());
+				if(currentQuestion.getResponse().getId()==null)
+					currentQuestion.getResponse().setId(UUID.randomUUID());
+				if(currentQuestion.getResponse().getRunId()==null)
+					currentQuestion.getResponse().setRunId(currentRun.getId());
 				wblblQuestion.setText("Question " + (webList.getSelectedIndex()+1));
 				webTextArea.setText(currentQuestion.getTitle());
 				

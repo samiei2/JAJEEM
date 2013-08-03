@@ -155,21 +155,7 @@ public class Survey_Window extends WebFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent arg0){
-				try{
-					FinishedSurveyCommand cmd = new FinishedSurveyCommand(
-							InetAddress.getLocalHost().getHostAddress(),
-							server, 
-							listenPort);
-					currentRun.setEnd(System.currentTimeMillis());
-					currentRun.setId(UUID.randomUUID());
-					cmd.setRun(currentRun);
-					
-					ServerService service = new ServerService();
-					service.send(cmd);
-				}
-				catch(Exception e){
-					JajeemExcetionHandler.logError(e,Quiz_Window.class);
-				}
+				
 			}
 		});
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -256,6 +242,10 @@ public class Survey_Window extends WebFrame {
 										}
 									}
 									SurveyResponse resp = new SurveyResponse(question);
+									if(question.getResponse().getId()==null)
+										question.getResponse().setId(UUID.randomUUID());
+									if(question.getResponse().getRunId()==null)
+										question.getResponse().setRunId(currentRun.getId());
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
 									resp.setSurveyRun(currentRun);
@@ -282,6 +272,22 @@ public class Survey_Window extends WebFrame {
 								return privateStudent;//TODO correct this code
 							}
 						}).start();
+						
+						try{
+							FinishedSurveyCommand cmd = new FinishedSurveyCommand(
+									InetAddress.getLocalHost().getHostAddress(),
+									server, 
+									listenPort);
+							currentRun.setEnd(System.currentTimeMillis());
+							currentRun.setId(UUID.randomUUID());
+							cmd.setRun(currentRun);
+							
+							ServerService service = new ServerService();
+							service.send(cmd);
+						}
+						catch(Exception ex){
+							JajeemExcetionHandler.logError(ex,Quiz_Window.class);
+						}
 					}
 					dispose();
 				}
@@ -692,6 +698,10 @@ public class Survey_Window extends WebFrame {
 									}
 								}
 								SurveyResponse resp = new SurveyResponse(question);
+								if(question.getResponse().getId()==null)
+									question.getResponse().setId(UUID.randomUUID());
+								if(question.getResponse().getRunId()==null)
+									question.getResponse().setRunId(currentRun.getId());
 								resp.setQuestion(question);
 								resp.setStudent(getStudent());
 								resp.setSurveyRun(currentRun);
@@ -721,6 +731,10 @@ public class Survey_Window extends WebFrame {
 				}
 				//Load Next Question
 				currentQuestion = currentRun.getSurvey().getQuestionList().get(webList.getSelectedIndex());
+				if(currentQuestion.getResponse().getId()==null)
+					currentQuestion.getResponse().setId(UUID.randomUUID());
+				if(currentQuestion.getResponse().getRunId()==null)
+					currentQuestion.getResponse().setRunId(currentRun.getId());
 				wblblQuestion.setText("Question " + (webList.getSelectedIndex()+1));
 				webTextArea.setText(currentQuestion.getTitle());
 				

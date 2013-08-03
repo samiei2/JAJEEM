@@ -673,8 +673,8 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 		if (currentQuestion != null && question != null && student != null) {
 			int index = -1;
 			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find question index in the response list
-				if (currentQuiz.getQuestionList().get(i).getId() == question
-						.getId()) {
+				if (currentQuiz.getQuestionList().get(i).getId().equals(question
+						.getId())) {
 					index = i;
 					break;
 				}
@@ -689,7 +689,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 			if (!found)
 				quizResponse.get(index).add(e);
 
-			if (question.getId() == currentQuestion.getId()) {// if the student
+			if (question.getId().equals(currentQuestion.getId())) {// if the student
 																// id is equal
 																// to current
 																// students id

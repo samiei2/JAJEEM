@@ -20,7 +20,10 @@ public class SurveyService implements ISurveyService{
 	public Survey create(Survey survey) throws SQLException {
 		surveyDAO = new SurveyDAO();//TODO remove this line
 		if(surveyDAO != null)
-			return surveyDAO.create(survey);
+			if(surveyDAO.Contains(survey))
+				surveyDAO.update(survey);
+			else
+				surveyDAO.create(survey);
 		return null;
 	}
 

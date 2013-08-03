@@ -109,7 +109,7 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 				Question question = e.getQuestion();
 				for (int i = 0; i < parentPanel.getCurrentRun().getQuiz().getQuestionList().size(); i++) {
 					Question temp = parentPanel.getCurrentRun().getQuiz().getQuestionList().get(i);
-					if(temp.getId() == question.getId()){
+					if(temp.getId().equals(question.getId())){
 						if(question.getType() == 0 || question.getType() == 1){ ///validate student answer against correct ones : only booleans
 							if((temp.getCorrectAnswer()[0] == question.getStudentAnswer()[0]) &&
 								(temp.getCorrectAnswer()[1] == question.getStudentAnswer()[1]) &&

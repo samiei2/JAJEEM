@@ -17,8 +17,9 @@ public class initDatabase {
 
 				con = BaseDAO.getConnection();
 				String query = 
-						  "CREATE TABLE IF NOT EXISTS QuizReponse (" +
+						  "CREATE TABLE IF NOT EXISTS QuizResponse (" +
 						  "id int DEFAULT NULL AUTO_INCREMENT, " +
+						  "runid UUID,"+
 						  "iid UUID,"+
 						  "answer varchar(555), " +
 						  "bool1 boolean, " +
@@ -232,8 +233,8 @@ public class initDatabase {
 						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (StudentId) REFERENCES Student (id);"
 						+ "ALTER TABLE StudentCourse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (CourseId) REFERENCES Course (id);";
 						
-//						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
-//						+ "ALTER TABLE QuizReponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
+//						+ "ALTER TABLE quizresponse ADD CONSTRAINT IF NOT EXISTS FKReponse203997 FOREIGN KEY (studentId) REFERENCES Student (id);"
+//						+ "ALTER TABLE quizresponse ADD CONSTRAINT IF NOT EXISTS FKReponse423401 FOREIGN KEY (quizquestionid) REFERENCES QuizQuestion (id);"
 //						+ "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti740493 FOREIGN KEY (quizId) REFERENCES Quiz (id);"
 //						+ "ALTER TABLE QuizQuestion ADD CONSTRAINT IF NOT EXISTS FKQuizQuesti13848 FOREIGN KEY (Instructorid) REFERENCES Instructor (id);"
 //						+ "ALTER TABLE QuizRun ADD CONSTRAINT IF NOT EXISTS FKQuizRun738461 FOREIGN KEY (instructorid) REFERENCES Instructor (id);"
@@ -387,31 +388,31 @@ public class initDatabase {
 				// "values (12,4,'How old are you?',1,10,'','','10','20','30','40','None of your business',false,false,false,true,false,1);";
 				//
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (1,'yeah.I am from here',true,false,false,false,false,false,1,1);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (2,'Nope,I am from tehran',false,false,false,true,false,true,1,2);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (3,'',false,false,false,true,false,true,1,3);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (4,'yeah.I am from here',true,false,false,false,false,false,2,1);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (5,'Nope,I am from tehran',false,false,false,true,false,false,2,2);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (6,'',false,false,false,true,false,true,1,3);";
 				// query +=
-				// "Insert into QuizReponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
+				// "Insert into quizresponse (id, answer, bool1, bool2, bool3, bool4, bool5, answerValid, studentId  , QuizQuestionid) "
 				// +
 				// "values (7,'',false,false,false,true,false,true,1,4);";
 				//

@@ -305,8 +305,8 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 																			// the
 																			// response
 																			// list
-				if (currentSurvey.getQuestionList().get(i).getId() == question
-						.getId())
+				if (currentSurvey.getQuestionList().get(i).getId().equals(question
+						.getId()))
 					index = i;
 			}
 			for (int i = 0; i < surveyResponse.size(); i++) {// search in
@@ -338,8 +338,8 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 																		// question
 					if (surveyResponse.get(i).get(j).getStudent().getId() == student
 							.getId()
-							&& surveyResponse.get(i).get(j).getQuestion().getId() == question
-									.getId()) {
+							&& surveyResponse.get(i).get(j).getQuestion().getId().equals(question
+									.getId())) {
 						surveyResponse.get(i).set(j, e);
 						found = true;
 						break;

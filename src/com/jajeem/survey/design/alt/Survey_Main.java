@@ -528,6 +528,8 @@ public class Survey_Main extends WebFrame {
 		
 		currentRun.getSurvey().getQuestionList()
 		.get(0).setId(UUID.randomUUID());
+		
+		currentQuestion = currentRun.getSurvey().getQuestionList().get(0);
 
 		((DefaultTableModel) firstPage.getWebQuestionListPanel().getWebTable()
 				.getModel()).addRow(new Object[] { 1, "Single Choice", 0, "" });

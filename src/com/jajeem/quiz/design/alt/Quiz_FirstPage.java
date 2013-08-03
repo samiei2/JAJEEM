@@ -310,7 +310,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 				webQuestionDesignPanel.getWebTextField_2().setEnabled(true);
 				webQuestionDesignPanel.getWebTextField_3().setEnabled(true);
 				webQuestionDesignPanel.getWebTextField_4().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField_6().setEnabled(true);
+//				webQuestionDesignPanel.getWebTextField_6().setEnabled(true);
 				webQuestionDesignPanel.getWebRadioButton().setEnabled(true);
 				webQuestionDesignPanel.getWebRadioButton_1().setEnabled(true);
 				webQuestionDesignPanel.getWebRadioButton_2().setEnabled(true);
