@@ -149,6 +149,7 @@ public class InstructorLogin extends JDialog {
 			InstructorService instructorService = new InstructorService();
 			final ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
 					.list();
+			instructorList.remove(0);
 			EventList<com.jajeem.core.model.Instructor> insList = new BasicEventList<com.jajeem.core.model.Instructor>();
 			insList.addAll(instructorList);
 			FilterList<Instructor> filterList = new FilterList<Instructor>(
@@ -305,6 +306,7 @@ public class InstructorLogin extends JDialog {
 											.getCoursesByInstructorId(
 													instructorList.get(index)
 															.getId());
+
 									listModel2.clear();
 									for (Course courseItem : courseList1) {
 										Date startDate = new Date(courseItem

@@ -26,6 +26,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import javax.swing.JComboBox;
 
 public class AddNewCourseDialog extends JDialog {
 
@@ -35,7 +36,7 @@ public class AddNewCourseDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final WebPanel contentPanel = new WebPanel();
 	private WebTextField courseNameTF;
-	private WebTextField classTypeTF;
+	private WebComboBox classTypeTF;
 	private WebLabel courseNameLabel;
 	private WebLabel instructorNameLabel;
 	private WebLabel ClassTypeLabel;
@@ -111,8 +112,8 @@ public class AddNewCourseDialog extends JDialog {
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
-			classTypeTF = new WebTextField();
-			classTypeTF.setColumns(10);
+			classTypeTF = new WebComboBox();
+			classTypeTF.setModel(new DefaultComboBoxModel(new String[] {"Termic", "Intensive", "Super-Intensive", "Thursday", "Friday"}));
 		}
 		contentPanel.add(classTypeTF);
 		contentPanel.add(levelLabel);
@@ -335,7 +336,7 @@ public class AddNewCourseDialog extends JDialog {
 							String courseName = courseNameTF.getText();
 							String instructorName = (String) instructorNameCombo
 									.getSelectedItem();
-							String classType = classTypeTF.getText();
+							String classType = (String) classTypeTF.getSelectedItem();
 							String level = (String) levelCombo
 									.getSelectedItem();
 							long startDate = startDateTF.getDate().getTime();
@@ -531,8 +532,7 @@ public class AddNewCourseDialog extends JDialog {
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
-			classTypeTF = new WebTextField();
-			classTypeTF.setColumns(10);
+			classTypeTF = new WebComboBox();
 		}
 		contentPanel.add(classTypeTF);
 		contentPanel.add(levelLabel);
@@ -755,7 +755,7 @@ public class AddNewCourseDialog extends JDialog {
 							String courseName = courseNameTF.getText();
 							String instructorName = (String) instructorNameCombo
 									.getSelectedItem();
-							String classType = classTypeTF.getText();
+							String classType = (String) classTypeTF.getSelectedItem();
 							String level = (String) levelCombo
 									.getSelectedItem();
 							long startDate = startDateTF.getDate().getTime();
@@ -862,7 +862,7 @@ public class AddNewCourseDialog extends JDialog {
 
 		courseNameTF.setText(course.getName());
 		instructorNameCombo.setSelectedItem(course.getInstructor());
-		classTypeTF.setText(course.getClassType());
+		classTypeTF.setSelectedItem(course.getClassType());
 		levelCombo.setSelectedItem(course.getLevel());
 		Date startDate = new Date(course.getStartDate());
 		startDateTF.setDate(startDate);

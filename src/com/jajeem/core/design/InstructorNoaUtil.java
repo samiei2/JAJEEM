@@ -1924,7 +1924,7 @@ public class InstructorNoaUtil {
 				.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);
-		serverServiceTimer.setInterval(5000);
+		serverServiceTimer.setInterval(Integer.parseInt(Config.getParam("interval")));
 		serverServiceTimer.start();
 
 		// setup a service for sending commands to others

@@ -1,0 +1,27 @@
+iCalabo=iCalabo
+volumecontrol=Volume Control
+viewmode=View Mode
+language=Language
+survey=Survey
+whiteboard=WhiteBoard
+pccontroller=PC Controller
+internetcontroller=Internet Controller
+programstarter=Program Starter
+monitoring=Monitoring
+intercom=Intercom
+groups=Groups
+modelling=Modelling
+recording=Recording
+speechrecognition=Speech Recognition
+filesharing=File Sharing
+exam=Exam
+movieplayer=Movie Player
+reports=Reports
+chat=Chat & Messaging
+log=Logo
+copyright\u00A92013=Copy Right \u00A9 2013
+pcip=PC IP
+studentname=Student Name
+empty=Empty
+groupa=Group A
+

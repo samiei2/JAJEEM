@@ -136,7 +136,7 @@ public class Student {
 		panel = createPanel();
 		getFrmJajeemProject().getContentPane().add(panel);
 
-		getFrmJajeemProject().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrmJajeemProject().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	}
 
 	private void networkSetup() throws NumberFormatException, Exception {
