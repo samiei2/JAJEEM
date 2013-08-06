@@ -19,9 +19,8 @@ import com.jajeem.events.SurveyEventListener;
 import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
-import com.jajeem.survey.model.Question;
-import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.model.Run;
+import com.jajeem.survey.model.Survey;
 
 
 @SuppressWarnings("serial")

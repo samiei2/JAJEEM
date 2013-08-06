@@ -8,16 +8,12 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.xbill.DNS.utils.base16;
 
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IRunDAO;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.util.BaseDAO;
-import com.jajeem.util.H2Connection;
 
 public class RunDAO implements IRunDAO {
 
@@ -35,16 +31,16 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, sessionId, quizId, studentid,score, start, end, iid) "
-				+ " VALUES (?, ?, ?, ? ,? ,? ,? ,?);");
+		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, quizId, studentid,score, start, end, iid, courseId) "
+				+ " VALUES (?,  ?, ? ,? ,? ,? ,?,?);");
 		ps.setInt(1, run.getInstructorId());
-		ps.setInt(2, run.getSessionId());
-		ps.setObject(3, run.getQuizId());
-		ps.setInt(4, run.getStudentId());
-		ps.setInt(5, run.getScore());
-		ps.setLong(6, run.getStart());
-		ps.setLong(7, run.getEnd());
-		ps.setObject(8, run.getId());
+		ps.setObject(2, run.getQuizId());
+		ps.setInt(3, run.getStudentId());
+		ps.setInt(4, run.getScore());
+		ps.setLong(5, run.getStart());
+		ps.setLong(6, run.getEnd());
+		ps.setObject(7, run.getId());
+		ps.setInt(8, run.getCourseId());
 		
 
 		try {
@@ -101,12 +97,12 @@ public class RunDAO implements IRunDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				run.setInstructorId(rs.getInt("instructorId"));
-				run.setSessionId(rs.getInt("sessionId"));
 				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));
 				run.setEnd(rs.getLong("end"));
+				run.setCourseId(rs.getInt("courseId"));
 
 			} else {
 				run.setId(null);
@@ -147,16 +143,16 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE QuizRun SET instructorId = ?, sessionId = ?, "
-				+ "quizId = ?, studentid=?, start = ?, end = ? ,score = ? WHERE iid = ?");
+		ps = con.prepareStatement("UPDATE QuizRun SET instructorId = ?, "
+				+ "quizId = ?, studentid=?, start = ?, end = ? ,score = ?, courseId=? WHERE iid = ?");
 
 		ps.setInt(1, run.getInstructorId());
-		ps.setInt(2, run.getSessionId());
-		ps.setObject(3, run.getQuizId());
-		ps.setInt(4, run.getStudentId());
-		ps.setLong(5, run.getStart());
-		ps.setLong(6, run.getEnd());
-		ps.setInt(7, run.getScore());
+		ps.setObject(2, run.getQuizId());
+		ps.setInt(3, run.getStudentId());
+		ps.setLong(4, run.getStart());
+		ps.setLong(5, run.getEnd());
+		ps.setInt(6, run.getScore());
+		ps.setInt(7, run.getCourseId());
 		ps.setObject(8, run.getId());
 
 		try {
@@ -237,12 +233,12 @@ public class RunDAO implements IRunDAO {
 
 				run.setId((UUID) rs.getObject("iid"));
 				run.setInstructorId(rs.getInt("instructorId"));
-				run.setSessionId(rs.getInt("sessionId"));
 				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));
 				run.setEnd(rs.getLong("end"));
+				run.setCourseId(rs.getInt("courseId"));
 
 				allRuns.add(run);
 			}
@@ -292,12 +288,12 @@ public class RunDAO implements IRunDAO {
 				run.setId((UUID) rs.getObject("iid"));
 				run.setCourseId(Courseid);
 				run.setInstructorId(rs.getInt("instructorId"));
-				run.setSessionId(rs.getInt("sessionId"));
 				run.setQuizId((UUID) rs.getObject("quizId"));
 				run.setStudentId(rs.getInt("studentid"));
 				run.setScore(rs.getInt("score"));
 				run.setStart(rs.getLong("start"));
 				run.setEnd(rs.getLong("end"));
+				run.setCourseId(rs.getInt("courseId"));
 
 				allRuns.add(run);
 			}

@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IResponseDAO;
 import com.jajeem.quiz.model.Response;
@@ -32,8 +30,8 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		ps = con.prepareStatement("INSERT INTO QuizResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid, answerValid, quizQuestionId) "
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);");
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
 		ps.setString(3, response.getAnswer());
@@ -43,6 +41,8 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
 		ps.setObject(9, response.getId());
+		ps.setBoolean(10, response.isAnswerValid());
+		ps.setObject(11, response.getQuizQuestionId());
 		
 		try {
 			rs = ps.executeUpdate();
@@ -93,6 +93,7 @@ public class ResponseDAO implements IResponseDAO {
 						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
 				};
 				response.setBoolAnswer(list);
+				response.setAnswerValid(rs.getBoolean("answerValid"));
 
 			} else {
 				response.setId(null);
@@ -134,7 +135,7 @@ public class ResponseDAO implements IResponseDAO {
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE QuizResponse SET runId = ?, studentId = ?, " +
-				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
+				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ?, answerValid=? WHERE iid = ?");
 
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
@@ -144,7 +145,8 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(6, String.valueOf(response.getBoolAnswer()[2]));
 		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
-		ps.setObject(9, response.getId());
+		ps.setBoolean(9, response.isAnswerValid());
+		ps.setObject(10, response.getId());
 
 		try {
 			rs = ps.executeUpdate();
@@ -234,6 +236,7 @@ public class ResponseDAO implements IResponseDAO {
 						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
 				};
 				response.setBoolAnswer(list);
+				response.setAnswerValid(rs.getBoolean("answerValid"));
 
 				allResponses.add(response);
 			}

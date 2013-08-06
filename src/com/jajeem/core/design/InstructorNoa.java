@@ -17,7 +17,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,11 +78,13 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.dao.h2.StudentDAO;
+import com.jajeem.core.model.Student;
+import com.jajeem.core.service.StudentService;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Run;
+import com.jajeem.quiz.service.QuizService;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
@@ -145,11 +146,10 @@ public class InstructorNoa {
 			new Config();
 			new i18n();
 
-			System.out.println(System.getProperty("file.encoding"));
-			System.out.println(Charset.defaultCharset().name());
-
 			// Start LibJitsi for first time
 			LibJitsi.start();
+			transmitter = new AVTransmit2("5000", "", "10000");
+			sendOnly = new AVSendOnly("5010", "", "10010");
 
 			InstructorNoaUtil.networkSetup();
 
@@ -1323,6 +1323,8 @@ public class InstructorNoa {
 			}
 		});
 
+		final WebComboBox listOfStudentsComboBox = new WebComboBox();
+
 		final WebComboBox reportQuizComboBox = new WebComboBox();
 		reportQuizComboBox.addItemListener(new ItemListener() {
 
@@ -1345,21 +1347,28 @@ public class InstructorNoa {
 			@Override
 			public void popupOpened() {
 				PopulateQuizCombobox();
-				PopulateStudentCombobox();
+				// PopulateStudentCombobox();
 			}
 
 			private void PopulateStudentCombobox() {
-				ArrayList<com.jajeem.core.model.Student> stdList;
+				StudentService stuService = new StudentService();
+				ArrayList<Student> studentList;
 				try {
-					stdList = new StudentDAO().list();
-					reportStudentList.clear();
-					for (int i = 0; i < stdList.size(); i++) {
-						com.jajeem.core.model.Student st = stdList.get(i);
-						reportStudentComboBox.addItem(st.getFullName() + " ("
-								+ st.getId() + ")");
-						reportStudentList.add(st);
-					}
+					studentList = stuService.list();
 
+					List<String> studentListComboModel = new ArrayList<String>();
+					for (Student stu : studentList) {
+						String fullname = stu.getFirstName()
+								+ stu.getLastName();
+						if (fullname == null || fullname.equals("")) {
+							studentListComboModel.add(fullname);
+						} else {
+							studentListComboModel.add(String.valueOf(stu
+									.getId()));
+						}
+					}
+					listOfStudentsComboBox.addItem((studentListComboModel
+							.toArray()));
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -1369,12 +1378,17 @@ public class InstructorNoa {
 				ArrayList<com.jajeem.quiz.model.Run> quizList;
 				try {
 					quizList = new RunDAO().list(com.jajeem.util.Session
-							.getCurrentCourse().getId());
+							.getCourse().getId());
 					// quizList = new RunDAO().list();
+					reportRunList.clear();
+					reportQuizComboBox.removeAllItems();
+					QuizService quizService = new QuizService();
 					for (int i = 0; i < quizList.size(); i++) {
 						Run run = quizList.get(i);
-						reportQuizComboBox.addItem(run.getId() + " ("
-								+ new Date(run.getStart()) + ")");
+
+						reportQuizComboBox.addItem(quizService.get(
+								run.getQuizId()).getTitle()
+								+ " (" + new Date(run.getStart()) + ")");
 						reportRunList.add(run);
 					}
 
@@ -1388,48 +1402,57 @@ public class InstructorNoa {
 			}
 		});
 
-		final String[] items = { "SummaryofStudents", "StudentResult",
-				"PointChart", "AnswerRate" };
+		// be careful with this list index, we work with index
+		final String[] jasperFileNames = { "AnswerRate", "RadarChart",
+				"StudentResult", "SummaryofStudents" };
 		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				"Summary of Students", "Student Result", "Point Chart",
-				"Answer Rate" });
+				"Answer rate", "Radar chart", "Student result",
+				"Summary of students" });
 
 		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
 		reportGoButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Object selectedItem = reportComboBox.getSelectedItem();
 				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
 						.format(Calendar.getInstance().getTime());
-				if (reportComboBox.getSelectedItem().equals(
-						"Summary of Students")) {
-					JasperReport.generate(items[reportComboBox
-							.getSelectedIndex()], (selectedItem.toString()
-							+ "_" + timeStamp), Query
-							.SummaryOfStudents(reportRunList.get(
+				if (reportComboBox.getSelectedIndex() == 0) {
+					JasperReport.generate(jasperFileNames[0],
+							(jasperFileNames[0].toString() + "_" + timeStamp),
+							Query.answerRate(reportRunList.get(
 									reportQuizComboBox.getSelectedIndex())
 									.getId()));
-				}
-				if (reportComboBox.getSelectedItem().equals("Student Result")) {
-					JasperReport.generate(items[reportComboBox
-							.getSelectedIndex()], (selectedItem.toString()
-							+ "_" + timeStamp), Query.StudentResult(
-							reportRunList.get(
+
+				} else if (reportComboBox.getSelectedIndex() == 1) {
+					JasperReport.generate(jasperFileNames[1],
+							(jasperFileNames[1] + "_" + timeStamp),
+							Query.radarChart());
+					/*
+					 * JasperReport.generate(jasperFileNames[0],
+					 * (jasperFileNames[0].toString() + "_" + timeStamp),
+					 * Query.pointChart(reportRunList.get(
+					 * reportQuizComboBox.getSelectedIndex()) .getId()));
+					 */
+				} else if (reportComboBox.getSelectedIndex() == 2) {
+					JasperReport.generate(jasperFileNames[2],
+							(jasperFileNames[2] + "_" + timeStamp), Query
+									.studentResult(reportRunList.get(
+											reportQuizComboBox
+													.getSelectedIndex())
+											.getId()));
+				} else if (reportComboBox.getSelectedIndex() == 3) {
+					JasperReport.generate(jasperFileNames[3],
+							(jasperFileNames[3].toString() + "_" + timeStamp),
+							Query.summaryOfStudents(reportRunList.get(
 									reportQuizComboBox.getSelectedIndex())
-									.getId(),
-							reportStudentList.get(
-									reportStudentComboBox.getSelectedIndex())
 									.getId()));
+
+				} else if (reportComboBox.getSelectedIndex() == 4) {
+					
+				} else if (reportComboBox.getSelectedIndex() == 5) {
+
 				}
-				if (reportComboBox.getSelectedItem().equals("Answer Rate")) {
-					JasperReport.generate(items[reportComboBox
-							.getSelectedIndex()], (selectedItem.toString()
-							+ "_" + timeStamp),
-							Query.AnswerRate(reportRunList.get(
-									reportQuizComboBox.getSelectedIndex())
-									.getId()));
-				}
+
 			}
 		});
 
@@ -1437,69 +1460,34 @@ public class InstructorNoa {
 
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				if (reportComboBox.getSelectedItem().toString()
-						.equals("Summary of Students")) {
-					reportPopupContent.removeAll();
-					reportPopupContent.add(reportComboBox);
-					reportPopupContent.add(reportQuizComboBox);
-					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(
-							reportPopupContent.getWidth(),
-							reportPopupContent.getHeight()
-									+ reportQuizComboBox.getHeight());
-					reportPopupButton.packPopup();
-					reportPopupButton.revalidate();
-					reportPopupButton.repaint();
-				} else if (reportComboBox.getSelectedItem().toString()
-						.equals("Student Result")) {
-					reportPopupContent.removeAll();
-					reportPopupContent.add(reportComboBox);
-					reportPopupContent.add(reportStudentComboBox);
-					reportPopupContent.add(reportQuizComboBox);
-					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(
-							reportPopupContent.getWidth(),
-							reportPopupContent.getHeight()
-									+ reportQuizComboBox.getHeight()
-									+ reportStudentComboBox.getHeight());
-					reportPopupButton.packPopup();
-					reportPopupButton.revalidate();
-					reportPopupButton.repaint();
-				} else if (reportComboBox.getSelectedItem().toString()
-						.equals("Point Chart")) {
-					reportPopupContent.removeAll();
-					reportPopupContent.add(reportComboBox);
-					reportPopupContent.add(reportStudentComboBox);
-					reportPopupContent.add(reportQuizComboBox);
-					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(
-							reportPopupContent.getWidth(),
-							reportPopupContent.getHeight()
-									+ reportQuizComboBox.getHeight()
-									+ reportStudentComboBox.getHeight());
-					reportPopupButton.packPopup();
-					reportPopupButton.revalidate();
-					reportPopupButton.repaint();
-				} else if (reportComboBox.getSelectedItem().toString()
-						.equals("Answer Rate")) {
-					reportPopupContent.removeAll();
-					reportPopupContent.add(reportComboBox);
-					reportPopupContent.add(reportQuizComboBox);
-					reportPopupContent.add(reportGoButton);
-					reportPopupContent.setSize(
-							reportPopupContent.getWidth(),
-							reportPopupContent.getHeight()
-									+ reportQuizComboBox.getHeight());
-					reportPopupButton.packPopup();
-					reportPopupButton.revalidate();
-					reportPopupButton.repaint();
+				if (reportComboBox.getSelectedIndex() == 0) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(true);
+				} else if (reportComboBox.getSelectedIndex() == 1) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(false);
+				} else if (reportComboBox.getSelectedIndex() == 2) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(true);
+				} else if (reportComboBox.getSelectedIndex() == 3) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(true);
+				} else if (reportComboBox.getSelectedIndex() == 4) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(true);
+				} else if (reportComboBox.getSelectedIndex() == 5) {
+					listOfStudentsComboBox.setVisible(false);
+					reportQuizComboBox.setVisible(false);
 				}
 			}
 		});
-
+		
 		reportPopupContent.add(reportComboBox);
-		reportPopupContent.add(reportQuizComboBox);
 		reportPopupContent.add(reportGoButton);
+		reportPopupContent.add(reportQuizComboBox);
+		reportPopupContent.add(listOfStudentsComboBox);
+		listOfStudentsComboBox.setVisible(false);
+		reportQuizComboBox.setVisible(true);
 
 		reportPopupButton.setContent(reportPopupContent);
 

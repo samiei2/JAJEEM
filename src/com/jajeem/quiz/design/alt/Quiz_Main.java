@@ -43,8 +43,7 @@ import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.quiz.service.ResultService;
-import com.jajeem.quiz.service.RunService;
-import com.jajeem.room.model.Session;
+import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
 
 public class Quiz_Main extends WebFrame {
@@ -278,7 +277,7 @@ public class Quiz_Main extends WebFrame {
 	}
 
 	private boolean ValidateSession() {
-		if (com.jajeem.util.Session.getSession() == null) {
+		if (com.jajeem.util.Session.getCourse() == null) {
 			int i = JOptionPane.showConfirmDialog(null,
 					"No class has started yet!\n Do you want to continue?");
 			if(i==0)
@@ -522,16 +521,22 @@ public class Quiz_Main extends WebFrame {
 
 	protected void newQuizRun() {
 		currentRun.setQuiz(new Quiz());
-		currentRun.setCourse(com.jajeem.util.Session.getCurrentCourse());
+		currentRun.setCourse(com.jajeem.util.Session.getCourse());
+		
+		currentRun.setId(UUID.randomUUID());
 		currentRun.setQuizId(UUID.randomUUID());
 		currentRun.getQuiz().addQuestion(new Question());
 
-		currentRun.setSession(getCurrentSession());
+		currentRun.setCourse(getCurrentCourse());
 		currentRun.setInstructor(getCurrentInstructor());
 		currentRun.setInstructorId(getCurrentInstructor()
 				.getId());
+		currentRun.setCourseId(getCurrentCourse().getId());
 		currentRun.getQuiz().setInstructorId(
 				getCurrentInstructor().getId());
+		currentRun.getQuiz().setCourseId(
+				getCurrentCourse().getId());
+		
 		currentRun
 				.getQuiz()
 				.getQuestionList()
@@ -548,7 +553,6 @@ public class Quiz_Main extends WebFrame {
 		m_modelSelection.setSelectionInterval(0, 0);
 	}
 
-	@SuppressWarnings("unused")
 	private void StopQuizCommand() {
 		try {
 			if(gIndex!=-1){
@@ -667,16 +671,16 @@ public class Quiz_Main extends WebFrame {
 		return com.jajeem.util.Session.getInstructor();
 	}
 
-	Session getCurrentSession() {
-		if (com.jajeem.util.Session.getSession() == null) {
+	Course getCurrentCourse() {
+		if (com.jajeem.util.Session.getCourse() == null) {
 //			int i = JOptionPane.showConfirmDialog(null, "No class has started yet!\n Do you want to continue?");
 //			if(i==0)
-				return new Session();
+				return new Course();
 //			else{
 //				dispose();
 //			}
 		}
-		return com.jajeem.util.Session.getSession();
+		return com.jajeem.util.Session.getCourse();
 	}
 
 	public Question getCurrentQuestion() {

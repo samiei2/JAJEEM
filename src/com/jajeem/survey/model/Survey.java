@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.jajeem.room.model.Course;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Response;
 
@@ -21,6 +22,7 @@ public class Survey implements Serializable{
 	private String description="";
 	private Response response = new Response();
 	private ArrayList<Question> questions = new ArrayList<>();
+	private Course course = new Course();
 	
 	//getter & setters
 	public UUID getId() {
@@ -64,5 +66,11 @@ public class Survey implements Serializable{
 	}
 	public ArrayList<Question> getQuestionList() {
 		return questions;
+	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 }

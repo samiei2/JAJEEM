@@ -1,6 +1,5 @@
 package jrdesktop.viewer;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,11 +11,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
 import jrdesktop.Commons;
@@ -33,7 +30,6 @@ import jrdesktop.viewer.FileMng.FileTransGUI;
 
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.InstructorNoaUtil;
 
 /**
  * Viewer.java

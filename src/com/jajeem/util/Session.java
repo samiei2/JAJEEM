@@ -12,7 +12,7 @@ public class Session {
 
 	private static Student student;
 	private static Instructor instructor;
-	private static com.jajeem.room.model.Session session;
+//	private static com.jajeem.room.model.Session session;
 	private static boolean isQuizWindowOpen = false;
 	private static boolean isSurveyWindowOpen = false;
 	private static boolean isWhiteboardWindowOpen = false;
@@ -45,13 +45,13 @@ public class Session {
 		Session.student = student;
 	}
 
-	public static void setSession(com.jajeem.room.model.Session session) {
-		Session.session = session;
-	}
-	
-	public static com.jajeem.room.model.Session getSession(){
-		return Session.session;
-	}
+//	public static void setSession(com.jajeem.room.model.Session session) {
+//		Session.session = session;
+//	}
+//	
+//	public static com.jajeem.room.model.Session getSession(){
+//		return Session.session;
+//	}
 
 	public static boolean isQuizWindowOpen() {
 		return isQuizWindowOpen;
@@ -114,11 +114,11 @@ public class Session {
 		return recordingList;
 	}
 
-	public static Course getCurrentCourse() {
+	public static Course getCourse() {
 		return Session.course;
 	}
 
-	public static void setCurrentCourse(Course temp){
+	public static void setCourse(Course temp){
 		Session.course = temp;
 	}
 }

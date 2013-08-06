@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.room.model.Course;
-import com.jajeem.room.model.Session;
 
 public class Run implements Serializable{
 	
@@ -17,13 +16,12 @@ public class Run implements Serializable{
 	//properties
 	private UUID id; 
 	private Instructor instructor = new Instructor();
-	private Session session = new Session();
 	private Quiz quiz = new Quiz();
 	private Student student = new Student();
 	private int score;
 	private long start;
 	private long end;
-	private Course course;
+	private Course course = new Course();
 	
 	//getter & setters
 	public UUID getId() {
@@ -37,12 +35,6 @@ public class Run implements Serializable{
 	}
 	public void setInstructorId(int instructorId) {
 		this.instructor.setId(instructorId);
-	}
-	public int getSessionId() {
-		return session.getId();
-	}
-	public void setSessionId(int sessionId) {
-		this.session.setId(sessionId);
 	}
 	public UUID getQuizId() {
 		return quiz.getId();
@@ -79,12 +71,6 @@ public class Run implements Serializable{
 	}
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
-	}
-	public Session getSession() {
-		return session;
-	}
-	public void setSession(Session session) {
-		this.session = session;
 	}
 	public Quiz getQuiz() {
 		return quiz;

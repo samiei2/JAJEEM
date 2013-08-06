@@ -26,7 +26,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
-import javax.swing.JComboBox;
+import com.jajeem.util.i18n;
 
 public class AddNewCourseDialog extends JDialog {
 
@@ -82,11 +82,12 @@ public class AddNewCourseDialog extends JDialog {
 	 * Create the dialog. New Course Mode
 	 * 
 	 * @param courseList
+	 * @throws Exception 
 	 * @wbp.parser.constructor
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList,
-			final EventList<Instructor> instructorList) {
-		setTitle("Add new course");
+			final EventList<Instructor> instructorList) throws Exception {
+		setTitle(i18n.getParam("Add new course"));
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(400, 200, 610, 278);
@@ -99,16 +100,16 @@ public class AddNewCourseDialog extends JDialog {
 			courseNameTF.setColumns(10);
 		}
 		{
-			courseNameLabel = new WebLabel("Course name");
+			courseNameLabel = new WebLabel(i18n.getParam("Course name"));
 		}
 		contentPanel.add(courseNameLabel);
 		contentPanel.add(courseNameTF);
 		{
-			ClassTypeLabel = new WebLabel("Class type");
+			ClassTypeLabel = new WebLabel(i18n.getParam("Class type"));
 		}
 		contentPanel.add(ClassTypeLabel);
 		{
-			levelLabel = new WebLabel("Level");
+			levelLabel = new WebLabel(i18n.getParam("Level"));
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
@@ -124,7 +125,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(levelCombo);
 		}
 		{
-			instructorNameLabel = new WebLabel("Instructor name");
+			instructorNameLabel = new WebLabel(i18n.getParam("Instructor name"));
 			instructorNameLabel.setAlignmentY(0.0f);
 		}
 		contentPanel.add(instructorNameLabel);
@@ -140,7 +141,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(instructorNameCombo);
 		}
 		{
-			startDateLabel = new WebLabel("Start date");
+			startDateLabel = new WebLabel(i18n.getParam("Start date"));
 			startDateLabel.setAlignmentY(0.0f);
 			contentPanel.add(startDateLabel);
 		}
@@ -151,7 +152,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startDateTF);
 		}
 		{
-			sessionLabel = new WebLabel("Sessions");
+			sessionLabel = new WebLabel(i18n.getParam("Sessions"));
 			contentPanel.add(sessionLabel);
 		}
 		{
@@ -160,7 +161,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(sessionTF);
 		}
 		{
-			dayLabel1 = new WebLabel("Day");
+			dayLabel1 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel1);
 		}
 		{
@@ -170,7 +171,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo1);
 		}
 		{
-			startTimeLabel1 = new WebLabel("Start time");
+			startTimeLabel1 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel1);
 		}
 		{
@@ -181,7 +182,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF1);
 		}
 		{
-			endTimeLabel1 = new WebLabel("End time");
+			endTimeLabel1 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel1);
 		}
 		{
@@ -203,7 +204,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo2);
 		}
 		{
-			startTimeLabel2 = new WebLabel("Start time");
+			startTimeLabel2 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel2);
 		}
 		{
@@ -214,7 +215,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF2);
 		}
 		{
-			endTimeLabel2 = new WebLabel("End time");
+			endTimeLabel2 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel2);
 		}
 		{
@@ -225,7 +226,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF2);
 		}
 		{
-			dayLabel3 = new WebLabel("Day");
+			dayLabel3 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel3);
 		}
 		{
@@ -235,7 +236,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo3);
 		}
 		{
-			startTimeLabel3 = new WebLabel("Start time");
+			startTimeLabel3 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel3);
 		}
 		{
@@ -246,7 +247,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF3);
 		}
 		{
-			endTimeLabel3 = new WebLabel("End time");
+			endTimeLabel3 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel3);
 		}
 		{
@@ -257,7 +258,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF3);
 		}
 		{
-			dayLabel4 = new WebLabel("Day");
+			dayLabel4 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel4);
 		}
 		{
@@ -267,7 +268,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo4);
 		}
 		{
-			startTimeLabel4 = new WebLabel("Start time");
+			startTimeLabel4 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel4);
 		}
 		{
@@ -278,7 +279,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF4);
 		}
 		{
-			endTimeLabel4 = new WebLabel("End time");
+			endTimeLabel4 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel4);
 		}
 		{
@@ -289,7 +290,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF4);
 		}
 		{
-			dayLabel5 = new WebLabel("Day");
+			dayLabel5 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel5);
 		}
 		{
@@ -299,7 +300,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo5);
 		}
 		{
-			startTimeLabel5 = new WebLabel("Start time");
+			startTimeLabel5 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel5);
 		}
 		{
@@ -310,7 +311,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF5);
 		}
 		{
-			endTimeLabel5 = new WebLabel("End time");
+			endTimeLabel5 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel5);
 		}
 		{
@@ -326,7 +327,7 @@ public class AddNewCourseDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton("OK");
+				WebButton okButton = new WebButton(i18n.getParam("OK"));
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(new ActionListener() {
 
@@ -479,7 +480,7 @@ public class AddNewCourseDialog extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				WebButton cancelButton = new WebButton("Cancel");
+				WebButton cancelButton = new WebButton(i18n.getParam("Cancel"));
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 
@@ -501,12 +502,13 @@ public class AddNewCourseDialog extends JDialog {
 	 * @param instructorList
 	 * @param selected
 	 *            courseList
+	 * @throws Exception 
 	 * 
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList,
 			final Course course, final EventList<Course> selectedCourse,
-			EventList<Instructor> instructorList) {
-		setTitle("Edit course");
+			EventList<Instructor> instructorList) throws Exception {
+		setTitle(i18n.getParam("Edit course"));
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(400, 200, 610, 278);
@@ -519,16 +521,16 @@ public class AddNewCourseDialog extends JDialog {
 			courseNameTF.setColumns(10);
 		}
 		{
-			courseNameLabel = new WebLabel("Course name");
+			courseNameLabel = new WebLabel(i18n.getParam("Course name"));
 		}
 		contentPanel.add(courseNameLabel);
 		contentPanel.add(courseNameTF);
 		{
-			ClassTypeLabel = new WebLabel("Class type");
+			ClassTypeLabel = new WebLabel(i18n.getParam("Class type"));
 		}
 		contentPanel.add(ClassTypeLabel);
 		{
-			levelLabel = new WebLabel("Level");
+			levelLabel = new WebLabel(i18n.getParam("Level"));
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
@@ -543,7 +545,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(levelCombo);
 		}
 		{
-			instructorNameLabel = new WebLabel("Instructor name");
+			instructorNameLabel = new WebLabel(i18n.getParam("Instructor name"));
 			instructorNameLabel.setAlignmentY(0.0f);
 		}
 		contentPanel.add(instructorNameLabel);
@@ -559,7 +561,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(instructorNameCombo);
 		}
 		{
-			startDateLabel = new WebLabel("Start date");
+			startDateLabel = new WebLabel(i18n.getParam("Start date"));
 			startDateLabel.setAlignmentY(0.0f);
 			contentPanel.add(startDateLabel);
 		}
@@ -570,7 +572,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startDateTF);
 		}
 		{
-			sessionLabel = new WebLabel("Sessions");
+			sessionLabel = new WebLabel(i18n.getParam("Sessions"));
 			contentPanel.add(sessionLabel);
 		}
 		{
@@ -579,7 +581,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(sessionTF);
 		}
 		{
-			dayLabel1 = new WebLabel("Day");
+			dayLabel1 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel1);
 		}
 		{
@@ -589,7 +591,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo1);
 		}
 		{
-			startTimeLabel1 = new WebLabel("Start time");
+			startTimeLabel1 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel1);
 		}
 		{
@@ -600,7 +602,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF1);
 		}
 		{
-			endTimeLabel1 = new WebLabel("End time");
+			endTimeLabel1 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel1);
 		}
 		{
@@ -612,7 +614,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF1);
 		}
 		{
-			dayLabel2 = new WebLabel("Day");
+			dayLabel2 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel2);
 		}
 		{
@@ -622,7 +624,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo2);
 		}
 		{
-			startTimeLabel2 = new WebLabel("Start time");
+			startTimeLabel2 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel2);
 		}
 		{
@@ -633,7 +635,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF2);
 		}
 		{
-			endTimeLabel2 = new WebLabel("End time");
+			endTimeLabel2 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel2);
 		}
 		{
@@ -644,7 +646,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF2);
 		}
 		{
-			dayLabel3 = new WebLabel("Day");
+			dayLabel3 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel3);
 		}
 		{
@@ -654,7 +656,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo3);
 		}
 		{
-			startTimeLabel3 = new WebLabel("Start time");
+			startTimeLabel3 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel3);
 		}
 		{
@@ -665,7 +667,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF3);
 		}
 		{
-			endTimeLabel3 = new WebLabel("End time");
+			endTimeLabel3 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel3);
 		}
 		{
@@ -676,7 +678,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF3);
 		}
 		{
-			dayLabel4 = new WebLabel("Day");
+			dayLabel4 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel4);
 		}
 		{
@@ -686,7 +688,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo4);
 		}
 		{
-			startTimeLabel4 = new WebLabel("Start time");
+			startTimeLabel4 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel4);
 		}
 		{
@@ -697,7 +699,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF4);
 		}
 		{
-			endTimeLabel4 = new WebLabel("End time");
+			endTimeLabel4 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel4);
 		}
 		{
@@ -708,7 +710,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF4);
 		}
 		{
-			dayLabel5 = new WebLabel("Day");
+			dayLabel5 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel5);
 		}
 		{
@@ -718,7 +720,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayCombo5);
 		}
 		{
-			startTimeLabel5 = new WebLabel("Start time");
+			startTimeLabel5 = new WebLabel(i18n.getParam("Start time"));
 			contentPanel.add(startTimeLabel5);
 		}
 		{
@@ -729,7 +731,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeTF5);
 		}
 		{
-			endTimeLabel5 = new WebLabel("End time");
+			endTimeLabel5 = new WebLabel(i18n.getParam("End time"));
 			contentPanel.add(endTimeLabel5);
 		}
 		{
@@ -745,7 +747,7 @@ public class AddNewCourseDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton("OK");
+				WebButton okButton = new WebButton(i18n.getParam("OK"));
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(new ActionListener() {
 
@@ -847,7 +849,7 @@ public class AddNewCourseDialog extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				WebButton cancelButton = new WebButton("Cancel");
+				WebButton cancelButton = new WebButton(i18n.getParam("Cancel"));
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 

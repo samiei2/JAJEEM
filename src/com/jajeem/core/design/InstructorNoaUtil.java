@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Window;
-import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -83,6 +82,7 @@ import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 import com.jajeem.util.WinRegistry;
+import com.jajeem.util.i18n;
 
 public class InstructorNoaUtil {
 
@@ -206,7 +206,8 @@ public class InstructorNoaUtil {
 															.send(si);
 
 													InstructorNoa
-															.setIntercomText("Intercom");
+															.setIntercomText(i18n
+																	.getParam("Intercom"));
 												} catch (Exception e) {
 													e.printStackTrace();
 												}
@@ -228,7 +229,7 @@ public class InstructorNoaUtil {
 																InetAddress
 																		.getByName(selectedStudent));
 												InstructorNoa.getTransmitter()
-														.start();
+														.start("audio");
 												InstructorNoa
 														.setIntercomText("Stop");
 											}
@@ -269,9 +270,9 @@ public class InstructorNoaUtil {
 																InetAddress
 																		.getByName(selectedStudent));
 												InstructorNoa.getTransmitter()
-														.start();
-												InstructorNoa
-														.setIntercomText("Stop");
+														.start("audio");
+												InstructorNoa.setIntercomText(i18n
+														.getParam("Stop"));
 
 											} else {
 												// Send start receiver to
@@ -294,9 +295,9 @@ public class InstructorNoaUtil {
 																InetAddress
 																		.getByName(selectedStudent));
 												InstructorNoa.getTransmitter()
-														.start();
-												InstructorNoa
-														.setIntercomText("Stop");
+														.start("audio");
+												InstructorNoa.setIntercomText(i18n
+														.getParam("Stop"));
 											}
 										}
 
@@ -308,37 +309,46 @@ public class InstructorNoaUtil {
 									// if no students selected and is
 									// transmitting
 									// to someone
-									if (InstructorNoa.getTransmitter()
-											.isTransmitting()) {
+									if (InstructorNoa.getTransmitter() != null)
+										if (InstructorNoa.getTransmitter()
+												.isTransmitting()) {
 
-										// Stop transmitting to prev student and
-										// sent stop
-										// command to him
-										InstructorNoa.getTransmitter().stop();
-										StopIntercomCommand si;
-										try {
-											si = new StopIntercomCommand(
-													InetAddress.getLocalHost()
-															.getHostAddress(),
-													InstructorNoa
-															.getTransmitter()
-															.getRemoteAddr()
-															.getHostAddress(),
-													Integer.parseInt(Config
-															.getParam("port")));
-											InstructorNoa.getServerService()
-													.send(si);
+											// Stop transmitting to prev student
+											// and
+											// sent stop
+											// command to him
+											InstructorNoa.getTransmitter()
+													.stop();
+											StopIntercomCommand si;
+											try {
+												si = new StopIntercomCommand(
+														InetAddress
+																.getLocalHost()
+																.getHostAddress(),
+														InstructorNoa
+																.getTransmitter()
+																.getRemoteAddr()
+																.getHostAddress(),
+														Integer.parseInt(Config
+																.getParam("port")));
+												InstructorNoa
+														.getServerService()
+														.send(si);
 
-											InstructorNoa
-													.setIntercomText("Intercom");
-										} catch (Exception e) {
-											e.printStackTrace();
+												InstructorNoa.setIntercomText(i18n
+														.getParam("Intercom"));
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+										} else {
+											try {
+												InstructorNoa.setIntercomText(i18n
+														.getParam("Intercom"));
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+											return;
 										}
-									} else {
-										InstructorNoa
-												.setIntercomText("Intercom");
-										return;
-									}
 								}
 							} else if (((JComponent) card).getClientProperty(
 									"viewMode").equals("groupView")) {
@@ -481,7 +491,8 @@ public class InstructorNoaUtil {
 
 											VNCCaptureService vnc = new VNCCaptureService();
 											vnc.startClient(conf);
-											button.setText("Stop");
+											button.setText(i18n
+													.getParam("Stop"));
 
 											InstructorNoa.setModeling(true);
 										} else {
@@ -495,7 +506,8 @@ public class InstructorNoaUtil {
 													.send(sm);
 											InstructorNoa.getReceiverOnly()
 													.close();
-											button.setText("Modeling");
+											button.setText(i18n
+													.getParam("Modeling"));
 											InstructorNoa.setModeling(false);
 										}
 									} catch (Exception e) {
@@ -931,7 +943,7 @@ public class InstructorNoaUtil {
 	 */
 
 	public void addEventsBottomPanel(final WebPanel bottomButtonPanel,
-			final WebFrame mainFrame) throws IOException {
+			final WebFrame mainFrame) throws Exception {
 		String key = "";
 
 		for (Component c : bottomButtonPanel.getComponents()) {
@@ -1203,7 +1215,6 @@ public class InstructorNoaUtil {
 									vc.setWhiteboardPort("1999");
 									InstructorNoa.getServerService().send(vc);
 								} catch (Exception e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 
@@ -1264,7 +1275,8 @@ public class InstructorNoaUtil {
 
 						WebButtonPopup programPopupButton = new WebButtonPopup(
 								(WebButton) button, PopupWay.upCenter);
-						final WebButton chooseAppButton = new WebButton("Add");
+						final WebButton chooseAppButton = new WebButton(
+								i18n.getParam("Add"));
 
 						final int sizeOfProgramModel = model.getSize();
 
@@ -1273,9 +1285,13 @@ public class InstructorNoaUtil {
 
 							public void actionPerformed(ActionEvent e) {
 								if (fileChooser == null) {
-									fileChooser = new WebFileChooser(
-											findWindow(button),
-											"Choose any files");
+									try {
+										fileChooser = new WebFileChooser(
+												findWindow(button),
+												i18n.getParam("Choose any files"));
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
 									fileChooser
 											.setSelectionMode(SelectionMode.SINGLE_SELECTION);
 								}
@@ -1560,36 +1576,37 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								if(button.getText().equals("Stop")){
+								if (button.getText().equals("Stop")) {
 									StopCallAllCommand sm = new StopCallAllCommand(
 											InetAddress.getLocalHost()
-											.getHostAddress(), Config
-											.getParam("broadcastingIp"),
+													.getHostAddress(),
+											"192.168.0.255",
 											Integer.parseInt(Config
 													.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
-									
+
 									if (InstructorNoa.getSendOnly() != null) {
 										InstructorNoa.getSendOnly().stop();
 										InstructorNoa.setSendOnly(null);
 									}
 									button.setText("Call All");
-								}
-								else{
+								} else {
 									StartCallAllCommand sm = new StartCallAllCommand(
 											InetAddress.getLocalHost()
-													.getHostAddress(), Config
-													.getParam("broadcastingIp"),
+													.getHostAddress(),
+											Config.getParam("broadcastingIp"),
 											Integer.parseInt(Config
 													.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
 
 									if (InstructorNoa.getSendOnly() == null) {
 										AVSendOnly as;
-										String ip = InetAddress.getLocalHost().getHostAddress().toString();
-										ip = ip.substring(0,ip.lastIndexOf(".")) + ".255";
-										as = new AVSendOnly("5010", ip,
-												"10010");
+										String ip = InetAddress.getLocalHost()
+												.getHostAddress().toString();
+										ip = ip.substring(0,
+												ip.lastIndexOf("."))
+												+ ".255";
+										as = new AVSendOnly("5010", ip, "10010");
 										InstructorNoa.setSendOnly(as);
 										as.start();
 										button.setText("Stop");
@@ -1924,7 +1941,8 @@ public class InstructorNoaUtil {
 				.getLocalHost().getHostAddress(),
 				System.getProperty("user.name"));
 		serverServiceTimer.setCmd(cmd);
-		serverServiceTimer.setInterval(Integer.parseInt(Config.getParam("interval")));
+		serverServiceTimer.setInterval(Integer.parseInt(Config
+				.getParam("interval")));
 		serverServiceTimer.start();
 
 		// setup a service for sending commands to others

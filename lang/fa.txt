@@ -1,6 +1,6 @@
 ﻿iCalabo=iCalabo
 volumecontrol=تنظیم صدا
-viewmode=نوع نمایش
+viewmode=نحوه نمایش
 language=زبان
 survey=نظر سنجی
 whiteboard=نخته سیاه
@@ -24,4 +24,16 @@ pcip=آی پی
 studentname=نام
 empty=خالی
 groupa=گروه الف
+login=ورود
+ok=تایید
+loginasadministrator=ورود به عنوان مدیر
+courses=درس ها
+instructors=اساتید
+welcometoicalabo=به آی کلبو خوش آمدید
+password=کلمه عبور
+more=بیشتر
+nocoursesavailable=درسی موجود نیست
+callall=تماس صوتی با همه
+chat&messaging=پیغام
+allow&restrictprogram=بستن برنامه ها
 

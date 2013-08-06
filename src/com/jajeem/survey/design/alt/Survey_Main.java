@@ -39,6 +39,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.room.model.Course;
 import com.jajeem.room.model.Session;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Run;
@@ -280,7 +281,7 @@ public class Survey_Main extends WebFrame {
 	}
 
 	private boolean ValidateSession() {
-		if (com.jajeem.util.Session.getSession() == null) {
+		if (com.jajeem.util.Session.getCourse() == null) {
 			int i = JOptionPane.showConfirmDialog(null,
 					"No class has started yet!\n Do you want to continue?");
 			if(i==0)
@@ -509,16 +510,18 @@ public class Survey_Main extends WebFrame {
 	}
 
 	protected void newSurveyRun() {
+		currentRun.setId(UUID.randomUUID());
 		currentRun.setSurvey(new Survey());
 		currentRun.setSurveyId(UUID.randomUUID());
 		currentRun.getSurvey().addQuestion(new Question());
 
-		currentRun.setSession(getCurrentSession());
+		currentRun.setCourse(getCurrentCourse());
 		currentRun.setInstructor(getCurrentInstructor());
 		currentRun.setInstructorId(getCurrentInstructor()
 				.getId());
 		currentRun.getSurvey().setInstructorId(
 				getCurrentInstructor().getId());
+		currentRun.getSurvey().setCourse(getCurrentCourse());
 		currentRun
 				.getSurvey()
 				.getQuestionList()
@@ -653,16 +656,16 @@ public class Survey_Main extends WebFrame {
 		return com.jajeem.util.Session.getInstructor();
 	}
 
-	Session getCurrentSession() {
-		if (com.jajeem.util.Session.getSession() == null) {
+	Course getCurrentCourse() {
+		if (com.jajeem.util.Session.getCourse() == null) {
 //			int i = JOptionPane.showConfirmDialog(null, "No class has started yet!\n Do you want to continue?");
 //			if(i==0)
-				return new Session();
+				return new Course();
 //			else{
 //				dispose();
 //			}
 		}
-		return com.jajeem.util.Session.getSession();
+		return com.jajeem.util.Session.getCourse();
 	}
 
 	public Question getCurrentQuestion() {

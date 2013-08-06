@@ -23,7 +23,7 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 
 			Student.getTransmitter().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
-			Student.getTransmitter().start();
+			Student.getTransmitter().start("audio");
 			Student.setIntercomButtonStop();
 			
 		} catch (Exception e) {

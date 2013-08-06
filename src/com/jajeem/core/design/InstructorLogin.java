@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,10 +41,10 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
-import com.jajeem.room.model.Session;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.StartUp;
+import com.jajeem.util.i18n;
 
 public class InstructorLogin extends JDialog {
 
@@ -61,6 +60,9 @@ public class InstructorLogin extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
+			
+			new Config();
+			new i18n();
 			JajeemExcetionHandler.logMessage("Application Started!",
 					InstructorLogin.class);
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -75,9 +77,9 @@ public class InstructorLogin extends JDialog {
 	/**
 	 * Create the dialog.
 	 * 
-	 * @throws SQLException
+	 * @throws Exception
 	 */
-	public InstructorLogin() throws SQLException {
+	public InstructorLogin() throws Exception {
 		LicenseValidator.ActiveValidateLicense();
 		@SuppressWarnings("unused")
 		StartUp start = new StartUp();
@@ -136,8 +138,8 @@ public class InstructorLogin extends JDialog {
 		private final JPanel contentPanel = new JPanel();
 		private final WebPasswordField password = new WebPasswordField(15);
 
-		public loginDialog(Window owner) throws SQLException {
-			super(owner, "Welcome to iCalabo");
+		public loginDialog(Window owner) throws Exception {
+			super(owner, i18n.getParam("Welcome to iCalabo"));
 			// setIconImage(Toolkit.getDefaultToolkit().getImage(
 			// InstructorLogin.class
 			// .getResource("/icons/menubar/jajeem.jpg")));
@@ -169,9 +171,8 @@ public class InstructorLogin extends JDialog {
 				admin.setPassword("admin");
 				instructorService.create(admin);
 				instructorList.add(admin);
-			} 
+			}
 			instructorList.remove(0);
-
 
 			for (com.jajeem.core.model.Instructor instructorItem : sortedIns) {
 				if (!instructorItem.getUsername().equals("admin")) {
@@ -186,7 +187,7 @@ public class InstructorLogin extends JDialog {
 			sPanel1.setDrawBackground(true);
 			sPanel1.setShadeWidth(0);
 			sPanel1.setRound(0);
-			sPanel1.setViewportBorder(new TitledBorder(null, "Instructors",
+			sPanel1.setViewportBorder(new TitledBorder(null, i18n.getParam("Instructors"),
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 			final DefaultListModel listModel2 = new DefaultListModel();
@@ -195,7 +196,7 @@ public class InstructorLogin extends JDialog {
 			sPanel2.setDrawBackground(true);
 			sPanel2.setShadeWidth(0);
 			sPanel2.setRound(0);
-			sPanel2.setViewportBorder(new TitledBorder(null, "Courses",
+			sPanel2.setViewportBorder(new TitledBorder(null, i18n.getParam("Courses"),
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 			getContentPane().setLayout(new BorderLayout());
@@ -216,7 +217,7 @@ public class InstructorLogin extends JDialog {
 				JPanel panel = new JPanel();
 				contentPanel.add(panel, BorderLayout.SOUTH);
 				{
-					JLabel lblNewLabel = new JLabel("Password");
+					JLabel lblNewLabel = new JLabel(i18n.getParam("Password"));
 					panel.add(lblNewLabel);
 				}
 				{
@@ -230,12 +231,12 @@ public class InstructorLogin extends JDialog {
 				JPanel buttonPane = new JPanel();
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				{
-					WebButton okButton = new WebButton("Login");
+					WebButton okButton = new WebButton(i18n.getParam("Login"));
 					final WebButton adminButton = new WebButton(
-							"Login as Administrator");
+							i18n.getParam("Login as Administrator"));
 					adminButton.setVisible(false);
-					WebButton moreButton = new WebButton("More");
-					okButton.setActionCommand("OK");
+					WebButton moreButton = new WebButton(i18n.getParam("More"));
+					okButton.setActionCommand(i18n.getParam("OK"));
 					getRootPane().setDefaultButton(okButton);
 					GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 					gl_buttonPane
@@ -327,11 +328,12 @@ public class InstructorLogin extends JDialog {
 												+ dt.format(startDate)
 												+ ")");
 									}
-									
+
 									if (courseList1.size() == 0) {
-										listModel2.addElement("No courses available");
+										listModel2.addElement(i18n
+												.getParam("No courses available"));
 									}
-								} catch (SQLException e1) {
+								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
 								courseList = courseList1;
@@ -350,6 +352,8 @@ public class InstructorLogin extends JDialog {
 
 								String user = list1.getSelectedValue()
 										.toString();
+								Course course = courseList.get(list2
+										.getSelectedIndex());
 								InstructorService instructorService = new InstructorService();
 								int indexOfOpenBracket = user.indexOf("(");
 								int indexOfLastBracket = user.lastIndexOf(")");
@@ -364,14 +368,15 @@ public class InstructorLogin extends JDialog {
 													indexOfLastBracket));
 									com.jajeem.util.Session
 											.setInstructor(instructor);
+									com.jajeem.util.Session.setCourse(course);
 
 									// TODO Session initialization which is set
 									// to default
-									Session session = new Session();
-									session.setInstructor(instructor);
-									session.setCourse(courseList.get(list2
-											.getSelectedIndex()));
-									com.jajeem.util.Session.setSession(session);
+									// Session session = new Session();
+									// session.setInstructor(instructor);
+									//
+									// session.setCourse(course);
+									// com.jajeem.util.Session.setCourse(session);
 									// TODO Save Session in database
 
 									// //////////////////////////////

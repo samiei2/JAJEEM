@@ -32,8 +32,8 @@ public class ResponseDAO implements IResponseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid, surveyQuestionId) "
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
 		ps.setString(3, response.getAnswer());
@@ -43,6 +43,7 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(7, String.valueOf(response.getBoolAnswer()[3]));
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
 		ps.setObject(9, response.getId());
+		ps.setObject(10, response.getSurveyQuestionId());
 		
 		try {
 			rs = ps.executeUpdate();

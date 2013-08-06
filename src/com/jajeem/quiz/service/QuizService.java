@@ -2,6 +2,7 @@ package com.jajeem.quiz.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.jajeem.core.model.Student;
 import com.jajeem.quiz.dao.h2.QuestionDAO;
@@ -14,7 +15,7 @@ import com.jajeem.quiz.model.Response;
 import com.jajeem.util.StartUp;
 
 public class QuizService implements IQuizService{
-	private QuizDAO quizDAO;
+	private QuizDAO quizDAO = new QuizDAO();
 	private QuestionDAO questionDAO;
 	private ResponseDAO responseDAO;
 	private RunDAO runDAO;
@@ -35,6 +36,12 @@ public class QuizService implements IQuizService{
 	public Quiz get(Quiz quiz) throws SQLException {
 		if(quizDAO != null)
 			return quizDAO.get(quiz);
+		return null;
+	}
+	
+	public Quiz get(UUID quizId) throws SQLException {
+		if(quizDAO != null)
+			return quizDAO.get(quizId);
 		return null;
 	}
 

@@ -33,8 +33,8 @@ public class QuizDAO implements IQuizDAO {
 
 		Connection con = BaseDAO.getConnection();
 		try {
-			ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle,iid) "
-					+ " VALUES (?,?, ?, ?, ?, ?, ?, ?, ?);");
+			ps = con.prepareStatement("INSERT INTO Quiz (instructorId, title, category, description, points, pointing, time, shuffle,iid, courseId) "
+					+ " VALUES (?,?, ?, ?, ?, ?, ?, ?, ?,?);");
 //			ps.setString(1, "1ae8df14-31aa-4b57-9b2c-4eaa52dcb67d");
 			ps.setInt(1, quiz.getInstructorId());
 			ps.setString(2, quiz.getTitle());
@@ -45,6 +45,7 @@ public class QuizDAO implements IQuizDAO {
 			ps.setInt(7, quiz.getTime());
 			ps.setInt(8, quiz.getShuffle());
 			ps.setObject(9, quiz.getId());
+			ps.setInt(10, quiz.getCourseId());
 
 		
 			rs = ps.executeUpdate();
@@ -95,6 +96,70 @@ public class QuizDAO implements IQuizDAO {
 
 		ps = con.prepareStatement("SELECT * FROM Quiz WHERE Quiz.iid = ?;");
 		ps.setObject(1, quiz.getId());
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				quiz.setInstructorId(rs.getInt("instructorId"));
+				quiz.setTitle(rs.getString("title"));
+				quiz.setCategory(rs.getString("category"));
+				quiz.setDescription(rs.getString("description"));
+				quiz.setPoints(rs.getInt("points"));
+				quiz.setPointing(rs.getInt("pointing"));
+				quiz.setTime(rs.getInt("time"));
+				quiz.setShuffle(rs.getByte("shuffle"));
+
+			} else {
+				quiz.setId(null);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			quiz.setId(null);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+		
+		try {
+			QuestionDAO qdao = new QuestionDAO();
+			quiz.getQuestionList().addAll(qdao.list(quiz.getId()));
+			
+		} catch(Exception ex){
+			JajeemExcetionHandler.logError(ex);
+		}
+
+		return quiz;
+	}
+	
+	public Quiz get(UUID quizId) throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Quiz quiz = new Quiz();
+		quiz.setId(quizId);
+		
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM Quiz WHERE Quiz.iid = ?;");
+		ps.setObject(1, quizId);
 
 		try {
 			rs = ps.executeQuery();

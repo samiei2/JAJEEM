@@ -18,6 +18,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.util.i18n;
 
 public class AddNewInstructorDialog extends JDialog {
 
@@ -33,9 +34,10 @@ public class AddNewInstructorDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @throws Exception 
 	 */
-	public AddNewInstructorDialog(final EventList<Instructor> instructorList) {
-		setTitle("Add new instructor");
+	public AddNewInstructorDialog(final EventList<Instructor> instructorList) throws Exception {
+		setTitle(i18n.getParam("Add new instructor"));
 		setVisible(true);
 		setBounds(400, 200, 392, 210);
 		getContentPane().setLayout(new BorderLayout());
@@ -43,7 +45,7 @@ public class AddNewInstructorDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.NORTH);
 		contentPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		{
-			WebLabel firstnameLabel = new WebLabel("First name");
+			WebLabel firstnameLabel = new WebLabel(i18n.getParam("First name"));
 			contentPanel.add(firstnameLabel);
 		}
 		{
@@ -52,7 +54,7 @@ public class AddNewInstructorDialog extends JDialog {
 			firstNameTF.setColumns(10);
 		}
 		{
-			WebLabel lastNameLabel = new WebLabel("Last name");
+			WebLabel lastNameLabel = new WebLabel(i18n.getParam("Last name"));
 			contentPanel.add(lastNameLabel);
 		}
 		{
@@ -61,7 +63,7 @@ public class AddNewInstructorDialog extends JDialog {
 			lastNameTF.setColumns(10);
 		}
 		{
-			WebLabel usernameLabel = new WebLabel("Username");
+			WebLabel usernameLabel = new WebLabel(i18n.getParam("Username"));
 			contentPanel.add(usernameLabel);
 		}
 		{
@@ -70,7 +72,7 @@ public class AddNewInstructorDialog extends JDialog {
 			usernameTF.setColumns(10);
 		}
 		{
-			WebLabel passworkLabel = new WebLabel("Password");
+			WebLabel passworkLabel = new WebLabel(i18n.getParam("Password"));
 			contentPanel.add(passworkLabel);
 		}
 		{
@@ -83,7 +85,7 @@ public class AddNewInstructorDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton("OK");
+				WebButton okButton = new WebButton(i18n.getParam("OK"));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -113,7 +115,7 @@ public class AddNewInstructorDialog extends JDialog {
 
 			}
 			{
-				WebButton cancelButton = new WebButton("Cancel");
+				WebButton cancelButton = new WebButton(i18n.getParam("Cancel"));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 				cancelButton.addActionListener(new ActionListener() {

@@ -28,6 +28,8 @@ public class ResultService {
 		for (int i = 0; i < e.size(); i++) {
 			for (int j = 0; j < e.get(i).size(); j++) {
 				Response resp = e.get(i).get(j).getQuestion().getResponse();
+				resp.setStudentId(e.get(i).get(j).getStudent().getId());
+				resp.setQuizQuestionId(e.get(i).get(j).getQuestion().getId());
 				try {
 					if(responsedao.Contains(resp))
 						responsedao.update(resp);

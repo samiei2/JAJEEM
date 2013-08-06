@@ -13,6 +13,7 @@ public class Quiz implements Serializable{
 	//properties
 	private UUID id;
 	private int instructorId;
+	private int courseId;
 	private String title="";
 	private String category="";
 	private String description="";
@@ -89,5 +90,11 @@ public class Quiz implements Serializable{
 	}
 	public ArrayList<Question> getQuestionList() {
 		return questions;
+	}
+	public int getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 }

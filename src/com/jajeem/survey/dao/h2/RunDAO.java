@@ -35,10 +35,10 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO SurveyRun (instructorId, sessionId, surveyId, start, end,iid) "
+		ps = con.prepareStatement("INSERT INTO SurveyRun (instructorId, courseId, surveyId, start, end,iid) "
 				+ " VALUES (?, ?, ?, ?, ?, ?);");
 		ps.setInt(1, run.getInstructorId());
-		ps.setInt(2, run.getSessionId());
+		ps.setInt(2, run.getCourseId());
 		ps.setObject(3, run.getSurveyId());
 		ps.setLong(4, run.getStart());
 		ps.setLong(5, run.getEnd());
@@ -96,7 +96,7 @@ public class RunDAO implements IRunDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				run.setInstructorId(rs.getInt("instructorId"));
-				run.setSessionId(rs.getInt("sessionId"));
+				run.setCourseId(rs.getInt("courseId"));
 				run.setSurveyId((UUID) rs.getObject("surveyId"));
 				run.setStart(rs.getInt("start"));
 				run.setEnd(rs.getInt("end"));
@@ -140,11 +140,11 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE SurveyRun SET instructorId = ?, sessionId = ?, "
+		ps = con.prepareStatement("UPDATE SurveyRun SET instructorId = ?, courseId = ?, "
 				+ "surveyId = ?, start = ?, end = ? WHERE iid = ?");
 
 		ps.setInt(1, run.getInstructorId());
-		ps.setInt(2, run.getSessionId());
+		ps.setInt(2, run.getCourseId());
 		ps.setObject(3, run.getSurveyId());
 		ps.setLong(4, run.getStart());
 		ps.setLong(5, run.getEnd());
@@ -240,7 +240,7 @@ public class RunDAO implements IRunDAO {
 
 				run.setId((UUID) rs.getObject("iid"));
 				run.setInstructorId(rs.getInt("instructorId"));
-				run.setSessionId(rs.getInt("sessionId"));
+				run.setCourseId(rs.getInt("courseId"));
 				run.setSurveyId((UUID) rs.getObject("surveyId"));
 				run.setStart(rs.getInt("start"));
 				run.setEnd(rs.getInt("end"));

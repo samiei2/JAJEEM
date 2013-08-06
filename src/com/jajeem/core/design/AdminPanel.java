@@ -53,6 +53,7 @@ import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
+import com.jajeem.util.i18n;
 
 public class AdminPanel extends WebFrame {
 
@@ -92,9 +93,9 @@ public class AdminPanel extends WebFrame {
 	/**
 	 * Create the frame.
 	 * 
-	 * @throws SQLException
+	 * @throws Exception
 	 */
-	public AdminPanel() throws SQLException {
+	public AdminPanel() throws Exception {
 		setTitle("Admin Panel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
@@ -109,17 +110,17 @@ public class AdminPanel extends WebFrame {
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
 		WebPanel userTab = new WebPanel();
-		tabbedPane.addTab("Instructors", null, userTab, null);
+		tabbedPane.addTab(i18n.getParam("Instructors"), null, userTab, null);
 		userTab.setLayout(new BorderLayout(0, 0));
 		userTab.add(initInstructor());
 
 		WebPanel courseTab = new WebPanel();
-		tabbedPane.addTab("Courses", null, courseTab, null);
+		tabbedPane.addTab(i18n.getParam("Courses"), null, courseTab, null);
 		courseTab.setLayout(new BorderLayout(0, 0));
 		courseTab.add(initCourse());
 
 		WebPanel studentTab = new WebPanel();
-		tabbedPane.addTab("Students", null, studentTab, null);
+		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
 		studentTab.setLayout(new BorderLayout(0, 0));
 		studentTab.add(initStudent());
 
@@ -157,7 +158,7 @@ public class AdminPanel extends WebFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	private WebPanel initCourse() {
+	private WebPanel initCourse() throws Exception {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
@@ -166,7 +167,7 @@ public class AdminPanel extends WebFrame {
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable courseTable = new JTable();
 		TooltipManager.setTooltip(courseTable,
-				"Select a course and push edit button to edit");
+				i18n.getParam("Select a course and push edit button to edit"));
 
 		jScrollPane1.setViewportView(courseTable);
 		panel.add(jScrollPane1);
@@ -186,7 +187,11 @@ public class AdminPanel extends WebFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddNewCourseDialog(courseList, getInstructorList());
+				try {
+					new AddNewCourseDialog(courseList, getInstructorList());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -227,14 +232,18 @@ public class AdminPanel extends WebFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					Course course = courseSelectionModel.getSelected().get(0);
-					new AddNewCourseDialog(courseList, course,
-							courseSelectionModel.getSelected(),
-							getInstructorList());
+					try {
+						new AddNewCourseDialog(courseList, course,
+								courseSelectionModel.getSelected(),
+								getInstructorList());
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
 
-		WebButton studentButton = new WebButton("Students");
+		WebButton studentButton = new WebButton(i18n.getParam("Students"));
 		buttonPanel.add(studentButton);
 		studentButton.addActionListener(new ActionListener() {
 
@@ -288,7 +297,7 @@ public class AdminPanel extends WebFrame {
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-		JLabel filterLabel = new JLabel("Search: ");
+		JLabel filterLabel = new JLabel(i18n.getParam("Search") + " :");
 		topPanel.add(filterLabel);
 		WebTextField courseFilterTF = new WebTextField();
 		topPanel.add(courseFilterTF);
@@ -358,7 +367,7 @@ public class AdminPanel extends WebFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	private WebPanel initInstructor() {
+	private WebPanel initInstructor() throws Exception {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
@@ -366,7 +375,8 @@ public class AdminPanel extends WebFrame {
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable instructorTable = new JTable();
-		TooltipManager.setTooltip(instructorTable, "Click on a cell to edit");
+		TooltipManager.setTooltip(instructorTable,
+				i18n.getParam("Click on a cell to edit"));
 
 		jScrollPane1.setViewportView(instructorTable);
 		panel.add(jScrollPane1);
@@ -386,7 +396,11 @@ public class AdminPanel extends WebFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddNewInstructorDialog(getInstructorList());
+				try {
+					new AddNewInstructorDialog(getInstructorList());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -437,7 +451,7 @@ public class AdminPanel extends WebFrame {
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-		JLabel filterLabel = new JLabel("Search: ");
+		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
 		topPanel.add(filterLabel);
 		WebTextField instructorFilterTF = new WebTextField();
 		topPanel.add(instructorFilterTF);
@@ -481,7 +495,7 @@ public class AdminPanel extends WebFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	private WebPanel initStudent() {
+	private WebPanel initStudent() throws Exception {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
@@ -489,7 +503,8 @@ public class AdminPanel extends WebFrame {
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable studentTable = new JTable();
-		TooltipManager.setTooltip(studentTable, "Click on a cell to edit");
+		TooltipManager.setTooltip(studentTable,
+				i18n.getParam("Click on a cell to edit"));
 
 		jScrollPane1.setViewportView(studentTable);
 		panel.add(jScrollPane1);
@@ -503,17 +518,21 @@ public class AdminPanel extends WebFrame {
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
 
-		WebButton addButton = new WebButton("Add");
+		WebButton addButton = new WebButton(i18n.getParam("Add"));
 		buttonPanel.add(addButton);
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AddNewStudentDialog(getStudentList());
+				try {
+					new AddNewStudentDialog(getStudentList());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
-		WebButton deleteButton = new WebButton("Delete");
+		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
 		buttonPanel.add(deleteButton);
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -552,7 +571,7 @@ public class AdminPanel extends WebFrame {
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-		JLabel filterLabel = new JLabel("Search: ");
+		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
 		topPanel.add(filterLabel);
 		WebTextField studentFilterTF = new WebTextField();
 		topPanel.add(studentFilterTF);
@@ -602,23 +621,26 @@ public class AdminPanel extends WebFrame {
 		}
 
 		public String getColumnName(int column) {
-			if (column == 0)
-				return "ID";
-			if (column == 1)
-				return "Course Name";
-			else if (column == 2)
-				return "Instructor Name";
-			else if (column == 3)
-				return "Class Type";
-			else if (column == 4)
-				return "Level";
-			else if (column == 5)
-				return "Start Date";
-			else if (column == 6)
-				return "Sessions";
-			else if (column == 7)
-				return "Weekly Time";
-
+			try {
+				if (column == 0)
+					return i18n.getParam("ID");
+				if (column == 1)
+					return i18n.getParam("Course Name");
+				else if (column == 2)
+					return i18n.getParam("Instructor Name");
+				else if (column == 3)
+					return i18n.getParam("Class Type");
+				else if (column == 4)
+					return i18n.getParam("Level");
+				else if (column == 5)
+					return i18n.getParam("Start Date");
+				else if (column == 6)
+					return i18n.getParam("Sessions");
+				else if (column == 7)
+					return i18n.getParam("Weekly Time");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			throw new IllegalStateException();
 		}
 
@@ -693,17 +715,22 @@ public class AdminPanel extends WebFrame {
 		}
 
 		public String getColumnName(int column) {
-			if (column == 0)
-				return "ID";
-			if (column == 1)
-				return "First name";
-			else if (column == 2)
-				return "Last Name";
-			else if (column == 3)
-				return "Username";
-			else if (column == 4)
-				return "Password";
+			try {
+				if (column == 0)
+					return i18n.getParam("ID");
+				if (column == 1)
 
+					return i18n.getParam("First name");
+
+				else if (column == 2)
+					return i18n.getParam("Last Name");
+				else if (column == 3)
+					return i18n.getParam("Username");
+				else if (column == 4)
+					return i18n.getParam("Password");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			throw new IllegalStateException();
 		}
 
@@ -768,17 +795,20 @@ public class AdminPanel extends WebFrame {
 		}
 
 		public String getColumnName(int column) {
-			if (column == 0)
-				return "ID";
-			if (column == 1)
-				return "First name";
-			else if (column == 2)
-				return "Last Name";
-			else if (column == 3)
-				return "Username";
-			else if (column == 4)
-				return "Password";
-
+			try {
+				if (column == 0)
+					return i18n.getParam("ID");
+				if (column == 1)
+					return i18n.getParam("First name");
+				else if (column == 2)
+					return i18n.getParam("Last Name");
+				else if (column == 3)
+					return i18n.getParam("Username");
+				else if (column == 4)
+					return i18n.getParam("Password");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			throw new IllegalStateException();
 		}
 

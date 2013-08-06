@@ -16,6 +16,7 @@ public class Response implements Serializable {
 	private String answer;
 	private boolean[] boolAnswer;
 	private boolean answerValid = false;
+	private UUID quizQuestionId; 
 	
 	//getter & setters
 	public UUID getId() {
@@ -53,5 +54,11 @@ public class Response implements Serializable {
 	}
 	public void setAnswerValid(boolean answerValid) {
 		this.answerValid = answerValid;
+	}
+	public UUID getQuizQuestionId() {
+		return quizQuestionId;
+	}
+	public void setQuizQuestionId(UUID quizQuestionId) {
+		this.quizQuestionId = quizQuestionId;
 	}
 }

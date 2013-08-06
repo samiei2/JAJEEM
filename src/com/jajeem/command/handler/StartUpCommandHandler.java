@@ -30,6 +30,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 			cmdToSend.setPort(port);
 			StudentLogin.getServerService().send(cmdToSend);
 			StudentLogin.setServerIp(((StartUpCommand) cmd).getSender());
+			// TODO: if not visible then set visible
 			Student.getFrmJajeemProject().setVisible(true);
 
 		} else if (Integer.parseInt(Config.getParam("server")) == 1

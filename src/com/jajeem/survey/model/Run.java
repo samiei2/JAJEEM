@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
-import com.jajeem.room.model.Session;
+import com.jajeem.room.model.Course;
 
 public class Run implements Serializable{
 	
@@ -15,10 +15,10 @@ public class Run implements Serializable{
 	private static final long serialVersionUID = 1L;
 	//properties
 	private UUID id; 
-	private Instructor instructor;
-	private Session session;
-	private Survey survey;
-	private Student student;
+	private Instructor instructor = new Instructor();
+	private Course course = new Course();
+	private Survey survey = new Survey();
+	private Student student = new Student();
 	private long start;
 	private long end;
 	
@@ -35,11 +35,11 @@ public class Run implements Serializable{
 	public void setInstructorId(int instructorId) {
 		this.instructor.setId(instructorId);
 	}
-	public int getSessionId() {
-		return session.getId();
+	public int getCourseId() {
+		return course.getId();
 	}
-	public void setSessionId(int sessionId) {
-		this.session.setId(sessionId);
+	public void setCourseId(int courseId) {
+		this.course.setId(courseId);
 	}
 	public UUID getSurveyId() {
 		return survey.getId();
@@ -71,11 +71,11 @@ public class Run implements Serializable{
 	public void setInstructor(Instructor currentInstructor) {
 		this.instructor = currentInstructor;
 	}
-	public Session getSession(){
-		return this.session;
+	public Course getCourse(){
+		return this.course;
 	}
-	public void setSession(Session currentSession) {
-		this.session = currentSession;
+	public void setCourse(Course currentCourse) {
+		this.course = currentCourse;
 	}
 	public Student getStudent(){
 		return this.student;

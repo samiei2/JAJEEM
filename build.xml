@@ -59,6 +59,8 @@
         <pathelement location="lib/jni/jni4net.j-0.8.6.0.jar"/>
         <pathelement location="lib/icu4j-51_2-src.jar"/>
         <pathelement location="lib/commons-lang3-3.1.jar"/>
+        <pathelement location="lib/jfreechart-1.0.12.jar"/>
+        <pathelement location="lib/jcommon-1.0.15.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -211,6 +213,11 @@
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
+    <target name="Quiz_Window">
+        <java classname="com.jajeem.quiz.design.client.alt.Quiz_Window" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
     <target name="Recorder">
         <java classname="com.jajeem.recorder.design.Recorder" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
@@ -243,6 +250,16 @@
     </target>
     <target name="StudentLogin">
         <java classname="com.jajeem.core.design.StudentLogin" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Survey_Main">
+        <java classname="com.jajeem.survey.design.alt.Survey_Main" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Survey_Window">
+        <java classname="com.jajeem.survey.design.client.alt.Survey_Window" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
