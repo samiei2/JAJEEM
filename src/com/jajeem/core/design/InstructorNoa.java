@@ -78,8 +78,6 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.model.Student;
-import com.jajeem.core.service.StudentService;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.dao.h2.RunDAO;
@@ -1169,7 +1167,24 @@ public class InstructorNoa {
 		intercomButton.setBottomBgColor(new Color(225, 234, 244));
 		intercomButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(intercomButton);
-
+		
+		WebButton videoChatButton = new WebButton();
+		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
+		videoChatButton.setIcon(new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa/right_panel/intercom.png")));
+		videoChatButton.setIconTextGap(30);
+		videoChatButton.putClientProperty("key", "videoChat");
+		videoChatButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		videoChatButton.setDrawShade(false);
+		videoChatButton.setRound(10);
+		videoChatButton.setTopSelectedBgColor(new Color(75, 113, 158));
+		videoChatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+		videoChatButton.setForeground(Color.WHITE);
+		videoChatButton.setText(i18n.getParam("Video Chat"));
+		videoChatButton.setBottomBgColor(new Color(225, 234, 244));
+		videoChatButton.setTopBgColor(new Color(116, 166, 219));
+		rightButtonPanel.add(videoChatButton);
+		
 		WebButton groupButton = new WebButton();
 		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
 		groupButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -1350,29 +1365,19 @@ public class InstructorNoa {
 				// PopulateStudentCombobox();
 			}
 
-			private void PopulateStudentCombobox() {
-				StudentService stuService = new StudentService();
-				ArrayList<Student> studentList;
-				try {
-					studentList = stuService.list();
-
-					List<String> studentListComboModel = new ArrayList<String>();
-					for (Student stu : studentList) {
-						String fullname = stu.getFirstName()
-								+ stu.getLastName();
-						if (fullname == null || fullname.equals("")) {
-							studentListComboModel.add(fullname);
-						} else {
-							studentListComboModel.add(String.valueOf(stu
-									.getId()));
-						}
-					}
-					listOfStudentsComboBox.addItem((studentListComboModel
-							.toArray()));
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			/*
+			 * private void PopulateStudentCombobox() { StudentService
+			 * stuService = new StudentService(); ArrayList<Student>
+			 * studentList; try { studentList = stuService.list();
+			 * 
+			 * List<String> studentListComboModel = new ArrayList<String>(); for
+			 * (Student stu : studentList) { String fullname =
+			 * stu.getFirstName() + stu.getLastName(); if (fullname == null ||
+			 * fullname.equals("")) { studentListComboModel.add(fullname); }
+			 * else { studentListComboModel.add(String.valueOf(stu .getId())); }
+			 * } listOfStudentsComboBox.addItem((studentListComboModel
+			 * .toArray())); } catch (SQLException e) { e.printStackTrace(); } }
+			 */
 
 			private void PopulateQuizCombobox() {
 				ArrayList<com.jajeem.quiz.model.Run> quizList;
@@ -1448,7 +1453,7 @@ public class InstructorNoa {
 									.getId()));
 
 				} else if (reportComboBox.getSelectedIndex() == 4) {
-					
+
 				} else if (reportComboBox.getSelectedIndex() == 5) {
 
 				}
@@ -1481,7 +1486,7 @@ public class InstructorNoa {
 				}
 			}
 		});
-		
+
 		reportPopupContent.add(reportComboBox);
 		reportPopupContent.add(reportGoButton);
 		reportPopupContent.add(reportQuizComboBox);

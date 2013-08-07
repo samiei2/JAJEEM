@@ -22,9 +22,9 @@ public class StartModelCommandHanlder implements ICommandHandler {
 			if (Student.getSendOnly() == null) {
 				AVSendOnly as = new AVSendOnly("5010", "224.5.6.7", "10010");
 				Student.setSendOnly(as);
-				as.start();
+				as.start("audio");
 			} else {
-				Student.getSendOnly().start();
+				Student.getSendOnly().start("audio");
 			}
 
 			return;
@@ -33,13 +33,13 @@ public class StartModelCommandHanlder implements ICommandHandler {
 			if (Student.getReceiverOnly() == null) {
 				AVReceiveOnly ar = new AVReceiveOnly("10010",
 						((StartModelCommand) cmd).getLeader(), "5010");
-				ar.initialize();
+				ar.initialize("audio");
 				Student.setReceiverOnly(ar);
 			} else {
 				Student.getReceiverOnly().setRemoteAddr(
 						InetAddress.getByName(((StartModelCommand) cmd)
 								.getLeader()));
-				Student.getReceiverOnly().initialize();
+				Student.getReceiverOnly().initialize("audio");
 			}
 
 			jrdesktop.Config conf = null;

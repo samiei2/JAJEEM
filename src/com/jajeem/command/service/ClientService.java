@@ -7,9 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
 import java.net.DatagramPacket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
@@ -18,8 +16,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
-
-import sun.misc.IOUtils;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
@@ -50,15 +46,18 @@ import com.jajeem.command.handler.StartRecorderCommandHandler;
 import com.jajeem.command.handler.StartSpeechCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
+import com.jajeem.command.handler.StartVideoChatCommandHandler;
 import com.jajeem.command.handler.StartVideoCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCallAllCommandHanlder;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
+import com.jajeem.command.handler.StopIntercomCommandHandler;
 import com.jajeem.command.handler.StopModelCommandHanlder;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
 import com.jajeem.command.handler.StopRecorderCommandHandler;
 import com.jajeem.command.handler.StopSurveyCommandHanlder;
+import com.jajeem.command.handler.StopVideoChatCommandHandler;
 import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.BlackoutCommand;
@@ -89,22 +88,24 @@ import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.model.StartVideoChatCommand;
 import com.jajeem.command.model.StartVideoCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopCaptureCommand;
+import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.model.StopSurveyCommand;
+import com.jajeem.command.model.StopVideoChatCommand;
 import com.jajeem.command.model.StopWhiteBoardCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.filemanager.design.FileSendProgressWindow;
 import com.jajeem.util.Config;
 
 public class ClientService implements IConnectorSevice, Runnable {
@@ -363,6 +364,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 					StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
 					startIntercomCommandHandler.run(cmd);
 				}
+				
+				else if (cmd instanceof StopIntercomCommand) {
+					StopIntercomCommandHandler stopIntercomCommandHandler = new StopIntercomCommandHandler();
+					stopIntercomCommandHandler.run(cmd);
+				}
 
 				else if (cmd instanceof StartApplicationCommand) {
 					StartApplicationCommandHanlder startApplicationCommandHandler = new StartApplicationCommandHanlder();
@@ -441,6 +447,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if(cmd instanceof FinishedSurveyCommand){
 					FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
 					hnldr.run(cmd);
+				}
+				
+				else if (cmd instanceof StartVideoChatCommand) {
+					StartVideoChatCommandHandler startVideoChatCommandHandler = new StartVideoChatCommandHandler();
+					startVideoChatCommandHandler.run(cmd);
+				}
+				
+				else if (cmd instanceof StopVideoChatCommand) {
+					StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
+					stopVideoChatCommandHandler.run(cmd);
 				}
 
 			} catch (Exception ex) {

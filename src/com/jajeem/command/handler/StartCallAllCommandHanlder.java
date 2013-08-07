@@ -18,13 +18,13 @@ public class StartCallAllCommandHanlder implements ICommandHandler {
 		if (Student.getReceiverOnly() == null) {
 			AVReceiveOnly ar = new AVReceiveOnly("10010",
 					"192.168.0.255", "5010");
-			ar.initialize();
+			ar.initialize("audio");
 			Student.setReceiverOnly(ar);
 		} else {
 			Student.getReceiverOnly()
 					.setRemoteAddr(
 							InetAddress.getByName(StudentLogin.getServerIp()));
-			Student.getReceiverOnly().initialize();
+			Student.getReceiverOnly().initialize("audio");
 		}
 	}
 }

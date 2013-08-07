@@ -409,6 +409,11 @@ public class InstructorNoaUtil {
 					});
 
 					break;
+
+				case "videoChat":
+					
+					break;
+					
 				case "group":
 					button.addActionListener(new ActionListener() {
 						@Override
@@ -466,7 +471,7 @@ public class InstructorNoaUtil {
 												AVReceiveOnly ar = new AVReceiveOnly(
 														"10010",
 														selectedStudent, "5010");
-												ar.initialize();
+												ar.initialize("audio");
 												InstructorNoa
 														.setReceiverOnly(ar);
 											} else {
@@ -476,7 +481,7 @@ public class InstructorNoaUtil {
 																InetAddress
 																		.getByName(selectedStudent));
 												InstructorNoa.getReceiverOnly()
-														.initialize();
+														.initialize("audio");
 											}
 
 											jrdesktop.Config conf = null;
@@ -1580,9 +1585,9 @@ public class InstructorNoaUtil {
 									StopCallAllCommand sm = new StopCallAllCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(),
-											"192.168.0.255",
-											Integer.parseInt(Config
-													.getParam("port")));
+											"192.168.0.255", Integer
+													.parseInt(Config
+															.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
 
 									if (InstructorNoa.getSendOnly() != null) {
@@ -1608,10 +1613,11 @@ public class InstructorNoaUtil {
 												+ ".255";
 										as = new AVSendOnly("5010", ip, "10010");
 										InstructorNoa.setSendOnly(as);
-										as.start();
+										as.start("audio");
 										button.setText("Stop");
 									} else {
-										InstructorNoa.getSendOnly().start();
+										InstructorNoa.getSendOnly().start(
+												"audio");
 										button.setText("Stop");
 									}
 								}
