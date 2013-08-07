@@ -99,6 +99,9 @@ public class InstructorNoa {
 	private static AVTransmit2 transmitter;
 	private static AVReceiveOnly receiverOnly;
 	private static AVSendOnly sendOnly;
+	private static boolean transmitting;
+	private static String transmittingType;
+	
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
 	private static List<Group> groups = new ArrayList<Group>();
@@ -1890,5 +1893,22 @@ public class InstructorNoa {
 
 	public static void setModeling(boolean modeling) {
 		InstructorNoa.modeling = modeling;
+	}
+
+	public static boolean isTransmitting() {
+		return getSendOnly().isTransmitting() && getTransmitter().isTransmitting(); 
+		
+	}
+
+	public static void setTransmitting(boolean transmitting) {
+		InstructorNoa.transmitting = transmitting;
+	}
+
+	public static String getTransmittingType() {
+		return transmittingType;
+	}
+
+	public static void setTransmittingType(String transmittingType) {
+		InstructorNoa.transmittingType = transmittingType;
 	}
 }

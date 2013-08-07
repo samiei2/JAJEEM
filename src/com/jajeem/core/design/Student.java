@@ -95,13 +95,10 @@ public class Student {
 
 			new Config();
 
-			// initiate Libjitsi for intercom
-			// LibJitsi.start();
 			setTransmitter(new AVTransmit2("10000", "", "5000"));
-			// setReceiver(new AVReceive2("10000", "", "5000"));
+			setReceiverOnly(new AVReceiveOnly("10010", "", "5010"));
 
 		} catch (Throwable e) {
-			// Something went wrong
 		}
 
 		initialize();
@@ -144,8 +141,6 @@ public class Student {
 	}
 
 	private WebPanel createPanel() throws IOException {
-
-		new Config();
 
 		WebPanel panel = new WebPanel();
 		panel.setUndecorated(false);
@@ -371,10 +366,11 @@ public class Student {
 	}
 
 	public static void setIntercomButtonStop() throws IOException {
-		intercomButton.setIcon(new ImageIcon(
-				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
-		
+		intercomButton
+				.setIcon(new ImageIcon(
+						ImageIO.read(Student.class
+								.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
+
 	}
 
 	public static JFrame getFrmJajeemProject() {

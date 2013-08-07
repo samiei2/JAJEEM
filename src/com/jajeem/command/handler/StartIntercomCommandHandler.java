@@ -25,7 +25,6 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().start("audio");
 			Student.setIntercomButtonStop();
-			
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();

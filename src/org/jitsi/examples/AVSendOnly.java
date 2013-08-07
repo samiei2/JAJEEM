@@ -348,7 +348,7 @@ public class AVSendOnly {
 		LibJitsi.start();
 		try {
 			// Create a audio transmit object with the specified params.
-			AVSendOnly at = new AVSendOnly("5000", "192.168.0.119", "10000");
+			AVSendOnly at = new AVSendOnly("5000", "192.168.0.101", "10000");
 			// Start the transmission
 			String result = at.start("both");
 

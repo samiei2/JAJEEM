@@ -37,6 +37,7 @@ public class IntercomRequestCommandHanlder implements ICommandHandler {
 			InstructorNoa.getTransmitter().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
 			InstructorNoa.getTransmitter().start("audio");
+			InstructorNoa.setTransmittingType("intercom");
 			InstructorNoa.setIntercomText("Stop");
 
 		}

@@ -63,6 +63,7 @@ import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartUpCommand;
+import com.jajeem.command.model.StartVideoChatCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopIntercomCommand;
@@ -231,6 +232,8 @@ public class InstructorNoaUtil {
 												InstructorNoa.getTransmitter()
 														.start("audio");
 												InstructorNoa
+														.setTransmittingType("intercom");
+												InstructorNoa
 														.setIntercomText("Stop");
 											}
 
@@ -271,6 +274,8 @@ public class InstructorNoaUtil {
 																		.getByName(selectedStudent));
 												InstructorNoa.getTransmitter()
 														.start("audio");
+												InstructorNoa
+														.setTransmittingType("intercom");
 												InstructorNoa.setIntercomText(i18n
 														.getParam("Stop"));
 
@@ -296,6 +301,8 @@ public class InstructorNoaUtil {
 																		.getByName(selectedStudent));
 												InstructorNoa.getTransmitter()
 														.start("audio");
+												InstructorNoa
+														.setTransmittingType("intercom");
 												InstructorNoa.setIntercomText(i18n
 														.getParam("Stop"));
 											}
@@ -334,6 +341,8 @@ public class InstructorNoaUtil {
 												InstructorNoa
 														.getServerService()
 														.send(si);
+												InstructorNoa
+														.setTransmittingType("");
 
 												InstructorNoa.setIntercomText(i18n
 														.getParam("Intercom"));
@@ -411,9 +420,53 @@ public class InstructorNoaUtil {
 					break;
 
 				case "videoChat":
-					
+					button.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String selectedStudent = getSelectedStudentIp();
+							
+							if (selectedStudent != null) {
+								try {
+									if (!InstructorNoa.isTransmitting()) {
+										ServerService serv = InstructorNoa
+												.getServerService();
+										StartVideoChatCommand cmd = new StartVideoChatCommand(
+												Inet4Address.getLocalHost()
+														.getHostAddress(),
+												Config.getParam("broadcastingIp"),
+												Integer.parseInt(Config
+														.getParam("port")));
+										serv.send(cmd);
+
+										InstructorNoa
+												.getSendOnly()
+												.setRemoteAddr(
+														InetAddress
+																.getByName(selectedStudent));
+										InstructorNoa.getSendOnly().start(
+												"both");
+										button.setText("Stop");
+										InstructorNoa
+												.setTransmittingType("videoChat");
+									} else {
+										if (InstructorNoa.getTransmittingType()
+												.equals("videoChat")) {
+											InstructorNoa.getSendOnly().stop();
+											button.setText("Video Chat");
+											
+											
+											
+										}
+									}
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						}
+					});
 					break;
-					
+
 				case "group":
 					button.addActionListener(new ActionListener() {
 						@Override
@@ -625,7 +678,6 @@ public class InstructorNoaUtil {
 												.getParam("port")));
 								serv.send(cmd);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -1969,6 +2021,31 @@ public class InstructorNoaUtil {
 		} else {
 			return findWindow(c.getParent());
 		}
+	}
+
+	public Component getActiveCard() {
+		Component card = null;
+		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
+			if (comp.isVisible() == true) {
+				card = comp;
+			}
+		}
+
+		return card;
+	}
+
+	public String getSelectedStudentIp() {
+		Component card = getActiveCard();
+		String selectedStudent = null;
+		if (((JComponent) card).getClientProperty("viewMode").equals(
+				"thumbView")) {
+			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+				selectedStudent = (String) InstructorNoa.getDesktopPane()
+						.getSelectedFrame().getClientProperty("ip");
+			}
+		}
+
+		return selectedStudent;
 	}
 
 }

@@ -23,7 +23,7 @@ public class StartVideoChatCommandHandler implements ICommandHandler {
 
 			Student.getReceiverOnly().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
-			Student.getTransmitter().start("both");
+			Student.getReceiverOnly().initialize("both");
 			Student.setIntercomButtonStop();
 			
 		} catch (Exception e) {
