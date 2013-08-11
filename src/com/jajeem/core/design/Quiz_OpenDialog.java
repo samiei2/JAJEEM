@@ -62,7 +62,7 @@ public class Quiz_OpenDialog extends JDialog {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Quiz_OpenDialog(final int id, final String type) {
-		setTitle("Open");
+		setTitle("Quizzes");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Quiz_OpenDialog.class
 						.getResource("/com/jajeem/images/quiz.png")));

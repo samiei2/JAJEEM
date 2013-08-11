@@ -35,7 +35,9 @@ import com.alee.managers.tooltip.TooltipManager;
 import com.jajeem.core.design.AdminPanel.StudentTableFormat;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
+import com.jajeem.core.model.StudentCourse;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
@@ -47,26 +49,35 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class StudentDialog extends JDialog {
+public class CourseStudentDialog extends JDialog {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
+	private Course course;
+	private StudentCourseService studentCourseService = new StudentCourseService();
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @throws SQLException
 	 */
-	public StudentDialog(final CourseStudentDialog scDialog)
-			throws SQLException {
-		setTitle("Add students");
+	public CourseStudentDialog(final Course course) throws SQLException {
+		setTitle("Students");
+		this.course = course;
 		setVisible(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 610, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		final CourseStudentDialog frame = this;
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
@@ -84,35 +95,65 @@ public class StudentDialog extends JDialog {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							if (!studentSelectionModel.isSelectionEmpty()) {
-								try {
-									scDialog.addStudents(studentSelectionModel
-											.getSelected());
-								} catch (SQLException e) {
-									e.printStackTrace();
-								}
-								dispose();
+							try {
+								new StudentDialog(frame);
+							} catch (SQLException e) {
+								e.printStackTrace();
 							}
 						}
 					});
 				}
+				{
+					WebButton deleteButton = new WebButton("Delete");
+					panel.add(deleteButton);
+					deleteButton.addActionListener(new ActionListener() {
 
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							int resp = WebOptionPane.showConfirmDialog(
+									contentPanel,
+									"Do you want to Delete selected item(s)?",
+									"Confirm", WebOptionPane.YES_NO_OPTION,
+									WebOptionPane.QUESTION_MESSAGE);
+							if (resp == 0) {
+								if (!studentSelectionModel.isSelectionEmpty()) {
+									for (Student student : studentSelectionModel
+											.getSelected()) {
+										try {
+											studentCourseService.delete(
+													student.getId(),
+													course.getId());
+										} catch (SQLException e1) {
+											e1.printStackTrace();
+										}
+									}
+									getStudentList()
+											.removeAll(
+													studentSelectionModel
+															.getSelected());
+
+								}
+							}
+						}
+					});
+				}
 			}
 			{
 				JPanel panel = new JPanel();
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
+				{
+					WebButton okButton = new WebButton("Ok");
+					panel.add(okButton);
+					okButton.addActionListener(new ActionListener() {
 
-				WebButton okButton = new WebButton("Ok");
-				panel.add(okButton);
-				okButton.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						dispose();
-					}
-				});
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							dispose();
+						}
+					});
+				}
 			}
 		}
 
@@ -121,10 +162,20 @@ public class StudentDialog extends JDialog {
 	}
 
 	private void loadData() throws SQLException {
-		StudentService studentService = new StudentService();
-		ArrayList<com.jajeem.core.model.Student> studentList = studentService
-				.list();
+		ArrayList<com.jajeem.core.model.Student> studentList = studentCourseService
+				.getcourseStudentsById(course.getId());
 		getStudentList().addAll(studentList);
+	}
+
+	public void addStudents(EventList<Student> stuList) throws SQLException {
+		studentList.addAll(stuList);
+		StudentCourse sc = new StudentCourse();
+		for (Student student : stuList) {
+			sc.setCourseId(course.getId());
+			sc.setStudentId(student.getId());
+			sc.setScore(0);
+			studentCourseService.create(sc);
+		}
 	}
 
 	@SuppressWarnings("deprecation")

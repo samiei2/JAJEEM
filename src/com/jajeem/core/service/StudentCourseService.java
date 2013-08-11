@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.jajeem.core.dao.h2.StudentCourseDAO;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.model.StudentCourse;
+import com.jajeem.room.model.Course;
 
 public class StudentCourseService implements IStudentCourseService {
 	private StudentCourseDAO studentCourseDAO = new StudentCourseDAO();
@@ -56,6 +57,13 @@ public class StudentCourseService implements IStudentCourseService {
 			throws SQLException {
 		if (studentCourseDAO != null)
 			return studentCourseDAO.getCourseStudentsById(courseId);
+		return null;
+	}
+	
+	public ArrayList<Course> getStudentCoursesById(int studentId)
+			throws SQLException {
+		if (studentCourseDAO != null)
+			return studentCourseDAO.getStudentCoursesById(studentId);
 		return null;
 	}
 

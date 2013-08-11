@@ -273,7 +273,7 @@ public class AdminPanel extends WebFrame {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
 						try {
-							new StudentCourseDialog(course);
+							new CourseStudentDialog(course);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -356,7 +356,7 @@ public class AdminPanel extends WebFrame {
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
-		JLabel filterLabel = new JLabel(i18n.getParam("Search") + " :");
+		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
 		topPanel.add(filterLabel);
 		WebTextField courseFilterTF = new WebTextField();
 		topPanel.add(courseFilterTF);
@@ -499,7 +499,7 @@ public class AdminPanel extends WebFrame {
 				}
 			}
 		});
-		
+
 		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
 		buttonPanel.add(quizButton);
 		quizButton.addActionListener(new ActionListener() {
@@ -512,8 +512,8 @@ public class AdminPanel extends WebFrame {
 								"Please select one instructor.", "Message",
 								WebOptionPane.INFORMATION_MESSAGE);
 					} else {
-						Instructor instructor = instructorSelectionModel.getSelected().get(
-								0);
+						Instructor instructor = instructorSelectionModel
+								.getSelected().get(0);
 						new Quiz_OpenDialog(instructor.getId(), "instructor");
 					}
 				}
@@ -635,6 +635,30 @@ public class AdminPanel extends WebFrame {
 						getStudentList().removeAll(
 								studentSelectionModel.getSelected());
 
+					}
+				}
+			}
+		});
+
+		WebButton courseButton = new WebButton(i18n.getParam("Courses"));
+		buttonPanel.add(courseButton);
+		courseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!studentSelectionModel.isSelectionEmpty()) {
+					if (studentSelectionModel.getSelected().size() > 1) {
+						WebOptionPane.showMessageDialog(frame,
+								"Please select one student.", "Message",
+								WebOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Student student = studentSelectionModel.getSelected()
+								.get(0);
+						try {
+							new StudentCourseDialog(student);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}

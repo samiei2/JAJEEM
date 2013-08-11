@@ -12,6 +12,7 @@ import com.jajeem.core.dao.IStudentCourseDAO;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.model.StudentCourse;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.room.model.Course;
 import com.jajeem.util.BaseDAO;
 
 public class StudentCourseDAO implements IStudentCourseDAO {
@@ -219,7 +220,7 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 
 		return false;
 	}
-	
+
 	public boolean delete(int studentId, int courseId) throws SQLException {
 
 		PreparedStatement ps = null;
@@ -366,4 +367,73 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 		return allStudentCourses;
 	}
 
+	public ArrayList<Course> getStudentCoursesById(int studentId)
+			throws SQLException {
+
+		ArrayList<Course> allCourses = new ArrayList<>();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM COURSE C JOIN STUDENTCOURSE SC ON (C.ID=SC.COURSEID) WHERE SC.STUDENTID=?");
+		ps.setInt(1, studentId);
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Course course = new Course();
+
+				course.setId(rs.getInt("id"));
+				course.setInstructorId(rs.getInt("instructorId"));
+				course.setName(rs.getString("name"));
+				course.setClassType(rs.getString("classType"));
+				course.setLevel(rs.getString("level"));
+				course.setStartDate(rs.getLong("startDate"));
+				course.setSession(rs.getInt("session"));
+				course.setDay1(rs.getString("day1"));
+				course.setStartTime1(rs.getInt("startTime1"));
+				course.setEndTime1(rs.getInt("endTime1"));
+				course.setDay2(rs.getString("day2"));
+				course.setStartTime2(rs.getInt("startTime2"));
+				course.setEndTime2(rs.getInt("endTime2"));
+				course.setDay3(rs.getString("day3"));
+				course.setStartTime3(rs.getInt("startTime3"));
+				course.setEndTime3(rs.getInt("endTime3"));
+				course.setDay4(rs.getString("day4"));
+				course.setStartTime4(rs.getInt("startTime4"));
+				course.setEndTime4(rs.getInt("endTime4"));
+				course.setDay5(rs.getString("day5"));
+				course.setStartTime5(rs.getInt("startTime5"));
+				course.setEndTime5(rs.getInt("endTime5"));
+
+				allCourses.add(course);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return allCourses;
+	}
 }
