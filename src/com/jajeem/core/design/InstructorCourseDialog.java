@@ -32,13 +32,9 @@ import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.core.design.AdminPanel.StudentTableFormat;
+import com.jajeem.core.design.AdminPanel.InstructorTableFormat;
 import com.jajeem.core.model.Instructor;
-import com.jajeem.core.model.Student;
-import com.jajeem.core.model.StudentCourse;
 import com.jajeem.core.service.InstructorService;
-import com.jajeem.core.service.StudentCourseService;
-import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.StripedTableCellRenderer;
@@ -49,7 +45,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class StudentCourseDialog extends JDialog {
+public class InstructorCourseDialog extends JDialog {
 
 	/**
 	 * 
@@ -58,18 +54,18 @@ public class StudentCourseDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
-	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
+	private EventList<com.jajeem.core.model.Instructor> instructorList = new BasicEventList<com.jajeem.core.model.Instructor>();
+	private EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel;
 	private Course course;
-	private StudentCourseService studentCourseService = new StudentCourseService();
+	private InstructorService instructorService = new InstructorService();
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @throws SQLException
 	 */
-	public StudentCourseDialog(final Course course) throws SQLException {
-		setTitle("Students");
+	public InstructorCourseDialog(final Course course) throws SQLException {
+		setTitle("Instructors");
 		this.course = course;
 		setVisible(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -77,7 +73,7 @@ public class StudentCourseDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		final StudentCourseDialog frame = this;
+		final InstructorCourseDialog frame = this;
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
@@ -88,55 +84,6 @@ public class StudentCourseDialog extends JDialog {
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 				flowLayout.setAlignment(FlowLayout.LEADING);
 				buttonPane.add(panel);
-				{
-					WebButton addButton = new WebButton("Add");
-					panel.add(addButton);
-					addButton.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent arg0) {
-							try {
-								new StudentDialog(frame);
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}
-					});
-				}
-				{
-					WebButton deleteButton = new WebButton("Delete");
-					panel.add(deleteButton);
-					deleteButton.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent arg0) {
-							int resp = WebOptionPane.showConfirmDialog(
-									contentPanel,
-									"Do you want to Delete selected item(s)?",
-									"Confirm", WebOptionPane.YES_NO_OPTION,
-									WebOptionPane.QUESTION_MESSAGE);
-							if (resp == 0) {
-								if (!studentSelectionModel.isSelectionEmpty()) {
-									for (Student student : studentSelectionModel
-											.getSelected()) {
-										try {
-											studentCourseService.delete(
-													student.getId(),
-													course.getId());
-										} catch (SQLException e1) {
-											e1.printStackTrace();
-										}
-									}
-									getStudentList()
-											.removeAll(
-													studentSelectionModel
-															.getSelected());
-
-								}
-							}
-						}
-					});
-				}
 			}
 			{
 				JPanel panel = new JPanel();
@@ -158,37 +105,26 @@ public class StudentCourseDialog extends JDialog {
 		}
 
 		loadData();
-		getContentPane().add(initStudent());
+		getContentPane().add(initInstructor());
 	}
 
 	private void loadData() throws SQLException {
-		ArrayList<com.jajeem.core.model.Student> studentList = studentCourseService
-				.getcourseStudentsById(course.getId());
-		getStudentList().addAll(studentList);
-	}
-
-	public void addStudents(EventList<Student> stuList) throws SQLException {
-		studentList.addAll(stuList);
-		StudentCourse sc = new StudentCourse();
-		for (Student student : stuList) {
-			sc.setCourseId(course.getId());
-			sc.setStudentId(student.getId());
-			sc.setScore(0);
-			studentCourseService.create(sc);
-		}
+		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
+				.getByCourseId(course.getId());
+		getInstructorList().addAll(instructorList);
 	}
 
 	@SuppressWarnings("deprecation")
-	private WebPanel initStudent() {
+	private WebPanel initInstructor() {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-		JTable studentTable = new JTable();
+		JTable instructorTable = new JTable();
 
-		jScrollPane1.setViewportView(studentTable);
+		jScrollPane1.setViewportView(instructorTable);
 		panel.add(jScrollPane1);
 
 		WebPanel topPanel = new WebPanel();
@@ -198,13 +134,13 @@ public class StudentCourseDialog extends JDialog {
 
 		JLabel filterLabel = new JLabel("Search: ");
 		topPanel.add(filterLabel);
-		WebTextField studentFilterTF = new WebTextField();
-		topPanel.add(studentFilterTF);
+		WebTextField instructorFilterTF = new WebTextField();
+		topPanel.add(instructorFilterTF);
 
-		TextFilterator<Student> personTextFilterator = new TextFilterator<Student>() {
+		TextFilterator<Instructor> personTextFilterator = new TextFilterator<Instructor>() {
 			@SuppressWarnings("unchecked")
 			@Override
-			public void getFilterStrings(java.util.List list, Student s) {
+			public void getFilterStrings(java.util.List list, Instructor s) {
 				// field you want to enable filter
 				list.add(s.getId());
 				list.add(s.getFirstName());
@@ -214,32 +150,32 @@ public class StudentCourseDialog extends JDialog {
 		};
 
 		// Table Configuration
-		MatcherEditor<Student> textMatcherEditor = new TextComponentMatcherEditor<Student>(
-				studentFilterTF, personTextFilterator);
-		FilterList<Student> filterList = new FilterList<Student>(
-				getStudentList(), textMatcherEditor);
-		SortedList<Student> sortedStudent = new SortedList<Student>(filterList,
+		MatcherEditor<Instructor> textMatcherEditor = new TextComponentMatcherEditor<Instructor>(
+				instructorFilterTF, personTextFilterator);
+		FilterList<Instructor> filterList = new FilterList<Instructor>(
+				getInstructorList(), textMatcherEditor);
+		SortedList<Instructor> sortedInstructor = new SortedList<Instructor>(filterList,
 				null);
-		AdvancedTableModel<Student> model = GlazedListsSwing
-				.eventTableModelWithThreadProxyList(sortedStudent,
-						new StudentTableFormat());
+		AdvancedTableModel<Instructor> model = GlazedListsSwing
+				.eventTableModelWithThreadProxyList(sortedInstructor,
+						new InstructorTableFormat());
 
-		studentSelectionModel = new EventSelectionModel<Student>(filterList);
-		studentTable.setSelectionModel(studentSelectionModel);
-		studentTable.setModel(model);
-		TableComparatorChooser<Student> tableSorter = TableComparatorChooser
-				.install(studentTable, sortedStudent,
+		instructorSelectionModel = new EventSelectionModel<Instructor>(filterList);
+		instructorTable.setSelectionModel(instructorSelectionModel);
+		instructorTable.setModel(model);
+		TableComparatorChooser<Instructor> tableSorter = TableComparatorChooser
+				.install(instructorTable, sortedInstructor,
 						TableComparatorChooser.SINGLE_COLUMN);
 
-		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
+		StripedTableCellRenderer.installInTable(instructorTable, Color.lightGray,
 				Color.white, null, null);
-		studentTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		return panel;
 	}
 
-	public class StudentTableFormat implements TableFormat<Student>,
-			WritableTableFormat<Student> {
+	public class InstructorTableFormat implements TableFormat<Instructor>,
+			WritableTableFormat<Instructor> {
 
 		public int getColumnCount() {
 			return 4;
@@ -258,38 +194,38 @@ public class StudentCourseDialog extends JDialog {
 			throw new IllegalStateException();
 		}
 
-		public Object getColumnValue(Student student, int column) {
+		public Object getColumnValue(Instructor instructor, int column) {
 
 			if (column == 0)
-				return student.getId();
+				return instructor.getId();
 			if (column == 1)
-				return student.getFirstName();
+				return instructor.getFirstName();
 			else if (column == 2)
-				return student.getLastName();
+				return instructor.getLastName();
 			else if (column == 3)
-				return student.getUsername();
+				return instructor.getUsername();
 
 			throw new IllegalStateException();
 		}
 
 		@Override
-		public boolean isEditable(Student baseObject, int column) {
+		public boolean isEditable(Instructor baseObject, int column) {
 			return false;
 		}
 
 		@Override
-		public Student setColumnValue(Student baseObject, Object editedValue,
+		public Instructor setColumnValue(Instructor baseObject, Object editedValue,
 				int column) {
 			return baseObject;
 		}
 	}
 
-	public EventList<com.jajeem.core.model.Student> getStudentList() {
-		return studentList;
+	public EventList<com.jajeem.core.model.Instructor> getInstructorList() {
+		return instructorList;
 	}
 
-	public void setStudentList(
-			EventList<com.jajeem.core.model.Student> studentList) {
-		this.studentList = studentList;
+	public void setInstructorList(
+			EventList<com.jajeem.core.model.Instructor> instructorList) {
+		this.instructorList = instructorList;
 	}
 }

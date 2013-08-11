@@ -58,25 +58,25 @@ import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
 public class AdminPanel extends WebFrame {
-	
+
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private static AdminPanel frame;
 	private WebPanel contentPane;
-	
+
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
-	
+
 	private EventList<com.jajeem.core.model.Instructor> instructorList = new BasicEventList<com.jajeem.core.model.Instructor>();
 	private EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel;
-	
+
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -188,7 +188,7 @@ public class AdminPanel extends WebFrame {
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
 
-		WebButton addButton = new WebButton("Add");
+		WebButton addButton = new WebButton(i18n.getParam("Add"));
 		buttonPanel.add(addButton);
 		addButton.addActionListener(new ActionListener() {
 
@@ -277,6 +277,50 @@ public class AdminPanel extends WebFrame {
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
+					}
+				}
+			}
+		});
+
+		WebButton instructorButton = new WebButton(i18n.getParam("Instructors"));
+		// buttonPanel.add(instructorButton);
+		instructorButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!courseSelectionModel.isSelectionEmpty()) {
+					if (courseSelectionModel.getSelected().size() > 1) {
+						WebOptionPane.showMessageDialog(frame,
+								"Please select one course.", "Message",
+								WebOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Course course = courseSelectionModel.getSelected().get(
+								0);
+						try {
+							new InstructorCourseDialog(course);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+
+		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
+		buttonPanel.add(quizButton);
+		quizButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!courseSelectionModel.isSelectionEmpty()) {
+					if (courseSelectionModel.getSelected().size() > 1) {
+						WebOptionPane.showMessageDialog(frame,
+								"Please select one course.", "Message",
+								WebOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Course course = courseSelectionModel.getSelected().get(
+								0);
+						new Quiz_OpenDialog(course.getId(), "course");
 					}
 				}
 			}
@@ -451,6 +495,26 @@ public class AdminPanel extends WebFrame {
 						getInstructorList().removeAll(
 								instructorSelectionModel.getSelected());
 
+					}
+				}
+			}
+		});
+		
+		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
+		buttonPanel.add(quizButton);
+		quizButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!instructorSelectionModel.isSelectionEmpty()) {
+					if (instructorSelectionModel.getSelected().size() > 1) {
+						WebOptionPane.showMessageDialog(frame,
+								"Please select one instructor.", "Message",
+								WebOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Instructor instructor = instructorSelectionModel.getSelected().get(
+								0);
+						new Quiz_OpenDialog(instructor.getId(), "instructor");
 					}
 				}
 			}

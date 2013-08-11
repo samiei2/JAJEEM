@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.command.service.ServerService;
 import com.jajeem.core.dao.IInstructorDAO;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
@@ -308,6 +306,61 @@ public class InstructorDAO implements IInstructorDAO {
 		}
 
 		return instructor;
+	}
+	
+	public ArrayList<Instructor> getByCourseId(int courseId)
+			throws SQLException {
+
+		ArrayList<Instructor> allInstructors = new ArrayList<>();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM Instructor I JOIN Course C ON (I.ID=C.INSTRUCTORID) WHERE C.ID=?");
+		ps.setInt(1, courseId);
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Instructor instructor = new Instructor();
+
+				instructor.setId(rs.getInt("id"));
+				instructor.setFirstName(rs.getString("firstName"));
+				instructor.setMiddleName(rs.getString("middleName"));
+				instructor.setLastName(rs.getString("lastName"));
+				instructor.setUsername(rs.getString("username"));
+				instructor.setPassword(rs.getString("password"));
+				instructor.setLanguage(rs.getString("language"));
+
+				allInstructors.add(instructor);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return allInstructors;
 	}
 
 	@Override

@@ -40,6 +40,12 @@ public class InstructorService implements IInstructorService{
 			return instructordao.getById(id);
 		return null;
 	}
+	
+	public ArrayList<Instructor> getByCourseId(int courseId) throws SQLException {
+		if(instructordao!=null)
+			return instructordao.getByCourseId(courseId);
+		return null;
+	}
 
 	@Override
 	public boolean update(Instructor instruct) throws SQLException {
@@ -69,7 +75,4 @@ public class InstructorService implements IInstructorService{
 	public void setInstructorDAO(InstructorDAO instructor) {
 		this.instructordao = instructor;
 	}
-
-	
-
 }

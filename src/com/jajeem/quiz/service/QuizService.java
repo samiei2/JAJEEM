@@ -66,6 +66,20 @@ public class QuizService implements IQuizService{
 			return quizDAO.list();
 		return null;
 	}
+	
+	public ArrayList<Quiz> listByCourseId(int courseId) throws SQLException {
+		quizDAO = new QuizDAO();//TODO remove this line
+		if(quizDAO != null)
+			return quizDAO.listByCourseId(courseId);
+		return null;
+	}
+	
+	public ArrayList<Quiz> listByInstructorId(int instructorId) throws SQLException {
+		quizDAO = new QuizDAO();//TODO remove this line
+		if(quizDAO != null)
+			return quizDAO.listByInstructorId(instructorId);
+		return null;
+	}
 
 	@Override
 	public Quiz copy(Quiz quiz) throws SQLException {
