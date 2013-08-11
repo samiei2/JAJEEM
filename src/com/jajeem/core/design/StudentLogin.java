@@ -35,6 +35,7 @@ import com.jajeem.filemanager.client.ClientFileServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
+import com.jajeem.util.i18n;
 
 public class StudentLogin extends JDialog {
 
@@ -107,6 +108,8 @@ public class StudentLogin extends JDialog {
 	public StudentLogin() throws NumberFormatException, Exception {
 
 		new Config();
+		new i18n();
+		
 		LibJitsi.start();
 		
 		new Thread(new Runnable() {
@@ -119,7 +122,7 @@ public class StudentLogin extends JDialog {
 		
 		if(!new File("util").exists()){
 //			Unzipper.unzip("util.zip");
-			JOptionPane.showMessageDialog(null, "util folder does not exist.Please call your administrator!\nShutting Down!");
+			JOptionPane.showMessageDialog(null, i18n.getParam("util folder does not exist.Please call your administrator!\nShutting Down!"));
 			System.exit(1);
 		}
 		
@@ -192,8 +195,8 @@ public class StudentLogin extends JDialog {
 		private static final long serialVersionUID = -4106820035425545163L;
 		public static String name = "";
 
-		public LoginDialog(Window owner) {
-			super(owner, "Login to iCalabo");
+		public LoginDialog(Window owner) throws Exception {
+			super(owner, i18n.getParam("Login to iCalabo"));
 			setIconImage(Toolkit.getDefaultToolkit().getImage(
 					Student.class.getResource("/icons/menubar/jajeem.jpg")));
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
@@ -211,15 +214,15 @@ public class StudentLogin extends JDialog {
 			content.setMargin(15, 30, 15, 30);
 			content.setOpaque(false);
 
-			content.add(new WebLabel("Name", WebLabel.TRAILING), "0,0");
+			content.add(new WebLabel(i18n.getParam("Name"), WebLabel.TRAILING), "0,0");
 			content.add(username, "1,0");
 
-			content.add(new WebLabel("Password", WebLabel.TRAILING), "0,1");
+			content.add(new WebLabel(i18n.getParam("Password"), WebLabel.TRAILING), "0,1");
 			content.add(password, "1,1");
 
-			WebButton login = new WebButton("Login");
+			WebButton login = new WebButton(i18n.getParam("Login"));
 			login.setRound(0);
-			WebButton cancel = new WebButton("Cancel");
+			WebButton cancel = new WebButton(i18n.getParam("Cancel"));
 			cancel.setRound(0);
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

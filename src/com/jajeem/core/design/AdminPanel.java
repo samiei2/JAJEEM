@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,29 +52,31 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import com.jajeem.util.Config;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
 public class AdminPanel extends WebFrame {
-
+	
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	private static AdminPanel frame;
 	private WebPanel contentPane;
-
+	
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
-
+	
 	private EventList<com.jajeem.core.model.Instructor> instructorList = new BasicEventList<com.jajeem.core.model.Instructor>();
 	private EventSelectionModel<com.jajeem.core.model.Instructor> instructorSelectionModel;
-
+	
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -81,8 +84,12 @@ public class AdminPanel extends WebFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					new Config();
+					new i18n();
+
 					frame = new AdminPanel();
 					frame.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -96,7 +103,7 @@ public class AdminPanel extends WebFrame {
 	 * @throws Exception
 	 */
 	public AdminPanel() throws Exception {
-		setTitle("Admin Panel");
+		setTitle(i18n.getParam("Admin Panel"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
 		contentPane = new WebPanel();
@@ -195,31 +202,39 @@ public class AdminPanel extends WebFrame {
 			}
 		});
 
-		WebButton deleteButton = new WebButton("Delete");
+		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
 		buttonPanel.add(deleteButton);
 		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) throws HeadlessException {
 
-				int resp = WebOptionPane.showConfirmDialog(panel,
-						"Do you want to Delete selected item(s)?", "Confirm",
-						WebOptionPane.YES_NO_OPTION,
-						WebOptionPane.QUESTION_MESSAGE);
-				if (resp == 0) {
-					if (!courseSelectionModel.isSelectionEmpty()) {
-						RoomService rs = new RoomService();
-						for (Course course : courseSelectionModel.getSelected()) {
-							try {
-								if (course.getInstructorId() != 0) {
-									rs.getCourseDAO().delete(course);
+				int resp;
+				try {
+					resp = WebOptionPane.showConfirmDialog(
+							panel,
+							i18n.getParam("Do you want to Delete selected item(s)?"),
+							i18n.getParam("Confirm"),
+							WebOptionPane.YES_NO_OPTION,
+							WebOptionPane.QUESTION_MESSAGE);
+					if (resp == 0) {
+						if (!courseSelectionModel.isSelectionEmpty()) {
+							RoomService rs = new RoomService();
+							for (Course course : courseSelectionModel
+									.getSelected()) {
+								try {
+									if (course.getInstructorId() != 0) {
+										rs.getCourseDAO().delete(course);
+									}
+								} catch (SQLException e1) {
+									e1.printStackTrace();
 								}
-							} catch (SQLException e1) {
-								e1.printStackTrace();
 							}
-						}
-						getCourseList().removeAll(
-								courseSelectionModel.getSelected());
+							getCourseList().removeAll(
+									courseSelectionModel.getSelected());
 
+						}
 					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
 				}
 			}
 		});
