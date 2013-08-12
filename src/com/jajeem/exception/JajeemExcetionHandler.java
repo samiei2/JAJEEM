@@ -2,10 +2,6 @@ package com.jajeem.exception;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.xml.DOMConfigurator;
-
-import com.jajeem.core.dao.h2.StudentDAO;
-import com.jajeem.groupwork.dao.h2.GroupDAO;
 
 @SuppressWarnings("serial")
 public class JajeemExcetionHandler extends Exception{

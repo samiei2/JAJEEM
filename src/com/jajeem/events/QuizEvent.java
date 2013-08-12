@@ -5,12 +5,6 @@ import java.util.UUID;
 
 import javax.swing.event.EventListenerList;
 
-import com.jajeem.quiz.design.alt.Quiz_SecondPage;
-
-/**
- * Created with IntelliJ IDEA. User: Armin Date: 5/1/13 Time: 3:03 PM To change
- * this template use File | Settings | File Templates.
- */
 public class QuizEvent implements Serializable {
 	/**
 	 * 

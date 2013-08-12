@@ -13,5 +13,4 @@ public class SendQuizResponseCommandHandler implements ICommandHandler{
 		QuizResponse resp = command.getEvent();
 		new QuizEvent().fireResponseEvent(resp);
 	}
-
 }

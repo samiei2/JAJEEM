@@ -29,7 +29,6 @@ import com.jajeem.command.handler.SendQuizResponseCommandHandler;
 import com.jajeem.command.handler.SendSpeechFileCommandHandler;
 import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
 import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
-import com.jajeem.command.handler.SetBlackoutCommandHandler;
 import com.jajeem.command.handler.SetGrantCommandHanlder;
 import com.jajeem.command.handler.SetInternetCommandHandler;
 import com.jajeem.command.handler.SetLockCommandHandler;
@@ -60,7 +59,6 @@ import com.jajeem.command.handler.StopSurveyCommandHanlder;
 import com.jajeem.command.handler.StopVideoChatCommandHandler;
 import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
 import com.jajeem.command.model.AuthenticateCommand;
-import com.jajeem.command.model.BlackoutCommand;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.FinishedQuizCommand;
@@ -159,58 +157,61 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
-		
+
 		// only for C!
 		String message = "";
 		message += new String(buffer, "UTF8");
 		if (message.contains("fromC!")) {
 			message = message.replaceAll("fromC!", "");
 			logger.info("From C, file path is: " + message);
-			
+
 			SendSpeechFile(message);
-			
+
 			return message.getBytes();
 		}
-		
+
 		return packet.getData();
 	}
 
 	private void SendSpeechFile(final String message) {
 		Thread t = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				
+
 				try {
-					String fileName= message.substring(message.lastIndexOf("\\")+1, message.length());
-					SendFileToAll(new File(message),fileName);
-					
-//					JOptionPane.showMessageDialog(null, "Speech Recognition started for all users!");
+					String fileName = message.substring(
+							message.lastIndexOf("\\") + 1, message.length());
+					SendFileToAll(new File(message), fileName);
+
+					// JOptionPane.showMessageDialog(null,
+					// "Speech Recognition started for all users!");
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "An error occured in sending speech file to users!");
+					JOptionPane
+							.showMessageDialog(null,
+									"An error occured in sending speech file to users!");
 					JajeemExcetionHandler.logError(e);
 				}
 			}
 		});
 		t.start();
 	}
-	
-	
-	protected void SendFileToAll(final File file,String fileName) {
-		try{
+
+	protected void SendFileToAll(final File file, String fileName) {
+		try {
 			final ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
-			System.out.println("Ips Count : "+ips.size());
+			System.out.println("Ips Count : " + ips.size());
 			try {
-				for (int i = 0; i < ips.size(); i++) { // send for all selected clients
-					Runnable r = new MyThread(file,ips.get(i),fileName);
+				for (int i = 0; i < ips.size(); i++) { // send for all selected
+														// clients
+					Runnable r = new MyThread(file, ips.get(i), fileName);
 					new Thread(r).start();
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
-		}
-		catch(Exception e){
+
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
@@ -295,10 +296,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
 					setWhiteBlackAppCommandHandler.run(cmd);
 
-				} else if (cmd instanceof BlackoutCommand) {
-					SetBlackoutCommandHandler setBlackoutCommandHandler = new SetBlackoutCommandHandler();
-					setBlackoutCommandHandler.run(cmd);
-
 				} else if (cmd instanceof InternetCommand) {
 					SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
 					setInternetCommandHandler.run(cmd);
@@ -364,7 +361,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
 					startIntercomCommandHandler.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopIntercomCommand) {
 					StopIntercomCommandHandler stopIntercomCommandHandler = new StopIntercomCommandHandler();
 					stopIntercomCommandHandler.run(cmd);
@@ -419,41 +416,40 @@ public class ClientService implements IConnectorSevice, Runnable {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StartCallAllCommand) {
 					StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
 					startCallAllCommandHanlder.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopCallAllCommand) {
 					StopCallAllCommandHanlder stopCallAllCommandHanlder = new StopCallAllCommandHanlder();
 					stopCallAllCommandHanlder.run(cmd);
 				}
-				
-				else if(cmd instanceof StartSpeechCommand){
+
+				else if (cmd instanceof StartSpeechCommand) {
 					StartSpeechCommandHandler hnldr = new StartSpeechCommandHandler();
 					hnldr.run(cmd);
 				}
-				
-				else if(cmd instanceof SendSpeechFileCommand){
+
+				else if (cmd instanceof SendSpeechFileCommand) {
 					SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
 					hnldr.run(cmd);
 				}
-				
-				else if(cmd instanceof FinishedQuizCommand){
+
+				else if (cmd instanceof FinishedQuizCommand) {
 					FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
 					hnldr.run(cmd);
-				}
-				else if(cmd instanceof FinishedSurveyCommand){
+				} else if (cmd instanceof FinishedSurveyCommand) {
 					FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
 					hnldr.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StartVideoChatCommand) {
 					StartVideoChatCommandHandler startVideoChatCommandHandler = new StartVideoChatCommandHandler();
 					startVideoChatCommandHandler.run(cmd);
 				}
-				
+
 				else if (cmd instanceof StopVideoChatCommand) {
 					StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
 					stopVideoChatCommandHandler.run(cmd);
@@ -481,68 +477,75 @@ public class ClientService implements IConnectorSevice, Runnable {
 }
 
 class MyThread implements Runnable {
-	
+
 	File file;
 	String ip;
 	String fileName;
-	public MyThread(File fileInp,String inp,String fname) {
+
+	public MyThread(File fileInp, String inp, String fname) {
 		file = fileInp;
 		ip = inp;
 		fileName = fname;
 	}
 
 	public void run() {
-		   try {
-				System.out.println("Ip : "+ip);
-				Socket clientSocket=new Socket(ip,12345);
-//				Socket clientSocket=new Socket("127.0.0.1",12345);
-				OutputStream out=clientSocket.getOutputStream();
-			    FileInputStream fis=new FileInputStream(file);
-			    byte[] info = new byte[2048];
-			    byte[] temp = file.getPath().trim().getBytes();
-			    int len = file.getPath().trim().length();
-			    for (int k=0; k < len; k++) info[k]=temp[k];
-			    for (int k=len; k < 2048; k++) info[k]=0x00;
-			    out.write(info, 0, 2048);
-			    
-			    len = file.getName().trim().length();
-			    temp = file.getName().trim().getBytes();
-			    for (int k=0; k < len; k++) info[k]=temp[k];
-			    for (int k=len; k < 2048; k++) info[k]=0x00;
-			    out.write(info, 0, 2048);
-			    
-			    FileInputStream inp = new FileInputStream(file);
-			    long fileLength = inp.available();
-			    len = String.valueOf(inp.available()).length();
-			    temp = String.valueOf(inp.available()).getBytes();
-			    for (int k=0; k < len; k++) info[k]=temp[k];
-			    for (int k=len; k < 2048; k++) info[k]=0x00;
-			    out.write(info, 0, 2048);
-			    inp.close();
-			    
-			    int x;
-			    byte[] b = new byte[4194304];
-			    long bytesRead = 0;
-			    while((x=fis.read(b)) > 0)
-			    {
-			    	out.write(b, 0, x);
-			    	bytesRead += x;
-			    }
-			    out.flush();
-			    out.close();
-			    fis.close();
-			    
-			    new Config();
-				ServerService serv = InstructorNoa.getServerService();
-				SendSpeechFileCommand cmd = new SendSpeechFileCommand(
-						InetAddress.getLocalHost().getHostAddress(), ip, Integer.parseInt(Config.getParam("port")));
-				
-				cmd.setFile(fileName.trim());
-				serv.send(cmd);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				JajeemExcetionHandler.logError(e);
-				e.printStackTrace();
+		try {
+			System.out.println("Ip : " + ip);
+			Socket clientSocket = new Socket(ip, 12345);
+			// Socket clientSocket=new Socket("127.0.0.1",12345);
+			OutputStream out = clientSocket.getOutputStream();
+			FileInputStream fis = new FileInputStream(file);
+			byte[] info = new byte[2048];
+			byte[] temp = file.getPath().trim().getBytes();
+			int len = file.getPath().trim().length();
+			for (int k = 0; k < len; k++)
+				info[k] = temp[k];
+			for (int k = len; k < 2048; k++)
+				info[k] = 0x00;
+			out.write(info, 0, 2048);
+
+			len = file.getName().trim().length();
+			temp = file.getName().trim().getBytes();
+			for (int k = 0; k < len; k++)
+				info[k] = temp[k];
+			for (int k = len; k < 2048; k++)
+				info[k] = 0x00;
+			out.write(info, 0, 2048);
+
+			FileInputStream inp = new FileInputStream(file);
+			long fileLength = inp.available();
+			len = String.valueOf(inp.available()).length();
+			temp = String.valueOf(inp.available()).getBytes();
+			for (int k = 0; k < len; k++)
+				info[k] = temp[k];
+			for (int k = len; k < 2048; k++)
+				info[k] = 0x00;
+			out.write(info, 0, 2048);
+			inp.close();
+
+			int x;
+			byte[] b = new byte[4194304];
+			long bytesRead = 0;
+			while ((x = fis.read(b)) > 0) {
+				out.write(b, 0, x);
+				bytesRead += x;
 			}
-	   }
+			out.flush();
+			out.close();
+			fis.close();
+
+			new Config();
+			ServerService serv = InstructorNoa.getServerService();
+			SendSpeechFileCommand cmd = new SendSpeechFileCommand(InetAddress
+					.getLocalHost().getHostAddress(), ip,
+					Integer.parseInt(Config.getParam("port")));
+
+			cmd.setFile(fileName.trim());
+			serv.send(cmd);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			JajeemExcetionHandler.logError(e);
+			e.printStackTrace();
+		}
 	}
+}

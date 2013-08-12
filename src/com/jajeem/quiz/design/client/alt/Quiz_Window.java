@@ -1389,6 +1389,12 @@ public class Quiz_Window extends WebFrame {
 				// TODO Auto-generated method stub
 
 			}
+
+			@Override
+			public UUID getQuizId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 	}
 
