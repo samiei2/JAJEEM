@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -33,7 +34,7 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 	private WebComboBox webComboBox;
 	private WebPanel cards;
 	private Quiz_Main parentPanel;
-	private Quiz currentQuiz;
+	public Quiz currentQuiz;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private ArrayList<Run> runResults;
 	private QuizEvent responseRecieved;
@@ -87,6 +88,7 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 		setLayout(groupLayout);
 		responseRecieved = new QuizEvent();
 		initEvents();
+		responseRecieved.quizId = currentQuiz.getId();
 	}
 	private void initEvents() {
 		webComboBox.addItemListener(new ItemListener() {
@@ -149,6 +151,11 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 				}
 				temp.setScore(score);
 				runResults.add(temp);
+			}
+			
+			@Override
+			public UUID getQuizId(){
+				return currentQuiz.getId();
 			}
 		});
 	}

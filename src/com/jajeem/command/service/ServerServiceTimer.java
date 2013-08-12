@@ -12,8 +12,6 @@ import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.log4j.Logger;
-
 import com.jajeem.command.model.Command;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.Config;
@@ -31,35 +29,33 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 	private Command cmd;
 
 	private boolean stopped;
-	
-	static Logger logger = Logger.getLogger("ServerServiceTimer.class");
-	
+
 	public ServerServiceTimer() throws NumberFormatException, Exception {
 
-		
-			
 		stopped = false;
-		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
-		this.setInterval(Integer.parseInt(Config.getParam("interval")));;
+		this.ttl = Integer.parseInt(Config.getParam("ttl"));
+		;
+		this.setInterval(Integer.parseInt(Config.getParam("interval")));
+		;
 
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
 		timer = new Timer();
-		
-	}
-	
-	public ServerServiceTimer(String group, int ttl, int interval,
-			String type) throws NumberFormatException, Exception {
 
-		
-			
+	}
+
+	public ServerServiceTimer(String group, int ttl, int interval, String type)
+			throws NumberFormatException, Exception {
+
 		stopped = false;
-		
+
 		this.group = InetAddress.getByName(group);
 		this.host = group;
-		this.ttl = Integer.parseInt(Config.getParam("ttl"));;
+		this.ttl = Integer.parseInt(Config.getParam("ttl"));
+		;
 		this.type = type;
-		this.setInterval(Integer.parseInt(Config.getParam("interval")));;
+		this.setInterval(Integer.parseInt(Config.getParam("interval")));
+		;
 
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
@@ -69,8 +65,8 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 	@Override
 	public void start() {
 		timer.schedule(this, 0, getInterval());
-		System.out.println("Server started, sending packets each " + getInterval() + "seconds.");
-		logger.info("Server started, sending startUpCommand every: " + getInterval());
+		System.out.println("Server started, sending packets each "
+				+ getInterval() + "seconds.");
 	}
 
 	@Override
@@ -84,7 +80,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 	public void send(Command cmd) {
 		byte[] b = null;
 		InetAddress group = null;
-		
+
 		try {
 			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
@@ -92,9 +88,10 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 			e1.printStackTrace();
 		}
 		b = constructMessage(cmd);
-		
-		DatagramPacket packet = new DatagramPacket(b, b.length, group, cmd.getPort());
-		
+
+		DatagramPacket packet = new DatagramPacket(b, b.length, group,
+				cmd.getPort());
+
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
@@ -116,11 +113,11 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public void run() {
 		byte[] b = null;
-		
+
 		try {
 			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
@@ -129,7 +126,8 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		}
 
 		b = constructMessage(cmd);
-		DatagramPacket packet = new DatagramPacket(b, b.length, group, cmd.getPort());
+		DatagramPacket packet = new DatagramPacket(b, b.length, group,
+				cmd.getPort());
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
@@ -145,11 +143,12 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 			}
 		}
 	}
-	
 
 	/**
 	 * Gets an command object and convert it to an stream of bytes
-	 * @param command Command
+	 * 
+	 * @param command
+	 *            Command
 	 * @return stream of bytes
 	 */
 	private byte[] constructMessage(Command cmd) {
@@ -175,7 +174,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public boolean isStopped() {
 		return stopped;
 	}

@@ -99,9 +99,10 @@ public class InstructorNoa {
 	private static AVTransmit2 transmitter;
 	private static AVReceiveOnly receiverOnly;
 	private static AVSendOnly sendOnly;
+	@SuppressWarnings("unused")
 	private static boolean transmitting;
 	private static String transmittingType;
-	
+
 	private static List<Chat> chatList = new ArrayList<Chat>();
 	private static ServerService serverService;
 	private static List<Group> groups = new ArrayList<Group>();
@@ -1170,7 +1171,7 @@ public class InstructorNoa {
 		intercomButton.setBottomBgColor(new Color(225, 234, 244));
 		intercomButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(intercomButton);
-		
+
 		WebButton videoChatButton = new WebButton();
 		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
 		videoChatButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -1187,7 +1188,7 @@ public class InstructorNoa {
 		videoChatButton.setBottomBgColor(new Color(225, 234, 244));
 		videoChatButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(videoChatButton);
-		
+
 		WebButton groupButton = new WebButton();
 		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
 		groupButton.setIcon(new ImageIcon(InstructorNoa.class
@@ -1895,20 +1896,20 @@ public class InstructorNoa {
 		InstructorNoa.modeling = modeling;
 	}
 
-	public static boolean isTransmitting() {
-		return getSendOnly().isTransmitting() && getTransmitter().isTransmitting(); 
-		
-	}
-
-	public static void setTransmitting(boolean transmitting) {
-		InstructorNoa.transmitting = transmitting;
-	}
-
 	public static String getTransmittingType() {
 		return transmittingType;
 	}
 
 	public static void setTransmittingType(String transmittingType) {
 		InstructorNoa.transmittingType = transmittingType;
+	}
+
+	public static boolean isTransmitting() {
+		return getSendOnly().isTransmitting()
+				&& getTransmitter().isTransmitting();
+	}
+
+	public static void setTransmitting(boolean transmitting) {
+		InstructorNoa.transmitting = transmitting;
 	}
 }
