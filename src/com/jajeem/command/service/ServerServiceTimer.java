@@ -34,9 +34,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 
 		stopped = false;
 		this.ttl = Integer.parseInt(Config.getParam("ttl"));
-		;
 		this.setInterval(Integer.parseInt(Config.getParam("interval")));
-		;
 
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);
@@ -52,10 +50,8 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		this.group = InetAddress.getByName(group);
 		this.host = group;
 		this.ttl = Integer.parseInt(Config.getParam("ttl"));
-		;
 		this.type = type;
 		this.setInterval(Integer.parseInt(Config.getParam("interval")));
-		;
 
 		socket = new MulticastSocket();
 		socket.setTimeToLive(ttl);

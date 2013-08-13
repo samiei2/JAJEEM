@@ -61,10 +61,8 @@ public class User implements Serializable{
 		this.language = language;
 	}
 	public String getFullName() {
-		if(fullName != "" && fullName != null)
-			return fullName;
 		this.fullName = firstName + " " + lastName;
-		return firstName + " " + lastName;
+		return this.fullName;
 	}
 	public void setFullName(String fullName) {
 		this.fullName = fullName;

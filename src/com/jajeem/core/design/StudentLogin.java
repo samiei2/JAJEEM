@@ -3,7 +3,6 @@ package com.jajeem.core.design;
 import info.clearthought.layout.TableLayout;
 
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +20,7 @@ import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.text.WebPasswordField;
@@ -44,12 +44,11 @@ public class StudentLogin extends JDialog {
 	 */
 	private static final long serialVersionUID = -5121321476236877112L;
 
-	
 	private static String serverIp;
 	private static LoginDialog loginDialog;
 	private static KeyHook keyHook;
 	private static MouseHook mouseHook;
-	
+
 	private static Student student;
 
 	private static ServerService serverService;
@@ -57,41 +56,18 @@ public class StudentLogin extends JDialog {
 	final static WebTextField username = new WebTextField(15);
 	final static WebPasswordField password = new WebPasswordField(15);
 
-	public static void setLoginDialogVisible(boolean flag) {
-		loginDialog.setVisible(flag);
-	}
-
-	public static void setFieldsColor(Color color) {
-		username.setBackground(color);
-		password.setBackground(color);
-	}
-
-	public static String getUsername() {
-		return username.getText();
-	}
-
-	public static String getServerIp() {
-		return serverIp;
-	}
-
-	public static void setServerIp(String serverIp) {
-		StudentLogin.serverIp = serverIp;
-	}
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
-
-			@SuppressWarnings("unused")
-			StudentLogin dialog = new StudentLogin();
 			
-			Student student = new Student();
-			StudentLogin.setStudent(student);
-			student.main(null);
-			StudentLogin.setLoginDialogVisible(false);
+			new Config();
+			new i18n();
+			
+			new Student();
+			new StudentLogin();
 			
 
 		} catch (Exception e) {
@@ -107,27 +83,27 @@ public class StudentLogin extends JDialog {
 	 */
 	public StudentLogin() throws NumberFormatException, Exception {
 
-		new Config();
-		new i18n();
-		
 		LibJitsi.start();
-		
+
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				new ClientFileServer().Startup();
 			}
 		}).start();
-		
-		if(!new File("util").exists()){
-//			Unzipper.unzip("util.zip");
-			JOptionPane.showMessageDialog(null, i18n.getParam("util folder does not exist.Please call your administrator!\nShutting Down!"));
+
+		if (!new File("util").exists()) {
+			// Unzipper.unzip("util.zip");
+			JOptionPane
+					.showMessageDialog(
+							null,
+							i18n.getParam("util folder does not exist.Please call your administrator!\nShutting Down!"));
 			System.exit(1);
 		}
-		
+
 		LibJitsi.start();
-		
+
 		setServerService(new ServerService());
 
 		ClientService clientServiceTimer = new ClientService(
@@ -145,13 +121,105 @@ public class StudentLogin extends JDialog {
 		WebLookAndFeel.setDecorateDialogs(true);
 
 		// Opening dialog
-		loginDialog = new LoginDialog(this);
-		loginDialog.pack();
-		loginDialog.setLocationRelativeTo(this);
-		loginDialog.setVisible(false);
+		setLoginDialog(new LoginDialog(this));
+		getLoginDialog().pack();
+		getLoginDialog().setLocationRelativeTo(this);
 
 		// Restoring frame decoration option
 		WebLookAndFeel.setDecorateDialogs(decorateFrames);
+	}
+
+	public static class LoginDialog extends WebDialog {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4106820035425545163L;
+		public static String name = "";
+
+		public LoginDialog(Window owner) throws Exception {
+			super(owner, i18n.getParam("Login to iCalabo"));
+			// setIconImage(Toolkit.getDefaultToolkit().getImage(
+			// Student.class.getResource("/icons/menubar/jajeem.jpg")));
+			setDefaultCloseOperation(WebDialog.DO_NOTHING_ON_CLOSE);
+			setResizable(false);
+			setAlwaysOnTop(true);
+			setRound(0);
+
+			TableLayout layout = new TableLayout(new double[][] {
+					{ TableLayout.PREFERRED, TableLayout.FILL },
+					{ TableLayout.PREFERRED, TableLayout.PREFERRED,
+							TableLayout.PREFERRED } });
+			layout.setHGap(5);
+			layout.setVGap(5);
+			WebPanel content = new WebPanel(layout);
+			content.setMargin(15, 30, 15, 30);
+			content.setOpaque(false);
+
+			content.add(new WebLabel(i18n.getParam("Username"),
+					WebLabel.TRAILING), "0,0");
+			content.add(username, "1,0");
+
+			content.add(new WebLabel(i18n.getParam("Password"),
+					WebLabel.TRAILING), "0,1");
+			content.add(password, "1,1");
+
+			WebButton login = new WebButton(i18n.getParam("Login"));
+			login.setRound(0);
+			ActionListener listener = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+
+						if (username.getText().equals("")
+								|| password.getPassword().equals("")) {
+							WebOptionPane.showMessageDialog(getRootPane(),
+									"Please fill in all fields.",
+									"Information",
+									WebOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
+
+						if (serverIp == null) {
+							WebOptionPane
+									.showMessageDialog(
+											getRootPane(),
+											"No instructor found, wait for your instructor.",
+											"Information",
+											WebOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
+
+						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
+								InetAddress.getLocalHost().getHostAddress(),
+								serverIp, Integer.parseInt(Config
+										.getParam("serverPort")),
+								username.getText(), password.getPassword());
+						name = username.getText();
+						getServerService().send(authenticateCommand);
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			};
+			login.addActionListener(listener);
+
+			WebButton cancel = new WebButton(i18n.getParam("Cancel"));
+			cancel.setRound(0);
+			cancel.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			content.add(new CenterPanel(new GroupPanel(5, login)), "0,2,1,2");
+			SwingUtils.equalizeComponentsWidths(login, cancel);
+
+			add(content);
+
+			// HotkeyManager.registerHotkey(this, cancel, Hotkey.ESCAPE);
+			HotkeyManager.registerHotkey(this, login, Hotkey.ENTER);
+		}
 	}
 
 	public static KeyHook getKeyHook() {
@@ -178,7 +246,6 @@ public class StudentLogin extends JDialog {
 		StudentLogin.mouseHook = mouseHook;
 	}
 
-
 	public static Student getStudent() {
 		return student;
 	}
@@ -187,83 +254,32 @@ public class StudentLogin extends JDialog {
 		StudentLogin.student = student;
 	}
 
+	public static void setLoginDialogVisible(boolean flag) {
+		getLoginDialog().setVisible(flag);
+	}
 
-	public static class LoginDialog extends WebDialog {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4106820035425545163L;
-		public static String name = "";
+	public static void setFieldsColor(Color color) {
+		username.setBackground(color);
+		password.setBackground(color);
+	}
 
-		public LoginDialog(Window owner) throws Exception {
-			super(owner, i18n.getParam("Login to iCalabo"));
-			setIconImage(Toolkit.getDefaultToolkit().getImage(
-					Student.class.getResource("/icons/menubar/jajeem.jpg")));
-			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-			setResizable(false);
-			setModal(true);
-			setRound(0);
+	public static String getUsername() {
+		return username.getText();
+	}
 
-			TableLayout layout = new TableLayout(new double[][] {
-					{ TableLayout.PREFERRED, TableLayout.FILL },
-					{ TableLayout.PREFERRED, TableLayout.PREFERRED,
-							TableLayout.PREFERRED } });
-			layout.setHGap(5);
-			layout.setVGap(5);
-			WebPanel content = new WebPanel(layout);
-			content.setMargin(15, 30, 15, 30);
-			content.setOpaque(false);
+	public static String getServerIp() {
+		return serverIp;
+	}
 
-			content.add(new WebLabel(i18n.getParam("Name"), WebLabel.TRAILING), "0,0");
-			content.add(username, "1,0");
+	public static void setServerIp(String serverIp) {
+		StudentLogin.serverIp = serverIp;
+	}
 
-			content.add(new WebLabel(i18n.getParam("Password"), WebLabel.TRAILING), "0,1");
-			content.add(password, "1,1");
+	public static LoginDialog getLoginDialog() {
+		return loginDialog;
+	}
 
-			WebButton login = new WebButton(i18n.getParam("Login"));
-			login.setRound(0);
-			WebButton cancel = new WebButton(i18n.getParam("Cancel"));
-			cancel.setRound(0);
-			ActionListener listener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
-						student.setFullName(username.getText());
-						com.jajeem.util.Session.setStudent(student);
-						
-						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
-								InetAddress.getLocalHost().getHostAddress(),
-								serverIp, Integer.parseInt(Config
-										.getParam("serverPort")),
-								username.getText(), password.getPassword());
-						name = username.getText();
-						getServerService().send(authenticateCommand);
-					} catch (Exception e2) {
-						e2.printStackTrace();
-					}
-				}
-			};
-			login.addActionListener(listener);
-			cancel.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					//Since the user has not logged in,then the user is anonymous
-					com.jajeem.core.model.Student student = new com.jajeem.core.model.Student();
-					student.setFullName("Anonymous");
-					com.jajeem.util.Session.setStudent(student);
-					setVisible(false);
-					dispose();
-				}
-			});
-			content.add(new CenterPanel(new GroupPanel(5, login, cancel)),
-					"0,2,1,2");
-			SwingUtils.equalizeComponentsWidths(login, cancel);
-
-			add(content);
-
-			HotkeyManager.registerHotkey(this, login, Hotkey.ESCAPE);
-			HotkeyManager.registerHotkey(this, login, Hotkey.ENTER);
-		}
+	public static void setLoginDialog(LoginDialog loginDialog) {
+		StudentLogin.loginDialog = loginDialog;
 	}
 }

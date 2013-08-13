@@ -131,15 +131,17 @@ public class Quiz_Window extends WebFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Quiz_Window.class.getResource("/com/jajeem/images/quiz.png")));
 		// TODO remove code below
-		sid = new Random().nextInt(Integer.MAX_VALUE);
-		privateStudent.setId(sid);
-		if (com.jajeem.util.Session.getStudent() != null)
-			if (com.jajeem.util.Session.getStudent().getFullName() != null
-					&& com.jajeem.util.Session.getStudent().getFullName() != "")
-				privateStudent.setFullName(com.jajeem.util.Session.getStudent()
-						.getFullName());
-			else
-				privateStudent.setFullName("Anonymous");
+		// sid = new Random().nextInt(Integer.MAX_VALUE);
+
+		privateStudent = com.jajeem.core.design.Student.getStudentModel();
+
+//		if (com.jajeem.util.Session.getStudent() != null)
+//			if (com.jajeem.util.Session.getStudent().getFullName() != null
+//					&& com.jajeem.util.Session.getStudent().getFullName() != "")
+//				privateStudent.setFullName(com.jajeem.util.Session.getStudent()
+//						.getFullName());
+//			else
+//				privateStudent.setFullName("Anonymous");
 
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
@@ -1392,8 +1394,7 @@ public class Quiz_Window extends WebFrame {
 
 			@Override
 			public UUID getQuizId() {
-				// TODO Auto-generated method stub
-				return null;
+				return currentRun.getQuizId();
 			}
 		});
 	}

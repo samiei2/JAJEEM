@@ -55,17 +55,10 @@ public class Student {
 	private static AVSendOnly sendOnly;
 	private static AVTransmit2 transmitter;
 
-	private static boolean black;
-
 	private static VNCCaptureService vncViewer;
 
-	public static boolean isBlack() {
-		return black;
-	}
-
-	public static void setBlack(boolean black) {
-		Student.black = black;
-	}
+	private static com.jajeem.core.model.Student studentModel;
+	private static boolean granted = false;
 
 	/**
 	 * Launch the application.
@@ -108,16 +101,16 @@ public class Student {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	private void initialize() throws Exception {
 		WebLookAndFeel.setDecorateFrames(true);
 		setFrmJajeemProject(new WebFrame());
 		mainFram = getFrmJajeemProject();
-		getFrmJajeemProject().setResizable(false);
-		getFrmJajeemProject().setUndecorated(true);
-		getFrmJajeemProject().setAlwaysOnTop(true);
-		getFrmJajeemProject().setTitle(i18n.getParam("iCalabo"));
+		mainFram.setResizable(false);
+		mainFram.setAlwaysOnTop(true);
+		mainFram.setTitle(i18n.getParam("iCalabo"));
 		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
 		getFrmJajeemProject().setBounds(0, 400, 280, 500);
@@ -161,21 +154,23 @@ public class Student {
 						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
 		WebButton messageButton = new WebButton(imgMessage);
 		TooltipManager.setTooltip(messageButton, imgToolTip,
-				i18n.getParam("Send a message to your instructor."), TooltipWay.down);
+				i18n.getParam("Send a message to your instructor."),
+				TooltipWay.down);
 		panel.add(messageButton);
 
 		ImageIcon imgFile = new ImageIcon(ImageIO.read(Student.class
 				.getResourceAsStream(("/com/jajeem/images/file_upload.png"))));
 		WebButton fileButton = new WebButton(imgFile);
 		TooltipManager.setTooltip(fileButton, imgToolTip,
-				i18n.getParam("Send a file to your instructor."), TooltipWay.down);
+				i18n.getParam("Send a file to your instructor."),
+				TooltipWay.down);
 		panel.add(fileButton);
 
 		ImageIcon videoFile = new ImageIcon(ImageIO.read(Student.class
 				.getResourceAsStream(("/com/jajeem/images/MPlayer.png"))));
 		WebButton videoButton = new WebButton(videoFile);
-		TooltipManager.setTooltip(videoButton, imgToolTip, i18n.getParam("Video Player"),
-				TooltipWay.down);
+		TooltipManager.setTooltip(videoButton, imgToolTip,
+				i18n.getParam("Video Player"), TooltipWay.down);
 		panel.add(videoButton);
 
 		ImageIcon imgIntercom = new ImageIcon(
@@ -191,8 +186,8 @@ public class Student {
 				ImageIO.read(Student.class
 						.getResourceAsStream(("/icons/noa/right_panel/mic_student.png"))));
 		WebButton recordButton = new WebButton(recordIntercom);
-		TooltipManager.setTooltip(recordButton, imgToolTip, i18n.getParam("Recorder"),
-				TooltipWay.down);
+		TooltipManager.setTooltip(recordButton, imgToolTip,
+				i18n.getParam("Recorder"), TooltipWay.down);
 		panel.add(recordButton);
 
 		WebPanel panel2 = new WebPanel();
@@ -379,5 +374,21 @@ public class Student {
 
 	public static void setFrmJajeemProject(JFrame frmJajeemProject) {
 		Student.frmJajeemProject = frmJajeemProject;
+	}
+
+	public static com.jajeem.core.model.Student getStudentModel() {
+		return studentModel;
+	}
+
+	public static void setStudentModel(com.jajeem.core.model.Student studentModel) {
+		Student.studentModel = studentModel;
+	}
+
+	public static boolean isGranted() {
+		return granted;
+	}
+
+	public static void setGranted(boolean granted) {
+		Student.granted = granted;
 	}
 }

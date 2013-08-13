@@ -199,6 +199,59 @@ public class StudentDAO implements IStudentDAO {
 
 		return student;
 	}
+	
+	public Student get(String username) throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Student student = new Student();
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM Student WHERE Student.username = ?;");
+		ps.setString(1, username);
+
+		try {
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				student.setId(rs.getInt("id"));
+				student.setFirstName(rs.getString("firstName"));
+				student.setMiddleName(rs.getString("middleName"));
+				student.setLastName(rs.getString("lastName"));
+				student.setUsername(rs.getString("username"));
+				student.setPassword(rs.getString("password"));
+				student.setLanguage(rs.getString("language"));
+			} else {
+				student.setId(0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			student.setId(-1);
+			new JajeemExcetionHandler(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				new JajeemExcetionHandler(e);
+			}
+		}
+
+		return student;
+	}
+
 
 	@Override
 	public boolean update(Student student) throws SQLException {

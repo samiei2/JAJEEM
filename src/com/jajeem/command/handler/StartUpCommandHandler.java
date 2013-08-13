@@ -24,21 +24,26 @@ public class StartUpCommandHandler implements ICommandHandler {
 			startCaptureCommandHandler.run(cmd);
 			StartUpCommand cmdToSend = new StartUpCommand(InetAddress
 					.getLocalHost().getHostAddress(),
-					((StartUpCommand) cmd).getSender() , port, InetAddress
-							.getLocalHost().getHostAddress(), System.getProperty("user.name"));
+					((StartUpCommand) cmd).getSender(), port, InetAddress
+							.getLocalHost().getHostAddress(),
+					System.getProperty("user.name"));
 			cmdToSend.setSender(InetAddress.getLocalHost().getHostAddress());
 			cmdToSend.setPort(port);
 			StudentLogin.getServerService().send(cmdToSend);
 			StudentLogin.setServerIp(((StartUpCommand) cmd).getSender());
-			// TODO: if not visible then set visible
-			Student.getFrmJajeemProject().setVisible(true);
+
+			if (!Student.getFrmJajeemProject().isVisible()) {
+				StudentLogin.getLoginDialog().setVisible(true);
+			} else {
+				StudentLogin.getLoginDialog().setVisible(false);
+			}
 
 		} else if (Integer.parseInt(Config.getParam("server")) == 1
 				&& cmd.getPort() == Integer.parseInt(Config
 						.getParam("serverPort"))) {
 			InstructorNoaUtil.createFrame(InstructorNoa.getDesktopPane(),
-					((StartUpCommand) cmd).getSender(), ((StartUpCommand) cmd).getSenderName());
+					((StartUpCommand) cmd).getSender(),
+					((StartUpCommand) cmd).getSenderName());
 		}
 	}
-
 }

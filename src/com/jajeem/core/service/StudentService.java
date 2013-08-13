@@ -22,6 +22,12 @@ public class StudentService implements IStudentService{
 			return studentDAO.get(student);
 		return null;
 	}
+	
+	public Student get(String username) throws SQLException {
+		if(studentDAO != null)
+			return studentDAO.get(username);
+		return null;
+	}
 
 	@Override
 	public Student create(Student student) throws SQLException {

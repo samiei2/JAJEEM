@@ -13,18 +13,17 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (((GrantCommand) cmd).isGranted()) {
-			if (StudentLogin.getStudent() == null) {
-				Student student = new Student();
-				StudentLogin.setStudent(student);
-				student.main(null);
-				StudentLogin.setLoginDialogVisible(false);
-			} else {
-				StudentLogin.setLoginDialogVisible(false);
-			}
+			
+			Student.getFrmJajeemProject().setVisible(true);
+
+			Student.setStudentModel(((GrantCommand) cmd).getStudent());
+			com.jajeem.util.Session.setStudent(((GrantCommand) cmd)
+					.getStudent());
+
+			StudentLogin.setLoginDialogVisible(false);
+
 		} else {
 			StudentLogin.setFieldsColor(Color.decode("#FAD9D9"));
-			StudentLogin.setLoginDialogVisible(true);
 		}
 	}
-
 }
