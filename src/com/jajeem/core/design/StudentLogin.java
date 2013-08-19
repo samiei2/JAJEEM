@@ -94,7 +94,6 @@ public class StudentLogin extends JDialog {
 		}).start();
 
 		if (!new File("util").exists()) {
-			// Unzipper.unzip("util.zip");
 			JOptionPane
 					.showMessageDialog(
 							null,

@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import com.jajeem.core.design.InstructorLogin;
+
 import icalabointeropservices.*;
 
 import net.sf.jni4net.Bridge;
@@ -58,6 +60,9 @@ public class LicenseValidator {
 	
 	public static void ActiveValidateLicense(){
 		icalabointeropservices.Interop op = new icalabointeropservices.Interop();
+		
+		InstructorLogin.progressBarFrame.setVisible(false);
+		
 		op.ActiveValidateLicense();
 		String result = op.getValidationResult();
 		if(result.equals("False"))

@@ -1412,10 +1412,10 @@ public class InstructorNoa {
 		});
 
 		// be careful with this list index, we work with index
-		final String[] jasperFileNames = { "AnswerRate", "RadarChart",
-				"StudentResult", "SummaryofStudents" };
+		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
+				"SummaryofStudents" };
 		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				"Answer rate", "Radar chart", "Student result",
+				"Answer rate","Student result",
 				"Summary of students" });
 
 		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
@@ -1431,27 +1431,16 @@ public class InstructorNoa {
 							Query.answerRate(reportRunList.get(
 									reportQuizComboBox.getSelectedIndex())
 									.getId()));
-
 				} else if (reportComboBox.getSelectedIndex() == 1) {
 					JasperReport.generate(jasperFileNames[1],
-							(jasperFileNames[1] + "_" + timeStamp),
-							Query.radarChart());
-					/*
-					 * JasperReport.generate(jasperFileNames[0],
-					 * (jasperFileNames[0].toString() + "_" + timeStamp),
-					 * Query.pointChart(reportRunList.get(
-					 * reportQuizComboBox.getSelectedIndex()) .getId()));
-					 */
-				} else if (reportComboBox.getSelectedIndex() == 2) {
-					JasperReport.generate(jasperFileNames[2],
-							(jasperFileNames[2] + "_" + timeStamp), Query
+							(jasperFileNames[1] + "_" + timeStamp), Query
 									.studentResult(reportRunList.get(
 											reportQuizComboBox
 													.getSelectedIndex())
 											.getId()));
-				} else if (reportComboBox.getSelectedIndex() == 3) {
-					JasperReport.generate(jasperFileNames[3],
-							(jasperFileNames[3].toString() + "_" + timeStamp),
+				} else if (reportComboBox.getSelectedIndex() == 2) {
+					JasperReport.generate(jasperFileNames[2],
+							(jasperFileNames[2].toString() + "_" + timeStamp),
 							Query.summaryOfStudents(reportRunList.get(
 									reportQuizComboBox.getSelectedIndex())
 									.getId()));

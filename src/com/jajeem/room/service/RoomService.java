@@ -8,15 +8,16 @@ import com.jajeem.room.dao.h2.CourseDAO;
 import com.jajeem.room.dao.h2.RoomDAO;
 import com.jajeem.room.dao.h2.SeatDAO;
 import com.jajeem.room.dao.h2.SessionDAO;
+import com.jajeem.room.model.Course;
 import com.jajeem.room.model.Room;
 
-public class RoomService implements IRoomService{
+public class RoomService implements IRoomService {
 	private RoomDAO roomDAO;
 	private AttendantDAO attendantDAO;
 	private SeatDAO seatDAO;
 	private SessionDAO sessionDAO;
 	private CourseDAO courseDAO = new CourseDAO();
-	
+
 	@Override
 	public Room create(Room room) throws SQLException {
 		// TODO Auto-generated method stub
@@ -50,13 +51,13 @@ public class RoomService implements IRoomService{
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void end() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public RoomDAO getRoomDAO() {
@@ -90,13 +91,17 @@ public class RoomService implements IRoomService{
 	public void setSessionDAO(SessionDAO sessionDAO) {
 		this.sessionDAO = sessionDAO;
 	}
-	
+
 	public CourseDAO getCourseDAO() {
 		return courseDAO;
+	}
+
+	public ArrayList<Course> getCoursesByInstructorId(int id) throws SQLException {
+		return courseDAO.getCoursesByInstructorId(id);
 	}
 
 	public void setCourseDAO(CourseDAO courseDAO) {
 		this.courseDAO = courseDAO;
 	}
-	
+
 }
