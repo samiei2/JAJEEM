@@ -519,13 +519,13 @@ public class InstructorNoa {
 
 		// desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
-		GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
-		gl_desktopPane.setAutoCreateContainerGaps(true);
-		gl_desktopPane.setAutoCreateGaps(true);
-		gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
-				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
-		gl_desktopPane.setVerticalGroup(gl_desktopPane.createParallelGroup(
-				Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
+		// GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
+		// gl_desktopPane.setAutoCreateContainerGaps(true);
+		// gl_desktopPane.setAutoCreateGaps(true);
+		// gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
+		// Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
+		// gl_desktopPane.setVerticalGroup(gl_desktopPane.createParallelGroup(
+		// Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		centerPanel.setLayout(new CardLayout(0, 0));
 		getDesktopPaneScroll().putClientProperty("viewMode", "thumbView");
 		centerListPanel.putClientProperty("viewMode", "listView");

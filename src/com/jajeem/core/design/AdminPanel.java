@@ -104,7 +104,7 @@ public class AdminPanel extends WebFrame {
 	 */
 	public AdminPanel() throws Exception {
 		setTitle(i18n.getParam("Admin Panel"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

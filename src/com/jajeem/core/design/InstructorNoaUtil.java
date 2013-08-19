@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -717,8 +718,8 @@ public class InstructorNoaUtil {
 								}
 							} else {
 								FileManagerMain main = new FileManagerMain();
-								main.setReceivingIps(InstructorNoa
-										.getAllStudentIPs());
+								main.setReceivingIps(new ArrayList<String>(
+										Arrays.asList(getSelectedStudentIp())));
 								main.setVisible(true);
 							}
 						}
