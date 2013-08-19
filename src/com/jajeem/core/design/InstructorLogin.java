@@ -20,6 +20,7 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.progressbar.WebProgressBar;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.text.WebPasswordField;
@@ -99,9 +100,9 @@ public class InstructorLogin extends JFrame {
 		progressBarFrame.setUndecorated(true);
 		progressBarFrame.setAlwaysOnTop(true);
 		progressBarFrame.setVisible(true);
-		
-		LicenseValidator.ActiveValidateLicense();
-		
+
+		// LicenseValidator.ActiveValidateLicense();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 190);
 		contentPane = new JPanel();
@@ -180,6 +181,7 @@ public class InstructorLogin extends JFrame {
 						Instructor instructor = instructorService
 								.get(usernameTF.getText());
 						com.jajeem.util.Session.setInstructor(instructor);
+						InstructorNoa.setInstructorModel(instructor);
 
 						bottomPanel.setVisible(true);
 
@@ -224,14 +226,53 @@ public class InstructorLogin extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (courseCombo.getItemCount() != 0) {
-					progressBarFrame.setVisible(true);
-					Course selectedCourse = courseList.get(courseCombo
-							.getSelectedIndex());
-					com.jajeem.util.Session.setCourse(selectedCourse);
-					InstructorNoa.main(null);
-					frame.dispose();
-					progressBarFrame.setVisible(false);
+
+				if (usernameTF.getText() != null
+						&& !usernameTF.getText().equals("")
+						&& passwordTF.getPassword() != null
+						&& !passwordTF.getPassword().toString().equals("")) {
+					InstructorService instructorService = new InstructorService();
+					boolean grant = false;
+					try {
+						grant = instructorService.authenticate(
+								usernameTF.getText(), passwordTF.getPassword());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
+					if (grant) {
+						Instructor instructor = instructorService
+								.get(usernameTF.getText());
+						com.jajeem.util.Session.setInstructor(instructor);
+						InstructorNoa.setInstructorModel(instructor);
+
+						if (courseCombo.getItemCount() != 0) {
+							progressBarFrame.setVisible(true);
+							Course selectedCourse = courseList.get(courseCombo
+									.getSelectedIndex());
+
+							InstructorNoa.setCourseModel(selectedCourse);
+
+							com.jajeem.util.Session.setCourse(selectedCourse);
+							InstructorNoa.main(null);
+							frame.dispose();
+							progressBarFrame.setVisible(false);
+						} else if (usernameTF.getText().equals("admin")) {
+							int resp = WebOptionPane
+									.showConfirmDialog(
+											null,
+											"You are about to login as adminstrator without a course, are you sure?",
+											"Confirm",
+											WebOptionPane.YES_NO_OPTION,
+											WebOptionPane.QUESTION_MESSAGE);
+							if (resp == 0) {
+								InstructorNoa.main(null);
+							} else {
+								return;
+							}
+
+						}
+					}
 				}
 			}
 		});

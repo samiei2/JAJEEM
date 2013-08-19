@@ -3,7 +3,12 @@ package com.jajeem.core.design;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -28,22 +33,12 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
-import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.core.design.AdminPanel.InstructorTableFormat;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.room.model.Course;
-import com.jajeem.room.service.RoomService;
 import com.jajeem.util.StripedTableCellRenderer;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class InstructorCourseDialog extends JDialog {
 

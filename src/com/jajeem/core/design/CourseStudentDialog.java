@@ -68,7 +68,8 @@ public class CourseStudentDialog extends JDialog {
 	 * 
 	 * @throws SQLException
 	 */
-	public CourseStudentDialog(final Course course) throws SQLException {
+	public CourseStudentDialog(final Course course, boolean isAdmin)
+			throws SQLException {
 		setTitle("Students");
 		this.course = course;
 		setVisible(true);
@@ -90,7 +91,9 @@ public class CourseStudentDialog extends JDialog {
 				buttonPane.add(panel);
 				{
 					WebButton addButton = new WebButton("Add");
-					panel.add(addButton);
+					if (isAdmin) {
+						panel.add(addButton);
+					}
 					addButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -105,7 +108,9 @@ public class CourseStudentDialog extends JDialog {
 				}
 				{
 					WebButton deleteButton = new WebButton("Delete");
-					panel.add(deleteButton);
+					if (isAdmin) {
+						panel.add(deleteButton);
+					}
 					deleteButton.addActionListener(new ActionListener() {
 
 						@Override

@@ -275,7 +275,7 @@ public class Student {
 						IntercomRequestCommand irc = new IntercomRequestCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								StudentLogin.getServerIp(),
-								Integer.parseInt(Config.getParam("serverPort")));
+								Integer.parseInt(Config.getParam("serverPort")), studentModel);
 						StudentLogin.getServerService().send(irc);
 					}
 				} catch (Exception e) {

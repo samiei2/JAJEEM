@@ -5,13 +5,10 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import com.jajeem.core.design.InstructorLogin;
-
-import icalabointeropservices.*;
-
 import net.sf.jni4net.Bridge;
-
 import system.Console;
+
+import com.jajeem.core.design.InstructorLogin;
 
 public class LicenseValidator {
 

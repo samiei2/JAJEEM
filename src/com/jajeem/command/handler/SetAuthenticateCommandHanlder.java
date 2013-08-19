@@ -38,6 +38,8 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 			student = studentService.get(
 					((AuthenticateCommand) cmd).getUsername());
 			grantCommand.setStudent(student);
+			
+			InstructorNoa.studentList.put(cmd.getFrom(), student);
 
 			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
 					.getAllFrames();

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,10 +44,10 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.alee.laf.text.WebTextField;
-import com.alee.managers.tooltip.TooltipManager;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
@@ -57,7 +56,7 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
-public class AdminPanel extends WebFrame {
+public class AccountPanel extends WebFrame {
 
 	/**
 	 * 
@@ -65,8 +64,10 @@ public class AdminPanel extends WebFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private static AdminPanel frame;
+	private static AccountPanel frame;
 	private WebPanel contentPane;
+	Instructor instructorModel;
+	Course courseModel;
 
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
@@ -87,7 +88,11 @@ public class AdminPanel extends WebFrame {
 					new Config();
 					new i18n();
 
-					frame = new AdminPanel();
+					Instructor ins = new Instructor();
+					ins.setId(1);
+					Course co = new Course();
+					co.setId(1);
+					frame = new AccountPanel(ins, co);
 					frame.setVisible(true);
 
 				} catch (Exception e) {
@@ -102,8 +107,13 @@ public class AdminPanel extends WebFrame {
 	 * 
 	 * @throws Exception
 	 */
-	public AdminPanel() throws Exception {
-		setTitle(i18n.getParam("Admin Panel"));
+	public AccountPanel(Instructor ins, Course co) throws Exception {
+
+		instructorModel = ins;
+		courseModel = co;
+
+		setTitle(i18n.getParam("My account" + " - "
+				+ instructorModel.getFullName()));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
 		contentPane = new WebPanel();
@@ -115,11 +125,6 @@ public class AdminPanel extends WebFrame {
 
 		WebTabbedPane tabbedPane = new WebTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
-		WebPanel userTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Instructors"), null, userTab, null);
-		userTab.setLayout(new BorderLayout(0, 0));
-		userTab.add(initInstructor());
 
 		WebPanel courseTab = new WebPanel();
 		tabbedPane.addTab(i18n.getParam("Courses"), null, courseTab, null);
@@ -138,17 +143,15 @@ public class AdminPanel extends WebFrame {
 	private void loadData() throws SQLException {
 
 		InstructorService instructorService = new InstructorService();
-		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
-				.list();
-		getInstructorList().addAll(instructorList);
-
-		StudentService studentService = new StudentService();
-		ArrayList<com.jajeem.core.model.Student> studentList = studentService
-				.list();
-		getStudentList().addAll(studentList);
 
 		RoomService rs = new RoomService();
-		ArrayList<Course> courseList = rs.getCourseDAO().list();
+		ArrayList<Course> courseList = rs
+				.getCoursesByInstructorId(instructorModel.getId());
+
+		StudentCourseService studentCourseService = new StudentCourseService();
+		ArrayList<com.jajeem.core.model.Student> studentList = studentCourseService
+				.getcourseStudentsById(courseModel.getId());
+		getStudentList().addAll(studentList);
 
 		for (Course course : courseList) {
 			Instructor ins = instructorService
@@ -175,8 +178,6 @@ public class AdminPanel extends WebFrame {
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable courseTable = new JTable();
-		TooltipManager.setTooltip(courseTable,
-				i18n.getParam("Select a course and push edit button to edit"));
 
 		jScrollPane1.setViewportView(courseTable);
 		panel.add(jScrollPane1);
@@ -189,76 +190,6 @@ public class AdminPanel extends WebFrame {
 		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
-
-		WebButton addButton = new WebButton(i18n.getParam("Add"));
-		buttonPanel.add(addButton);
-		addButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new AddNewCourseDialog(courseList, getInstructorList());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
-		buttonPanel.add(deleteButton);
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) throws HeadlessException {
-
-				int resp;
-				try {
-					resp = WebOptionPane.showConfirmDialog(
-							panel,
-							i18n.getParam("Do you want to Delete selected item(s)?"),
-							i18n.getParam("Confirm"),
-							WebOptionPane.YES_NO_OPTION,
-							WebOptionPane.QUESTION_MESSAGE);
-					if (resp == 0) {
-						if (!courseSelectionModel.isSelectionEmpty()) {
-							RoomService rs = new RoomService();
-							for (Course course : courseSelectionModel
-									.getSelected()) {
-								try {
-									if (course.getInstructorId() != 0) {
-										rs.getCourseDAO().delete(course);
-									}
-								} catch (SQLException e1) {
-									e1.printStackTrace();
-								}
-							}
-							getCourseList().removeAll(
-									courseSelectionModel.getSelected());
-
-						}
-					}
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
-
-		WebButton editButton = new WebButton("Edit");
-		buttonPanel.add(editButton);
-		editButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!courseSelectionModel.isSelectionEmpty()) {
-					Course course = courseSelectionModel.getSelected().get(0);
-					try {
-						new AddNewCourseDialog(courseList, course,
-								courseSelectionModel.getSelected(),
-								getInstructorList());
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
 
 		WebButton studentButton = new WebButton(i18n.getParam("Students"));
 		buttonPanel.add(studentButton);
@@ -275,7 +206,14 @@ public class AdminPanel extends WebFrame {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
 						try {
-							new CourseStudentDialog(course, true);
+
+							boolean isAdmin = false;
+							if (instructorModel.getUsername().equals("admin")) {
+								isAdmin = true;
+							}
+
+							new CourseStudentDialog(course, isAdmin);
+
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -428,154 +366,6 @@ public class AdminPanel extends WebFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	private WebPanel initInstructor() throws Exception {
-
-		final WebPanel panel = new WebPanel();
-		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-		JTable instructorTable = new JTable();
-		TooltipManager.setTooltip(instructorTable,
-				i18n.getParam("Click on a cell to edit"));
-
-		jScrollPane1.setViewportView(instructorTable);
-		panel.add(jScrollPane1);
-
-		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
-		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
-
-		JPanel buttonPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
-		bottomPanel.add(buttonPanel);
-
-		WebButton addButton = new WebButton("Add");
-		buttonPanel.add(addButton);
-		addButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new AddNewInstructorDialog(getInstructorList());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		WebButton deleteButton = new WebButton("Delete");
-		buttonPanel.add(deleteButton);
-
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int resp = WebOptionPane.showConfirmDialog(panel,
-						"Do you want to Delete selected item(s)?", "Confirm",
-						WebOptionPane.YES_NO_OPTION,
-						WebOptionPane.QUESTION_MESSAGE);
-				if (resp == 0) {
-					if (!instructorSelectionModel.isSelectionEmpty()) {
-						InstructorService insService = new InstructorService();
-						for (Instructor instructor : instructorSelectionModel
-								.getSelected()) {
-							try {
-								if (instructor.getUsername().equals("admin")) {
-									WebOptionPane.showMessageDialog(
-											getRootPane(),
-											"You cannot delete admin account!",
-											"Error",
-											WebOptionPane.ERROR_MESSAGE);
-								} else {
-									insService.delete(instructor);
-								}
-							} catch (SQLException e1) {
-								e1.printStackTrace();
-							}
-						}
-						getInstructorList().removeAll(
-								instructorSelectionModel.getSelected());
-
-					}
-				}
-			}
-		});
-
-		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
-		buttonPanel.add(quizButton);
-		quizButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!instructorSelectionModel.isSelectionEmpty()) {
-					if (instructorSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
-								"Please select one instructor.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
-					} else {
-						Instructor instructor = instructorSelectionModel
-								.getSelected().get(0);
-						new Quiz_OpenDialog(instructor.getId(), "instructor");
-					}
-				}
-			}
-		});
-
-		JPanel paginationPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.TRAILING);
-		bottomPanel.add(paginationPanel);
-
-		WebPanel topPanel = new WebPanel();
-		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
-		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-
-		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
-		topPanel.add(filterLabel);
-		WebTextField instructorFilterTF = new WebTextField();
-		topPanel.add(instructorFilterTF);
-
-		TextFilterator<Instructor> personTextFilterator = new TextFilterator<Instructor>() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void getFilterStrings(java.util.List list, Instructor i) {
-				// field you want to enable filter
-				list.add(i.getId());
-				list.add(i.getFirstName());
-				list.add(i.getLastName());
-				list.add(i.getUsername());
-			}
-		};
-
-		// Table Configuration
-		MatcherEditor<Instructor> textMatcherEditor = new TextComponentMatcherEditor<Instructor>(
-				instructorFilterTF, personTextFilterator);
-		FilterList<Instructor> filterList = new FilterList<Instructor>(
-				getInstructorList(), textMatcherEditor);
-		SortedList<Instructor> sortedInstructor = new SortedList<Instructor>(
-				filterList, null);
-		AdvancedTableModel<Instructor> model = GlazedListsSwing
-				.eventTableModelWithThreadProxyList(sortedInstructor,
-						new InstructorTableFormat());
-
-		instructorSelectionModel = new EventSelectionModel<Instructor>(
-				filterList);
-		instructorTable.setSelectionModel(instructorSelectionModel);
-		instructorTable.setModel(model);
-		TableComparatorChooser<Instructor> tableSorter = TableComparatorChooser
-				.install(instructorTable, sortedInstructor,
-						TableComparatorChooser.SINGLE_COLUMN);
-
-		StripedTableCellRenderer.installInTable(instructorTable,
-				Color.lightGray, Color.white, null, null);
-		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
-
-		return panel;
-	}
-
-	@SuppressWarnings("deprecation")
 	private WebPanel initStudent() throws Exception {
 
 		final WebPanel panel = new WebPanel();
@@ -584,8 +374,6 @@ public class AdminPanel extends WebFrame {
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable studentTable = new JTable();
-		TooltipManager.setTooltip(studentTable,
-				i18n.getParam("Click on a cell to edit"));
 
 		jScrollPane1.setViewportView(studentTable);
 		panel.add(jScrollPane1);
@@ -598,73 +386,6 @@ public class AdminPanel extends WebFrame {
 		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
-
-		WebButton addButton = new WebButton(i18n.getParam("Add"));
-		buttonPanel.add(addButton);
-		addButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new AddNewStudentDialog(getStudentList());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
-		buttonPanel.add(deleteButton);
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int resp = WebOptionPane.showConfirmDialog(panel,
-						"Do you want to Delete selected item(s)?", "Confirm",
-						WebOptionPane.YES_NO_OPTION,
-						WebOptionPane.QUESTION_MESSAGE);
-				if (resp == 0) {
-					if (!studentSelectionModel.isSelectionEmpty()) {
-
-						StudentService stuService = new StudentService();
-						for (Student student : studentSelectionModel
-								.getSelected()) {
-							try {
-								stuService.delete(student);
-							} catch (SQLException e1) {
-								e1.printStackTrace();
-							}
-						}
-						getStudentList().removeAll(
-								studentSelectionModel.getSelected());
-
-					}
-				}
-			}
-		});
-
-		WebButton courseButton = new WebButton(i18n.getParam("Courses"));
-		buttonPanel.add(courseButton);
-		courseButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!studentSelectionModel.isSelectionEmpty()) {
-					if (studentSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
-								"Please select one student.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
-					} else {
-						Student student = studentSelectionModel.getSelected()
-								.get(0);
-						try {
-							new StudentCourseDialog(student);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-			}
-		});
 
 		JPanel paginationPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
@@ -812,91 +533,11 @@ public class AdminPanel extends WebFrame {
 		}
 	}
 
-	public class InstructorTableFormat implements TableFormat<Instructor>,
-			WritableTableFormat<Instructor> {
-
-		public int getColumnCount() {
-			return 5;
-		}
-
-		public String getColumnName(int column) {
-			try {
-				if (column == 0)
-					return i18n.getParam("ID");
-				if (column == 1)
-
-					return i18n.getParam("First name");
-
-				else if (column == 2)
-					return i18n.getParam("Last Name");
-				else if (column == 3)
-					return i18n.getParam("Username");
-				else if (column == 4)
-					return i18n.getParam("Password");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			throw new IllegalStateException();
-		}
-
-		public Object getColumnValue(Instructor instructor, int column) {
-
-			if (column == 0)
-				return instructor.getId();
-			if (column == 1)
-				return instructor.getFirstName();
-			else if (column == 2)
-				return instructor.getLastName();
-			else if (column == 3)
-				return instructor.getUsername();
-			else if (column == 4)
-				return instructor.getPassword();
-
-			throw new IllegalStateException();
-		}
-
-		@Override
-		public boolean isEditable(Instructor baseObject, int column) {
-			return column > 0; // which columns to be editable?
-		}
-
-		@Override
-		public Instructor setColumnValue(Instructor baseObject,
-				Object editedValue, int column) {
-
-			if (column == 1) {
-				baseObject.setFirstName((String) editedValue);
-			} else if (column == 2) {
-				baseObject.setLastName((String) editedValue);
-			} else if (column == 3) {
-				if (baseObject.getUsername().equals("admin")) {
-					WebOptionPane.showMessageDialog(getRootPane(),
-							"You cannot change admin's username!", "Error",
-							WebOptionPane.ERROR_MESSAGE);
-
-				} else {
-					baseObject.setUsername((String) editedValue);
-				}
-			} else if (column == 4) {
-				baseObject.setPassword((String) editedValue);
-			}
-
-			InstructorService insService = new InstructorService();
-			try {
-				insService.update(baseObject);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			return baseObject;
-		}
-	}
-
 	public class StudentTableFormat implements TableFormat<Student>,
 			WritableTableFormat<Student> {
 
 		public int getColumnCount() {
-			return 5;
+			return 4;
 		}
 
 		public String getColumnName(int column) {
@@ -909,8 +550,7 @@ public class AdminPanel extends WebFrame {
 					return i18n.getParam("Last Name");
 				else if (column == 3)
 					return i18n.getParam("Username");
-				else if (column == 4)
-					return i18n.getParam("Password");
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -927,15 +567,13 @@ public class AdminPanel extends WebFrame {
 				return student.getLastName();
 			else if (column == 3)
 				return student.getUsername();
-			else if (column == 4)
-				return student.getPassword();
 
 			throw new IllegalStateException();
 		}
 
 		@Override
 		public boolean isEditable(Student baseObject, int column) {
-			return column > 0;
+			return false;
 		}
 
 		@Override

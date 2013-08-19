@@ -425,7 +425,7 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							String selectedStudent = getSelectedStudentIp();
-							
+
 							if (selectedStudent != null) {
 								try {
 									if (!InstructorNoa.isTransmitting()) {
@@ -454,9 +454,7 @@ public class InstructorNoaUtil {
 												.equals("videoChat")) {
 											InstructorNoa.getSendOnly().stop();
 											button.setText("Video Chat");
-											
-											
-											
+
 										}
 									}
 								} catch (Exception e1) {
@@ -797,7 +795,7 @@ public class InstructorNoaUtil {
 					});
 					break;
 				case "movieplayer":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -836,27 +834,33 @@ public class InstructorNoaUtil {
 
 					break;
 				case "account":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
+							try {
+								if (InstructorNoa.getInstructorModel()
+										.getUsername().equals("admin")) {
+									new AdminPanel();
+								} else {
 
+									new AccountPanel(InstructorNoa
+											.getInstructorModel(),
+											InstructorNoa.getCourseModel());
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					});
 					break;
 				case "chat":
-					((JButton) c).addActionListener(new ActionListener() {
+					button.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 
-							Component card = null;
-							for (Component comp : InstructorNoa
-									.getCenterPanel().getComponents()) {
-								if (comp.isVisible() == true) {
-									card = comp;
-								}
-							}
+							Component card = getActiveCard();
 
 							if (((JComponent) card).getClientProperty(
 									"viewMode").equals("thumbView")) {
@@ -901,8 +905,12 @@ public class InstructorNoaUtil {
 														selectedStudent,
 														Integer.parseInt(Config
 																.getParam("port")),
-														false, -1,
-														selectedStudent);
+														false,
+														-1,
+														InstructorNoa
+																.getDesktopPane()
+																.getSelectedFrame()
+																.getTitle());
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {

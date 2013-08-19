@@ -4,6 +4,7 @@ import java.net.InetAddress;
 
 import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.Command;
+import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.core.design.InstructorNoa;
@@ -16,8 +17,10 @@ public class IntercomRequestCommandHanlder implements ICommandHandler {
 
 		int response = WebOptionPane.showConfirmDialog(
 				InstructorNoa.getCenterPanel(),
-				"Do you want to start intercom with" + cmd.getFrom(), "Confirm",
-				WebOptionPane.YES_NO_OPTION, WebOptionPane.QUESTION_MESSAGE);
+				"Do you want to start intercom with"
+						+ ((IntercomRequestCommand) cmd).getStudent().getFullName(),
+				"Confirm", WebOptionPane.YES_NO_OPTION,
+				WebOptionPane.QUESTION_MESSAGE);
 
 		if (response == 0) {// yes!
 			if (InstructorNoa.getTransmitter().isTransmitting()) {
@@ -29,7 +32,7 @@ public class IntercomRequestCommandHanlder implements ICommandHandler {
 						Integer.parseInt(Config.getParam("port")));
 				InstructorNoa.getServerService().send(si);
 			}
-			
+
 			StartIntercomCommand startI = new StartIntercomCommand(InetAddress
 					.getLocalHost().getHostAddress(), cmd.getFrom(),
 					Integer.parseInt(Config.getParam("port")));

@@ -80,7 +80,12 @@ public class Chat extends WebFrame {
 	 */
 	public Chat(String to, int port, boolean multi, int groupId, String title)
 			throws NumberFormatException, Exception {
-		super("Chat - " + title);
+		if (InstructorNoa.studentList.containsKey(to)) {
+			setTitle(InstructorNoa.studentList.get(to).getFullName());
+		} else {
+			setTitle(title);
+		}
+
 		new Config();
 		File dir = new File("Messages/");
 		if (!dir.exists())

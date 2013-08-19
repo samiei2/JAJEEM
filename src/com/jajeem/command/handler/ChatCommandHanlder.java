@@ -35,7 +35,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 						.getGroupId()), Integer.parseInt(Config
 						.getParam("serverPort")),
 						((ChatCommand) cmd).isMutli(),
-						((ChatCommand) cmd).getGroupId(), cmd.getFrom());
+						((ChatCommand) cmd).getGroupId(), "Chat");
 				currentChat.addLine(((ChatCommand) cmd).getMessage());
 				Student.getChatList().add(currentChat);
 				currentChat.setVisible(true);

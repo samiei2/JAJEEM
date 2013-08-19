@@ -22,7 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
@@ -78,11 +80,13 @@ import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.quiz.service.QuizService;
+import com.jajeem.room.model.Course;
 import com.jajeem.util.BackgroundPanel;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
@@ -92,9 +96,12 @@ import com.jajeem.util.i18n;
 public class InstructorNoa {
 
 	private WebFrame frame;
+	public static Map<String, com.jajeem.core.model.Student> studentList;
 	private static JScrollDesktopPane desktopPaneScroll;
 	private static WebPanel centerPanel;
 	private static WebTable studentListTable;
+	private static Instructor instructorModel;
+	private static Course courseModel;
 
 	private static AVTransmit2 transmitter;
 	private static AVReceiveOnly receiverOnly;
@@ -171,6 +178,9 @@ public class InstructorNoa {
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 	private void initialize() throws Exception {
+
+		studentList = new HashMap<String, com.jajeem.core.model.Student>();
+
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
@@ -1415,8 +1425,7 @@ public class InstructorNoa {
 		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
 				"SummaryofStudents" };
 		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				"Answer rate","Student result",
-				"Summary of students" });
+				"Answer rate", "Student result", "Summary of students" });
 
 		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
 		reportGoButton.addActionListener(new ActionListener() {
@@ -1501,10 +1510,10 @@ public class InstructorNoa {
 		accountButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		accountButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		accountButton.setForeground(Color.WHITE);
-		accountButton.setText(i18n.getParam("Accounts"));
+		accountButton.setText(i18n.getParam("My account"));
 		accountButton.setBottomBgColor(new Color(225, 234, 244));
 		accountButton.setTopBgColor(new Color(116, 166, 219));
-		// rightButtonPanel.add(accountButton);
+		rightButtonPanel.add(accountButton);
 
 		WebButton chatButton = new WebButton();
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
@@ -1518,7 +1527,7 @@ public class InstructorNoa {
 		chatButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		chatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		chatButton.setForeground(Color.WHITE);
-		chatButton.setText(i18n.getParam("Chat & Messaging"));
+		chatButton.setText(i18n.getParam("Chat"));
 		chatButton.setBottomBgColor(new Color(225, 234, 244));
 		chatButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(chatButton);
@@ -1900,5 +1909,21 @@ public class InstructorNoa {
 
 	public static void setTransmitting(boolean transmitting) {
 		InstructorNoa.transmitting = transmitting;
+	}
+
+	public static Instructor getInstructorModel() {
+		return instructorModel;
+	}
+
+	public static void setInstructorModel(Instructor instructorModel) {
+		InstructorNoa.instructorModel = instructorModel;
+	}
+
+	public static Course getCourseModel() {
+		return courseModel;
+	}
+
+	public static void setCourseModel(Course courseModel) {
+		InstructorNoa.courseModel = courseModel;
 	}
 }
