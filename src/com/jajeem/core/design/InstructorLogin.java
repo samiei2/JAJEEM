@@ -29,7 +29,6 @@ import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
-import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;

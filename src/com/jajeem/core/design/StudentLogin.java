@@ -69,7 +69,6 @@ public class StudentLogin extends JDialog {
 			new Student();
 			new StudentLogin();
 			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -20,9 +20,11 @@ import org.apache.log4j.Logger;
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
 import com.jajeem.command.handler.FinishedSurveyCommandHandler;
+import com.jajeem.command.handler.GetCourseListCommandHandler;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
+import com.jajeem.command.handler.RequestCourseListCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
@@ -63,12 +65,14 @@ import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.FinishedSurveyCommand;
+import com.jajeem.command.model.GetCourseListCommand;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.RequestCourseListCommand;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
@@ -453,6 +457,16 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof StopVideoChatCommand) {
 					StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
 					stopVideoChatCommandHandler.run(cmd);
+				}
+				
+				else if (cmd instanceof RequestCourseListCommand) {
+					RequestCourseListCommandHandler requestCourseListCommandHandler = new RequestCourseListCommandHandler();
+					requestCourseListCommandHandler.run(cmd);
+				}
+				
+				else if (cmd instanceof GetCourseListCommand) {
+					GetCourseListCommandHandler getCourseListCommandHandler = new GetCourseListCommandHandler();
+					getCourseListCommandHandler.run(cmd);
 				}
 
 			} catch (Exception ex) {

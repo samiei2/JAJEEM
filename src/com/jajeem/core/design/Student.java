@@ -32,6 +32,7 @@ import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.IntercomRequestCommand;
+import com.jajeem.command.model.RequestCourseListCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
@@ -41,7 +42,6 @@ import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
 
-//import org.apache.log4j.PropertyConfigurator;
 
 public class Student {
 
@@ -88,6 +88,7 @@ public class Student {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
+			new i18n();
 
 			setTransmitter(new AVTransmit2("10000", "", "5000"));
 			setReceiverOnly(new AVReceiveOnly("10010", "", "5010"));
@@ -113,7 +114,7 @@ public class Student {
 		mainFram.setTitle(i18n.getParam("iCalabo"));
 		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
-		getFrmJajeemProject().setBounds(0, 400, 280, 500);
+		getFrmJajeemProject().setBounds(0, 400, 280, 550);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -189,6 +190,13 @@ public class Student {
 		TooltipManager.setTooltip(recordButton, imgToolTip,
 				i18n.getParam("Recorder"), TooltipWay.down);
 		panel.add(recordButton);
+
+		ImageIcon accountImage = new ImageIcon(ImageIO.read(Student.class
+				.getResourceAsStream(("/icons/noa/right_panel/accounts.png"))));
+		WebButton accountButton = new WebButton(accountImage);
+		TooltipManager.setTooltip(recordButton, imgToolTip,
+				i18n.getParam("My Account"), TooltipWay.down);
+		panel.add(accountButton);
 
 		WebPanel panel2 = new WebPanel();
 		panel2.setLayout(new BorderLayout());
@@ -275,7 +283,8 @@ public class Student {
 						IntercomRequestCommand irc = new IntercomRequestCommand(
 								InetAddress.getLocalHost().getHostAddress(),
 								StudentLogin.getServerIp(),
-								Integer.parseInt(Config.getParam("serverPort")), studentModel);
+								Integer.parseInt(Config.getParam("serverPort")),
+								studentModel);
 						StudentLogin.getServerService().send(irc);
 					}
 				} catch (Exception e) {
@@ -299,6 +308,23 @@ public class Student {
 
 				// Restoring frame decoration option
 				WebLookAndFeel.setDecorateDialogs(decorateFrames);
+			}
+		});
+
+		accountButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RequestCourseListCommand gcc;
+				try {
+					gcc = new RequestCourseListCommand(InetAddress
+							.getLocalHost().getHostAddress(), StudentLogin
+							.getServerIp(), Integer.parseInt(Config
+							.getParam("serverPort")), studentModel);
+					StudentLogin.getServerService().send(gcc);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -380,7 +406,8 @@ public class Student {
 		return studentModel;
 	}
 
-	public static void setStudentModel(com.jajeem.core.model.Student studentModel) {
+	public static void setStudentModel(
+			com.jajeem.core.model.Student studentModel) {
 		Student.studentModel = studentModel;
 	}
 
