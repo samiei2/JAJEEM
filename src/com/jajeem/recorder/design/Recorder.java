@@ -1,5 +1,6 @@
 package com.jajeem.recorder.design;
 
+import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,9 @@ import javax.swing.JOptionPane;
 
 import com.alee.extended.filechooser.WebFileChooser;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.progressbar.WebProgressBar;
 import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.rootpane.WebFrame;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StartStudentRecordCommand;
@@ -48,6 +51,7 @@ public class Recorder extends WebDialog {
 	private ArrayList<String> selectedStudent;
 	private boolean isGroupSelected;
 	private Recorder frame;
+	public WebFrame progressBarFrame;
 
 	/**
 	 * Launch the application.
@@ -74,8 +78,20 @@ public class Recorder extends WebDialog {
 		isGroupSelected = isGroup;
 		setAlwaysOnTop(true);
 		setModal(false);
-//		setRound(0);
+		
+		WebProgressBar progressBar = new WebProgressBar();
+		progressBar.setIndeterminate(true);
+		progressBar.setStringPainted(true);
+		progressBar.setString("Recording...");
+		progressBar.setOpaque(false);
 
+		progressBarFrame = new WebFrame();
+		progressBarFrame.add(progressBar);
+		progressBarFrame.setSize(200, 35);
+		progressBarFrame.setLocationRelativeTo(null);
+		progressBarFrame.setUndecorated(true);
+		progressBarFrame.setAlwaysOnTop(true);
+		
 		setResizable(false);
 		setBounds(100, 100, 211, 295);
 		getContentPane().setLayout(null);
@@ -91,12 +107,14 @@ public class Recorder extends WebDialog {
 //							recordingsList.remove(selectedStudent.get(i));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
+							progressBarFrame.setVisible(false);
 						}
 						else{
 							recordingsList.add(selectedStudent.get(i));
 							SendStartRecordCommandTo(selectedStudent.get(i));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
+							progressBarFrame.setVisible(true);
 						}
 					}
 					frame.dispose();
@@ -108,12 +126,14 @@ public class Recorder extends WebDialog {
 //							recordingsList.remove(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
+							progressBarFrame.setVisible(false);
 						}
 						else{
 							recordingsList.add(selectedStudent.get(0));
 							SendStartRecordCommandTo(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
+							progressBarFrame.setVisible(true);
 							frame.dispose();
 						}
 					}
@@ -138,7 +158,6 @@ public class Recorder extends WebDialog {
 					try {
 						Desktop.getDesktop().open(file);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -159,6 +178,7 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnPlay.setEnabled(false);
+					progressBarFrame.setVisible(true);
 				} else {
 					wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
@@ -166,6 +186,7 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnPlay.setEnabled(true);
+					progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
 						File filetemp = new File("Recordings");
@@ -205,12 +226,14 @@ public class Recorder extends WebDialog {
 					wbtnRecordDesktopOnly.setText("Stop");
 					wbtnRecord.setEnabled(false);
 					wbtnRecordBoth.setEnabled(false);
+					progressBarFrame.setVisible(true);
 				}
 				else{
 					capture.StopCapture();
 					wbtnRecordDesktopOnly.setText("Record Desktop Only");
 					wbtnRecord.setEnabled(true);
 					wbtnRecordBoth.setEnabled(true);
+					progressBarFrame.setVisible(false);
 				}
 			}
 		});
@@ -229,12 +252,14 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setText("Stop");
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnRecord.setEnabled(false);
+					progressBarFrame.setVisible(true);
 				}
 				else{
 					capture.StopCapture();
 					wbtnRecordBoth.setText("Record Both");
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnRecord.setEnabled(true);
+					progressBarFrame.setVisible(false);
 				}
 			}
 		});
