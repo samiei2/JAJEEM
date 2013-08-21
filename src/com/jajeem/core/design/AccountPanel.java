@@ -214,7 +214,7 @@ public class AccountPanel extends WebFrame {
 
 							new CourseStudentDialog(course, isAdmin);
 
-						} catch (SQLException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 					}

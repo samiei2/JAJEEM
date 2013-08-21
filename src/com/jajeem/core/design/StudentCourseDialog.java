@@ -44,7 +44,9 @@ import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import com.jajeem.util.JasperReport;
 import com.jajeem.util.MultiLineCellRenderer;
+import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
@@ -54,6 +56,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class StudentCourseDialog extends JDialog {
@@ -107,13 +110,19 @@ public class StudentCourseDialog extends JDialog {
 				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
 				{
-					WebButton okButton = new WebButton("Ok");
+					WebButton okButton = new WebButton(
+							i18n.getParam("Export to pdf"));
 					panel.add(okButton);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							dispose();
+							String timeStamp = new SimpleDateFormat(
+									"yyyy-MM-dd_HH-mm").format(Calendar
+									.getInstance().getTime());
+							JasperReport.generate("CoursesByStudent",
+									student.getFullName() + "_" + timeStamp,
+									Query.courseByStudent(student.getId()));
 						}
 					});
 				}
@@ -146,16 +155,6 @@ public class StudentCourseDialog extends JDialog {
 		WebPanel bottomPanel = new WebPanel();
 		panel.add(bottomPanel, BorderLayout.SOUTH);
 		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
-
-		JPanel buttonPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
-		bottomPanel.add(buttonPanel);
-
-		JPanel paginationPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.TRAILING);
-		bottomPanel.add(paginationPanel);
 
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));

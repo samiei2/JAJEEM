@@ -41,13 +41,18 @@ import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import com.jajeem.util.JasperReport;
+import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
+import com.jajeem.util.i18n;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CourseStudentDialog extends JDialog {
 
@@ -66,10 +71,10 @@ public class CourseStudentDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 * 
-	 * @throws SQLException
+	 * @throws Exception
 	 */
 	public CourseStudentDialog(final Course course, boolean isAdmin)
-			throws SQLException {
+			throws Exception {
 		setTitle("Students");
 		this.course = course;
 		setVisible(true);
@@ -149,13 +154,20 @@ public class CourseStudentDialog extends JDialog {
 				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
 				{
-					WebButton okButton = new WebButton("Ok");
+					WebButton okButton = new WebButton(
+							i18n.getParam("Export to pdf"));
 					panel.add(okButton);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							dispose();
+							String timeStamp = new SimpleDateFormat(
+									"yyyy-MM-dd_HH-mm").format(Calendar
+									.getInstance().getTime());
+							JasperReport.generate("StudentsByCourse",
+									course.getName() + "_" + course.getId()
+											+ "_" + timeStamp,
+									Query.studentByCourse(course.getId()));
 						}
 					});
 				}

@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
@@ -53,7 +54,9 @@ import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import com.jajeem.util.JasperReport;
 import com.jajeem.util.MultiLineCellRenderer;
+import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
@@ -86,6 +89,7 @@ public class AdminPanel extends WebFrame {
 				try {
 					new Config();
 					new i18n();
+					new Query();
 
 					frame = new AdminPanel();
 					frame.setVisible(true);
@@ -130,7 +134,7 @@ public class AdminPanel extends WebFrame {
 		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
 		studentTab.setLayout(new BorderLayout(0, 0));
 		studentTab.add(initStudent());
-		
+
 		setVisible(true);
 
 	}
@@ -276,7 +280,7 @@ public class AdminPanel extends WebFrame {
 								0);
 						try {
 							new CourseStudentDialog(course, true);
-						} catch (SQLException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 					}
@@ -333,25 +337,17 @@ public class AdminPanel extends WebFrame {
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
 
-		/*
-		 * 
-		 * Pagination, for now we will comment it.
-		 * 
-		 * 
-		 * WebButton previousButton = new WebButton("Previous");
-		 * previousButton.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) {
-		 * 
-		 * } }); paginationPanel.add(previousButton);
-		 * 
-		 * WebButton nextButton = new WebButton("Next");
-		 * nextButton.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) {
-		 * 
-		 * } }); paginationPanel.add(nextButton);
-		 */
+		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
+		paginationPanel.add(nextButton);
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
+						.format(Calendar.getInstance().getTime());
+				JasperReport.generate("Courses", "CourseList_" + timeStamp,
+						Query.courses());
+			}
+		});
 
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
@@ -527,6 +523,18 @@ public class AdminPanel extends WebFrame {
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
 
+		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
+		paginationPanel.add(nextButton);
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
+						.format(Calendar.getInstance().getTime());
+				JasperReport.generate("Instructors", "InstructorsList_"
+						+ timeStamp, Query.instructors());
+			}
+		});
+
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
 		panel.add(topPanel, BorderLayout.NORTH);
@@ -670,6 +678,18 @@ public class AdminPanel extends WebFrame {
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
+
+		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
+		paginationPanel.add(nextButton);
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
+						.format(Calendar.getInstance().getTime());
+				JasperReport.generate("Students", "StudentList_" + timeStamp,
+						Query.students());
+			}
+		});
 
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));

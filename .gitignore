@@ -8,7 +8,6 @@ log/*
 !log/.keepme
 nbproject/*
 bin/
-util/*
 libvlc/*
 Deploy/*
 .idea/*

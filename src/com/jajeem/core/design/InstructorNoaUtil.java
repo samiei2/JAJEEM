@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
@@ -1104,13 +1105,7 @@ public class InstructorNoaUtil {
 					button.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 
-							Component card = null;
-							for (Component comp : InstructorNoa
-									.getCenterPanel().getComponents()) {
-								if (comp.isVisible() == true) {
-									card = comp;
-								}
-							}
+							Component card = getActiveCard();
 
 							if (((JComponent) card).getClientProperty(
 									"viewMode").equals("groupView")) {
@@ -1146,7 +1141,7 @@ public class InstructorNoaUtil {
 																.println(line);
 													}
 												} catch (Exception e) {
-													// TODO: handle exception
+													e.printStackTrace();
 												}
 											}
 										}).start();
@@ -1234,7 +1229,7 @@ public class InstructorNoaUtil {
 													System.out.println(line);
 												}
 											} catch (Exception e) {
-												// TODO: handle exception
+												e.printStackTrace();
 											}
 										}
 									}).start();
@@ -1285,18 +1280,6 @@ public class InstructorNoaUtil {
 								}
 
 							}
-
-							// if (Session.isWhiteboardWindowOpen()) {
-							// if (client == null) {
-							// client = new WhiteboardClient();
-							// } else {
-							// client.toFront();
-							// client.repaint();
-							// }
-							// } else {
-							// client = new WhiteboardClient();
-							// }
-
 						}
 					});
 					break;
@@ -1779,7 +1762,7 @@ public class InstructorNoaUtil {
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorNoaUtil.class
 						.getResourceAsStream("/icons/menubar/student.png"))));
-		internalFrame.setSize(120, 120);
+		internalFrame.setSize(100, 120);
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -1840,11 +1823,17 @@ public class InstructorNoaUtil {
 		});
 
 		WebPopupMenu popup = new WebPopupMenu();
-		((JComponent) internalFrame.getComponent(1))
+		
+		internalFrame.pack();
+		
+		((JComponent) internalFrame.getLayeredPane())
 				.setComponentPopupMenu(popup);
 		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
 				"No Group");
-
+		JPopupMenu.
+        setDefaultLightWeightPopupEnabled
+        (true);
+		
 		WebMenuItem menuItemUngroup = new WebMenuItem("Ungroup");
 		WebMenuItem menuItemGroupA = new WebMenuItem("Group A");
 		WebMenuItem menuItemGroupB = new WebMenuItem("Group B");
