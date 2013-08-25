@@ -29,6 +29,7 @@ import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
@@ -100,7 +101,7 @@ public class InstructorLogin extends JFrame {
 		progressBarFrame.setAlwaysOnTop(true);
 		progressBarFrame.setVisible(true);
 
-		// LicenseValidator.ActiveValidateLicense();
+		LicenseValidator.ActiveValidateLicense();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 190);

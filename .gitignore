@@ -3,7 +3,7 @@ bin/*
 
 local.properties
 .classpath
-
+Recordings/*
 log/*
 !log/.keepme
 nbproject/*

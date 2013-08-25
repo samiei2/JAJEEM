@@ -105,7 +105,7 @@ public class CourseListDialog extends JDialog {
 				buttonPane.add(panel);
 				{
 					WebButton okButton = new WebButton("Ok");
-					panel.add(okButton);
+//					panel.add(okButton);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
