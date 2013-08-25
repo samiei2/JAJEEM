@@ -1824,10 +1824,9 @@ public class InstructorNoaUtil {
 
 		WebPopupMenu popup = new WebPopupMenu();
 		
-		internalFrame.pack();
+		((JComponent) internalFrame.getComponent(1))
+		.setComponentPopupMenu(popup);
 		
-		((JComponent) internalFrame.getLayeredPane())
-				.setComponentPopupMenu(popup);
 		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
 				"No Group");
 		JPopupMenu.

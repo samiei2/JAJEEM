@@ -190,7 +190,7 @@ public class InstructorNoa {
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
 		frame.setBounds(10, 0, 1021, 656);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		langListModel.addElement("English");
 		langListModel.addElement("فارسی");
 		langList.addMouseListener(new MouseAdapter() {
@@ -261,6 +261,28 @@ public class InstructorNoa {
 
 		final DefaultListModel groupListModel = new DefaultListModel();
 		getGroupList().setModel(groupListModel);
+
+		getGroupList().addMouseListener(new MouseAdapter() {
+
+			private WebFrame frame;
+
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+					int index = list.locationToIndex(evt.getPoint());
+					Group group = getGroups().get(index);
+					List<String> studentNames = group.getStudentNames();
+					frame = new WebFrame();
+					WebList studentList = new WebList();
+					studentList.setListData(studentNames.toArray());
+					frame.add(new WebScrollPane(studentList));
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.pack();
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+				}
+			}
+		});
 
 		getGroupList().setModel(new AbstractListModel() {
 			String[] values = new String[] { i18n.getParam("Group A"),
