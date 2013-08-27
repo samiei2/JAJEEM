@@ -29,6 +29,7 @@ import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
@@ -67,6 +68,7 @@ public class InstructorLogin extends JFrame {
 					frame.setVisible(true);
 
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -174,6 +176,7 @@ public class InstructorLogin extends JFrame {
 						grant = instructorService.authenticate(
 								usernameTF.getText(), passwordTF.getPassword());
 					} catch (SQLException e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 
@@ -209,6 +212,7 @@ public class InstructorLogin extends JFrame {
 							}
 
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 
@@ -237,6 +241,7 @@ public class InstructorLogin extends JFrame {
 						grant = instructorService.authenticate(
 								usernameTF.getText(), passwordTF.getPassword());
 					} catch (SQLException e1) {
+						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 

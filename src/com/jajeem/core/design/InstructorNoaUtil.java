@@ -1,5 +1,6 @@
 package com.jajeem.core.design;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -74,6 +75,7 @@ import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
@@ -142,6 +144,7 @@ public class InstructorNoaUtil {
 													.getParam("vncPort")),
 											"admin", "admin", false, false);
 								} catch (Exception e) {
+									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
 								}
 								VNCCaptureService vnc = new VNCCaptureService();
@@ -212,6 +215,8 @@ public class InstructorNoaUtil {
 															.setIntercomText(i18n
 																	.getParam("Intercom"));
 												} catch (Exception e) {
+													JajeemExcetionHandler
+															.logError(e);
 													e.printStackTrace();
 												}
 											} else {
@@ -311,6 +316,7 @@ public class InstructorNoaUtil {
 										}
 
 									} catch (Exception e) {
+										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
 
@@ -349,6 +355,8 @@ public class InstructorNoaUtil {
 												InstructorNoa.setIntercomText(i18n
 														.getParam("Intercom"));
 											} catch (Exception e) {
+												JajeemExcetionHandler
+														.logError(e);
 												e.printStackTrace();
 											}
 										} else {
@@ -356,6 +364,8 @@ public class InstructorNoaUtil {
 												InstructorNoa.setIntercomText(i18n
 														.getParam("Intercom"));
 											} catch (Exception e) {
+												JajeemExcetionHandler
+														.logError(e);
 												e.printStackTrace();
 											}
 											return;
@@ -409,6 +419,8 @@ public class InstructorNoaUtil {
 														.send(si);
 
 											} catch (Exception e) {
+												JajeemExcetionHandler
+														.logError(e);
 												e.printStackTrace();
 											}
 										}
@@ -460,6 +472,7 @@ public class InstructorNoaUtil {
 										}
 									}
 								} catch (Exception e1) {
+									JajeemExcetionHandler.logError(e1);
 									e1.printStackTrace();
 								}
 							}
@@ -569,6 +582,7 @@ public class InstructorNoaUtil {
 											InstructorNoa.setModeling(false);
 										}
 									} catch (Exception e) {
+										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
 
@@ -627,6 +641,7 @@ public class InstructorNoaUtil {
 											WebLookAndFeel
 													.setDecorateDialogs(decorateFrames);
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 										}
 									}
 								}
@@ -678,6 +693,7 @@ public class InstructorNoaUtil {
 												.getParam("port")));
 								serv.send(cmd);
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -714,6 +730,7 @@ public class InstructorNoaUtil {
 													group.getStudentIps()));
 											main.setVisible(true);
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 										}
 									}
 								}
@@ -776,6 +793,7 @@ public class InstructorNoaUtil {
 											}
 
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 										}
 									}
 								}
@@ -823,10 +841,12 @@ public class InstructorNoaUtil {
 												System.out.println(line);
 											}
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 										}
 									}
 								}).start();
 							} catch (IOException ex) {
+								JajeemExcetionHandler.logError(ex);
 								ex.printStackTrace();
 							}
 						}
@@ -851,6 +871,7 @@ public class InstructorNoaUtil {
 											InstructorNoa.getCourseModel());
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -897,6 +918,8 @@ public class InstructorNoaUtil {
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
+												JajeemExcetionHandler
+														.logError(e);
 												e.printStackTrace();
 											}
 										}
@@ -916,6 +939,8 @@ public class InstructorNoaUtil {
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
+												JajeemExcetionHandler
+														.logError(e);
 												e.printStackTrace();
 											}
 										}
@@ -963,6 +988,8 @@ public class InstructorNoaUtil {
 																.getChatList()
 																.add(currentChat);
 													} catch (Exception e) {
+														JajeemExcetionHandler
+																.logError(e);
 														e.printStackTrace();
 													}
 												}
@@ -982,11 +1009,14 @@ public class InstructorNoaUtil {
 																.getChatList()
 																.add(currentChat);
 													} catch (Exception e) {
+														JajeemExcetionHandler
+																.logError(e);
 														e.printStackTrace();
 													}
 												}
 											}
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 											e.printStackTrace();
 										}
 									}
@@ -1075,6 +1105,7 @@ public class InstructorNoaUtil {
 											}
 
 										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
 										}
 									}
 								}
@@ -1141,11 +1172,14 @@ public class InstructorNoaUtil {
 																.println(line);
 													}
 												} catch (Exception e) {
+													JajeemExcetionHandler
+															.logError(e);
 													e.printStackTrace();
 												}
 											}
 										}).start();
 									} catch (IOException e) {
+										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
 
@@ -1292,6 +1326,9 @@ public class InstructorNoaUtil {
 					break;
 				case "programStart":
 					try {
+
+						// get start menu path from registry and add them to
+						// program starter list
 						String pathToStartMenu = WinRegistry
 								.readString(
 										WinRegistry.HKEY_LOCAL_MACHINE,
@@ -1823,16 +1860,14 @@ public class InstructorNoaUtil {
 		});
 
 		WebPopupMenu popup = new WebPopupMenu();
-		
+
 		((JComponent) internalFrame.getComponent(1))
-		.setComponentPopupMenu(popup);
-		
+				.setComponentPopupMenu(popup);
+
 		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
 				"No Group");
-		JPopupMenu.
-        setDefaultLightWeightPopupEnabled
-        (true);
-		
+		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
+
 		WebMenuItem menuItemUngroup = new WebMenuItem("Ungroup");
 		WebMenuItem menuItemGroupA = new WebMenuItem("Group A");
 		WebMenuItem menuItemGroupB = new WebMenuItem("Group B");
@@ -1977,7 +2012,10 @@ public class InstructorNoaUtil {
 				.getStudentListTable().getModel();
 		model.addRow(new Object[] { hostIp, hostName });
 
-		InstructorNoa.getDesktopPaneScroll().add(internalFrame);
+		InstructorNoa.getDesktopPaneScroll().add(internalFrame,
+				BorderLayout.CENTER);
+		InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
+				.tileInternalFrames();
 
 		return internalFrame;
 	}

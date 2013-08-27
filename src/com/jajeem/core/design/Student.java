@@ -34,6 +34,7 @@ import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
 import com.jajeem.command.model.StopIntercomCommand;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
@@ -41,7 +42,6 @@ import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
-
 
 public class Student {
 
@@ -70,6 +70,7 @@ public class Student {
 					Student window = new Student();
 					window.getFrmJajeemProject().setVisible(false);
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -210,6 +211,7 @@ public class Student {
 					MessageSend.main(new String[] { StudentLogin.getServerIp(),
 							Config.getParam("serverPort") });
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -223,6 +225,7 @@ public class Student {
 					ClientFileManagerMain main = new ClientFileManagerMain();
 					main.setVisible(true);
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -253,11 +256,12 @@ public class Student {
 									System.out.println(line);
 								}
 							} catch (Exception e) {
-								// TODO: handle exception
+								JajeemExcetionHandler.logError(e);
 							}
 						}
 					}).start();
 				} catch (IOException ex) {
+					JajeemExcetionHandler.logError(ex);
 					ex.printStackTrace();
 				}
 			}
@@ -288,6 +292,7 @@ public class Student {
 						StudentLogin.getServerService().send(irc);
 					}
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -323,6 +328,7 @@ public class Student {
 							.getParam("serverPort")), studentModel);
 					StudentLogin.getServerService().send(gcc);
 				} catch (Exception e1) {
+					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}

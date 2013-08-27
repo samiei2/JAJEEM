@@ -81,6 +81,7 @@ import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Instructor;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.dao.h2.RunDAO;
@@ -95,7 +96,7 @@ import com.jajeem.util.i18n;
 
 public class InstructorNoa {
 
-	private WebFrame frame;
+	private static WebFrame frame;
 	public static Map<String, com.jajeem.core.model.Student> studentList;
 	private static JScrollDesktopPane desktopPaneScroll;
 	private static WebPanel centerPanel;
@@ -132,10 +133,12 @@ public class InstructorNoa {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InstructorNoa window = new InstructorNoa();
-					window.frame.setVisible(true);
 
+					new InstructorNoa();
+					frame.pack();
+					frame.setVisible(true);
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -160,12 +163,13 @@ public class InstructorNoa {
 			transmitter = new AVTransmit2("5000", "", "10000");
 			sendOnly = new AVSendOnly("5010", "", "10010");
 
-			InstructorNoaUtil.networkSetup();
+//			InstructorNoaUtil.networkSetup();
 
 			initialize();
 
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -190,7 +194,7 @@ public class InstructorNoa {
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
 		frame.setBounds(10, 0, 1021, 656);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		langListModel.addElement("English");
 		langListModel.addElement("فارسی");
 		langList.addMouseListener(new MouseAdapter() {
@@ -207,6 +211,7 @@ public class InstructorNoa {
 											"run.exe");
 									processBuilder.start();
 								} catch (IOException e) {
+									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
 								}
 
@@ -219,12 +224,14 @@ public class InstructorNoa {
 										"run.exe");
 								processBuilder.start();
 							} catch (IOException e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 
 							System.exit(0);
 						}
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				}
@@ -645,6 +652,7 @@ public class InstructorNoa {
 							powerCommand.setType("turnOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -669,6 +677,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -708,6 +717,7 @@ public class InstructorNoa {
 							powerCommand.setType("logOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -732,6 +742,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -770,6 +781,7 @@ public class InstructorNoa {
 							powerCommand.setType("logOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -794,6 +806,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -853,6 +866,7 @@ public class InstructorNoa {
 						// getDesktopPane().getSelectedFrame().updateUI();
 
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				}
@@ -940,6 +954,7 @@ public class InstructorNoa {
 								return;
 							}
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -970,6 +985,7 @@ public class InstructorNoa {
 								}
 
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -1006,6 +1022,7 @@ public class InstructorNoa {
 											.getParam("port")));
 							serverService.send(ic);
 						} catch (Exception e) {
+							JajeemExcetionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -1030,6 +1047,7 @@ public class InstructorNoa {
 									serverService.send(ic);
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -1112,6 +1130,7 @@ public class InstructorNoa {
 								(programTextField.getText() + ".exe"), true);
 						serverService.send(ic);
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else if (((JComponent) card).getClientProperty("viewMode")
@@ -1142,6 +1161,7 @@ public class InstructorNoa {
 									serverService.send(ic);
 								}
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 
@@ -1434,6 +1454,7 @@ public class InstructorNoa {
 					}
 
 				} catch (SQLException e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -1593,6 +1614,7 @@ public class InstructorNoa {
 						try {
 							popup.add(new WebMenuItem(i18n.getParam("Empty")));
 						} catch (Exception e1) {
+							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 						return;
@@ -1757,6 +1779,7 @@ public class InstructorNoa {
 										(data[row][col - 1] + ".exe"), true);
 								serverService.send(ic);
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						} else if (((JComponent) card).getClientProperty(
@@ -1784,6 +1807,7 @@ public class InstructorNoa {
 											serverService.send(ic);
 										}
 									} catch (Exception e) {
+										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
 								}
@@ -1791,6 +1815,7 @@ public class InstructorNoa {
 						}
 
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else {
@@ -1817,6 +1842,7 @@ public class InstructorNoa {
 										(data[row][col - 1] + ".exe"), false);
 								serverService.send(ic);
 							} catch (Exception e) {
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						} else if (((JComponent) card).getClientProperty(
@@ -1844,6 +1870,7 @@ public class InstructorNoa {
 											serverService.send(ic);
 										}
 									} catch (Exception e) {
+										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
 								}
@@ -1851,6 +1878,7 @@ public class InstructorNoa {
 						}
 
 					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
 				}

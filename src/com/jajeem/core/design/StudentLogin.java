@@ -31,6 +31,7 @@ import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.client.ClientFileServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.KeyHook;
@@ -43,7 +44,7 @@ public class StudentLogin extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -5121321476236877112L;
-	
+
 	private static String serverIp;
 	private static LoginDialog loginDialog;
 	private static KeyHook keyHook;
@@ -62,14 +63,15 @@ public class StudentLogin extends JDialog {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
-			
+
 			new Config();
 			new i18n();
-			
+
 			new Student();
 			new StudentLogin();
-			
+
 		} catch (Exception e) {
+			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}

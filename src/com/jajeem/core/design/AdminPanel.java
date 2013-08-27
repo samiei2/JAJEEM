@@ -51,6 +51,7 @@ import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentService;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
@@ -95,6 +96,7 @@ public class AdminPanel extends WebFrame {
 					frame.setVisible(true);
 
 				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -203,6 +205,7 @@ public class AdminPanel extends WebFrame {
 				try {
 					new AddNewCourseDialog(courseList, getInstructorList());
 				} catch (Exception e1) {
+					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -231,6 +234,7 @@ public class AdminPanel extends WebFrame {
 										rs.getCourseDAO().delete(course);
 									}
 								} catch (SQLException e1) {
+									JajeemExcetionHandler.logError(e1);
 									e1.printStackTrace();
 								}
 							}
@@ -240,6 +244,7 @@ public class AdminPanel extends WebFrame {
 						}
 					}
 				} catch (Exception e2) {
+					JajeemExcetionHandler.logError(e2);
 					e2.printStackTrace();
 				}
 			}
@@ -258,6 +263,7 @@ public class AdminPanel extends WebFrame {
 								courseSelectionModel.getSelected(),
 								getInstructorList());
 					} catch (Exception e1) {
+						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 				}
@@ -281,6 +287,7 @@ public class AdminPanel extends WebFrame {
 						try {
 							new CourseStudentDialog(course, true);
 						} catch (Exception e1) {
+							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -305,6 +312,7 @@ public class AdminPanel extends WebFrame {
 						try {
 							new InstructorCourseDialog(course);
 						} catch (SQLException e1) {
+							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -456,6 +464,7 @@ public class AdminPanel extends WebFrame {
 				try {
 					new AddNewInstructorDialog(getInstructorList());
 				} catch (Exception e1) {
+					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -487,6 +496,7 @@ public class AdminPanel extends WebFrame {
 									insService.delete(instructor);
 								}
 							} catch (SQLException e1) {
+								JajeemExcetionHandler.logError(e1);
 								e1.printStackTrace();
 							}
 						}
@@ -616,6 +626,7 @@ public class AdminPanel extends WebFrame {
 				try {
 					new AddNewStudentDialog(getStudentList());
 				} catch (Exception e1) {
+					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -639,6 +650,7 @@ public class AdminPanel extends WebFrame {
 							try {
 								stuService.delete(student);
 							} catch (SQLException e1) {
+								JajeemExcetionHandler.logError(e1);
 								e1.printStackTrace();
 							}
 						}
@@ -667,6 +679,7 @@ public class AdminPanel extends WebFrame {
 						try {
 							new StudentCourseDialog(student);
 						} catch (Exception e1) {
+							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -764,6 +777,7 @@ public class AdminPanel extends WebFrame {
 				else if (column == 7)
 					return i18n.getParam("Weekly Time");
 			} catch (Exception e) {
+				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -854,6 +868,7 @@ public class AdminPanel extends WebFrame {
 				else if (column == 4)
 					return i18n.getParam("Password");
 			} catch (Exception e) {
+				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -905,6 +920,7 @@ public class AdminPanel extends WebFrame {
 			try {
 				insService.update(baseObject);
 			} catch (SQLException e) {
+				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
 			}
 
@@ -932,6 +948,7 @@ public class AdminPanel extends WebFrame {
 				else if (column == 4)
 					return i18n.getParam("Password");
 			} catch (Exception e) {
+				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -975,6 +992,7 @@ public class AdminPanel extends WebFrame {
 			try {
 				stuService.update(baseObject);
 			} catch (SQLException e) {
+				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
 			}
 
