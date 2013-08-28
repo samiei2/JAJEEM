@@ -163,7 +163,7 @@ public class InstructorNoa {
 			transmitter = new AVTransmit2("5000", "", "10000");
 			sendOnly = new AVSendOnly("5010", "", "10010");
 
-//			InstructorNoaUtil.networkSetup();
+			InstructorNoaUtil.networkSetup();
 
 			initialize();
 

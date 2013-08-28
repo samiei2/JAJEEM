@@ -2011,8 +2011,8 @@ public class InstructorNoaUtil {
 		DefaultTableModel model = (DefaultTableModel) InstructorNoa
 				.getStudentListTable().getModel();
 		model.addRow(new Object[] { hostIp, hostName });
-
-		InstructorNoa.getDesktopPaneScroll().add(internalFrame,
+		
+		desktopPane.add(internalFrame,
 				BorderLayout.CENTER);
 		InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 				.tileInternalFrames();
