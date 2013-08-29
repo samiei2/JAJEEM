@@ -41,13 +41,13 @@ public class MessageReceive extends JDialog {
 	public static void main(String[] args) {
 		String text = "";
 		@SuppressWarnings("unused")
-		MessageReceive dialog = new MessageReceive(text);
+		MessageReceive dialog = new MessageReceive(text, "");
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public MessageReceive(String text) {
+	public MessageReceive(String text, String name) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageReceive.class.getResource("/icons/menubar/message.png")));
 		
 		setMessageLabel(text);
@@ -67,6 +67,7 @@ public class MessageReceive extends JDialog {
 
 		// Opening dialog
 
+		exampleDialog.setTitle(name);
 		exampleDialog.pack();
 		exampleDialog.setLocationRelativeTo(this);
 		exampleDialog.setVisible(true);
@@ -94,7 +95,6 @@ public class MessageReceive extends JDialog {
 		private static final long serialVersionUID = -5926336525198856722L;
 
 		public ExampleDialog(Window owner) {
-			super(owner, "Message");
 			setIconImages(WebLookAndFeel.getImages());
 			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
 //			setModal(true);
@@ -110,19 +110,19 @@ public class MessageReceive extends JDialog {
 
 			content.add(getMessageLabel(), "0,0");
 
-			WebButton cancel = new WebButton("Ok");
+			WebButton okButton = new WebButton("Ok");
 			ActionListener listener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
 				}
 			};
-			cancel.addActionListener(listener);
-			content.add(new CenterPanel(new GroupPanel(5, cancel)), "0,1,1,1");
-			SwingUtils.equalizeComponentsWidths(cancel);
+			okButton.addActionListener(listener);
+			content.add(new CenterPanel(new GroupPanel(5, okButton)), "0,1,1,1");
+			SwingUtils.equalizeComponentsWidths(okButton);
 
 			add(content);
 
-			HotkeyManager.registerHotkey(this, cancel, Hotkey.ESCAPE);
+			HotkeyManager.registerHotkey(this, okButton, Hotkey.ESCAPE);
 		}
 	}
 }

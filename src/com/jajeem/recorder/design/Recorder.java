@@ -202,7 +202,7 @@ public class Recorder extends WebDialog {
 					progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
-						
+
 						if (directoryChooser == null) {
 							directoryChooser = new WebDirectoryChooser(frame,
 									"Choose directory to save");
@@ -254,6 +254,7 @@ public class Recorder extends WebDialog {
 								AudioFileFormat.Type.WAVE, file);
 						file.flush();
 						file.close();
+						Desktop.getDesktop().open(output.getParentFile());
 
 					} catch (IOException | InterruptedException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());

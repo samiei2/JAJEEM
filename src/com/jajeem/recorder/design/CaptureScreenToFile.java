@@ -19,6 +19,7 @@
 
 package com.jajeem.recorder.design;
 
+import java.awt.Desktop;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MouseInfo;
@@ -200,6 +201,7 @@ public class CaptureScreenToFile {
 						// if
 						// needed
 						writer.close();
+						Desktop.getDesktop().open(outputFile);
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
@@ -279,12 +281,13 @@ public class CaptureScreenToFile {
 						writer.close();
 						capt.stop();
 						Thread.sleep(1000);
-						FileOutputStream out = new FileOutputStream(
-								outputFile.getPath() +"/temp.mp3");
+						FileOutputStream out = new FileOutputStream(outputFile
+								.getPath() + "/temp.mp3");
 						AudioSystem.write(capt.audioInputStream,
 								AudioFileFormat.Type.AIFF, out);
 						out.flush();
 						out.close();
+						Desktop.getDesktop().open(outputFile);
 						Thread.sleep(1000);
 						Synchornize();
 					} catch (Exception e) {

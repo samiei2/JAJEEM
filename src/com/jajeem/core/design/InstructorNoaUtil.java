@@ -1800,6 +1800,12 @@ public class InstructorNoaUtil {
 				.read(InstructorNoaUtil.class
 						.getResourceAsStream("/icons/menubar/student.png"))));
 		internalFrame.setSize(100, 120);
+		internalFrame.setMaximizable(false);
+		internalFrame.setIconifiable(false);
+		internalFrame.setIcon(false);
+		internalFrame.pack();
+		internalFrame.setResizable(false);
+
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
@@ -1824,8 +1830,9 @@ public class InstructorNoaUtil {
 				if (!(boolean) internalFrame.getClientProperty("live")) {
 					return;
 				}
-
+				
 				try {
+					internalFrame.setBorder(BorderFactory.createEmptyBorder());
 					internalFrame.setFrameIcon(new ImageIcon(
 							ImageIO.read(InstructorNoaUtil.class
 									.getResourceAsStream("/icons/menubar/student.png"))));
@@ -1850,6 +1857,9 @@ public class InstructorNoaUtil {
 				}
 
 				try {
+
+					internalFrame.setBorder(BorderFactory.createMatteBorder(4,
+							4, 4, 4, Color.decode("#82CAFF")));
 					internalFrame.setFrameIcon(new ImageIcon(
 							ImageIO.read(InstructorNoaUtil.class
 									.getResourceAsStream("/icons/menubar/check.png"))));
@@ -2011,9 +2021,8 @@ public class InstructorNoaUtil {
 		DefaultTableModel model = (DefaultTableModel) InstructorNoa
 				.getStudentListTable().getModel();
 		model.addRow(new Object[] { hostIp, hostName });
-		
-		desktopPane.add(internalFrame,
-				BorderLayout.CENTER);
+
+		desktopPane.add(internalFrame, BorderLayout.CENTER);
 		InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 				.tileInternalFrames();
 

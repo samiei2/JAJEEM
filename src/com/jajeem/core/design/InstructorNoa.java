@@ -1976,4 +1976,18 @@ public class InstructorNoa {
 	public static void setCourseModel(Course courseModel) {
 		InstructorNoa.courseModel = courseModel;
 	}
+
+	public static String getStudentNameByIP(String ip) {
+		if (studentList.containsKey(ip)) {
+			return studentList.get(ip).getFullName();
+		} else {
+			JInternalFrame[] frames = getDesktopPane().getAllFrames();
+			for (JInternalFrame frame : frames) {
+				if (frame.getClientProperty("ip").equals(ip)) {
+					return (String) frame.getClientProperty("username");
+				}
+			}
+		}
+		return ip;
+	}
 }

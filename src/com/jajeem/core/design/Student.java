@@ -195,7 +195,7 @@ public class Student {
 		ImageIcon accountImage = new ImageIcon(ImageIO.read(Student.class
 				.getResourceAsStream(("/icons/noa/right_panel/accounts.png"))));
 		WebButton accountButton = new WebButton(accountImage);
-		TooltipManager.setTooltip(recordButton, imgToolTip,
+		TooltipManager.setTooltip(accountButton, imgToolTip,
 				i18n.getParam("My Account"), TooltipWay.down);
 		panel.add(accountButton);
 

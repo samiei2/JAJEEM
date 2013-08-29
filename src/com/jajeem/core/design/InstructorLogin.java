@@ -103,7 +103,7 @@ public class InstructorLogin extends JFrame {
 		progressBarFrame.setAlwaysOnTop(true);
 		progressBarFrame.setVisible(true);
 
-		LicenseValidator.ActiveValidateLicense();
+//		LicenseValidator.ActiveValidateLicense();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 190);
