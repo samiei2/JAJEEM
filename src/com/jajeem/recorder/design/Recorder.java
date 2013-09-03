@@ -114,7 +114,7 @@ public class Recorder extends WebDialog {
 		wbtnRecordStudent.setVisible(true);
 		wbtnRecordStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (isGroupSelected) {
+				if (isGroupSelected) { 
 					for (int i = 0; i < selectedStudent.size(); i++) {
 						if (recordingsList.contains(selectedStudent.get(i))) {
 							SendStopRecordCommandTo(selectedStudent.get(i));

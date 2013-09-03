@@ -9,6 +9,7 @@ import com.sun.jna.platform.win32.WinDef.WPARAM;
 import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinUser.HHOOK;
 import com.sun.jna.platform.win32.WinUser.HOOKPROC;
+import com.sun.jna.platform.win32.WinUser.KBDLLHOOKSTRUCT;
 import com.sun.jna.platform.win32.WinUser.MSG;
 
 /** Sample implementation of a low-level keyboard hook on W32. */
@@ -17,6 +18,7 @@ import com.sun.jna.platform.win32.WinUser.MSG;
 
 public class MouseHook implements Runnable {
 	private static HHOOK hhk;
+	private static LowLevelMouseProc mouseHook;
 	private static boolean ignoreCallback;
 	protected Thread thread;
 
@@ -74,8 +76,22 @@ public class MouseHook implements Runnable {
 		final User32 lib = User32.INSTANCE;
 		HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
 
+		
+		mouseHook = new LowLevelMouseProc() {
+			@Override
+			public LRESULT callback(int nCode, WPARAM wParam, LPARAM lParam) {
+				if (isIgnoreCallback()) {
+					return new LRESULT(1);
+				} else {
+					return lib.CallNextHookEx(hhk, nCode, wParam,
+							lParam.toPointer());
+				}
+			}
+		};
+		
+		
 		hhk = lib
-				.SetWindowsHookEx(WinUser.WH_MOUSE_LL, hookTheMouse(), hMod, 0);
+				.SetWindowsHookEx(WinUser.WH_MOUSE_LL, mouseHook, hMod, 0);
 
 		MSG msg = new MSG();
 		lib.GetMessage(msg, null, 0, 0);
