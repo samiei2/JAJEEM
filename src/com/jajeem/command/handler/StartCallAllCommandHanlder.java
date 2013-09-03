@@ -16,8 +16,13 @@ public class StartCallAllCommandHanlder implements ICommandHandler {
 		StartCallAllCommand command = (StartCallAllCommand)cmd;
 		//TODO: change ip here!
 		if (Student.getReceiverOnly() == null) {
+			String ip = InetAddress.getLocalHost()
+					.getHostAddress().toString();
+			ip = ip.substring(0,
+					ip.lastIndexOf("."))
+					+ ".255";
 			AVReceiveOnly ar = new AVReceiveOnly("10010",
-					"192.168.0.255", "5010");
+					ip, "5010");
 			ar.initialize("audio");
 			Student.setReceiverOnly(ar);
 		} else {

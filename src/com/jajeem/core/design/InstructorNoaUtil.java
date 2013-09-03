@@ -1663,10 +1663,15 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent arg0) {
 							try {
 								if (button.getText().equals("Stop")) {
+									String ip = InetAddress.getLocalHost()
+											.getHostAddress().toString();
+									ip = ip.substring(0,
+											ip.lastIndexOf("."))
+											+ ".255";
 									StopCallAllCommand sm = new StopCallAllCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(),
-											"192.168.0.255", Integer
+											Config.getParam("broadcastingIp"), Integer
 													.parseInt(Config
 															.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
@@ -1677,6 +1682,11 @@ public class InstructorNoaUtil {
 									}
 									button.setText("Call All");
 								} else {
+									String ip = InetAddress.getLocalHost()
+											.getHostAddress().toString();
+									ip = ip.substring(0,
+											ip.lastIndexOf("."))
+											+ ".255";
 									StartCallAllCommand sm = new StartCallAllCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(),
@@ -1687,8 +1697,6 @@ public class InstructorNoaUtil {
 
 									if (InstructorNoa.getSendOnly() == null) {
 										AVSendOnly as;
-										String ip = InetAddress.getLocalHost()
-												.getHostAddress().toString();
 										ip = ip.substring(0,
 												ip.lastIndexOf("."))
 												+ ".255";
