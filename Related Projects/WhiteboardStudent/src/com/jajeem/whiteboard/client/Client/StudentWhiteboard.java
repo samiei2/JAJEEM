@@ -73,41 +73,52 @@ public class StudentWhiteboard {
         }
 	}
 	
-	public void Join(int sessionId,String userName, String whiteboardPort){
-		try {
-			System.out.println("Joining");
-			sessions.joinSession(sessionID);
-			
-//			Registry registry = LocateRegistry.getRegistry(
-//	                hostname, WhiteboardClient.WHITEBOARD_PORT,
-//	                new javax.rmi.ssl.SslRMIClientSocketFactory()
-//	                );
-			Registry registry = LocateRegistry.getRegistry(
-	                hostname, Integer.parseInt(whiteboardPort)
-	                );
-
-	        // the name of service in RMI server
-	        String serviceName = "RemoteWhiteboard" + sessionID;
-	        
-	     // "proxy" is the identifier that refer to
-            // the remote object that implements the "Whiteboard"
-            // interface
-            Object proxy = registry.lookup(serviceName);
-            Whiteboard whiteboard = (Whiteboard)proxy;
-            System.out.println("Joined");
-            int userid = whiteboard.userRegistry(userName, "");
-            System.out.println("Opening MainFrame");
-            MainFrame mainFrame = new MainFrame(sessions, sessionID,
-                        whiteboard,userid,"");
-            System.out.println("Main Frame Opened");
-            
-		} catch (RemoteException | NotBoundException e) {
-			e.printStackTrace();
-			System.out.println("Exception :" + e.getMessage());
-			for (int i = 0; i < e.getStackTrace().length; i++) {
-				System.out.println(e.getStackTrace()[i]);
+	public void Join(int sessionID,String userName, String whiteboardPort){
+		int numOfTries = 10;
+		while (numOfTries > 0) {
+			try {
+				System.out.println("Joining");
+				sessions.joinSession(sessionID);
+				
+	//			Registry registry = LocateRegistry.getRegistry(
+	//	                hostname, WhiteboardClient.WHITEBOARD_PORT,
+	//	                new javax.rmi.ssl.SslRMIClientSocketFactory()
+	//	                );
+				Registry registry = LocateRegistry.getRegistry(
+		                hostname, Integer.parseInt(whiteboardPort)
+		                );
+	
+		        // the name of service in RMI server
+		        String serviceName = "RemoteWhiteboard" + sessionID;
+		        
+		     // "proxy" is the identifier that refer to
+	            // the remote object that implements the "Whiteboard"
+	            // interface
+	            Object proxy = registry.lookup(serviceName);
+	            Whiteboard whiteboard = (Whiteboard)proxy;
+	            System.out.println("Joined");
+	            int userid = whiteboard.userRegistry(userName, "");
+	            System.out.println("Opening MainFrame");
+	            MainFrame mainFrame = new MainFrame(sessions, sessionID,
+	                        whiteboard,userid,"");
+	            System.out.println("Main Frame Opened");
+	            break;
+			} catch (RemoteException | NotBoundException e) {
+				numOfTries--;
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+				System.out.println("Exception :" + e.getMessage());
+				for (int i = 0; i < e.getStackTrace().length; i++) {
+					System.out.println(e.getStackTrace()[i]);
+				}
 			}
 		}
+		if(numOfTries == 0)
+			JOptionPane.showMessageDialog(null, "Unable to connect to whiteboard server.Please contact administrator!");
 	}
 
 //	private String getUserName() {
