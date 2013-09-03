@@ -37,40 +37,52 @@ public class StudentWhiteboard {
 		
 		userid = new Random().nextInt(2000);
 		/** Connect to the server */
-		try {
-            if (getTxtServerAddress() == null || getTxtServerAddress().equals("")){
-                // if the user specify the address of server
-                
-            }
-            else {
-            	hostname = getTxtServerAddress();
-            }
-
-            // Make reference to SSL-based registry
-//            Registry registry = LocateRegistry.getRegistry(
-//                hostname, WhiteboardClient.SESSIONS_PORT,
-//                new javax.rmi.ssl.SslRMIClientSocketFactory()
-//            );
-            System.out.println("Calling " + host +":"+ sessionPort);
-            Registry registry = LocateRegistry.getRegistry(
-                    hostname, Integer.parseInt(sessionPort)
-                );
-
-
-            String serviceName = "RWS";
-
-            // "proxy" is the identifier that refer to
-            // the remote object that implements the "Sessions"
-            // interface
-            System.out.println("Lookup");
-            Object proxy = registry.lookup(serviceName);
-            sessions = (Sessions)proxy;
-        } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null,
-                   "Connection refused to host, please make "
-                   + "sure the host is correct.",
-                   "Error", JOptionPane.ERROR_MESSAGE);
+		if (getTxtServerAddress() == null || getTxtServerAddress().equals("")){
+            // if the user specify the address of server
+            
         }
+        else {
+        	hostname = getTxtServerAddress();
+        }
+		int numOfTries = 10;
+		while (numOfTries > 0) {
+			try {
+	            // Make reference to SSL-based registry
+	//            Registry registry = LocateRegistry.getRegistry(
+	//                hostname, WhiteboardClient.SESSIONS_PORT,
+	//                new javax.rmi.ssl.SslRMIClientSocketFactory()
+	//            );
+	            System.out.println("Calling " + host +":"+ sessionPort);
+		        Registry registry = LocateRegistry.getRegistry(
+		                    hostname, Integer.parseInt(sessionPort)
+		                );
+		
+		
+		            String serviceName = "RWS";
+		
+		            // "proxy" is the identifier that refer to
+		            // the remote object that implements the "Sessions"
+		            // interface
+		            System.out.println("Lookup");
+		            Object proxy = registry.lookup(serviceName);
+		            sessions = (Sessions)proxy;
+		            break;
+	        } catch(Exception ex) {
+	        	numOfTries--;
+	        	System.out.println("Try #"+numOfTries);
+	        	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+	            JOptionPane.showMessageDialog(null,
+	                   "Connection refused to host, please make "
+	                   + "sure the host is correct.",
+	                   "Error", JOptionPane.ERROR_MESSAGE);
+	        }
+			if(numOfTries == 0)
+				JOptionPane.showMessageDialog(null, "Unable to connect to whiteboard server.Please contact administrator!");
+		}
 	}
 	
 	public void Join(int sessionID,String userName, String whiteboardPort){
@@ -105,6 +117,7 @@ public class StudentWhiteboard {
 	            break;
 			} catch (RemoteException | NotBoundException e) {
 				numOfTries--;
+				System.out.println("Try #"+numOfTries);
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
@@ -143,15 +156,15 @@ public class StudentWhiteboard {
 			whiteboardPort = args[2];
 			userName = args[3];
 			sessionID = args[4];
-			StudentWhiteboard student = new StudentWhiteboard(host,sessionPort);
-			student.Join(Integer.parseInt(sessionID), userName,whiteboardPort);
-			System.out.println("Student Whiteboard Started!");
 			System.out.println("Info : ");
 			System.out.println("Host : "+args[0]);
 			System.out.println("Session Port : "+args[1]);
 			System.out.println("Whiteboard Port : "+args[2]);
 			System.out.println("Username : "+args[3]);
 			System.out.println("Session Id : "+args[4]);
+			StudentWhiteboard student = new StudentWhiteboard(host,sessionPort);
+			student.Join(Integer.parseInt(sessionID), userName,whiteboardPort);
+			System.out.println("Student Whiteboard Started!");
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());

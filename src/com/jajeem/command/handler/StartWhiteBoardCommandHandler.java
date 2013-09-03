@@ -35,8 +35,8 @@ public class StartWhiteBoardCommandHandler implements ICommandHandler {
 					String runCommand = "java -jar WhiteboardStudent.jar "
 							+ command.getFrom() + " " 
 							+ command.getSessionPort() + " " 
-							+ command.getWhiteboardPort() + " " 
-							+ userName + " 0" ;
+							+ command.getWhiteboardPort() + " \"" 
+							+ userName + "\" 0" ;
 					final Process proc = Runtime
 							.getRuntime()
 							.exec(runCommand,null,new File("util/"));
