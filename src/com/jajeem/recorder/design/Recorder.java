@@ -118,16 +118,16 @@ public class Recorder extends WebDialog {
 					for (int i = 0; i < selectedStudent.size(); i++) {
 						if (recordingsList.contains(selectedStudent.get(i))) {
 							SendStopRecordCommandTo(selectedStudent.get(i));
-							// recordingsList.remove(selectedStudent.get(i));
+							recordingsList.remove(selectedStudent.get(i));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
-							progressBarFrame.setVisible(false);
+//							progressBarFrame.setVisible(false);
 						} else {
 							recordingsList.add(selectedStudent.get(i));
 							SendStartRecordCommandTo(selectedStudent.get(i));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
-							progressBarFrame.setVisible(true);
+//							progressBarFrame.setVisible(true);
 						}
 					}
 					frame.dispose();
@@ -135,16 +135,16 @@ public class Recorder extends WebDialog {
 					if (selectedStudent.size() != 0) {
 						if (recordingsList.contains(selectedStudent.get(0))) {
 							SendStopRecordCommandTo(selectedStudent.get(0));
-							// recordingsList.remove(selectedStudent.get(0));
+							recordingsList.remove(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Record Student");
 							wbtnRecordStudent.setEnabled(true);
-							progressBarFrame.setVisible(false);
+//							progressBarFrame.setVisible(false);
 						} else {
 							recordingsList.add(selectedStudent.get(0));
 							SendStartRecordCommandTo(selectedStudent.get(0));
 							wbtnRecordStudent.setText("Recording Started");
 							wbtnRecordStudent.setEnabled(false);
-							progressBarFrame.setVisible(true);
+//							progressBarFrame.setVisible(true);
 							frame.dispose();
 						}
 					}

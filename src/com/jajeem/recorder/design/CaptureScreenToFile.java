@@ -51,6 +51,7 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
+import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
 import com.xuggle.mediatool.IMediaCoder;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
@@ -78,6 +79,7 @@ public class CaptureScreenToFile {
 	private static String filename;
 	private static boolean isClient;
 	private static File outputFile = null;
+	private static TransparentRecordingFrame overlayScreen;
 
 	/**
 	 * Takes a screen shot of your entire screen and writes it to output.flv
@@ -149,6 +151,7 @@ public class CaptureScreenToFile {
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
 
+			overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -224,7 +227,7 @@ public class CaptureScreenToFile {
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
-
+			overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -306,6 +309,8 @@ public class CaptureScreenToFile {
 	public static void StopCapture() {
 		try {
 			running = false;
+			overlayScreen.setVisible(false);
+			overlayScreen.dispose();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

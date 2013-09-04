@@ -17,7 +17,7 @@ import com.jajeem.util.Session;
 
 public class StopRecorderCommandHandler implements ICommandHandler {
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "static-access" })
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StopStudentRecordCommand command = (StopStudentRecordCommand)cmd;
