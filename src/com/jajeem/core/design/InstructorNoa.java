@@ -545,7 +545,48 @@ public class InstructorNoa {
 		// create the scrollable desktop instance and add it to the JFrame
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
 		setDesktopPaneScroll(scrollableDesktop);
-
+		
+		
+		///Armin codes Clean Up actions and move to proper place
+		WebPopupMenu popup = new WebPopupMenu();
+		WebMenuItem menuItemThumbView = new WebMenuItem("Thumbnail View");
+		WebMenuItem menuItemGroupView = new WebMenuItem("Group View");
+		WebMenuItem menuItemListView = new WebMenuItem("List View");
+		
+		popup.add(menuItemThumbView);
+		popup.add(menuItemGroupView);
+		popup.add(menuItemListView);
+		
+		scrollableDesktop.getDesktopMediator().getDesktopScrollpane().getDesktopPane().setComponentPopupMenu(popup);
+//		getGroupList().setComponentPopupMenu(popup);
+		getStudentListTable().setComponentPopupMenu(popup);
+		
+		menuItemThumbView.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ThumbViewActionListener();
+			}
+		});
+		
+		menuItemGroupView.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GroupViewActionListener();
+			}
+		});
+		
+		menuItemListView.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListViewActionListener();
+			}
+		});
+		///////////////////////////////////////////////////////////////////
+		
+		
 		// desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
 		// GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
@@ -1627,6 +1668,24 @@ public class InstructorNoa {
 			}
 		});
 
+	}
+
+	protected void ListViewActionListener() {
+		CardLayout cl = (CardLayout) InstructorNoa
+				.getCenterPanel().getLayout();
+		cl.show(centerPanel, "listView");
+	}
+
+	protected void GroupViewActionListener() {
+		CardLayout cl = (CardLayout) InstructorNoa
+				.getCenterPanel().getLayout();
+		cl.show(centerPanel, "groupView");
+	}
+
+	protected void ThumbViewActionListener() {
+		CardLayout cl = (CardLayout) InstructorNoa
+				.getCenterPanel().getLayout();
+		cl.show(centerPanel, "thumbsView");
 	}
 
 	public static AVTransmit2 getTransmitter() {

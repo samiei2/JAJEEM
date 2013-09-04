@@ -26,8 +26,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +51,7 @@ import com.alee.laf.button.WebButton;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
+import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuItem;
 import com.alee.laf.menu.WebPopupMenu;
 import com.alee.laf.optionpane.WebOptionPane;
@@ -1878,14 +1883,17 @@ public class InstructorNoaUtil {
 		});
 
 		WebPopupMenu popup = new WebPopupMenu();
-
+		WebMenu menu = new WebMenu();
+		
 		((JComponent) internalFrame.getComponent(1))
 				.setComponentPopupMenu(popup);
+		((JScrollPane)((JPanel)((JLayeredPane)((JRootPane) internalFrame.getComponent(0)).getComponent(1)).getComponent(0)).getComponent(0)).setComponentPopupMenu(popup);
 
 		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
 				"No Group");
 		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
 
+		WebMenu menuItemgroups = new WebMenu("Grouping");
 		WebMenuItem menuItemUngroup = new WebMenuItem("Ungroup");
 		WebMenuItem menuItemGroupA = new WebMenuItem("Group A");
 		WebMenuItem menuItemGroupB = new WebMenuItem("Group B");
@@ -1902,24 +1910,47 @@ public class InstructorNoaUtil {
 		WebMenuItem menuItemGroupM = new WebMenuItem("Group M");
 		WebMenuItem menuItemGroupN = new WebMenuItem("Group N");
 		WebMenuItem menuItemGroupO = new WebMenuItem("Group O");
-
-		popup.add(menuItemUngroup);
-		popup.addSeparator();
-		popup.add(menuItemGroupA);
-		popup.add(menuItemGroupB);
-		popup.add(menuItemGroupC);
-		popup.add(menuItemGroupD);
-		popup.add(menuItemGroupE);
-		popup.add(menuItemGroupF);
-		popup.add(menuItemGroupG);
-		popup.add(menuItemGroupH);
-		popup.add(menuItemGroupI);
-		popup.add(menuItemGroupJ);
-		popup.add(menuItemGroupK);
-		popup.add(menuItemGroupL);
-		popup.add(menuItemGroupM);
-		popup.add(menuItemGroupN);
-		popup.add(menuItemGroupO);
+		
+		menuItemgroups.add(menuItemUngroup);
+		menuItemgroups.addSeparator();
+		menuItemgroups.add(menuItemGroupA);
+		menuItemgroups.add(menuItemGroupB);
+		menuItemgroups.add(menuItemGroupC);
+		menuItemgroups.add(menuItemGroupD);
+		menuItemgroups.add(menuItemGroupE);
+		menuItemgroups.add(menuItemGroupF);
+		menuItemgroups.add(menuItemGroupG);
+		menuItemgroups.add(menuItemGroupH);
+		menuItemgroups.add(menuItemGroupI);
+		menuItemgroups.add(menuItemGroupJ);
+		menuItemgroups.add(menuItemGroupK);
+		menuItemgroups.add(menuItemGroupL);
+		menuItemgroups.add(menuItemGroupM);
+		menuItemgroups.add(menuItemGroupN);
+		menuItemgroups.add(menuItemGroupO);
+		
+				
+		WebMenu menuItemActions = new WebMenu("Actions");
+		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
+		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
+		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
+		WebMenuItem menuItemVideoChat = new WebMenuItem("Video Chat");
+		WebMenuItem menuItemModeling = new WebMenuItem("Modeling");
+		WebMenuItem menuItemChat = new WebMenuItem("Chat");
+		WebMenuItem menuItemLock = new WebMenuItem("Lock");
+		WebMenuItem menuItemRecord = new WebMenuItem("Record");
+		
+		menuItemActions.add(menuItemSendFile);
+		menuItemActions.add(menuItemIntercom);
+		menuItemActions.add(menuItemMonitor);
+		menuItemActions.add(menuItemVideoChat);
+		menuItemActions.add(menuItemModeling);
+		menuItemActions.add(menuItemChat);
+		menuItemActions.add(menuItemLock);
+		menuItemActions.add(menuItemRecord);
+		
+		popup.add(menuItemgroups);
+		popup.add(menuItemActions);
 
 		menuItemUngroup.putClientProperty("group", "none");
 		menuItemUngroup.putClientProperty("group_no", -1);
