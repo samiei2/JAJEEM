@@ -87,7 +87,7 @@ public class CaptureScreenToFile {
 	 * @param args
 	 */
 	public CaptureScreenToFile() {
-
+		
 		WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
 				"Choose directory to save");
 
@@ -125,6 +125,8 @@ public class CaptureScreenToFile {
 			outputFile.delete();
 			outputFile.mkdir();
 		}
+		
+		overlayScreen = new TransparentRecordingFrame();
 	}
 
 	public static void main(String[] args) {

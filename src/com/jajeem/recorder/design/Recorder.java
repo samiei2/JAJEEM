@@ -33,6 +33,7 @@ import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.Config;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
@@ -57,7 +58,7 @@ public class Recorder extends WebDialog {
 	private ArrayList<String> selectedStudent;
 	private boolean isGroupSelected;
 	private Recorder frame;
-	public WebFrame progressBarFrame;
+//	public WebFrame progressBarFrame;
 
 	/**
 	 * Launch the application.
@@ -93,18 +94,18 @@ public class Recorder extends WebDialog {
 		setAlwaysOnTop(true);
 		setModal(false);
 
-		WebProgressBar progressBar = new WebProgressBar();
-		progressBar.setIndeterminate(true);
-		progressBar.setStringPainted(true);
-		progressBar.setString("Recording...");
-		progressBar.setOpaque(false);
-
-		progressBarFrame = new WebFrame();
-		progressBarFrame.add(progressBar);
-		progressBarFrame.setSize(200, 35);
-		progressBarFrame.setLocationRelativeTo(null);
-		progressBarFrame.setUndecorated(true);
-		progressBarFrame.setAlwaysOnTop(true);
+//		WebProgressBar progressBar = new WebProgressBar();
+//		progressBar.setIndeterminate(true);
+//		progressBar.setStringPainted(true);
+//		progressBar.setString("Recording...");
+//		progressBar.setOpaque(false);
+//
+//		progressBarFrame = new WebFrame();
+//		progressBarFrame.add(progressBar);
+//		progressBarFrame.setSize(200, 35);
+//		progressBarFrame.setLocationRelativeTo(null);
+//		progressBarFrame.setUndecorated(true);
+//		progressBarFrame.setAlwaysOnTop(true);
 
 		setResizable(false);
 		setBounds(100, 100, 211, 295);
@@ -191,7 +192,7 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnPlay.setEnabled(false);
-					progressBarFrame.setVisible(true);
+//					progressBarFrame.setVisible(true);
 				} else {
 					wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
@@ -199,7 +200,7 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnPlay.setEnabled(true);
-					progressBarFrame.setVisible(false);
+//					progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
 
@@ -250,8 +251,13 @@ public class Recorder extends WebDialog {
 						File output = new File(filetemp.getPath(),
 								"recording - " + timeStamp + ".mp3");
 						FileOutputStream file = new FileOutputStream(output);
-						AudioSystem.write(capt.audioInputStream,
-								AudioFileFormat.Type.WAVE, file);
+						try{
+							AudioSystem.write(capt.audioInputStream,
+									AudioFileFormat.Type.WAVE, file);
+						}
+						catch(Exception ex){
+							JajeemExcetionHandler.logError(ex,Recorder.class);
+						}
 						file.flush();
 						file.close();
 						Desktop.getDesktop().open(output.getParentFile());
@@ -283,13 +289,13 @@ public class Recorder extends WebDialog {
 					wbtnRecordDesktopOnly.setText("Stop");
 					wbtnRecord.setEnabled(false);
 					wbtnRecordBoth.setEnabled(false);
-					progressBarFrame.setVisible(true);
+//					progressBarFrame.setVisible(true);
 				} else {
 					capture.StopCapture();
 					wbtnRecordDesktopOnly.setText("Record Desktop Only");
 					wbtnRecord.setEnabled(true);
 					wbtnRecordBoth.setEnabled(true);
-					progressBarFrame.setVisible(false);
+//					progressBarFrame.setVisible(false);
 				}
 			}
 		});
@@ -308,13 +314,13 @@ public class Recorder extends WebDialog {
 					wbtnRecordBoth.setText("Stop");
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnRecord.setEnabled(false);
-					progressBarFrame.setVisible(true);
+//					progressBarFrame.setVisible(true);
 				} else {
 					capture.StopCapture();
 					wbtnRecordBoth.setText("Record Both");
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnRecord.setEnabled(true);
-					progressBarFrame.setVisible(false);
+//					progressBarFrame.setVisible(false);
 				}
 			}
 		});
