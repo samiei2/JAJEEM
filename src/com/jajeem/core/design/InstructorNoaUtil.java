@@ -85,6 +85,7 @@ import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.alt.Quiz_Main;
+import com.jajeem.recorder.design.CaptureScreenToFile;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.survey.design.alt.Survey_Main;
@@ -1934,17 +1935,50 @@ public class InstructorNoaUtil {
 		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
 		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
 		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
-		WebMenuItem menuItemVideoChat = new WebMenuItem("Video Chat");
-		WebMenuItem menuItemModeling = new WebMenuItem("Modeling");
 		WebMenuItem menuItemChat = new WebMenuItem("Chat");
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
 		WebMenuItem menuItemRecord = new WebMenuItem("Record");
 		
+		menuItemSendFile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SendFileActionListener();
+			}
+		});
+		menuItemIntercom.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				IntercomActionListener();
+			}
+		});
+		menuItemMonitor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MonitorActionListener();
+			}
+		});
+		menuItemChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ChatActionListener();
+			}
+		});
+		menuItemLock.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				LockActionListener();
+			}
+		});
+		menuItemRecord.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				RecordActionListener();
+			}
+		});
+		
 		menuItemActions.add(menuItemSendFile);
 		menuItemActions.add(menuItemIntercom);
 		menuItemActions.add(menuItemMonitor);
-		menuItemActions.add(menuItemVideoChat);
-		menuItemActions.add(menuItemModeling);
 		menuItemActions.add(menuItemChat);
 		menuItemActions.add(menuItemLock);
 		menuItemActions.add(menuItemRecord);
@@ -1974,16 +2008,16 @@ public class InstructorNoaUtil {
 		menuItemGroupI.putClientProperty("group_no", 8);
 		menuItemGroupJ.putClientProperty("group", "J");
 		menuItemGroupJ.putClientProperty("group_no", 9);
-		menuItemGroupJ.putClientProperty("group", "K");
-		menuItemGroupJ.putClientProperty("group_no", 10);
-		menuItemGroupJ.putClientProperty("group", "L");
-		menuItemGroupJ.putClientProperty("group_no", 11);
-		menuItemGroupJ.putClientProperty("group", "M");
-		menuItemGroupJ.putClientProperty("group_no", 12);
-		menuItemGroupJ.putClientProperty("group", "N");
-		menuItemGroupJ.putClientProperty("group_no", 13);
-		menuItemGroupJ.putClientProperty("group", "O");
-		menuItemGroupJ.putClientProperty("group_no", 14);
+		menuItemGroupK.putClientProperty("group", "K");
+		menuItemGroupK.putClientProperty("group_no", 10);
+		menuItemGroupL.putClientProperty("group", "L");
+		menuItemGroupL.putClientProperty("group_no", 11);
+		menuItemGroupM.putClientProperty("group", "M");
+		menuItemGroupM.putClientProperty("group_no", 12);
+		menuItemGroupN.putClientProperty("group", "N");
+		menuItemGroupN.putClientProperty("group_no", 13);
+		menuItemGroupO.putClientProperty("group", "O");
+		menuItemGroupO.putClientProperty("group_no", 14);
 
 		ActionListener actionListenerGroupMenuItem = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2068,6 +2102,385 @@ public class InstructorNoaUtil {
 		return internalFrame;
 	}
 
+	protected static void RecordActionListener() {
+		ArrayList<String> temp = new ArrayList<>();
+		temp.add(InstructorNoa.getDesktopPane()
+				.getSelectedFrame()
+				.getClientProperty("ip").toString());
+		Recorder recorder = new Recorder(temp, false, true);
+		recorder.RecordStudent();
+	}
+
+	protected static void LockActionListener() {
+		InstructorNoa.LockAction();
+	}
+
+	protected static void ChatActionListener() {
+		Component card = getActiveCard();
+
+		if (((JComponent) card).getClientProperty(
+				"viewMode").equals("thumbView")) {
+			InstructorNoa.getDesktopPaneScroll()
+					.getSelectedFrame();
+			if (InstructorNoa.getDesktopPane()
+					.getSelectedFrame() != null) {
+				String selectedStudent = "";
+				selectedStudent = (String) InstructorNoa
+						.getDesktopPane()
+						.getSelectedFrame()
+						.getClientProperty("ip");
+				Chat currentChat = null;
+				if (!InstructorNoa.getChatList().isEmpty()) {
+					for (Chat chat : InstructorNoa
+							.getChatList()) {
+						if (chat.getTo().equals(
+								selectedStudent)) {
+							currentChat = chat;
+							currentChat.setVisible(true);
+							break;
+						}
+					}
+					if (currentChat == null) {
+						try {
+							currentChat = new Chat(
+									selectedStudent,
+									Integer.parseInt(Config
+											.getParam("port")),
+									false, -1,
+									selectedStudent);
+							InstructorNoa.getChatList()
+									.add(currentChat);
+						} catch (Exception e) {
+							JajeemExcetionHandler
+									.logError(e);
+							e.printStackTrace();
+						}
+					}
+				} else {
+					if (currentChat == null) {
+						try {
+							currentChat = new Chat(
+									selectedStudent,
+									Integer.parseInt(Config
+											.getParam("port")),
+									false,
+									-1,
+									InstructorNoa
+											.getDesktopPane()
+											.getSelectedFrame()
+											.getTitle());
+							InstructorNoa.getChatList()
+									.add(currentChat);
+						} catch (Exception e) {
+							JajeemExcetionHandler
+									.logError(e);
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	protected static void MonitorActionListener() {
+		if (InstructorNoa.getDesktopPane()
+				.getSelectedFrame() != null) {
+			String selectedStudent = "";
+			selectedStudent = (String) InstructorNoa
+					.getDesktopPane().getSelectedFrame()
+					.getClientProperty("ip");
+			jrdesktop.Config conf = null;
+			try {
+				conf = new jrdesktop.Config(false, "",
+						selectedStudent,
+						Integer.parseInt(Config
+								.getParam("vncPort")),
+						"admin", "admin", false, false);
+			} catch (Exception e) {
+				JajeemExcetionHandler.logError(e);
+				e.printStackTrace();
+			}
+			VNCCaptureService vnc = new VNCCaptureService();
+			vnc.startClient(conf);
+		}
+	}
+
+	protected static void IntercomActionListener() {
+		Component card = null;
+		for (Component comp : InstructorNoa
+				.getCenterPanel().getComponents()) {
+			if (comp.isVisible() == true) {
+				card = comp;
+			}
+		}
+
+		if (((JComponent) card).getClientProperty(
+				"viewMode").equals("thumbView")) {
+
+			if (InstructorNoa.getDesktopPane()
+					.getSelectedFrame() != null) {
+				String selectedStudent = "";
+				selectedStudent = (String) InstructorNoa
+						.getDesktopPane()
+						.getSelectedFrame()
+						.getClientProperty("ip");
+				try {
+					// "--remote-host=127.0.0.1 --remote-port-base=10000"
+
+					// if some one is selected and we were
+					// talking to him,
+					// stop transmitting and sent a stop
+					// command
+					// to him
+					if (InstructorNoa.getTransmitter()
+							.getRemoteAddr()
+							.getHostAddress()
+							.equals(selectedStudent)) {
+						if (InstructorNoa.getTransmitter()
+								.isTransmitting()) {
+							InstructorNoa.getTransmitter()
+									.stop();
+							StopIntercomCommand si;
+							try {
+								si = new StopIntercomCommand(
+										InetAddress
+												.getLocalHost()
+												.getHostAddress(),
+										InstructorNoa
+												.getTransmitter()
+												.getRemoteAddr()
+												.getHostAddress(),
+										Integer.parseInt(Config
+												.getParam("port")));
+								InstructorNoa
+										.getServerService()
+										.send(si);
+
+								InstructorNoa
+										.setIntercomText(i18n
+												.getParam("Intercom"));
+							} catch (Exception e) {
+								JajeemExcetionHandler
+										.logError(e);
+								e.printStackTrace();
+							}
+						} else {
+							StartIntercomCommand si = new StartIntercomCommand(
+									InetAddress
+											.getLocalHost()
+											.getHostAddress(),
+									selectedStudent,
+									Integer.parseInt(Config
+											.getParam("port")));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+
+							InstructorNoa
+									.getTransmitter()
+									.setRemoteAddr(
+											InetAddress
+													.getByName(selectedStudent));
+							InstructorNoa.getTransmitter()
+									.start("audio");
+							InstructorNoa
+									.setTransmittingType("intercom");
+							InstructorNoa
+									.setIntercomText("Stop");
+						}
+
+					} else {
+						if (InstructorNoa.getTransmitter()
+								.isTransmitting()) {
+							InstructorNoa.getTransmitter()
+									.stop();
+							StopIntercomCommand si;
+							si = new StopIntercomCommand(
+									InetAddress
+											.getLocalHost()
+											.getHostAddress(),
+									InstructorNoa
+											.getTransmitter()
+											.getRemoteAddr()
+											.getHostAddress(),
+									Integer.parseInt(Config
+											.getParam("port")));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+							StartIntercomCommand startI = new StartIntercomCommand(
+									InetAddress
+											.getLocalHost()
+											.getHostAddress(),
+									selectedStudent,
+									Integer.parseInt(Config
+											.getParam("port")));
+							InstructorNoa
+									.getServerService()
+									.send(startI);
+
+							InstructorNoa
+									.getTransmitter()
+									.setRemoteAddr(
+											InetAddress
+													.getByName(selectedStudent));
+							InstructorNoa.getTransmitter()
+									.start("audio");
+							InstructorNoa
+									.setTransmittingType("intercom");
+							InstructorNoa.setIntercomText(i18n
+									.getParam("Stop"));
+
+						} else {
+							// Send start receiver to
+							// selected
+							// student and start transmitter
+							StartIntercomCommand si = new StartIntercomCommand(
+									InetAddress
+											.getLocalHost()
+											.getHostAddress(),
+									selectedStudent,
+									Integer.parseInt(Config
+											.getParam("port")));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+
+							InstructorNoa
+									.getTransmitter()
+									.setRemoteAddr(
+											InetAddress
+													.getByName(selectedStudent));
+							InstructorNoa.getTransmitter()
+									.start("audio");
+							InstructorNoa
+									.setTransmittingType("intercom");
+							InstructorNoa.setIntercomText(i18n
+									.getParam("Stop"));
+						}
+					}
+
+				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
+					e.printStackTrace();
+				}
+
+			} else {
+				// if no students selected and is
+				// transmitting
+				// to someone
+				if (InstructorNoa.getTransmitter() != null)
+					if (InstructorNoa.getTransmitter()
+							.isTransmitting()) {
+
+						// Stop transmitting to prev student
+						// and
+						// sent stop
+						// command to him
+						InstructorNoa.getTransmitter()
+								.stop();
+						StopIntercomCommand si;
+						try {
+							si = new StopIntercomCommand(
+									InetAddress
+											.getLocalHost()
+											.getHostAddress(),
+									InstructorNoa
+											.getTransmitter()
+											.getRemoteAddr()
+											.getHostAddress(),
+									Integer.parseInt(Config
+											.getParam("port")));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+							InstructorNoa
+									.setTransmittingType("");
+
+							InstructorNoa.setIntercomText(i18n
+									.getParam("Intercom"));
+						} catch (Exception e) {
+							JajeemExcetionHandler
+									.logError(e);
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							InstructorNoa.setIntercomText(i18n
+									.getParam("Intercom"));
+						} catch (Exception e) {
+							JajeemExcetionHandler
+									.logError(e);
+							e.printStackTrace();
+						}
+						return;
+					}
+			}
+		} else if (((JComponent) card).getClientProperty(
+				"viewMode").equals("groupView")) {
+			if (!InstructorNoa.getGroupList()
+					.isSelectionEmpty()) {
+				int groupIndex = InstructorNoa
+						.getGroupList().getSelectedIndex();
+
+				Group group = InstructorNoa.getGroups()
+						.get(groupIndex);
+				if (group.getStudentIps().isEmpty()) {
+					return;
+				} else {
+					if (group.getStudentIps().size() != 2) {
+						WebOptionPane.showMessageDialog(
+								InstructorNoa
+										.getCenterPanel(),
+								"Intercom is only available for groups with two students",
+								"Information",
+								WebOptionPane.INFORMATION_MESSAGE);
+						return;
+					} else {
+						StartIntercomCommand si;
+						try {
+							si = new StartIntercomCommand(
+									"",
+									"",
+									Integer.parseInt(Config
+											.getParam("port")));
+
+							// from student 0 to 1
+							si.setFrom(group
+									.getStudentIps().get(0));
+							si.setTo(group.getStudentIps()
+									.get(1));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+
+							// from student 1 to 0
+							si.setFrom(group
+									.getStudentIps().get(1));
+							si.setTo(group.getStudentIps()
+									.get(0));
+							InstructorNoa
+									.getServerService()
+									.send(si);
+
+						} catch (Exception e) {
+							JajeemExcetionHandler
+									.logError(e);
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	protected static void SendFileActionListener() {
+			FileManagerMain main = new FileManagerMain();
+			main.setReceivingIps(new ArrayList<String>(
+					Arrays.asList(getSelectedStudentIp())));
+			main.setVisible(true);
+	}
+
 	/**
 	 * Initializes network, broadcasting an start up command to network
 	 */
@@ -2106,7 +2519,7 @@ public class InstructorNoaUtil {
 		}
 	}
 
-	public Component getActiveCard() {
+	public static Component getActiveCard() {
 		Component card = null;
 		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
 			if (comp.isVisible() == true) {
@@ -2117,7 +2530,7 @@ public class InstructorNoaUtil {
 		return card;
 	}
 
-	public String getSelectedStudentIp() {
+	protected static String getSelectedStudentIp() {
 		Component card = getActiveCard();
 		String selectedStudent = null;
 		if (((JComponent) card).getClientProperty("viewMode").equals(

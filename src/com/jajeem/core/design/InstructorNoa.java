@@ -125,6 +125,8 @@ public class InstructorNoa {
 	ArrayList<com.jajeem.core.model.Student> reportStudentList = new ArrayList<>();
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
+	
+	static WebPanel rightButtonPanel;
 
 	/**
 	 * Launch the application.
@@ -325,7 +327,7 @@ public class InstructorNoa {
 		WebScrollPane scrollGroupPanel = new WebScrollPane(getGroupList());
 		scrollGroupPanel.setDrawBorder(false);
 
-		WebPanel rightButtonPanel = new WebPanel();
+		rightButtonPanel = new WebPanel();
 		rightButtonPanel.setBackground(new Color(56, 107, 170));
 
 		WebPanel bottomButtonPanel = new WebPanel();
@@ -862,55 +864,7 @@ public class InstructorNoa {
 		lockButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LockCommand lockCommand;
-				if (getDesktopPane().getSelectedFrame() != null) {
-					String selectedStudent = "";
-					selectedStudent = (String) getDesktopPane()
-							.getSelectedFrame().getClientProperty("ip");
-					try {
-						lockCommand = new LockCommand(InetAddress
-								.getLocalHost().getHostAddress(),
-								selectedStudent, Integer.parseInt(Config
-										.getParam("port")));
-						serverService.send(lockCommand);
-						if (!(boolean) getDesktopPane().getSelectedFrame()
-								.getClientProperty("lock")) {
-							getDesktopPane().getSelectedFrame()
-									.putClientProperty("lock", true);
-							getDesktopPane()
-									.getSelectedFrame()
-									.setFrameIcon(
-											new ImageIcon(
-													ImageIO.read(InstructorNoa.class
-															.getResourceAsStream("/icons/noa/lock.png"))));
-
-						} else {
-							getDesktopPane().getSelectedFrame()
-									.putClientProperty("lock", false);
-							if (getDesktopPane().getSelectedFrame()
-									.isSelected()) {
-								getDesktopPane()
-										.getSelectedFrame()
-										.setFrameIcon(
-												new ImageIcon(
-														ImageIO.read(InstructorNoa.class
-																.getResourceAsStream("/icons/menubar/check.png"))));
-							} else {
-								getDesktopPane()
-										.getSelectedFrame()
-										.setFrameIcon(
-												new ImageIcon(
-														ImageIO.read(InstructorNoa.class
-																.getResourceAsStream("/icons/menubar/student.png"))));
-							}
-						}
-						// getDesktopPane().getSelectedFrame().updateUI();
-
-					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
-						e.printStackTrace();
-					}
-				}
+				LockAction();
 			}
 		});
 
@@ -1670,6 +1624,58 @@ public class InstructorNoa {
 
 	}
 
+	public static void LockAction() {
+		LockCommand lockCommand;
+		if (getDesktopPane().getSelectedFrame() != null) {
+			String selectedStudent = "";
+			selectedStudent = (String) getDesktopPane()
+					.getSelectedFrame().getClientProperty("ip");
+			try {
+				lockCommand = new LockCommand(InetAddress
+						.getLocalHost().getHostAddress(),
+						selectedStudent, Integer.parseInt(Config
+								.getParam("port")));
+				serverService.send(lockCommand);
+				if (!(boolean) getDesktopPane().getSelectedFrame()
+						.getClientProperty("lock")) {
+					getDesktopPane().getSelectedFrame()
+							.putClientProperty("lock", true);
+					getDesktopPane()
+							.getSelectedFrame()
+							.setFrameIcon(
+									new ImageIcon(
+											ImageIO.read(InstructorNoa.class
+													.getResourceAsStream("/icons/noa/lock.png"))));
+
+				} else {
+					getDesktopPane().getSelectedFrame()
+							.putClientProperty("lock", false);
+					if (getDesktopPane().getSelectedFrame()
+							.isSelected()) {
+						getDesktopPane()
+								.getSelectedFrame()
+								.setFrameIcon(
+										new ImageIcon(
+												ImageIO.read(InstructorNoa.class
+														.getResourceAsStream("/icons/menubar/check.png"))));
+					} else {
+						getDesktopPane()
+								.getSelectedFrame()
+								.setFrameIcon(
+										new ImageIcon(
+												ImageIO.read(InstructorNoa.class
+														.getResourceAsStream("/icons/menubar/student.png"))));
+					}
+				}
+				// getDesktopPane().getSelectedFrame().updateUI();
+
+			} catch (Exception e) {
+				JajeemExcetionHandler.logError(e);
+				e.printStackTrace();
+			}
+		}
+	}
+
 	protected void ListViewActionListener() {
 		CardLayout cl = (CardLayout) InstructorNoa
 				.getCenterPanel().getLayout();
@@ -2048,5 +2054,30 @@ public class InstructorNoa {
 			}
 		}
 		return ip;
+	}
+	
+	public static void changeModelButtonText(String text)
+	{
+		String key = "";
+
+		for (Component c : rightButtonPanel.getComponents()) {
+			if (c instanceof WebButton) {
+
+				key = (String) ((WebButton) c).getClientProperty("key");
+
+				if (key == null) {
+					return;
+				}
+
+				final WebButton button = ((WebButton) c);
+
+				switch (key) {
+
+				case "monitor":
+					button.setText(text);
+					break;
+				}
+			}
+		}
 	}
 }
