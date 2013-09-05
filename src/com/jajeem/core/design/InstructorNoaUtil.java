@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
@@ -34,7 +35,10 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import jrdesktop.viewer.Viewer;
 
@@ -59,6 +63,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.slider.WebSlider;
+import com.alee.laf.table.WebTable;
 import com.alee.managers.popup.PopupStyle;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
@@ -77,6 +82,7 @@ import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.VolumeCommand;
+import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
@@ -1339,7 +1345,23 @@ public class InstructorNoaUtil {
 						FileUtil fileUtil = new FileUtil();
 						final File[] fileList = fileUtil
 								.finder(pathToStartMenu);
-						final DefaultListModel model = new DefaultListModel();
+						
+						final DefaultTableModel model = (new DefaultTableModel(
+								new Object[][] {
+								},
+								new String[] {
+									"Name", "status"
+								}
+							) {
+								private static final long serialVersionUID = 1L;
+								Class[] columnTypes = new Class[] {
+									String.class, Boolean.class
+								};
+								public Class getColumnClass(int columnIndex) {
+									return columnTypes[columnIndex];
+								}
+							});
+
 						for (int i = 0; i < fileList.length; i++) {
 							File file = fileList[i];
 							if (file.getName().indexOf(".") != -1) {
@@ -1348,50 +1370,28 @@ public class InstructorNoaUtil {
 								if (extension.equals(".lnk")) {
 									fileListModel.add(file.getName().substring(
 											0, file.getName().length() - 4));
-									model.addElement(file.getName().substring(
-											0, file.getName().length() - 4));
+									model.addRow(new Object[]{
+											file.getName().substring(
+													0, file.getName().length() - 4),
+											false
+									});
 								}
 							}
 						}
 
-						final WebList programsList = new WebList(model);
-						programsList.setVisibleRowCount(6);
-						programsList.setSelectedIndex(0);
-						programsList.setEditable(false);
+						final WebTable programsList = new WebTable();
+						
+						programsList.setTableHeader(null);
+						programsList.setModel(model);
+						programsList.getColumnModel().getColumn(0).setResizable(false);
+						programsList.getColumnModel().getColumn(1).setResizable(false);
+						programsList.getColumnModel().getColumn(1).setPreferredWidth(30);
+						programsList.getColumnModel().getColumn(1).setMaxWidth(30);
 
 						WebButtonPopup programPopupButton = new WebButtonPopup(
 								(WebButton) button, PopupWay.upCenter);
-						final WebButton chooseAppButton = new WebButton(
-								i18n.getParam("Add"));
-
-						final int sizeOfProgramModel = model.getSize();
-
-						chooseAppButton.addActionListener(new ActionListener() {
-							private WebFileChooser fileChooser = null;
-
-							public void actionPerformed(ActionEvent e) {
-								if (fileChooser == null) {
-									try {
-										fileChooser = new WebFileChooser(
-												findWindow(button),
-												i18n.getParam("Choose any files"));
-									} catch (Exception e1) {
-										e1.printStackTrace();
-									}
-									fileChooser
-											.setSelectionMode(SelectionMode.SINGLE_SELECTION);
-								}
-
-								fileChooser.setVisible(true);
-
-								if (fileChooser.getResult() == StyleConstants.OK_OPTION) {
-									File file = fileChooser.getSelectedFile();
-									model.addElement(FileUtils
-											.getDisplayFileName(file));
-									fileListModel.add(file.getPath());
-								}
-							}
-						});
+						
+						final int sizeOfProgramModel = model.getRowCount();
 
 						GroupPanel programPopupContent = new GroupPanel(5,
 								false, new WebScrollPane(programsList));
@@ -1403,121 +1403,113 @@ public class InstructorNoaUtil {
 
 						programsList.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent evt) {
-								WebList list = (WebList) evt.getSource();
-								if (evt.getClickCount() == 2) {
-									int index = list.locationToIndex(evt
-											.getPoint());
-
+								boolean value = (boolean)programsList.getValueAt(programsList.getSelectedRow(), 1);
+								
+								if(value == true){
 									Component card = null;
-									for (Component comp : InstructorNoa
-											.getCenterPanel().getComponents()) {
+									for (Component comp : InstructorNoa.getCenterPanel()
+											.getComponents()) {
 										if (comp.isVisible() == true) {
 											card = comp;
 										}
 									}
 
-									if (index > sizeOfProgramModel) {
+									if (((JComponent) card).getClientProperty("viewMode").equals(
+											"thumbView")) {
+										try {
+											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+													InetAddress.getLocalHost().getHostAddress(),
+													Config.getParam("broadcastingIp"), Integer
+															.parseInt(Config.getParam("port")),
+													(fileListModel.get(programsList.getSelectedRow()) + ".exe"), true);
+											InstructorNoa.getServerService().send(ic);
+										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
+											e.printStackTrace();
+										}
+									} else if (((JComponent) card).getClientProperty("viewMode")
+											.equals("groupView")) {
+										if (!InstructorNoa.getGroupList().isSelectionEmpty()) {
+											int groupIndex = InstructorNoa.getGroupList()
+													.getSelectedIndex();
 
+											Group group = InstructorNoa.getGroups().get(groupIndex);
+											if (group.getStudentIps().isEmpty()) {
+												return;
+											} else {
+
+												try {
+													WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+															InetAddress.getLocalHost()
+																	.getHostAddress(), "", Integer
+																	.parseInt(Config
+																			.getParam("port")),
+															(fileListModel.get(programsList.getSelectedRow()) + ".exe"),
+															true);
+													for (String studentIp : group.getStudentIps()) {
+														ic.setTo(studentIp);
+														InstructorNoa.getServerService().send(ic);
+													}
+												} catch (Exception e) {
+													JajeemExcetionHandler.logError(e);
+													e.printStackTrace();
+												}
+
+											}
+										}
+									}
+								}
+								else{
+									Component card = null;
+									for (Component comp : InstructorNoa.getCenterPanel()
+											.getComponents()) {
+										if (comp.isVisible() == true) {
+											card = comp;
+										}
 									}
 
-									for (int i = 0; i < fileList.length; i++) {
-										File file = fileList[i];
-										if (file.getName().indexOf(".") != -1) {
-											if (file.getName()
-													.substring(
-															0,
-															file.getName()
-																	.length() - 4)
-													.equals(list
-															.getModel()
-															.getElementAt(index))) {
+									if (((JComponent) card).getClientProperty("viewMode").equals(
+											"thumbView")) {
+										try {
+											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+													InetAddress.getLocalHost().getHostAddress(),
+													Config.getParam("broadcastingIp"), Integer
+															.parseInt(Config.getParam("port")),
+													(fileListModel.get(programsList.getSelectedRow()) + ".exe"), false);
+											InstructorNoa.getServerService().send(ic);
+										} catch (Exception e) {
+											JajeemExcetionHandler.logError(e);
+											e.printStackTrace();
+										}
+									} else if (((JComponent) card).getClientProperty("viewMode")
+											.equals("groupView")) {
+										if (!InstructorNoa.getGroupList().isSelectionEmpty()) {
+											int groupIndex = InstructorNoa.getGroupList()
+													.getSelectedIndex();
 
-												if (((JComponent) card)
-														.getClientProperty(
-																"viewMode")
-														.equals("thumbView")) {
-													if (InstructorNoa
-															.getDesktopPane()
-															.getSelectedFrame() != null) {
-														String selectedStudent = "";
-														selectedStudent = (String) InstructorNoa
-																.getDesktopPane()
-																.getSelectedFrame()
-																.getClientProperty(
-																		"ip");
+											Group group = InstructorNoa.getGroups().get(groupIndex);
+											if (group.getStudentIps().isEmpty()) {
+												return;
+											} else {
 
-														StartApplicationCommand sa;
-														try {
-															sa = new StartApplicationCommand(
-																	InetAddress
-																			.getLocalHost()
-																			.getHostAddress(),
-																	selectedStudent,
-																	Integer.parseInt(Config
+												try {
+													WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+															InetAddress.getLocalHost()
+																	.getHostAddress(), "", Integer
+																	.parseInt(Config
 																			.getParam("port")),
-																	file.getName()
-																			.substring(
-																					0,
-																					file.getName()
-																							.length() - 4));
-															InstructorNoa
-																	.getServerService()
-																	.send(sa);
-														} catch (Exception e) {
-															e.printStackTrace();
-														}
+															(fileListModel.get(programsList.getSelectedRow()) + ".exe"),
+															false);
+													for (String studentIp : group.getStudentIps()) {
+														ic.setTo(studentIp);
+														InstructorNoa.getServerService().send(ic);
 													}
-												} else if (((JComponent) card)
-														.getClientProperty(
-																"viewMode")
-														.equals("groupView")) {
-													if (!InstructorNoa
-															.getGroupList()
-															.isSelectionEmpty()) {
-														int groupIndex = InstructorNoa
-																.getGroupList()
-																.getSelectedIndex();
-
-														Group group = InstructorNoa
-																.getGroups()
-																.get(groupIndex);
-														if (group
-																.getStudentIps()
-																.isEmpty()) {
-															return;
-														} else {
-
-															StartApplicationCommand sa;
-															try {
-																sa = new StartApplicationCommand(
-																		InetAddress
-																				.getLocalHost()
-																				.getHostAddress(),
-																		"",
-																		Integer.parseInt(Config
-																				.getParam("port")),
-																		file.getName()
-																				.substring(
-																						0,
-																						file.getName()
-																								.length() - 4));
-																for (String studentIp : group
-																		.getStudentIps()) {
-																	sa.setTo(studentIp);
-																	InstructorNoa
-																			.getServerService()
-																			.send(sa);
-																}
-
-															} catch (Exception e) {
-																e.printStackTrace();
-															}
-
-														}
-													}
+												} catch (Exception e) {
+													JajeemExcetionHandler.logError(e);
+													e.printStackTrace();
 												}
-											}
 
+											}
 										}
 									}
 								}
