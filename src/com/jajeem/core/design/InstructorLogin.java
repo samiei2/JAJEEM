@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -63,10 +65,36 @@ public class InstructorLogin extends JFrame {
 					UIManager.setLookAndFeel(WebLookAndFeel.class
 							.getCanonicalName());
 
+					Thread loading = new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							final LoadingDialog load = new LoadingDialog();
+							load.setVisible(true);
+							Timer timer = new Timer();
+							timer.schedule(new TimerTask() {
+								
+								@Override
+								public void run() {
+									load.setVisible(false);
+								}
+							}, 5000);
+						}
+					});
+					loading.start();
 					frame = new InstructorLogin();
 					frame.pack();
-					frame.setVisible(true);
-
+					
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						
+						@Override
+						public void run() {
+							frame.setVisible(true);
+						}
+					}, 5000);
+					
+					
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
@@ -81,7 +109,6 @@ public class InstructorLogin extends JFrame {
 	 * @throws Exception
 	 */
 	public InstructorLogin() throws Exception {
-
 		setResizable(false);
 		setTitle("Welcome to iCalabo");
 
@@ -106,7 +133,7 @@ public class InstructorLogin extends JFrame {
 //		LicenseValidator.ActiveValidateLicense();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 190);
+		setSize(400, 190);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -282,6 +309,8 @@ public class InstructorLogin extends JFrame {
 			}
 		});
 
+		setResizable(false);
+		setLocationRelativeTo(null);
 		progressBarFrame.setVisible(false);
 	}
 }

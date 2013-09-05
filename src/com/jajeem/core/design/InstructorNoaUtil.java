@@ -1328,7 +1328,204 @@ public class InstructorNoaUtil {
 					break;
 
 				case "program":
-					// in instructor noa!
+					try {
+						String pathToStartMenu = WinRegistry
+								.readString(
+										WinRegistry.HKEY_LOCAL_MACHINE,
+										"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
+										"Common Start Menu")
+								+ "\\Programs";
+
+						FileUtil fileUtil = new FileUtil();
+						final File[] fileList = fileUtil
+								.finder(pathToStartMenu);
+						final DefaultListModel model = new DefaultListModel();
+						for (int i = 0; i < fileList.length; i++) {
+							File file = fileList[i];
+							if (file.getName().indexOf(".") != -1) {
+								String extension = file.getName().substring(
+										file.getName().indexOf("."));
+								if (extension.equals(".lnk")) {
+									fileListModel.add(file.getName().substring(
+											0, file.getName().length() - 4));
+									model.addElement(file.getName().substring(
+											0, file.getName().length() - 4));
+								}
+							}
+						}
+
+						final WebList programsList = new WebList(model);
+						programsList.setVisibleRowCount(6);
+						programsList.setSelectedIndex(0);
+						programsList.setEditable(false);
+
+						WebButtonPopup programPopupButton = new WebButtonPopup(
+								(WebButton) button, PopupWay.upCenter);
+						final WebButton chooseAppButton = new WebButton(
+								i18n.getParam("Add"));
+
+						final int sizeOfProgramModel = model.getSize();
+
+						chooseAppButton.addActionListener(new ActionListener() {
+							private WebFileChooser fileChooser = null;
+
+							public void actionPerformed(ActionEvent e) {
+								if (fileChooser == null) {
+									try {
+										fileChooser = new WebFileChooser(
+												findWindow(button),
+												i18n.getParam("Choose any files"));
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
+									fileChooser
+											.setSelectionMode(SelectionMode.SINGLE_SELECTION);
+								}
+
+								fileChooser.setVisible(true);
+
+								if (fileChooser.getResult() == StyleConstants.OK_OPTION) {
+									File file = fileChooser.getSelectedFile();
+									model.addElement(FileUtils
+											.getDisplayFileName(file));
+									fileListModel.add(file.getPath());
+								}
+							}
+						});
+
+						GroupPanel programPopupContent = new GroupPanel(5,
+								false, new WebScrollPane(programsList));
+						programPopupContent.setMargin(15);
+						programPopupContent.setOpaque(false);
+						programsList.setOpaque(false);
+
+						programPopupButton.setContent(programPopupContent);
+
+						programsList.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent evt) {
+								WebList list = (WebList) evt.getSource();
+								if (evt.getClickCount() == 2) {
+									int index = list.locationToIndex(evt
+											.getPoint());
+
+									Component card = null;
+									for (Component comp : InstructorNoa
+											.getCenterPanel().getComponents()) {
+										if (comp.isVisible() == true) {
+											card = comp;
+										}
+									}
+
+									if (index > sizeOfProgramModel) {
+
+									}
+
+									for (int i = 0; i < fileList.length; i++) {
+										File file = fileList[i];
+										if (file.getName().indexOf(".") != -1) {
+											if (file.getName()
+													.substring(
+															0,
+															file.getName()
+																	.length() - 4)
+													.equals(list
+															.getModel()
+															.getElementAt(index))) {
+
+												if (((JComponent) card)
+														.getClientProperty(
+																"viewMode")
+														.equals("thumbView")) {
+													if (InstructorNoa
+															.getDesktopPane()
+															.getSelectedFrame() != null) {
+														String selectedStudent = "";
+														selectedStudent = (String) InstructorNoa
+																.getDesktopPane()
+																.getSelectedFrame()
+																.getClientProperty(
+																		"ip");
+
+														StartApplicationCommand sa;
+														try {
+															sa = new StartApplicationCommand(
+																	InetAddress
+																			.getLocalHost()
+																			.getHostAddress(),
+																	selectedStudent,
+																	Integer.parseInt(Config
+																			.getParam("port")),
+																	file.getName()
+																			.substring(
+																					0,
+																					file.getName()
+																							.length() - 4));
+															InstructorNoa
+																	.getServerService()
+																	.send(sa);
+														} catch (Exception e) {
+															e.printStackTrace();
+														}
+													}
+												} else if (((JComponent) card)
+														.getClientProperty(
+																"viewMode")
+														.equals("groupView")) {
+													if (!InstructorNoa
+															.getGroupList()
+															.isSelectionEmpty()) {
+														int groupIndex = InstructorNoa
+																.getGroupList()
+																.getSelectedIndex();
+
+														Group group = InstructorNoa
+																.getGroups()
+																.get(groupIndex);
+														if (group
+																.getStudentIps()
+																.isEmpty()) {
+															return;
+														} else {
+
+															StartApplicationCommand sa;
+															try {
+																sa = new StartApplicationCommand(
+																		InetAddress
+																				.getLocalHost()
+																				.getHostAddress(),
+																		"",
+																		Integer.parseInt(Config
+																				.getParam("port")),
+																		file.getName()
+																				.substring(
+																						0,
+																						file.getName()
+																								.length() - 4));
+																for (String studentIp : group
+																		.getStudentIps()) {
+																	sa.setTo(studentIp);
+																	InstructorNoa
+																			.getServerService()
+																			.send(sa);
+																}
+
+															} catch (Exception e) {
+																e.printStackTrace();
+															}
+
+														}
+													}
+												}
+											}
+
+										}
+									}
+								}
+							}
+						});
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 					break;
 				case "programStart":
 					try {
