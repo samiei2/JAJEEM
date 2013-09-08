@@ -18,6 +18,8 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -41,6 +43,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import jrdesktop.viewer.Viewer;
+
+import net.jimmc.jshortcut.JShellLink;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
@@ -97,6 +101,7 @@ import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.survey.design.alt.Survey_Main;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
+import com.jajeem.util.LnkParser;
 import com.jajeem.util.Session;
 import com.jajeem.util.WinRegistry;
 import com.jajeem.util.i18n;
@@ -1343,8 +1348,41 @@ public class InstructorNoaUtil {
 								+ "\\Programs";
 
 						FileUtil fileUtil = new FileUtil();
-						final File[] fileList = fileUtil
-								.finder(pathToStartMenu);
+						final File[] tempfileList = fileUtil.finder(pathToStartMenu);
+						final File[] fileList;
+						final ArrayList<File> listOfAllLinks = new ArrayList<>();
+						final ArrayList<File> lnkList = new ArrayList<>();
+						final ArrayList<File> exeList = new ArrayList<>();
+						for (int i = 0; i < tempfileList.length; i++) {
+							if (tempfileList[i].isDirectory())
+								listOfAllLinks.addAll(getPath(getDirectoryContent(tempfileList[i])));
+							else
+								listOfAllLinks.add(tempfileList[i]);
+						}
+						
+						Collections.sort(listOfAllLinks);
+						
+						for (int i = 0; i < listOfAllLinks.size(); i++) {
+							if(listOfAllLinks.get(i).getName().indexOf(".") != -1){
+								String ext = listOfAllLinks.get(i).getName().substring(
+										listOfAllLinks.get(i).getName().indexOf("."));
+								String path = listOfAllLinks.get(i).getParent();
+								String fileName = listOfAllLinks.get(i).getName();
+								if (ext.equals(".lnk")){
+									try{
+										LnkParser parser = new LnkParser(listOfAllLinks.get(i));
+										if(parser.getRealFilename().contains(".exe")){
+											lnkList.add(listOfAllLinks.get(i));
+											exeList.add(new File(parser.getRealFilename()));
+										}
+									}
+									catch(Exception e){
+										
+									}
+								}
+										//System.out.println(new LnkParser(fileList[i]).getRealFilename());
+							}
+						}
 						
 						final DefaultTableModel model = (new DefaultTableModel(
 								new Object[][] {
@@ -1362,16 +1400,15 @@ public class InstructorNoaUtil {
 								}
 							});
 
-						for (int i = 0; i < fileList.length; i++) {
-							File file = fileList[i];
+						for (int i = 0; i < lnkList.size(); i++) {
+							File file = lnkList.get(i);
 							if (file.getName().indexOf(".") != -1) {
 								String extension = file.getName().substring(
 										file.getName().indexOf("."));
 								if (extension.equals(".lnk")) {
-									fileListModel.add(file.getName().substring(
-											0, file.getName().length() - 4));
+									fileListModel.add(exeList.get(i).getName());
 									model.addRow(new Object[]{
-											file.getName().substring(
+											file.getParentFile().getName() + "\\" + file.getName().substring(
 													0, file.getName().length() - 4),
 											false
 									});
@@ -1421,7 +1458,7 @@ public class InstructorNoaUtil {
 													InetAddress.getLocalHost().getHostAddress(),
 													Config.getParam("broadcastingIp"), Integer
 															.parseInt(Config.getParam("port")),
-													(fileListModel.get(programsList.getSelectedRow()) + ".exe"), true);
+													(fileListModel.get(programsList.getSelectedRow())), true);
 											InstructorNoa.getServerService().send(ic);
 										} catch (Exception e) {
 											JajeemExcetionHandler.logError(e);
@@ -1444,7 +1481,7 @@ public class InstructorNoaUtil {
 																	.getHostAddress(), "", Integer
 																	.parseInt(Config
 																			.getParam("port")),
-															(fileListModel.get(programsList.getSelectedRow()) + ".exe"),
+															(fileListModel.get(programsList.getSelectedRow())),
 															true);
 													for (String studentIp : group.getStudentIps()) {
 														ic.setTo(studentIp);
@@ -1475,7 +1512,7 @@ public class InstructorNoaUtil {
 													InetAddress.getLocalHost().getHostAddress(),
 													Config.getParam("broadcastingIp"), Integer
 															.parseInt(Config.getParam("port")),
-													(fileListModel.get(programsList.getSelectedRow()) + ".exe"), false);
+													(fileListModel.get(programsList.getSelectedRow())), false);
 											InstructorNoa.getServerService().send(ic);
 										} catch (Exception e) {
 											JajeemExcetionHandler.logError(e);
@@ -1498,7 +1535,7 @@ public class InstructorNoaUtil {
 																	.getHostAddress(), "", Integer
 																	.parseInt(Config
 																			.getParam("port")),
-															(fileListModel.get(programsList.getSelectedRow()) + ".exe"),
+															(fileListModel.get(programsList.getSelectedRow())),
 															false);
 													for (String studentIp : group.getStudentIps()) {
 														ic.setTo(studentIp);
@@ -1735,6 +1772,25 @@ public class InstructorNoaUtil {
 	/*
 	 * ***************** Bottom Panel Events **************************
 	 */
+
+	protected ArrayList<File> getDirectoryContent(File file) {
+		ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
+		for (int i = 0; i < files.size(); i++) {
+			if (files.get(i).isDirectory()) {
+				files.addAll(getDirectoryContent(files.get(i)));
+			}
+		}
+		return files;
+	}
+
+	protected Collection<? extends File> getPath(
+			ArrayList<File> directoryContent) {
+		ArrayList<File> list = new ArrayList<>();
+		for (int i = 0; i < directoryContent.size(); i++) {
+			list.add(directoryContent.get(i));
+		}
+		return list;
+	}
 
 	public void addEventsTopPanel(final WebPanel bottomButtonPanel) {
 		String key = "";
