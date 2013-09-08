@@ -39,6 +39,7 @@ import org.jitsi.service.neomedia.format.MediaFormatFactory;
  */
 public class AVReceiveOnly {
 
+	JDialog frame ;
 	/**
 	 * The port which is the target of the transmission i.e. on which the media
 	 * is to be received.
@@ -247,13 +248,16 @@ public class AVReceiveOnly {
 					}
 
 					if (cmp != null) {
-						JDialog frame = new JDialog();
-//						frame.setLayout(new BorderLayout(0, 0));
-						frame.getContentPane().add(cmp);
-						frame.setSize(400, 400);
-						frame.repaint();
-						frame.setAlwaysOnTop(true);
-						frame.setVisible(true);
+						
+						if(frame == null){
+							frame = new JDialog();
+	//						frame.setLayout(new BorderLayout(0, 0));
+							frame.getContentPane().add(cmp);
+							frame.setSize(400, 400);
+							frame.repaint();
+							frame.setAlwaysOnTop(true);
+							frame.setVisible(true);
+						}
 					}
 
 				}
@@ -281,6 +285,8 @@ public class AVReceiveOnly {
 			}
 
 			mediaStreams = null;
+			frame.setVisible(false);
+			frame = null;
 		}
 	}
 

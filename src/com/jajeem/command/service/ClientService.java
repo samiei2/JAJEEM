@@ -444,7 +444,9 @@ public class ClientService implements IConnectorSevice, Runnable {
 				else if (cmd instanceof FinishedQuizCommand) {
 					FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
 					hnldr.run(cmd);
-				} else if (cmd instanceof FinishedSurveyCommand) {
+				} 
+				
+				else if (cmd instanceof FinishedSurveyCommand) {
 					FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
 					hnldr.run(cmd);
 				}

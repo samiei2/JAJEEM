@@ -84,6 +84,7 @@ import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
+import com.jajeem.command.model.StopVideoChatCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
@@ -468,7 +469,7 @@ public class InstructorNoaUtil {
 												Integer.parseInt(Config
 														.getParam("port")));
 										serv.send(cmd);
-
+										InstructorNoa.setTransmitting(true);
 										InstructorNoa
 												.getSendOnly()
 												.setRemoteAddr(
@@ -479,12 +480,22 @@ public class InstructorNoaUtil {
 										button.setText("Stop");
 										InstructorNoa
 												.setTransmittingType("videoChat");
+										
 									} else {
 										if (InstructorNoa.getTransmittingType()
 												.equals("videoChat")) {
+											ServerService serv = InstructorNoa
+													.getServerService();
+											StopVideoChatCommand cmd = new StopVideoChatCommand(
+													Inet4Address.getLocalHost()
+															.getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config
+															.getParam("port")));
+											serv.send(cmd);
 											InstructorNoa.getSendOnly().stop();
 											button.setText("Video Chat");
-
+											InstructorNoa.setTransmitting(false);
 										}
 									}
 								} catch (Exception e1) {

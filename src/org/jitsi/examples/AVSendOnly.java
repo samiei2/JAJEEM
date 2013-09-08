@@ -30,6 +30,8 @@ import com.alee.laf.rootpane.WebFrame;
  * @author Lyubomir Marinov
  */
 public class AVSendOnly {
+	JFrame frame = null;
+	
 	private boolean transmitting = false;
 	/**
 	 * The port which is the source of the transmission i.e. from which the
@@ -241,11 +243,13 @@ public class AVSendOnly {
 						}
 						try {
 							if (cmp != null) {
-								JFrame frame = new JFrame();
-								frame.setLayout(new BorderLayout(0, 0));
-								frame.add(cmp);
-								frame.setSize(400, 400);
-								frame.setVisible(true);
+								if(frame == null){
+									frame = new JFrame();
+									frame.setLayout(new BorderLayout(0, 0));
+									frame.add(cmp);
+									frame.setSize(400, 400);
+									frame.setVisible(true);
+								}
 							}
 						} catch (Exception e) {
 
@@ -274,10 +278,13 @@ public class AVSendOnly {
 					}
 				}
 			}
-
+			
 			mediaStreams = null;
 
 			setTransmitting(false);
+			
+			frame.setVisible(false);
+			frame = null;
 		}
 	}
 

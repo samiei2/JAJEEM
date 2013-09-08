@@ -1707,7 +1707,7 @@ public class InstructorNoa {
 
 	public static boolean isTransmitting() {
 		return getSendOnly().isTransmitting()
-				&& getTransmitter().isTransmitting();
+				|| getTransmitter().isTransmitting();
 	}
 
 	public static void setTransmitting(boolean transmitting) {
