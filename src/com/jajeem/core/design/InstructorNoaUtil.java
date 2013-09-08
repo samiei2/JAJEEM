@@ -1946,7 +1946,7 @@ public class InstructorNoaUtil {
 			final RootDesktopPane desktopPane, final String hostIp,
 			final String hostName) throws NumberFormatException, Exception {
 		final WebInternalFrame internalFrame = new WebInternalFrame(hostName,
-				false, false, false, true);
+				false, false, false, false);
 
 		// get current list of students, if some one is new, add him/her
 		JInternalFrame[] frames = desktopPane.getAllFrames();

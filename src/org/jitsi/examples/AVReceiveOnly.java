@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import org.jitsi.service.libjitsi.LibJitsi;
@@ -246,10 +247,12 @@ public class AVReceiveOnly {
 					}
 
 					if (cmp != null) {
-						JFrame frame = new JFrame();
-						frame.setLayout(new BorderLayout(0, 0));
-						frame.add(cmp);
+						JDialog frame = new JDialog();
+//						frame.setLayout(new BorderLayout(0, 0));
+						frame.getContentPane().add(cmp);
 						frame.setSize(400, 400);
+						frame.repaint();
+						frame.setAlwaysOnTop(true);
 						frame.setVisible(true);
 					}
 
