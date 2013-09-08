@@ -80,8 +80,13 @@ public class Chat extends WebFrame {
 	 */
 	public Chat(String to, int port, boolean multi, int groupId, String title)
 			throws NumberFormatException, Exception {
-		if (InstructorNoa.studentList.containsKey(to)) {
-			setTitle(InstructorNoa.studentList.get(to).getFullName());
+
+		if (Integer.parseInt(Config.getParam("server")) == 1) {
+			if (InstructorNoa.studentList.containsKey(to)) {
+				setTitle(InstructorNoa.studentList.get(to).getFullName());
+			} else {
+				setTitle(title);
+			}
 		} else {
 			setTitle(title);
 		}
