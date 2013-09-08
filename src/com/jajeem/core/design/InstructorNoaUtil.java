@@ -44,7 +44,6 @@ import javax.swing.table.TableModel;
 
 import jrdesktop.viewer.Viewer;
 
-import net.jimmc.jshortcut.JShellLink;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
@@ -1568,19 +1567,29 @@ public class InstructorNoaUtil {
 										"Common Start Menu")
 								+ "\\Programs";
 
+						
 						FileUtil fileUtil = new FileUtil();
-						final File[] fileList = fileUtil
-								.finder(pathToStartMenu);
+						final File[] tempfileList = fileUtil.finder(pathToStartMenu);
+						final ArrayList<File> listOfAllLinks = new ArrayList<>();
+						for (int i = 0; i < tempfileList.length; i++) {
+							if (tempfileList[i].isDirectory())
+								listOfAllLinks.addAll(getPath(getDirectoryContent(tempfileList[i])));
+							else
+								listOfAllLinks.add(tempfileList[i]);
+						}
+						
+						Collections.sort(listOfAllLinks);
+						
 						final DefaultListModel model = new DefaultListModel();
-						for (int i = 0; i < fileList.length; i++) {
-							File file = fileList[i];
+						for (int i = 0; i < listOfAllLinks.size(); i++) {
+							File file = listOfAllLinks.get(i);
 							if (file.getName().indexOf(".") != -1) {
 								String extension = file.getName().substring(
 										file.getName().indexOf("."));
 								if (extension.equals(".lnk")) {
 									fileListModel.add(file.getName().substring(
 											0, file.getName().length() - 4));
-									model.addElement(file.getName().substring(
+									model.addElement(file.getParentFile().getName() + "\\" + file.getName().substring(
 											0, file.getName().length() - 4));
 								}
 							}
@@ -1652,8 +1661,8 @@ public class InstructorNoaUtil {
 
 									}
 
-									for (int i = 0; i < fileList.length; i++) {
-										File file = fileList[i];
+									for (int i = 0; i < listOfAllLinks.size(); i++) {
+										File file = listOfAllLinks.get(i);
 										if (file.getName().indexOf(".") != -1) {
 											if (file.getName()
 													.substring(
