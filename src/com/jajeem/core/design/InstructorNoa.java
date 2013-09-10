@@ -191,7 +191,7 @@ public class InstructorNoa {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
 		frame.setShowMinimizeButton(false);
-		frame.setTitle("iCalabo");
+		frame.setTitle("Classmate");
 		frame.setShowResizeCorner(false);
 		frame.getContentPane().setBackground(new Color(56, 107, 170));
 		frame.setBounds(10, 0, 1021, 656);

@@ -48,7 +48,7 @@ public class JasperReport {
 			exporter.exportReport();
 			
 			JasperViewer jv = new JasperViewer(print, false);
-	        jv.setTitle("iCalabo Report");
+	        jv.setTitle("Classmate Report");
 	        jv.setVisible(true);
 
 		} catch (JRException e) {

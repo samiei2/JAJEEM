@@ -112,7 +112,7 @@ public class Student {
 		mainFram = getFrmJajeemProject();
 		mainFram.setResizable(false);
 		mainFram.setAlwaysOnTop(true);
-		mainFram.setTitle(i18n.getParam("iCalabo"));
+		mainFram.setTitle(i18n.getParam("Classmate"));
 		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
 		getFrmJajeemProject().setBounds(0, 400, 280, 550);

@@ -137,7 +137,7 @@ public class StudentLogin extends JDialog {
 		public static String name = "";
 
 		public LoginDialog(Window owner) throws Exception {
-			super(owner, i18n.getParam("Login to iCalabo"));
+			super(owner, i18n.getParam("Login to Classmate"));
 			// setIconImage(Toolkit.getDefaultToolkit().getImage(
 			// Student.class.getResource("/icons/menubar/jajeem.jpg")));
 			setDefaultCloseOperation(WebDialog.DO_NOTHING_ON_CLOSE);
