@@ -43,7 +43,9 @@ public class Recorder extends WebDialog {
 	private WebButton wbtnPlay;
 	private WebButton wbtnRecord;
 
-	private static boolean isRecording = false;
+	private static boolean isRecordingVoice = false;
+	private static boolean isRecordingDesktop = false;
+	private static boolean isRecordingBoth = false;
 
 	private AudioInputStream audioInputStream;
 	private static ArrayList<String> recordingsList = Session
@@ -110,7 +112,9 @@ public class Recorder extends WebDialog {
 		setResizable(false);
 		setBounds(100, 100, 211, 295);
 		getContentPane().setLayout(null);
-
+		
+		
+		
 		wbtnRecordStudent = new WebButton();
 		wbtnRecordStudent.setVisible(true);
 		wbtnRecordStudent.addActionListener(new ActionListener() {
@@ -154,6 +158,7 @@ public class Recorder extends WebDialog {
 					wbtnPlay.setEnabled(false);
 					audioInputStream = capt.audioInputStream;
 					capt.start();
+					isRecordingVoice = true;
 					wbtnRecord.setText("Stop");
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
@@ -163,6 +168,7 @@ public class Recorder extends WebDialog {
 					wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
 					capt.stop();
+					isRecordingVoice = false;
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnPlay.setEnabled(true);
@@ -252,12 +258,14 @@ public class Recorder extends WebDialog {
 						"Record Desktop Only")) {
 					capture = new CaptureScreenToFile();
 					capture.StartCaputre("temp.mp4");
+					isRecordingDesktop = true;
 					wbtnRecordDesktopOnly.setText("Stop");
 					wbtnRecord.setEnabled(false);
 					wbtnRecordBoth.setEnabled(false);
 //					progressBarFrame.setVisible(true);
 				} else {
 					capture.StopCapture();
+					isRecordingDesktop = false;
 					wbtnRecordDesktopOnly.setText("Record Desktop Only");
 					wbtnRecord.setEnabled(true);
 					wbtnRecordBoth.setEnabled(true);
@@ -277,12 +285,14 @@ public class Recorder extends WebDialog {
 				if (wbtnRecordBoth.getText().equals("Record Both")) {
 					capture = new CaptureScreenToFile();
 					capture.StartCaputreWithAudio("");
+					isRecordingBoth = true;
 					wbtnRecordBoth.setText("Stop");
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnRecord.setEnabled(false);
 //					progressBarFrame.setVisible(true);
 				} else {
 					capture.StopCapture();
+					isRecordingBoth = false;
 					wbtnRecordBoth.setText("Record Both");
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnRecord.setEnabled(true);
@@ -293,6 +303,23 @@ public class Recorder extends WebDialog {
 		wbtnRecordBoth.setText("Record Both");
 		wbtnRecordBoth.setBounds(10, 91, 146, 29);
 		getContentPane().add(wbtnRecordBoth);
+		
+		if(isRecordingVoice){
+			wbtnRecord.setText("Stop");
+			wbtnRecordBoth.setEnabled(false);
+			wbtnRecordDesktopOnly.setEnabled(false);
+			wbtnPlay.setEnabled(false);
+		}
+		else if(isRecordingDesktop){
+			wbtnRecordDesktopOnly.setText("Stop");
+			wbtnRecord.setEnabled(false);
+			wbtnRecordBoth.setEnabled(false);
+		}
+		else if(isRecordingBoth){
+			wbtnRecordBoth.setText("Stop");
+			wbtnRecordDesktopOnly.setEnabled(false);
+			wbtnRecord.setEnabled(false);
+		}
 		// pack();
 		// setVisible(true);
 	}

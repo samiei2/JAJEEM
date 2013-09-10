@@ -68,7 +68,7 @@ public class Student {
 			public void run() {
 				try {
 					Student window = new Student();
-					window.getFrmJajeemProject().setVisible(false);
+					window.getFrmJajeemProject().setVisible(true);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
@@ -240,7 +240,7 @@ public class Student {
 					System.out.println(new File("util/", "videoplayer.jar")
 							.exists());
 					proc = Runtime.getRuntime().exec(
-							"java -jar videoplayer.jar", null,
+							"java -jar videoplayer.jar \"\" true", null,
 							new File("util/"));
 					// Then retrieve the process output
 					new Thread(new Runnable() {

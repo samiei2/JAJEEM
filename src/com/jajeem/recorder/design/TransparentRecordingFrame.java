@@ -169,6 +169,6 @@ public class TransparentRecordingFrame extends JDialog {
 	    
 	public static void main(String[] args) {
 		TransparentRecordingFrame frm = new TransparentRecordingFrame();
-		
+		frm.setVisible(true);
 	}
 }

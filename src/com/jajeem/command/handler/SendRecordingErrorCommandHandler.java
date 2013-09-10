@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.swing.JOptionPane;
+
 import com.alee.extended.filechooser.FileListCellEditor;
+import com.alee.managers.language.data.Record;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendRecordingSuccessCommand;
@@ -25,5 +28,6 @@ public class SendRecordingErrorCommandHandler implements ICommandHandler {
 		SendRecordingSuccessCommand command = (SendRecordingSuccessCommand)cmd;
 		if(Session.getRecordingList().contains(command.getFrom()))
 			Session.getRecordingList().remove(command.getFrom());
+		JOptionPane.showMessageDialog(null, "An error occured while recording the student.please try again!\nIf the problem persists please contact your administrator.");
 	}
 }

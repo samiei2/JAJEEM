@@ -20,6 +20,7 @@ import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 
 public class InstructorServer {
+	
 	static long requestNumber = 0;
 	FileTransferEvent fileEvents = new FileTransferEvent();
 	public void Startup(){
@@ -153,9 +154,9 @@ public class InstructorServer {
 
 	private void StartFileListenerServer() {
 		try {
-			ServerSocket ss=new ServerSocket(54321);
+			ServerSocket internalsocket=new ServerSocket(54321);
 			while(true){
-				final Socket client = ss.accept();
+				final Socket client = internalsocket.accept();
 				FileTransferObject obj = new FileTransferObject(this);
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
@@ -170,9 +171,9 @@ public class InstructorServer {
 	
 	private void StartFileCollectionListenerServer() {
 		try {
-			ServerSocket ss=new ServerSocket(54322);
+			ServerSocket internalsocket=new ServerSocket(54322);
 			while(true){
-				final Socket client = ss.accept();
+				final Socket client = internalsocket.accept();
 				FileTransferObject obj = new FileTransferObject(this);
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
@@ -185,6 +186,6 @@ public class InstructorServer {
 	
 	
 	public static void main(String[] list){
-		new InstructorServer().StartFileListenerServer();
+		new InstructorServer().Startup();
 	}
 }

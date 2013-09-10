@@ -153,7 +153,8 @@ public class CaptureScreenToFile {
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
 
-			overlayScreen.setVisible(true);
+			if(Config.getParam("server").equals("1"))
+				overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -229,7 +230,8 @@ public class CaptureScreenToFile {
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
-			overlayScreen.setVisible(true);
+			if(Config.getParam("server").equals("1"))
+				overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -311,8 +313,10 @@ public class CaptureScreenToFile {
 	public static void StopCapture() {
 		try {
 			running = false;
-			overlayScreen.setVisible(false);
-			overlayScreen.dispose();
+			if(Config.getParam("server").equals("1")){
+				overlayScreen.setVisible(false);
+				overlayScreen.dispose();
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

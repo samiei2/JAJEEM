@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.swing.JOptionPane;
+
 import com.alee.extended.filechooser.FileListCellEditor;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
@@ -25,5 +27,6 @@ public class SendRecordingSuccessCommandHandler implements ICommandHandler {
 		SendRecordingSuccessCommand command = (SendRecordingSuccessCommand)cmd;
 		if(Session.getRecordingList().contains(command.getFrom()))
 			Session.getRecordingList().remove(command.getFrom());
+		JOptionPane.showMessageDialog(null, "Recording has successfuly been received from "+command.getFrom());
 	}
 }

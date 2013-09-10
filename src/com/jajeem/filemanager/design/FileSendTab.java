@@ -324,8 +324,6 @@ public class FileSendTab extends WebPanel {
 																// clients
 							System.out.println("Ip : " + ips.get(i));
 							Socket clientSocket = new Socket(ips.get(i), 12345);
-							// Socket clientSocket=new
-							// Socket("127.0.0.1",12345);
 							OutputStream out = clientSocket.getOutputStream();
 							FileInputStream fis = new FileInputStream(file);
 							byte[] info = new byte[2048];

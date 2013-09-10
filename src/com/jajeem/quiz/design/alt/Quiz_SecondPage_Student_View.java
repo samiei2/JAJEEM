@@ -36,6 +36,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 
 	private Student currentStudent;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
+	private ArrayList<Student> studentList;
 	private Quiz currentQuiz;
 	private int id = 1;
 
@@ -48,6 +49,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 	 */
 	public Quiz_SecondPage_Student_View(Quiz_SecondPage parent) {
 		parentPanel = parent;
+		studentList = new ArrayList<>();
 		WebLabel wblblStudent = new WebLabel();
 		wblblStudent.setText("Student");
 
@@ -279,9 +281,11 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (quizResponse != null) {
 					currentStudent = new Student();
+					
 					if (webComboBox.getSelectedIndex() != -1)
-						currentStudent.setId(Integer.parseInt(webComboBox
-								.getSelectedItem().toString()));
+						currentStudent = studentList.get(webComboBox.getSelectedIndex());
+//						currentStudent.setId(Integer.parseInt(webComboBox
+//								.getSelectedItem().toString()));
 
 					WebTableModel model = (WebTableModel) webTable
 							.getModel();
@@ -409,13 +413,22 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 		Question question = e.getQuestion();
 		Student student = e.getStudent();
 		boolean found = false;
-		for (int i = 0; i < (webComboBox.getModel()).getSize(); i++) {
-			if (webComboBox.getItemAt(i).toString()
-					.equals(String.valueOf(student.getId())))
+//		for (int i = 0; i < (webComboBox.getModel()).getSize(); i++) {
+//			if (webComboBox.getItemAt(i).toString()
+//					.equals(String.valueOf(student.getId())))
+//				found = true;
+//		}
+		for (int i = 0; i < studentList.size(); i++) {
+			if (studentList.get(i).getId() == student.getId())
 				found = true;
 		}
+//		if (!found) {
+//			webComboBox.addItem(student.getId());
+//			id = student.getId();
+//		}
 		if (!found) {
-			webComboBox.addItem(student.getId());
+			studentList.add(student);
+			webComboBox.addItem(student.getFullName());
 			id = student.getId();
 		}
 		if (webComboBox.getSelectedIndex() == -1)
@@ -608,6 +621,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 		model.getDataVector().clear();
 		model.fireTableDataChanged();
 		webComboBox.removeAllItems();
+		studentList.clear();
 		currentStudent = null;
 		currentQuiz = null;
 		quizResponse.clear();

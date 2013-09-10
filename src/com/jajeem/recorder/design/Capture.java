@@ -11,6 +11,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
+import com.jajeem.util.Config;
+
 public class Capture implements Runnable {
 
 	AudioInputStream audioInputStream;
@@ -18,12 +20,20 @@ public class Capture implements Runnable {
 	Thread thread;
 	String errStr;
 	double duration, seconds;
+	static TransparentRecordingFrame overlayframe;
 
 	public Capture() {
-
+		
 	}
 
 	public void start() {
+		overlayframe = new TransparentRecordingFrame();
+		try {
+			if(Config.getParam("server").equals("1"))
+				overlayframe.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		errStr = null;
 		thread = new Thread(this);
 		thread.setName("Capture");
@@ -32,6 +42,12 @@ public class Capture implements Runnable {
 
 	public void stop() {
 		thread = null;
+		try {
+			if(Config.getParam("server").equals("1"))
+				overlayframe.setVisible(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void shutDown(String message) {
