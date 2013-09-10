@@ -86,6 +86,8 @@ public class ClientFileServer {
 							new FileTransferEvent().fireSuccess(obj,
 									ClientFileInbox.class);
 
+							JOptionPane.showConfirmDialog(null, "A new file has been received from the teacher!");
+							
 							File foler = new File(FileUtil.getInboxPath());
 							Desktop desktop = null;
 							if (Desktop.isDesktopSupported()) {

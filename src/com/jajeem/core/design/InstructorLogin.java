@@ -36,6 +36,7 @@ import com.jajeem.licensing.LicenseValidator;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
 
 public class InstructorLogin extends JFrame {
@@ -82,6 +83,7 @@ public class InstructorLogin extends JFrame {
 						}
 					});
 					loading.start();
+					new StartUp();
 					frame = new InstructorLogin();
 					frame.pack();
 					

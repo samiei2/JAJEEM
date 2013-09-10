@@ -13,9 +13,9 @@ public class StartUp {
 	static H2Connection conn;
 
 	public StartUp() {
-		conn = new H2Connection();
-		BaseDAO.setH2Connection(conn);
-		initDatabase.initialize();
+//		conn = new H2Connection();
+//		BaseDAO.setH2Connection(conn);
+//		initDatabase.initialize();
 		if (!new File("util").exists()) {
 			JOptionPane
 					.showMessageDialog(null,
@@ -39,7 +39,7 @@ public class StartUp {
 
 		try {
 			// Setting up WebLookAndFeel style
-			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+//			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
