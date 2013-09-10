@@ -1704,8 +1704,12 @@ public class InstructorNoaUtil {
 							}
 						});
 
+						WebButton runButton = new WebButton(
+								i18n.getParam("Run"));
+
 						GroupPanel programPopupContent = new GroupPanel(5,
-								false, new WebScrollPane(programsList));
+								false, new WebScrollPane(programsList),
+								runButton);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
@@ -1801,6 +1805,95 @@ public class InstructorNoaUtil {
 												}
 
 											}
+										}
+									}
+								}
+							}
+						});
+
+						runButton.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								int index = programsList.getSelectedIndex();
+
+								Component card = null;
+								for (Component comp : InstructorNoa
+										.getCenterPanel().getComponents()) {
+									if (comp.isVisible() == true) {
+										card = comp;
+									}
+								}
+
+								if (((JComponent) card).getClientProperty(
+										"viewMode").equals("thumbView")) {
+									if (InstructorNoa.getDesktopPane()
+											.getSelectedFrame() != null) {
+										String selectedStudent = "";
+										selectedStudent = (String) InstructorNoa
+												.getDesktopPane()
+												.getSelectedFrame()
+												.getClientProperty("ip");
+
+										StartApplicationCommand sa;
+										try {
+											sa = new StartApplicationCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													selectedStudent,
+													Integer.parseInt(Config
+															.getParam("port")),
+													programsList
+															.getModel()
+															.getElementAt(index)
+															.toString());
+											InstructorNoa.getServerService()
+													.send(sa);
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+									}
+								} else if (((JComponent) card)
+										.getClientProperty("viewMode").equals(
+												"groupView")) {
+									if (!InstructorNoa.getGroupList()
+											.isSelectionEmpty()) {
+										int groupIndex = InstructorNoa
+												.getGroupList()
+												.getSelectedIndex();
+
+										Group group = InstructorNoa.getGroups()
+												.get(groupIndex);
+										if (group.getStudentIps().isEmpty()) {
+											return;
+										} else {
+
+											StartApplicationCommand sa;
+											try {
+												sa = new StartApplicationCommand(
+														InetAddress
+																.getLocalHost()
+																.getHostAddress(),
+														"",
+														Integer.parseInt(Config
+																.getParam("port")),
+														programsList
+																.getModel()
+																.getElementAt(
+																		index)
+																.toString());
+												for (String studentIp : group
+														.getStudentIps()) {
+													sa.setTo(studentIp);
+													InstructorNoa
+															.getServerService()
+															.send(sa);
+												}
+
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+
 										}
 									}
 								}
