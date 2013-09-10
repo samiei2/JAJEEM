@@ -149,7 +149,7 @@ public class Student {
 
 		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Student.class
 				.getResourceAsStream(("/icons/menubar/tooltip.png"))));
-		TooltipManager.setDefaultDelay(1000);
+		TooltipManager.setDefaultDelay(500);
 
 		ImageIcon imgMessage = new ImageIcon(
 				ImageIO.read(Student.class

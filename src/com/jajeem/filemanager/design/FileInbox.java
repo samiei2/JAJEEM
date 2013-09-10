@@ -7,6 +7,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
+import java.awt.Desktop;
+
 import com.alee.laf.button.WebButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.alee.laf.table.WebTable;
@@ -242,6 +244,7 @@ public class FileInbox extends WebPanel {
 					DefaultTableModel model = (DefaultTableModel)webTable.getModel();
 					model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
 					model.setValueAt("Success", webTable.getSelectedRow(), 3);
+					Desktop.getDesktop().open(new File(FileUtil.getInboxPath()));
 				} catch (Exception e) {
 				}
 			}
