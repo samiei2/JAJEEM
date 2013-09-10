@@ -112,7 +112,7 @@ public class InstructorLogin extends JFrame {
 	 */
 	public InstructorLogin() throws Exception {
 		setResizable(false);
-		setTitle("Welcome to iCalabo");
+		setTitle("Welcome to Classmate");
 
 		new Config();
 		new i18n();
@@ -121,7 +121,7 @@ public class InstructorLogin extends JFrame {
 		progressBar.setIndeterminate(true);
 		progressBar.setStringPainted(true);
 		progressBar.setString(i18n
-				.getParam("iCalabo is loading, Please wait..."));
+				.getParam("Classmate is loading, Please wait..."));
 		progressBar.setOpaque(false);
 
 		progressBarFrame = new WebFrame();
