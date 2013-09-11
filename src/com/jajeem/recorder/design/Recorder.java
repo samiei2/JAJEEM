@@ -13,9 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -320,6 +322,13 @@ public class Recorder extends WebDialog {
 			wbtnRecordDesktopOnly.setEnabled(false);
 			wbtnRecord.setEnabled(false);
 		}
+		
+		if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
+			if(InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("recording").equals(true))
+				wbtnRecordStudent.setText("Stop");
+			else
+				wbtnRecordStudent.setText("Record Student");
+		}
 		// pack();
 		// setVisible(true);
 	}
@@ -349,12 +358,30 @@ public class Recorder extends WebDialog {
 					recordingsList.remove(selectedStudent.get(0));
 					wbtnRecordStudent.setText("Record Student");
 					wbtnRecordStudent.setEnabled(true);
+					InstructorNoa.getDesktopPane().getSelectedFrame().putClientProperty("recording", false);
+					try {
+						InstructorNoa.getDesktopPane().getSelectedFrame().setFrameIcon(new ImageIcon(
+									ImageIO.read(Recorder.class
+											.getResourceAsStream("/icons/menubar/check.png"))));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
 //					progressBarFrame.setVisible(false);
 				} else {
 					recordingsList.add(selectedStudent.get(0));
 					SendStartRecordCommandTo(selectedStudent.get(0));
-					wbtnRecordStudent.setText("Recording Started");
+//					wbtnRecordStudent.setText("Recording Started");
 					wbtnRecordStudent.setEnabled(false);
+					InstructorNoa.getDesktopPane().getSelectedFrame().putClientProperty("recording", true);
+					try {
+						InstructorNoa.getDesktopPane().getSelectedFrame().setFrameIcon(new ImageIcon(
+									ImageIO.read(Recorder.class
+											.getResourceAsStream("/icons/menubar/rec-icon.png"))));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
 //					progressBarFrame.setVisible(true);
 					frame.dispose();
 				}

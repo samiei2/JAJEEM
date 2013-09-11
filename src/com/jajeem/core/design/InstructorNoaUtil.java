@@ -2196,6 +2196,7 @@ public class InstructorNoaUtil {
 		internalFrame.putClientProperty("username", hostName);
 		internalFrame.putClientProperty("live", true);
 		internalFrame.putClientProperty("group", -1);
+		internalFrame.putClientProperty("recording", false);
 
 		internalFrame.setFrameIcon(new ImageIcon(ImageIO
 				.read(InstructorNoaUtil.class

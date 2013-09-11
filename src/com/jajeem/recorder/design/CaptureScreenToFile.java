@@ -77,7 +77,7 @@ public class CaptureScreenToFile {
 	private static final int SECONDS_TO_RUN_FOR = 15;
 	private static boolean running = false;
 	private static String filename;
-	private static boolean isClient;
+	private static boolean isClient = false;
 	private static File outputFile = null;
 	private static TransparentRecordingFrame overlayScreen;
 
@@ -153,7 +153,7 @@ public class CaptureScreenToFile {
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
 
-			if(Config.getParam("server").equals("1"))
+			if(!isClient)
 				overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
@@ -230,7 +230,7 @@ public class CaptureScreenToFile {
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
-			if(Config.getParam("server").equals("1"))
+			if(!isClient)
 				overlayScreen.setVisible(true);
 			Thread recorder = new Thread(new Runnable() {
 
@@ -313,7 +313,7 @@ public class CaptureScreenToFile {
 	public static void StopCapture() {
 		try {
 			running = false;
-			if(Config.getParam("server").equals("1")){
+			if(!isClient){
 				overlayScreen.setVisible(false);
 				overlayScreen.dispose();
 			}

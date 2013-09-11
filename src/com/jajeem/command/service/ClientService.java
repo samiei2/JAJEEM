@@ -263,19 +263,15 @@ public class ClientService implements IConnectorSevice, Runnable {
 				if (cmd instanceof StartCaptureCommand) {
 					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
 					startCaptureHandler.run(cmd);
-
 				} else if (cmd instanceof StopCaptureCommand) {
 					StopCaptureCommandHandler stopCaptureHandler = new StopCaptureCommandHandler();
 					stopCaptureHandler.run(cmd);
-
 				} else if (cmd instanceof StartViewerCommand) {
 					StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
 					startViewerHandler.run(cmd);
-
 				} else if (cmd instanceof StartUpCommand) {
 					StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
 					startUpHandler.run(cmd);
-
 				} else if (cmd instanceof StartQuizCommand) {
 					StartQuizCommandHandler startQuizHandler = new StartQuizCommandHandler();
 					startQuizHandler.run(cmd);
@@ -285,7 +281,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof SendQuizResponseCommand) {
 					SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
 					sendquizresponse.run(cmd);
-
 				} else if (cmd instanceof StartSurveyCommand) {
 					StartSurveyCommandHandler startSurveyHandler = new StartSurveyCommandHandler();
 					startSurveyHandler.run(cmd);
@@ -295,177 +290,129 @@ public class ClientService implements IConnectorSevice, Runnable {
 				} else if (cmd instanceof SendSurveyResponseCommand) {
 					SendSurveyResponseCommandHandler sendSurveyresponse = new SendSurveyResponseCommandHandler();
 					sendSurveyresponse.run(cmd);
-
 				} else if (cmd instanceof WhiteBlackAppCommand) {
 					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
 					setWhiteBlackAppCommandHandler.run(cmd);
-
 				} else if (cmd instanceof InternetCommand) {
 					SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
 					setInternetCommandHandler.run(cmd);
-
 				} else if (cmd instanceof VolumeCommand) {
 					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
 					setVolumeCommandHandler.run(cmd);
-
 				} else if (cmd instanceof LockCommand) {
 					SetLockCommandHandler setLockCommandHandler = new SetLockCommandHandler();
 					setLockCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof PowerCommand) {
+				} else if (cmd instanceof PowerCommand) {
 					SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
 					setPowerCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof VolumeCommand) {
+				} else if (cmd instanceof VolumeCommand) {
 					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
 					setVolumeCommandHandler.run(cmd);
-
 				} else if (cmd instanceof WebsiteCommand) {
 					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
 					openWebsiteCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof StartWhiteBoardCommand) {
+				} else if (cmd instanceof StartWhiteBoardCommand) {
 					StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
 					whiteboardHandler.run(cmd);
-
 				} else if (cmd instanceof StopWhiteBoardCommand) {
 					StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
 					whiteboardHandler.run(cmd);
-				}
-
-				else if (cmd instanceof AuthenticateCommand) {
+				} else if (cmd instanceof AuthenticateCommand) {
 					SetAuthenticateCommandHanlder setAuthenticateCommandHanlder = new SetAuthenticateCommandHanlder();
 					setAuthenticateCommandHanlder.run(cmd);
-				}
-
-				else if (cmd instanceof GrantCommand) {
+				} else if (cmd instanceof GrantCommand) {
 					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
 					setGrantCommandHanlder.run(cmd);
-				}
-
-				else if (cmd instanceof MessageCommand) {
+				} else if (cmd instanceof MessageCommand) {
 					MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
 					messageCommandHanlder.run(cmd);
-				}
-
-				else if (cmd instanceof ChatCommand) {
+				} else if (cmd instanceof ChatCommand) {
 					ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
 					chatCommandHanlder.run(cmd);
-				}
-
-				else if (cmd instanceof StartVideoCommand) {
+				} else if (cmd instanceof StartVideoCommand) {
 					StartVideoCommandHandler videoCommandHandler = new StartVideoCommandHandler();
 					videoCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof StartIntercomCommand) {
+				} else if (cmd instanceof StartIntercomCommand) {
 					StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
 					startIntercomCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof StopIntercomCommand) {
+				} else if (cmd instanceof StopIntercomCommand) {
 					StopIntercomCommandHandler stopIntercomCommandHandler = new StopIntercomCommandHandler();
 					stopIntercomCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof StartApplicationCommand) {
+				} else if (cmd instanceof StartApplicationCommand) {
 					StartApplicationCommandHanlder startApplicationCommandHandler = new StartApplicationCommandHanlder();
 					startApplicationCommandHandler.run(cmd);
-				}
-
-				else if (cmd instanceof SendFileCollectCommand) {
+				} else if (cmd instanceof SendFileCollectCommand) {
 					SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
 					sendfileCommandHandler.run(cmd);
 				}
-
 				else if (cmd instanceof SendFileAssignmentCommand) {
 					SendFileAssignmentCommandHandler sendfileassignmentCommandHandler = new SendFileAssignmentCommandHandler();
 					sendfileassignmentCommandHandler.run(cmd);
 				}
-
 				else if (cmd instanceof StartModelCommand) {
 					StartModelCommandHanlder startModelCommandHanlder = new StartModelCommandHanlder();
 					startModelCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof IntercomRequestCommand) {
 					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
 					intercomRequestCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StartStudentRecordCommand) {
 					StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
 					startRecorderCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StopStudentRecordCommand) {
 					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
 					stopRecorderCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StopModelCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof SendRecordingErrorCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof SendRecordingSuccessCommand) {
 					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
 					stopModelCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StartCallAllCommand) {
 					StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
 					startCallAllCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StopCallAllCommand) {
 					StopCallAllCommandHanlder stopCallAllCommandHanlder = new StopCallAllCommandHanlder();
 					stopCallAllCommandHanlder.run(cmd);
 				}
-
 				else if (cmd instanceof StartSpeechCommand) {
 					StartSpeechCommandHandler hnldr = new StartSpeechCommandHandler();
 					hnldr.run(cmd);
 				}
-
 				else if (cmd instanceof SendSpeechFileCommand) {
 					SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
 					hnldr.run(cmd);
 				}
-
 				else if (cmd instanceof FinishedQuizCommand) {
 					FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
 					hnldr.run(cmd);
-				} 
-				
+				}
 				else if (cmd instanceof FinishedSurveyCommand) {
 					FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
 					hnldr.run(cmd);
 				}
-
 				else if (cmd instanceof StartVideoChatCommand) {
 					StartVideoChatCommandHandler startVideoChatCommandHandler = new StartVideoChatCommandHandler();
 					startVideoChatCommandHandler.run(cmd);
 				}
-
 				else if (cmd instanceof StopVideoChatCommand) {
 					StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
 					stopVideoChatCommandHandler.run(cmd);
 				}
-				
 				else if (cmd instanceof RequestCourseListCommand) {
 					RequestCourseListCommandHandler requestCourseListCommandHandler = new RequestCourseListCommandHandler();
 					requestCourseListCommandHandler.run(cmd);
-				}
-				
+				}	
 				else if (cmd instanceof GetCourseListCommand) {
 					GetCourseListCommandHandler getCourseListCommandHandler = new GetCourseListCommandHandler();
 					getCourseListCommandHandler.run(cmd);

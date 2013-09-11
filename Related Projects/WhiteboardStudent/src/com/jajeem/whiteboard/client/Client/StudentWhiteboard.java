@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import com.jajeem.util.LoadingDialog;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
 import com.jajeem.whiteboard.server.Module.Whiteboard;
@@ -21,8 +22,11 @@ public class StudentWhiteboard {
 	private int sessionID;
 	private Sessions sessions;
 	private int userid;
+	private LoadingDialog overlayScreen;
 	
 	public StudentWhiteboard(String host, String sessionPort){
+		overlayScreen = new LoadingDialog();
+		overlayScreen.setVisible(true);
 //		Policy.setPolicy(new MinimalPolicy());
 //    	System.setProperty("javax.net.ssl.trustStore","cert/client.keystore");
 //    	System.setProperty("javax.net.ssl.keyStore", "cert/client.keystore");
@@ -114,6 +118,7 @@ public class StudentWhiteboard {
 	            MainFrame mainFrame = new MainFrame(sessions, sessionID,
 	                        whiteboard,userid,"");
 	            System.out.println("Main Frame Opened");
+	            overlayScreen.setVisible(false);
 	            break;
 			} catch (RemoteException | NotBoundException e) {
 				numOfTries--;
@@ -132,6 +137,7 @@ public class StudentWhiteboard {
 		}
 		if(numOfTries == 0)
 			JOptionPane.showMessageDialog(null, "Unable to connect to whiteboard server.Please contact administrator!");
+		overlayScreen.setVisible(false);
 	}
 
 //	private String getUserName() {

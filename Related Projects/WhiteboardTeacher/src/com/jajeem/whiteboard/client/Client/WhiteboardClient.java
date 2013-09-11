@@ -16,6 +16,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.util.LoadingDialog;
 //import com.jajeem.util.Session;
 import com.jajeem.whiteboard.client.Client.design.MainFrame;
 import com.jajeem.whiteboard.server.Module.Sessions;
@@ -65,6 +66,7 @@ public class WhiteboardClient extends WebFrame {
     private WebButton btnJoin;
     private WebButton btnCancel;
     private WebButton btnConnect;
+    private LoadingDialog loading;
 
     /** The name of columns */
     private final String[] columnNames = {"Session ID","Session Name","Administrator",
@@ -89,6 +91,8 @@ public class WhiteboardClient extends WebFrame {
      * @param args2 
      * @param args */
     public WhiteboardClient(String sessionPort, String whiteboardPort) {
+    	loading = new LoadingDialog();
+    	loading.setVisible(true);
     	try{
     		SESSIONS_PORT = Integer.parseInt(sessionPort);
         	WHITEBOARD_PORT = Integer.parseInt(whiteboardPort);
@@ -232,6 +236,7 @@ public class WhiteboardClient extends WebFrame {
         	whiteboardChooseServer = new WhiteboardChooseServer(this);
         	WhiteboardCreateASession createASession
         		= new WhiteboardCreateASession(sessions,this);
+        	loading.setVisible(false);
         }
         catch(Exception ex){
         	System.out.println(getClass().getName()+" : "+ex.getMessage());
@@ -240,7 +245,9 @@ public class WhiteboardClient extends WebFrame {
         	LocalWhiteboard localWhiteboard = new LocalWhiteboard();
             MainFrame mainFrame = new MainFrame(null,
                 0,localWhiteboard,0,"localuser");
+            loading.setVisible(false);
         }
+        
         
     }
 
@@ -270,13 +277,16 @@ public class WhiteboardClient extends WebFrame {
                 String strSessionID = sessionsList.getValueAt(selectedRow, 0).toString();
                 int sessionID = Integer.parseInt(strSessionID);
                 // join a session 
+                
                 WhiteboardJoinASession joinASession
                     = new WhiteboardJoinASession(sessions,sessionID,this);
+                loading.setVisible(false);
             }
         } else {
             WebOptionPane.showMessageDialog(null,
                        "Please connect the server first.",
                        "Error", WebOptionPane.ERROR_MESSAGE);
+            loading.setVisible(false);
         }
     }
 

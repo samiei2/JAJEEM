@@ -174,6 +174,7 @@ public class MainFrame extends JFrame {
     public void window_exit() throws RemoteException{
         userLeave();
         this.dispose();
+        System.exit(0);
     }
 
     /** Get the paint panel*/
