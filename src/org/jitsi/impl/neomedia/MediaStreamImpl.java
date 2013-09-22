@@ -1619,7 +1619,7 @@ public class MediaStreamImpl
 
         if ((deviceSession == null) || (deviceSession.getDevice() != device))
         {
-            assertDirection(direction, device.getDirection(), "device");
+            //assertDirection(direction, device.getDirection(), "device");
 
             MediaDeviceSession oldValue = deviceSession;
             MediaFormat format;
@@ -1716,7 +1716,7 @@ public class MediaStreamImpl
          * Make sure that the specified direction is in accord with the
          * direction of the MediaDevice of this instance.
          */
-        assertDirection(direction, getDeviceDirection(), "direction");
+        //assertDirection(direction, getDeviceDirection(), "direction");
 
         this.direction = direction;
 

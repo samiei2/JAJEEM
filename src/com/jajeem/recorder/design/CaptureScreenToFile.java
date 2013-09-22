@@ -294,9 +294,9 @@ public class CaptureScreenToFile {
 								AudioFileFormat.Type.AIFF, out);
 						out.flush();
 						out.close();
-						Desktop.getDesktop().open(outputFile);
 						Thread.sleep(1000);
 						Synchornize();
+						Desktop.getDesktop().open(outputFile);
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
