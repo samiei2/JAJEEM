@@ -59,7 +59,7 @@ public class StudentDialog extends JDialog {
 	 * 
 	 * @throws SQLException
 	 */
-	public StudentDialog(final CourseStudentDialog scDialog)
+	public StudentDialog(final StudentList scDialog)
 			throws SQLException {
 		setTitle("Add students");
 		setVisible(true);

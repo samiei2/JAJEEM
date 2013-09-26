@@ -9,6 +9,8 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -270,7 +272,7 @@ public class AdminPanel extends WebFrame {
 			}
 		});
 
-		WebButton studentButton = new WebButton(i18n.getParam("Students"));
+		WebButton studentButton = new WebButton(i18n.getParam("Details"));
 		buttonPanel.add(studentButton);
 		studentButton.addActionListener(new ActionListener() {
 
@@ -285,7 +287,8 @@ public class AdminPanel extends WebFrame {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
 						try {
-							new CourseStudentDialog(course, true);
+//							new CourseStudentDialog(course, true);
+							new StudentsAndQuizListDialog(course,true,course.getId(),"course");
 						} catch (Exception e1) {
 							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
@@ -320,25 +323,25 @@ public class AdminPanel extends WebFrame {
 			}
 		});
 
-		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
-		buttonPanel.add(quizButton);
-		quizButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!courseSelectionModel.isSelectionEmpty()) {
-					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
-								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
-					} else {
-						Course course = courseSelectionModel.getSelected().get(
-								0);
-						new Quiz_OpenDialog(course.getId(), "course");
-					}
-				}
-			}
-		});
+//		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
+//		buttonPanel.add(quizButton);
+//		quizButton.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (!courseSelectionModel.isSelectionEmpty()) {
+//					if (courseSelectionModel.getSelected().size() > 1) {
+//						WebOptionPane.showMessageDialog(frame,
+//								"Please select one course.", "Message",
+//								WebOptionPane.INFORMATION_MESSAGE);
+//					} else {
+//						Course course = courseSelectionModel.getSelected().get(
+//								0);
+//						new Quiz_OpenDialog(course.getId(), "course");
+//					}
+//				}
+//			}
+//		});
 
 		JPanel paginationPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
@@ -427,6 +430,33 @@ public class AdminPanel extends WebFrame {
 
 		StripedTableCellRenderer.installInTable(courseTable, Color.lightGray,
 				Color.white, null, null);
+		
+		courseTable.addMouseListener(new MouseAdapter() {
+			   public void mouseClicked(MouseEvent e) {
+			      if (e.getClickCount() == 2) {
+			         JTable target = (JTable)e.getSource();
+			         int row = target.getSelectedRow();
+			         int column = target.getSelectedColumn();
+			         if (!courseSelectionModel.isSelectionEmpty()) {
+							if (courseSelectionModel.getSelected().size() > 1) {
+								WebOptionPane.showMessageDialog(frame,
+										"Please select one course.", "Message",
+										WebOptionPane.INFORMATION_MESSAGE);
+							} else {
+								Course course = courseSelectionModel.getSelected().get(
+										0);
+								try {
+//									new CourseStudentDialog(course, true);
+									new StudentsAndQuizListDialog(course,true,course.getId(),"course");
+								} catch (Exception e1) {
+									JajeemExcetionHandler.logError(e1);
+									e1.printStackTrace();
+								}
+					      }
+			          }
+			      }
+			   }
+			});
 
 		return panel;
 	}
