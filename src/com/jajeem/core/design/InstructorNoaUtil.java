@@ -766,10 +766,23 @@ public class InstructorNoaUtil {
 									}
 								}
 							} else {
-								FileManagerMain main = new FileManagerMain();
-								main.setReceivingIps(new ArrayList<String>(
-										Arrays.asList(getSelectedStudentIp())));
-								main.setVisible(true);
+								String ip = getSelectedStudentIp();
+								if(ip != "" && ip !=null){
+									FileManagerMain main = new FileManagerMain();
+									main.setReceivingIps(new ArrayList<String>(
+											Arrays.asList(ip)));
+									main.setVisible(true);
+								}
+								else{
+									FileManagerMain main = new FileManagerMain();
+									ArrayList<String> ips = new ArrayList<>();
+									for (int i = 0; i < InstructorNoa.getDesktopPane().getAllFrames().length; i++) {
+										String sip = InstructorNoa.getDesktopPane().getAllFrames()[i].getClientProperty("ip").toString();
+										ips.add(sip);
+									}
+									main.setReceivingIps(ips);
+									main.setVisible(true);
+								}
 							}
 						}
 					});
@@ -2936,6 +2949,8 @@ public class InstructorNoaUtil {
 				selectedStudent = (String) InstructorNoa.getDesktopPane()
 						.getSelectedFrame().getClientProperty("ip");
 			}
+			else
+				return "";
 		}
 
 		return selectedStudent;

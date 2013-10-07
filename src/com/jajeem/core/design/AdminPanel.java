@@ -45,6 +45,7 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.alee.laf.text.WebTextField;
@@ -72,7 +73,9 @@ public class AdminPanel extends WebFrame {
 	private static final long serialVersionUID = 1L;
 
 	private static AdminPanel frame;
+	private WebFrame mainFrame;
 	private WebPanel contentPane;
+	private DatabaseManager databaseDialog;
 
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
@@ -138,7 +141,8 @@ public class AdminPanel extends WebFrame {
 		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
 		studentTab.setLayout(new BorderLayout(0, 0));
 		studentTab.add(initStudent());
-
+		
+		mainFrame = this;
 		setVisible(true);
 
 	}
@@ -556,6 +560,24 @@ public class AdminPanel extends WebFrame {
 					}
 				}
 			}
+		});
+		
+		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
+		buttonPanel.add(databaseManager);
+		databaseManager.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(databaseDialog==null){
+					DatabaseManager manager = new DatabaseManager(mainFrame);
+					databaseDialog = manager;
+					manager.setVisible(true);
+				}
+				else{
+					databaseDialog.toFront();
+				}
+			}
+			
 		});
 
 		JPanel paginationPanel = new JPanel();
