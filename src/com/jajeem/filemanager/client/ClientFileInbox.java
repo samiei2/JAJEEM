@@ -17,6 +17,7 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 
 import java.io.File;
@@ -165,6 +166,7 @@ public class ClientFileInbox extends WebPanel {
 							evt.getFileName(),
 							"Received"
 					});
+					Audio.playSound("util/Ding.aiff");
 				} catch (Exception e) {
 				}
 			}

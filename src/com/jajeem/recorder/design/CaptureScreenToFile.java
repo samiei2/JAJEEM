@@ -50,6 +50,7 @@ import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
+import com.jajeem.util.FileUtil;
 import com.jajeem.util.i18n;
 import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
 import com.xuggle.mediatool.IMediaCoder;
@@ -88,35 +89,40 @@ public class CaptureScreenToFile {
 	 */
 	public CaptureScreenToFile() {
 		
-		WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
-				"Choose directory to save");
+		if(!isClient){
+			WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
+					"Choose directory to save");
 
-		directoryChooser.setVisible(true);
+			directoryChooser.setVisible(true);
 
-		if (directoryChooser.getResult() == StyleConstants.OK_OPTION) {
-			File filetmp = directoryChooser.getSelectedFolder();
-			outputFile = new File(filetmp.getPath());
-			if (!outputFile.exists())
-				outputFile.mkdir();
-		} else {
-			int resp = 1;
-
-			try {
-				resp = WebOptionPane
-						.showConfirmDialog(
-								null,
-								i18n.getParam("Do you want to save the recording is the default folder (\\Recordings) or discard recording?"),
-								i18n.getParam("Confirm"),
-								WebOptionPane.YES_NO_OPTION,
-								WebOptionPane.QUESTION_MESSAGE);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			if (resp == 0) {
-				outputFile = new File("Recordings");
+			if (directoryChooser.getResult() == StyleConstants.OK_OPTION) {
+				File filetmp = directoryChooser.getSelectedFolder();
+				outputFile = new File(filetmp.getPath());
+				if (!outputFile.exists())
+					outputFile.mkdir();
 			} else {
-				return;
+				int resp = 1;
+
+				try {
+					resp = WebOptionPane
+							.showConfirmDialog(
+									null,
+									i18n.getParam("Do you want to save the recording is the default folder (\\Recordings) or discard recording?"),
+									i18n.getParam("Confirm"),
+									WebOptionPane.YES_NO_OPTION,
+									WebOptionPane.QUESTION_MESSAGE);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				if (resp == 0) {
+					outputFile = new File("Recordings");
+				} else {
+					return;
+				}
 			}
+		}
+		else{
+			outputFile = new File(FileUtil.getRecorderPath());
 		}
 
 		if (!outputFile.exists())
@@ -552,7 +558,7 @@ public class CaptureScreenToFile {
 					try {
 						System.out.println("Sending recorded screen to "
 								+ server);
-						Socket clientSocket = new Socket(server, 54322);
+						Socket clientSocket = new Socket(server, 54333);
 						OutputStream out = clientSocket.getOutputStream();
 						FileInputStream fis = new FileInputStream(file);
 						byte[] info = new byte[2048];

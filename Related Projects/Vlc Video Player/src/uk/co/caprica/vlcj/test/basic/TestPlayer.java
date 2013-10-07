@@ -361,7 +361,6 @@ public class TestPlayer extends VlcjTest {
         	((PlayerControlsPanel)controlsPanel).setStream(stream);
         }
         diag.setVisible(false);
-        
     }
 
     private JMenuBar buildMenuBar() {

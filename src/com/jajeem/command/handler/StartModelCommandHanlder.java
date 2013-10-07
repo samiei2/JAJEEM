@@ -2,6 +2,8 @@ package com.jajeem.command.handler;
 
 import java.net.InetAddress;
 
+import javax.swing.JFrame;
+
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
 
@@ -18,7 +20,7 @@ public class StartModelCommandHanlder implements ICommandHandler {
 		if (InetAddress.getLocalHost().getHostAddress()
 				.equals(((StartModelCommand) cmd).getLeader())) {
 
-			// i am the supreme leader!
+			// i am the supreme leader!//@A:liiidi!
 			if (Student.getSendOnly() == null) {
 				AVSendOnly as = new AVSendOnly("5010", "224.5.6.7", "10010");
 				Student.setSendOnly(as);
@@ -56,13 +58,14 @@ public class StartModelCommandHanlder implements ICommandHandler {
 				VNCCaptureService vnc = new VNCCaptureService();
 				vnc.startClient(conf);
 				vnc.getViewer().getRecorder().setViewOnly(true);
+				vnc.getViewer().getRecorder().viewerGUI.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				Student.setVncViewer(vnc);
 			} else {
 				Student.getVncViewer().getViewer().getRecorder()
 						.setViewOnly(true);
+				Student.getVncViewer().getViewer().getRecorder().viewerGUI.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				Student.getVncViewer().startClient(conf);
 			}
-
 		}
 	}
 }

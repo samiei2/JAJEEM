@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 
 import com.alee.laf.WebLookAndFeel;
 import com.jajeem.filemanager.InstructorServer;
+import com.jajeem.recorder.design.RecorderServer;
 
 public class StartUp {
 
@@ -26,6 +27,13 @@ public class StartUp {
 			@Override
 			public void run() {
 				new InstructorServer().Startup();
+			}
+		}).start();
+		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				new RecorderServer().Startup();
 			}
 		}).start();
 		

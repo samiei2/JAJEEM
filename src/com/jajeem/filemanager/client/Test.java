@@ -1,5 +1,7 @@
 package com.jajeem.filemanager.client;
 
+import com.jajeem.util.Audio;
+
 public class Test {
 
 	/**
@@ -10,10 +12,11 @@ public class Test {
 			
 			@Override
 			public void run() {
-				new ClientFileServer().Startup();
+				Audio.playSound("util/Ding.aiff");
+				//new ClientFileServer().Startup();
 			}
 		}).start();
-		new ClientFileManagerMain().setVisible(true);
+		//new ClientFileManagerMain().setVisible(true);
 	}
 
 }

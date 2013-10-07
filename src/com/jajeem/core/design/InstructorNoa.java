@@ -60,6 +60,7 @@ import com.alee.extended.list.WebCheckBoxListModel;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.list.DefaultListModel;
@@ -894,10 +895,13 @@ public class InstructorNoa {
 				i18n.getParam("Block Internet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
+		
+		final WebCheckBox sendToAllWebCheckBox = new WebCheckBox();
+		sendToAllWebCheckBox.setText("Send to All");
 
 		GroupPanel InternetPopupContent = new GroupPanel(5, false,
 				internetBlockButton, WebsiteTextField,
-				internetSendWebsiteButton);
+				internetSendWebsiteButton,sendToAllWebCheckBox);
 		InternetPopupContent.setMargin(15);
 
 		internetPopupButton.setContent(InternetPopupContent);
@@ -928,60 +932,80 @@ public class InstructorNoa {
 					}
 				}
 
-				if (((JComponent) card).getClientProperty("viewMode").equals(
-						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
-						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
-
-						try {
-							if (!WebsiteTextField.getText().equals("")) {
-								WebsiteCommand wc = new WebsiteCommand(
-										InetAddress.getLocalHost()
-												.getHostAddress(),
-										selectedStudent, Integer
-												.parseInt(Config
-														.getParam("port")),
-										WebsiteTextField.getText());
-								serverService.send(wc);
-							} else {
-								return;
-							}
-						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
-							e.printStackTrace();
-						}
-					}
-				} else if (((JComponent) card).getClientProperty("viewMode")
-						.equals("groupView")) {
-					if (!groupList.isSelectionEmpty()) {
-						int groupIndex = groupList.getSelectedIndex();
-
-						Group group = groups.get(groupIndex);
-						if (group.getStudentIps().isEmpty()) {
-							return;
+				if(sendToAllWebCheckBox.isSelected()){
+					try {
+						if (!WebsiteTextField.getText().equals("")) {
+							WebsiteCommand wc = new WebsiteCommand(
+									InetAddress.getLocalHost()
+											.getHostAddress(),
+											Config.getParam("broadcastingIp"), 
+											Integer.parseInt(Config.getParam("port")),
+									WebsiteTextField.getText());
+							serverService.send(wc);
 						} else {
+							return;
+						}
+					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
+						e.printStackTrace();
+					}
+				}
+				else{
+					if (((JComponent) card).getClientProperty("viewMode").equals(
+							"thumbView")) {
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
+	
 							try {
 								if (!WebsiteTextField.getText().equals("")) {
 									WebsiteCommand wc = new WebsiteCommand(
 											InetAddress.getLocalHost()
-													.getHostAddress(), "",
-											Integer.parseInt(Config
-													.getParam("port")),
+													.getHostAddress(),
+											selectedStudent, Integer
+													.parseInt(Config
+															.getParam("port")),
 											WebsiteTextField.getText());
-									for (String studentIp : group
-											.getStudentIps()) {
-										wc.setTo(studentIp);
-										serverService.send(wc);
-									}
+									serverService.send(wc);
 								} else {
 									return;
 								}
-
 							} catch (Exception e) {
 								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
+							}
+						}
+					} else if (((JComponent) card).getClientProperty("viewMode")
+							.equals("groupView")) {
+						if (!groupList.isSelectionEmpty()) {
+							int groupIndex = groupList.getSelectedIndex();
+	
+							Group group = groups.get(groupIndex);
+							if (group.getStudentIps().isEmpty()) {
+								return;
+							} else {
+								try {
+									if (!WebsiteTextField.getText().equals("")) {
+										WebsiteCommand wc = new WebsiteCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(), "",
+												Integer.parseInt(Config
+														.getParam("port")),
+												WebsiteTextField.getText());
+										for (String studentIp : group
+												.getStudentIps()) {
+											wc.setTo(studentIp);
+											serverService.send(wc);
+										}
+									} else {
+										return;
+									}
+	
+								} catch (Exception e) {
+									JajeemExcetionHandler.logError(e);
+									e.printStackTrace();
+								}
 							}
 						}
 					}

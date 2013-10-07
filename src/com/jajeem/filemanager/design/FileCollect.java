@@ -21,6 +21,7 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
+import com.jajeem.util.Audio;
 import com.jajeem.util.Config;
 
 import javax.swing.table.DefaultTableModel;
@@ -178,6 +179,7 @@ public class FileCollect extends WebPanel {
 						wbtnDeleteCollectedFiles.setEnabled(true);
 						wbtnOpen.setEnabled(true);
 					}
+					Audio.playSound("util/Ding.aiff");
 				} catch (Exception e) {
 				}
 			}

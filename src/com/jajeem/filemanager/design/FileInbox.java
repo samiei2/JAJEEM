@@ -18,6 +18,7 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
+import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 
@@ -245,6 +246,7 @@ public class FileInbox extends WebPanel {
 					model.setValueAt(evt.getFileName(), webTable.getSelectedRow(), 1);
 					model.setValueAt("Success", webTable.getSelectedRow(), 3);
 					Desktop.getDesktop().open(new File(FileUtil.getInboxPath()));
+					Audio.playSound("util/Ding.aiff");
 				} catch (Exception e) {
 				}
 			}

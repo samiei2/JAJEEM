@@ -12,6 +12,10 @@ public class FileUtil {
 	public static String getInboxPath() {
 		return getMyDocumentsPath() + "iCalabo\\Inbox";
 	}
+	
+	public static String getRecorderPath() {
+		return getMyDocumentsPath() + "iCalabo\\Recorder";
+	}
 
 	public static String getOutboxPath() {
 		return getMyDocumentsPath() + "iCalabo\\Outbox";
