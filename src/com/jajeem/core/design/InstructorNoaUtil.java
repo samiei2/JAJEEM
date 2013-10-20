@@ -292,8 +292,12 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (InstructorNoa.getTransmitter()
-									.isTransmitting() || InstructorNoa.getSendOnly().isTransmitting()) {
+
+							if (InstructorNoa.getTransmitter().isTransmitting()
+									|| (InstructorNoa.getSendOnly()
+											.isTransmitting() && InstructorNoa
+											.getTransmittingType().equals(
+													"intercom"))) {
 								WebOptionPane.showMessageDialog(
 										InstructorNoa.getCenterPanel(),
 										"Another voice or video function is already running, please stop it first",
@@ -301,13 +305,14 @@ public class InstructorNoaUtil {
 										WebOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
-							
+
 							String selectedStudent = getSelectedStudentIp();
 
 							if (selectedStudent != null
 									&& selectedStudent != "") {
 								try {
-									if (!InstructorNoa.isTransmitting()) {
+									if (!InstructorNoa.getSendOnly()
+											.isTransmitting()) {
 										ServerService serv = InstructorNoa
 												.getServerService();
 										StartVideoChatCommand cmd = new StartVideoChatCommand(
@@ -317,7 +322,6 @@ public class InstructorNoaUtil {
 												Integer.parseInt(Config
 														.getParam("port")));
 										serv.send(cmd);
-										InstructorNoa.setTransmitting(true);
 										InstructorNoa
 												.getSendOnly()
 												.setRemoteAddr(
@@ -328,19 +332,24 @@ public class InstructorNoaUtil {
 											@Override
 											public void run() {
 												try {
-													button.setText("Trying...");
+													button.setText(i18n
+															.getParam("Trying..."));
 													button.setEnabled(false);
 													InstructorNoa.getSendOnly()
 															.start("both");
-													button.setText("Stop");
+													button.setText(i18n
+															.getParam("Stop"));
 													button.setEnabled(true);
 													InstructorNoa
 															.setTransmittingType("videoChat");
 												} catch (Exception e) {
-													button.setText("Video Chat");
-													button.setEnabled(true);
-													InstructorNoa
-													.setTransmitting(false);
+													try {
+														button.setText(i18n
+																.getParam("Video Chat"));
+														button.setEnabled(true);
+													} catch (Exception e1) {
+														e1.printStackTrace();
+													}
 												}
 											}
 										});
@@ -350,23 +359,31 @@ public class InstructorNoaUtil {
 												.getRemoteAddr()
 												.getHostAddress()
 												.equals(selectedStudent)) {
-											if (InstructorNoa.getTransmittingType()
+											if (InstructorNoa
+													.getTransmittingType()
 													.equals("videoChat")) {
 												ServerService serv = InstructorNoa
 														.getServerService();
 												StopVideoChatCommand cmd = new StopVideoChatCommand(
-														Inet4Address.getLocalHost()
+														Inet4Address
+																.getLocalHost()
 																.getHostAddress(),
 														Config.getParam("broadcastingIp"),
 														Integer.parseInt(Config
 																.getParam("port")));
 												serv.send(cmd);
-												InstructorNoa.getSendOnly().stop();
+												InstructorNoa.getSendOnly()
+														.stop();
 												button.setText(i18n
 														.getParam("Video Chat"));
-												InstructorNoa
-														.setTransmitting(false);
 											}
+										} else {
+											WebOptionPane.showMessageDialog(
+													InstructorNoa
+															.getCenterPanel(),
+													"Another voice or video function is already running, please stop it first",
+													"Information",
+													WebOptionPane.INFORMATION_MESSAGE);
 										}
 									}
 								} catch (Exception e1) {
@@ -1930,7 +1947,9 @@ public class InstructorNoaUtil {
 							try {
 
 								if (InstructorNoa.getTransmitter()
-										.isTransmitting()) {
+										.isTransmitting()
+										|| InstructorNoa.getSendOnly()
+												.isTransmitting()) {
 									WebOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
