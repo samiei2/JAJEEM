@@ -260,8 +260,8 @@ public class InstructorNoaUtil {
 													.start("audio");
 											InstructorNoa
 													.setTransmittingType("intercom");
-											InstructorNoa
-													.setIntercomText("Stop");
+											InstructorNoa.setIntercomText(i18n
+													.getParam("Stop"));
 										}
 									} catch (Exception e) {
 										JajeemExcetionHandler.logError(e);
@@ -338,7 +338,8 @@ public class InstructorNoaUtil {
 															.getParam("port")));
 											serv.send(cmd);
 											InstructorNoa.getSendOnly().stop();
-											button.setText("Video Chat");
+											button.setText(i18n
+													.getParam("Video Chat"));
 											InstructorNoa
 													.setTransmitting(false);
 										}
@@ -1902,7 +1903,19 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								if (button.getText().equals("Stop")) {
+
+								if (InstructorNoa.getTransmitter()
+										.isTransmitting()) {
+									WebOptionPane.showMessageDialog(
+											InstructorNoa.getCenterPanel(),
+											"Another voice or video function is already running, please stop it first",
+											"Information",
+											WebOptionPane.INFORMATION_MESSAGE);
+									return;
+								}
+
+								if (InstructorNoa.getSendOnly()
+										.isTransmitting()) {
 									String ip = InetAddress.getLocalHost()
 											.getHostAddress().toString();
 									ip = ip.substring(0, ip.lastIndexOf("."))
@@ -1914,17 +1927,9 @@ public class InstructorNoaUtil {
 											Integer.parseInt(Config
 													.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
-
-									if (InstructorNoa.getSendOnly() != null) {
-										InstructorNoa.getSendOnly().stop();
-										InstructorNoa.setSendOnly(null);
-									}
-									button.setText("Call All");
+									InstructorNoa.getSendOnly().stop();
+									button.setText(i18n.getParam("Call All"));
 								} else {
-									String ip = InetAddress.getLocalHost()
-											.getHostAddress().toString();
-									ip = ip.substring(0, ip.lastIndexOf("."))
-											+ ".255";
 									StartCallAllCommand sm = new StartCallAllCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(),
@@ -1932,22 +1937,10 @@ public class InstructorNoaUtil {
 											Integer.parseInt(Config
 													.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
-
-									if (InstructorNoa.getSendOnly() == null) {
-										AVSendOnly as;
-										ip = ip.substring(0,
-												ip.lastIndexOf("."))
-												+ ".255";
-										as = new AVSendOnly("5010", ip, "10010");
-										InstructorNoa.setSendOnly(as);
-										as.start("audio");
-										button.setText("Stop");
-									} else {
-										InstructorNoa.getSendOnly().start(
-												"audio");
-										button.setText("Stop");
-									}
+									InstructorNoa.getSendOnly().start("audio");
+									button.setText(i18n.getParam("Stop"));
 								}
+
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
