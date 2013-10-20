@@ -182,6 +182,15 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent arg0)
 								throws NumberFormatException {
 
+							if (InstructorNoa.getSendOnly().isTransmitting()) {
+								WebOptionPane.showMessageDialog(
+										InstructorNoa.getCenterPanel(),
+										"Another voice or video function is already running, please stop it first",
+										"Information",
+										WebOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+
 							Component card = null;
 							for (Component comp : InstructorNoa
 									.getCenterPanel().getComponents()) {
@@ -285,7 +294,8 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent e) {
 							String selectedStudent = getSelectedStudentIp();
 
-							if (selectedStudent != null && selectedStudent != "") {
+							if (selectedStudent != null
+									&& selectedStudent != "") {
 								try {
 									if (!InstructorNoa.isTransmitting()) {
 										ServerService serv = InstructorNoa
@@ -304,14 +314,14 @@ public class InstructorNoaUtil {
 														InetAddress
 																.getByName(selectedStudent));
 										_videoChat = new Thread(new Runnable() {
-											
+
 											@Override
 											public void run() {
 												try {
 													button.setText("Trying...");
 													button.setEnabled(false);
-													InstructorNoa.getSendOnly().start(
-															"both");
+													InstructorNoa.getSendOnly()
+															.start("both");
 													button.setText("Stop");
 													button.setEnabled(true);
 													InstructorNoa

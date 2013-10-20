@@ -28,6 +28,7 @@ public class VNCCaptureService implements ICaptureService {
 	@Override
 	public void stopClient() {
 		viewer.Stop();
+		viewer.destroy();
 	}
 	
 	public void startClientDialog() {

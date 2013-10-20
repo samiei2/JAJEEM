@@ -67,14 +67,14 @@ public class InstructorLogin extends JFrame {
 							.getCanonicalName());
 
 					Thread loading = new Thread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							final LoadingDialog load = new LoadingDialog();
 							load.setVisible(true);
 							Timer timer = new Timer();
 							timer.schedule(new TimerTask() {
-								
+
 								@Override
 								public void run() {
 									load.setVisible(false);
@@ -86,17 +86,16 @@ public class InstructorLogin extends JFrame {
 					new StartUp();
 					frame = new InstructorLogin();
 					frame.pack();
-					
+
 					Timer timer = new Timer();
 					timer.schedule(new TimerTask() {
-						
+
 						@Override
 						public void run() {
 							frame.setVisible(true);
 						}
 					}, 5000);
-					
-					
+
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
@@ -132,7 +131,7 @@ public class InstructorLogin extends JFrame {
 		progressBarFrame.setAlwaysOnTop(true);
 		progressBarFrame.setVisible(true);
 
-//		LicenseValidator.ActiveValidateLicense();
+		// LicenseValidator.ActiveValidateLicense();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400, 190);
