@@ -14,6 +14,7 @@ import java.util.*;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.jitsi.service.libjitsi.*;
 import org.jitsi.service.neomedia.*;
@@ -21,6 +22,7 @@ import org.jitsi.service.neomedia.device.*;
 import org.jitsi.service.neomedia.format.*;
 
 import com.alee.laf.rootpane.WebFrame;
+import com.jajeem.exception.VideoConnectionException;
 
 /**
  * Implements an example application in the fashion of JMF's AVTransmit2 example
@@ -237,9 +239,14 @@ public class AVSendOnly {
 					if (mediaStream.getName().equals("video")) {
 						Component cmp = ((VideoMediaStream) mediaStream)
 								.getLocalVisualComponent();
+						int i = 0;
 						while (cmp == null) {
 							cmp = ((VideoMediaStream) mediaStream)
 									.getLocalVisualComponent();
+							Thread.sleep(1000);
+							if(i==10) ///tries for 30 * 1000 miliseconds = 30 seconds
+								break;
+							i++;
 						}
 						try {
 							if (cmp != null) {
@@ -251,8 +258,15 @@ public class AVSendOnly {
 									frame.setVisible(true);
 								}
 							}
-						} catch (Exception e) {
-
+							else{
+								JOptionPane.showMessageDialog(null, "Could not start webchat,the other system is probably is not responding!");
+								throw new VideoConnectionException("Video Error");
+							}
+						}catch (Exception e) {
+							if(e instanceof VideoConnectionException)
+								throw new VideoConnectionException("Video Error");
+							else
+								e.printStackTrace();
 						}
 					}
 				}
