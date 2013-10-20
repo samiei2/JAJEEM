@@ -319,6 +319,8 @@ public class InstructorNoaUtil {
 												} catch (Exception e) {
 													button.setText("Video Chat");
 													button.setEnabled(true);
+													InstructorNoa
+													.setTransmitting(false);
 												}
 											}
 										});
