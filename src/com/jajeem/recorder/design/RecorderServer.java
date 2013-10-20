@@ -128,6 +128,7 @@ public class RecorderServer {
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,RecorderServer.class);
+			WebOptionPane.showMessageDialog(null, "An error has occured in recorder server.Recording services might not work correctly,please restart the application!");
 		}
 	}
 	

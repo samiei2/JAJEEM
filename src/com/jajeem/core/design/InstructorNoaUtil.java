@@ -292,6 +292,16 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							if (InstructorNoa.getTransmitter()
+									.isTransmitting() || InstructorNoa.getSendOnly().isTransmitting()) {
+								WebOptionPane.showMessageDialog(
+										InstructorNoa.getCenterPanel(),
+										"Another voice or video function is already running, please stop it first",
+										"Information",
+										WebOptionPane.INFORMATION_MESSAGE);
+								return;
+							}
+							
 							String selectedStudent = getSelectedStudentIp();
 
 							if (selectedStudent != null
@@ -329,27 +339,34 @@ public class InstructorNoaUtil {
 												} catch (Exception e) {
 													button.setText("Video Chat");
 													button.setEnabled(true);
+													InstructorNoa
+													.setTransmitting(false);
 												}
 											}
 										});
 										_videoChat.start();
 									} else {
-										if (InstructorNoa.getTransmittingType()
-												.equals("videoChat")) {
-											ServerService serv = InstructorNoa
-													.getServerService();
-											StopVideoChatCommand cmd = new StopVideoChatCommand(
-													Inet4Address.getLocalHost()
-															.getHostAddress(),
-													Config.getParam("broadcastingIp"),
-													Integer.parseInt(Config
-															.getParam("port")));
-											serv.send(cmd);
-											InstructorNoa.getSendOnly().stop();
-											button.setText(i18n
-													.getParam("Video Chat"));
-											InstructorNoa
-													.setTransmitting(false);
+										if (InstructorNoa.getSendOnly()
+												.getRemoteAddr()
+												.getHostAddress()
+												.equals(selectedStudent)) {
+											if (InstructorNoa.getTransmittingType()
+													.equals("videoChat")) {
+												ServerService serv = InstructorNoa
+														.getServerService();
+												StopVideoChatCommand cmd = new StopVideoChatCommand(
+														Inet4Address.getLocalHost()
+																.getHostAddress(),
+														Config.getParam("broadcastingIp"),
+														Integer.parseInt(Config
+																.getParam("port")));
+												serv.send(cmd);
+												InstructorNoa.getSendOnly().stop();
+												button.setText(i18n
+														.getParam("Video Chat"));
+												InstructorNoa
+														.setTransmitting(false);
+											}
 										}
 									}
 								} catch (Exception e1) {
