@@ -200,19 +200,12 @@ public class InstructorNoaUtil {
 											.getSelectedFrame()
 											.getClientProperty("ip");
 									try {
-										// "--remote-host=127.0.0.1 --remote-port-base=10000"
-
-										// if some one is selected and we were
-										// talking to him,
-										// stop transmitting and sent a stop
-										// command
-										// to him
 										if (InstructorNoa.getTransmitter()
-												.getRemoteAddr()
-												.getHostAddress()
-												.equals(selectedStudent)) {
+												.isTransmitting()) {
 											if (InstructorNoa.getTransmitter()
-													.isTransmitting()) {
+													.getRemoteAddr()
+													.getHostAddress()
+													.equals(selectedStudent)) {
 												InstructorNoa.getTransmitter()
 														.stop();
 												StopIntercomCommand si;
@@ -240,212 +233,43 @@ public class InstructorNoaUtil {
 													e.printStackTrace();
 												}
 											} else {
-												StartIntercomCommand si = new StartIntercomCommand(
-														InetAddress
-																.getLocalHost()
-																.getHostAddress(),
-														selectedStudent,
-														Integer.parseInt(Config
-																.getParam("port")));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-
-												InstructorNoa
-														.getTransmitter()
-														.setRemoteAddr(
-																InetAddress
-																		.getByName(selectedStudent));
-												InstructorNoa.getTransmitter()
-														.start("audio");
-												InstructorNoa
-														.setTransmittingType("intercom");
-												InstructorNoa
-														.setIntercomText("Stop");
-											}
-
-										} else {
-											if (InstructorNoa.getTransmitter()
-													.isTransmitting()) {
-												InstructorNoa.getTransmitter()
-														.stop();
-												StopIntercomCommand si;
-												si = new StopIntercomCommand(
-														InetAddress
-																.getLocalHost()
-																.getHostAddress(),
+												WebOptionPane.showMessageDialog(
 														InstructorNoa
-																.getTransmitter()
-																.getRemoteAddr()
-																.getHostAddress(),
-														Integer.parseInt(Config
-																.getParam("port")));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-												StartIntercomCommand startI = new StartIntercomCommand(
-														InetAddress
-																.getLocalHost()
-																.getHostAddress(),
-														selectedStudent,
-														Integer.parseInt(Config
-																.getParam("port")));
-												InstructorNoa
-														.getServerService()
-														.send(startI);
-
-												InstructorNoa
-														.getTransmitter()
-														.setRemoteAddr(
-																InetAddress
-																		.getByName(selectedStudent));
-												InstructorNoa.getTransmitter()
-														.start("audio");
-												InstructorNoa
-														.setTransmittingType("intercom");
-												InstructorNoa.setIntercomText(i18n
-														.getParam("Stop"));
-
-											} else {
-												// Send start receiver to
-												// selected
-												// student and start transmitter
-												StartIntercomCommand si = new StartIntercomCommand(
-														InetAddress
-																.getLocalHost()
-																.getHostAddress(),
-														selectedStudent,
-														Integer.parseInt(Config
-																.getParam("port")));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-
-												InstructorNoa
-														.getTransmitter()
-														.setRemoteAddr(
-																InetAddress
-																		.getByName(selectedStudent));
-												InstructorNoa.getTransmitter()
-														.start("audio");
-												InstructorNoa
-														.setTransmittingType("intercom");
-												InstructorNoa.setIntercomText(i18n
-														.getParam("Stop"));
+																.getCenterPanel(),
+														"Another voice or video function is already running, please stop it first",
+														"Information",
+														WebOptionPane.INFORMATION_MESSAGE);
 											}
-										}
+										} else {
+											StartIntercomCommand si = new StartIntercomCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													selectedStudent,
+													Integer.parseInt(Config
+															.getParam("port")));
+											InstructorNoa.getServerService()
+													.send(si);
 
+											InstructorNoa
+													.getTransmitter()
+													.setRemoteAddr(
+															InetAddress
+																	.getByName(selectedStudent));
+											InstructorNoa.getTransmitter()
+													.start("audio");
+											InstructorNoa
+													.setTransmittingType("intercom");
+											InstructorNoa
+													.setIntercomText("Stop");
+										}
 									} catch (Exception e) {
 										JajeemExcetionHandler.logError(e);
 										e.printStackTrace();
 									}
-
-								} else {
-									// if no students selected and is
-									// transmitting
-									// to someone
-									if (InstructorNoa.getTransmitter() != null)
-										if (InstructorNoa.getTransmitter()
-												.isTransmitting()) {
-
-											// Stop transmitting to prev student
-											// and
-											// sent stop
-											// command to him
-											InstructorNoa.getTransmitter()
-													.stop();
-											StopIntercomCommand si;
-											try {
-												si = new StopIntercomCommand(
-														InetAddress
-																.getLocalHost()
-																.getHostAddress(),
-														InstructorNoa
-																.getTransmitter()
-																.getRemoteAddr()
-																.getHostAddress(),
-														Integer.parseInt(Config
-																.getParam("port")));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-												InstructorNoa
-														.setTransmittingType("");
-
-												InstructorNoa.setIntercomText(i18n
-														.getParam("Intercom"));
-											} catch (Exception e) {
-												JajeemExcetionHandler
-														.logError(e);
-												e.printStackTrace();
-											}
-										} else {
-											try {
-												InstructorNoa.setIntercomText(i18n
-														.getParam("Intercom"));
-											} catch (Exception e) {
-												JajeemExcetionHandler
-														.logError(e);
-												e.printStackTrace();
-											}
-											return;
-										}
 								}
 							} else if (((JComponent) card).getClientProperty(
 									"viewMode").equals("groupView")) {
-								if (!InstructorNoa.getGroupList()
-										.isSelectionEmpty()) {
-									int groupIndex = InstructorNoa
-											.getGroupList().getSelectedIndex();
-
-									Group group = InstructorNoa.getGroups()
-											.get(groupIndex);
-									if (group.getStudentIps().isEmpty()) {
-										return;
-									} else {
-										if (group.getStudentIps().size() != 2) {
-											WebOptionPane.showMessageDialog(
-													InstructorNoa
-															.getCenterPanel(),
-													"Intercom is only available for groups with two students",
-													"Information",
-													WebOptionPane.INFORMATION_MESSAGE);
-											return;
-										} else {
-											StartIntercomCommand si;
-											try {
-												si = new StartIntercomCommand(
-														"",
-														"",
-														Integer.parseInt(Config
-																.getParam("port")));
-
-												// from student 0 to 1
-												si.setFrom(group
-														.getStudentIps().get(0));
-												si.setTo(group.getStudentIps()
-														.get(1));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-
-												// from student 1 to 0
-												si.setFrom(group
-														.getStudentIps().get(1));
-												si.setTo(group.getStudentIps()
-														.get(0));
-												InstructorNoa
-														.getServerService()
-														.send(si);
-
-											} catch (Exception e) {
-												JajeemExcetionHandler
-														.logError(e);
-												e.printStackTrace();
-											}
-										}
-									}
-								}
+								return;
 							}
 						}
 
@@ -767,17 +591,21 @@ public class InstructorNoaUtil {
 								}
 							} else {
 								String ip = getSelectedStudentIp();
-								if(ip != "" && ip !=null){
+								if (ip != "" && ip != null) {
 									FileManagerMain main = new FileManagerMain();
 									main.setReceivingIps(new ArrayList<String>(
 											Arrays.asList(ip)));
 									main.setVisible(true);
-								}
-								else{
+								} else {
 									FileManagerMain main = new FileManagerMain();
 									ArrayList<String> ips = new ArrayList<>();
-									for (int i = 0; i < InstructorNoa.getDesktopPane().getAllFrames().length; i++) {
-										String sip = InstructorNoa.getDesktopPane().getAllFrames()[i].getClientProperty("ip").toString();
+									for (int i = 0; i < InstructorNoa
+											.getDesktopPane().getAllFrames().length; i++) {
+										String sip = InstructorNoa
+												.getDesktopPane()
+												.getAllFrames()[i]
+												.getClientProperty("ip")
+												.toString();
 										ips.add(sip);
 									}
 									main.setReceivingIps(ips);
@@ -1640,47 +1468,48 @@ public class InstructorNoaUtil {
 
 						// get start menu path from registry and add them to
 						// program starter list
-//						String pathToStartMenu = WinRegistry
-//								.readString(
-//										WinRegistry.HKEY_LOCAL_MACHINE,
-//										"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
-//										"Common Start Menu")
-//								+ "\\Programs";
-//
-//						FileUtil fileUtil = new FileUtil();
-//						final File[] tempfileList = fileUtil
-//								.finder(pathToStartMenu);
-//						final ArrayList<File> listOfAllLinks = new ArrayList<>();
-//						for (int i = 0; i < tempfileList.length; i++) {
-//							if (tempfileList[i].isDirectory())
-//								listOfAllLinks
-//										.addAll(getPath(getDirectoryContent(tempfileList[i])));
-//							else
-//								listOfAllLinks.add(tempfileList[i]);
-//						}
-//
-//						Collections.sort(listOfAllLinks);
-//
+						// String pathToStartMenu = WinRegistry
+						// .readString(
+						// WinRegistry.HKEY_LOCAL_MACHINE,
+						// "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
+						// "Common Start Menu")
+						// + "\\Programs";
+						//
+						// FileUtil fileUtil = new FileUtil();
+						// final File[] tempfileList = fileUtil
+						// .finder(pathToStartMenu);
+						// final ArrayList<File> listOfAllLinks = new
+						// ArrayList<>();
+						// for (int i = 0; i < tempfileList.length; i++) {
+						// if (tempfileList[i].isDirectory())
+						// listOfAllLinks
+						// .addAll(getPath(getDirectoryContent(tempfileList[i])));
+						// else
+						// listOfAllLinks.add(tempfileList[i]);
+						// }
+						//
+						// Collections.sort(listOfAllLinks);
+						//
 						final DefaultListModel model = new DefaultListModel();
-//						for (int i = 0; i < listOfAllLinks.size(); i++) {
-//							File file = listOfAllLinks.get(i);
-//							if (file.getName().indexOf(".") != -1) {
-//								String extension = file.getName().substring(
-//										file.getName().indexOf("."));
-//								if (extension.equals(".lnk")) {
-//									fileListModel.add(file.getName().substring(
-//											0, file.getName().length() - 4));
-//									model.addElement(file.getParentFile()
-//											.getName()
-//											+ "\\"
-//											+ file.getName()
-//													.substring(
-//															0,
-//															file.getName()
-//																	.length() - 4));
-//								}
-//							}
-//						}
+						// for (int i = 0; i < listOfAllLinks.size(); i++) {
+						// File file = listOfAllLinks.get(i);
+						// if (file.getName().indexOf(".") != -1) {
+						// String extension = file.getName().substring(
+						// file.getName().indexOf("."));
+						// if (extension.equals(".lnk")) {
+						// fileListModel.add(file.getName().substring(
+						// 0, file.getName().length() - 4));
+						// model.addElement(file.getParentFile()
+						// .getName()
+						// + "\\"
+						// + file.getName()
+						// .substring(
+						// 0,
+						// file.getName()
+						// .length() - 4));
+						// }
+						// }
+						// }
 
 						final WebList programsList = new WebList(model);
 						programsList.setVisibleRowCount(6);
@@ -1695,7 +1524,8 @@ public class InstructorNoaUtil {
 						final int sizeOfProgramModel = model.getSize();
 
 						chooseAppButton.addActionListener(new ActionListener() {
-							private ProgramList fileChooser = new ProgramList(model);
+							private ProgramList fileChooser = new ProgramList(
+									model);
 
 							public void actionPerformed(ActionEvent e) {
 								fileChooser.setVisible(true);
@@ -1707,7 +1537,7 @@ public class InstructorNoaUtil {
 
 						GroupPanel programPopupContent = new GroupPanel(5,
 								false, new WebScrollPane(programsList),
-								runButton,chooseAppButton);
+								runButton, chooseAppButton);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
@@ -2212,35 +2042,35 @@ public class InstructorNoaUtil {
 		internalFrame.open();
 
 		internalFrame.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				//JOptionPane.showMessageDialog(null, "not");
+				// JOptionPane.showMessageDialog(null, "not");
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				internalFrameMouseClicked(e);
 			}
 		});
-		
+
 		internalFrame.addInternalFrameListener(new InternalFrameListener() {
 
 			@Override
@@ -2319,67 +2149,69 @@ public class InstructorNoaUtil {
 				.getComponent(0)).getComponent(1)).getComponent(0))
 				.getComponent(0)).setComponentPopupMenu(popup);
 
-		((JComponent) internalFrame.getComponent(1)).addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-//				JOptionPane.showMessageDialog(null, "mcv");
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				internalFrameMouseClicked(e);
-			}
-		});
-		
-		((ScreenPlayer)((JViewport)((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-				.getComponent(0)).getComponent(1)).getComponent(0))
-				.getComponent(0)).getComponent(0)).getComponent(0)).addMouseListener(new MouseListener() {
-					
+		((JComponent) internalFrame.getComponent(1))
+				.addMouseListener(new MouseListener() {
+
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						//JOptionPane.showMessageDialog(null, "not");
+						// TODO Auto-generated method stub
+
 					}
-					
+
 					@Override
 					public void mousePressed(MouseEvent e) {
-						
+						// TODO Auto-generated method stub
+
 					}
-					
+
 					@Override
 					public void mouseExited(MouseEvent e) {
-						//JOptionPane.showMessageDialog(null, "not");
+						// TODO Auto-generated method stub
+
 					}
-					
+
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						//JOptionPane.showMessageDialog(null, "not");
+						// JOptionPane.showMessageDialog(null, "mcv");
 					}
-					
+
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						internalFrameMouseClicked(e);
 					}
 				});
-		
+
+		((ScreenPlayer) ((JViewport) ((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+				.getComponent(0)).getComponent(1)).getComponent(0))
+				.getComponent(0)).getComponent(0)).getComponent(0))
+				.addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// JOptionPane.showMessageDialog(null, "not");
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// JOptionPane.showMessageDialog(null, "not");
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// JOptionPane.showMessageDialog(null, "not");
+					}
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						internalFrameMouseClicked(e);
+					}
+				});
+
 		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
 				"No Group");
 		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
@@ -2593,24 +2425,22 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void internalFrameMouseClicked(MouseEvent e) {
-		if(InstructorNoa.getDesktopPane()
-				.getSelectedFrame().getClientProperty("isselected").equals(false))
-		{
-			InstructorNoa.getDesktopPane()
-			.getSelectedFrame().putClientProperty("isselected", true);
+		if (InstructorNoa.getDesktopPane().getSelectedFrame()
+				.getClientProperty("isselected").equals(false)) {
+			InstructorNoa.getDesktopPane().getSelectedFrame()
+					.putClientProperty("isselected", true);
 			try {
-				InstructorNoa.getDesktopPane()
-				.getSelectedFrame().setSelected(true);
+				InstructorNoa.getDesktopPane().getSelectedFrame()
+						.setSelected(true);
 			} catch (PropertyVetoException ex) {
 				ex.printStackTrace();
 			}
-		}
-		else{
-			InstructorNoa.getDesktopPane()
-			.getSelectedFrame().putClientProperty("isselected", false);
+		} else {
+			InstructorNoa.getDesktopPane().getSelectedFrame()
+					.putClientProperty("isselected", false);
 			try {
-				InstructorNoa.getDesktopPane()
-				.getSelectedFrame().setSelected(false);
+				InstructorNoa.getDesktopPane().getSelectedFrame()
+						.setSelected(false);
 			} catch (PropertyVetoException ex) {
 				ex.printStackTrace();
 			}
@@ -2948,8 +2778,7 @@ public class InstructorNoaUtil {
 			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 				selectedStudent = (String) InstructorNoa.getDesktopPane()
 						.getSelectedFrame().getClientProperty("ip");
-			}
-			else
+			} else
 				return "";
 		}
 
