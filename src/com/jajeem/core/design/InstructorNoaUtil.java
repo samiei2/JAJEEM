@@ -120,6 +120,7 @@ public class InstructorNoaUtil {
 	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[15];
 	static Survey_Main[] groupsSurveyWindows = new Survey_Main[15];
 	public static ArrayList<String> recordingsList = new ArrayList<>();
+	private Thread _videoChat;
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -284,7 +285,7 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent e) {
 							String selectedStudent = getSelectedStudentIp();
 
-							if (selectedStudent != null) {
+							if (selectedStudent != null && selectedStudent != "") {
 								try {
 									if (!InstructorNoa.isTransmitting()) {
 										ServerService serv = InstructorNoa
@@ -302,12 +303,26 @@ public class InstructorNoaUtil {
 												.setRemoteAddr(
 														InetAddress
 																.getByName(selectedStudent));
-										InstructorNoa.getSendOnly().start(
-												"both");
-										button.setText(i18n.getParam("Stop"));
-										InstructorNoa
-												.setTransmittingType("videoChat");
-
+										_videoChat = new Thread(new Runnable() {
+											
+											@Override
+											public void run() {
+												try {
+													button.setText("Trying...");
+													button.setEnabled(false);
+													InstructorNoa.getSendOnly().start(
+															"both");
+													button.setText("Stop");
+													button.setEnabled(true);
+													InstructorNoa
+															.setTransmittingType("videoChat");
+												} catch (Exception e) {
+													button.setText("Video Chat");
+													button.setEnabled(true);
+												}
+											}
+										});
+										_videoChat.start();
 									} else {
 										if (InstructorNoa.getTransmittingType()
 												.equals("videoChat")) {
