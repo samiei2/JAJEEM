@@ -126,7 +126,7 @@ public class InstructorNoa {
 	ArrayList<com.jajeem.core.model.Student> reportStudentList = new ArrayList<>();
 
 	WebCheckBoxListModel programModel = new WebCheckBoxListModel();
-	
+
 	static WebPanel rightButtonPanel;
 
 	/**
@@ -164,7 +164,10 @@ public class InstructorNoa {
 			// Start LibJitsi for first time
 			LibJitsi.start();
 			transmitter = new AVTransmit2("5000", "", "10000");
-			sendOnly = new AVSendOnly("5010", "", "10010");
+
+			String ip = InetAddress.getLocalHost().getHostAddress().toString();
+			ip = ip.substring(0, ip.lastIndexOf(".")) + ".255";
+			sendOnly = new AVSendOnly("5010", ip, "10010");
 
 			InstructorNoaUtil.networkSetup();
 
@@ -548,48 +551,47 @@ public class InstructorNoa {
 		// create the scrollable desktop instance and add it to the JFrame
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
 		setDesktopPaneScroll(scrollableDesktop);
-		
-		
-		///Armin codes Clean Up actions and move to proper place
+
+		// /Armin codes Clean Up actions and move to proper place
 		WebPopupMenu popup = new WebPopupMenu();
 		WebMenuItem menuItemThumbView = new WebMenuItem("Thumbnail View");
 		WebMenuItem menuItemGroupView = new WebMenuItem("Group View");
 		WebMenuItem menuItemListView = new WebMenuItem("List View");
-		
+
 		popup.add(menuItemThumbView);
 		popup.add(menuItemGroupView);
 		popup.add(menuItemListView);
-		
-		scrollableDesktop.getDesktopMediator().getDesktopScrollpane().getDesktopPane().setComponentPopupMenu(popup);
-//		getGroupList().setComponentPopupMenu(popup);
+
+		scrollableDesktop.getDesktopMediator().getDesktopScrollpane()
+				.getDesktopPane().setComponentPopupMenu(popup);
+		// getGroupList().setComponentPopupMenu(popup);
 		getStudentListTable().setComponentPopupMenu(popup);
-		
+
 		menuItemThumbView.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ThumbViewActionListener();
 			}
 		});
-		
+
 		menuItemGroupView.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GroupViewActionListener();
 			}
 		});
-		
+
 		menuItemListView.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListViewActionListener();
 			}
 		});
-		///////////////////////////////////////////////////////////////////
-		
-		
+		// /////////////////////////////////////////////////////////////////
+
 		// desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
 		// GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
@@ -895,13 +897,13 @@ public class InstructorNoa {
 				i18n.getParam("Block Internet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
-		
+
 		final WebCheckBox sendToAllWebCheckBox = new WebCheckBox();
 		sendToAllWebCheckBox.setText("Send to All");
 
 		GroupPanel InternetPopupContent = new GroupPanel(5, false,
 				internetBlockButton, WebsiteTextField,
-				internetSendWebsiteButton,sendToAllWebCheckBox);
+				internetSendWebsiteButton, sendToAllWebCheckBox);
 		InternetPopupContent.setMargin(15);
 
 		internetPopupButton.setContent(InternetPopupContent);
@@ -932,14 +934,13 @@ public class InstructorNoa {
 					}
 				}
 
-				if(sendToAllWebCheckBox.isSelected()){
+				if (sendToAllWebCheckBox.isSelected()) {
 					try {
 						if (!WebsiteTextField.getText().equals("")) {
-							WebsiteCommand wc = new WebsiteCommand(
-									InetAddress.getLocalHost()
-											.getHostAddress(),
-											Config.getParam("broadcastingIp"), 
-											Integer.parseInt(Config.getParam("port")),
+							WebsiteCommand wc = new WebsiteCommand(InetAddress
+									.getLocalHost().getHostAddress(), Config
+									.getParam("broadcastingIp"), Integer
+									.parseInt(Config.getParam("port")),
 									WebsiteTextField.getText());
 							serverService.send(wc);
 						} else {
@@ -949,15 +950,14 @@ public class InstructorNoa {
 						JajeemExcetionHandler.logError(e);
 						e.printStackTrace();
 					}
-				}
-				else{
-					if (((JComponent) card).getClientProperty("viewMode").equals(
-							"thumbView")) {
+				} else {
+					if (((JComponent) card).getClientProperty("viewMode")
+							.equals("thumbView")) {
 						if (getDesktopPane().getSelectedFrame() != null) {
 							String selectedStudent = "";
 							selectedStudent = (String) getDesktopPane()
 									.getSelectedFrame().getClientProperty("ip");
-	
+
 							try {
 								if (!WebsiteTextField.getText().equals("")) {
 									WebsiteCommand wc = new WebsiteCommand(
@@ -976,11 +976,11 @@ public class InstructorNoa {
 								e.printStackTrace();
 							}
 						}
-					} else if (((JComponent) card).getClientProperty("viewMode")
-							.equals("groupView")) {
+					} else if (((JComponent) card)
+							.getClientProperty("viewMode").equals("groupView")) {
 						if (!groupList.isSelectionEmpty()) {
 							int groupIndex = groupList.getSelectedIndex();
-	
+
 							Group group = groups.get(groupIndex);
 							if (group.getStudentIps().isEmpty()) {
 								return;
@@ -1001,7 +1001,7 @@ public class InstructorNoa {
 									} else {
 										return;
 									}
-	
+
 								} catch (Exception e) {
 									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
@@ -1077,7 +1077,7 @@ public class InstructorNoa {
 		});
 
 		WebButton programButton = new WebButton();
-		
+
 		programButton.setIconTextGap(30);
 		programButton.putClientProperty("key", "program");
 		programButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1549,18 +1549,17 @@ public class InstructorNoa {
 		LockCommand lockCommand;
 		if (getDesktopPane().getSelectedFrame() != null) {
 			String selectedStudent = "";
-			selectedStudent = (String) getDesktopPane()
-					.getSelectedFrame().getClientProperty("ip");
+			selectedStudent = (String) getDesktopPane().getSelectedFrame()
+					.getClientProperty("ip");
 			try {
-				lockCommand = new LockCommand(InetAddress
-						.getLocalHost().getHostAddress(),
-						selectedStudent, Integer.parseInt(Config
-								.getParam("port")));
+				lockCommand = new LockCommand(InetAddress.getLocalHost()
+						.getHostAddress(), selectedStudent,
+						Integer.parseInt(Config.getParam("port")));
 				serverService.send(lockCommand);
 				if (!(boolean) getDesktopPane().getSelectedFrame()
 						.getClientProperty("lock")) {
-					getDesktopPane().getSelectedFrame()
-							.putClientProperty("lock", true);
+					getDesktopPane().getSelectedFrame().putClientProperty(
+							"lock", true);
 					getDesktopPane()
 							.getSelectedFrame()
 							.setFrameIcon(
@@ -1569,10 +1568,9 @@ public class InstructorNoa {
 													.getResourceAsStream("/icons/noa/lock.png"))));
 
 				} else {
-					getDesktopPane().getSelectedFrame()
-							.putClientProperty("lock", false);
-					if (getDesktopPane().getSelectedFrame()
-							.isSelected()) {
+					getDesktopPane().getSelectedFrame().putClientProperty(
+							"lock", false);
+					if (getDesktopPane().getSelectedFrame().isSelected()) {
 						getDesktopPane()
 								.getSelectedFrame()
 								.setFrameIcon(
@@ -1598,20 +1596,17 @@ public class InstructorNoa {
 	}
 
 	protected void ListViewActionListener() {
-		CardLayout cl = (CardLayout) InstructorNoa
-				.getCenterPanel().getLayout();
+		CardLayout cl = (CardLayout) InstructorNoa.getCenterPanel().getLayout();
 		cl.show(centerPanel, "listView");
 	}
 
 	protected void GroupViewActionListener() {
-		CardLayout cl = (CardLayout) InstructorNoa
-				.getCenterPanel().getLayout();
+		CardLayout cl = (CardLayout) InstructorNoa.getCenterPanel().getLayout();
 		cl.show(centerPanel, "groupView");
 	}
 
 	protected void ThumbViewActionListener() {
-		CardLayout cl = (CardLayout) InstructorNoa
-				.getCenterPanel().getLayout();
+		CardLayout cl = (CardLayout) InstructorNoa.getCenterPanel().getLayout();
 		cl.show(centerPanel, "thumbsView");
 	}
 
@@ -1767,9 +1762,8 @@ public class InstructorNoa {
 		}
 		return ip;
 	}
-	
-	public static void changeModelButtonText(String text)
-	{
+
+	public static void changeModelButtonText(String text) {
 		String key = "";
 
 		for (Component c : rightButtonPanel.getComponents()) {
