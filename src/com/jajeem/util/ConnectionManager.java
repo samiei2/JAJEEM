@@ -12,6 +12,8 @@ import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
+import com.alee.laf.optionpane.WebOptionPane;
+
 /**
  *
  * @author Armin
@@ -46,7 +48,13 @@ public class ConnectionManager implements IConnectionManager {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+       
+        Connection con;
+        try {
+        	con = dataSource.getConnection();
+		} catch (Exception e) {
+			WebOptionPane.showMessageDialog(null, e.getMessage());
+		}
        return dataSource.getConnection();
     }
     

@@ -10,6 +10,7 @@ import java.net.Socket;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -166,6 +167,7 @@ public class InstructorServer {
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);
+			WebOptionPane.showMessageDialog(null, "An error has occured in file server.File services might not work correctly,please restart the application!");
 		}
 	}
 	
@@ -181,6 +183,7 @@ public class InstructorServer {
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e,InstructorServer.class);
+			WebOptionPane.showMessageDialog(null, "An error has occured in file server.File services might not work correctly,please restart the application!");
 		}
 	}
 	
