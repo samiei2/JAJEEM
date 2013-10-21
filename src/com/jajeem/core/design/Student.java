@@ -397,6 +397,7 @@ public class Student {
 				.setIcon(new ImageIcon(
 						ImageIO.read(Student.class
 								.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
+		intercomButton.setEnabled(false);
 
 	}
 	
@@ -405,7 +406,7 @@ public class Student {
 				.setIcon(new ImageIcon(
 						ImageIO.read(Student.class
 								.getResourceAsStream(("/icons/applications_style1/call_teacher.png")))));
-
+		intercomButton.setEnabled(true);
 	}
 
 	public static JFrame getFrmJajeemProject() {
