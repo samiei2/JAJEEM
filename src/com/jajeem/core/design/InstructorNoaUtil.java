@@ -2390,8 +2390,7 @@ public class InstructorNoaUtil {
 		WebMenu menuItemActions = new WebMenu("Actions");
 		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
 		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
-		WebMenuItem menuItemConversations = new WebMenuItem(
-				"Conversation With : ");
+		final WebMenu menuItemConversations = new WebMenu("Conversation With : ");
 		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
 		WebMenuItem menuItemChat = new WebMenuItem("Chat");
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
@@ -2413,7 +2412,27 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				JOptionPane.showMessageDialog(null, "hey");
+				menuItemConversations.removeAll();
+				WebMenuItem tempItem;
+				for (int i = 0; i < InstructorNoa.getDesktopPane().getAllFrames().length; i++) {
+					if(!InstructorNoa.getDesktopPane().getAllFrames()[i]
+							.equals(InstructorNoa.getDesktopPane().getSelectedFrame())){
+						tempItem = new WebMenuItem(
+							InstructorNoa.getDesktopPane().getAllFrames()[i]
+									.getClientProperty("username").toString());
+						final int index = i;
+						tempItem.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								StartIntercomePair(
+										InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString(),
+										InstructorNoa.getDesktopPane().getAllFrames()[index].getClientProperty("ip").toString());
+							}
+						});
+						menuItemConversations.add(tempItem);
+					}
+				}
+				
 			}
 		});
 		menuItemConversations.addActionListener(new ActionListener() {
@@ -2944,5 +2963,10 @@ public class InstructorNoaUtil {
 
 		return selectedStudent;
 	}
-
+	
+	private static void StartIntercomePair(
+			String ipFrom,
+			String ipTo) {
+		
+	}
 }
