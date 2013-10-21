@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1842,10 +1843,14 @@ public class InstructorNoaUtil {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
 								int index = programsList.getSelectedIndex();
-
-								String pair = model.getElementAt(index)
-										.toString();
-								String[] ips = pair.split("\\ and ");
+								if(index < 0) {
+									return;
+								}
+								
+								String pair = InstructorNoa
+								.getConversationPairs().get(index);
+								
+								String[] ips = pair.split("\\|");
 
 								try {
 									StopIntercomCommand si;
@@ -1858,11 +1863,14 @@ public class InstructorNoaUtil {
 
 									si.setTo(ips[1]);
 									InstructorNoa.getServerService().send(si);
-									
-									InstructorNoa.getConversationPairs().remove(pair);
-									InstructorNoa.getConversationIps().remove(ips[0]);
-									InstructorNoa.getConversationIps().remove(ips[1]);
-									
+
+									InstructorNoa.getConversationPairs()
+											.remove(pair);
+									InstructorNoa.getConversationIps().remove(
+											ips[0]);
+									InstructorNoa.getConversationIps().remove(
+											ips[1]);
+
 								} catch (Exception e) {
 									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
@@ -2390,7 +2398,8 @@ public class InstructorNoaUtil {
 		WebMenu menuItemActions = new WebMenu("Actions");
 		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
 		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
-		final WebMenu menuItemConversations = new WebMenu("Conversation With : ");
+		final WebMenu menuItemConversations = new WebMenu(
+				"Conversation With : ");
 		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
 		WebMenuItem menuItemChat = new WebMenuItem("Chat");
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
@@ -2414,25 +2423,31 @@ public class InstructorNoaUtil {
 			public void stateChanged(ChangeEvent arg0) {
 				menuItemConversations.removeAll();
 				WebMenuItem tempItem;
-				for (int i = 0; i < InstructorNoa.getDesktopPane().getAllFrames().length; i++) {
-					if(!InstructorNoa.getDesktopPane().getAllFrames()[i]
-							.equals(InstructorNoa.getDesktopPane().getSelectedFrame())){
-						tempItem = new WebMenuItem(
-							InstructorNoa.getDesktopPane().getAllFrames()[i]
-									.getClientProperty("username").toString());
+				for (int i = 0; i < InstructorNoa.getDesktopPane()
+						.getAllFrames().length; i++) {
+					if (!InstructorNoa.getDesktopPane().getAllFrames()[i]
+							.equals(InstructorNoa.getDesktopPane()
+									.getSelectedFrame())) {
+						tempItem = new WebMenuItem(InstructorNoa
+								.getDesktopPane().getAllFrames()[i]
+								.getClientProperty("username").toString());
 						final int index = i;
 						tempItem.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-								StartIntercomePair(
-										InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString(),
-										InstructorNoa.getDesktopPane().getAllFrames()[index].getClientProperty("ip").toString());
+								StartIntercomePair(InstructorNoa
+										.getDesktopPane().getSelectedFrame()
+										.getClientProperty("ip").toString(),
+										InstructorNoa.getDesktopPane()
+												.getAllFrames()[index]
+												.getClientProperty("ip")
+												.toString());
 							}
 						});
 						menuItemConversations.add(tempItem);
 					}
 				}
-				
+
 			}
 		});
 		menuItemConversations.addActionListener(new ActionListener() {
@@ -2963,10 +2978,25 @@ public class InstructorNoaUtil {
 
 		return selectedStudent;
 	}
-	
-	private static void StartIntercomePair(
-			String ipFrom,
-			String ipTo) {
-		
+
+	private static void StartIntercomePair(String ipFrom, String ipTo) {
+
+		StartIntercomCommand si;
+		try {
+			si = new StartIntercomCommand(InetAddress.getLocalHost()
+					.getHostAddress(), ipFrom, Integer.parseInt(Config
+					.getParam("port")));
+			InstructorNoa.getServerService().send(si);
+
+			si.setTo(ipTo);
+			InstructorNoa.getServerService().send(si);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		InstructorNoa.getConversationIps().add(ipFrom);
+		InstructorNoa.getConversationIps().add(ipTo);
+		InstructorNoa.getConversationPairs().add(ipFrom + "|" + ipTo);
+
 	}
 }
