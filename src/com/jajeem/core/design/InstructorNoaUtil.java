@@ -188,7 +188,9 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent arg0)
 								throws NumberFormatException {
 
-							if (InstructorNoa.getSendOnly().isTransmitting()) {
+							if (InstructorNoa.getSendOnly().isTransmitting() || 
+									InstructorNoa.getConversationIps().contains(
+											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
 								WebOptionPane.showMessageDialog(
 										InstructorNoa.getCenterPanel(),
 										"Another voice or video function is already running, please stop it first",
@@ -299,7 +301,9 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 
-							if (InstructorNoa.getTransmitter().isTransmitting()
+							if (InstructorNoa.getTransmitter().isTransmitting() || 
+									InstructorNoa.getConversationIps().contains(
+											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))
 									|| (InstructorNoa.getSendOnly()
 											.isTransmitting() && InstructorNoa
 											.getTransmittingType().equals(
@@ -1970,7 +1974,9 @@ public class InstructorNoaUtil {
 								if (InstructorNoa.getTransmitter()
 										.isTransmitting()
 										|| InstructorNoa.getSendOnly()
-												.isTransmitting()) {
+												.isTransmitting()
+												|| InstructorNoa.getConversationIps().contains(
+														InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
 									WebOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
@@ -2335,6 +2341,17 @@ public class InstructorNoaUtil {
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
 		WebMenuItem menuItemRecord = new WebMenuItem("Record");
 		
+		menuItemActions.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				if(InstructorNoa.getConversationIps().contains(
+						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip")))
+					menuItemConversations.setEnabled(false);
+				else
+					menuItemConversations.setEnabled(true);
+			}
+		});
 		menuItemSendFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -2371,13 +2388,6 @@ public class InstructorNoaUtil {
 						menuItemConversations.add(tempItem);
 					}
 				}
-				
-			}
-		});
-		menuItemConversations.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
 				
 			}
 		});
@@ -2641,6 +2651,21 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void IntercomActionListener() {
+		if (InstructorNoa.getTransmitter().isTransmitting() || 
+				InstructorNoa.getConversationIps().contains(
+						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))
+				|| (InstructorNoa.getSendOnly()
+						.isTransmitting() && InstructorNoa
+						.getTransmittingType().equals(
+								"intercom"))) {
+			WebOptionPane.showMessageDialog(
+					InstructorNoa.getCenterPanel(),
+					"Another voice or video function is already running, please stop it first",
+					"Information",
+					WebOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
 		Component card = null;
 		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
 			if (comp.isVisible() == true) {
