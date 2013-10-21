@@ -28,6 +28,8 @@ import com.jajeem.command.handler.RequestCourseListCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
+import com.jajeem.command.handler.SendRecordingErrorCommandHandler;
+import com.jajeem.command.handler.SendRecordingSuccessCommandHandler;
 import com.jajeem.command.handler.SendSpeechFileCommandHandler;
 import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
 import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
@@ -370,11 +372,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 					stopModelCommandHanlder.run(cmd);
 				}
 				else if (cmd instanceof SendRecordingErrorCommand) {
-					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+					SendRecordingErrorCommandHandler stopModelCommandHanlder = new SendRecordingErrorCommandHandler();
 					stopModelCommandHanlder.run(cmd);
 				}
 				else if (cmd instanceof SendRecordingSuccessCommand) {
-					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+					SendRecordingSuccessCommandHandler stopModelCommandHanlder = new SendRecordingSuccessCommandHandler();
 					stopModelCommandHanlder.run(cmd);
 				}
 				else if (cmd instanceof StartCallAllCommand) {

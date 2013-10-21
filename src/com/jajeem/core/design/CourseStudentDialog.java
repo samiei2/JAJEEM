@@ -104,8 +104,8 @@ public class CourseStudentDialog extends JDialog {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								new StudentDialog(frame);
-							} catch (SQLException e) {
+								//new StudentDialog(frame);
+							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}

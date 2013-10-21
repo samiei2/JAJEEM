@@ -32,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -87,8 +88,8 @@ public class CaptureScreenToFile {
 	 * 
 	 * @param args
 	 */
-	public CaptureScreenToFile() {
-		
+	public CaptureScreenToFile(boolean _isClient) {
+		isClient = _isClient;
 		if(!isClient){
 			WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
 					"Choose directory to save");
@@ -306,6 +307,8 @@ public class CaptureScreenToFile {
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
+						final String server = ClientSession.getReturnRecordedFileServer();
+						SendErrorCommand(server);
 					}
 				}
 			});
@@ -313,6 +316,8 @@ public class CaptureScreenToFile {
 
 		} catch (Throwable e) {
 			System.err.println("an error occurred: " + e.getMessage());
+			final String server = ClientSession.getReturnRecordedFileServer();
+			SendErrorCommand(server);
 		}
 	}
 
@@ -620,7 +625,9 @@ public class CaptureScreenToFile {
 		try {
 			ServerService service = StudentLogin.getServerService();
 			SendRecordingErrorCommand cmd = new SendRecordingErrorCommand(
-					Inet4Address.getLocalHost().getAddress().toString(),
+					InetAddress
+					.getLocalHost()
+					.getHostAddress(),
 					server, Integer.parseInt(Config.getParam("port")));
 
 			service.send(cmd);
@@ -633,7 +640,9 @@ public class CaptureScreenToFile {
 		try {
 			ServerService service = StudentLogin.getServerService();
 			SendRecordingErrorCommand cmd = new SendRecordingErrorCommand(
-					Inet4Address.getLocalHost().getAddress().toString(),
+					InetAddress
+					.getLocalHost()
+					.getHostAddress(),
 					server, Integer.parseInt(Config.getParam("port")));
 
 			service.send(cmd);

@@ -38,8 +38,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -58,6 +62,7 @@ import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.StyleConstants;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
@@ -120,6 +125,7 @@ public class InstructorNoaUtil {
 	static Quiz_Main[] groupsQuizWindows = new Quiz_Main[15];
 	static Survey_Main[] groupsSurveyWindows = new Survey_Main[15];
 	public static ArrayList<String> recordingsList = new ArrayList<>();
+	private static JInternalFrame previousFrame;
 	private Thread _videoChat;
 
 	/*
@@ -1520,7 +1526,7 @@ public class InstructorNoaUtil {
 							}
 						});
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 					break;
 				case "programStart":
@@ -1580,7 +1586,8 @@ public class InstructorNoaUtil {
 								(WebButton) button, PopupWay.upCenter);
 						final WebButton chooseAppButton = new WebButton(
 								i18n.getParam("Add"));
-
+						final WebCheckBox sendToAll = new WebCheckBox(i18n.getParam("Send To All"));
+						
 						final int sizeOfProgramModel = model.getSize();
 
 						chooseAppButton.addActionListener(new ActionListener() {
@@ -1597,7 +1604,7 @@ public class InstructorNoaUtil {
 
 						GroupPanel programPopupContent = new GroupPanel(5,
 								false, new WebScrollPane(programsList),
-								runButton, chooseAppButton);
+								runButton, chooseAppButton,sendToAll);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
@@ -1715,30 +1722,47 @@ public class InstructorNoaUtil {
 
 								if (((JComponent) card).getClientProperty(
 										"viewMode").equals("thumbView")) {
-									if (InstructorNoa.getDesktopPane()
-											.getSelectedFrame() != null) {
-										String selectedStudent = "";
-										selectedStudent = (String) InstructorNoa
-												.getDesktopPane()
-												.getSelectedFrame()
-												.getClientProperty("ip");
-
+									if(sendToAll.isSelected()){
 										StartApplicationCommand sa;
 										try {
 											sa = new StartApplicationCommand(
-													InetAddress.getLocalHost()
-															.getHostAddress(),
-													selectedStudent,
-													Integer.parseInt(Config
-															.getParam("port")),
-													programsList
-															.getModel()
-															.getElementAt(index)
+													InetAddress.getLocalHost().getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config.getParam("port")),
+													programsList.getModel().getElementAt(index)
 															.toString());
 											InstructorNoa.getServerService()
 													.send(sa);
 										} catch (Exception e) {
 											e.printStackTrace();
+										}
+									}
+									else{
+										if (InstructorNoa.getDesktopPane()
+												.getSelectedFrame() != null) {
+											String selectedStudent = "";
+											selectedStudent = (String) InstructorNoa
+													.getDesktopPane()
+													.getSelectedFrame()
+													.getClientProperty("ip");
+
+											StartApplicationCommand sa;
+											try {
+												sa = new StartApplicationCommand(
+														InetAddress.getLocalHost()
+																.getHostAddress(),
+														selectedStudent,
+														Integer.parseInt(Config
+																.getParam("port")),
+														programsList
+																.getModel()
+																.getElementAt(index)
+																.toString());
+												InstructorNoa.getServerService()
+														.send(sa);
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
 										}
 									}
 								} else if (((JComponent) card)
@@ -2094,13 +2118,11 @@ public class InstructorNoaUtil {
 		vnc.StartThumbs(internalFrame);
 
 		internalFrame.open();
-
 		internalFrame.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
@@ -2110,7 +2132,6 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -2164,6 +2185,9 @@ public class InstructorNoaUtil {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
+//				InstructorNoa.getDesktopPane().getSelectedFrame()
+//				.putClientProperty("isselected", false);
 			}
 
 			@Override
@@ -2191,6 +2215,8 @@ public class InstructorNoaUtil {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+//				InstructorNoa.getDesktopPane().getSelectedFrame()
+//				.putClientProperty("isselected", true);
 			}
 		});
 
@@ -2208,20 +2234,17 @@ public class InstructorNoaUtil {
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub
-
+						
 					}
 
 					@Override
 					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
-
+						
 					}
 
 					@Override
 					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-
+						
 					}
 
 					@Override
@@ -2309,11 +2332,12 @@ public class InstructorNoaUtil {
 		WebMenu menuItemActions = new WebMenu("Actions");
 		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
 		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
+		WebMenuItem menuItemConversations = new WebMenuItem("Conversation With : ");
 		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
 		WebMenuItem menuItemChat = new WebMenuItem("Chat");
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
 		WebMenuItem menuItemRecord = new WebMenuItem("Record");
-
+		
 		menuItemSendFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -2324,6 +2348,20 @@ public class InstructorNoaUtil {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				IntercomActionListener();
+			}
+		});
+		menuItemConversations.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				JOptionPane.showMessageDialog(null, "hey");
+			}
+		});
+		menuItemConversations.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		menuItemMonitor.addActionListener(new ActionListener() {
@@ -2353,6 +2391,7 @@ public class InstructorNoaUtil {
 
 		menuItemActions.add(menuItemSendFile);
 		menuItemActions.add(menuItemIntercom);
+		menuItemActions.add(menuItemConversations);
 		menuItemActions.add(menuItemMonitor);
 		menuItemActions.add(menuItemChat);
 		menuItemActions.add(menuItemLock);
@@ -2479,6 +2518,8 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void internalFrameMouseClicked(MouseEvent e) {
+		if(previousFrame!=null && !previousFrame.equals(InstructorNoa.getDesktopPane().getSelectedFrame()))
+			previousFrame.putClientProperty("isselected", false);
 		if (InstructorNoa.getDesktopPane().getSelectedFrame()
 				.getClientProperty("isselected").equals(false)) {
 			InstructorNoa.getDesktopPane().getSelectedFrame()
@@ -2486,6 +2527,7 @@ public class InstructorNoaUtil {
 			try {
 				InstructorNoa.getDesktopPane().getSelectedFrame()
 						.setSelected(true);
+				previousFrame = InstructorNoa.getDesktopPane().getSelectedFrame();
 			} catch (PropertyVetoException ex) {
 				ex.printStackTrace();
 			}
@@ -2495,6 +2537,7 @@ public class InstructorNoaUtil {
 			try {
 				InstructorNoa.getDesktopPane().getSelectedFrame()
 						.setSelected(false);
+				previousFrame = InstructorNoa.getDesktopPane().getSelectedFrame();
 			} catch (PropertyVetoException ex) {
 				ex.printStackTrace();
 			}

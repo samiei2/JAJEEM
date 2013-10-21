@@ -14,7 +14,7 @@ public class StartRecorderCommandHandler implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StartStudentRecordCommand command = (StartStudentRecordCommand)cmd;
 		
-		CaptureScreenToFile recorder = new CaptureScreenToFile();
+		CaptureScreenToFile recorder = new CaptureScreenToFile(true);
 		recorder.setClient(true);
 		ClientSession.setRecorder(recorder);
 		recorder.StartCaputreWithAudio("");

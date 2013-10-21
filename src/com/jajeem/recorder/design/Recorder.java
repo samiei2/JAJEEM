@@ -258,7 +258,7 @@ public class Recorder extends WebDialog {
 				CaptureScreenToFile capture = null;
 				if (wbtnRecordDesktopOnly.getText().equals(
 						"Record Desktop Only")) {
-					capture = new CaptureScreenToFile();
+					capture = new CaptureScreenToFile(false);
 					capture.StartCaputre("temp.mp4");
 					isRecordingDesktop = true;
 					wbtnRecordDesktopOnly.setText("Stop");
@@ -285,7 +285,7 @@ public class Recorder extends WebDialog {
 			public void actionPerformed(ActionEvent e) {
 				CaptureScreenToFile capture = null;
 				if (wbtnRecordBoth.getText().equals("Record Both")) {
-					capture = new CaptureScreenToFile();
+					capture = new CaptureScreenToFile(false);
 					capture.StartCaputreWithAudio("");
 					isRecordingBoth = true;
 					wbtnRecordBoth.setText("Stop");
