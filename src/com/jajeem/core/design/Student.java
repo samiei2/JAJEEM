@@ -399,6 +399,14 @@ public class Student {
 								.getResourceAsStream(("/icons/noa/right_panel/stop_recording.png")))));
 
 	}
+	
+	public static void setIntercomButtonStart() throws IOException {
+		intercomButton
+				.setIcon(new ImageIcon(
+						ImageIO.read(Student.class
+								.getResourceAsStream(("/icons/applications_style1/call_teacher.png")))));
+
+	}
 
 	public static JFrame getFrmJajeemProject() {
 		return frmJajeemProject;
