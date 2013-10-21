@@ -2730,13 +2730,9 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void IntercomActionListener() {
-		if (InstructorNoa.getTransmitter().isTransmitting() || 
+		if (InstructorNoa.getSendOnly().isTransmitting() || 
 				InstructorNoa.getConversationIps().contains(
-						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))
-				|| (InstructorNoa.getSendOnly()
-						.isTransmitting() && InstructorNoa
-						.getTransmittingType().equals(
-								"intercom"))) {
+						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
 			WebOptionPane.showMessageDialog(
 					InstructorNoa.getCenterPanel(),
 					"Another voice or video function is already running, please stop it first",
@@ -2744,191 +2740,96 @@ public class InstructorNoaUtil {
 					WebOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
+
 		Component card = null;
-		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
+		for (Component comp : InstructorNoa
+				.getCenterPanel().getComponents()) {
 			if (comp.isVisible() == true) {
 				card = comp;
 			}
 		}
 
-		if (((JComponent) card).getClientProperty("viewMode").equals(
-				"thumbView")) {
+		if (((JComponent) card).getClientProperty(
+				"viewMode").equals("thumbView")) {
 
-			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+			if (InstructorNoa.getDesktopPane()
+					.getSelectedFrame() != null) {
 				String selectedStudent = "";
-				selectedStudent = (String) InstructorNoa.getDesktopPane()
-						.getSelectedFrame().getClientProperty("ip");
+				selectedStudent = (String) InstructorNoa
+						.getDesktopPane()
+						.getSelectedFrame()
+						.getClientProperty("ip");
 				try {
-					// "--remote-host=127.0.0.1 --remote-port-base=10000"
-
-					// if some one is selected and we were
-					// talking to him,
-					// stop transmitting and sent a stop
-					// command
-					// to him
-					if (InstructorNoa.getTransmitter().getRemoteAddr()
-							.getHostAddress().equals(selectedStudent)) {
-						if (InstructorNoa.getTransmitter().isTransmitting()) {
-							InstructorNoa.getTransmitter().stop();
+					if (InstructorNoa.getTransmitter()
+							.isTransmitting()) {
+						if (InstructorNoa.getTransmitter()
+								.getRemoteAddr()
+								.getHostAddress()
+								.equals(selectedStudent)) {
+							InstructorNoa.getTransmitter()
+									.stop();
 							StopIntercomCommand si;
 							try {
-								si = new StopIntercomCommand(InetAddress
-										.getLocalHost().getHostAddress(),
-										InstructorNoa.getTransmitter()
+								si = new StopIntercomCommand(
+										InetAddress
+												.getLocalHost()
+												.getHostAddress(),
+										InstructorNoa
+												.getTransmitter()
 												.getRemoteAddr()
 												.getHostAddress(),
 										Integer.parseInt(Config
 												.getParam("port")));
-								InstructorNoa.getServerService().send(si);
+								InstructorNoa
+										.getServerService()
+										.send(si);
 
-								InstructorNoa.setIntercomText(i18n
-										.getParam("Intercom"));
+								InstructorNoa
+										.setIntercomText(i18n
+												.getParam("Intercom"));
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExcetionHandler
+										.logError(e);
 								e.printStackTrace();
 							}
 						} else {
-							StartIntercomCommand si = new StartIntercomCommand(
-									InetAddress.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")));
-							InstructorNoa.getServerService().send(si);
-
-							InstructorNoa.getTransmitter().setRemoteAddr(
-									InetAddress.getByName(selectedStudent));
-							InstructorNoa.getTransmitter().start("audio");
-							InstructorNoa.setTransmittingType("intercom");
-							InstructorNoa.setIntercomText("Stop");
+							WebOptionPane.showMessageDialog(
+									InstructorNoa
+											.getCenterPanel(),
+									"Another voice or video function is already running, please stop it first",
+									"Information",
+									WebOptionPane.INFORMATION_MESSAGE);
 						}
-
 					} else {
-						if (InstructorNoa.getTransmitter().isTransmitting()) {
-							InstructorNoa.getTransmitter().stop();
-							StopIntercomCommand si;
-							si = new StopIntercomCommand(InetAddress
-									.getLocalHost().getHostAddress(),
-									InstructorNoa.getTransmitter()
-											.getRemoteAddr().getHostAddress(),
-									Integer.parseInt(Config.getParam("port")));
-							InstructorNoa.getServerService().send(si);
-							StartIntercomCommand startI = new StartIntercomCommand(
-									InetAddress.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")));
-							InstructorNoa.getServerService().send(startI);
+						StartIntercomCommand si = new StartIntercomCommand(
+								InetAddress.getLocalHost()
+										.getHostAddress(),
+								selectedStudent,
+								Integer.parseInt(Config
+										.getParam("port")));
+						InstructorNoa.getServerService()
+								.send(si);
 
-							InstructorNoa.getTransmitter().setRemoteAddr(
-									InetAddress.getByName(selectedStudent));
-							InstructorNoa.getTransmitter().start("audio");
-							InstructorNoa.setTransmittingType("intercom");
-							InstructorNoa
-									.setIntercomText(i18n.getParam("Stop"));
-
-						} else {
-							// Send start receiver to
-							// selected
-							// student and start transmitter
-							StartIntercomCommand si = new StartIntercomCommand(
-									InetAddress.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")));
-							InstructorNoa.getServerService().send(si);
-
-							InstructorNoa.getTransmitter().setRemoteAddr(
-									InetAddress.getByName(selectedStudent));
-							InstructorNoa.getTransmitter().start("audio");
-							InstructorNoa.setTransmittingType("intercom");
-							InstructorNoa
-									.setIntercomText(i18n.getParam("Stop"));
-						}
+						InstructorNoa
+								.getTransmitter()
+								.setRemoteAddr(
+										InetAddress
+												.getByName(selectedStudent));
+						InstructorNoa.getTransmitter()
+								.start("audio");
+						InstructorNoa
+								.setTransmittingType("intercom");
+						InstructorNoa.setIntercomText(i18n
+								.getParam("Stop"));
 					}
-
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
-
-			} else {
-				// if no students selected and is
-				// transmitting
-				// to someone
-				if (InstructorNoa.getTransmitter() != null)
-					if (InstructorNoa.getTransmitter().isTransmitting()) {
-
-						// Stop transmitting to prev student
-						// and
-						// sent stop
-						// command to him
-						InstructorNoa.getTransmitter().stop();
-						StopIntercomCommand si;
-						try {
-							si = new StopIntercomCommand(InetAddress
-									.getLocalHost().getHostAddress(),
-									InstructorNoa.getTransmitter()
-											.getRemoteAddr().getHostAddress(),
-									Integer.parseInt(Config.getParam("port")));
-							InstructorNoa.getServerService().send(si);
-							InstructorNoa.setTransmittingType("");
-
-							InstructorNoa.setIntercomText(i18n
-									.getParam("Intercom"));
-						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
-							e.printStackTrace();
-						}
-					} else {
-						try {
-							InstructorNoa.setIntercomText(i18n
-									.getParam("Intercom"));
-						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
-							e.printStackTrace();
-						}
-						return;
-					}
 			}
-		} else if (((JComponent) card).getClientProperty("viewMode").equals(
-				"groupView")) {
-			if (!InstructorNoa.getGroupList().isSelectionEmpty()) {
-				int groupIndex = InstructorNoa.getGroupList()
-						.getSelectedIndex();
-
-				Group group = InstructorNoa.getGroups().get(groupIndex);
-				if (group.getStudentIps().isEmpty()) {
-					return;
-				} else {
-					if (group.getStudentIps().size() != 2) {
-						WebOptionPane
-								.showMessageDialog(
-										InstructorNoa.getCenterPanel(),
-										"Intercom is only available for groups with two students",
-										"Information",
-										WebOptionPane.INFORMATION_MESSAGE);
-						return;
-					} else {
-						StartIntercomCommand si;
-						try {
-							si = new StartIntercomCommand("", "",
-									Integer.parseInt(Config.getParam("port")));
-
-							// from student 0 to 1
-							si.setFrom(group.getStudentIps().get(0));
-							si.setTo(group.getStudentIps().get(1));
-							InstructorNoa.getServerService().send(si);
-
-							// from student 1 to 0
-							si.setFrom(group.getStudentIps().get(1));
-							si.setTo(group.getStudentIps().get(0));
-							InstructorNoa.getServerService().send(si);
-
-						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
-							e.printStackTrace();
-						}
-					}
-				}
-			}
+		} else if (((JComponent) card).getClientProperty(
+				"viewMode").equals("groupView")) {
+			return;
 		}
 	}
 
