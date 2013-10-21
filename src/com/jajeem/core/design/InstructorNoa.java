@@ -99,6 +99,8 @@ public class InstructorNoa {
 
 	private static WebFrame frame;
 	public static Map<String, com.jajeem.core.model.Student> studentList;
+	private static ArrayList<String> conversationPairs;
+	private static ArrayList<String> conversationIps;
 	private static JScrollDesktopPane desktopPaneScroll;
 	private static WebPanel centerPanel;
 	private static WebTable studentListTable;
@@ -190,7 +192,10 @@ public class InstructorNoa {
 	private void initialize() throws Exception {
 
 		studentList = new HashMap<String, com.jajeem.core.model.Student>();
-
+		
+		conversationIps = new ArrayList<String>();
+		conversationPairs = new ArrayList<String>();
+		
 		frame = new WebFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
@@ -1105,6 +1110,20 @@ public class InstructorNoa {
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
 		bottomButtonPanel.add(programStartButton);
 
+		WebButton conversationButton = new WebButton();
+		conversationButton.setIconTextGap(30);
+		conversationButton.putClientProperty("key", "conversation");
+		conversationButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		conversationButton.setDrawShade(false);
+		conversationButton.setRound(10);
+		conversationButton.setTopSelectedBgColor(new Color(75, 113, 158));
+		conversationButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+		conversationButton.setForeground(Color.WHITE);
+		conversationButton.setText(i18n.getParam("Conversations"));
+		conversationButton.setBottomBgColor(new Color(225, 234, 244));
+		conversationButton.setTopBgColor(new Color(116, 166, 219));
+		bottomButtonPanel.add(conversationButton);
+
 		rightButtonPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
 		WebButton monitorButton = new WebButton();
@@ -1785,5 +1804,21 @@ public class InstructorNoa {
 				}
 			}
 		}
+	}
+
+	public static ArrayList<String> getConversationPairs() {
+		return conversationPairs;
+	}
+
+	public static void setConversationPairs(ArrayList<String> conversationPairs) {
+		InstructorNoa.conversationPairs = conversationPairs;
+	}
+
+	public static ArrayList<String> getConversationIps() {
+		return conversationIps;
+	}
+
+	public static void setConversationIps(ArrayList<String> conversationIps) {
+		InstructorNoa.conversationIps = conversationIps;
 	}
 }

@@ -1531,52 +1531,7 @@ public class InstructorNoaUtil {
 					break;
 				case "programStart":
 					try {
-
-						// get start menu path from registry and add them to
-						// program starter list
-						// String pathToStartMenu = WinRegistry
-						// .readString(
-						// WinRegistry.HKEY_LOCAL_MACHINE,
-						// "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
-						// "Common Start Menu")
-						// + "\\Programs";
-						//
-						// FileUtil fileUtil = new FileUtil();
-						// final File[] tempfileList = fileUtil
-						// .finder(pathToStartMenu);
-						// final ArrayList<File> listOfAllLinks = new
-						// ArrayList<>();
-						// for (int i = 0; i < tempfileList.length; i++) {
-						// if (tempfileList[i].isDirectory())
-						// listOfAllLinks
-						// .addAll(getPath(getDirectoryContent(tempfileList[i])));
-						// else
-						// listOfAllLinks.add(tempfileList[i]);
-						// }
-						//
-						// Collections.sort(listOfAllLinks);
-						//
 						final DefaultListModel model = new DefaultListModel();
-						// for (int i = 0; i < listOfAllLinks.size(); i++) {
-						// File file = listOfAllLinks.get(i);
-						// if (file.getName().indexOf(".") != -1) {
-						// String extension = file.getName().substring(
-						// file.getName().indexOf("."));
-						// if (extension.equals(".lnk")) {
-						// fileListModel.add(file.getName().substring(
-						// 0, file.getName().length() - 4));
-						// model.addElement(file.getParentFile()
-						// .getName()
-						// + "\\"
-						// + file.getName()
-						// .substring(
-						// 0,
-						// file.getName()
-						// .length() - 4));
-						// }
-						// }
-						// }
-
 						final WebList programsList = new WebList(model);
 						programsList.setVisibleRowCount(6);
 						programsList.setSelectedIndex(0);
@@ -1809,6 +1764,48 @@ public class InstructorNoaUtil {
 										}
 									}
 								}
+							}
+						});
+
+					} catch (IllegalArgumentException | IllegalAccessException
+							| InvocationTargetException e) {
+						e.printStackTrace();
+					}
+					break;
+
+				case "conversation":
+					try {
+						
+						final DefaultListModel model = new DefaultListModel();
+						final WebList programsList = new WebList(model);
+						programsList.setVisibleRowCount(6);
+						programsList.setSelectedIndex(0);
+						programsList.setEditable(false);
+
+						WebButtonPopup programPopupButton = new WebButtonPopup(
+								(WebButton) button, PopupWay.upCenter);
+
+						WebButton runButton = new WebButton(
+								i18n.getParam("Stop"));
+
+						GroupPanel programPopupContent = new GroupPanel(5,
+								false, new WebScrollPane(programsList),
+								runButton);
+						programPopupContent.setMargin(15);
+						programPopupContent.setOpaque(false);
+						programsList.setOpaque(false);
+
+						programPopupButton.setContent(programPopupContent);
+
+						runButton.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								int index = programsList.getSelectedIndex();
+
+								String pair = programsList.getModel().getElementAt(index)
+										.toString();
+								System.out.println(pair);
 							}
 						});
 
