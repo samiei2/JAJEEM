@@ -33,7 +33,8 @@ public class ConnectionManager implements IConnectionManager {
         
         GenericObjectPool connectionPool = new GenericObjectPool(null);
         connectionPool.setMinIdle( 5 );
-        connectionPool.setMaxActive( 10 );
+        connectionPool.setMaxIdle(100);
+        connectionPool.setMaxActive( 150 );
 
         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(connectURI, username, passwd);
         PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory,connectionPool,null,null,false,true);
