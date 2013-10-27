@@ -1126,194 +1126,229 @@ public class InstructorNoa {
 
 		rightButtonPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-		WebButton monitorButton = new WebButton();
-		monitorButton.setHorizontalAlignment(SwingConstants.LEADING);
-		monitorButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/monitor.png")));
-		monitorButton.setIconTextGap(30);
-		monitorButton.putClientProperty("key", "monitor");
-		monitorButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		monitorButton.setDrawShade(false);
-		monitorButton.setRound(10);
-		monitorButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		monitorButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		monitorButton.setForeground(Color.WHITE);
-		monitorButton.setText("Monitoring");
-		monitorButton.setBottomBgColor(new Color(225, 234, 244));
-		monitorButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon monitorIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/monitor.png"));
+		WebButton monitorButton = new WebButton(monitorIcon);
+		monitorButton.setUndecorated(true);
+//		monitorButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		monitorButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/monitor.png")));
+//		monitorButton.setIconTextGap(30);
+//		monitorButton.putClientProperty("key", "monitor");
+//		monitorButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		monitorButton.setDrawShade(false);
+//		monitorButton.setRound(10);
+//		monitorButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		monitorButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		monitorButton.setForeground(Color.WHITE);
+//		monitorButton.setText("Monitoring");
+//		monitorButton.setBottomBgColor(new Color(225, 234, 244));
+//		monitorButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(monitorButton);
 
-		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
-		intercomButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/intercom.png")));
-		intercomButton.setIconTextGap(30);
-		intercomButton.putClientProperty("key", "intercom");
-		intercomButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		intercomButton.setDrawShade(false);
-		intercomButton.setRound(10);
-		intercomButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		intercomButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		intercomButton.setForeground(Color.WHITE);
-		intercomButton.setText(i18n.getParam("Intercom"));
-		intercomButton.setBottomBgColor(new Color(225, 234, 244));
-		intercomButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon intercomIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/intercom.png"));
+		WebButton intercomButton = new WebButton(intercomIcon);
+		this.intercomButton = intercomButton;
+		intercomButton.setUndecorated(true);
+//		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		intercomButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/intercom.png")));
+//		intercomButton.setIconTextGap(30);
+//		intercomButton.putClientProperty("key", "intercom");
+//		intercomButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		intercomButton.setDrawShade(false);
+//		intercomButton.setRound(10);
+//		intercomButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		intercomButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		intercomButton.setForeground(Color.WHITE);
+//		intercomButton.setText(i18n.getParam("Intercom"));
+//		intercomButton.setBottomBgColor(new Color(225, 234, 244));
+//		intercomButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(intercomButton);
 
-		WebButton videoChatButton = new WebButton();
-		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
-		videoChatButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/intercom.png")));
-		videoChatButton.setIconTextGap(30);
-		videoChatButton.putClientProperty("key", "videoChat");
-		videoChatButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		videoChatButton.setDrawShade(false);
-		videoChatButton.setRound(10);
-		videoChatButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		videoChatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		videoChatButton.setForeground(Color.WHITE);
-		videoChatButton.setText(i18n.getParam("Video Chat"));
-		videoChatButton.setBottomBgColor(new Color(225, 234, 244));
-		videoChatButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon videochatIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/videochat.png"));
+		WebButton videoChatButton = new WebButton(videochatIcon);
+		videoChatButton.setUndecorated(true);
+//		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		videoChatButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/intercom.png")));
+//		videoChatButton.setIconTextGap(30);
+//		videoChatButton.putClientProperty("key", "videoChat");
+//		videoChatButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		videoChatButton.setDrawShade(false);
+//		videoChatButton.setRound(10);
+//		videoChatButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		videoChatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		videoChatButton.setForeground(Color.WHITE);
+//		videoChatButton.setText(i18n.getParam("Video Chat"));
+//		videoChatButton.setBottomBgColor(new Color(225, 234, 244));
+//		videoChatButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(videoChatButton);
 
-		WebButton groupButton = new WebButton();
-		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
-		groupButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/group.png")));
-		groupButton.setIconTextGap(30);
-		groupButton.putClientProperty("key", "group");
-		groupButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		groupButton.setDrawShade(false);
-		groupButton.setRound(10);
-		groupButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		groupButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		groupButton.setForeground(Color.WHITE);
-		groupButton.setText(i18n.getParam("Groups"));
-		groupButton.setBottomBgColor(new Color(225, 234, 244));
-		groupButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon groupIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/group.png"));
+		WebButton groupButton = new WebButton(groupIcon);
+		groupButton.setUndecorated(true);
+//		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		groupButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/group.png")));
+//		groupButton.setIconTextGap(30);
+//		groupButton.putClientProperty("key", "group");
+//		groupButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		groupButton.setDrawShade(false);
+//		groupButton.setRound(10);
+//		groupButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		groupButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		groupButton.setForeground(Color.WHITE);
+//		groupButton.setText(i18n.getParam("Groups"));
+//		groupButton.setBottomBgColor(new Color(225, 234, 244));
+//		groupButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(groupButton);
 
-		WebButton modelButton = new WebButton();
-		modelButton.setHorizontalAlignment(SwingConstants.LEADING);
-		modelButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/group.png")));
-		modelButton.setIconTextGap(30);
-		modelButton.putClientProperty("key", "model");
-		modelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		modelButton.setDrawShade(false);
-		modelButton.setRound(10);
-		modelButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		modelButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		modelButton.setForeground(Color.WHITE);
-		modelButton.setText(i18n.getParam("Modelling"));
-		modelButton.setBottomBgColor(new Color(225, 234, 244));
-		modelButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon modelIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/modeling.png"));
+		WebButton modelButton = new WebButton(modelIcon);
+		modelButton.setUndecorated(true);
+//		modelButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		modelButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/group.png")));
+//		modelButton.setIconTextGap(30);
+//		modelButton.putClientProperty("key", "model");
+//		modelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		modelButton.setDrawShade(false);
+//		modelButton.setRound(10);
+//		modelButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		modelButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		modelButton.setForeground(Color.WHITE);
+//		modelButton.setText(i18n.getParam("Modelling"));
+//		modelButton.setBottomBgColor(new Color(225, 234, 244));
+//		modelButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(modelButton);
 
-		WebButton recordButton = new WebButton();
-		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
-		recordButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/record.png")));
-		recordButton.setIconTextGap(30);
-		recordButton.putClientProperty("key", "record");
-		recordButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		recordButton.setDrawShade(false);
-		recordButton.setRound(10);
-		recordButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		recordButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		recordButton.setForeground(Color.WHITE);
-		recordButton.setText(i18n.getParam("Recording"));
-		recordButton.setBottomBgColor(new Color(225, 234, 244));
-		recordButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon recordIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/recording.png"));
+		WebButton recordButton = new WebButton(modelIcon);
+		recordButton.setUndecorated(true);
+//		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		recordButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/record.png")));
+//		recordButton.setIconTextGap(30);
+//		recordButton.putClientProperty("key", "record");
+//		recordButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		recordButton.setDrawShade(false);
+//		recordButton.setRound(10);
+//		recordButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		recordButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		recordButton.setForeground(Color.WHITE);
+//		recordButton.setText(i18n.getParam("Recording"));
+//		recordButton.setBottomBgColor(new Color(225, 234, 244));
+//		recordButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(recordButton);
 
-		WebButton speechButton = new WebButton();
-		speechButton.setHorizontalAlignment(SwingConstants.LEADING);
-		speechButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/speech.png")));
-		speechButton.setIconTextGap(30);
-		speechButton.putClientProperty("key", "speech");
-		speechButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		speechButton.setDrawShade(false);
-		speechButton.setRound(10);
-		speechButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		speechButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		speechButton.setForeground(Color.WHITE);
-		speechButton.setText(i18n.getParam("Speech Recognition"));
-		speechButton.setBottomBgColor(new Color(225, 234, 244));
-		speechButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon speechIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/speech.png"));
+		WebButton speechButton = new WebButton(speechIcon);
+		speechButton.setUndecorated(true);
+//		speechButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		speechButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/speech.png")));
+//		speechButton.setIconTextGap(30);
+//		speechButton.putClientProperty("key", "speech");
+//		speechButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		speechButton.setDrawShade(false);
+//		speechButton.setRound(10);
+//		speechButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		speechButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		speechButton.setForeground(Color.WHITE);
+//		speechButton.setText(i18n.getParam("Speech Recognition"));
+//		speechButton.setBottomBgColor(new Color(225, 234, 244));
+//		speechButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(speechButton);
 
-		WebButton fileButton = new WebButton();
-		fileButton.setHorizontalAlignment(SwingConstants.LEADING);
-		fileButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/file.png")));
-		fileButton.setIconTextGap(30);
-		fileButton.putClientProperty("key", "file");
-		fileButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		fileButton.setDrawShade(false);
-		fileButton.setRound(10);
-		fileButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		fileButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		fileButton.setForeground(Color.WHITE);
-		fileButton.setText(i18n.getParam("File Sharing"));
-		fileButton.setBottomBgColor(new Color(225, 234, 244));
-		fileButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon fileIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/filesharing.png"));
+		WebButton fileButton = new WebButton(fileIcon);
+		fileButton.setUndecorated(true);
+//		fileButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		fileButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/file.png")));
+//		fileButton.setIconTextGap(30);
+//		fileButton.putClientProperty("key", "file");
+//		fileButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		fileButton.setDrawShade(false);
+//		fileButton.setRound(10);
+//		fileButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		fileButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		fileButton.setForeground(Color.WHITE);
+//		fileButton.setText(i18n.getParam("File Sharing"));
+//		fileButton.setBottomBgColor(new Color(225, 234, 244));
+//		fileButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(fileButton);
 
-		WebButton quizButton = new WebButton();
-		quizButton.setHorizontalAlignment(SwingConstants.LEADING);
-		quizButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/quiz.png")));
-		quizButton.setIconTextGap(30);
-		quizButton.putClientProperty("key", "quiz");
-		quizButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		quizButton.setDrawShade(false);
-		quizButton.setRound(10);
-		quizButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		quizButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		quizButton.setForeground(Color.WHITE);
-		quizButton.setText(i18n.getParam("Exam"));
-		quizButton.setBottomBgColor(new Color(225, 234, 244));
-		quizButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon quizIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/exam.png"));
+		WebButton quizButton = new WebButton(quizIcon);
+		quizButton.setUndecorated(true);
+//		quizButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		quizButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/quiz.png")));
+//		quizButton.setIconTextGap(30);
+//		quizButton.putClientProperty("key", "quiz");
+//		quizButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		quizButton.setDrawShade(false);
+//		quizButton.setRound(10);
+//		quizButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		quizButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		quizButton.setForeground(Color.WHITE);
+//		quizButton.setText(i18n.getParam("Exam"));
+//		quizButton.setBottomBgColor(new Color(225, 234, 244));
+//		quizButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(quizButton);
 
-		WebButton videoButton = new WebButton();
-		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
-		videoButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/com/jajeem/images/Media_Player.png")));
-		videoButton.setIconTextGap(30);
-		videoButton.putClientProperty("key", "movieplayer");
-		videoButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		videoButton.setDrawShade(false);
-		videoButton.setRound(10);
-		videoButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		videoButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		videoButton.setForeground(Color.WHITE);
-		videoButton.setText(i18n.getParam("Movie Player"));
-		videoButton.setBottomBgColor(new Color(225, 234, 244));
-		videoButton.setTopBgColor(new Color(116, 166, 219));
+		ImageIcon videoIcon = new ImageIcon(InstructorNoa.class
+				.getResource("/icons/noa_en/movieplayer.png"));
+		WebButton videoButton = new WebButton(videoIcon);
+		videoButton.setUndecorated(true);
+//		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		videoButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/com/jajeem/images/Media_Player.png")));
+//		videoButton.setIconTextGap(30);
+//		videoButton.putClientProperty("key", "movieplayer");
+//		videoButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		videoButton.setDrawShade(false);
+//		videoButton.setRound(10);
+//		videoButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		videoButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		videoButton.setForeground(Color.WHITE);
+//		videoButton.setText(i18n.getParam("Movie Player"));
+//		videoButton.setBottomBgColor(new Color(225, 234, 244));
+//		videoButton.setTopBgColor(new Color(116, 166, 219));
 		rightButtonPanel.add(videoButton);
 
-		WebButton reportButton = new WebButton();
-		reportButton.setHorizontalAlignment(SwingConstants.LEADING);
-		reportButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa/right_panel/report.png")));
-		reportButton.setIconTextGap(30);
-		reportButton.putClientProperty("key", "report");
-		reportButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		reportButton.setDrawShade(false);
-		reportButton.setRound(10);
-		reportButton.setTopSelectedBgColor(new Color(75, 113, 158));
-		reportButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		reportButton.setForeground(Color.WHITE);
-		reportButton.setText(i18n.getParam("Reports"));
-		reportButton.setBottomBgColor(new Color(225, 234, 244));
-		reportButton.setTopBgColor(new Color(116, 166, 219));
-		rightButtonPanel.add(reportButton);
+//		ImageIcon reportIcon = new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa_en/report.png"));
+//		WebButton reportButton = new WebButton(reportIcon);
+//		reportButton.setUndecorated(true);
+//		reportButton.setHorizontalAlignment(SwingConstants.LEADING);
+//		reportButton.setIcon(new ImageIcon(InstructorNoa.class
+//				.getResource("/icons/noa/right_panel/report.png")));
+//		reportButton.setIconTextGap(30);
+//		reportButton.putClientProperty("key", "report");
+//		reportButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+//		reportButton.setDrawShade(false);
+//		reportButton.setRound(10);
+//		reportButton.setTopSelectedBgColor(new Color(75, 113, 158));
+//		reportButton.setBottomSelectedBgColor(new Color(75, 113, 158));
+//		reportButton.setForeground(Color.WHITE);
+//		reportButton.setText(i18n.getParam("Reports"));
+//		reportButton.setBottomBgColor(new Color(225, 234, 244));
+//		reportButton.setTopBgColor(new Color(116, 166, 219));
+//		rightButtonPanel.add(reportButton);
 
-		final WebButtonPopup reportPopupButton = new WebButtonPopup(
-				reportButton, PopupWay.upCenter);
+//		final WebButtonPopup reportPopupButton = new WebButtonPopup(
+//				reportButton, PopupWay.upCenter);
 
 		// /////////////////// Report Combo
 
@@ -1340,64 +1375,64 @@ public class InstructorNoa {
 			}
 		});
 
-		reportPopupButton.addPopupListener(new PopupListener() {
-
-			@Override
-			public void popupWillBeOpened() {
-			}
-
-			@Override
-			public void popupWillBeClosed() {
-			}
-
-			@Override
-			public void popupOpened() {
-				PopulateQuizCombobox();
-				// PopulateStudentCombobox();
-			}
-
-			/*
-			 * private void PopulateStudentCombobox() { StudentService
-			 * stuService = new StudentService(); ArrayList<Student>
-			 * studentList; try { studentList = stuService.list();
-			 * 
-			 * List<String> studentListComboModel = new ArrayList<String>(); for
-			 * (Student stu : studentList) { String fullname =
-			 * stu.getFirstName() + stu.getLastName(); if (fullname == null ||
-			 * fullname.equals("")) { studentListComboModel.add(fullname); }
-			 * else { studentListComboModel.add(String.valueOf(stu .getId())); }
-			 * } listOfStudentsComboBox.addItem((studentListComboModel
-			 * .toArray())); } catch (SQLException e) { e.printStackTrace(); } }
-			 */
-
-			private void PopulateQuizCombobox() {
-				ArrayList<com.jajeem.quiz.model.Run> quizList;
-				try {
-					quizList = new RunDAO().list(com.jajeem.util.Session
-							.getCourse().getId());
-					// quizList = new RunDAO().list();
-					reportRunList.clear();
-					reportQuizComboBox.removeAllItems();
-					QuizService quizService = new QuizService();
-					for (int i = 0; i < quizList.size(); i++) {
-						Run run = quizList.get(i);
-
-						reportQuizComboBox.addItem(quizService.get(
-								run.getQuizId()).getTitle()
-								+ " (" + new Date(run.getStart()) + ")");
-						reportRunList.add(run);
-					}
-
-				} catch (SQLException e) {
-					JajeemExcetionHandler.logError(e);
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void popupClosed() {
-			}
-		});
+//		reportPopupButton.addPopupListener(new PopupListener() {
+//
+//			@Override
+//			public void popupWillBeOpened() {
+//			}
+//
+//			@Override
+//			public void popupWillBeClosed() {
+//			}
+//
+//			@Override
+//			public void popupOpened() {
+//				PopulateQuizCombobox();
+//				// PopulateStudentCombobox();
+//			}
+//
+//			/*
+//			 * private void PopulateStudentCombobox() { StudentService
+//			 * stuService = new StudentService(); ArrayList<Student>
+//			 * studentList; try { studentList = stuService.list();
+//			 * 
+//			 * List<String> studentListComboModel = new ArrayList<String>(); for
+//			 * (Student stu : studentList) { String fullname =
+//			 * stu.getFirstName() + stu.getLastName(); if (fullname == null ||
+//			 * fullname.equals("")) { studentListComboModel.add(fullname); }
+//			 * else { studentListComboModel.add(String.valueOf(stu .getId())); }
+//			 * } listOfStudentsComboBox.addItem((studentListComboModel
+//			 * .toArray())); } catch (SQLException e) { e.printStackTrace(); } }
+//			 */
+//
+//			private void PopulateQuizCombobox() {
+//				ArrayList<com.jajeem.quiz.model.Run> quizList;
+//				try {
+//					quizList = new RunDAO().list(com.jajeem.util.Session
+//							.getCourse().getId());
+//					// quizList = new RunDAO().list();
+//					reportRunList.clear();
+//					reportQuizComboBox.removeAllItems();
+//					QuizService quizService = new QuizService();
+//					for (int i = 0; i < quizList.size(); i++) {
+//						Run run = quizList.get(i);
+//
+//						reportQuizComboBox.addItem(quizService.get(
+//								run.getQuizId()).getTitle()
+//								+ " (" + new Date(run.getStart()) + ")");
+//						reportRunList.add(run);
+//					}
+//
+//				} catch (SQLException e) {
+//					JajeemExcetionHandler.logError(e);
+//					e.printStackTrace();
+//				}
+//			}
+//
+//			@Override
+//			public void popupClosed() {
+//			}
+//		});
 
 		// be careful with this list index, we work with index
 		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
@@ -1474,7 +1509,7 @@ public class InstructorNoa {
 		listOfStudentsComboBox.setVisible(false);
 		reportQuizComboBox.setVisible(true);
 
-		reportPopupButton.setContent(reportPopupContent);
+//		reportPopupButton.setContent(reportPopupContent);
 
 		WebButton accountButton = new WebButton();
 		accountButton.setHorizontalAlignment(SwingConstants.LEADING);
