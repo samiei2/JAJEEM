@@ -1,73 +1,48 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.jajeem.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.core.design.InstructorNoa;
 
+public class test extends JFrame {
+	test() {
+		setContentPane(new ContentPanel());
+		// setSize(500, 300);
+		setSize(2000, 1000);
+	}
 
-/**
- *
- * @author Armin
- */
-public class test {
+	public static void main(String[] args) {
+		test jrframe = new test();
+		jrframe.setUndecorated(true);
+		jrframe.setVisible(true);
+	}
+}
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    public static void main(String[] args) throws ClassNotFoundException, IOException {
-    	PreparedStatement ps = null;
-		int rs = 0;
+class ContentPanel extends JPanel {
+	Image bgimage = null;
 
-		Connection con = null;
+	ContentPanel() {
+		MediaTracker mt = new MediaTracker(this);
+		bgimage = Toolkit.getDefaultToolkit().getImage(
+				test.class.getResource("/icons/noa_en/background.png"));
+		mt.addImage(bgimage, 0);
 		try {
-			con = BaseDAO.getConnection();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			ps = con.prepareStatement("drop table if exists test;create table test(id int Auto_Increment,n int,primary key(id));");
-			ps.execute();
-			ps = con.prepareStatement("INSERT INTO test (n) "
-					+ " VALUES (1);");
-			rs = ps.executeUpdate();
-		} catch (SQLException e) {
+			mt.waitForAll();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
-		} finally {
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
-			try {
-				if (con != null)
-					con.close();
-			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
-			}
-
 		}
-    }
-    
-    
+	}
+
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int imwidth = bgimage.getWidth(null);
+		int imheight = bgimage.getHeight(null);
+		this.setSize(imwidth, imheight);
+		g.drawImage(bgimage, 1, 1, null);
+	}
 }
