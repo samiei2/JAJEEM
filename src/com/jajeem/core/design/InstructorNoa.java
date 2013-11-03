@@ -1173,7 +1173,7 @@ public class InstructorNoa {
 
 		ImageIcon recordIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/recording.png"));
-		WebButton recordButton = new WebButton(modelIcon);
+		WebButton recordButton = new WebButton(recordIcon);
 		recordButton.setUndecorated(true);
 		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
 //		recordButton.setIcon(new ImageIcon(InstructorNoa.class

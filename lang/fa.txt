@@ -1,4 +1,4 @@
-﻿iCalabo=iCalabo
+﻿iCalabo=ClassMate
 volumecontrol=تنظیم صدا
 viewmode=نحوه نمایش
 language=زبان

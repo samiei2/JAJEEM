@@ -15,15 +15,15 @@ public class FileUtil {
 	}
 
 	public static String getInboxPath() {
-		return getMyDocumentsPath() + "iCalabo\\Inbox";
+		return getMyDocumentsPath() + "ClassMate\\Inbox";
 	}
 	
 	public static String getRecorderPath() {
-		return getMyDocumentsPath() + "iCalabo\\Recorder";
+		return getMyDocumentsPath() + "ClassMate\\Recorder";
 	}
 
 	public static String getOutboxPath() {
-		return getMyDocumentsPath() + "iCalabo\\Outbox";
+		return getMyDocumentsPath() + "ClassMate\\Outbox";
 	}
 
 	public static String getMyDocumentsPath() {

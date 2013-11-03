@@ -1,4 +1,4 @@
-iCalabo=iCalabo
+iCalabo=ClassMate
 volumecontrol=Volume Control
 viewmode=View Mode
 language=Language
