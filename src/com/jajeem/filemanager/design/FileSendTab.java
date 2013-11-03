@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.swing.GroupLayout;
+import javax.swing.JComponent;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
@@ -28,6 +30,7 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.groupwork.model.Group;
 
 public class FileSendTab extends WebPanel {
 	/**
@@ -312,9 +315,52 @@ public class FileSendTab extends WebPanel {
 					if (chckbxSendToAll.isSelected()) {
 						ips = InstructorNoa.getAllStudentIPs();
 					} else {
-						ips = parentPanel.getReceivingIps();
+						Component card = null;
+						for (Component comp : InstructorNoa.getCenterPanel()
+								.getComponents()) {
+							if (comp.isVisible() == true) {
+								card = comp;
+							}
+						}
+
+						if (((JComponent) card).getClientProperty("viewMode")
+								.equals("groupView")) {
+							if (!InstructorNoa.getGroupList()
+									.isSelectionEmpty()) {
+								int groupIndex = InstructorNoa.getGroupList()
+										.getSelectedIndex();
+
+								Group group = InstructorNoa.getGroups().get(
+										groupIndex);
+								if (group.getStudentIps().isEmpty()) {
+									return;
+								} else {
+									try {
+										ips = new ArrayList<>(group
+												.getStudentIps());
+									} catch (Exception e) {
+										JajeemExcetionHandler.logError(e);
+									}
+								}
+							}
+						} else if (((JComponent) card).getClientProperty(
+								"viewMode").equals("thumbView")) {
+							if (InstructorNoa.getDesktopPane()
+									.getSelectedFrame() != null) {
+								ips = new ArrayList<>();
+								ips.add(((String) InstructorNoa.getDesktopPane()
+										.getSelectedFrame()
+										.getClientProperty("ip")));
+							} else {
+								WebOptionPane.showMessageDialog(null,
+										"No student is selected!");
+								ips = null;
+							}
+						}
 					}
 					if (ips == null) {
+						WebOptionPane.showMessageDialog(null,
+								"No student is selected!");
 						return;
 					}
 					System.out.println("Ips Count : " + ips.size());
