@@ -82,6 +82,7 @@ import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
+import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
 import com.jajeem.util.CustomJList;
 import com.jajeem.util.CustomPowerButton;
@@ -366,7 +367,7 @@ public class InstructorNoa {
 		volumeButton.setOpaque(false);
 		topButtonPanel.add(volumeButton);
 
-		WebButton callAllButton = new WebButton();
+		CustomTopButton callAllButton = new CustomTopButton();
 		callAllButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/callall.png")));
 		callAllButton.putClientProperty("key", "callAll");
 		callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -374,7 +375,7 @@ public class InstructorNoa {
 //		callAllButton.setRound(10);
 //		callAllButton.setTopSelectedBgColor(new Color(75, 113, 158));
 //		callAllButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		callAllButton.setForeground(Color.WHITE);
+		callAllButton.setForeground(Color.DARK_GRAY);
 		callAllButton.setText(i18n.getParam("Call All"));
 //		callAllButton.setBottomBgColor(new Color(235, 105, 11));
 //		callAllButton.setTopBgColor(new Color(235, 105, 11));
@@ -382,7 +383,7 @@ public class InstructorNoa {
 		callAllButton.setUndecorated(true);
 		topButtonPanel.add(callAllButton);
 
-		WebButton viewModeButton = new WebButton();
+		CustomTopButton viewModeButton = new CustomTopButton();
 		viewModeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/viewmode.png")));
 		viewModeButton.putClientProperty("key", "viewMode");
 		viewModeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -390,7 +391,7 @@ public class InstructorNoa {
 //		viewModeButton.setRound(10);
 //		viewModeButton.setTopSelectedBgColor(new Color(75, 113, 158));
 //		viewModeButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		viewModeButton.setForeground(Color.WHITE);
+		viewModeButton.setForeground(Color.DARK_GRAY);
 		viewModeButton.setText(i18n.getParam("View Mode"));
 //		viewModeButton.setBottomBgColor(new Color(235, 105, 11));
 //		viewModeButton.setTopBgColor(new Color(235, 105, 11));
@@ -398,13 +399,11 @@ public class InstructorNoa {
 		viewModeButton.setOpaque(false);
 		topButtonPanel.add(viewModeButton);
 
-		WebButton languageButton = new WebButton();
+		CustomTopButton languageButton = new CustomTopButton();
 		languageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		languageButton.setHorizontalTextPosition(SwingConstants.RIGHT);
-		languageButton.setHorizontalAlignment(SwingConstants.LEFT);
 		languageButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/lang.png")));
 		languageButton.putClientProperty("key", "language");
 		languageButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -412,7 +411,7 @@ public class InstructorNoa {
 //		languageButton.setRound(10);
 //		languageButton.setTopSelectedBgColor(new Color(75, 113, 158));
 //		languageButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		languageButton.setForeground(Color.WHITE);
+		languageButton.setForeground(Color.DARK_GRAY);
 		languageButton.setText(i18n.getParam("Language"));
 //		languageButton.setBottomBgColor(new Color(235, 105, 11));
 //		languageButton.setTopBgColor(new Color(235, 105, 11));
@@ -436,12 +435,12 @@ public class InstructorNoa {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(bottomButtonPanel, 0, 0, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
 								.addComponent(topButtonPanel, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(webPanel, 0, 0, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)))
@@ -455,10 +454,10 @@ public class InstructorNoa {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -565,7 +564,7 @@ public class InstructorNoa {
 				new Component[] { getDesktopPaneScroll(), centerListPanel,
 						centerGroupPanel }));
 
-		WebButton surveyButton = new WebButton();
+		CustomBottomButton surveyButton = new CustomBottomButton();
 		surveyButton.setIconTextGap(30);
 		surveyButton.putClientProperty("key", "survey");
 		surveyButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -573,14 +572,14 @@ public class InstructorNoa {
 		surveyButton.setRound(10);
 		surveyButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		surveyButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		surveyButton.setForeground(Color.WHITE);
+		surveyButton.setForeground(Color.GRAY);
 		surveyButton.setText(i18n.getParam("Survey"));
 		surveyButton.setBottomBgColor(new Color(225, 234, 244));
 		surveyButton.setTopBgColor(new Color(116, 166, 219));
 		surveyButton.setUndecorated(true);
 		bottomButtonPanel.add(surveyButton);
 
-		WebButton whiteBoardButton = new WebButton();
+		CustomBottomButton whiteBoardButton = new CustomBottomButton();
 		whiteBoardButton.setIconTextGap(30);
 		whiteBoardButton.putClientProperty("key", "whiteBoard");
 		whiteBoardButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -588,14 +587,14 @@ public class InstructorNoa {
 		whiteBoardButton.setRound(10);
 		whiteBoardButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		whiteBoardButton.setForeground(Color.WHITE);
+		whiteBoardButton.setForeground(Color.GRAY);
 		whiteBoardButton.setText(i18n.getParam("White board"));
 		whiteBoardButton.setBottomBgColor(new Color(225, 234, 244));
 		whiteBoardButton.setTopBgColor(new Color(116, 166, 219));
 		whiteBoardButton.setUndecorated(true);
 		bottomButtonPanel.add(whiteBoardButton);
 
-		WebButton powerButton = new WebButton();
+		CustomBottomButton powerButton = new CustomBottomButton();
 		powerButton.setIconTextGap(30);
 		powerButton.putClientProperty("key", "pcController");
 		powerButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -603,7 +602,7 @@ public class InstructorNoa {
 		powerButton.setRound(10);
 		powerButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		powerButton.setForeground(Color.WHITE);
+		powerButton.setForeground(Color.GRAY);
 		powerButton.setText(i18n.getParam("PC Controller"));
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
@@ -846,7 +845,7 @@ public class InstructorNoa {
 		pcControllerPopupButton.setMargin(5);
 		pcControllerPopupButton.setContent(panel);
 
-		WebButton internetButton = new WebButton();
+		CustomBottomButton internetButton = new CustomBottomButton();
 		internetButton.putClientProperty("key", "internet");
 		WebButtonPopup internetPopupButton = new WebButtonPopup(internetButton,
 				PopupWay.upCenter);
@@ -882,7 +881,7 @@ public class InstructorNoa {
 		internetButton.setRound(10);
 		internetButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		internetButton.setForeground(Color.WHITE);
+		internetButton.setForeground(Color.GRAY);
 		internetButton.setText(i18n.getParam("Internet Controller"));
 		internetButton.setBottomBgColor(new Color(225, 234, 244));
 		internetButton.setTopBgColor(new Color(116, 166, 219));
@@ -1043,7 +1042,7 @@ public class InstructorNoa {
 
 		});
 
-		WebButton programButton = new WebButton();
+		CustomBottomButton programButton = new CustomBottomButton();
 
 		programButton.setIconTextGap(30);
 		programButton.putClientProperty("key", "program");
@@ -1052,14 +1051,14 @@ public class InstructorNoa {
 		programButton.setRound(10);
 		programButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		programButton.setForeground(Color.WHITE);
+		programButton.setForeground(Color.GRAY);
 		programButton.setText(i18n.getParam("Allow & Restrict Program"));
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
 		bottomButtonPanel.add(programButton);
 
-		WebButton programStartButton = new WebButton();
+		CustomBottomButton programStartButton = new CustomBottomButton();
 		programStartButton.setIconTextGap(30);
 		programStartButton.putClientProperty("key", "programStart");
 		programStartButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1067,14 +1066,14 @@ public class InstructorNoa {
 		programStartButton.setRound(10);
 		programStartButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		programStartButton.setForeground(Color.WHITE);
+		programStartButton.setForeground(Color.GRAY);
 		programStartButton.setText(i18n.getParam("Program Starter"));
 		programStartButton.setBottomBgColor(new Color(225, 234, 244));
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
 		programStartButton.setUndecorated(true);
 		bottomButtonPanel.add(programStartButton);
 
-		WebButton conversationButton = new WebButton();
+		CustomBottomButton conversationButton = new CustomBottomButton();
 		conversationButton.setIconTextGap(30);
 		conversationButton.putClientProperty("key", "conversation");
 		conversationButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1082,7 +1081,7 @@ public class InstructorNoa {
 		conversationButton.setRound(10);
 		conversationButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		conversationButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		conversationButton.setForeground(Color.WHITE);
+		conversationButton.setForeground(Color.GRAY);
 		conversationButton.setText(i18n.getParam("Conversations"));
 		conversationButton.setBottomBgColor(new Color(225, 234, 244));
 		conversationButton.setTopBgColor(new Color(116, 166, 219));

@@ -13,42 +13,42 @@ import javax.swing.ImageIcon;
 
 import com.alee.laf.button.WebButton;
 
-public class CustomTopButton extends WebButton{
+public class CustomBottomButton extends WebButton{
 	BufferedImage background;
 	
-	public CustomTopButton(){
+	public CustomBottomButton(){
 		try {
-			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
+			URL inp = CustomButton.class.getResource("/icons/noa_en/buttombutton.png");
 			background = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public CustomTopButton(ImageIcon img){
+	public CustomBottomButton(ImageIcon img){
 		super(img);
 		try {
-			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
+			URL inp = CustomButton.class.getResource("/icons/noa_en/buttombutton.png");
 			background = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public CustomTopButton(String label,ImageIcon img){
+	public CustomBottomButton(String label,ImageIcon img){
 		super(label,img);
 		try {
-			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
+			URL inp = CustomButton.class.getResource("/icons/noa_en/buttombutton.png");
 			background = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public CustomTopButton(String label){
+	public CustomBottomButton(String label){
 		super(label);
 		try {
-			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
+			URL inp = CustomButton.class.getResource("/icons/noa_en/buttombutton.png");
 			background = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class CustomTopButton extends WebButton{
 //        super.paintComponent(g);
 		
 		Graphics g2 = g.create();
-        g2.drawImage(background, 0, 0, getWidth()-25, getHeight(), null);
+        g2.drawImage(background, 0, 0, getWidth()+5, getHeight(), null);
         g2.dispose();
         super.paintComponent(g);
 	}
