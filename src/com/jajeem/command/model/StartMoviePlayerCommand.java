@@ -1,6 +1,6 @@
 package com.jajeem.command.model;
 
-public class StartVideoCommand extends Command {
+public class StartMoviePlayerCommand extends Command {
 	/**
 	 * 
 	 */
@@ -11,7 +11,7 @@ public class StartVideoCommand extends Command {
 	private String streamAddress;
 	private boolean isClient;
 	
-	public StartVideoCommand(String from, String to, int port) {
+	public StartMoviePlayerCommand(String from, String to, int port) {
 		super(from, to, port);
 		
 	}

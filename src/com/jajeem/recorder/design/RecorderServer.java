@@ -17,6 +17,8 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.filemanager.InstructorProgressWindow;
+import com.jajeem.filemanager.client.ClientProgressWindow;
 import com.jajeem.filemanager.design.FileCollect;
 import com.jajeem.filemanager.design.FileInbox;
 import com.jajeem.util.FileUtil;
@@ -50,10 +52,11 @@ public class RecorderServer {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
+						final ClientProgressWindow progwin = new ClientProgressWindow();
 						try{
 							File outputFile;
 							WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
-									"Choose directory to save");
+									"Choose directory to save students recording");
 
 							directoryChooser.setVisible(true);
 
@@ -82,6 +85,9 @@ public class RecorderServer {
 									return;
 								}
 							}
+							progwin.setVisible(true);
+							FileTransferObject evt = new FileTransferObject(
+									this);
 							InputStream in = client.getInputStream();
 						    
 						    byte[] path = new byte[2048];
@@ -111,14 +117,18 @@ public class RecorderServer {
 						    {
 						        fos.write(b, 0, x);
 						        bytesRead += x;
+						        evt.setProgressValue(((double) bytesRead / (double) fileLength) * 100.0);
+								new FileTransferEvent().fireProgress(evt,
+										RecorderProgressWindow.class);
 						    }
 						    fos.flush();
 						    fos.close();
 						    in.close();
 						    client.close();
-						    
+						    progwin.dispose();
 						}
 						catch(Exception e){
+							progwin.dispose();
 //							confirmationDialog.dispose();
 							JajeemExcetionHandler.logError(e,RecorderServer.class);
 							new FileTransferEvent().fireFailure(null,FileInbox.class);
@@ -127,6 +137,7 @@ public class RecorderServer {
 				}).start();
 			}
 		} catch (Exception e) {
+			
 			JajeemExcetionHandler.logError(e,RecorderServer.class);
 			WebOptionPane.showMessageDialog(null, "An error has occured in recorder server.Recording services might not work correctly,please restart the application!");
 		}

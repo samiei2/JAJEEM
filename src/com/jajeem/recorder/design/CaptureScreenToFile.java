@@ -214,7 +214,8 @@ public class CaptureScreenToFile {
 						// if
 						// needed
 						writer.close();
-						Desktop.getDesktop().open(outputFile);
+						if(!isClient)
+							Desktop.getDesktop().open(outputFile);
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
@@ -303,7 +304,8 @@ public class CaptureScreenToFile {
 						out.close();
 						Thread.sleep(1000);
 						Synchornize();
-						Desktop.getDesktop().open(outputFile);
+						if(!isClient)
+							Desktop.getDesktop().open(outputFile);
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());

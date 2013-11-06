@@ -11,11 +11,13 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+import org.junit.internal.runners.statements.RunAfters;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
@@ -50,7 +52,7 @@ import com.jajeem.command.handler.StartSpeechCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartVideoChatCommandHandler;
-import com.jajeem.command.handler.StartVideoCommandHandler;
+import com.jajeem.command.handler.StartMoviePlayerCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCallAllCommandHanlder;
@@ -93,7 +95,7 @@ import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartVideoChatCommand;
-import com.jajeem.command.model.StartVideoCommand;
+import com.jajeem.command.model.StartMoviePlayerCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
@@ -118,6 +120,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 	protected InetAddress group;
 	protected int port;
 	protected Thread thread;
+	private ThreadPoolService pool;
 
 	private boolean stopped;
 
@@ -140,7 +143,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 		socket.joinGroup(this.group);
 
 		thread = new Thread(this);
-
+		pool = new ThreadPoolService();
 	}
 
 	@Override
@@ -254,7 +257,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				if (!(o instanceof Command))
 					throw new ClassNotFoundException("Object is not a message");
 
-				Command cmd = (Command) o;
+				final Command cmd = (Command) o;
 
 				System.out.println("Receiving ----> Command: " + cmd.getClass()
 						+ " from: " + cmd.getFrom());
@@ -263,161 +266,640 @@ public class ClientService implements IConnectorSevice, Runnable {
 				// + ", from: " + cmd.getTo());
 
 				if (cmd instanceof StartCaptureCommand) {
-					StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
-					startCaptureHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+						@Override
+						public void run() {
+							StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
+							startCaptureHandler.run(cmd);
+						}
+					});
 				} else if (cmd instanceof StopCaptureCommand) {
-					StopCaptureCommandHandler stopCaptureHandler = new StopCaptureCommandHandler();
-					stopCaptureHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopCaptureCommandHandler stopCaptureHandler = new StopCaptureCommandHandler();
+							stopCaptureHandler.run(cmd);
+						}
+					});
 				} else if (cmd instanceof StartViewerCommand) {
-					StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
-					startViewerHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartViewerCommandHandler startViewerHandler = new StartViewerCommandHandler();
+							startViewerHandler.run(cmd);
+						}
+					});
 				} else if (cmd instanceof StartUpCommand) {
-					StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
-					startUpHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
+							try {
+								startUpHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof StartQuizCommand) {
-					StartQuizCommandHandler startQuizHandler = new StartQuizCommandHandler();
-					startQuizHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartQuizCommandHandler startQuizHandler = new StartQuizCommandHandler();
+							try {
+								startQuizHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof StopQuizCommand) {
-					StopQuizCommandHanlder stopQuizHandler = new StopQuizCommandHanlder();
-					stopQuizHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopQuizCommandHanlder stopQuizHandler = new StopQuizCommandHanlder();
+							try {
+								stopQuizHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof SendQuizResponseCommand) {
-					SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
-					sendquizresponse.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendQuizResponseCommandHandler sendquizresponse = new SendQuizResponseCommandHandler();
+							try {
+								sendquizresponse.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof StartSurveyCommand) {
-					StartSurveyCommandHandler startSurveyHandler = new StartSurveyCommandHandler();
-					startSurveyHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartSurveyCommandHandler startSurveyHandler = new StartSurveyCommandHandler();
+							try {
+								startSurveyHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof StopSurveyCommand) {
-					StopSurveyCommandHanlder stopSurveyHandler = new StopSurveyCommandHanlder();
-					stopSurveyHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopSurveyCommandHanlder stopSurveyHandler = new StopSurveyCommandHanlder();
+							try {
+								stopSurveyHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof SendSurveyResponseCommand) {
-					SendSurveyResponseCommandHandler sendSurveyresponse = new SendSurveyResponseCommandHandler();
-					sendSurveyresponse.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendSurveyResponseCommandHandler sendSurveyresponse = new SendSurveyResponseCommandHandler();
+							try {
+								sendSurveyresponse.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof WhiteBlackAppCommand) {
-					SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
-					setWhiteBlackAppCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetWhiteBlackAppCommandHandler setWhiteBlackAppCommandHandler = new SetWhiteBlackAppCommandHandler();
+							try {
+								setWhiteBlackAppCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
 				} else if (cmd instanceof InternetCommand) {
-					SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
-					setInternetCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetInternetCommandHandler setInternetCommandHandler = new SetInternetCommandHandler();
+							try {
+								setInternetCommandHandler.run(cmd);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof VolumeCommand) {
-					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
-					setVolumeCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
+							try {
+								setVolumeCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof LockCommand) {
-					SetLockCommandHandler setLockCommandHandler = new SetLockCommandHandler();
-					setLockCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetLockCommandHandler setLockCommandHandler = new SetLockCommandHandler();
+							try {
+								setLockCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof PowerCommand) {
-					SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
-					setPowerCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetPowerCommandHandler setPowerCommandHandler = new SetPowerCommandHandler();
+							try {
+								setPowerCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof VolumeCommand) {
-					SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
-					setVolumeCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetVolumeCommandHandler setVolumeCommandHandler = new SetVolumeCommandHandler();
+							try {
+								setVolumeCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof WebsiteCommand) {
-					OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
-					openWebsiteCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							OpenWebsiteCommandHandler openWebsiteCommandHandler = new OpenWebsiteCommandHandler();
+							try {
+								openWebsiteCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof StartWhiteBoardCommand) {
-					StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
-					whiteboardHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartWhiteBoardCommandHandler whiteboardHandler = new StartWhiteBoardCommandHandler();
+							try {
+								whiteboardHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof StopWhiteBoardCommand) {
-					StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
-					whiteboardHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopWhiteBoardCommandHanlder whiteboardHandler = new StopWhiteBoardCommandHanlder();
+							try {
+								whiteboardHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof AuthenticateCommand) {
-					SetAuthenticateCommandHanlder setAuthenticateCommandHanlder = new SetAuthenticateCommandHanlder();
-					setAuthenticateCommandHanlder.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetAuthenticateCommandHanlder setAuthenticateCommandHanlder = new SetAuthenticateCommandHanlder();
+							try {
+								setAuthenticateCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof GrantCommand) {
-					SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
-					setGrantCommandHanlder.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetGrantCommandHanlder setGrantCommandHanlder = new SetGrantCommandHanlder();
+							try {
+								setGrantCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof MessageCommand) {
-					MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
-					messageCommandHanlder.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							MessageCommandHanlder messageCommandHanlder = new MessageCommandHanlder();
+							try {
+								messageCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+
 				} else if (cmd instanceof ChatCommand) {
-					ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
-					chatCommandHanlder.run(cmd);
-				} else if (cmd instanceof StartVideoCommand) {
-					StartVideoCommandHandler videoCommandHandler = new StartVideoCommandHandler();
-					videoCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							ChatCommandHanlder chatCommandHanlder = new ChatCommandHanlder();
+							try {
+								chatCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartMoviePlayerCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartMoviePlayerCommandHandler videoCommandHandler = new StartMoviePlayerCommandHandler();
+							try {
+								videoCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
 				} else if (cmd instanceof StartIntercomCommand) {
-					StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
-					startIntercomCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartIntercomCommandHandler startIntercomCommandHandler = new StartIntercomCommandHandler();
+							startIntercomCommandHandler.run(cmd);
+						}
+					});
+					
 				} else if (cmd instanceof StopIntercomCommand) {
-					StopIntercomCommandHandler stopIntercomCommandHandler = new StopIntercomCommandHandler();
-					stopIntercomCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopIntercomCommandHandler stopIntercomCommandHandler = new StopIntercomCommandHandler();
+							stopIntercomCommandHandler.run(cmd);
+						}
+					});
+					
 				} else if (cmd instanceof StartApplicationCommand) {
-					StartApplicationCommandHanlder startApplicationCommandHandler = new StartApplicationCommandHanlder();
-					startApplicationCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartApplicationCommandHanlder startApplicationCommandHandler = new StartApplicationCommandHanlder();
+							try {
+								startApplicationCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
 				} else if (cmd instanceof SendFileCollectCommand) {
-					SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
-					sendfileCommandHandler.run(cmd);
-				}
-				else if (cmd instanceof SendFileAssignmentCommand) {
-					SendFileAssignmentCommandHandler sendfileassignmentCommandHandler = new SendFileAssignmentCommandHandler();
-					sendfileassignmentCommandHandler.run(cmd);
-				}
-				else if (cmd instanceof StartModelCommand) {
-					StartModelCommandHanlder startModelCommandHanlder = new StartModelCommandHanlder();
-					startModelCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof IntercomRequestCommand) {
-					IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
-					intercomRequestCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StartStudentRecordCommand) {
-					StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
-					startRecorderCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StopStudentRecordCommand) {
-					StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
-					stopRecorderCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StopModelCommand) {
-					StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
-					stopModelCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof SendRecordingErrorCommand) {
-					SendRecordingErrorCommandHandler stopModelCommandHanlder = new SendRecordingErrorCommandHandler();
-					stopModelCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof SendRecordingSuccessCommand) {
-					SendRecordingSuccessCommandHandler stopModelCommandHanlder = new SendRecordingSuccessCommandHandler();
-					stopModelCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StartCallAllCommand) {
-					StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
-					startCallAllCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StopCallAllCommand) {
-					StopCallAllCommandHanlder stopCallAllCommandHanlder = new StopCallAllCommandHanlder();
-					stopCallAllCommandHanlder.run(cmd);
-				}
-				else if (cmd instanceof StartSpeechCommand) {
-					StartSpeechCommandHandler hnldr = new StartSpeechCommandHandler();
-					hnldr.run(cmd);
-				}
-				else if (cmd instanceof SendSpeechFileCommand) {
-					SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
-					hnldr.run(cmd);
-				}
-				else if (cmd instanceof FinishedQuizCommand) {
-					FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
-					hnldr.run(cmd);
-				}
-				else if (cmd instanceof FinishedSurveyCommand) {
-					FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
-					hnldr.run(cmd);
-				}
-				else if (cmd instanceof StartVideoChatCommand) {
-					StartVideoChatCommandHandler startVideoChatCommandHandler = new StartVideoChatCommandHandler();
-					startVideoChatCommandHandler.run(cmd);
-				}
-				else if (cmd instanceof StopVideoChatCommand) {
-					StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
-					stopVideoChatCommandHandler.run(cmd);
-				}
-				else if (cmd instanceof RequestCourseListCommand) {
-					RequestCourseListCommandHandler requestCourseListCommandHandler = new RequestCourseListCommandHandler();
-					requestCourseListCommandHandler.run(cmd);
-				}	
-				else if (cmd instanceof GetCourseListCommand) {
-					GetCourseListCommandHandler getCourseListCommandHandler = new GetCourseListCommandHandler();
-					getCourseListCommandHandler.run(cmd);
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendFileCollectCommandHandler sendfileCommandHandler = new SendFileCollectCommandHandler();
+							try {
+								sendfileCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof SendFileAssignmentCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendFileAssignmentCommandHandler sendfileassignmentCommandHandler = new SendFileAssignmentCommandHandler();
+							try {
+								sendfileassignmentCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartModelCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartModelCommandHanlder startModelCommandHanlder = new StartModelCommandHanlder();
+							try {
+								startModelCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof IntercomRequestCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							IntercomRequestCommandHanlder intercomRequestCommandHanlder = new IntercomRequestCommandHanlder();
+							try {
+								intercomRequestCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartStudentRecordCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartRecorderCommandHandler startRecorderCommandHanlder = new StartRecorderCommandHandler();
+							try {
+								startRecorderCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StopStudentRecordCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopRecorderCommandHandler stopRecorderCommandHanlder = new StopRecorderCommandHandler();
+							try {
+								stopRecorderCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StopModelCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopModelCommandHanlder stopModelCommandHanlder = new StopModelCommandHanlder();
+							try {
+								stopModelCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof SendRecordingErrorCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendRecordingErrorCommandHandler stopModelCommandHanlder = new SendRecordingErrorCommandHandler();
+							try {
+								stopModelCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof SendRecordingSuccessCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendRecordingSuccessCommandHandler stopModelCommandHanlder = new SendRecordingSuccessCommandHandler();
+							try {
+								stopModelCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartCallAllCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartCallAllCommandHanlder startCallAllCommandHanlder = new StartCallAllCommandHanlder();
+							try {
+								startCallAllCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StopCallAllCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopCallAllCommandHanlder stopCallAllCommandHanlder = new StopCallAllCommandHanlder();
+							try {
+								stopCallAllCommandHanlder.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartSpeechCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartSpeechCommandHandler hnldr = new StartSpeechCommandHandler();
+							try {
+								hnldr.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof SendSpeechFileCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SendSpeechFileCommandHandler hnldr = new SendSpeechFileCommandHandler();
+							try {
+								hnldr.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof FinishedQuizCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							FinishedQuizCommandHandler hnldr = new FinishedQuizCommandHandler();
+							try {
+								hnldr.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof FinishedSurveyCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							FinishedSurveyCommandHandler hnldr = new FinishedSurveyCommandHandler();
+							try {
+								hnldr.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StartVideoChatCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StartVideoChatCommandHandler startVideoChatCommandHandler = new StartVideoChatCommandHandler();
+							startVideoChatCommandHandler.run(cmd);
+						}
+					});
+					
+				} else if (cmd instanceof StopVideoChatCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopVideoChatCommandHandler stopVideoChatCommandHandler = new StopVideoChatCommandHandler();
+							stopVideoChatCommandHandler.run(cmd);
+						}
+					});
+					
+				} else if (cmd instanceof RequestCourseListCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							RequestCourseListCommandHandler requestCourseListCommandHandler = new RequestCourseListCommandHandler();
+							try {
+								requestCourseListCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof GetCourseListCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							GetCourseListCommandHandler getCourseListCommandHandler = new GetCourseListCommandHandler();
+							try {
+								getCourseListCommandHandler.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
 				}
 
 			} catch (Exception ex) {

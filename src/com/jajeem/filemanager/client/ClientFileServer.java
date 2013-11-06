@@ -43,7 +43,8 @@ public class ClientFileServer {
 					public void run() {
 						try {
 							InputStream in = client.getInputStream();
-
+							FileTransferObject evt = new FileTransferObject(
+									this);
 							byte[] path = new byte[2048];
 							in.read(path, 0, 2048);
 							String pathStr = new String(path);
@@ -68,8 +69,7 @@ public class ClientFileServer {
 							while ((x = in.read(b)) > 0) {
 								fos.write(b, 0, x);
 								bytesRead += x;
-								FileTransferObject evt = new FileTransferObject(
-										this);
+								
 								evt.setProgressValue(((double) bytesRead / (double) fileLength) * 100.0);
 								new FileTransferEvent().fireProgress(evt,
 										ClientProgressWindow.class);

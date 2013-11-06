@@ -1,6 +1,11 @@
 package com.jajeem.command.handler;
 
+import java.awt.TrayIcon.MessageType;
 import java.net.InetAddress;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.Command;
@@ -8,6 +13,7 @@ import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.message.design.MessageReceive;
 import com.jajeem.util.Config;
 
 public class IntercomRequestCommandHanlder implements ICommandHandler {
@@ -15,12 +21,16 @@ public class IntercomRequestCommandHanlder implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 
-		int response = WebOptionPane.showConfirmDialog(
-				InstructorNoa.getCenterPanel(),
-				"Do you want to start intercom with"
-						+ ((IntercomRequestCommand) cmd).getStudent().getFullName(),
-				"Confirm", WebOptionPane.YES_NO_OPTION,
-				WebOptionPane.QUESTION_MESSAGE);
+		String[] options = new String[] {"Yes", "No", "Maybe", "Cancel"};
+		int response = WebOptionPane.showOptionDialog(
+				null,
+				"Confirm", 
+				"Do you want to start intercom with"+((IntercomRequestCommand) cmd).getStudent().getFullName(), 
+		        JOptionPane.YES_NO_CANCEL_OPTION, 
+		        WebOptionPane.INFORMATION_MESSAGE,
+		        null, 
+		        options, 
+		        options[0]);
 
 		if (response == 0) {// yes!
 			if (InstructorNoa.getTransmitter().isTransmitting()) {

@@ -1,31 +1,29 @@
 package com.jajeem.util;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Panel;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.beans.Transient;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-
-import com.jajeem.core.design.InstructorNoa;
-
-public class test extends JFrame {
-	test() {
-	}
-
-	public static void main(String[] args) {
-		CustomFrame jframe = new CustomFrame();
-		jframe.setVisible(true);
-	}
-}
+    import java.awt.*;  
+    import java.awt.geom.*;  
+    import java.awt.image.BufferedImage;  
+    import java.io.*;  
+    import java.net.*;  
+    import javax.imageio.ImageIO;  
+    import javax.swing.*;  
+       
+    public class test  
+    {  
+        public static void main(String[] args)  
+        {  
+            JLabel label = new JLabel();  
+            label.setPreferredSize(new Dimension(300,500));  
+            JScrollPane scrollPane = new JScrollPane();  
+            scrollPane.setViewport(new CustomViewport());  
+            scrollPane.getViewport().setView(label);  
+            JFrame f = new JFrame();  
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+            f.getContentPane().add(scrollPane);  
+            f.setSize(400,400);  
+            f.setLocation(200,200);  
+            f.setVisible(true);  
+        }  
+    }  
+       
+    

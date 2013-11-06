@@ -188,16 +188,25 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0)
 								throws NumberFormatException {
-
-							if (InstructorNoa.getSendOnly().isTransmitting() || 
-									InstructorNoa.getConversationIps().contains(
-											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
-								WebOptionPane.showMessageDialog(
-										InstructorNoa.getCenterPanel(),
-										"Another voice or video function is already running, please stop it first",
-										"Information",
-										WebOptionPane.INFORMATION_MESSAGE);
-								return;
+							if (InstructorNoa.getDesktopPane()
+									.getSelectedFrame() != null) {
+								if (InstructorNoa.getSendOnly()
+										.isTransmitting()
+										|| InstructorNoa
+												.getConversationIps()
+												.contains(
+														InstructorNoa
+																.getDesktopPane()
+																.getSelectedFrame()
+																.getClientProperty(
+																		"ip"))) {
+									WebOptionPane.showMessageDialog(
+											InstructorNoa.getCenterPanel(),
+											"Another voice or video function is already running, please stop it first",
+											"Information",
+											WebOptionPane.INFORMATION_MESSAGE);
+									return;
+								}
 							}
 
 							Component card = null;
@@ -302,9 +311,14 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 
-							if (InstructorNoa.getTransmitter().isTransmitting() || 
-									InstructorNoa.getConversationIps().contains(
-											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))
+							if (InstructorNoa.getTransmitter().isTransmitting()
+									|| InstructorNoa.getConversationIps()
+											.contains(
+													InstructorNoa
+															.getDesktopPane()
+															.getSelectedFrame()
+															.getClientProperty(
+																	"ip"))
 									|| (InstructorNoa.getSendOnly()
 											.isTransmitting() && InstructorNoa
 											.getTransmittingType().equals(
@@ -1847,13 +1861,13 @@ public class InstructorNoaUtil {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
 								int index = programsList.getSelectedIndex();
-								if(index < 0) {
+								if (index < 0) {
 									return;
 								}
-								
+
 								String pair = InstructorNoa
-								.getConversationPairs().get(index);
-								
+										.getConversationPairs().get(index);
+
 								String[] ips = pair.split("\\|");
 
 								try {
@@ -2044,8 +2058,14 @@ public class InstructorNoaUtil {
 										.isTransmitting()
 										|| InstructorNoa.getSendOnly()
 												.isTransmitting()
-												|| InstructorNoa.getConversationIps().contains(
-														InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
+										|| InstructorNoa
+												.getConversationIps()
+												.contains(
+														InstructorNoa
+																.getDesktopPane()
+																.getSelectedFrame()
+																.getClientProperty(
+																		"ip"))) {
 									WebOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
@@ -2069,6 +2089,9 @@ public class InstructorNoaUtil {
 									InstructorNoa.getServerService().send(sm);
 									InstructorNoa.getSendOnly().stop();
 									button.setText(i18n.getParam("Call All"));
+									button.setIcon(new ImageIcon(
+											InstructorNoa.class
+													.getResource("/icons/noa_en/callall.png")));
 								} else {
 									StartCallAllCommand sm = new StartCallAllCommand(
 											InetAddress.getLocalHost()
@@ -2078,6 +2101,9 @@ public class InstructorNoaUtil {
 													.getParam("port")));
 									InstructorNoa.getServerService().send(sm);
 									InstructorNoa.getSendOnly().start("audio");
+									button.setIcon(new ImageIcon(
+											InstructorNoa.class
+													.getResource("/icons/noa_en/callalloff.png")));
 									button.setText(i18n.getParam("Stop"));
 								}
 
@@ -2411,11 +2437,12 @@ public class InstructorNoaUtil {
 		WebMenuItem menuItemLock = new WebMenuItem("Lock");
 		WebMenuItem menuItemRecord = new WebMenuItem("Record");
 		menuItemActions.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				if(InstructorNoa.getConversationIps().contains(
-						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip")))
+				if (InstructorNoa.getConversationIps().contains(
+						InstructorNoa.getDesktopPane().getSelectedFrame()
+								.getClientProperty("ip")))
 					menuItemConversations.setEnabled(false);
 				else
 					menuItemConversations.setEnabled(true);
@@ -2730,105 +2757,82 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void IntercomActionListener() {
-		if (InstructorNoa.getSendOnly().isTransmitting() || 
-				InstructorNoa.getConversationIps().contains(
-						InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))) {
-			WebOptionPane.showMessageDialog(
-					InstructorNoa.getCenterPanel(),
-					"Another voice or video function is already running, please stop it first",
-					"Information",
-					WebOptionPane.INFORMATION_MESSAGE);
+		if (InstructorNoa.getSendOnly().isTransmitting()
+				|| InstructorNoa.getConversationIps().contains(
+						InstructorNoa.getDesktopPane().getSelectedFrame()
+								.getClientProperty("ip"))) {
+			WebOptionPane
+					.showMessageDialog(
+							InstructorNoa.getCenterPanel(),
+							"Another voice or video function is already running, please stop it first",
+							"Information", WebOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
 		Component card = null;
-		for (Component comp : InstructorNoa
-				.getCenterPanel().getComponents()) {
+		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
 			if (comp.isVisible() == true) {
 				card = comp;
 			}
 		}
 
-		if (((JComponent) card).getClientProperty(
-				"viewMode").equals("thumbView")) {
+		if (((JComponent) card).getClientProperty("viewMode").equals(
+				"thumbView")) {
 
-			if (InstructorNoa.getDesktopPane()
-					.getSelectedFrame() != null) {
+			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 				String selectedStudent = "";
-				selectedStudent = (String) InstructorNoa
-						.getDesktopPane()
-						.getSelectedFrame()
-						.getClientProperty("ip");
+				selectedStudent = (String) InstructorNoa.getDesktopPane()
+						.getSelectedFrame().getClientProperty("ip");
 				try {
-					if (InstructorNoa.getTransmitter()
-							.isTransmitting()) {
-						if (InstructorNoa.getTransmitter()
-								.getRemoteAddr()
-								.getHostAddress()
-								.equals(selectedStudent)) {
-							InstructorNoa.getTransmitter()
-									.stop();
+					if (InstructorNoa.getTransmitter().isTransmitting()) {
+						if (InstructorNoa.getTransmitter().getRemoteAddr()
+								.getHostAddress().equals(selectedStudent)) {
+							InstructorNoa.getTransmitter().stop();
 							StopIntercomCommand si;
 							try {
-								si = new StopIntercomCommand(
-										InetAddress
-												.getLocalHost()
-												.getHostAddress(),
-										InstructorNoa
-												.getTransmitter()
+								si = new StopIntercomCommand(InetAddress
+										.getLocalHost().getHostAddress(),
+										InstructorNoa.getTransmitter()
 												.getRemoteAddr()
 												.getHostAddress(),
 										Integer.parseInt(Config
 												.getParam("port")));
-								InstructorNoa
-										.getServerService()
-										.send(si);
+								InstructorNoa.getServerService().send(si);
 
-								InstructorNoa
-										.setIntercomText(i18n
-												.getParam("Intercom"));
+								InstructorNoa.setIntercomText(i18n
+										.getParam("Intercom"));
 							} catch (Exception e) {
-								JajeemExcetionHandler
-										.logError(e);
+								JajeemExcetionHandler.logError(e);
 								e.printStackTrace();
 							}
 						} else {
-							WebOptionPane.showMessageDialog(
-									InstructorNoa
-											.getCenterPanel(),
-									"Another voice or video function is already running, please stop it first",
-									"Information",
-									WebOptionPane.INFORMATION_MESSAGE);
+							WebOptionPane
+									.showMessageDialog(
+											InstructorNoa.getCenterPanel(),
+											"Another voice or video function is already running, please stop it first",
+											"Information",
+											WebOptionPane.INFORMATION_MESSAGE);
 						}
 					} else {
 						StartIntercomCommand si = new StartIntercomCommand(
-								InetAddress.getLocalHost()
-										.getHostAddress(),
-								selectedStudent,
-								Integer.parseInt(Config
+								InetAddress.getLocalHost().getHostAddress(),
+								selectedStudent, Integer.parseInt(Config
 										.getParam("port")));
-						InstructorNoa.getServerService()
-								.send(si);
+						InstructorNoa.getServerService().send(si);
 
-						InstructorNoa
-								.getTransmitter()
-								.setRemoteAddr(
-										InetAddress
-												.getByName(selectedStudent));
-						InstructorNoa.getTransmitter()
-								.start("audio");
-						InstructorNoa
-								.setTransmittingType("intercom");
-						InstructorNoa.setIntercomText(i18n
-								.getParam("Stop"));
+						InstructorNoa.getTransmitter().setRemoteAddr(
+								InetAddress.getByName(selectedStudent));
+						InstructorNoa.getTransmitter().start("audio");
+						InstructorNoa.setTransmittingType("intercom");
+						InstructorNoa.setIntercomText(i18n.getParam("Stop"));
 					}
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
-		} else if (((JComponent) card).getClientProperty(
-				"viewMode").equals("groupView")) {
+		} else if (((JComponent) card).getClientProperty("viewMode").equals(
+				"groupView")) {
 			return;
 		}
 	}
