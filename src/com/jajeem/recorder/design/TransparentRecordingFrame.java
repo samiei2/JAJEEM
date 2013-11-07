@@ -88,7 +88,7 @@ public class TransparentRecordingFrame extends JDialog {
 	    
 	    
 	    Icon icon = new ImageIcon(TransparentRecordingFrame.class
-				.getResource("/com/jajeem/images/recording-icon.gif"));
+				.getResource("/icons/noa_en/recording-icon.gif"));
 		lblImage = new JLabel(icon);
 	    
 	    WebPanel webPanel = new WebPanel();

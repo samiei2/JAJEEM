@@ -84,8 +84,12 @@ import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
+import com.jajeem.util.CustomCallAllButton;
+import com.jajeem.util.CustomCellRenderer;
 import com.jajeem.util.CustomJList;
 import com.jajeem.util.CustomPowerButton;
+import com.jajeem.util.CustomPowerPanel;
+import com.jajeem.util.CustomScrollPane;
 import com.jajeem.util.CustomTopButton;
 import com.jajeem.util.CustomTopPanel;
 import com.jajeem.util.JasperReport;
@@ -116,7 +120,7 @@ public class InstructorNoa {
 	private static List<Group> groups = new ArrayList<Group>();
 
 	static WebButton intercomButton = new WebButton();
-	private static WebList groupList = new WebList();
+	private static CustomJList groupList = new CustomJList();
 	private static boolean modeling = false;
 	private static DefaultListModel langListModel = new DefaultListModel();
 	private static WebList langList = new WebList(langListModel);
@@ -300,7 +304,7 @@ public class InstructorNoa {
 				}
 			}
 		});
-
+		
 		getGroupList().setModel(new AbstractListModel() {
 			String[] values = new String[] { i18n.getParam("Group A"),
 					"Group B", "Group C", "Group D", "Group E", "Group F",
@@ -315,6 +319,8 @@ public class InstructorNoa {
 				return values[index];
 			}
 		});
+		
+		getGroupList().setCellRenderer(new CustomCellRenderer());
 
 		groups.add(new Group("Group A", 0, "#FF0000"));
 		groups.add(new Group("Group B", 1, "#00FFFF"));
@@ -334,6 +340,8 @@ public class InstructorNoa {
 
 		WebScrollPane scrollGroupPanel = new WebScrollPane(getGroupList());
 		scrollGroupPanel.setDrawBorder(false);
+		scrollGroupPanel.setOpaque(false);
+		scrollGroupPanel.getViewport().setOpaque(false);
 
 		rightButtonPanel = new WebPanel();
 //		rightButtonPanel.setBackground(new Color(56, 107, 170));
@@ -365,9 +373,8 @@ public class InstructorNoa {
 //		volumeButton.setTopBgColor(new Color(235, 105, 11));
 		volumeButton.setUndecorated(true);
 		volumeButton.setOpaque(false);
-		topButtonPanel.add(volumeButton);
 
-		CustomTopButton callAllButton = new CustomTopButton();
+		CustomCallAllButton callAllButton = new CustomCallAllButton();
 		callAllButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/callall.png")));
 		callAllButton.putClientProperty("key", "callAll");
 		callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -381,7 +388,6 @@ public class InstructorNoa {
 //		callAllButton.setTopBgColor(new Color(235, 105, 11));
 		callAllButton.setOpaque(false);
 		callAllButton.setUndecorated(true);
-		topButtonPanel.add(callAllButton);
 
 		CustomTopButton viewModeButton = new CustomTopButton();
 		viewModeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/viewmode.png")));
@@ -397,7 +403,6 @@ public class InstructorNoa {
 //		viewModeButton.setTopBgColor(new Color(235, 105, 11));
 		viewModeButton.setUndecorated(true);
 		viewModeButton.setOpaque(false);
-		topButtonPanel.add(viewModeButton);
 
 		CustomTopButton languageButton = new CustomTopButton();
 		languageButton.addActionListener(new ActionListener() {
@@ -417,7 +422,6 @@ public class InstructorNoa {
 //		languageButton.setTopBgColor(new Color(235, 105, 11));
 		languageButton.setUndecorated(true);
 		languageButton.setOpaque(false);
-		topButtonPanel.add(languageButton);
 
 		WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
 				PopupWay.downCenter);
@@ -439,8 +443,8 @@ public class InstructorNoa {
 						.addComponent(bottomButtonPanel, 0, 0, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-								.addComponent(topButtonPanel, GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+								.addComponent(topButtonPanel, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
 								.addComponent(webPanel, 0, 0, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)))
@@ -454,9 +458,9 @@ public class InstructorNoa {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
 						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
@@ -464,6 +468,7 @@ public class InstructorNoa {
 		);
 		
 		WebLabel webLabel = new WebLabel();
+		webLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		webLabel.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/logo.png")));
 		
 		WebLabel webLabel_1 = new WebLabel();
@@ -472,16 +477,19 @@ public class InstructorNoa {
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel.createSequentialGroup()
-					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webLabel_1, GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		gl_webPanel.setVerticalGroup(
 			gl_webPanel.createParallelGroup(Alignment.TRAILING)
-				.addComponent(webLabel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 124, Short.MAX_VALUE)
-				.addGroup(Alignment.LEADING, gl_webPanel.createSequentialGroup()
-					.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+				.addGroup(gl_webPanel.createSequentialGroup()
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(webLabel, GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
+							.addContainerGap(26, Short.MAX_VALUE)
+							.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		webPanel.setLayout(gl_webPanel);
@@ -550,16 +558,43 @@ public class InstructorNoa {
 		centerGroupPanel.add(scrollGroupPanel);
 
 		centerListPanel.add(scrollPanel);
-
-		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
-		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
+//		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
-		topButtonPanel.setLayout(new GridLayout(0, 4, 0, 0));
+//		topButtonPanel.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		GroupLayout gl_topButtonPanel = new GroupLayout(topButtonPanel);
+		gl_topButtonPanel.setHorizontalGroup(
+			gl_topButtonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_topButtonPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 160, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 181, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 167, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 159, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_topButtonPanel.setVerticalGroup(
+			gl_topButtonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_topButtonPanel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_topButtonPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		topButtonPanel.setLayout(gl_topButtonPanel);
+		
 		centerListPanel.setBackground(new Color(237, 246, 253));
 		centerGroupPanel.setBackground(new Color(237, 246, 253));
 		scrollGroupPanel.setBackground(new Color(237, 246, 253));
 //		scrollGroupPanel.getViewport().setView(getGroupList());
-		getGroupList().setBackground(new Color(237, 246, 253));
+		getGroupList().setBackground(new Color(0, 0, 0, 0));
+		getGroupList().setOpaque(false);
 		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
 				new Component[] { getDesktopPaneScroll(), centerListPanel,
 						centerGroupPanel }));
@@ -838,8 +873,9 @@ public class InstructorNoa {
 		GroupPanel pcControllerPopupContent = new GroupPanel(3, false,
 				powerOffButton, logOffButton, restartButton, lockButton);
 		pcControllerPopupContent.setMargin(10);
+		
 
-		WebPanel panel = new WebPanel();
+		CustomPowerPanel panel = new CustomPowerPanel();
 		panel.setPreferredSize(new Dimension(160,210));
 		panel.add(pcControllerPopupContent);
 		pcControllerPopupButton.setMargin(5);
@@ -1277,7 +1313,7 @@ public class InstructorNoa {
 		videoButton.setUndecorated(true);
 		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
 //		videoButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/com/jajeem/images/Media_Player.png")));
+//				.getResource("/icons/noa_en/Media_Player.png")));
 		videoButton.setIconTextGap(20);
 		videoButton.putClientProperty("key", "movieplayer");
 		videoButton.setFont(font);
@@ -1535,6 +1571,7 @@ public class InstructorNoa {
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
 		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel, frame);
 		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
+		
 
 		getGroupList().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {

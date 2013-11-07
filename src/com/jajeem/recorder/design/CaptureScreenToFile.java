@@ -396,7 +396,7 @@ public class CaptureScreenToFile {
 		Image cursor;
 		cursor = Toolkit.getDefaultToolkit().getImage(
 				CaptureScreenToFile.class
-						.getResource("/com/jajeem/images/cursor.png"));
+						.getResource("/icons/noa_en/cursor.png"));
 
 		int x = MouseInfo.getPointerInfo().getLocation().x;
 		int y = MouseInfo.getPointerInfo().getLocation().y;

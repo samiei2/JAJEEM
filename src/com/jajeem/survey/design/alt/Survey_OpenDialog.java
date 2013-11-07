@@ -53,7 +53,7 @@ public class Survey_OpenDialog extends JDialog {
 	 */
 	public Survey_OpenDialog(Survey_Main frame) {
 		setTitle("Open");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Survey_OpenDialog.class.getResource("/com/jajeem/images/survey.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Survey_OpenDialog.class.getResource("/icons/noa_en/survey.png")));
 		parentFrame = frame;
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {

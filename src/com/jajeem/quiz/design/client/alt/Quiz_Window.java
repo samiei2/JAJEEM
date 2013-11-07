@@ -129,7 +129,7 @@ public class Quiz_Window extends WebFrame {
 	public Quiz_Window(Run run) {
 		setTitle("Quiz");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Quiz_Window.class.getResource("/com/jajeem/images/quiz.png")));
+				Quiz_Window.class.getResource("/icons/noa_en/quiz.png")));
 		// TODO remove code below
 		// sid = new Random().nextInt(Integer.MAX_VALUE);
 

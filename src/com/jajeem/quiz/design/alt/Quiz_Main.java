@@ -98,7 +98,7 @@ public class Quiz_Main extends WebFrame {
 		currentRun = new Run();
 		mainFrame = this;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Quiz_Main.class.getResource("/com/jajeem/images/quiz.png")));
+				Quiz_Main.class.getResource("/icons/noa_en/quiz.png")));
 		setTitle("Quiz");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 987, 683);
@@ -162,37 +162,37 @@ public class Quiz_Main extends WebFrame {
 		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
 		wbtnNew.setText("New");
 		wbtnNew.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/com/jajeem/images/Addx16.png")));
+				.getResource("/icons/noa_en/Addx16.png")));
 
 		wbtnOpen = new WebButton();
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnOpen.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/folder_green_open-x16.png")));
+		wbtnOpen.setIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/folder_green_open-x16.png")));
 		wbtnOpen.setText("Open");
 
 		wbtnSave = new WebButton();
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSave.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/documentx16.png")));
+		wbtnSave.setIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/documentx16.png")));
 		wbtnSave.setText("Save");
 
 		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/documentx16.png")));
+		wbtnSaveResults.setIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/documentx16.png")));
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setVisible(false);
 
 		wbtnStart = new WebButton();
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnStart.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/startx16.png")));
+		wbtnStart.setIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/startx16.png")));
 		wbtnStart.setText("Start");
 
 		wbtnContent = new WebButton();
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnContent.setIcon(new ImageIcon(Quiz_Main.class.getResource("/com/jajeem/images/contentx16.png")));
+		wbtnContent.setIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/contentx16.png")));
 		wbtnContent.setText("Content");
 		wbtnContent.setEnabled(false);
 		
@@ -349,7 +349,7 @@ public class Quiz_Main extends WebFrame {
 					wbtnSaveResults.setVisible(false);
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/startx16.png")));
+							.getResource("/icons/noa_en/startx16.png")));
 					wbtnStart.setEnabled(true);
 
 					eventsEnabled = false;
@@ -389,7 +389,7 @@ public class Quiz_Main extends WebFrame {
 				wbtnSaveResults.setVisible(false);
 				wbtnStart.setText("Start");
 				wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-						.getResource("/com/jajeem/images/startx16.png")));
+						.getResource("/icons/noa_en/startx16.png")));
 				wbtnStart.setEnabled(true);
 
 				eventsEnabled = false;
@@ -490,7 +490,7 @@ public class Quiz_Main extends WebFrame {
 					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/stop-redx16.png")));
+							.getResource("/icons/noa_en/stop-redx16.png")));
 					CardLayout cl = (CardLayout) (webPanel.getLayout());
 					cl.show(webPanel, "secondPage");
 					secondPage.LoadQuiz(currentQuiz);
@@ -506,7 +506,7 @@ public class Quiz_Main extends WebFrame {
 					}
 					wbtnStart.setText("Start");
 					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/com/jajeem/images/startx16.png")));
+							.getResource("/icons/noa_en/startx16.png")));
 					wbtnStart.setEnabled(false);
 				} // / end else
 			}

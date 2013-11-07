@@ -1,7 +1,9 @@
 package com.jajeem.core.design;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
@@ -18,7 +20,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.jitsi.examples.AVReceiveOnly;
@@ -26,8 +30,8 @@ import org.jitsi.examples.AVSendOnly;
 import org.jitsi.examples.AVTransmit2;
 
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
@@ -39,15 +43,21 @@ import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.recorder.design.Recorder;
+import com.jajeem.recorder.design.RecorderStudent;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
+import com.jajeem.util.CustomButton;
 import com.jajeem.util.i18n;
+import com.sun.awt.AWTUtilities;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Student {
 
-	private static JFrame frmJajeemProject;
-	private static JFrame mainFram;
-	private static WebButton intercomButton;
+	private static WebDialog frmJajeemProject;
+	private static WebDialog mainFram;
+	private static CustomButton intercomButton;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -60,6 +70,7 @@ public class Student {
 	private static com.jajeem.core.model.Student studentModel;
 	private static boolean granted = false;
 
+	Font font = new Font("Arial", Font.BOLD, 20);
 	/**
 	 * Launch the application.
 	 */
@@ -108,14 +119,18 @@ public class Student {
 	 */
 	private void initialize() throws Exception {
 		WebLookAndFeel.setDecorateFrames(true);
-		setFrmJajeemProject(new WebFrame());
+		setFrmJajeemProject(new WebDialog());
+		
 		mainFram = getFrmJajeemProject();
 		mainFram.setResizable(false);
 		mainFram.setAlwaysOnTop(true);
 		mainFram.setTitle(i18n.getParam("Classmate"));
+//		mainFram.setUndecorated(true);
+//		System.setProperty("sun.java2d.noddraw", "true");
+//	    AWTUtilities.setWindowOpaque(mainFram, false);
 		// frmJajeemProject.setIconImage(Toolkit.getDefaultToolkit().getImage(
 		// Student.class.getResource("/icons/menubar/jajeem.jpg")));
-		getFrmJajeemProject().setBounds(0, 400, 280, 550);
+		getFrmJajeemProject().setBounds(0, 400, 311, 460);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -144,64 +159,134 @@ public class Student {
 		WebPanel trailingPanel = new WebPanel();
 		trailingPanel.setDrawSides(false, true, true, false);
 
-		GridLayout grid = new GridLayout(0, 1);
-		panel.setLayout(grid);
-
 		ImageIcon imgToolTip = new ImageIcon(ImageIO.read(Student.class
 				.getResourceAsStream(("/icons/menubar/tooltip.png"))));
 		TooltipManager.setDefaultDelay(500);
 
 		ImageIcon imgMessage = new ImageIcon(
 				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/applications_style1/message_text.png"))));
-		WebButton messageButton = new WebButton(imgMessage);
+						.getResourceAsStream(("/icons/noa_en/chat.png"))));
+		CustomButton messageButton = new CustomButton(imgMessage);
+		messageButton.setUndecorated(true);
+		messageButton.setHorizontalAlignment(SwingConstants.LEADING);
+		messageButton.setIconTextGap(20);
+		messageButton.setFont(font);
+		messageButton.setForeground(Color.WHITE);
+		messageButton.setText("Call Instructor");
 		TooltipManager.setTooltip(messageButton, imgToolTip,
 				i18n.getParam("Send a message to your instructor."),
 				TooltipWay.down);
-		panel.add(messageButton);
 
 		ImageIcon imgFile = new ImageIcon(ImageIO.read(Student.class
-				.getResourceAsStream(("/com/jajeem/images/file_upload.png"))));
-		WebButton fileButton = new WebButton(imgFile);
+				.getResourceAsStream(("/icons/noa_en/filesharing.png"))));
+		CustomButton fileButton = new CustomButton(imgFile);
+		fileButton.setUndecorated(true);
+		fileButton.setHorizontalAlignment(SwingConstants.LEADING);
+		fileButton.setIconTextGap(20);
+		fileButton.setFont(font);
+		fileButton.setForeground(Color.WHITE);
+		fileButton.setText("File Manager");
 		TooltipManager.setTooltip(fileButton, imgToolTip,
 				i18n.getParam("Send a file to your instructor."),
 				TooltipWay.down);
-		panel.add(fileButton);
 
 		ImageIcon videoFile = new ImageIcon(ImageIO.read(Student.class
-				.getResourceAsStream(("/com/jajeem/images/MPlayer.png"))));
-		WebButton videoButton = new WebButton(videoFile);
+				.getResourceAsStream(("/icons/noa_en/movieplayer.png"))));
+		CustomButton videoButton = new CustomButton(videoFile);
+		videoButton.setUndecorated(true);
+		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
+		videoButton.setIconTextGap(20);
+		videoButton.setFont(font);
+		videoButton.setForeground(Color.WHITE);
+		videoButton.setText("Movie Player");
 		TooltipManager.setTooltip(videoButton, imgToolTip,
 				i18n.getParam("Video Player"), TooltipWay.down);
-		panel.add(videoButton);
 
 		ImageIcon imgIntercom = new ImageIcon(
 				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/applications_style1/call_teacher.png"))));
-		intercomButton = new WebButton(imgIntercom);
-
+						.getResourceAsStream(("/icons/noa_en/chat.png"))));
+		intercomButton = new CustomButton(imgIntercom);
+		intercomButton.setUndecorated(true);
+		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
+		intercomButton.setIconTextGap(20);
+		intercomButton.setFont(font);
+		intercomButton.setForeground(Color.WHITE);
+		intercomButton.setText("Chat");
 		TooltipManager.setTooltip(intercomButton, imgToolTip,
 				i18n.getParam("Call Instructor."), TooltipWay.down);
-		panel.add(intercomButton);
 
 		ImageIcon recordIntercom = new ImageIcon(
 				ImageIO.read(Student.class
-						.getResourceAsStream(("/icons/noa/right_panel/mic_student.png"))));
-		WebButton recordButton = new WebButton(recordIntercom);
+						.getResourceAsStream(("/icons/noa_en/recording.png"))));
+		CustomButton recordButton = new CustomButton(recordIntercom);
+		recordButton.setUndecorated(true);
+		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
+		recordButton.setIconTextGap(20);
+		recordButton.setFont(font);
+		recordButton.setForeground(Color.WHITE);
+		recordButton.setText("Recording");
 		TooltipManager.setTooltip(recordButton, imgToolTip,
 				i18n.getParam("Recorder"), TooltipWay.down);
-		panel.add(recordButton);
 
 		ImageIcon accountImage = new ImageIcon(ImageIO.read(Student.class
-				.getResourceAsStream(("/icons/noa/right_panel/accounts.png"))));
-		WebButton accountButton = new WebButton(accountImage);
+				.getResourceAsStream(("/icons/noa_en/account.png"))));
+		CustomButton accountButton = new CustomButton(accountImage);
+		accountButton.setUndecorated(true);
+		accountButton.setHorizontalAlignment(SwingConstants.LEADING);
+		accountButton.setIconTextGap(20);
+		accountButton.setFont(font);
+		accountButton.setForeground(Color.WHITE);
+		accountButton.setText("Account Manager");
 		TooltipManager.setTooltip(accountButton, imgToolTip,
 				i18n.getParam("My Account"), TooltipWay.down);
-		panel.add(accountButton);
 
 		WebPanel panel2 = new WebPanel();
-		panel2.setLayout(new BorderLayout());
-		panel2.add(panel, BorderLayout.NORTH);
+		GroupLayout gl_panel2 = new GroupLayout(panel2);
+		gl_panel2.setHorizontalGroup(
+			gl_panel2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel2.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 305, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel2.setVerticalGroup(
+			gl_panel2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel2.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(30, Short.MAX_VALUE))
+		);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(messageButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addComponent(fileButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addComponent(videoButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addComponent(intercomButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addComponent(recordButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						.addComponent(accountButton, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(messageButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(fileButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(videoButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(intercomButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(recordButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(accountButton, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+					.addGap(28))
+		);
+		panel.setLayout(gl_panel);
+		panel2.setLayout(gl_panel2);
 
 		messageButton.addActionListener(new ActionListener() {
 
@@ -306,7 +391,7 @@ public class Student {
 				boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
 				WebLookAndFeel.setDecorateDialogs(true);
 
-				Recorder recorder = new Recorder(new ArrayList<String>(),
+				RecorderStudent recorder = new RecorderStudent(new ArrayList<String>(),
 						false, false);
 				recorder.setLocationRelativeTo(getFrmJajeemProject());
 				recorder.setVisible(true);
@@ -364,11 +449,11 @@ public class Student {
 		Student.vncViewer = vncViewer;
 	}
 
-	public static JFrame getMainFram() {
+	public static WebDialog getMainFram() {
 		return mainFram;
 	}
 
-	public void setMainFram(JFrame frmJajeemProject) {
+	public void setMainFram(WebDialog frmJajeemProject) {
 		this.mainFram = frmJajeemProject;
 	}
 
@@ -409,11 +494,11 @@ public class Student {
 		intercomButton.setEnabled(true);
 	}
 
-	public static JFrame getFrmJajeemProject() {
+	public static WebDialog getFrmJajeemProject() {
 		return frmJajeemProject;
 	}
 
-	public static void setFrmJajeemProject(JFrame frmJajeemProject) {
+	public static void setFrmJajeemProject(WebDialog frmJajeemProject) {
 		Student.frmJajeemProject = frmJajeemProject;
 	}
 

@@ -65,7 +65,7 @@ public class Quiz_OpenDialog extends JDialog {
 		setTitle("Quizzes");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Quiz_OpenDialog.class
-						.getResource("/com/jajeem/images/quiz.png")));
+						.getResource("/icons/noa_en/quiz.png")));
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
 			@Override

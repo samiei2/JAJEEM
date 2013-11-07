@@ -121,7 +121,7 @@ public class Survey_Window extends WebFrame {
 		setTitle("Survey");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Survey_Window.class
-						.getResource("/com/jajeem/images/survey.png")));
+						.getResource("/icons/noa_en/survey.png")));
 		// TODO remove code below
 		sid = new Random().nextInt(Integer.MAX_VALUE);
 		privateStudent.setId(sid);

@@ -133,6 +133,7 @@ public class InstructorNoaUtil {
 	 * ***************** Right Panel Events **************************
 	 */
 	Component intl;
+	protected static boolean callAllActive = false;
 
 	public void addEventsRightPanel(final WebPanel rightButtonPanel) {
 
@@ -2092,6 +2093,8 @@ public class InstructorNoaUtil {
 									button.setIcon(new ImageIcon(
 											InstructorNoa.class
 													.getResource("/icons/noa_en/callall.png")));
+									callAllActive = false;
+									button.repaint();
 								} else {
 									StartCallAllCommand sm = new StartCallAllCommand(
 											InetAddress.getLocalHost()
@@ -2105,6 +2108,8 @@ public class InstructorNoaUtil {
 											InstructorNoa.class
 													.getResource("/icons/noa_en/callalloff.png")));
 									button.setText(i18n.getParam("Stop"));
+									callAllActive = true;
+									button.repaint();
 								}
 
 							} catch (Exception e1) {
@@ -2927,5 +2932,9 @@ public class InstructorNoaUtil {
 		InstructorNoa.getConversationIps().add(ipTo);
 		InstructorNoa.getConversationPairs().add(ipFrom + "|" + ipTo);
 
+	}
+	
+	public static boolean getCallAllActive(){
+		return callAllActive;
 	}
 }

@@ -39,7 +39,10 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import com.jajeem.util.Config;
+import com.jajeem.util.CustomStudentFrame;
 import com.jajeem.util.StripedTableCellRenderer;
+import com.jajeem.util.i18n;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -241,4 +244,5 @@ public class StudentDialog extends JDialog {
 			EventList<com.jajeem.core.model.Student> studentList) {
 		this.studentList = studentList;
 	}
+	
 }

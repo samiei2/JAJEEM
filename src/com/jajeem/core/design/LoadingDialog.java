@@ -64,13 +64,13 @@ public class LoadingDialog extends JDialog{
 	    System.setProperty("sun.java2d.noddraw", "true");
 	    AWTUtilities.setWindowOpaque(this, false);
 	    
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoadingDialog.class.getResource("/com/jajeem/images/testdrive.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoadingDialog.class.getResource("/icons/noa_en/1.jpg")));
 		
 		setBounds(100, 100, 696, 451);
 		int scaledWidth, scaledHeight;
 		{
 			
-			myImage = new ImageIcon(LoadingDialog.class.getResource("/com/jajeem/images/testdrive.jpg"));
+			myImage = new ImageIcon(LoadingDialog.class.getResource("/icons/noa_en/1.jpg"));
 			
 			int originalWidth = myImage.getIconWidth();
 			int originalHeight = myImage.getIconHeight();

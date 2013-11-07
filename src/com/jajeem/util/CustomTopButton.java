@@ -12,14 +12,19 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import com.alee.laf.button.WebButton;
+import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.InstructorNoaUtil;
 
 public class CustomTopButton extends WebButton{
 	BufferedImage background;
+	BufferedImage backgroundactive;
 	
 	public CustomTopButton(){
 		try {
 			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
 			background = ImageIO.read(inp);
+			inp = CustomButton.class.getResource("/icons/noa_en/topbuttonactive.png");
+			backgroundactive = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -30,6 +35,8 @@ public class CustomTopButton extends WebButton{
 		try {
 			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
 			background = ImageIO.read(inp);
+			inp = CustomButton.class.getResource("/icons/noa_en/topbuttonactive.png");
+			backgroundactive = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,6 +47,8 @@ public class CustomTopButton extends WebButton{
 		try {
 			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
 			background = ImageIO.read(inp);
+			inp = CustomButton.class.getResource("/icons/noa_en/topbuttonactive.png");
+			backgroundactive = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +59,8 @@ public class CustomTopButton extends WebButton{
 		try {
 			URL inp = CustomButton.class.getResource("/icons/noa_en/topbutton.png");
 			background = ImageIO.read(inp);
+			inp = CustomButton.class.getResource("/icons/noa_en/topbuttonactive.png");
+			backgroundactive = ImageIO.read(inp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -65,7 +76,7 @@ public class CustomTopButton extends WebButton{
 //        super.paintComponent(g);
 		
 		Graphics g2 = g.create();
-        g2.drawImage(background, 0, 0, getWidth()-25, getHeight(), null);
+		g2.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         g2.dispose();
         super.paintComponent(g);
 	}
