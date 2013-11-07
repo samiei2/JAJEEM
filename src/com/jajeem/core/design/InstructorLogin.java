@@ -69,7 +69,7 @@ public class InstructorLogin extends JFrame {
 
 						@Override
 						public void run() {
-							final LoadingDialog load = new LoadingDialog();
+							final LoadingDialog2 load = new LoadingDialog2();
 							load.setVisible(true);
 							Timer timer = new Timer();
 							timer.schedule(new TimerTask() {
@@ -78,7 +78,7 @@ public class InstructorLogin extends JFrame {
 								public void run() {
 									load.setVisible(false);
 								}
-							}, 5000);
+							}, 6000);
 						}
 					});
 					loading.start();

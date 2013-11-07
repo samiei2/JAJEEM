@@ -1,23 +1,28 @@
 package com.jajeem.core.design;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.Border;
 
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.progressbar.WebProgressBar;
+import com.jajeem.util.CustomTopPanel;
 import com.sun.awt.AWTUtilities;
 
 public class LoadingDialog2 extends JDialog{
@@ -29,7 +34,6 @@ public class LoadingDialog2 extends JDialog{
 	public static void main(String[] args) {
 		try {
 			LoadingDialog2 dialog = new LoadingDialog2();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,12 +44,6 @@ public class LoadingDialog2 extends JDialog{
 	 * Create the dialog.
 	 */
 	public LoadingDialog2() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				
-			}
-		});
 		setResizable(false);
 	    setUndecorated(true);
 	    
@@ -53,78 +51,53 @@ public class LoadingDialog2 extends JDialog{
 	    setAlwaysOnTop(true);
 	    System.setProperty("sun.java2d.noddraw", "true");
 	    AWTUtilities.setWindowOpaque(this, false);
+	    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	    setBounds(0,0,screen.width,screen.height);
 	    
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoadingDialog.class.getResource("/icons/noa_en/loadingfinal.gif")));
-		
-		setBounds(100, 100, 696, 451);
-		int scaledWidth, scaledHeight;
-		{
-			
-			myImage = new ImageIcon(LoadingDialog.class.getResource("/icons/noa_en/loadingfinal.gif"));
-			
-			int originalWidth = myImage.getIconWidth();
-			int originalHeight = myImage.getIconHeight();
-
-			// Then calculate the ratio
-			float imageRatio = (float) ((float)originalWidth / (float)originalHeight);
-
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			float screenRatio = (float) ((float)screenSize.width / (float)screenSize.height);
-
-			if(imageRatio <= screenRatio) {
-			// The scaled size is based on the height
-			scaledHeight = screenSize.height;
-			scaledWidth = (int) (scaledHeight * imageRatio);
-			} else {
-			// The scaled size is based on the width
-			scaledWidth = screenSize.width;
-			scaledHeight = (int) (scaledWidth / imageRatio);
-			}
-
-			myImage = new ImageIcon(myImage.getImage().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST));
-		}
-		
-		Toolkit tk = Toolkit.getDefaultToolkit();  
-	    int xSize = ((int) tk.getScreenSize().getWidth());  
-	    int ySize = ((int) tk.getScreenSize().getHeight()); 
-	    setSize(scaledWidth, scaledHeight);
-	    setLocationRelativeTo(null);
-	    
-	    WebPanel webPanel = new WebPanel();
-	    webPanel.setOpaque(false);
-	    getContentPane().add(webPanel, BorderLayout.CENTER);
-	    
-	    WebLabel wblblStatus = new WebLabel();
-	    wblblStatus.setText("Initializing...");
-	    
-	    WebProgressBar webProgressBar = new WebProgressBar();
-	    webProgressBar.setOpaque(true);
-	    webProgressBar.setIndeterminate(true);
-	    GroupLayout gl_webPanel = new GroupLayout(webPanel);
-	    gl_webPanel.setHorizontalGroup(
-	    	gl_webPanel.createParallelGroup(Alignment.TRAILING)
-	    		.addGroup(gl_webPanel.createSequentialGroup()
-	    			.addContainerGap()
-	    			.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
-	    				.addComponent(webProgressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
-	    				.addComponent(wblblStatus, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE))
-	    			.addContainerGap())
+	    WebPanel webpanel = new WebPanel();
+	    webpanel.setOpaque(false);
+	    CustomLoadingPanel panel=new CustomLoadingPanel();
+	    setContentPane(webpanel);
+	    GroupLayout gl_webpanel = new GroupLayout(webpanel);
+	    gl_webpanel.setHorizontalGroup(
+	    	gl_webpanel.createParallelGroup(Alignment.LEADING)
+	    		.addGroup(Alignment.TRAILING, gl_webpanel.createSequentialGroup()
+	    			.addContainerGap(538, Short.MAX_VALUE)
+	    			.addComponent(panel, GroupLayout.PREFERRED_SIZE, 573, GroupLayout.PREFERRED_SIZE)
+	    			.addGap(489))
 	    );
-	    gl_webPanel.setVerticalGroup(
-	    	gl_webPanel.createParallelGroup(Alignment.TRAILING)
-	    		.addGroup(gl_webPanel.createSequentialGroup()
-	    			.addContainerGap(370, Short.MAX_VALUE)
-	    			.addComponent(wblblStatus, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-	    			.addPreferredGap(ComponentPlacement.UNRELATED)
-	    			.addComponent(webProgressBar, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-	    			.addContainerGap())
+	    gl_webpanel.setVerticalGroup(
+	    	gl_webpanel.createParallelGroup(Alignment.LEADING)
+	    		.addGroup(gl_webpanel.createSequentialGroup()
+	    			.addGap(68)
+	    			.addComponent(panel, GroupLayout.PREFERRED_SIZE, 747, GroupLayout.PREFERRED_SIZE)
+	    			.addContainerGap(85, Short.MAX_VALUE))
 	    );
-	    webPanel.setLayout(gl_webPanel);
+	    webpanel.setLayout(gl_webpanel);
 	}
-	
+}
+
+class CustomLoadingPanel extends WebPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Image myImage;
+	BufferedImage originalImage;
+	{
+		try {
+			myImage = Toolkit.getDefaultToolkit().getImage(LoadingDialog2.class.getResource("/icons/noa_en/loadingfinal.gif"));
+			originalImage = ImageIO.read(
+					CustomTopPanel.class.getResource("/icons/noa_en/loadingfinal.gif"));
+		} catch (Exception e) {
+		}
+		setBackground(new Color(0,0,0,0));
+	}
 	@Override
-	public void paint(Graphics g){
-		super.paintComponents(g);
-        g.drawImage(myImage.getImage(), 0, 0, null);
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics g2 = g.create();
+        g2.drawImage(myImage, 0, 0 , originalImage.getWidth(),originalImage.getHeight(), this);
+        g2.dispose();
 	}
 }
