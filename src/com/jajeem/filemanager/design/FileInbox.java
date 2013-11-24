@@ -1,18 +1,23 @@
 package com.jajeem.filemanager.design;
 
-import javax.swing.JPanel;
-
-import com.alee.laf.panel.WebPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
-import com.google.common.io.Files;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -21,15 +26,6 @@ import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
-
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 public class FileInbox extends WebPanel {
 	private WebTable webTable;

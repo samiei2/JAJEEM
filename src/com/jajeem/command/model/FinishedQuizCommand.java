@@ -1,7 +1,5 @@
 package com.jajeem.command.model;
 
-import com.jajeem.events.QuizFinished;
-import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 
 public class FinishedQuizCommand extends Command {

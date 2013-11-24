@@ -12,6 +12,7 @@ import com.jajeem.util.WinRegistry;
 
 public class StartApplicationCommandHanlder implements ICommandHandler {
 
+	@SuppressWarnings("unused")
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		String pathToStartMenu = WinRegistry

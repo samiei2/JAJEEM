@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
+import javax.swing.JOptionPane;
 
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
@@ -95,6 +96,7 @@ public class CaptureScreenToFile {
 					"Choose directory to save");
 
 			directoryChooser.setVisible(true);
+			directoryChooser.setAlwaysOnTop(true);
 
 			if (directoryChooser.getResult() == StyleConstants.OK_OPTION) {
 				File filetmp = directoryChooser.getSelectedFolder();
@@ -141,7 +143,6 @@ public class CaptureScreenToFile {
 		try {
 			Thread.sleep(30000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		StopCapture();
@@ -151,11 +152,11 @@ public class CaptureScreenToFile {
 		try {
 			if (file == "")
 				file = "temp.mp4";
-			final String outFile;
+			final File outFile;
 			if (!new File(outputFile.getPath()).exists())
 				new File(outputFile.getPath()).mkdir();
-			outFile = outputFile.getPath() + "/recording - "
-					+ System.currentTimeMillis() + ".avi";
+			outFile = new File(outputFile.getPath() , "recording - "
+					+ System.currentTimeMillis() + ".avi");
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
@@ -174,7 +175,7 @@ public class CaptureScreenToFile {
 
 						// First, let's make a IMediaWriter to write the file.
 						final IMediaWriter writer = ToolFactory
-								.makeWriter(outFile);
+								.makeWriter(outFile.getAbsolutePath());
 
 						// We tell it we're going to add one video stream, with
 						// id
@@ -231,10 +232,10 @@ public class CaptureScreenToFile {
 
 	public static void StartCaputreWithAudio(String file) {
 		try {
-			final String outFile;
+			final File outFile;
 			if (!new File(outputFile.getPath()).exists())
 				new File(outputFile.getPath()).mkdir();
-			outFile = outputFile.getPath() + "/temp.mp4";
+			outFile = new File(outputFile.getPath(),"temp.mp4");
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
@@ -254,7 +255,7 @@ public class CaptureScreenToFile {
 
 						// First, let's make a IMediaWriter to write the file.
 						final IMediaWriter writer = ToolFactory
-								.makeWriter(outFile);
+								.makeWriter(outFile.getAbsolutePath());
 
 						// We tell it we're going to add one video stream, with
 						// id
@@ -296,8 +297,8 @@ public class CaptureScreenToFile {
 						writer.close();
 						capt.stop();
 						Thread.sleep(1000);
-						FileOutputStream out = new FileOutputStream(outputFile
-								.getPath() + "/temp.mp3");
+						FileOutputStream out = new FileOutputStream(new File(outputFile
+								.getPath(),"temp.mp3"));
 						AudioSystem.write(capt.audioInputStream,
 								AudioFileFormat.Type.AIFF, out);
 						out.flush();
@@ -309,8 +310,16 @@ public class CaptureScreenToFile {
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
+						
 						final String server = ClientSession.getReturnRecordedFileServer();
-						SendErrorCommand(server);
+						if(isClient)
+							SendErrorCommand(server);
+						running = false;
+						if(!isClient){
+							overlayScreen.dispose();
+							JOptionPane.showMessageDialog(null, 
+									"An error has occured.\nPlease stop the recording and start again.Try changing the save folder.\nIf the problem persists contact administrator!");
+						}
 					}
 				}
 			});
@@ -319,7 +328,13 @@ public class CaptureScreenToFile {
 		} catch (Throwable e) {
 			System.err.println("an error occurred: " + e.getMessage());
 			final String server = ClientSession.getReturnRecordedFileServer();
-			SendErrorCommand(server);
+			if(isClient)
+				SendErrorCommand(server);
+			running = false;
+			if(!isClient){
+				overlayScreen.setVisible(false);
+				overlayScreen.dispose();
+			}
 		}
 	}
 
@@ -331,7 +346,7 @@ public class CaptureScreenToFile {
 				overlayScreen.dispose();
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -409,20 +424,21 @@ public class CaptureScreenToFile {
 	}
 
 	public static void Synchornize() {
-		String filenamevideo = outputFile.getPath() + "/temp.mp4"; // this is
+		String filenamevideo = new File(outputFile.getPath() , "temp.mp4").getAbsolutePath(); // this is
 																	// the input
 		// file for video.
 		// you can change
 		// extension
-		String filenameaudio = outputFile.getPath() + "/temp.mp3"; // this is
+		String filenameaudio = new File(outputFile.getPath() , "temp.mp3").getAbsolutePath(); // this is
 																	// the input
 		// file for audio.
 		// you can change
 		// extension
 
-		String fileName = outputFile.getPath() + "/recording - "
-				+ System.currentTimeMillis() + ".mp4";
+		String fileName = new File(outputFile.getPath() , "recording - "
+				+ System.currentTimeMillis() + ".mp4").getAbsolutePath();
 		setFileName(fileName);
+		ClientSession.setRecordedFileName(fileName);
 		IMediaWriter mWriter = ToolFactory.makeWriter(fileName); // output
 		// file
 
@@ -545,8 +561,8 @@ public class CaptureScreenToFile {
 
 		mWriter.flush();
 		mWriter.close();
-		new File(outputFile.getPath() + "/temp.mp4").delete();
-		new File(outputFile.getPath() + "/temp.mp3").delete();
+		new File(outputFile.getPath() , "temp.mp4").delete();
+		new File(outputFile.getPath() , "temp.mp3").delete();
 
 		if (isClient)
 			ReturnFileToServer();

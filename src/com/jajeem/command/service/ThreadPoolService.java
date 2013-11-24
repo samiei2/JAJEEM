@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ThreadPoolService {
 	static ArrayList<Thread> pool = new ArrayList<>();
+	@SuppressWarnings("unused")
 	public ThreadPoolService(){
 		Thread t = new Thread(new Runnable() {
 			

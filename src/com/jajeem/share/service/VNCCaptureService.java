@@ -25,6 +25,7 @@ public class VNCCaptureService implements ICaptureService {
 		getViewer().Start();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void stopClient() {
 		viewer.Stop();

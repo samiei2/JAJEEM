@@ -7,10 +7,10 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import com.alee.laf.optionpane.WebOptionPane;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -27,23 +27,27 @@ public class InstructorServer {
 	public void Startup(){
 		fileEvents.addEventListener(new FileTransferEventListener() {
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void success(FileTransferObject evt, Class t) {
 				// 
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
 				// 
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileSendRequest(FileTransferObject evt, Class t) {
 				//
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileAcceptRequest(final FileTransferObject evt, Class t) {
 				if(t!=InstructorServer.class)
@@ -78,7 +82,12 @@ public class InstructorServer {
 							String inboxPath = FileUtil.getInboxPath();
 						    File inbox = new File(inboxPath);
 						    inbox.mkdirs();
-						    File file = new File(inbox,client.getInetAddress().getHostAddress());
+						    File file;
+						    String StudentName = InstructorNoa.getStudentNameByIP(client.getInetAddress().getHostAddress());
+						    if(StudentName!=null && StudentName!="")
+						    	file = new File(inbox,StudentName);
+						    else
+						    	file = new File(inbox,client.getInetAddress().getHostAddress());
 						    file.mkdir();
 						    File output = new File(file,nameStr);
 						    FileOutputStream fos = new FileOutputStream(output);
@@ -118,11 +127,13 @@ public class InstructorServer {
 				progwin.setVisible(true);
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
 				
 			}
 
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileRejectRequest(FileTransferObject evt, Class t) {
 				if(t!=InstructorServer.class)
@@ -153,6 +164,7 @@ public class InstructorServer {
 		}).start(); 
 	}
 
+	@SuppressWarnings("resource")
 	private void StartFileListenerServer() {
 		try {
 			ServerSocket internalsocket=new ServerSocket(54321);
@@ -171,6 +183,7 @@ public class InstructorServer {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	private void StartFileCollectionListenerServer() {
 		try {
 			ServerSocket internalsocket=new ServerSocket(54322);

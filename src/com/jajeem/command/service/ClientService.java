@@ -11,13 +11,11 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
-import org.junit.internal.runners.statements.RunAfters;
 
 import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
@@ -35,9 +33,12 @@ import com.jajeem.command.handler.SendRecordingSuccessCommandHandler;
 import com.jajeem.command.handler.SendSpeechFileCommandHandler;
 import com.jajeem.command.handler.SendSurveyResponseCommandHandler;
 import com.jajeem.command.handler.SetAuthenticateCommandHanlder;
+import com.jajeem.command.handler.SetDuplicateLoginCommandHanlder;
 import com.jajeem.command.handler.SetGrantCommandHanlder;
 import com.jajeem.command.handler.SetInternetCommandHandler;
 import com.jajeem.command.handler.SetLockCommandHandler;
+import com.jajeem.command.handler.SetStudentLogoutCommandHanlder;
+import com.jajeem.command.handler.SetTeacherLogoutCommandHanlder;
 import com.jajeem.command.handler.SetPowerCommandHandler;
 import com.jajeem.command.handler.SetVolumeCommandHandler;
 import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
@@ -46,13 +47,13 @@ import com.jajeem.command.handler.StartCallAllCommandHanlder;
 import com.jajeem.command.handler.StartCaptureCommandHandler;
 import com.jajeem.command.handler.StartIntercomCommandHandler;
 import com.jajeem.command.handler.StartModelCommandHanlder;
+import com.jajeem.command.handler.StartMoviePlayerCommandHandler;
 import com.jajeem.command.handler.StartQuizCommandHandler;
 import com.jajeem.command.handler.StartRecorderCommandHandler;
 import com.jajeem.command.handler.StartSpeechCommandHandler;
 import com.jajeem.command.handler.StartSurveyCommandHandler;
 import com.jajeem.command.handler.StartUpCommandHandler;
 import com.jajeem.command.handler.StartVideoChatCommandHandler;
-import com.jajeem.command.handler.StartMoviePlayerCommandHandler;
 import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCallAllCommandHanlder;
@@ -67,6 +68,7 @@ import com.jajeem.command.handler.StopWhiteBoardCommandHanlder;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
+import com.jajeem.command.model.DuplicateLoginCommand;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.FinishedSurveyCommand;
 import com.jajeem.command.model.GetCourseListCommand;
@@ -74,6 +76,8 @@ import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
+import com.jajeem.command.model.StudentLogoutCommand;
+import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
@@ -89,13 +93,13 @@ import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartCaptureCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
+import com.jajeem.command.model.StartMoviePlayerCommand;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StartSpeechCommand;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartVideoChatCommand;
-import com.jajeem.command.model.StartMoviePlayerCommand;
 import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
@@ -900,6 +904,51 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 					
+				} else if (cmd instanceof DuplicateLoginCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetDuplicateLoginCommandHanlder duplicateLogin = new SetDuplicateLoginCommandHanlder();
+							try {
+								duplicateLogin.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof TeacherLogoutCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetTeacherLogoutCommandHanlder logout = new SetTeacherLogoutCommandHanlder();
+							try {
+								logout.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
+				} else if (cmd instanceof StudentLogoutCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							SetStudentLogoutCommandHanlder logout = new SetStudentLogoutCommandHanlder();
+							try {
+								logout.run(cmd);
+							} catch (Exception e) {
+								
+								e.printStackTrace();
+							}
+						}
+					});
+					
 				}
 
 			} catch (Exception ex) {
@@ -935,6 +984,7 @@ class MyThread implements Runnable {
 		fileName = fname;
 	}
 
+	@SuppressWarnings({ "resource", "unused" })
 	public void run() {
 		try {
 			System.out.println("Ip : " + ip);

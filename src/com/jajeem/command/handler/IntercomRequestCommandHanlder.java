@@ -1,10 +1,7 @@
 package com.jajeem.command.handler;
 
-import java.awt.TrayIcon.MessageType;
 import java.net.InetAddress;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.alee.laf.optionpane.WebOptionPane;
@@ -13,7 +10,6 @@ import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.message.design.MessageReceive;
 import com.jajeem.util.Config;
 
 public class IntercomRequestCommandHanlder implements ICommandHandler {

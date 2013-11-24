@@ -1,6 +1,5 @@
 package com.jajeem.command.model;
 
-import java.io.File;
 
 public class SendFileAssignmentCommand extends Command{
 

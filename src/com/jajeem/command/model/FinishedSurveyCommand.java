@@ -7,6 +7,10 @@ public class FinishedSurveyCommand extends Command {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private String server;
 	private Run run;
 	public FinishedSurveyCommand(String from, String to, int port) {

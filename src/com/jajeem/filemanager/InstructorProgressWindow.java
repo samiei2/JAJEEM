@@ -1,25 +1,22 @@
 package com.jajeem.filemanager;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.progressbar.WebProgressBar;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+
 import com.alee.laf.label.WebLabel;
+import com.alee.laf.progressbar.WebProgressBar;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.filemanager.design.FileSendProgressWindow;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Dialog.ModalityType;
-
+@SuppressWarnings("serial")
 public class InstructorProgressWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -82,12 +79,13 @@ public class InstructorProgressWindow extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 		event.addEventListener(new FileTransferEventListener() {
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void success(FileTransferObject evt, Class t) {
-				// TODO Auto-generated method stub
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
 				if(t!=InstructorProgressWindow.class)
@@ -95,27 +93,27 @@ public class InstructorProgressWindow extends JDialog {
 				setProgressValue((int)evt.getProgressValue());
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileSendRequest(FileTransferObject evt, Class t) {
-				// TODO Auto-generated method stub
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileRejectRequest(FileTransferObject evt, Class t) {
-				// TODO Auto-generated method stub
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileAcceptRequest(FileTransferObject evt, Class t) {
-				// TODO Auto-generated method stub
 				
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				// TODO Auto-generated method stub
 				
 			}
 		}, FileSendProgressWindow.class);

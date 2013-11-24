@@ -1,9 +1,11 @@
 package com.jajeem.util;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Dictionary;
+import java.util.HashMap;
 
-import com.jajeem.core.design.StudentLogin;
+import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
+
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.room.model.Course;
@@ -22,7 +24,9 @@ public class Session {
 	private static boolean[] isSurveyWindowsOpen = new boolean[15];
 	private static boolean[] isWhiteboardWindowsOpen = new boolean[15];
 	private static ArrayList<String> recordingList = new ArrayList<>();
+	private static HashMap<String,String> loggedInStudents = new HashMap();
 	private static Course course;
+	
 	
 	
 	public static void setInstructor(Instructor instructor) {
@@ -120,5 +124,13 @@ public class Session {
 
 	public static void setCourse(Course temp){
 		Session.course = temp;
+	}
+
+	public static HashMap<String,String> getLoggedInStudents() {
+		return loggedInStudents;
+	}
+
+	public static void setLoggedInStudents(HashMap<String,String> loggedInStudents) {
+		Session.loggedInStudents = loggedInStudents;
 	}
 }

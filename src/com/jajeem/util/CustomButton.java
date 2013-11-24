@@ -2,6 +2,7 @@ package com.jajeem.util;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -76,12 +77,12 @@ public class CustomButton extends WebButton{
 		Graphics g2 = g.create();
 		if(background != null){
 			if(isPressed)
-				g2.drawImage(selected, 3, 0, this);
+				g2.drawImage(selected, 3, 0,getWidth(),getHeight(), this);
 			else{
 				if(isRollOver)
-					g2.drawImage(rollover, 3, 0, this);
+					g2.drawImage(rollover, 3, 0,getWidth(),getHeight(), this);
 				else
-					g2.drawImage(background, 3, 0, this);
+					g2.drawImage(background, 3, 0,getWidth(),getHeight(), this);
 			}
 	    }
         g2.dispose();

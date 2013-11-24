@@ -77,6 +77,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 		try {
 			Thread fileSender = new Thread(new Runnable() {
 
+				@SuppressWarnings("resource")
 				@Override
 				public void run() {
 					try {

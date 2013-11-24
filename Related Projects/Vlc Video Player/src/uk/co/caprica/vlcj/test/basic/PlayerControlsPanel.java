@@ -45,7 +45,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
-import com.jajeem.command.model.StartVideoCommand;
+import com.jajeem.command.model.StartMoviePlayerCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Config;
 
@@ -449,7 +449,7 @@ public class PlayerControlsPanel extends JPanel {
 					System.out.println(mediaPlayer.mrl());
 					new Config();
 					ServerService server = new ServerService();
-					StartVideoCommand videoCommand = new StartVideoCommand(
+					StartMoviePlayerCommand videoCommand = new StartMoviePlayerCommand(
 							InetAddress.getLocalHost().getHostAddress(), Config
 									.getParam("broadcastingIp"), Integer
 									.parseInt(Config.getParam("port")));

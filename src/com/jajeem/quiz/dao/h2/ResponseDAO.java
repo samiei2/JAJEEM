@@ -22,6 +22,7 @@ public class ResponseDAO implements IResponseDAO {
 		
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Response create(Response response) throws SQLException {
 
@@ -126,6 +127,7 @@ public class ResponseDAO implements IResponseDAO {
 		return response;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean update(Response response) throws SQLException {
 
@@ -172,6 +174,7 @@ public class ResponseDAO implements IResponseDAO {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean delete(Response response) throws SQLException {
 

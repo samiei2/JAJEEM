@@ -52,7 +52,7 @@ public class LoadingDialog2 extends JDialog{
 	    System.setProperty("sun.java2d.noddraw", "true");
 	    AWTUtilities.setWindowOpaque(this, false);
 	    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	    setBounds(0,0,screen.width,screen.height);
+//	    setBounds(0,0,screen.width,screen.height);
 	    
 	    WebPanel webpanel = new WebPanel();
 	    webpanel.setOpaque(false);
@@ -74,6 +74,9 @@ public class LoadingDialog2 extends JDialog{
 	    			.addContainerGap(85, Short.MAX_VALUE))
 	    );
 	    webpanel.setLayout(gl_webpanel);
+	    setSize(340, 460);
+	    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	    setLocation(dim.width/2-getSize().width/2, dim.height/2-getSize().height/2);
 	}
 }
 
@@ -84,6 +87,7 @@ class CustomLoadingPanel extends WebPanel{
 	private static final long serialVersionUID = 1L;
 	Image myImage;
 	BufferedImage originalImage;
+	int x,y=0;
 	{
 		try {
 			myImage = Toolkit.getDefaultToolkit().getImage(LoadingDialog2.class.getResource("/icons/noa_en/loadingfinal.gif"));
@@ -92,6 +96,12 @@ class CustomLoadingPanel extends WebPanel{
 		} catch (Exception e) {
 		}
 		setBackground(new Color(0,0,0,0));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		x = dim.width/2-this.getSize().width/2;
+		y = dim.height/2-this.getSize().height/2;
+//		super.setSize(originalImage.getWidth(), originalImage.getHeight());
+//		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
 	@Override
 	public void paintComponent(Graphics g){

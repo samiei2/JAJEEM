@@ -11,7 +11,7 @@ import java.net.MulticastSocket;
 
 import com.jajeem.command.handler.StartVideoCommandHandler;
 import com.jajeem.command.model.Command;
-import com.jajeem.command.model.StartVideoCommand;
+import com.jajeem.command.model.StartMoviePlayerCommand;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -106,7 +106,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 //				logger.info("Receiving: Message type: " + cmd.getClass()
 //						+ ", from: " + cmd.getTo());
 
-				if(cmd instanceof StartVideoCommand){
+				if(cmd instanceof StartMoviePlayerCommand){
 					StartVideoCommandHandler videoCommandHandler = new StartVideoCommandHandler();
 					videoCommandHandler.run(cmd);
 				}

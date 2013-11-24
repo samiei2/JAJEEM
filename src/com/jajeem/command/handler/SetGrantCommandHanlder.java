@@ -6,10 +6,10 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.core.design.Student;
 import com.jajeem.core.design.StudentLogin;
+import com.jajeem.util.ClientSession;
 
 public class SetGrantCommandHanlder implements ICommandHandler {
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (((GrantCommand) cmd).isGranted()) {
@@ -19,6 +19,7 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 			Student.setStudentModel(((GrantCommand) cmd).getStudent());
 			com.jajeem.util.Session.setStudent(((GrantCommand) cmd)
 					.getStudent());
+			ClientSession.setCurrentStudent(((GrantCommand) cmd).getStudent());
 
 			StudentLogin.setLoginDialogVisible(false);
 

@@ -10,7 +10,11 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -87,9 +91,11 @@ import com.jajeem.util.CustomButton;
 import com.jajeem.util.CustomCallAllButton;
 import com.jajeem.util.CustomCellRenderer;
 import com.jajeem.util.CustomJList;
+import com.jajeem.util.CustomLogoLabel;
+import com.jajeem.util.CustomPanel;
 import com.jajeem.util.CustomPowerButton;
 import com.jajeem.util.CustomPowerPanel;
-import com.jajeem.util.CustomScrollPane;
+import com.jajeem.util.CustomTeacherFrame;
 import com.jajeem.util.CustomTopButton;
 import com.jajeem.util.CustomTopPanel;
 import com.jajeem.util.JasperReport;
@@ -98,7 +104,7 @@ import com.jajeem.util.i18n;
 
 public class InstructorNoa {
 
-	private static WebFrame frame;
+	private static CustomTeacherFrame frame;
 	public static Map<String, com.jajeem.core.model.Student> studentList;
 	private static ArrayList<String> conversationPairs;
 	private static ArrayList<String> conversationIps;
@@ -190,7 +196,7 @@ public class InstructorNoa {
 	 * @throws Exception
 	 */
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "serial", "static-access" })
 	private void initialize() throws Exception {
 
 		studentList = new HashMap<String, com.jajeem.core.model.Student>();
@@ -198,16 +204,10 @@ public class InstructorNoa {
 		conversationIps = new ArrayList<String>();
 		conversationPairs = new ArrayList<String>();
 		
-		frame = new WebFrame();
+		frame = new CustomTeacherFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
-		frame.setShowMinimizeButton(false);
 		frame.setTitle("Classmate");
-		frame.setShowResizeCorner(false);
-//		frame.getContentPane().setBackground(new Color(56, 107, 170));
-		frame.setContentPane(new GradientPanel());
-		frame.setBounds(10, 0, 1021, 656);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		langListModel.addElement("English");
 		langListModel.addElement("فارسی");
@@ -254,7 +254,7 @@ public class InstructorNoa {
 
 		WebPanel centerPanel = new WebPanel();
 		InstructorNoa.setCenterPanel(centerPanel);
-		WebPanel centerListPanel = new WebPanel();
+		CustomPanel centerListPanel = new CustomPanel("/icons/noa_en/new/maingridpanel.png");
 		centerPanel.add(centerListPanel);
 		centerPanel.setBackground(new Color(255, 255, 255));
 		WebPanel centerGroupPanel = new WebPanel();
@@ -266,6 +266,7 @@ public class InstructorNoa {
 		model.addColumn(i18n.getParam("Student name"));
 
 		WebTable table = new WebTable(model);
+		table.setOpaque(false);
 		setStudentListTable(table);
 		table.setBackground(new Color(237, 246, 253));
 		table.setEditable(false);
@@ -274,6 +275,7 @@ public class InstructorNoa {
 		table.setColumnSelectionAllowed(false);
 		table.setPreferredScrollableViewportSize(new Dimension(300, 100));
 		WebScrollPane scrollPanel = new WebScrollPane(table);
+		scrollPanel.setOpaque(false);
 		scrollPanel.setDrawBorder(false);
 
 		WebPopupMenu groupPopup = new WebPopupMenu();
@@ -344,110 +346,37 @@ public class InstructorNoa {
 		scrollGroupPanel.getViewport().setOpaque(false);
 
 		rightButtonPanel = new WebPanel();
-//		rightButtonPanel.setBackground(new Color(56, 107, 170));
 		rightButtonPanel.setOpaque(false);
-//		rightButtonPanel.setUndecorated(true);
 
 		WebPanel bottomButtonPanel = new WebPanel();
-//		bottomButtonPanel.setBackground(new Color(58, 109, 175));
 		bottomButtonPanel.setOpaque(false);
-
-//		WebPanel bottomLogoPanel = new WebPanel();
-//		bottomLogoPanel.setBackground(new Color(58, 109, 175));
-
-		CustomTopPanel topButtonPanel = new CustomTopPanel();
-		topButtonPanel.setOpaque(false);
-		topButtonPanel.setUndecorated(true);
-
-		CustomTopButton volumeButton = new CustomTopButton();
-		volumeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/volume.png")));
-		volumeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-//		volumeButton.setDrawShade(false);
-//		volumeButton.setRound(10);
-//		volumeButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		volumeButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		volumeButton.setForeground(Color.DARK_GRAY);
-		volumeButton.putClientProperty("key", "volume");
-		volumeButton.setText(i18n.getParam("Volume Control"));
-//		volumeButton.setBottomBgColor(new Color(235, 105, 11));
-//		volumeButton.setTopBgColor(new Color(235, 105, 11));
-		volumeButton.setUndecorated(true);
-		volumeButton.setOpaque(false);
-
-		CustomCallAllButton callAllButton = new CustomCallAllButton();
-		callAllButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/callall.png")));
-		callAllButton.putClientProperty("key", "callAll");
-		callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-//		callAllButton.setDrawShade(false);
-//		callAllButton.setRound(10);
-//		callAllButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		callAllButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		callAllButton.setForeground(Color.DARK_GRAY);
-		callAllButton.setText(i18n.getParam("Call All"));
-//		callAllButton.setBottomBgColor(new Color(235, 105, 11));
-//		callAllButton.setTopBgColor(new Color(235, 105, 11));
-		callAllButton.setOpaque(false);
-		callAllButton.setUndecorated(true);
-
-		CustomTopButton viewModeButton = new CustomTopButton();
-		viewModeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/viewmode.png")));
-		viewModeButton.putClientProperty("key", "viewMode");
-		viewModeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-//		viewModeButton.setDrawShade(false);
-//		viewModeButton.setRound(10);
-//		viewModeButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		viewModeButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		viewModeButton.setForeground(Color.DARK_GRAY);
-		viewModeButton.setText(i18n.getParam("View Mode"));
-//		viewModeButton.setBottomBgColor(new Color(235, 105, 11));
-//		viewModeButton.setTopBgColor(new Color(235, 105, 11));
-		viewModeButton.setUndecorated(true);
-		viewModeButton.setOpaque(false);
-
-		CustomTopButton languageButton = new CustomTopButton();
-		languageButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		languageButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/lang.png")));
-		languageButton.putClientProperty("key", "language");
-		languageButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-//		languageButton.setDrawShade(false);
-//		languageButton.setRound(10);
-//		languageButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		languageButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		languageButton.setForeground(Color.DARK_GRAY);
-		languageButton.setText(i18n.getParam("Language"));
-//		languageButton.setBottomBgColor(new Color(235, 105, 11));
-//		languageButton.setTopBgColor(new Color(235, 105, 11));
-		languageButton.setUndecorated(true);
-		languageButton.setOpaque(false);
-
-		WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
-				PopupWay.downCenter);
 
 		GroupPanel langPopupContent = new GroupPanel(5, false, langList);
 		langPopupContent.setMargin(15);
 
-		langPopupButton.setContent(langPopupContent);
+		
 		
 		WebPanel webPanel = new WebPanel();
 		webPanel.setUndecorated(true);
 		webPanel.setOpaque(false);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		
+		WebPanel webPanel_1 = new WebPanel();
+		webPanel_1.setOpaque(false);
+		GroupLayout groupLayout = new GroupLayout(frame.getMainContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(bottomButtonPanel, 0, 0, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(topButtonPanel, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-								.addComponent(webPanel, 0, 0, Short.MAX_VALUE))
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 1153, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 866, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 577, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -455,42 +384,99 @@ public class InstructorNoa {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(webPanel, 0, 0, Short.MAX_VALUE)
+						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE))
+							.addGap(62)
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+						.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 508, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		
-		WebLabel webLabel = new WebLabel();
-		webLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		webLabel.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/logo.png")));
+				CustomTopButton volumeButton = new CustomTopButton();
+				volumeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/volume.png")));
+				volumeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+				volumeButton.setForeground(Color.DARK_GRAY);
+				volumeButton.putClientProperty("key", "volume");
+				volumeButton.setText(i18n.getParam("Volume Control"));
+				volumeButton.setUndecorated(true);
+				volumeButton.setOpaque(false);
 		
-		WebLabel webLabel_1 = new WebLabel();
-		webLabel_1.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/logo_text.png")));
+				CustomCallAllButton callAllButton = new CustomCallAllButton();
+				callAllButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/callall.png")));
+				callAllButton.putClientProperty("key", "callAll");
+				callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+				callAllButton.setForeground(Color.DARK_GRAY);
+				callAllButton.setText(i18n.getParam("Call All"));
+				callAllButton.setOpaque(false);
+				callAllButton.setUndecorated(true);
+		
+				CustomTopButton viewModeButton = new CustomTopButton();
+				viewModeButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/viewmode.png")));
+				viewModeButton.putClientProperty("key", "viewMode");
+				viewModeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+				viewModeButton.setForeground(Color.DARK_GRAY);
+				viewModeButton.setText(i18n.getParam("View Mode"));
+				viewModeButton.setUndecorated(true);
+				viewModeButton.setOpaque(false);
+		
+				CustomTopButton languageButton = new CustomTopButton();
+				languageButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+					}
+				});
+				languageButton.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/lang.png")));
+				languageButton.putClientProperty("key", "language");
+				languageButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+				languageButton.setForeground(Color.DARK_GRAY);
+				languageButton.setText(i18n.getParam("Language"));
+				languageButton.setUndecorated(true);
+				languageButton.setOpaque(false);
+				
+						WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
+								PopupWay.downCenter);
+						langPopupButton.setContent(langPopupContent);
+		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
+		gl_webPanel_1.setHorizontalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_webPanel_1.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(201, Short.MAX_VALUE))
+		);
+		gl_webPanel_1.setVerticalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addContainerGap(20, Short.MAX_VALUE)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		webPanel_1.setLayout(gl_webPanel_1);
+//		webLabel_1.setIcon(new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/new/classmate.png")));
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
 			gl_webPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(39, Short.MAX_VALUE))
+				.addGap(0, 705, Short.MAX_VALUE)
 		);
 		gl_webPanel.setVerticalGroup(
 			gl_webPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(webLabel, GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_webPanel.createSequentialGroup()
-							.addContainerGap(26, Short.MAX_VALUE)
-							.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+				.addGap(0, 124, Short.MAX_VALUE)
 		);
 		webPanel.setLayout(gl_webPanel);
 		// create the scrollable desktop instance and add it to the JFrame
@@ -539,13 +525,6 @@ public class InstructorNoa {
 
 		// desktopPane.setBackground(new Color(237, 246, 253));
 		centerPanel.setBackground(new Color(237, 246, 253));
-		// GroupLayout gl_desktopPane = new GroupLayout(getDesktopPaneScroll());
-		// gl_desktopPane.setAutoCreateContainerGaps(true);
-		// gl_desktopPane.setAutoCreateGaps(true);
-		// gl_desktopPane.setHorizontalGroup(gl_desktopPane.createParallelGroup(
-		// Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
-		// gl_desktopPane.setVerticalGroup(gl_desktopPane.createParallelGroup(
-		// Alignment.LEADING).addGap(0, 10, Short.MAX_VALUE));
 		centerPanel.setLayout(new CardLayout(0, 0));
 		getDesktopPaneScroll().putClientProperty("viewMode", "thumbView");
 		centerListPanel.putClientProperty("viewMode", "listView");
@@ -558,41 +537,11 @@ public class InstructorNoa {
 		centerGroupPanel.add(scrollGroupPanel);
 
 		centerListPanel.add(scrollPanel);
-//		topButtonPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		bottomButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
-//		topButtonPanel.setLayout(new GridLayout(0, 4, 0, 0));
-		
-		GroupLayout gl_topButtonPanel = new GroupLayout(topButtonPanel);
-		gl_topButtonPanel.setHorizontalGroup(
-			gl_topButtonPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_topButtonPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 160, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 181, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 167, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 159, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_topButtonPanel.setVerticalGroup(
-			gl_topButtonPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_topButtonPanel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_topButtonPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		topButtonPanel.setLayout(gl_topButtonPanel);
 		
 		centerListPanel.setBackground(new Color(237, 246, 253));
 		centerGroupPanel.setBackground(new Color(237, 246, 253));
 		scrollGroupPanel.setBackground(new Color(237, 246, 253));
-//		scrollGroupPanel.getViewport().setView(getGroupList());
 		getGroupList().setBackground(new Color(0, 0, 0, 0));
 		getGroupList().setOpaque(false);
 		centerPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(
@@ -647,7 +596,6 @@ public class InstructorNoa {
 		CustomPowerButton powerOffButton = new CustomPowerButton(i18n.getParam("Power Off"),new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/poweroff.png")));
 		powerOffButton.putClientProperty("key", "powerOff");
 		powerOffButton.setUndecorated(false);
-//		powerOffButton.setMargin(0, 10, 0, 0);
 		powerOffButton.setHorizontalAlignment(SwingConstants.LEADING);
 		powerOffButton.setHorizontalTextPosition(SwingConstants.TRAILING);
 		powerOffButton.setIconTextGap(20);
@@ -717,7 +665,6 @@ public class InstructorNoa {
 		CustomPowerButton logOffButton = new CustomPowerButton(i18n.getParam("Log Off"),new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/logoff.png")));
 		logOffButton.putClientProperty("key", "logOff");
 		logOffButton.setUndecorated(false);
-//		logOffButton.setMargin(0, 10, 0, 0);
 		logOffButton.setHorizontalAlignment(SwingConstants.LEADING);
 		logOffButton.setHorizontalTextPosition(SwingConstants.TRAILING);
 		logOffButton.setIconTextGap(20);
@@ -786,7 +733,6 @@ public class InstructorNoa {
 		CustomPowerButton restartButton = new CustomPowerButton(i18n.getParam("Restart"),new ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/restart.png")));
 		restartButton.putClientProperty("key", "restart");
 		restartButton.setUndecorated(false);
-//		restartButton.setMargin(0, 10, 0, 0);
 		restartButton.setHorizontalAlignment(SwingConstants.LEADING);
 		restartButton.setHorizontalTextPosition(SwingConstants.TRAILING);
 		restartButton.setIconTextGap(20);
@@ -1128,227 +1074,173 @@ public class InstructorNoa {
 
 		ImageIcon monitorIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/monitor.png"));
-		CustomButton monitorButton = new CustomButton(monitorIcon);
+		ImageIcon monitorIconScaled = new ImageIcon(monitorIcon.getImage().getScaledInstance(
+						monitorIcon.getIconWidth()-10, 
+						monitorIcon.getIconHeight()-15, 
+						Image.SCALE_SMOOTH));
+		CustomButton monitorButton = new CustomButton(monitorIconScaled);
 		monitorButton.setUndecorated(true);
 		monitorButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		monitorButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/monitor.png")));
 		monitorButton.setIconTextGap(20);
 		monitorButton.putClientProperty("key", "monitor");
 		monitorButton.setFont(font);
-//		monitorButton.setDrawShade(false);
-//		monitorButton.setRound(10);
-//		monitorButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		monitorButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		monitorButton.setForeground(Color.WHITE);
 		monitorButton.setText("Monitoring");
-//		monitorButton.setBottomBgColor(new Color(225, 234, 244));
-//		monitorButton.setTopBgColor(new Color(116, 166, 219));
+		monitorButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(monitorButton);
 
 		ImageIcon intercomIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/intercom.png"));
-		CustomButton intercomButton = new CustomButton(intercomIcon);
+		ImageIcon intercomIconScaled = new ImageIcon(intercomIcon.getImage().getScaledInstance(
+				intercomIcon.getIconWidth()-10, 
+				intercomIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton intercomButton = new CustomButton(intercomIconScaled);
 		this.intercomButton = intercomButton;
 		intercomButton.setUndecorated(true);
 		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		intercomButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/intercom.png")));
 		intercomButton.setIconTextGap(20);
 		intercomButton.putClientProperty("key", "intercom");
 		intercomButton.setFont(font);
-//		intercomButton.setDrawShade(false);
-//		intercomButton.setRound(10);
-//		intercomButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		intercomButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		intercomButton.setForeground(Color.WHITE);
 		intercomButton.setText(i18n.getParam("Intercom"));
-//		intercomButton.setBottomBgColor(new Color(225, 234, 244));
-//		intercomButton.setTopBgColor(new Color(116, 166, 219));
+		intercomButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(intercomButton);
 
 		ImageIcon videochatIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/videochat.png"));
-		CustomButton videoChatButton = new CustomButton(videochatIcon);
+		ImageIcon videochatIconScaled = new ImageIcon(videochatIcon.getImage().getScaledInstance(
+				videochatIcon.getIconWidth()-10, 
+				videochatIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton videoChatButton = new CustomButton(videochatIconScaled);
 		videoChatButton.setUndecorated(true);
 		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		videoChatButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/intercom.png")));
 		videoChatButton.setIconTextGap(20);
 		videoChatButton.putClientProperty("key", "videoChat");
 		videoChatButton.setFont(font);
-//		videoChatButton.setDrawShade(false);
-//		videoChatButton.setRound(10);
-//		videoChatButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		videoChatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		videoChatButton.setForeground(Color.WHITE);
 		videoChatButton.setText(i18n.getParam("Video Chat"));
-//		videoChatButton.setBottomBgColor(new Color(225, 234, 244));
-//		videoChatButton.setTopBgColor(new Color(116, 166, 219));
+		videoChatButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(videoChatButton);
 
 		ImageIcon groupIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/group.png"));
-		CustomButton groupButton = new CustomButton(groupIcon);
+		ImageIcon groupIconScaled = new ImageIcon(groupIcon.getImage().getScaledInstance(
+				groupIcon.getIconWidth()-10, 
+				groupIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton groupButton = new CustomButton(groupIconScaled);
 		groupButton.setUndecorated(true);
 		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		groupButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/group.png")));
 		groupButton.setIconTextGap(20);
 		groupButton.putClientProperty("key", "group");
 		groupButton.setFont(font);
-//		groupButton.setDrawShade(false);
-//		groupButton.setRound(10);
-//		groupButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		groupButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		groupButton.setForeground(Color.WHITE);
 		groupButton.setText(i18n.getParam("Groups"));
-//		groupButton.setBottomBgColor(new Color(225, 234, 244));
-//		groupButton.setTopBgColor(new Color(116, 166, 219));
+		groupButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(groupButton);
 
 		ImageIcon modelIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/modeling.png"));
-		CustomButton modelButton = new CustomButton(modelIcon);
+		ImageIcon modelIconScaled = new ImageIcon(modelIcon.getImage().getScaledInstance(
+				modelIcon.getIconWidth()-10, 
+				modelIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton modelButton = new CustomButton(modelIconScaled);
 		modelButton.setUndecorated(true);
 		modelButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		modelButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/group.png")));
 		modelButton.setIconTextGap(20);
 		modelButton.putClientProperty("key", "model");
 		modelButton.setFont(font);
-//		modelButton.setDrawShade(false);
-//		modelButton.setRound(10);
-//		modelButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		modelButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		modelButton.setForeground(Color.WHITE);
 		modelButton.setText(i18n.getParam("Modelling"));
-//		modelButton.setBottomBgColor(new Color(225, 234, 244));
-//		modelButton.setTopBgColor(new Color(116, 166, 219));
+		modelButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(modelButton);
 
 		ImageIcon recordIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/recording.png"));
-		CustomButton recordButton = new CustomButton(recordIcon);
+		ImageIcon recordIconScaled = new ImageIcon(recordIcon.getImage().getScaledInstance(
+				recordIcon.getIconWidth()-10, 
+				recordIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton recordButton = new CustomButton(recordIconScaled);
 		recordButton.setUndecorated(true);
 		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		recordButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/record.png")));
 		recordButton.setIconTextGap(20);
 		recordButton.putClientProperty("key", "record");
 		recordButton.setFont(font);
-//		recordButton.setDrawShade(false);
-//		recordButton.setRound(10);
-//		recordButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		recordButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		recordButton.setForeground(Color.WHITE);
 		recordButton.setText(i18n.getParam("Recording"));
-//		recordButton.setBottomBgColor(new Color(225, 234, 244));
-//		recordButton.setTopBgColor(new Color(116, 166, 219));
+		recordButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(recordButton);
 
 		ImageIcon speechIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/speech.png"));
-		CustomButton speechButton = new CustomButton(speechIcon);
+		ImageIcon speechIconScaled = new ImageIcon(speechIcon.getImage().getScaledInstance(
+				speechIcon.getIconWidth()-10, 
+				speechIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton speechButton = new CustomButton(speechIconScaled);
 		speechButton.setUndecorated(true);
 		speechButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		speechButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/speech.png")));
 		speechButton.setIconTextGap(10);
 		speechButton.putClientProperty("key", "speech");
 		speechButton.setFont(font);
-//		speechButton.setDrawShade(false);
-//		speechButton.setRound(10);
-//		speechButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		speechButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		speechButton.setForeground(Color.WHITE);
 		speechButton.setText(i18n.getParam("Speech Recognition"));
-//		speechButton.setBottomBgColor(new Color(225, 234, 244));
-//		speechButton.setTopBgColor(new Color(116, 166, 219));
+		speechButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(speechButton);
 
 		ImageIcon fileIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/filesharing.png"));
-		CustomButton fileButton = new CustomButton(fileIcon);
+		ImageIcon fileIconScaled = new ImageIcon(fileIcon.getImage().getScaledInstance(
+				fileIcon.getIconWidth()-10, 
+				fileIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton fileButton = new CustomButton(fileIconScaled);
 		fileButton.setUndecorated(true);
 		fileButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		fileButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/file.png")));
 		fileButton.setIconTextGap(20);
 		fileButton.putClientProperty("key", "file");
 		fileButton.setFont(font);
-//		fileButton.setDrawShade(false);
-//		fileButton.setRound(10);
-//		fileButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		fileButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		fileButton.setForeground(Color.WHITE);
 		fileButton.setText(i18n.getParam("File Sharing"));
-//		fileButton.setBottomBgColor(new Color(225, 234, 244));
-//		fileButton.setTopBgColor(new Color(116, 166, 219));
+		fileButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(fileButton);
 
 		ImageIcon quizIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/exam.png"));
-		CustomButton quizButton = new CustomButton(quizIcon);
+		ImageIcon quizIconScaled = new ImageIcon(quizIcon.getImage().getScaledInstance(
+				quizIcon.getIconWidth()-10, 
+				quizIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton quizButton = new CustomButton(quizIconScaled);
 		quizButton.setUndecorated(true);
 		quizButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		quizButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/quiz.png")));
 		quizButton.setIconTextGap(20);
 		quizButton.putClientProperty("key", "quiz");
 		quizButton.setFont(font);
-//		quizButton.setDrawShade(false);
-//		quizButton.setRound(10);
-//		quizButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		quizButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		quizButton.setForeground(Color.WHITE);
 		quizButton.setText(i18n.getParam("Exam"));
-//		quizButton.setBottomBgColor(new Color(225, 234, 244));
-//		quizButton.setTopBgColor(new Color(116, 166, 219));
+		quizButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(quizButton);
 
 		ImageIcon videoIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/movieplayer.png"));
-		CustomButton videoButton = new CustomButton(videoIcon);
+		ImageIcon videoIconScaled = new ImageIcon(videoIcon.getImage().getScaledInstance(
+				videoIcon.getIconWidth()-10, 
+				videoIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton videoButton = new CustomButton(videoIconScaled);
 		videoButton.setUndecorated(true);
 		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		videoButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa_en/Media_Player.png")));
 		videoButton.setIconTextGap(20);
 		videoButton.putClientProperty("key", "movieplayer");
 		videoButton.setFont(font);
-//		videoButton.setDrawShade(false);
-//		videoButton.setRound(10);
-//		videoButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		videoButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		videoButton.setForeground(Color.WHITE);
 		videoButton.setText(i18n.getParam("Movie Player"));
-//		videoButton.setBottomBgColor(new Color(225, 234, 244));
-//		videoButton.setTopBgColor(new Color(116, 166, 219));
+		videoButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(videoButton);
-
-//		ImageIcon reportIcon = new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa_en/report.png"));
-//		CustomButton reportButton = new CustomButton(reportIcon);
-//		reportButton.setUndecorated(true);
-//		reportButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		reportButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/report.png")));
-//		reportButton.setIconTextGap(30);
-//		reportButton.putClientProperty("key", "report");
-//		reportButton.setFont(font);
-//		reportButton.setDrawShade(false);
-//		reportButton.setRound(10);
-//		reportButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		reportButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-//		reportButton.setForeground(Color.WHITE);
-//		reportButton.setText(i18n.getParam("Reports"));
-//		reportButton.setBottomBgColor(new Color(225, 234, 244));
-//		reportButton.setTopBgColor(new Color(116, 166, 219));
-//		rightButtonPanel.add(reportButton);
-
-//		final WebButtonPopup reportPopupButton = new WebButtonPopup(
-//				reportButton, PopupWay.upCenter);
 
 		// /////////////////// Report Combo
 
@@ -1374,65 +1266,6 @@ public class InstructorNoa {
 
 			}
 		});
-
-//		reportPopupButton.addPopupListener(new PopupListener() {
-//
-//			@Override
-//			public void popupWillBeOpened() {
-//			}
-//
-//			@Override
-//			public void popupWillBeClosed() {
-//			}
-//
-//			@Override
-//			public void popupOpened() {
-//				PopulateQuizCombobox();
-//				// PopulateStudentCombobox();
-//			}
-//
-//			/*
-//			 * private void PopulateStudentCombobox() { StudentService
-//			 * stuService = new StudentService(); ArrayList<Student>
-//			 * studentList; try { studentList = stuService.list();
-//			 * 
-//			 * List<String> studentListComboModel = new ArrayList<String>(); for
-//			 * (Student stu : studentList) { String fullname =
-//			 * stu.getFirstName() + stu.getLastName(); if (fullname == null ||
-//			 * fullname.equals("")) { studentListComboModel.add(fullname); }
-//			 * else { studentListComboModel.add(String.valueOf(stu .getId())); }
-//			 * } listOfStudentsComboBox.addItem((studentListComboModel
-//			 * .toArray())); } catch (SQLException e) { e.printStackTrace(); } }
-//			 */
-//
-//			private void PopulateQuizCombobox() {
-//				ArrayList<com.jajeem.quiz.model.Run> quizList;
-//				try {
-//					quizList = new RunDAO().list(com.jajeem.util.Session
-//							.getCourse().getId());
-//					// quizList = new RunDAO().list();
-//					reportRunList.clear();
-//					reportQuizComboBox.removeAllItems();
-//					QuizService quizService = new QuizService();
-//					for (int i = 0; i < quizList.size(); i++) {
-//						Run run = quizList.get(i);
-//
-//						reportQuizComboBox.addItem(quizService.get(
-//								run.getQuizId()).getTitle()
-//								+ " (" + new Date(run.getStart()) + ")");
-//						reportRunList.add(run);
-//					}
-//
-//				} catch (SQLException e) {
-//					JajeemExcetionHandler.logError(e);
-//					e.printStackTrace();
-//				}
-//			}
-//
-//			@Override
-//			public void popupClosed() {
-//			}
-//		});
 
 		// be careful with this list index, we work with index
 		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
@@ -1509,46 +1342,39 @@ public class InstructorNoa {
 		listOfStudentsComboBox.setVisible(false);
 		reportQuizComboBox.setVisible(true);
 
-//		reportPopupButton.setContent(reportPopupContent);
 
 		ImageIcon accountIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/account.png"));
-		CustomButton accountButton = new CustomButton(accountIcon);
+		ImageIcon accountIconScaled = new ImageIcon(accountIcon.getImage().getScaledInstance(
+				accountIcon.getIconWidth()-10, 
+				accountIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton accountButton = new CustomButton(accountIconScaled);
 		accountButton.setUndecorated(true);
 		accountButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		accountButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/account.png")));
 		accountButton.setIconTextGap(20);
 		accountButton.putClientProperty("key", "account");
 		accountButton.setFont(font);
-//		accountButton.setDrawShade(false);
-//		accountButton.setRound(10);
-//		accountButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		accountButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		accountButton.setForeground(Color.WHITE);
 		accountButton.setText(i18n.getParam("My account"));
-//		accountButton.setBottomBgColor(new Color(225, 234, 244));
-//		accountButton.setTopBgColor(new Color(116, 166, 219));
+		accountButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(accountButton);
 
 		ImageIcon chatIcon = new ImageIcon(InstructorNoa.class
 				.getResource("/icons/noa_en/chat.png"));
-		CustomButton chatButton = new CustomButton(chatIcon);
+		ImageIcon chatIconScaled = new ImageIcon(chatIcon.getImage().getScaledInstance(
+				chatIcon.getIconWidth()-10, 
+				chatIcon.getIconHeight()-15, 
+				Image.SCALE_SMOOTH));
+		CustomButton chatButton = new CustomButton(chatIconScaled);
 		chatButton.setUndecorated(true);
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
-//		chatButton.setIcon(new ImageIcon(InstructorNoa.class
-//				.getResource("/icons/noa/right_panel/chat.png")));
 		chatButton.setIconTextGap(20);
 		chatButton.putClientProperty("key", "chat");
 		chatButton.setFont(font);
-//		chatButton.setDrawShade(false);
-//		chatButton.setRound(10);
-//		chatButton.setTopSelectedBgColor(new Color(75, 113, 158));
-//		chatButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		chatButton.setForeground(Color.WHITE);
 		chatButton.setText(i18n.getParam("Chat"));
-//		chatButton.setBottomBgColor(new Color(225, 234, 244));
-//		chatButton.setTopBgColor(new Color(116, 166, 219));
+		chatButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(chatButton);
 
 		WebLabel bottomLogoLabel = new WebLabel("LOGO");
@@ -1561,16 +1387,12 @@ public class InstructorNoa {
 		copyRightLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		copyRightLabel.setText(i18n.getParam("Copy Right \u00A9 2013"));
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//		bottomLogoPanel.setLayout(new GridLayout(0, 1, 0, 0));
-//		bottomLogoPanel.add(bottomLogoLabel);
-//		bottomLogoPanel.add(copyRightLabel);
-		frame.getContentPane().setLayout(groupLayout);
+		frame.getMainContentPane().setLayout(groupLayout);
 
 		// Add Event Handlers
 		InstructorNoaUtil instructorNoaUtil = new InstructorNoaUtil();
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
 		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel, frame);
-		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
 		
 
 		getGroupList().addMouseListener(new MouseAdapter() {
@@ -1871,6 +1693,7 @@ class GradientPanel extends WebPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private static final int N = 32;
 
     public GradientPanel() {

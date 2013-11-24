@@ -4,7 +4,9 @@ import com.jajeem.command.model.Command;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.design.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
+import com.jajeem.util.Session;
 
 public class StopIntercomCommandHandler implements ICommandHandler {
 
@@ -17,6 +19,8 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 			} else {
 				Student.getTransmitter().stop();
 				Student.setIntercomButtonStart();
+				if(ClientSession.getStudentIntercomPanel()!=null)
+					ClientSession.getStudentIntercomPanel().dispose();
 			}
 
 		} catch (Exception e) {

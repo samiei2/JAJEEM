@@ -1,8 +1,10 @@
 package com.jajeem.quiz.design.client.alt;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -10,7 +12,6 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.swing.GroupLayout;
@@ -50,8 +51,6 @@ import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.util.ClientSession;
-import java.awt.Toolkit;
-import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class Quiz_Window extends WebFrame {
@@ -88,7 +87,7 @@ public class Quiz_Window extends WebFrame {
 
 	private QuizEvent quizEvent;
 	private ArrayList<Question> sendQueue = new ArrayList<>();
-	// TODO remove code below
+	@SuppressWarnings("unused")
 	private int sid;
 	private Student privateStudent = new Student();
 	private Run currentRun;

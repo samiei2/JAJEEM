@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -35,7 +36,7 @@ public class ViewerGUIThumbs extends javax.swing.JFrame {
         main.activeConnection++;
     }  
   
-    public void Start(WebInternalFrame panel) {
+    public void Start(JInternalFrame panel) {
     	recorder.Start();
     	panel.add(jScrollPane1);
         //jBtnStartStopActionPerformed(null);  

@@ -1,6 +1,5 @@
 package com.jajeem.command.handler;
 
-import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +7,6 @@ import java.io.InputStreamReader;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartWhiteBoardCommand;
-import com.jajeem.room.model.Session;
 
 public class StartWhiteBoardCommandHandler implements ICommandHandler {
 

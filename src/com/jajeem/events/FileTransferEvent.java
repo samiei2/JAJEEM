@@ -11,15 +11,16 @@ public class FileTransferEvent implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected static EventListenerList listenerList = new EventListenerList();
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
 	public void addEventListener(FileTransferEventListener listener,Class type) {
         listenerList.add(FileTransferEventListener.class,listener);
     }
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
 	public void removeEventListener(FileTransferEventListener listener,Class type) {
         listenerList.remove(FileTransferEventListener.class, listener);
     }
-    public void fireSuccess(FileTransferObject evt,Class t) {
+    @SuppressWarnings("rawtypes")
+	public void fireSuccess(FileTransferObject evt,Class t) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
             if (listeners[i] == FileTransferEventListener.class) {
@@ -27,7 +28,8 @@ public class FileTransferEvent implements Serializable{
             }
         }
     }
-    public void fireFailure(FileTransferObject evt,Class t) {
+    @SuppressWarnings("rawtypes")
+	public void fireFailure(FileTransferObject evt,Class t) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
             if (listeners[i] == FileTransferEventListener.class) {
@@ -35,6 +37,7 @@ public class FileTransferEvent implements Serializable{
             }
         }
     }
+	@SuppressWarnings("rawtypes")
 	public void fireProgress(FileTransferObject evt,Class t) {
 		Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
@@ -43,6 +46,7 @@ public class FileTransferEvent implements Serializable{
             }
         }
 	}
+	@SuppressWarnings("rawtypes")
 	public void fireFileSendRequest(FileTransferObject evt,Class t) {
 		Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
@@ -51,6 +55,7 @@ public class FileTransferEvent implements Serializable{
             }
         }
 	}
+	@SuppressWarnings("rawtypes")
 	public void fireAcceptFileRequest(FileTransferObject evt,Class t) {
 		Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {
@@ -59,6 +64,7 @@ public class FileTransferEvent implements Serializable{
             }
         }
 	}
+	@SuppressWarnings("rawtypes")
 	public void fireRejectFileRequest(FileTransferObject evt,Class t) {
 		Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i+2) {

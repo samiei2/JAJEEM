@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.dao.IQuizDAO;
 import com.jajeem.quiz.model.Question;
@@ -25,6 +23,7 @@ public class QuizDAO implements IQuizDAO {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
 
@@ -211,6 +210,7 @@ public class QuizDAO implements IQuizDAO {
 		return quiz;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean update(Quiz quiz) throws SQLException {
 

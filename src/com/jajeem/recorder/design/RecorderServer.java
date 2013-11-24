@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
 import com.alee.laf.optionpane.WebOptionPane;
+import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -40,6 +41,7 @@ public class RecorderServer {
 	
 	}
 
+	@SuppressWarnings("resource")
 	private void StartFileListenerServer() {
 		try {
 			ServerSocket internalsocket=new ServerSocket(54333);
@@ -53,8 +55,10 @@ public class RecorderServer {
 					@Override
 					public void run() {
 						final ClientProgressWindow progwin = new ClientProgressWindow();
+						
 						try{
 							File outputFile;
+							
 							WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
 									"Choose directory to save students recording");
 
@@ -85,7 +89,13 @@ public class RecorderServer {
 									return;
 								}
 							}
-							progwin.setVisible(true);
+							
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									progwin.setVisible(true);
+								}
+							}).start();
 							FileTransferObject evt = new FileTransferObject(
 									this);
 							InputStream in = client.getInputStream();
@@ -105,7 +115,12 @@ public class RecorderServer {
 							String inboxPath = outputFile.getPath();
 						    File inbox = new File(inboxPath);
 						    inbox.mkdirs();
-						    File file = new File(inbox,client.getInetAddress().getHostAddress());
+						    File file;
+						    String StudentName = InstructorNoa.getStudentNameByIP(client.getInetAddress().getHostAddress());
+						    if(StudentName!=null && StudentName!="")
+						    	file = new File(inbox,StudentName);
+						    else
+						    	file = new File(inbox,client.getInetAddress().getHostAddress());
 						    file.mkdir();
 						    File output = new File(file,nameStr);
 						    FileOutputStream fos = new FileOutputStream(output);
@@ -135,6 +150,7 @@ public class RecorderServer {
 						}
 					}
 				}).start();
+				
 			}
 		} catch (Exception e) {
 			

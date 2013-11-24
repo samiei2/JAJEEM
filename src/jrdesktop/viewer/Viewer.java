@@ -30,6 +30,7 @@ import jrdesktop.viewer.FileMng.FileTransGUI;
 
 import com.alee.laf.desktoppane.WebInternalFrame;
 import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.util.Session;
 
 /**
  * Viewer.java
@@ -72,7 +73,7 @@ public class Viewer extends Thread {
 			Stop();
 	}
 
-	public void StartThumbs(WebInternalFrame panel) {
+	public void StartThumbs(JInternalFrame panel) {
 		connect();
 		if (connected) {
 			setRecorder(new Recorder(this, client.clientConfig, true));
@@ -90,6 +91,11 @@ public class Viewer extends Thread {
 				if (client.clientConfig.server_address.equals((String) frame
 						.getClientProperty("ip"))) {
 					frame.putClientProperty("live", false);
+					try{
+						//Session.getLoggedInStudents().remove(frame.getClientProperty("ip").toString());
+					}
+					catch(Exception e){
+					}
 					try {
 						frame.setFrameIcon(new ImageIcon(
 								ImageIO.read(Viewer.class

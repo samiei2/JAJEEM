@@ -1,93 +1,91 @@
 package com.jajeem.util;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.Panel;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.metal.MetalIconFactory;
 
 public class test {
 
-    public static void main(String[] args) {
-        new test();
-    }
+	private static Image getImage() throws HeadlessException {
 
-    public test() {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
+		Icon defaultIcon = MetalIconFactory.getTreeComputerIcon();
 
-                JFrame frame = new JFrame("Testing");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().setLayout(new BorderLayout());
-                frame.getContentPane().add(new TestPane());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-    }
+		Image img = new BufferedImage(defaultIcon.getIconWidth(),
 
-    public class TestPane extends JPanel {
+		defaultIcon.getIconHeight(),
 
-        private JList list;
-        private BufferedImage background;
+		BufferedImage.TYPE_4BYTE_ABGR);
 
-        public TestPane() {
-            setLayout(new BorderLayout());
-            try {
-            	URL inp = CustomScrollPane.class.getResource("/icons/noa_en/jscrollpanebackground.png");
-                background = ImageIO.read(inp);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+		defaultIcon.paintIcon(new Panel(), img.getGraphics(), 0, 0);
 
-            int count = 50;
-            String[] values = new String[count];
-            for (int index = 0; index < count; index++) {
-                values[index] = "Testing " + (index + 1);
-            }
+		return img;
 
-            list = new JList(values);
-            list.setOpaque(false);
-            list.setBackground(new Color(0, 0, 0, 0));
-            list.setForeground(Color.WHITE);
+	}
 
-            JScrollPane scrollPane = new JScrollPane(list);
-            scrollPane.setOpaque(false);
-            scrollPane.getViewport().setOpaque(false);
+	private static PopupMenu createPopupMenu() throws
 
-            add(scrollPane);
+	HeadlessException {
 
-        }
+		PopupMenu menu = new PopupMenu();
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (background != null) {
-                Graphics2D g2d = (Graphics2D) g.create();
-                int x = getWidth() - background.getWidth();
-                int y = getHeight() - background.getHeight();
-                g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-                g2d.dispose();
-            }
-        }
-    }
+		MenuItem exit = new MenuItem("Exit");
+
+		exit.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				System.exit(0);
+
+			}
+
+		});
+
+		menu.add(exit);
+
+		return menu;
+
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		TrayIcon icon = new TrayIcon(getImage(),
+
+		"This is a Java Tray Icon", createPopupMenu());
+
+		icon.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				JOptionPane.showMessageDialog(null,
+
+				"Bring Java to the Desktop app");
+
+			}
+
+		});
+
+		SystemTray.getSystemTray().add(icon);
+
+		while (true) {
+
+			Thread.sleep(10000);
+
+			icon.displayMessage("Warning", "Click me! =)",
+
+			TrayIcon.MessageType.WARNING);
+
+		}
+
+	}
+
 }

@@ -302,126 +302,39 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1
-				.setHorizontalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addComponent(
-																				webLabel,
-																				GroupLayout.PREFERRED_SIZE,
-																				43,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(31)
-																		.addComponent(
-																				webComboBox,
-																				GroupLayout.PREFERRED_SIZE,
-																				114,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_webPanel_1
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								webLabel_1,
-																								GroupLayout.PREFERRED_SIZE,
-																								70,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								webLabel_2,
-																								GroupLayout.PREFERRED_SIZE,
-																								43,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addGap(4)
-																		.addGroup(
-																				gl_webPanel_1
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								webScrollPane,
-																								GroupLayout.DEFAULT_SIZE,
-																								284,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								webTextField,
-																								GroupLayout.PREFERRED_SIZE,
-																								154,
-																								GroupLayout.PREFERRED_SIZE))))
-										.addContainerGap()));
-		gl_webPanel_1
-				.setVerticalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webLabel,
-																GroupLayout.PREFERRED_SIZE,
-																21,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(6)
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addGap(5)
-																		.addComponent(
-																				webLabel_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				14,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																webTextField,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addGap(8)
-																		.addComponent(
-																				webLabel_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				14,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webScrollPane,
-																				GroupLayout.DEFAULT_SIZE,
-																				74,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
+		gl_webPanel_1.setHorizontalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_webPanel_1.setVerticalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(12)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_webPanel_1.createSequentialGroup()
+							.addGap(13)
+							.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_webPanel_1.createSequentialGroup()
+							.addGap(5)
+							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
 
 		webTextArea = new WebTextArea();
 		webTextArea.setEditable(false);
@@ -528,7 +441,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 									QuestionOption = "Fifth Option";
 								if (QuestionOption == "")
 									QuestionOption = "None Selected";
-							} else if (temp2.getType() == 0) {
+							} else if (temp2.getType() == 1) {
 								if (temp2.getCorrectAnswer()[0])
 									QuestionOption += "First Option,";
 								if (temp2.getCorrectAnswer()[1])
@@ -744,7 +657,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 						QuestionOption = "Fifth Option";
 					if (QuestionOption == "")
 						QuestionOption = "None Selected";
-				} else if (temp2.getType() == 0) {
+				} else if (temp2.getType() == 1) {
 					if (temp2.getCorrectAnswer()[0])
 						QuestionOption += "First Option,";
 					if (temp2.getCorrectAnswer()[1])

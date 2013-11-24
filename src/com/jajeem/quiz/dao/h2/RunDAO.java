@@ -23,6 +23,7 @@ public class RunDAO implements IRunDAO {
 		
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Run create(Run run) throws SQLException {
 
@@ -135,6 +136,7 @@ public class RunDAO implements IRunDAO {
 		return run;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean update(Run run) throws SQLException {
 
@@ -179,6 +181,7 @@ public class RunDAO implements IRunDAO {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean delete(Run run) throws SQLException {
 

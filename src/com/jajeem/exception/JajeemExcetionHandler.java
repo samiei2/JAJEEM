@@ -33,6 +33,7 @@ public class JajeemExcetionHandler extends Exception{
 		logger.error(e.getMessage());
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static void logError(Exception e,Class type)
 	{
 		Logger internalLogger = Logger.getLogger(type);
@@ -44,6 +45,7 @@ public class JajeemExcetionHandler extends Exception{
 			logger.info((String)e);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static void logMessage(Object e, Class type) {
 		Logger internalLogger = Logger.getLogger(type);
 		if(e instanceof String)

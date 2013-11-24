@@ -3,10 +3,13 @@ package com.jajeem.command.handler;
 import java.net.InetAddress;
 
 import org.jitsi.service.libjitsi.LibJitsi;
+import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.ClientSession;
+import com.jajeem.util.Session;
 
 public class StartIntercomCommandHandler implements ICommandHandler {
 
@@ -25,6 +28,11 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().start("audio");
 			Student.setIntercomButtonStop();
+			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
+			if(ClientSession.getStudentIntercomPanel()!=null)
+				ClientSession.getStudentIntercomPanel().dispose();
+			ClientSession.setStudentIntercomInProgress(frame);
+			frame.setVisible(true);
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();

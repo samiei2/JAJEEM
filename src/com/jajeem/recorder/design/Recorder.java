@@ -1,10 +1,12 @@
 package com.jajeem.recorder.design;
 
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.EventQueue;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -27,19 +30,20 @@ import com.alee.laf.StyleConstants;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.progressbar.WebProgressBar;
 import com.alee.laf.rootpane.WebDialog;
-import com.alee.laf.rootpane.WebFrame;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.InstructorNoaUtil;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
 
+@SuppressWarnings("serial")
 public class Recorder extends WebDialog {
 
 	private WebButton wbtnPlay;
@@ -49,6 +53,7 @@ public class Recorder extends WebDialog {
 	private static boolean isRecordingDesktop = false;
 	private static boolean isRecordingBoth = false;
 
+	@SuppressWarnings("unused")
 	private AudioInputStream audioInputStream;
 	private static ArrayList<String> recordingsList = Session
 			.getRecordingList();
@@ -60,6 +65,7 @@ public class Recorder extends WebDialog {
 	private WebButton wbtnRecordBoth;
 	private WebButton wbtnRecordStudent;
 	private ArrayList<String> selectedStudent;
+	@SuppressWarnings("unused")
 	private boolean isGroupSelected;
 	private Recorder frame;
 //	public WebFrame progressBarFrame;
@@ -98,24 +104,16 @@ public class Recorder extends WebDialog {
 		setAlwaysOnTop(true);
 		setModal(false);
 
-//		WebProgressBar progressBar = new WebProgressBar();
-//		progressBar.setIndeterminate(true);
-//		progressBar.setStringPainted(true);
-//		progressBar.setString("Recording...");
-//		progressBar.setOpaque(false);
-//
-//		progressBarFrame = new WebFrame();
-//		progressBarFrame.add(progressBar);
-//		progressBarFrame.setSize(200, 35);
-//		progressBarFrame.setLocationRelativeTo(null);
-//		progressBarFrame.setUndecorated(true);
-//		progressBarFrame.setAlwaysOnTop(true);
-
 		setResizable(false);
 		setBounds(100, 100, 211, 295);
 		getContentPane().setLayout(null);
 		
-		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				InstructorNoaUtil.getRecorder_Button().setEnabled(true);
+			}
+		});
 		
 		wbtnRecordStudent = new WebButton();
 		wbtnRecordStudent.setVisible(true);
@@ -251,6 +249,7 @@ public class Recorder extends WebDialog {
 		wbtnRecordDesktopOnly = new WebButton();
 		wbtnRecordDesktopOnly.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unused")
 			private WebDirectoryChooser directoryChooser = null;
 
 			@SuppressWarnings("static-access")
@@ -281,7 +280,7 @@ public class Recorder extends WebDialog {
 
 		wbtnRecordBoth = new WebButton();
 		wbtnRecordBoth.addActionListener(new ActionListener() {
-			@SuppressWarnings({ "static-access", "null" })
+			@SuppressWarnings({ "static-access" })
 			public void actionPerformed(ActionEvent e) {
 				CaptureScreenToFile capture = null;
 				if (wbtnRecordBoth.getText().equals("Record Both")) {
@@ -334,25 +333,54 @@ public class Recorder extends WebDialog {
 	}
 
 	public void RecordStudent() {
-		if (isGroupSelected) { 
-			for (int i = 0; i < selectedStudent.size(); i++) {
-				if (recordingsList.contains(selectedStudent.get(i))) {
-					SendStopRecordCommandTo(selectedStudent.get(i));
-					recordingsList.remove(selectedStudent.get(i));
-					wbtnRecordStudent.setText("Record Student");
-					wbtnRecordStudent.setEnabled(true);
-//					progressBarFrame.setVisible(false);
+		
+		Component card = null;
+		for (Component comp : InstructorNoa
+				.getCenterPanel().getComponents()) {
+			if (comp.isVisible() == true) {
+				card = comp;
+			}
+		}
+
+		if (((JComponent) card).getClientProperty(
+				"viewMode").equals("groupView")) {
+			if (!InstructorNoa.getGroupList()
+					.isSelectionEmpty()) {
+				int groupIndex = InstructorNoa
+						.getGroupList().getSelectedIndex();
+
+				Group group = InstructorNoa.getGroups()
+						.get(groupIndex);
+				if (group.getStudentIps().isEmpty()) {
+					return;
 				} else {
-					recordingsList.add(selectedStudent.get(i));
-					SendStartRecordCommandTo(selectedStudent.get(i));
-					wbtnRecordStudent.setText("Recording Started");
-					wbtnRecordStudent.setEnabled(false);
-//					progressBarFrame.setVisible(true);
+					try {
+						selectedStudent = new ArrayList<>();
+						selectedStudent.addAll(group.getStudentIps());
+						for (int i = 0; i < selectedStudent.size(); i++) {
+							if (recordingsList.contains(selectedStudent.get(i))) {
+								SendStopRecordCommandTo(selectedStudent.get(i));
+								recordingsList.remove(selectedStudent.get(i));
+								wbtnRecordStudent.setText("Record Student");
+								wbtnRecordStudent.setEnabled(true);
+							} else {
+								recordingsList.add(selectedStudent.get(i));
+								SendStartRecordCommandTo(selectedStudent.get(i));
+								wbtnRecordStudent.setText("Recording Started");
+								wbtnRecordStudent.setEnabled(false);
+							}
+						}
+						frame.dispose();
+						InstructorNoaUtil.getRecorder_Button().setEnabled(true);
+					} catch (Exception e) {
+						JajeemExcetionHandler.logError(e);
+					}
 				}
 			}
-			frame.dispose();
 		} else {
-			if (selectedStudent.size() != 0) {
+			if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
+				selectedStudent = new ArrayList<>();
+				selectedStudent.add(InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString());
 				if (recordingsList.contains(selectedStudent.get(0))) {
 					SendStopRecordCommandTo(selectedStudent.get(0));
 					recordingsList.remove(selectedStudent.get(0));
@@ -366,8 +394,6 @@ public class Recorder extends WebDialog {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
-//					progressBarFrame.setVisible(false);
 				} else {
 					recordingsList.add(selectedStudent.get(0));
 					SendStartRecordCommandTo(selectedStudent.get(0));
@@ -381,9 +407,8 @@ public class Recorder extends WebDialog {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
-//					progressBarFrame.setVisible(true);
 					frame.dispose();
+					InstructorNoaUtil.getRecorder_Button().setEnabled(true);
 				}
 			}
 		}
