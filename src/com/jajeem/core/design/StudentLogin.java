@@ -1,44 +1,50 @@
 package com.jajeem.core.design;
 
-import info.clearthought.layout.TableLayout;
+import java.awt.Insets;
 
-import java.awt.Color;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.InetAddress;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-
-import org.jitsi.service.libjitsi.LibJitsi;
-
-import com.alee.extended.panel.CenterPanel;
-import com.alee.extended.panel.GroupPanel;
-import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.button.WebButton;
-import com.alee.laf.label.WebLabel;
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebDialog;
-import com.alee.laf.text.WebPasswordField;
-import com.alee.laf.text.WebTextField;
-import com.alee.managers.hotkey.Hotkey;
-import com.alee.managers.hotkey.HotkeyManager;
-import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.client.ClientFileServer;
 import com.jajeem.util.Config;
+import com.jajeem.util.CustomLoginFrame;
+import com.jajeem.util.CustomLogoLabel;
+import com.jajeem.util.CustomTextField;
+import com.jajeem.util.CustomPasswordField;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
 import com.jajeem.util.i18n;
 
-public class StudentLogin extends JDialog {
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.UIManager;
+
+import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.laf.rootpane.WebDialog;
+import com.alee.laf.text.WebPasswordField;
+import com.alee.laf.text.WebTextField;
+import com.alee.managers.hotkey.Hotkey;
+import com.alee.managers.hotkey.HotkeyManager;
+
+import java.awt.Color;
+import java.io.File;
+import java.net.InetAddress;
+
+import javax.swing.border.MatteBorder;
+
+import org.jitsi.service.libjitsi.LibJitsi;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class StudentLogin extends CustomLoginFrame {
 
 	/**
 	 * 
@@ -46,17 +52,17 @@ public class StudentLogin extends JDialog {
 	private static final long serialVersionUID = -5121321476236877112L;
 
 	private static String serverIp;
-	private static LoginDialog loginDialog;
+	private static CustomLoginFrame loginDialog;
 	private static KeyHook keyHook;
 	private static MouseHook mouseHook;
+	public static String name = "";
 
 	private static Student student;
 
 	private static ServerService serverService;
 
-	final static WebTextField username = new WebTextField(15);
-	final static WebPasswordField password = new WebPasswordField(15);
-
+	static WebTextField username = new WebTextField(15);
+	static WebPasswordField password = new WebPasswordField(15);
 	/**
 	 * Launch the application.
 	 */
@@ -67,7 +73,7 @@ public class StudentLogin extends JDialog {
 			new Config();
 			new i18n();
 
-			new Student();
+			new Student2();
 			new StudentLogin();
 
 		} catch (Exception e) {
@@ -82,8 +88,118 @@ public class StudentLogin extends JDialog {
 	 * @throws Exception
 	 * @throws NumberFormatException
 	 */
-	public StudentLogin() throws NumberFormatException, Exception {
+	public StudentLogin() throws Exception{
+		
+		initilization();
+		
+		CustomLogoLabel lblNewLabel = new CustomLogoLabel("/icons/noa_en/new/username.png");
+		
+		CustomLogoLabel label = new CustomLogoLabel("/icons/noa_en/new/password.png");
+		
+		WebButton wbtnLogin = new WebButton();
+		wbtnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
 
+					if (username.getText().equals("")
+							|| password.getPassword().equals("")) {
+						WebOptionPane.showMessageDialog(getRootPane(),
+								"Please fill in all fields.",
+								"Information",
+								WebOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+
+					if (serverIp == null) {
+						WebOptionPane
+								.showMessageDialog(
+										getRootPane(),
+										"No instructor found, wait for your instructor.",
+										"Information",
+										WebOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+
+					AuthenticateCommand authenticateCommand = new AuthenticateCommand(
+							InetAddress.getLocalHost().getHostAddress(),
+							serverIp, Integer.parseInt(Config
+									.getParam("serverPort")),
+							username.getText(), password.getPassword());
+					name = username.getText();
+					getServerService().send(authenticateCommand);
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
+		wbtnLogin.setBorder(new MatteBorder(5, 3, 5, 3, (Color) Color.GRAY));
+		wbtnLogin.setBackground(Color.GRAY);
+		wbtnLogin.setRound(10);
+		wbtnLogin.setUndecorated(true);
+		wbtnLogin.setText("Login");
+		
+		CustomTextField textField = new CustomTextField("/icons/noa_en/new/logintextbox.png");
+		textField.setColumns(10);
+		textField.setMargin(new Insets(0, 10, 0, 0));
+		username = textField;
+		
+		CustomPasswordField textField_1 = new CustomPasswordField("/icons/noa_en/new/logintextbox.png");
+		textField_1.setColumns(10);
+		textField_1.setMargin(new Insets(0, 10, 0, 0));
+		password = textField_1;
+		
+		GroupLayout groupLayout = new GroupLayout(getMainContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(textField, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(label, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(178)
+							.addComponent(wbtnLogin, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+					.addComponent(wbtnLogin, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		getMainContentPane().setLayout(groupLayout);
+		
+		setDefaultCloseOperation(WebDialog.DO_NOTHING_ON_CLOSE);
+		setResizable(false);
+		setAlwaysOnTop(true);
+		
+		HotkeyManager.registerHotkey(this, wbtnLogin, Hotkey.ENTER);
+		
+		setLoginDialog(this);
+		getLoginDialog().pack();
+		getLoginDialog().setLocationRelativeTo(this);
+
+	}
+
+	private void initilization() throws Exception {
 		LibJitsi.start();
 
 		new Thread(new Runnable() {
@@ -115,113 +231,8 @@ public class StudentLogin extends JDialog {
 				Config.getParam("broadcastingIp"), Integer.parseInt(Config
 						.getParam("port")));
 		clientService.start();
-
-		// Enabling dialog decoration
-		boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
-		WebLookAndFeel.setDecorateDialogs(true);
-
-		// Opening dialog
-		setLoginDialog(new LoginDialog(this));
-		getLoginDialog().pack();
-		getLoginDialog().setLocationRelativeTo(this);
-
-		// Restoring frame decoration option
-		WebLookAndFeel.setDecorateDialogs(decorateFrames);
 	}
-
-	public static class LoginDialog extends WebDialog {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4106820035425545163L;
-		public static String name = "";
-
-		public LoginDialog(Window owner) throws Exception {
-			super(owner, i18n.getParam("Login to Classmate"));
-			// setIconImage(Toolkit.getDefaultToolkit().getImage(
-			// Student.class.getResource("/icons/menubar/jajeem.jpg")));
-			setDefaultCloseOperation(WebDialog.DO_NOTHING_ON_CLOSE);
-			setResizable(false);
-			setAlwaysOnTop(true);
-			setRound(0);
-
-			TableLayout layout = new TableLayout(new double[][] {
-					{ TableLayout.PREFERRED, TableLayout.FILL },
-					{ TableLayout.PREFERRED, TableLayout.PREFERRED,
-							TableLayout.PREFERRED } });
-			layout.setHGap(5);
-			layout.setVGap(5);
-			WebPanel content = new WebPanel(layout);
-			content.setMargin(15, 30, 15, 30);
-			content.setOpaque(false);
-
-			content.add(new WebLabel(i18n.getParam("Username"),
-					WebLabel.TRAILING), "0,0");
-			content.add(username, "1,0");
-
-			content.add(new WebLabel(i18n.getParam("Password"),
-					WebLabel.TRAILING), "0,1");
-			content.add(password, "1,1");
-
-			WebButton login = new WebButton(i18n.getParam("Login"));
-			login.setRound(0);
-			ActionListener listener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-
-						if (username.getText().equals("")
-								|| password.getPassword().equals("")) {
-							WebOptionPane.showMessageDialog(getRootPane(),
-									"Please fill in all fields.",
-									"Information",
-									WebOptionPane.INFORMATION_MESSAGE);
-							return;
-						}
-
-						if (serverIp == null) {
-							WebOptionPane
-									.showMessageDialog(
-											getRootPane(),
-											"No instructor found, wait for your instructor.",
-											"Information",
-											WebOptionPane.INFORMATION_MESSAGE);
-							return;
-						}
-
-						AuthenticateCommand authenticateCommand = new AuthenticateCommand(
-								InetAddress.getLocalHost().getHostAddress(),
-								serverIp, Integer.parseInt(Config
-										.getParam("serverPort")),
-								username.getText(), password.getPassword());
-						name = username.getText();
-						getServerService().send(authenticateCommand);
-
-					} catch (Exception e2) {
-						e2.printStackTrace();
-					}
-				}
-			};
-			login.addActionListener(listener);
-
-			WebButton cancel = new WebButton(i18n.getParam("Cancel"));
-			cancel.setRound(0);
-			cancel.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dispose();
-				}
-			});
-			content.add(new CenterPanel(new GroupPanel(5, login)), "0,2,1,2");
-			SwingUtils.equalizeComponentsWidths(login, cancel);
-
-			add(content);
-
-			// HotkeyManager.registerHotkey(this, cancel, Hotkey.ESCAPE);
-			HotkeyManager.registerHotkey(this, login, Hotkey.ENTER);
-		}
-	}
-
+	
 	public static KeyHook getKeyHook() {
 		return keyHook;
 	}
@@ -275,11 +286,11 @@ public class StudentLogin extends JDialog {
 		StudentLogin.serverIp = serverIp;
 	}
 
-	public static LoginDialog getLoginDialog() {
+	public static CustomLoginFrame getLoginDialog() {
 		return loginDialog;
 	}
 
-	public static void setLoginDialog(LoginDialog loginDialog) {
+	public static void setLoginDialog(CustomLoginFrame loginDialog) {
 		StudentLogin.loginDialog = loginDialog;
 	}
 }

@@ -34,6 +34,16 @@ public class CustomInternalPanel extends JInternalFrame{
 			g2.drawImage(background, 3, 0,getWidth(),getHeight(), this);
 	    }
         g2.dispose();
-		super.paintComponent(g);
+//		super.paintComponent(g);
+	}
+	
+	@Override
+	public void paintComponents(Graphics g) {
+		Graphics g2 = (Graphics2D)g.create();
+		if(background != null){
+			g2.drawImage(background, 3, 0,getWidth(),getHeight(), this);
+	    }
+        g2.dispose();
+//		super.paintComponents(g);
 	}
 }
