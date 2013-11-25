@@ -1,5 +1,6 @@
 package com.jajeem.util;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class CustomBottomButton extends WebButton{
 	BufferedImage backgroundHover;
 	boolean isRollOver = false;
 	boolean isPressed = false;
+	Color oldColor;
 	
 	public CustomBottomButton(){
 		init();
@@ -66,6 +68,8 @@ public class CustomBottomButton extends WebButton{
 	            }
 	         }
 		});
+		
+		oldColor = getForeground();
 	}
 	
 	@Override
@@ -79,13 +83,19 @@ public class CustomBottomButton extends WebButton{
 		
 		Graphics g2 = g.create();
 		if(background != null){
-			if(isPressed)
+			if(isPressed){
 				g2.drawImage(backgroundHover, 0, 0,getWidth(),getHeight(), this);
+				setForeground(new Color(42,56,143));
+			}
 			else{
-				if(isRollOver)
+				if(isRollOver){
 					g2.drawImage(backgroundHover, 0, 0,getWidth(),getHeight(), this);
-				else
+					setForeground(new Color(42,56,143));
+				}
+				else{
 					g2.drawImage(background, 0, 0,getWidth(),getHeight(), this);
+					setForeground(oldColor);
+				}
 			}
 	    }
         g2.dispose();

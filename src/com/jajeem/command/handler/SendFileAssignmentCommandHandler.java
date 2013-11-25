@@ -27,7 +27,7 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 			public void run() {
 				AssignmentTimer timer = new AssignmentTimer();
 				timer.start(time);
-				timer.setLocationRelativeTo(Student.getMainFram());
+				timer.setLocationRelativeTo(Student.getFrmJajeemProject());
 				timer.setVisible(true);
 				
 			}

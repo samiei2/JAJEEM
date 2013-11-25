@@ -90,6 +90,8 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
+import com.jajeem.core.design.account.AccountPanel;
+import com.jajeem.core.design.account.AdminPanel;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
@@ -540,10 +542,10 @@ public class InstructorNoaUtil {
 						// recorder action
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								boolean decorateFrames = WebLookAndFeel
-										.isDecorateDialogs();
-								WebLookAndFeel
-										.setDecorateDialogs(true);
+//								boolean decorateFrames = WebLookAndFeel
+//										.isDecorateDialogs();
+//								WebLookAndFeel
+//										.setDecorateDialogs(true);
 
 								Recorder recorder = new Recorder(
 										null,
@@ -552,8 +554,8 @@ public class InstructorNoaUtil {
 								recorder.setVisible(true);
 								getRecorder_Button().setEnabled(false);
 								// Restoring frame decoration option
-								WebLookAndFeel
-										.setDecorateDialogs(decorateFrames);
+//								WebLookAndFeel
+//										.setDecorateDialogs(decorateFrames);
 							} catch (Exception e) {
 								JajeemExcetionHandler.logError(e);
 							}
@@ -772,7 +774,7 @@ public class InstructorNoaUtil {
 							try {
 								if (InstructorNoa.getInstructorModel()
 										.getUsername().equals("admin")) {
-									new AdminPanel();
+									new AdminPanel().setVisible(true);
 								} else {
 
 									new AccountPanel(InstructorNoa

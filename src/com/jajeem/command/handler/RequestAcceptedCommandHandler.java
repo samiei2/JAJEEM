@@ -4,17 +4,12 @@ import static com.jajeem.core.design.StudentLogin.getServerService;
 
 import java.net.InetAddress;
 
-import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.RequestAcceptedCommand;
-import com.jajeem.command.model.RequestFromStudentCommand;
-import com.jajeem.command.model.RequestRejectedCommand;
 import com.jajeem.command.model.StopIntercomCommand;
-import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.Student2;
+import com.jajeem.core.design.Student;
 import com.jajeem.core.design.StudentLogin;
-import com.jajeem.core.model.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.util.CommunicationType;
@@ -31,8 +26,8 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 					Config.getParam("serverPort") });
 		} else if (type == CommunicationType.Just_Intercom) {
 			try {
-				if (Student2.getTransmitter().isTransmitting()) {
-					Student2.getTransmitter().stop();
+				if (Student.getTransmitter().isTransmitting()) {
+					Student.getTransmitter().stop();
 					StopIntercomCommand sic = new StopIntercomCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
@@ -42,7 +37,7 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 					IntercomRequestCommand irc = new IntercomRequestCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")), Student2.getStudentModel());
+									.getParam("serverPort")), Student.getStudentModel());
 					StudentLogin.getServerService().send(irc);
 				}
 			} catch (Exception e) {
@@ -53,8 +48,8 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 			MessageSend.main(new String[] { StudentLogin.getServerIp(),
 					Config.getParam("serverPort") });
 			try {
-				if (Student2.getTransmitter().isTransmitting()) {
-					Student2.getTransmitter().stop();
+				if (Student.getTransmitter().isTransmitting()) {
+					Student.getTransmitter().stop();
 					StopIntercomCommand sic = new StopIntercomCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
@@ -64,7 +59,7 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 					IntercomRequestCommand irc = new IntercomRequestCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")), Student2.getStudentModel());
+									.getParam("serverPort")), Student.getStudentModel());
 					StudentLogin.getServerService().send(irc);
 				}
 			} catch (Exception e) {

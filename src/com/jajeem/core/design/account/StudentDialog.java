@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.account;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,7 +32,7 @@ import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.core.design.AdminPanel.StudentTableFormat;
+import com.jajeem.core.design.account.AdminPanel.StudentTableFormat;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.InstructorService;

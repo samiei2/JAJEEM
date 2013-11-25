@@ -73,7 +73,7 @@ public class StudentLogin extends CustomLoginFrame {
 			new Config();
 			new i18n();
 
-			new Student2();
+			new Student();
 			new StudentLogin();
 
 		} catch (Exception e) {
@@ -156,17 +156,15 @@ public class StudentLogin extends CustomLoginFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(textField, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(label, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(178)
+							.addGap(154)
 							.addComponent(wbtnLogin, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
@@ -174,14 +172,14 @@ public class StudentLogin extends CustomLoginFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(57)
 					.addComponent(wbtnLogin, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);

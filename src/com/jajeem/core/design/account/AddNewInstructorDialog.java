@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.account;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

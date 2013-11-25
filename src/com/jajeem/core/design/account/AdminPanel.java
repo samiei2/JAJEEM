@@ -1,9 +1,10 @@
-package com.jajeem.core.design;
-
+package com.jajeem.core.design.account;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
@@ -18,14 +19,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -45,9 +46,7 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.rootpane.WebFrame;
-import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.alee.laf.text.WebTextField;
 import com.alee.managers.tooltip.TooltipManager;
 import com.jajeem.core.model.Instructor;
@@ -58,22 +57,23 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
+import com.jajeem.util.CustomButton;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+import java.awt.Dimension;
+import javax.swing.JButton;
 
-public class AdminPanel extends WebFrame {
 
-	/**
-	 * 
-	 */
-
-	private static final long serialVersionUID = 1L;
-
+@SuppressWarnings("deprecation")
+public class AdminPanel extends CustomAccountFrame{
+	Font font = new Font("Arial", Font.BOLD, 12);
+	
 	private static AdminPanel frame;
 	private WebFrame mainFrame;
+	@SuppressWarnings("unused")
 	private WebPanel contentPane;
 	private DatabaseManager databaseDialog;
 
@@ -85,68 +85,164 @@ public class AdminPanel extends WebFrame {
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new Config();
-					new i18n();
-					new Query();
-
-					frame = new AdminPanel();
-					frame.setVisible(true);
-
-				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
-					e.printStackTrace();
-				}
+	
+	public AdminPanel() throws Exception {
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		loadData();
+		
+		final CustomAccountCheckBox chckbxNewCheckBox = new CustomAccountCheckBox();
+		chckbxNewCheckBox.setSelected(true);
+		chckbxNewCheckBox.setText("Instructor");
+		chckbxNewCheckBox.setForeground(Color.WHITE);
+		chckbxNewCheckBox.setFont(font);
+		
+		
+		final CustomAccountCheckBox checkBox = new CustomAccountCheckBox();
+		checkBox.setText("Courses");
+		checkBox.setForeground(Color.WHITE);
+		checkBox.setFont(font);
+		
+		final CustomAccountCheckBox checkBox_1 = new CustomAccountCheckBox();
+		checkBox_1.setText("Students");
+		checkBox_1.setForeground(Color.WHITE);
+		checkBox_1.setFont(font);
+		
+		GroupLayout groupLayout = new GroupLayout(getTopContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		getTopContentPane().setLayout(groupLayout);
+		
+		WebButton webButton = new WebButton();
+		
+		WebButton webButton_1 = new WebButton();
+		
+		WebButton webButton_2 = new WebButton();
+		GroupLayout groupLayout_2 = new GroupLayout(getCloseContentPane());
+		groupLayout_2.setHorizontalGroup(
+			groupLayout_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addContainerGap(17, Short.MAX_VALUE)
+					.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addGap(18))
+		);
+		groupLayout_2.setVerticalGroup(
+			groupLayout_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
+		getCloseContentPane().setLayout(groupLayout_2);
+		
+		final JPanel cards = new JPanel();
+		cards.setOpaque(false);
+		GroupLayout groupLayout_1 = new GroupLayout(getMainContentPane());
+		groupLayout_1.setHorizontalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout_1.setVerticalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		CardLayout cardlayout = new CardLayout(0, 0);
+		cards.setLayout(cardlayout);
+		
+		WebPanel instructorPanel = new WebPanel(); 
+		instructorPanel.setOpaque(false);
+		instructorPanel.setLayout(new BorderLayout(0, 0));
+		instructorPanel.add(initInstructor());
+		
+		WebPanel coursesPanel = new WebPanel(); 
+		coursesPanel.setOpaque(false);
+		coursesPanel.setLayout(new BorderLayout(0, 0));
+		coursesPanel.add(initCourse());
+		
+		WebPanel studentPanel = new WebPanel();
+		studentPanel.setOpaque(false);
+		studentPanel.setLayout(new BorderLayout(0, 0));
+		studentPanel.add(initStudent());
+		
+		
+		cards.add(instructorPanel,"instructor");
+		cards.add(coursesPanel,"course");
+		cards.add(studentPanel,"student");
+		getMainContentPane().setLayout(groupLayout_1);
+		pack();
+		mainFrame = this;
+		
+		
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				chckbxNewCheckBox.setSelected(true);
+				checkBox.setSelected(false);
+				checkBox_1.setSelected(false);
+				CardLayout cl_cards = (CardLayout)(cards.getLayout());
+		        cl_cards.show(cards, "instructor");
 			}
 		});
+		
+		checkBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				chckbxNewCheckBox.setSelected(false);
+				checkBox.setSelected(true);
+				checkBox_1.setSelected(false);
+				CardLayout cl_cards = (CardLayout)(cards.getLayout());
+		        cl_cards.show(cards, "course");
+			}
+		});
+		
+		checkBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				checkBox.setSelected(false);
+				chckbxNewCheckBox.setSelected(false);
+				checkBox_1.setSelected(true);
+				CardLayout cl_cards = (CardLayout)(cards.getLayout());
+		        cl_cards.show(cards, "student");
+			}
+		});
+		
+//		setVisible(true);
 	}
 
 	/**
-	 * Create the frame.
 	 * 
-	 * @throws Exception
 	 */
-	public AdminPanel() throws Exception {
-		setTitle(i18n.getParam("Admin Panel"));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(200, 50, 800, 600);
-		contentPane = new WebPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-
-		loadData();
-
-		WebTabbedPane tabbedPane = new WebTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
-		WebPanel userTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Instructors"), null, userTab, null);
-		userTab.setLayout(new BorderLayout(0, 0));
-		userTab.add(initInstructor());
-
-		WebPanel courseTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Courses"), null, courseTab, null);
-		courseTab.setLayout(new BorderLayout(0, 0));
-		courseTab.add(initCourse());
-
-		WebPanel studentTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
-		studentTab.setLayout(new BorderLayout(0, 0));
-		studentTab.add(initStudent());
-		
-		mainFrame = this;
-		setVisible(true);
-
-	}
-
+	private static final long serialVersionUID = 1L;
+	
 	private void loadData() throws SQLException {
 
 		InstructorService instructorService = new InstructorService();
@@ -178,12 +274,12 @@ public class AdminPanel extends WebFrame {
 
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({"unused" })
 	private WebPanel initCourse() throws Exception {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable courseTable = new JTable();
@@ -191,19 +287,22 @@ public class AdminPanel extends WebFrame {
 				i18n.getParam("Select a course and push edit button to edit"));
 
 		jScrollPane1.setViewportView(courseTable);
-		panel.add(jScrollPane1);
 
 		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
+		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
 
 		JPanel buttonPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		buttonPanel.setOpaque(false);
+		buttonPanel.setSize(new Dimension(0, 60));
 		bottomPanel.add(buttonPanel);
 
-		WebButton addButton = new WebButton(i18n.getParam("Add"));
-		buttonPanel.add(addButton);
+		CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+		addButton.setMargin(new Insets(0, 5, 0, 0));
+		addButton.setHorizontalAlignment(SwingConstants.LEFT);
+		addButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		addButton.setUndecorated(true);
+		addButton.setText(i18n.getParam("Add"));
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -217,8 +316,13 @@ public class AdminPanel extends WebFrame {
 			}
 		});
 
-		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
-		buttonPanel.add(deleteButton);
+		CustomAccountButton deleteButton = new CustomAccountButton("/icons/noa_en/accountdelete.png");
+		deleteButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		deleteButton.setHorizontalAlignment(SwingConstants.LEFT);
+		deleteButton.setMargin(new Insets(0, 5, 0, 0));
+		deleteButton.setUndecorated(true);
+		deleteButton.setSize(50, 30);
+		deleteButton.setText(i18n.getParam("Delete"));
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) throws HeadlessException {
 
@@ -257,7 +361,6 @@ public class AdminPanel extends WebFrame {
 		});
 
 		WebButton editButton = new WebButton("Edit");
-		buttonPanel.add(editButton);
 		editButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -277,7 +380,38 @@ public class AdminPanel extends WebFrame {
 		});
 
 		WebButton studentButton = new WebButton(i18n.getParam("Details"));
-		buttonPanel.add(studentButton);
+		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(5)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+					.addGap(32)
+					.addComponent(editButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(editButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+								.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		buttonPanel.setLayout(gl_buttonPanel);
 		studentButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -348,6 +482,7 @@ public class AdminPanel extends WebFrame {
 //		});
 
 		JPanel paginationPanel = new JPanel();
+		paginationPanel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
@@ -365,8 +500,8 @@ public class AdminPanel extends WebFrame {
 		});
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
@@ -375,7 +510,7 @@ public class AdminPanel extends WebFrame {
 		topPanel.add(courseFilterTF);
 
 		TextFilterator<Course> personTextFilterator = new TextFilterator<Course>() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void getFilterStrings(java.util.List list, Course c) {
 				// field you want to enable filter
@@ -434,6 +569,26 @@ public class AdminPanel extends WebFrame {
 
 		StripedTableCellRenderer.installInTable(courseTable, Color.lightGray,
 				Color.white, null, null);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(20, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		);
+		panel.setLayout(gl_panel);
 		
 		courseTable.addMouseListener(new MouseAdapter() {
 			   public void mouseClicked(MouseEvent e) {
@@ -465,12 +620,12 @@ public class AdminPanel extends WebFrame {
 		return panel;
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "unused" })
 	private WebPanel initInstructor() throws Exception {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable instructorTable = new JTable();
@@ -478,19 +633,21 @@ public class AdminPanel extends WebFrame {
 				i18n.getParam("Click on a cell to edit"));
 
 		jScrollPane1.setViewportView(instructorTable);
-		panel.add(jScrollPane1);
 
 		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
+		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
 
 		JPanel buttonPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		buttonPanel.setOpaque(false);
 		bottomPanel.add(buttonPanel);
 
-		WebButton addButton = new WebButton("Add");
-		buttonPanel.add(addButton);
+		CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+		addButton.setText(i18n.getParam("Add"));
+		addButton.setMargin(new Insets(0, 5, 0, 0));
+		addButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		addButton.setHorizontalAlignment(SwingConstants.LEFT);
+		addButton.setUndecorated(true);
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -504,8 +661,12 @@ public class AdminPanel extends WebFrame {
 			}
 		});
 
-		WebButton deleteButton = new WebButton("Delete");
-		buttonPanel.add(deleteButton);
+		CustomAccountButton deleteButton = new CustomAccountButton("/icons/noa_en/accountdelete.png");
+		deleteButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		deleteButton.setHorizontalAlignment(SwingConstants.LEFT);
+		deleteButton.setMargin(new Insets(0, 5, 0, 0));
+		deleteButton.setUndecorated(true);
+		deleteButton.setText(i18n.getParam("delete"));
 
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -543,7 +704,6 @@ public class AdminPanel extends WebFrame {
 		});
 
 		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
-		buttonPanel.add(quizButton);
 		quizButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -563,7 +723,34 @@ public class AdminPanel extends WebFrame {
 		});
 		
 		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
-		buttonPanel.add(databaseManager);
+		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(5)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+					.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		buttonPanel.setLayout(gl_buttonPanel);
 		databaseManager.addActionListener(new ActionListener() {
 
 			@Override
@@ -581,6 +768,7 @@ public class AdminPanel extends WebFrame {
 		});
 
 		JPanel paginationPanel = new JPanel();
+		paginationPanel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
@@ -598,8 +786,8 @@ public class AdminPanel extends WebFrame {
 		});
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
@@ -608,7 +796,7 @@ public class AdminPanel extends WebFrame {
 		topPanel.add(instructorFilterTF);
 
 		TextFilterator<Instructor> personTextFilterator = new TextFilterator<Instructor>() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void getFilterStrings(java.util.List list, Instructor i) {
 				// field you want to enable filter
@@ -640,12 +828,32 @@ public class AdminPanel extends WebFrame {
 
 		StripedTableCellRenderer.installInTable(instructorTable,
 				Color.lightGray, Color.white, null, null);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		return panel;
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("unused")
 	private WebPanel initStudent() throws Exception {
 
 		final WebPanel panel = new WebPanel();
@@ -767,7 +975,7 @@ public class AdminPanel extends WebFrame {
 		topPanel.add(studentFilterTF);
 
 		TextFilterator<Student> personTextFilterator = new TextFilterator<Student>() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void getFilterStrings(java.util.List list, Student s) {
 				// field you want to enable filter
@@ -1096,4 +1304,23 @@ public class AdminPanel extends WebFrame {
 		this.studentSelectionModel = studentSelectionModel;
 	}
 
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new Config();
+					new i18n();
+					new Query();
+
+					frame = new AdminPanel();
+					frame.setVisible(true);
+
+				} catch (Exception e) {
+					JajeemExcetionHandler.logError(e);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 }
