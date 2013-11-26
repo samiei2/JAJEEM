@@ -1291,12 +1291,15 @@ public class InstructorNoa {
 		final WebCheckBox sendToAllWebCheckBox = new WebCheckBox();
 		sendToAllWebCheckBox.setText("Send to All");
 
+		CustomPowerPanel internetContentPanel = new CustomPowerPanel();
 		GroupPanel InternetPopupContent = new GroupPanel(5, false,
 				internetBlockButton, WebsiteTextField,
 				internetSendWebsiteButton, sendToAllWebCheckBox);
 		InternetPopupContent.setMargin(15);
 
-		internetPopupButton.setContent(InternetPopupContent);
+		internetContentPanel.add(InternetPopupContent);
+		internetPopupButton.setContent(internetContentPanel);
+		internetPopupButton.setMargin(5);
 		internetPopupButton.setDefaultFocusComponent(internetBlockButton);
 
 		internetButton.setIconTextGap(30);

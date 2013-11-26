@@ -97,6 +97,7 @@ import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.survey.design.alt.Survey_Main;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomInternalPanel;
+import com.jajeem.util.CustomPowerPanel;
 import com.jajeem.util.CustomTeacherFrame;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.LnkParser;
@@ -1341,13 +1342,16 @@ public class InstructorNoaUtil {
 
 						final int sizeOfProgramModel = model.getRowCount();
 
+						CustomPowerPanel panel = new CustomPowerPanel();
 						GroupPanel programPopupContent = new GroupPanel(5,
 								false, new WebScrollPane(programsList));
-						programPopupContent.setMargin(15);
+						programPopupContent.setMargin(5);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
 
-						programPopupButton.setContent(programPopupContent);
+						panel.add(programPopupContent);
+						programPopupButton.setMargin(5);
+						programPopupButton.setContent(panel);
 
 						programsList.addMouseListener(new MouseAdapter() {
 							@Override
@@ -1536,14 +1540,19 @@ public class InstructorNoaUtil {
 						WebButton runButton = new WebButton(
 								i18n.getParam("Run"));
 
+						CustomPowerPanel panel = new CustomPowerPanel();
+						WebScrollPane scrollpane = new WebScrollPane(programsList);
+						scrollpane.setOpaque(true);
 						GroupPanel programPopupContent = new GroupPanel(5,
-								false, new WebScrollPane(programsList),
+								false, scrollpane,
 								runButton, chooseAppButton, sendToAll);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
 
-						programPopupButton.setContent(programPopupContent);
+						panel.add(programPopupContent);
+						programPopupButton.setMargin(5);
+						programPopupButton.setContent(panel);
 
 						programsList.addMouseListener(new MouseAdapter() {
 							@Override
