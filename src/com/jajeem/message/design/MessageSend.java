@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import javax.swing.JDialog;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
@@ -110,7 +111,7 @@ public class MessageSend extends JDialog {
 			super(owner, "Message");
 			setResizable(false);
 			setIconImages(WebLookAndFeel.getImages());
-			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 			WebPanel content = new WebPanel();
 			content.setMargin(15, 30, 15, 30);
@@ -118,6 +119,7 @@ public class MessageSend extends JDialog {
 
 			WebButton cancel = new WebButton("Send");
 			ActionListener listener = new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						MessageCommand messageCommand = new MessageCommand(

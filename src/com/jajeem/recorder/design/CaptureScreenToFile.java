@@ -31,10 +31,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -43,19 +41,15 @@ import javax.swing.JOptionPane;
 
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.model.SendRecordingErrorCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.Student;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.i18n;
-import com.sun.jna.platform.win32.WinBase.OVERLAPPED;
-import com.xuggle.mediatool.IMediaCoder;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.IAudioSamples;
@@ -77,7 +71,6 @@ import com.xuggle.xuggler.IVideoPicture;
 
 public class CaptureScreenToFile {
 	private static IRational FRAME_RATE = IRational.make(30, 1);
-	private static final int SECONDS_TO_RUN_FOR = 15;
 	private static boolean running = false;
 	private static String filename;
 	private static boolean isClient = false;
@@ -91,9 +84,9 @@ public class CaptureScreenToFile {
 	 */
 	public CaptureScreenToFile(boolean _isClient) {
 		isClient = _isClient;
-		if(!isClient){
-			WebDirectoryChooser directoryChooser = new WebDirectoryChooser(null,
-					"Choose directory to save");
+		if (!isClient) {
+			WebDirectoryChooser directoryChooser = new WebDirectoryChooser(
+					null, "Choose directory to save");
 
 			directoryChooser.setVisible(true);
 			directoryChooser.setAlwaysOnTop(true);
@@ -101,19 +94,20 @@ public class CaptureScreenToFile {
 			if (directoryChooser.getResult() == StyleConstants.OK_OPTION) {
 				File filetmp = directoryChooser.getSelectedFolder();
 				outputFile = new File(filetmp.getPath());
-				if (!outputFile.exists())
+				if (!outputFile.exists()) {
 					outputFile.mkdir();
+				}
 			} else {
 				int resp = 1;
 
 				try {
-					resp = WebOptionPane
+					resp = JOptionPane
 							.showConfirmDialog(
 									null,
 									i18n.getParam("Do you want to save the recording is the default folder (\\Recordings) or discard recording?"),
 									i18n.getParam("Confirm"),
-									WebOptionPane.YES_NO_OPTION,
-									WebOptionPane.QUESTION_MESSAGE);
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -123,18 +117,17 @@ public class CaptureScreenToFile {
 					return;
 				}
 			}
-		}
-		else{
+		} else {
 			outputFile = new File(FileUtil.getRecorderPath());
 		}
 
-		if (!outputFile.exists())
+		if (!outputFile.exists()) {
 			outputFile.mkdir();
-		else if (!outputFile.isDirectory()) {
+		} else if (!outputFile.isDirectory()) {
 			outputFile.delete();
 			outputFile.mkdir();
 		}
-		
+
 		overlayScreen = new TransparentRecordingFrame();
 	}
 
@@ -150,19 +143,22 @@ public class CaptureScreenToFile {
 
 	public static void StartCaputre(String file) {
 		try {
-			if (file == "")
+			if (file == "") {
 				file = "temp.mp4";
+			}
 			final File outFile;
-			if (!new File(outputFile.getPath()).exists())
+			if (!new File(outputFile.getPath()).exists()) {
 				new File(outputFile.getPath()).mkdir();
-			outFile = new File(outputFile.getPath() , "recording - "
+			}
+			outFile = new File(outputFile.getPath(), "recording - "
 					+ System.currentTimeMillis() + ".avi");
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
 
-			if(!isClient)
+			if (!isClient) {
 				overlayScreen.setVisible(true);
+			}
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -215,8 +211,9 @@ public class CaptureScreenToFile {
 						// if
 						// needed
 						writer.close();
-						if(!isClient)
+						if (!isClient) {
 							Desktop.getDesktop().open(outputFile);
+						}
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
@@ -233,14 +230,16 @@ public class CaptureScreenToFile {
 	public static void StartCaputreWithAudio(String file) {
 		try {
 			final File outFile;
-			if (!new File(outputFile.getPath()).exists())
+			if (!new File(outputFile.getPath()).exists()) {
 				new File(outputFile.getPath()).mkdir();
-			outFile = new File(outputFile.getPath(),"temp.mp4");
+			}
+			outFile = new File(outputFile.getPath(), "temp.mp4");
 			running = true;
 			// This is the robot for taking a snapshot of the
 			// screen. It's part of Java AWT
-			if(!isClient)
+			if (!isClient) {
 				overlayScreen.setVisible(true);
+			}
 			Thread recorder = new Thread(new Runnable() {
 
 				@Override
@@ -297,28 +296,33 @@ public class CaptureScreenToFile {
 						writer.close();
 						capt.stop();
 						Thread.sleep(1000);
-						FileOutputStream out = new FileOutputStream(new File(outputFile
-								.getPath(),"temp.mp3"));
+						FileOutputStream out = new FileOutputStream(new File(
+								outputFile.getPath(), "temp.mp3"));
 						AudioSystem.write(capt.audioInputStream,
 								AudioFileFormat.Type.AIFF, out);
 						out.flush();
 						out.close();
 						Thread.sleep(1000);
 						Synchornize();
-						if(!isClient)
+						if (!isClient) {
 							Desktop.getDesktop().open(outputFile);
+						}
 					} catch (Exception e) {
 						System.err.println("an error occurred: "
 								+ e.getMessage());
-						
-						final String server = ClientSession.getReturnRecordedFileServer();
-						if(isClient)
+
+						final String server = ClientSession
+								.getReturnRecordedFileServer();
+						if (isClient) {
 							SendErrorCommand(server);
+						}
 						running = false;
-						if(!isClient){
+						if (!isClient) {
 							overlayScreen.dispose();
-							JOptionPane.showMessageDialog(null, 
-									"An error has occured.\nPlease stop the recording and start again.Try changing the save folder.\nIf the problem persists contact administrator!");
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"An error has occured.\nPlease stop the recording and start again.Try changing the save folder.\nIf the problem persists contact administrator!");
 						}
 					}
 				}
@@ -328,10 +332,11 @@ public class CaptureScreenToFile {
 		} catch (Throwable e) {
 			System.err.println("an error occurred: " + e.getMessage());
 			final String server = ClientSession.getReturnRecordedFileServer();
-			if(isClient)
+			if (isClient) {
 				SendErrorCommand(server);
+			}
 			running = false;
-			if(!isClient){
+			if (!isClient) {
 				overlayScreen.setVisible(false);
 				overlayScreen.dispose();
 			}
@@ -341,7 +346,7 @@ public class CaptureScreenToFile {
 	public static void StopCapture() {
 		try {
 			running = false;
-			if(!isClient){
+			if (!isClient) {
 				overlayScreen.setVisible(false);
 				overlayScreen.dispose();
 			}
@@ -374,13 +379,9 @@ public class CaptureScreenToFile {
 		// if the source image is already the target type, return the source
 		// image
 
-		if (sourceImage.getType() == targetType)
+		if (sourceImage.getType() == targetType) {
 			image = sourceImage;
-
-		// otherwise create a new image of the target type and draw the new
-		// image
-
-		else {
+		} else {
 			image = new BufferedImage(sourceImage.getWidth(),
 					sourceImage.getHeight(), targetType);
 			image.getGraphics().drawImage(sourceImage, 0, 0, null);
@@ -396,13 +397,9 @@ public class CaptureScreenToFile {
 		// if the source image is already the target type, return the source
 		// image
 
-		if (sourceImage.getType() == targetType)
+		if (sourceImage.getType() == targetType) {
 			image = sourceImage;
-
-		// otherwise create a new image of the target type and draw the new
-		// image
-
-		else {
+		} else {
 			image = new BufferedImage(sourceImage.getWidth(),
 					sourceImage.getHeight(), targetType);
 			image.getGraphics().drawImage(sourceImage, 0, 0, null);
@@ -424,18 +421,20 @@ public class CaptureScreenToFile {
 	}
 
 	public static void Synchornize() {
-		String filenamevideo = new File(outputFile.getPath() , "temp.mp4").getAbsolutePath(); // this is
-																	// the input
+		String filenamevideo = new File(outputFile.getPath(), "temp.mp4")
+				.getAbsolutePath(); // this is
+		// the input
 		// file for video.
 		// you can change
 		// extension
-		String filenameaudio = new File(outputFile.getPath() , "temp.mp3").getAbsolutePath(); // this is
-																	// the input
+		String filenameaudio = new File(outputFile.getPath(), "temp.mp3")
+				.getAbsolutePath(); // this is
+		// the input
 		// file for audio.
 		// you can change
 		// extension
 
-		String fileName = new File(outputFile.getPath() , "recording - "
+		String fileName = new File(outputFile.getPath(), "recording - "
 				+ System.currentTimeMillis() + ".mp4").getAbsolutePath();
 		setFileName(fileName);
 		ClientSession.setRecordedFileName(fileName);
@@ -445,11 +444,13 @@ public class CaptureScreenToFile {
 		IContainer containerVideo = IContainer.make();
 		IContainer containerAudio = IContainer.make();
 
-		if (containerVideo.open(filenamevideo, IContainer.Type.READ, null) < 0)
+		if (containerVideo.open(filenamevideo, IContainer.Type.READ, null) < 0) {
 			throw new IllegalArgumentException("Cant find " + filenamevideo);
+		}
 
-		if (containerAudio.open(filenameaudio, IContainer.Type.READ, null) < 0)
+		if (containerAudio.open(filenameaudio, IContainer.Type.READ, null) < 0) {
 			throw new IllegalArgumentException("Cant find " + filenameaudio);
+		}
 
 		int numStreamVideo = containerVideo.getNumStreams();
 		int numStreamAudio = containerAudio.getNumStreams();
@@ -485,20 +486,24 @@ public class CaptureScreenToFile {
 
 		}
 
-		if (videostreamt == -1)
+		if (videostreamt == -1) {
 			throw new RuntimeException("No video steam found");
-		if (audiostreamt == -1)
+		}
+		if (audiostreamt == -1) {
 			throw new RuntimeException("No audio steam found");
+		}
 
-		if (videocoder.open() < 0)
+		if (videocoder.open() < 0) {
 			throw new RuntimeException("Cant open video coder");
+		}
 		IPacket packetvideo = IPacket.make();
 
 		IStreamCoder audioCoder = containerAudio.getStream(audiostreamt)
 				.getStreamCoder();
 
-		if (audioCoder.open() < 0)
+		if (audioCoder.open() < 0) {
 			throw new RuntimeException("Cant open audio coder");
+		}
 		mWriter.addAudioStream(1, 1, audioCoder.getChannels(),
 				audioCoder.getSampleRate());
 
@@ -520,8 +525,9 @@ public class CaptureScreenToFile {
 				while (offset < packetvideo.getSize()) {
 					int bytesDecoded = videocoder.decodeVideo(picture,
 							packetvideo, offset);
-					if (bytesDecoded < 0)
+					if (bytesDecoded < 0) {
 						throw new RuntimeException("bytesDecoded not working");
+					}
 					offset += bytesDecoded;
 
 					if (picture.isComplete()) {
@@ -541,8 +547,9 @@ public class CaptureScreenToFile {
 				while (offset < packetaudio.getSize()) {
 					int bytesDecodedaudio = audioCoder.decodeAudio(samples,
 							packetaudio, offset);
-					if (bytesDecodedaudio < 0)
+					if (bytesDecodedaudio < 0) {
 						throw new RuntimeException("could not detect audio");
+					}
 					offset += bytesDecodedaudio;
 
 					if (samples.isComplete()) {
@@ -561,18 +568,20 @@ public class CaptureScreenToFile {
 
 		mWriter.flush();
 		mWriter.close();
-		new File(outputFile.getPath() , "temp.mp4").delete();
-		new File(outputFile.getPath() , "temp.mp3").delete();
+		new File(outputFile.getPath(), "temp.mp4").delete();
+		new File(outputFile.getPath(), "temp.mp3").delete();
 
-		if (isClient)
+		if (isClient) {
 			ReturnFileToServer();
+		}
 	}
 
 	private static void ReturnFileToServer() {
 		final String server = ClientSession.getReturnRecordedFileServer();
 		final File file = new File(ClientSession.getRecordedFileName());
-		if (file == null || !file.exists() || server == null || server == "")
+		if (file == null || !file.exists() || server == null || server == "") {
 			SendErrorCommand(server);
+		}
 		try {
 			Thread fileSender = new Thread(new Runnable() {
 
@@ -587,27 +596,33 @@ public class CaptureScreenToFile {
 						byte[] info = new byte[2048];
 						byte[] temp = file.getPath().getBytes();
 						int len = file.getPath().length();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 
 						len = file.getName().length();
 						temp = file.getName().getBytes();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 
 						FileInputStream inp = new FileInputStream(file);
 						len = String.valueOf(inp.available()).length();
 						temp = String.valueOf(inp.available()).getBytes();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 						inp.close();
 
@@ -643,10 +658,8 @@ public class CaptureScreenToFile {
 		try {
 			ServerService service = StudentLogin.getServerService();
 			SendRecordingErrorCommand cmd = new SendRecordingErrorCommand(
-					InetAddress
-					.getLocalHost()
-					.getHostAddress(),
-					server, Integer.parseInt(Config.getParam("port")));
+					InetAddress.getLocalHost().getHostAddress(), server,
+					Integer.parseInt(Config.getParam("port")));
 
 			service.send(cmd);
 		} catch (Exception e) {
@@ -658,10 +671,8 @@ public class CaptureScreenToFile {
 		try {
 			ServerService service = StudentLogin.getServerService();
 			SendRecordingErrorCommand cmd = new SendRecordingErrorCommand(
-					InetAddress
-					.getLocalHost()
-					.getHostAddress(),
-					server, Integer.parseInt(Config.getParam("port")));
+					InetAddress.getLocalHost().getHostAddress(), server,
+					Integer.parseInt(Config.getParam("port")));
 
 			service.send(cmd);
 		} catch (Exception e) {

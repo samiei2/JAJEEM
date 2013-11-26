@@ -9,29 +9,22 @@ package org.jitsi.impl.neomedia.device;
 /**
  * Implements an <tt>AudioSystem</tt> without any devices which allows the user
  * to select to use no audio capture, notification and playback.
- *
+ * 
  * @author Lyubomir Marinov
  */
-public class NoneAudioSystem
-    extends AudioSystem
-{
-    public static final String LOCATOR_PROTOCOL = "none";
+public class NoneAudioSystem extends AudioSystem {
+	public static final String LOCATOR_PROTOCOL = "none";
 
-    public NoneAudioSystem()
-        throws Exception
-    {
-        super(LOCATOR_PROTOCOL);
-    }
+	public NoneAudioSystem() throws Exception {
+		super(LOCATOR_PROTOCOL);
+	}
 
-    @Override
-    protected void doInitialize()
-        throws Exception
-    {
-    }
+	@Override
+	protected void doInitialize() throws Exception {
+	}
 
-    @Override
-    public String toString()
-    {
-        return "None";
-    }
+	@Override
+	public String toString() {
+		return "None";
+	}
 }

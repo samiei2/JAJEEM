@@ -35,9 +35,10 @@ public class OpenWebsiteCommandHandler implements ICommandHandler {
 				// Build a command string which looks like
 				// "browser1 "url" || browser2 "url" ||..."
 				StringBuffer cmd1 = new StringBuffer();
-				for (int i = 0; i < browsers.length; i++)
+				for (int i = 0; i < browsers.length; i++) {
 					cmd1.append((i == 0 ? "" : " || ") + browsers[i] + " \""
 							+ url + "\" ");
+				}
 
 				rt.exec(new String[] { "sh", "-c", cmd1.toString() });
 

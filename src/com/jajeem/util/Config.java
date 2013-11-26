@@ -48,8 +48,9 @@ public class Config {
 	 */
 	public static String getParam(String key) throws Exception {
 
-		if (props == null || props.isEmpty())
+		if (props == null || props.isEmpty()) {
 			throw new Exception("Configuration file is not loaded before!");
+		}
 
 		String p = props.getProperty(key);
 
@@ -68,8 +69,9 @@ public class Config {
 	 */
 	public static void setParam(String key, String value) throws Exception {
 
-		if (props == null || props.isEmpty())
+		if (props == null || props.isEmpty()) {
 			throw new Exception("Configuration file is not loaded before!");
+		}
 
 		props.put(key, value);
 

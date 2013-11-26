@@ -2,14 +2,14 @@ package com.jajeem.core.design.account;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import ca.odell.glazedlists.EventList;
 
@@ -34,9 +34,11 @@ public class AddNewInstructorDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
-	public AddNewInstructorDialog(final EventList<Instructor> instructorList) throws Exception {
+	public AddNewInstructorDialog(final EventList<Instructor> instructorList)
+			throws Exception {
 		setTitle(i18n.getParam("Add new instructor"));
 		setVisible(true);
 		setBounds(400, 200, 392, 210);

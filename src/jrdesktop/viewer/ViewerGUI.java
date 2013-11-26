@@ -1,11 +1,11 @@
 package jrdesktop.viewer;
 
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import jrdesktop.Commons;
@@ -19,6 +19,11 @@ import jrdesktop.main;
  */
 
 public class ViewerGUI extends javax.swing.JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean fullScreenMode = false;
 
@@ -91,6 +96,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jMenuItemSendFilesFromClipbrd.setText("Send files from clipborad");
 		jMenuItemSendFilesFromClipbrd
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jMenuItemSendFilesFromClipbrdActionPerformed(evt);
 					}
@@ -101,6 +107,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setText("Receive files from clipboard");
 		jMenuItemReceiveFilesFromClipbrd
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jMenuItemReceiveFilesFromClipbrdActionPerformed(evt);
 					}
@@ -113,6 +120,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jMenuItemConnectInfo.setToolTipText("");
 		jMenuItemConnectInfo
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jMenuItemConnectInfoActionPerformed(evt);
 					}
@@ -125,6 +133,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jMenuItemHostProps.setToolTipText("");
 		jMenuItemHostProps
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jMenuItemHostPropsActionPerformed(evt);
 					}
@@ -136,34 +145,40 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jMenuItemAbout.setText("About jrdesktop");
 		jMenuItemAbout.setToolTipText("");
 		jMenuItemAbout.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jMenuItemAboutActionPerformed(evt);
 			}
 		});
 		// jPopupMenuHelp.add(jMenuItemAbout);
 
-		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		setExtendedState(getExtendedState() | Frame.MAXIMIZED_BOTH);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		setTitle(" Classmate Viewer");
 		setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
 		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
 			public void windowActivated(java.awt.event.WindowEvent evt) {
 				formWindowActivated(evt);
 			}
 
+			@Override
 			public void windowClosing(java.awt.event.WindowEvent evt) {
 				formWindowClosing(evt);
 			}
 
+			@Override
 			public void windowDeactivated(java.awt.event.WindowEvent evt) {
 				formWindowDeactivated(evt);
 			}
 
+			@Override
 			public void windowDeiconified(java.awt.event.WindowEvent evt) {
 				formWindowDeiconified(evt);
 			}
 
+			@Override
 			public void windowIconified(java.awt.event.WindowEvent evt) {
 				formWindowIconified(evt);
 			}
@@ -182,6 +197,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnStartStop
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnStartStop.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnStartStopActionPerformed(evt);
 			}
@@ -194,6 +210,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jToggleBtnPauseResume.setFocusable(false);
 		jToggleBtnPauseResume
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jToggleBtnPauseResumeActionPerformed(evt);
 					}
@@ -208,6 +225,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jBtnViewCtrl.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnViewCtrl.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnViewCtrlActionPerformed(evt);
 			}
@@ -224,6 +242,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnFullNormal
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnFullNormal.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnFullNormalActionPerformed(evt);
 			}
@@ -240,6 +259,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnPartialComplete
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jBtnPartialCompleteActionPerformed(evt);
 					}
@@ -263,6 +283,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jComboBoxScreenZoom.setMinimumSize(new java.awt.Dimension(70, 20));
 		jComboBoxScreenZoom.setPreferredSize(new java.awt.Dimension(70, 20));
 		jComboBoxScreenZoom.addItemListener(new java.awt.event.ItemListener() {
+			@Override
 			public void itemStateChanged(java.awt.event.ItemEvent evt) {
 				jComboBoxScreenZoomItemStateChanged(evt);
 			}
@@ -285,6 +306,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jCheckBoxScreenCompress
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jCheckBoxScreenCompressActionPerformed(evt);
 					}
@@ -307,6 +329,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jCheckBoxImageQuality
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jCheckBoxImageQualityActionPerformed(evt);
 					}
@@ -324,6 +347,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jComboBoxImageQuality.setPreferredSize(new java.awt.Dimension(65, 20));
 		jComboBoxImageQuality
 				.addItemListener(new java.awt.event.ItemListener() {
+					@Override
 					public void itemStateChanged(java.awt.event.ItemEvent evt) {
 						jComboBoxImageQualityItemStateChanged(evt);
 					}
@@ -348,6 +372,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jComboBoxColorQuality.setPreferredSize(new java.awt.Dimension(85, 20));
 		jComboBoxColorQuality
 				.addItemListener(new java.awt.event.ItemListener() {
+					@Override
 					public void itemStateChanged(java.awt.event.ItemEvent evt) {
 						jComboBoxColorQualityItemStateChanged(evt);
 					}
@@ -370,6 +395,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jComboBoxRefreshRate.setMinimumSize(new java.awt.Dimension(70, 20));
 		jComboBoxRefreshRate.setPreferredSize(new java.awt.Dimension(70, 20));
 		jComboBoxRefreshRate.addItemListener(new java.awt.event.ItemListener() {
+			@Override
 			public void itemStateChanged(java.awt.event.ItemEvent evt) {
 				jComboBoxRefreshRateItemStateChanged(evt);
 			}
@@ -392,6 +418,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jCheckBoxClipTrans
 				.addActionListener(new java.awt.event.ActionListener() {
+					@Override
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jCheckBoxClipTransActionPerformed(evt);
 					}
@@ -408,6 +435,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnFileTransfer
 				.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnFileTransfer.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnFileTransferActionPerformed(evt);
 			}
@@ -422,6 +450,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnHelp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jBtnHelp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnHelp.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnHelpActionPerformed(evt);
 			}
@@ -436,6 +465,7 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jBtnClose.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jBtnClose.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jBtnCloseActionPerformed(evt);
 			}
@@ -475,15 +505,17 @@ public class ViewerGUI extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void jBtnStartStopActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jBtnStartStopActionPerformed
-		if (recorder.isRecording())
+		if (recorder.isRecording()) {
 			recorder.Stop();
-		else
+		} else {
 			recorder.Start();
+		}
 
 		if (recorder.isRecording()) {
 			setIconImage(new ImageIcon(Commons.ALIVE_ICON).getImage());
 			jBtnStartStop.setIcon(new ImageIcon(Commons.STOP_ICON));
-			setTitle("Classmate Viewer [" + recorder.config.server_address + "]");
+			setTitle("Classmate Viewer [" + recorder.config.server_address
+					+ "]");
 		} else {
 			setTitle("Classmate Viewer");
 			setIconImage(new ImageIcon(Commons.WAIT_ICON).getImage());
@@ -498,10 +530,11 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	private void jBtnViewCtrlActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jBtnViewCtrlActionPerformed
 		recorder.setViewOnly(!recorder.isViewOnly());
-		if (recorder.isViewOnly())
+		if (recorder.isViewOnly()) {
 			jBtnViewCtrl.setIcon(new ImageIcon(Commons.INPUTS_ICON));
-		else
+		} else {
 			jBtnViewCtrl.setIcon(new ImageIcon(Commons.LOCKED_INPUTS_ICON));
+		}
 	}// GEN-LAST:event_jBtnViewCtrlActionPerformed
 
 	private void jBtnFullNormalActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jBtnFullNormalActionPerformed
@@ -515,25 +548,28 @@ public class ViewerGUI extends javax.swing.JFrame {
 				jBtnPartialComplete.setIcon(new ImageIcon(
 						Commons.CUSTOM_SCREEN_ICON));
 				recorder.screenPlayer.stopSelectingMode();
-			} else
+			} else {
 				recorder.screenPlayer.startSelectingMode();
+			}
 		}
 	}// GEN-LAST:event_jBtnPartialCompleteActionPerformed
 
 	private void jCheckBoxImageQualityActionPerformed(
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jCheckBoxImageQualityActionPerformed
 		jComboBoxImageQuality.setEnabled(jCheckBoxImageQuality.isSelected());
-		if (!jCheckBoxImageQuality.isSelected())
+		if (!jCheckBoxImageQuality.isSelected()) {
 			recorder.viewerOptions.setImageQuality(-1);
-		else
+		} else {
 			recorder.viewerOptions
 					.setImageQuality(Float.valueOf(jComboBoxImageQuality
 							.getSelectedItem().toString()) / 100.0f);
+		}
 		if (recorder.isRecording()) {
-			if (recorder.config.reverseConnection)
+			if (recorder.config.reverseConnection) {
 				recorder.viewerOptions.setChanged(true);
-			else
+			} else {
 				recorder.viewer.setOption(Commons.IMAGE_OPTION);
+			}
 		}
 	}// GEN-LAST:event_jCheckBoxImageQualityActionPerformed
 
@@ -543,10 +579,11 @@ public class ViewerGUI extends javax.swing.JFrame {
 	}// GEN-LAST:event_jComboBoxColorQualityItemStateChanged
 
 	private void formWindowClosing(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowClosing
-		if (evt.getID() == WindowEvent.WINDOW_CLOSING)
+		if (evt.getID() == WindowEvent.WINDOW_CLOSING) {
 			jBtnCloseActionPerformed(null);
-		else
+		} else {
 			super.processWindowEvent(evt);
+		}
 	}// GEN-LAST:event_formWindowClosing
 
 	private void jCheckBoxClipTransActionPerformed(
@@ -560,8 +597,9 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	private void jMenuItemSendFilesFromClipbrdActionPerformed(
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSendFilesFromClipbrdActionPerformed
-		if (!recorder.isRecording())
+		if (!recorder.isRecording()) {
 			return;
+		}
 		File[] files = recorder.clipbrdUtility.getFiles();
 		if (files.length == 0) { // no files in clipboard, return
 			JOptionPane.showMessageDialog(ViewerGUI.this,
@@ -575,8 +613,9 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	private void jMenuItemReceiveFilesFromClipbrdActionPerformed(
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemReceiveFilesFromClipbrdActionPerformed
-		if (!recorder.isRecording())
+		if (!recorder.isRecording()) {
 			return;
+		}
 		recorder.viewer.ReceiveFiles();
 	}// GEN-LAST:event_jMenuItemReceiveFilesFromClipbrdActionPerformed
 
@@ -584,10 +623,11 @@ public class ViewerGUI extends javax.swing.JFrame {
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jToggleBtnPauseResumeActionPerformed
 		if (recorder.isRecording()) {
 			recorder.setPause(!recorder.isPaused());
-			if (recorder.isPaused())
+			if (recorder.isPaused()) {
 				jToggleBtnPauseResume.setSelected(true);
-			else
+			} else {
 				jToggleBtnPauseResume.setSelected(false);
+			}
 		}
 	}// GEN-LAST:event_jToggleBtnPauseResumeActionPerformed
 
@@ -602,27 +642,32 @@ public class ViewerGUI extends javax.swing.JFrame {
 	}// GEN-LAST:event_jBtnCloseActionPerformed
 
 	private void formWindowActivated(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowActivated
-		if (recorder.viewerOptions.getClipboardTransfer())
+		if (recorder.viewerOptions.getClipboardTransfer()) {
 			recorder.clipbrdUtility.addFlavorListener();
+		}
 		if (recorder.isRecording() && !recorder.isPaused()
-				&& !recorder.isViewOnly())
+				&& !recorder.isViewOnly()) {
 			recorder.eventsListener.addAdapters();
+		}
 	}// GEN-LAST:event_formWindowActivated
 
 	private void formWindowDeactivated(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowDeactivated
-		if (recorder.viewerOptions.getClipboardTransfer())
+		if (recorder.viewerOptions.getClipboardTransfer()) {
 			recorder.clipbrdUtility.removeFlavorListener();
+		}
 		recorder.eventsListener.removeAdapters();
 	}// GEN-LAST:event_formWindowDeactivated
 
 	private void formWindowIconified(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowIconified
-		if (recorder.isRecording())
+		if (recorder.isRecording()) {
 			recorder.setHold(true);
+		}
 	}// GEN-LAST:event_formWindowIconified
 
 	private void formWindowDeiconified(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowDeiconified
-		if (recorder.isRecording())
+		if (recorder.isRecording()) {
 			recorder.setHold(false);
+		}
 		recorder.Notify();
 	}// GEN-LAST:event_formWindowDeiconified
 
@@ -644,10 +689,11 @@ public class ViewerGUI extends javax.swing.JFrame {
 				.setImageQuality(Float.valueOf(jComboBoxImageQuality
 						.getSelectedItem().toString()) / 100.0f);
 		if (recorder.isRecording()) {
-			if (recorder.config.reverseConnection)
+			if (recorder.config.reverseConnection) {
 				recorder.viewerOptions.setChanged(true);
-			else
+			} else {
 				recorder.viewer.setOption(Commons.IMAGE_OPTION);
+			}
 		}
 	}// GEN-LAST:event_jComboBoxImageQualityItemStateChanged
 
@@ -663,22 +709,26 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	private void jMenuItemConnectInfoActionPerformed(
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemConnectInfoActionPerformed
-		if (!recorder.isRecording())
+		if (!recorder.isRecording()) {
 			return;
-		if (recorder.config.reverseConnection)
+		}
+		if (recorder.config.reverseConnection) {
 			recorder.viewerOptions.connectionInfos.display();
-		else
+		} else {
 			recorder.viewer.getConnectionInfos();
+		}
 	}// GEN-LAST:event_jMenuItemConnectInfoActionPerformed
 
 	private void jMenuItemHostPropsActionPerformed(
 			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemHostPropsActionPerformed
-		if (!recorder.isRecording())
+		if (!recorder.isRecording()) {
 			return;
-		if (recorder.config.reverseConnection)
+		}
+		if (recorder.config.reverseConnection) {
 			HostProperties.display(recorder.viewerOptions.getProperties());
-		else
+		} else {
 			recorder.viewer.getHostProperties();
+		}
 	}// GEN-LAST:event_jMenuItemHostPropsActionPerformed
 
 	private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemAboutActionPerformed
@@ -691,8 +741,9 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	public void changeFullScreenMode() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
-		if (!device.isFullScreenSupported())
+		if (!device.isFullScreenSupported()) {
 			return;
+		}
 
 		fullScreenMode = !fullScreenMode;
 
@@ -727,24 +778,27 @@ public class ViewerGUI extends javax.swing.JFrame {
 		}
 		recorder.viewerOptions.setColorQuality(colorQuality);
 		if (recorder.isRecording()) {
-			if (recorder.config.reverseConnection)
+			if (recorder.config.reverseConnection) {
 				recorder.viewerOptions.setChanged(true);
-			else
+			} else {
 				recorder.viewer.setOption(Commons.COLOR_OPTION);
+			}
 		}
 	}
 
 	public void setClipboardTransfer(boolean bool) {
 		recorder.viewerOptions.setClipboardTransfer(bool);
-		if (bool)
+		if (bool) {
 			recorder.clipbrdUtility.addFlavorListener();
-		else
+		} else {
 			recorder.clipbrdUtility.removeFlavorListener();
+		}
 		if (recorder.isRecording()) {
-			if (recorder.config.reverseConnection)
+			if (recorder.config.reverseConnection) {
 				recorder.viewerOptions.setChanged(true);
-			else
+			} else {
 				recorder.viewer.setOption(Commons.CLIPBOARD_OPTION);
+			}
 		}
 	}
 

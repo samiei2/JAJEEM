@@ -11,8 +11,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
-import com.jajeem.util.Config;
-
 public class Capture implements Runnable {
 
 	AudioInputStream audioInputStream;
@@ -20,26 +18,27 @@ public class Capture implements Runnable {
 	Thread thread;
 	String errStr;
 	double duration, seconds;
-//	static TransparentRecordingFrame overlayframe;
+
+	// static TransparentRecordingFrame overlayframe;
 
 	public Capture() {
-		
+
 	}
 
 	public void start() {
-//		overlayframe = new TransparentRecordingFrame();
-//		try {
-//			if(Config.getParam("server").equals("1"))
-//				overlayframe.setVisible(true);
-//		} catch (Exception e) {
-//			try {
-//				if(Config.getParam("server").equals("1"))
-//					overlayframe.setVisible(true);
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-//			e.printStackTrace();
-//		}
+		// overlayframe = new TransparentRecordingFrame();
+		// try {
+		// if(Config.getParam("server").equals("1"))
+		// overlayframe.setVisible(true);
+		// } catch (Exception e) {
+		// try {
+		// if(Config.getParam("server").equals("1"))
+		// overlayframe.setVisible(true);
+		// } catch (Exception e1) {
+		// e1.printStackTrace();
+		// }
+		// e.printStackTrace();
+		// }
 		errStr = null;
 		thread = new Thread(this);
 		thread.setName("Capture");
@@ -48,12 +47,12 @@ public class Capture implements Runnable {
 
 	public void stop() {
 		thread = null;
-//		try {
-//			if(Config.getParam("server").equals("1"))
-//				overlayframe.setVisible(false);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// if(Config.getParam("server").equals("1"))
+		// overlayframe.setVisible(false);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	private void shutDown(String message) {
@@ -63,6 +62,7 @@ public class Capture implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 
 		duration = 0;
@@ -74,7 +74,6 @@ public class Capture implements Runnable {
 		AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
 		float rate = 44100.0f;
 		int channels = 2;
-		int frameSize = 4;
 		int sampleSize = 16;
 		boolean bigEndian = true;
 
@@ -140,8 +139,8 @@ public class Capture implements Runnable {
 
 		byte audioBytes[] = out.toByteArray();
 		ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
-		audioInputStream = new AudioInputStream(bais, format,
-				audioBytes.length / frameSizeInBytes);
+		audioInputStream = new AudioInputStream(bais, format, audioBytes.length
+				/ frameSizeInBytes);
 
 		long milliseconds = (long) ((audioInputStream.getFrameLength() * 1000) / format
 				.getFrameRate());

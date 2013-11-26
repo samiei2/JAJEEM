@@ -6,47 +6,43 @@
  */
 package net.java.sip.communicator.impl.protocol.jabber.extensions.jingle;
 
-import java.util.*;
+import java.util.List;
 
-import net.java.sip.communicator.impl.protocol.jabber.extensions.*;
+import net.java.sip.communicator.impl.protocol.jabber.extensions.AbstractPacketExtension;
 
-import org.jivesoftware.smack.packet.*;
+import org.jivesoftware.smack.packet.PacketExtension;
 
 /**
  * An {@link AbstractPacketExtension} implementation for transport elements.
- *
+ * 
  * @author Emil Ivov
  * @author Lyubomir Marinov
  */
-public class RawUdpTransportPacketExtension
-    extends IceUdpTransportPacketExtension
-{
-    /**
-     * The name of the "transport" element.
-     */
-    public static final String NAMESPACE
-        = "urn:xmpp:jingle:transports:raw-udp:1";
-    /**
-     * The name of the "transport" element.
-     */
-    public static final String ELEMENT_NAME = "transport";
+public class RawUdpTransportPacketExtension extends
+		IceUdpTransportPacketExtension {
+	/**
+	 * The name of the "transport" element.
+	 */
+	public static final String NAMESPACE = "urn:xmpp:jingle:transports:raw-udp:1";
+	/**
+	 * The name of the "transport" element.
+	 */
+	public static final String ELEMENT_NAME = "transport";
 
-    /**
-     * Creates a new {@link RawUdpTransportPacketExtension} instance.
-     */
-    public RawUdpTransportPacketExtension()
-    {
-        super(NAMESPACE, ELEMENT_NAME);
-    }
+	/**
+	 * Creates a new {@link RawUdpTransportPacketExtension} instance.
+	 */
+	public RawUdpTransportPacketExtension() {
+		super(NAMESPACE, ELEMENT_NAME);
+	}
 
-    /**
-     * Returns this element's child (local or remote) candidate elements.
-     *
-     * @return this element's child (local or remote) candidate elements.
-     */
-    @Override
-    public List<? extends PacketExtension> getChildExtensions()
-    {
-        return getCandidateList();
-    }
+	/**
+	 * Returns this element's child (local or remote) candidate elements.
+	 * 
+	 * @return this element's child (local or remote) candidate elements.
+	 */
+	@Override
+	public List<? extends PacketExtension> getChildExtensions() {
+		return getCandidateList();
+	}
 }

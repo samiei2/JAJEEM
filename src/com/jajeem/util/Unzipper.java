@@ -9,9 +9,6 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import javax.naming.spi.DirectoryManager;
-
-
 public class Unzipper {
 
 	/**
@@ -61,7 +58,7 @@ public class Unzipper {
 				File destinationFilePath = new File(entry.getName());
 
 				// create directories if required.
-				//destinationFilePath.getParentFile().mkdirs();
+				// destinationFilePath.getParentFile().mkdirs();
 
 				// if the entry is directory, leave it. Otherwise extract it.
 				if (entry.isDirectory()) {
@@ -148,7 +145,7 @@ public class Unzipper {
 				File destinationFilePath = new File(sysdir, entry.getName());
 
 				// create directories if required.
-				//destinationFilePath.getParentFile().mkdirs();
+				// destinationFilePath.getParentFile().mkdirs();
 
 				// if the entry is directory, leave it. Otherwise extract it.
 				if (entry.isDirectory()) {
@@ -235,7 +232,7 @@ public class Unzipper {
 				File destinationFilePath = new File(sysdir, entry.getName());
 
 				// create directories if required.
-				//destinationFilePath.getParentFile().mkdirs();
+				// destinationFilePath.getParentFile().mkdirs();
 
 				// if the entry is directory, leave it. Otherwise extract it.
 				if (entry.isDirectory()) {

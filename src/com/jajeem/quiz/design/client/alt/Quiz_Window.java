@@ -16,11 +16,11 @@ import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -110,6 +110,7 @@ public class Quiz_Window extends WebFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					// QuizWindow frame = new QuizWindow();
@@ -134,13 +135,13 @@ public class Quiz_Window extends WebFrame {
 
 		privateStudent = com.jajeem.core.design.Student.getStudentModel();
 
-//		if (com.jajeem.util.Session.getStudent() != null)
-//			if (com.jajeem.util.Session.getStudent().getFullName() != null
-//					&& com.jajeem.util.Session.getStudent().getFullName() != "")
-//				privateStudent.setFullName(com.jajeem.util.Session.getStudent()
-//						.getFullName());
-//			else
-//				privateStudent.setFullName("Anonymous");
+		// if (com.jajeem.util.Session.getStudent() != null)
+		// if (com.jajeem.util.Session.getStudent().getFullName() != null
+		// && com.jajeem.util.Session.getStudent().getFullName() != "")
+		// privateStudent.setFullName(com.jajeem.util.Session.getStudent()
+		// .getFullName());
+		// else
+		// privateStudent.setFullName("Anonymous");
 
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
@@ -170,6 +171,7 @@ public class Quiz_Window extends WebFrame {
 
 				// ///Setting the timer
 				taskPerformer = new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent evt) {
 						updateDisplay();
 					}
@@ -198,7 +200,7 @@ public class Quiz_Window extends WebFrame {
 
 			}
 		});
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(200, 0, 720, 700);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -249,6 +251,7 @@ public class Quiz_Window extends WebFrame {
 
 		final WebButton wbtnNext = new WebButton();
 		wbtnNext.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (webList.getSelectedIndex() != model.getSize() - 1) {
 					webList.setSelectedIndex(webList.getSelectedIndex() + 1);
@@ -296,12 +299,14 @@ public class Quiz_Window extends WebFrame {
 									}
 									QuizResponse resp = new QuizResponse(
 											question);
-									if (question.getResponse().getId() == null)
+									if (question.getResponse().getId() == null) {
 										question.getResponse().setId(
 												UUID.randomUUID());
-									if (question.getResponse().getRunId() == null)
+									}
+									if (question.getResponse().getRunId() == null) {
 										question.getResponse().setRunId(
 												currentRun.getId());
+									}
 									resp.setQuestion(question);
 									resp.setStudent(getStudent());
 									resp.setQuizRun(currentRun);
@@ -329,11 +334,12 @@ public class Quiz_Window extends WebFrame {
 							}
 						}).start();
 
-						if (timer != null)
+						if (timer != null) {
 							if (timer.isRunning()) {
 								timer.stop();
 								timer.removeActionListener(taskPerformer);
 							}
+						}
 
 						try {
 							FinishedQuizCommand cmd = new FinishedQuizCommand(
@@ -360,6 +366,7 @@ public class Quiz_Window extends WebFrame {
 
 		WebButton wbtnPrevious_1 = new WebButton();
 		wbtnPrevious_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (webList.getSelectedIndex() != 0) {
 					webList.setSelectedIndex(webList.getSelectedIndex() - 1);
@@ -512,6 +519,7 @@ public class Quiz_Window extends WebFrame {
 
 		webRadioButton = new WebRadioButton();
 		webRadioButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				webRadioButton.setSelected(true);
 				webRadioButton_1.setSelected(false);
@@ -529,6 +537,7 @@ public class Quiz_Window extends WebFrame {
 
 		webRadioButton_1 = new WebRadioButton();
 		webRadioButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(true);
@@ -546,6 +555,7 @@ public class Quiz_Window extends WebFrame {
 
 		webRadioButton_2 = new WebRadioButton();
 		webRadioButton_2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
@@ -563,6 +573,7 @@ public class Quiz_Window extends WebFrame {
 
 		webRadioButton_3 = new WebRadioButton();
 		webRadioButton_3.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
@@ -580,6 +591,7 @@ public class Quiz_Window extends WebFrame {
 
 		webRadioButton_4 = new WebRadioButton();
 		webRadioButton_4.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				webRadioButton.setSelected(false);
 				webRadioButton_1.setSelected(false);
@@ -1048,15 +1060,17 @@ public class Quiz_Window extends WebFrame {
 											}
 											QuizResponse resp = new QuizResponse(
 													question);
-											if (question.getResponse().getId() == null)
+											if (question.getResponse().getId() == null) {
 												question.getResponse().setId(
 														UUID.randomUUID());
+											}
 											if (question.getResponse()
-													.getRunId() == null)
+													.getRunId() == null) {
 												question.getResponse()
 														.setRunId(
 																currentRun
 																		.getId());
+											}
 											resp.setQuestion(question);
 											resp.setStudent(getStudent());
 											resp.setQuizRun(currentRun);
@@ -1090,12 +1104,14 @@ public class Quiz_Window extends WebFrame {
 							currentQuestion = currentRun.getQuiz()
 									.getQuestionList()
 									.get(webList.getSelectedIndex());
-							if (currentQuestion.getResponse().getId() == null)
+							if (currentQuestion.getResponse().getId() == null) {
 								currentQuestion.getResponse().setId(
 										UUID.randomUUID());
-							if (currentQuestion.getResponse().getRunId() == null)
+							}
+							if (currentQuestion.getResponse().getRunId() == null) {
 								currentQuestion.getResponse().setRunId(
 										currentRun.getId());
+							}
 							wblblQuestion.setText("Question "
 									+ (webList.getSelectedIndex() + 1));
 							webTextArea.setText(currentQuestion.getTitle());
@@ -1121,16 +1137,21 @@ public class Quiz_Window extends WebFrame {
 								webTextField_6.setText(currentQuestion
 										.getAnswer5());
 
-								if (currentQuestion.getAnswer1().equals(""))
+								if (currentQuestion.getAnswer1().equals("")) {
 									webRadioButton.setEnabled(false);
-								if (currentQuestion.getAnswer2().equals(""))
+								}
+								if (currentQuestion.getAnswer2().equals("")) {
 									webRadioButton_1.setEnabled(false);
-								if (currentQuestion.getAnswer3().equals(""))
+								}
+								if (currentQuestion.getAnswer3().equals("")) {
 									webRadioButton_2.setEnabled(false);
-								if (currentQuestion.getAnswer4().equals(""))
+								}
+								if (currentQuestion.getAnswer4().equals("")) {
 									webRadioButton_3.setEnabled(false);
-								if (currentQuestion.getAnswer5().equals(""))
+								}
+								if (currentQuestion.getAnswer5().equals("")) {
 									webRadioButton_4.setEnabled(false);
+								}
 
 								boolean[] answers = currentQuestion
 										.getStudentAnswer();
@@ -1170,16 +1191,21 @@ public class Quiz_Window extends WebFrame {
 								webTextField_16.setText(currentQuestion
 										.getAnswer5());
 
-								if (currentQuestion.getAnswer1().equals(""))
+								if (currentQuestion.getAnswer1().equals("")) {
 									webCheckBox.setEnabled(false);
-								if (currentQuestion.getAnswer2().equals(""))
+								}
+								if (currentQuestion.getAnswer2().equals("")) {
 									webCheckBox_1.setEnabled(false);
-								if (currentQuestion.getAnswer3().equals(""))
+								}
+								if (currentQuestion.getAnswer3().equals("")) {
 									webCheckBox_2.setEnabled(false);
-								if (currentQuestion.getAnswer4().equals(""))
+								}
+								if (currentQuestion.getAnswer4().equals("")) {
 									webCheckBox_3.setEnabled(false);
-								if (currentQuestion.getAnswer5().equals(""))
+								}
+								if (currentQuestion.getAnswer5().equals("")) {
 									webCheckBox_4.setEnabled(false);
+								}
 								boolean[] answers = currentQuestion
 										.getStudentAnswer();
 								if (answers != null) {
@@ -1204,20 +1230,23 @@ public class Quiz_Window extends WebFrame {
 								// lblInputAnswer.setText("Input Answer");
 								String text = currentQuestion
 										.getStudentTextAnswer();
-								if (text != null)
+								if (text != null) {
 									webTextArea_1.setText(text);
-								else
+								} else {
 									webTextArea_1.setText("");
+								}
 							}
 
-							if (webList.getSelectedIndex() == 0)
+							if (webList.getSelectedIndex() == 0) {
 								wbtnPrevious.setVisible(false);
-							else
+							} else {
 								wbtnPrevious.setVisible(true);
-							if (webList.getSelectedIndex() == model.getSize() - 1)
+							}
+							if (webList.getSelectedIndex() == model.getSize() - 1) {
 								wbtnNext.setText("Submit");
-							else
+							} else {
 								wbtnNext.setText("Next");
+							}
 						}
 					}
 				});
@@ -1373,9 +1402,11 @@ public class Quiz_Window extends WebFrame {
 			public void quizStoped(QuizStop e) {
 				JOptionPane.showMessageDialog(null,
 						"Quiz stopped by the teacher!");
-				if (timer != null)
-					if (timer.isRunning())
+				if (timer != null) {
+					if (timer.isRunning()) {
 						timer.stop();
+					}
+				}
 				dispose();
 			}
 
@@ -1407,8 +1438,9 @@ public class Quiz_Window extends WebFrame {
 		lastUpdate = now; // remember this update time
 
 		// Convert remaining milliseconds to mm:ss format and display
-		if (remaining < 0)
+		if (remaining < 0) {
 			remaining = 0;
+		}
 		int minutes = (int) (remaining / 60000);
 		int seconds = (int) ((remaining % 60000) / 1000);
 		webTextField_1.setText(format.format(minutes) + ":"

@@ -11,7 +11,9 @@ import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import ca.odell.glazedlists.EventList;
@@ -20,7 +22,6 @@ import com.alee.extended.date.WebDateField;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
@@ -82,14 +83,14 @@ public class AddNewCourseDialog extends JDialog {
 	 * Create the dialog. New Course Mode
 	 * 
 	 * @param courseList
-	 * @throws Exception 
+	 * @throws Exception
 	 * @wbp.parser.constructor
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList,
 			final EventList<Instructor> instructorList) throws Exception {
 		setTitle(i18n.getParam("Add new course"));
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 200, 610, 278);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,7 +115,9 @@ public class AddNewCourseDialog extends JDialog {
 		}
 		{
 			classTypeTF = new WebComboBox();
-			classTypeTF.setModel(new DefaultComboBoxModel(new String[] {"Termic", "Intensive", "Super-Intensive", "Thursday", "Friday"}));
+			classTypeTF.setModel(new DefaultComboBoxModel(new String[] {
+					"Termic", "Intensive", "Super-Intensive", "Thursday",
+					"Friday" }));
 		}
 		contentPanel.add(classTypeTF);
 		contentPanel.add(levelLabel);
@@ -337,7 +340,8 @@ public class AddNewCourseDialog extends JDialog {
 							String courseName = courseNameTF.getText();
 							String instructorName = (String) instructorNameCombo
 									.getSelectedItem();
-							String classType = (String) classTypeTF.getSelectedItem();
+							String classType = (String) classTypeTF
+									.getSelectedItem();
 							String level = (String) levelCombo
 									.getSelectedItem();
 							long startDate = startDateTF.getDate().getTime();
@@ -368,12 +372,12 @@ public class AddNewCourseDialog extends JDialog {
 								endTime1 = Integer.parseInt((String) endTimeTF1
 										.getSelectedItem());
 								if (startTime1 > endTime1) {
-									WebOptionPane
+									JOptionPane
 											.showMessageDialog(
 													getRootPane(),
 													"Start time cannot be greater that end time!",
 													"Error",
-													WebOptionPane.ERROR_MESSAGE);
+													JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}
@@ -385,12 +389,12 @@ public class AddNewCourseDialog extends JDialog {
 								endTime2 = Integer.parseInt((String) endTimeTF2
 										.getSelectedItem());
 								if (startTime2 > endTime2) {
-									WebOptionPane
+									JOptionPane
 											.showMessageDialog(
 													getRootPane(),
 													"Start time cannot be greater that end time!",
 													"Error",
-													WebOptionPane.ERROR_MESSAGE);
+													JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}
@@ -402,12 +406,12 @@ public class AddNewCourseDialog extends JDialog {
 								endTime3 = Integer.parseInt((String) endTimeTF3
 										.getSelectedItem());
 								if (startTime3 > endTime3) {
-									WebOptionPane
+									JOptionPane
 											.showMessageDialog(
 													getRootPane(),
 													"Start time cannot be greater that end time!",
 													"Error",
-													WebOptionPane.ERROR_MESSAGE);
+													JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}
@@ -419,12 +423,12 @@ public class AddNewCourseDialog extends JDialog {
 								endTime4 = Integer.parseInt((String) endTimeTF4
 										.getSelectedItem());
 								if (startTime4 > endTime4) {
-									WebOptionPane
+									JOptionPane
 											.showMessageDialog(
 													getRootPane(),
 													"Start time cannot be greater that end time!",
 													"Error",
-													WebOptionPane.ERROR_MESSAGE);
+													JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}
@@ -436,12 +440,12 @@ public class AddNewCourseDialog extends JDialog {
 								endTime5 = Integer.parseInt((String) endTimeTF5
 										.getSelectedItem());
 								if (startTime5 > endTime5) {
-									WebOptionPane
+									JOptionPane
 											.showMessageDialog(
 													getRootPane(),
 													"Start time cannot be greater that end time!",
 													"Error",
-													WebOptionPane.ERROR_MESSAGE);
+													JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}
@@ -467,12 +471,11 @@ public class AddNewCourseDialog extends JDialog {
 							dispose();
 						} catch (Exception e1) {
 							e1.printStackTrace();
-							WebOptionPane
+							JOptionPane
 									.showMessageDialog(
 											getRootPane(),
 											"Please fill all fields and use correct format for each field",
-											"Error",
-											WebOptionPane.ERROR_MESSAGE);
+											"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
@@ -502,7 +505,7 @@ public class AddNewCourseDialog extends JDialog {
 	 * @param instructorList
 	 * @param selected
 	 *            courseList
-	 * @throws Exception 
+	 * @throws Exception
 	 * 
 	 */
 	public AddNewCourseDialog(final EventList<Course> courseList,
@@ -510,7 +513,7 @@ public class AddNewCourseDialog extends JDialog {
 			EventList<Instructor> instructorList) throws Exception {
 		setTitle(i18n.getParam("Edit course"));
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 200, 610, 278);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -757,7 +760,8 @@ public class AddNewCourseDialog extends JDialog {
 							String courseName = courseNameTF.getText();
 							String instructorName = (String) instructorNameCombo
 									.getSelectedItem();
-							String classType = (String) classTypeTF.getSelectedItem();
+							String classType = (String) classTypeTF
+									.getSelectedItem();
 							String level = (String) levelCombo
 									.getSelectedItem();
 							long startDate = startDateTF.getDate().getTime();
@@ -836,12 +840,11 @@ public class AddNewCourseDialog extends JDialog {
 							dispose();
 						} catch (Exception e1) {
 							e1.printStackTrace();
-							WebOptionPane
+							JOptionPane
 									.showMessageDialog(
 											getRootPane(),
 											"Please fill all fields and use correct format for each field",
-											"Error",
-											WebOptionPane.ERROR_MESSAGE);
+											"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});

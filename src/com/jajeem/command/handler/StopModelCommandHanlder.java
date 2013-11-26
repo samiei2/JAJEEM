@@ -13,7 +13,8 @@ public class StopModelCommandHanlder implements ICommandHandler {
 			return;
 		} else {
 			Student.getVncViewer().stopClient();
-			Student.getVncViewer().getViewer().getRecorder().viewerGUI.dispose();
+			Student.getVncViewer().getViewer().getRecorder().viewerGUI
+					.dispose();
 			Student.getReceiverOnly().close();
 		}
 	}

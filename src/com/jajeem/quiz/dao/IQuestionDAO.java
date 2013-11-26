@@ -8,8 +8,12 @@ import com.jajeem.quiz.model.Question;
 public interface IQuestionDAO {
 
 	Question create(Question question) throws SQLException;
+
 	Question get(Question question) throws SQLException;
+
 	boolean update(Question question) throws SQLException;
+
 	boolean delete(Question question) throws SQLException;
+
 	ArrayList<Question> list() throws SQLException;
 }

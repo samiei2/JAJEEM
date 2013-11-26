@@ -2,10 +2,10 @@ package com.jajeem.util;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinDef.HMODULE;
 import com.sun.jna.platform.win32.WinDef.LRESULT;
 import com.sun.jna.platform.win32.WinDef.WPARAM;
+import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinUser.HHOOK;
 import com.sun.jna.platform.win32.WinUser.KBDLLHOOKSTRUCT;
 import com.sun.jna.platform.win32.WinUser.LowLevelKeyboardProc;
@@ -43,6 +43,7 @@ public class KeyHook implements Runnable {
 		HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
 
 		keyboardHook = new LowLevelKeyboardProc() {
+			@Override
 			public LRESULT callback(int nCode, WPARAM wParam,
 					KBDLLHOOKSTRUCT info) {
 				if (nCode >= 0) {
@@ -51,7 +52,8 @@ public class KeyHook implements Runnable {
 					case WinUser.WM_KEYDOWN:
 					case WinUser.WM_SYSKEYUP:
 					case WinUser.WM_SYSKEYDOWN:
-//						System.err.println("in callback, key=" + info.vkCode);
+						// System.err.println("in callback, key=" +
+						// info.vkCode);
 						if (isIgnoreCallback()) {
 							return new LRESULT(1);
 						}
@@ -61,7 +63,7 @@ public class KeyHook implements Runnable {
 						.CallNextHookEx(hhk, nCode, wParam, info.getPointer());
 			}
 		};
-		
+
 		hhk = lib.SetWindowsHookEx(WinUser.WH_KEYBOARD_LL, keyboardHook, hMod,
 				0);
 

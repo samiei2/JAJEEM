@@ -11,8 +11,9 @@ public class GetCourseListCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws Exception {
-		ArrayList<Course> courseList = ((GetCourseListCommand) cmd).getCourseList();
-		
+		ArrayList<Course> courseList = ((GetCourseListCommand) cmd)
+				.getCourseList();
+
 		new CourseListDialog(courseList);
 	}
 }

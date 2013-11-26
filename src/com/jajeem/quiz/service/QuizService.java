@@ -12,85 +12,97 @@ import com.jajeem.quiz.dao.h2.RunDAO;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Response;
-import com.jajeem.util.StartUp;
 
-public class QuizService implements IQuizService{
+public class QuizService implements IQuizService {
 	private QuizDAO quizDAO = new QuizDAO();
 	private QuestionDAO questionDAO;
 	private ResponseDAO responseDAO;
 	private RunDAO runDAO;
-	//StartUp start = new StartUp();
+
+	// StartUp start = new StartUp();
 	@Override
 	public Quiz create(Quiz quiz) throws SQLException {
-		
-		quizDAO = new QuizDAO();//TODO remove this line
-		if(quizDAO != null)
-			if(quizDAO.Contains(quiz))
+
+		quizDAO = new QuizDAO();// TODO remove this line
+		if (quizDAO != null) {
+			if (quizDAO.Contains(quiz)) {
 				quizDAO.update(quiz);
-			else
+			} else {
 				quizDAO.create(quiz);
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Quiz get(Quiz quiz) throws SQLException {
-		if(quizDAO != null)
+		if (quizDAO != null) {
 			return quizDAO.get(quiz);
+		}
 		return null;
 	}
-	
+
 	public Quiz get(UUID quizId) throws SQLException {
-		if(quizDAO != null)
+		if (quizDAO != null) {
 			return quizDAO.get(quizId);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean update(Quiz quiz) throws SQLException {
-		if(quizDAO != null)
+		if (quizDAO != null) {
 			return quizDAO.update(quiz);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean delete(Quiz quiz) throws SQLException {
-		if(quizDAO != null)
+		if (quizDAO != null) {
 			return quizDAO.delete(quiz);
+		}
 		return false;
 	}
 
 	@Override
 	public ArrayList<Quiz> list() throws SQLException {
-		quizDAO = new QuizDAO();//TODO remove this line
-		if(quizDAO != null)
+		quizDAO = new QuizDAO();// TODO remove this line
+		if (quizDAO != null) {
 			return quizDAO.list();
+		}
 		return null;
 	}
-	
+
 	public ArrayList<Quiz> listByCourseId(int courseId) throws SQLException {
-		quizDAO = new QuizDAO();//TODO remove this line
-		if(quizDAO != null)
+		quizDAO = new QuizDAO();// TODO remove this line
+		if (quizDAO != null) {
 			return quizDAO.listByCourseId(courseId);
+		}
 		return null;
 	}
-	
-	public ArrayList<Quiz> listByInstructorId(int instructorId) throws SQLException {
-		quizDAO = new QuizDAO();//TODO remove this line
-		if(quizDAO != null)
+
+	public ArrayList<Quiz> listByInstructorId(int instructorId)
+			throws SQLException {
+		quizDAO = new QuizDAO();// TODO remove this line
+		if (quizDAO != null) {
 			return quizDAO.listByInstructorId(instructorId);
+		}
 		return null;
 	}
 
 	@Override
 	public Quiz copy(Quiz quiz) throws SQLException {
-		if(quizDAO != null)
+		if (quizDAO != null) {
 			return quizDAO.get(quiz);
+		}
 		return null;
 	}
 
 	@Override
-	public Response getResponsesByQuestion(Question question) throws SQLException {
-		
+	public Response getResponsesByQuestion(Question question)
+			throws SQLException {
+
 		return null;
 	}
 
@@ -102,7 +114,7 @@ public class QuizService implements IQuizService{
 
 	@Override
 	public ArrayList<Response> getResponses() throws SQLException {
-		
+
 		return null;
 	}
 
@@ -139,7 +151,7 @@ public class QuizService implements IQuizService{
 	}
 
 	public void Run(com.jajeem.quiz.model.Quiz currentQuiz) {
-		
+
 	}
 
 }

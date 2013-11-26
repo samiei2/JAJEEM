@@ -19,7 +19,7 @@ public class SetLockCommandHandler implements ICommandHandler {
 		} else {
 			if (StudentLogin.getKeyHook().isIgnoreCallback()) {
 				StudentLogin.getKeyHook().setIgnoreCallback(false);
-				
+
 				System.out.println("KeyHook removed.");
 			} else {
 				StudentLogin.getKeyHook().setIgnoreCallback(true);

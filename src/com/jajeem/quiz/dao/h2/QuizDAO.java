@@ -53,14 +53,16 @@ public class QuizDAO implements IQuizDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -72,10 +74,11 @@ public class QuizDAO implements IQuizDAO {
 			for (int i = 0; i < list.size(); i++) {
 				Question q = list.get(i);
 				q.setQuizId(quiz.getId());
-				if (qdao.Contains(q))
+				if (qdao.Contains(q)) {
 					qdao.update(q);
-				else
+				} else {
 					qdao.create(q);
+				}
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
@@ -116,20 +119,23 @@ public class QuizDAO implements IQuizDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -180,20 +186,23 @@ public class QuizDAO implements IQuizDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -240,14 +249,16 @@ public class QuizDAO implements IQuizDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -256,10 +267,11 @@ public class QuizDAO implements IQuizDAO {
 		try {
 			QuestionDAO qdao = new QuestionDAO();
 			for (int i = 0; i < quiz.getQuestionList().size(); i++) {
-				if (qdao.Contains(quiz.getQuestionList().get(i)))
+				if (qdao.Contains(quiz.getQuestionList().get(i))) {
 					qdao.update(quiz.getQuestionList().get(i));
-				else
+				} else {
 					qdao.create(quiz.getQuestionList().get(i));
+				}
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e, QuizDAO.class);
@@ -296,14 +308,16 @@ public class QuizDAO implements IQuizDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -346,20 +360,23 @@ public class QuizDAO implements IQuizDAO {
 			JajeemExcetionHandler.logError(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
@@ -389,7 +406,7 @@ public class QuizDAO implements IQuizDAO {
 		try {
 			ps = con.prepareStatement("SELECT * FROM Quiz WHERE QUIZ.COURSEID=?");
 			ps.setInt(1, courseId);
-			
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Quiz quiz = new Quiz();
@@ -411,20 +428,23 @@ public class QuizDAO implements IQuizDAO {
 			JajeemExcetionHandler.logError(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
@@ -442,8 +462,9 @@ public class QuizDAO implements IQuizDAO {
 
 		return allQuizs;
 	}
-	
-	public ArrayList<Quiz> listByInstructorId(int instructorId) throws SQLException {
+
+	public ArrayList<Quiz> listByInstructorId(int instructorId)
+			throws SQLException {
 
 		ArrayList<Quiz> allQuizs = new ArrayList<>();
 
@@ -454,7 +475,7 @@ public class QuizDAO implements IQuizDAO {
 		try {
 			ps = con.prepareStatement("SELECT * FROM Quiz WHERE QUIZ.INSTRUCTORID=?");
 			ps.setInt(1, instructorId);
-			
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Quiz quiz = new Quiz();
@@ -476,20 +497,23 @@ public class QuizDAO implements IQuizDAO {
 			JajeemExcetionHandler.logError(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 			}
@@ -507,7 +531,6 @@ public class QuizDAO implements IQuizDAO {
 
 		return allQuizs;
 	}
-
 
 	public boolean Contains(Quiz quiz) throws SQLException {
 		PreparedStatement ps = null;
@@ -530,20 +553,23 @@ public class QuizDAO implements IQuizDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

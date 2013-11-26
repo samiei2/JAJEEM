@@ -1,4 +1,5 @@
 package com.jajeem.recorder.design;
+
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.EventQueue;
@@ -7,11 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,7 +33,6 @@ import javax.swing.SwingConstants;
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.service.ServerService;
@@ -47,13 +44,13 @@ import com.jajeem.util.Config;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
 
-public class Recorder extends CustomRecorderDialog{
-	
+public class Recorder extends CustomRecorderDialog {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static boolean isRecordingVoice = false;
 	private static boolean isRecordingDesktop = false;
 	private static boolean isRecordingBoth = false;
@@ -71,48 +68,48 @@ public class Recorder extends CustomRecorderDialog{
 	private WebButton wbtnRecordBoth;
 	private WebButton wbtnRecordStudent;
 	private ArrayList<String> selectedStudent;
-	private boolean isGroupSelected;
 	private Recorder frame;
 	final ImageIcon stopIconScaled;
 	final ImageIcon recordIconScaled;
-	
-	
+
 	public Recorder(ArrayList<String> selections, boolean isGroup,
 			boolean isInstructor) {
 		frame = this;
 		selectedStudent = selections;
-		isGroupSelected = isGroup;
 		setAlwaysOnTop(true);
 		setModal(false);
 
 		setResizable(false);
 		setLocation(211, 295);
-		
-		ImageIcon stopIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderstop.png"));
+
+		ImageIcon stopIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderstop.png"));
 		stopIconScaled = new ImageIcon(stopIcon.getImage().getScaledInstance(
-				stopIcon.getIconWidth()-15, 
-				stopIcon.getIconHeight()-15, 
+				stopIcon.getIconWidth() - 15, stopIcon.getIconHeight() - 15,
 				Image.SCALE_SMOOTH));
-		
-		ImageIcon playIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderplay.png"));
-		ImageIcon playIconScaled = new ImageIcon(playIcon.getImage().getScaledInstance(
-				playIcon.getIconWidth()-15, 
-				playIcon.getIconHeight()-15, 
+
+		ImageIcon playIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderplay.png"));
+		new ImageIcon(playIcon.getImage().getScaledInstance(
+				playIcon.getIconWidth() - 15, playIcon.getIconHeight() - 15,
 				Image.SCALE_SMOOTH));
-		
-		ImageIcon recordIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
-		recordIconScaled = new ImageIcon(recordIcon.getImage().getScaledInstance(
-				recordIcon.getIconWidth()-15, 
-				recordIcon.getIconHeight()-15, 
-				Image.SCALE_SMOOTH));
-		
-		CustomRecordButton webButtonRecordVoice = new CustomRecordButton("Record Voice Only");
+
+		ImageIcon recordIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
+		recordIconScaled = new ImageIcon(recordIcon.getImage()
+				.getScaledInstance(recordIcon.getIconWidth() - 15,
+						recordIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
+
+		CustomRecordButton webButtonRecordVoice = new CustomRecordButton(
+				"Record Voice Only");
 		wbtnRecord = webButtonRecordVoice;
 		webButtonRecordVoice.addActionListener(new ActionListener() {
 			private WebDirectoryChooser directoryChooser = null;
+
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (wbtnRecord.getText().equals("Record Voice Only")) {
-//					wbtnPlay.setEnabled(false);
+					// wbtnPlay.setEnabled(false);
 					audioInputStream = capt.audioInputStream;
 					capt.start();
 					isRecordingVoice = true;
@@ -120,18 +117,18 @@ public class Recorder extends CustomRecorderDialog{
 					wbtnRecord.setIcon(stopIconScaled);
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
-//					wbtnPlay.setEnabled(false);
-//					progressBarFrame.setVisible(true);
+					// wbtnPlay.setEnabled(false);
+					// progressBarFrame.setVisible(true);
 				} else {
-//					wbtnPlay.setEnabled(true);
+					// wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
 					wbtnRecord.setIcon(recordIconScaled);
 					capt.stop();
 					isRecordingVoice = false;
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
-//					wbtnPlay.setEnabled(true);
-//					progressBarFrame.setVisible(false);
+					// wbtnPlay.setEnabled(true);
+					// progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
 
@@ -146,18 +143,19 @@ public class Recorder extends CustomRecorderDialog{
 						if (directoryChooser.getResult() == StyleConstants.OK_OPTION) {
 							File file = directoryChooser.getSelectedFolder();
 							filetemp = new File(file.getPath());
-							if (!filetemp.exists())
+							if (!filetemp.exists()) {
 								filetemp.mkdir();
+							}
 						} else {
 							int resp = 1;
 
 							try {
-								resp = WebOptionPane.showConfirmDialog(
+								resp = JOptionPane.showConfirmDialog(
 										frame,
 										i18n.getParam("Do you want to save the recording is the default folder (\\Recordings) or discard recording?"),
 										i18n.getParam("Confirm"),
-										WebOptionPane.YES_NO_OPTION,
-										WebOptionPane.QUESTION_MESSAGE);
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.QUESTION_MESSAGE);
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
@@ -168,9 +166,9 @@ public class Recorder extends CustomRecorderDialog{
 							}
 						}
 
-						if (!filetemp.exists())
+						if (!filetemp.exists()) {
 							filetemp.mkdir();
-						else if (!filetemp.isDirectory()) {
+						} else if (!filetemp.isDirectory()) {
 							filetemp.delete();
 							filetemp.mkdir();
 						}
@@ -182,12 +180,11 @@ public class Recorder extends CustomRecorderDialog{
 						File output = new File(filetemp.getPath(),
 								"recording - " + timeStamp + ".mp3");
 						FileOutputStream file = new FileOutputStream(output);
-						try{
+						try {
 							AudioSystem.write(capt.audioInputStream,
 									AudioFileFormat.Type.WAVE, file);
-						}
-						catch(Exception ex){
-							JajeemExcetionHandler.logError(ex,Recorder.class);
+						} catch (Exception ex) {
+							JajeemExcetionHandler.logError(ex, Recorder.class);
 						}
 						file.flush();
 						file.close();
@@ -201,166 +198,186 @@ public class Recorder extends CustomRecorderDialog{
 		});
 		webButtonRecordVoice.setIconTextGap(20);
 		webButtonRecordVoice.setHorizontalAlignment(SwingConstants.LEFT);
-		ImageIcon voiceIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
-		ImageIcon RecordVoiceIconScaled = new ImageIcon(voiceIcon.getImage().getScaledInstance(
-				voiceIcon.getIconWidth()-15, 
-				voiceIcon.getIconHeight()-15, 
-				Image.SCALE_SMOOTH));
+		ImageIcon voiceIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
+		ImageIcon RecordVoiceIconScaled = new ImageIcon(voiceIcon.getImage()
+				.getScaledInstance(voiceIcon.getIconWidth() - 15,
+						voiceIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
 		webButtonRecordVoice.setIcon(RecordVoiceIconScaled);
 		webButtonRecordVoice.setUndecorated(true);
-		
-		CustomRecordButton webButtonRecordDesktop = new CustomRecordButton("Record Desktop Only");
+
+		CustomRecordButton webButtonRecordDesktop = new CustomRecordButton(
+				"Record Desktop Only");
 		wbtnRecordDesktopOnly = webButtonRecordDesktop;
 		webButtonRecordDesktop.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				CaptureScreenToFile capture = null;
 				if (wbtnRecordDesktopOnly.getText().equals(
 						"Record Desktop Only")) {
-					capture = new CaptureScreenToFile(false);
-					capture.StartCaputre("temp.mp4");
+					new CaptureScreenToFile(false);
+					CaptureScreenToFile.StartCaputre("temp.mp4");
 					isRecordingDesktop = true;
 					wbtnRecordDesktopOnly.setText("Stop");
 					wbtnRecordDesktopOnly.setIcon(stopIconScaled);
 					wbtnRecord.setEnabled(false);
 					wbtnRecordBoth.setEnabled(false);
-//					progressBarFrame.setVisible(true);
+					// progressBarFrame.setVisible(true);
 				} else {
-					capture.StopCapture();
+					CaptureScreenToFile.StopCapture();
 					isRecordingDesktop = false;
 					wbtnRecordDesktopOnly.setText("Record Desktop Only");
 					wbtnRecordDesktopOnly.setIcon(recordIconScaled);
 					wbtnRecord.setEnabled(true);
 					wbtnRecordBoth.setEnabled(true);
-//					progressBarFrame.setVisible(false);
+					// progressBarFrame.setVisible(false);
 				}
 			}
 		});
-		ImageIcon desktopIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
-		ImageIcon RecordDesktopIconScaled = new ImageIcon(desktopIcon.getImage().getScaledInstance(
-				desktopIcon.getIconWidth()-15, 
-				desktopIcon.getIconHeight()-15, 
-				Image.SCALE_SMOOTH));
+		ImageIcon desktopIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
+		ImageIcon RecordDesktopIconScaled = new ImageIcon(desktopIcon
+				.getImage().getScaledInstance(desktopIcon.getIconWidth() - 15,
+						desktopIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
 		webButtonRecordDesktop.setIcon(RecordDesktopIconScaled);
 		webButtonRecordDesktop.setHorizontalAlignment(SwingConstants.LEFT);
 		webButtonRecordDesktop.setIconTextGap(20);
 		webButtonRecordDesktop.setUndecorated(true);
-		
-		CustomRecordButton webButtonRecordBoth = new CustomRecordButton("Record Both");
+
+		CustomRecordButton webButtonRecordBoth = new CustomRecordButton(
+				"Record Both");
 		wbtnRecordBoth = webButtonRecordBoth;
 		webButtonRecordBoth.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				CaptureScreenToFile capture = null;
 				if (wbtnRecordBoth.getText().equals("Record Both")) {
-					capture = new CaptureScreenToFile(false);
-					capture.StartCaputreWithAudio("");
+					new CaptureScreenToFile(false);
+					CaptureScreenToFile.StartCaputreWithAudio("");
 					isRecordingBoth = true;
 					wbtnRecordBoth.setText("Stop");
 					wbtnRecordBoth.setIcon(stopIconScaled);
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnRecord.setEnabled(false);
-//					progressBarFrame.setVisible(true);
+					// progressBarFrame.setVisible(true);
 				} else {
-					capture.StopCapture();
+					CaptureScreenToFile.StopCapture();
 					isRecordingBoth = false;
 					wbtnRecordBoth.setText("Record Both");
 					wbtnRecordBoth.setIcon(recordIconScaled);
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnRecord.setEnabled(true);
-//					progressBarFrame.setVisible(false);
+					// progressBarFrame.setVisible(false);
 				}
 			}
 		});
-		ImageIcon bothIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
-		ImageIcon RecordBothIconScaled = new ImageIcon(bothIcon.getImage().getScaledInstance(
-				bothIcon.getIconWidth()-15, 
-				bothIcon.getIconHeight()-15, 
-				Image.SCALE_SMOOTH));
+		ImageIcon bothIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
+		ImageIcon RecordBothIconScaled = new ImageIcon(bothIcon.getImage()
+				.getScaledInstance(bothIcon.getIconWidth() - 15,
+						bothIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
 		webButtonRecordBoth.setIcon(RecordBothIconScaled);
 		webButtonRecordBoth.setIconTextGap(20);
 		webButtonRecordBoth.setHorizontalAlignment(SwingConstants.LEFT);
 		webButtonRecordBoth.setUndecorated(true);
-		
-		CustomRecordButton webButtonRecordStudent = new CustomRecordButton("Record Student");
+
+		CustomRecordButton webButtonRecordStudent = new CustomRecordButton(
+				"Record Student");
 		wbtnRecordStudent = webButtonRecordStudent;
 		webButtonRecordStudent.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				RecordStudent();
 			}
 		});
-		ImageIcon studentIcon = new ImageIcon(Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
-		ImageIcon RecordStudentIconScaled = new ImageIcon(studentIcon.getImage().getScaledInstance(
-				studentIcon.getIconWidth()-15, 
-				studentIcon.getIconHeight()-15, 
-				Image.SCALE_SMOOTH));
+		ImageIcon studentIcon = new ImageIcon(
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
+		ImageIcon RecordStudentIconScaled = new ImageIcon(studentIcon
+				.getImage().getScaledInstance(studentIcon.getIconWidth() - 15,
+						studentIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
 		webButtonRecordStudent.setIcon(RecordStudentIconScaled);
 		webButtonRecordStudent.setHorizontalAlignment(SwingConstants.LEFT);
 		webButtonRecordStudent.setIconTextGap(20);
 		webButtonRecordStudent.setUndecorated(true);
 		GroupLayout groupLayout = new GroupLayout(getMainContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webButtonRecordVoice, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE)
-						.addComponent(webButtonRecordDesktop, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE)
-						.addComponent(webButtonRecordBoth, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE)
-						.addComponent(webButtonRecordStudent, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(webButtonRecordVoice, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonRecordDesktop, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonRecordBoth, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonRecordStudent, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(36, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								groupLayout
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(webButtonRecordVoice,
+												GroupLayout.PREFERRED_SIZE,
+												194, Short.MAX_VALUE)
+										.addComponent(webButtonRecordDesktop,
+												GroupLayout.PREFERRED_SIZE,
+												194, Short.MAX_VALUE)
+										.addComponent(webButtonRecordBoth,
+												GroupLayout.PREFERRED_SIZE,
+												194, Short.MAX_VALUE)
+										.addComponent(webButtonRecordStudent,
+												GroupLayout.PREFERRED_SIZE,
+												194, Short.MAX_VALUE))
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(webButtonRecordVoice,
+								GroupLayout.PREFERRED_SIZE, 45,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webButtonRecordDesktop,
+								GroupLayout.PREFERRED_SIZE, 45,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webButtonRecordBoth,
+								GroupLayout.PREFERRED_SIZE, 45,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webButtonRecordStudent,
+								GroupLayout.PREFERRED_SIZE, 45,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(36, Short.MAX_VALUE)));
 		getMainContentPane().setLayout(groupLayout);
-		
-		if(isRecordingVoice){
+
+		if (isRecordingVoice) {
 			wbtnRecord.setText("Stop");
 			wbtnRecord.setIcon(stopIconScaled);
 			wbtnRecordBoth.setEnabled(false);
 			wbtnRecordDesktopOnly.setEnabled(false);
-//			wbtnPlay.setEnabled(false);
-		}
-		else if(isRecordingDesktop){
+			// wbtnPlay.setEnabled(false);
+		} else if (isRecordingDesktop) {
 			wbtnRecordDesktopOnly.setText("Stop");
 			wbtnRecordDesktopOnly.setIcon(stopIconScaled);
 			wbtnRecord.setEnabled(false);
 			wbtnRecordBoth.setEnabled(false);
-		}
-		else if(isRecordingBoth){
+		} else if (isRecordingBoth) {
 			wbtnRecordBoth.setText("Stop");
 			wbtnRecordBoth.setIcon(stopIconScaled);
 			wbtnRecordDesktopOnly.setEnabled(false);
 			wbtnRecord.setEnabled(false);
 		}
-		
-		if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
-			if(InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("recording").equals(true)){
+
+		if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
+			if (InstructorNoa.getDesktopPane().getSelectedFrame()
+					.getClientProperty("recording").equals(true)) {
 				wbtnRecordStudent.setText("Stop");
 				wbtnRecordStudent.setIcon(stopIconScaled);
-			}
-			else{
+			} else {
 				wbtnRecordStudent.setText("Record Student");
 				wbtnRecordStudent.setIcon(recordIconScaled);
 			}
 		}
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				InstructorNoaUtil.getRecorder_Button().setEnabled(true);
 			}
 		});
-		
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
@@ -368,26 +385,23 @@ public class Recorder extends CustomRecorderDialog{
 			}
 		});
 	}
-	
+
 	public void RecordStudent() {
-		
+
 		Component card = null;
-		for (Component comp : InstructorNoa
-				.getCenterPanel().getComponents()) {
+		for (Component comp : InstructorNoa.getCenterPanel().getComponents()) {
 			if (comp.isVisible() == true) {
 				card = comp;
 			}
 		}
 
-		if (((JComponent) card).getClientProperty(
-				"viewMode").equals("groupView")) {
-			if (!InstructorNoa.getGroupList()
-					.isSelectionEmpty()) {
-				int groupIndex = InstructorNoa
-						.getGroupList().getSelectedIndex();
+		if (((JComponent) card).getClientProperty("viewMode").equals(
+				"groupView")) {
+			if (!InstructorNoa.getGroupList().isSelectionEmpty()) {
+				int groupIndex = InstructorNoa.getGroupList()
+						.getSelectedIndex();
 
-				Group group = InstructorNoa.getGroups()
-						.get(groupIndex);
+				Group group = InstructorNoa.getGroups().get(groupIndex);
 				if (group.getStudentIps().isEmpty()) {
 					return;
 				} else {
@@ -417,33 +431,44 @@ public class Recorder extends CustomRecorderDialog{
 				}
 			}
 		} else {
-			if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
+			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 				selectedStudent = new ArrayList<>();
-				selectedStudent.add(InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString());
+				selectedStudent.add(InstructorNoa.getDesktopPane()
+						.getSelectedFrame().getClientProperty("ip").toString());
 				if (recordingsList.contains(selectedStudent.get(0))) {
 					SendStopRecordCommandTo(selectedStudent.get(0));
 					recordingsList.remove(selectedStudent.get(0));
 					wbtnRecordStudent.setText("Record Student");
 					wbtnRecordStudent.setIcon(recordIconScaled);
 					wbtnRecordStudent.setEnabled(true);
-					InstructorNoa.getDesktopPane().getSelectedFrame().putClientProperty("recording", false);
+					InstructorNoa.getDesktopPane().getSelectedFrame()
+							.putClientProperty("recording", false);
 					try {
-						InstructorNoa.getDesktopPane().getSelectedFrame().setFrameIcon(new ImageIcon(
-									ImageIO.read(Recorder.class
-											.getResourceAsStream("/icons/menubar/check.png"))));
+						InstructorNoa
+								.getDesktopPane()
+								.getSelectedFrame()
+								.setFrameIcon(
+										new ImageIcon(
+												ImageIO.read(Recorder.class
+														.getResourceAsStream("/icons/menubar/check.png"))));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				} else {
 					recordingsList.add(selectedStudent.get(0));
 					SendStartRecordCommandTo(selectedStudent.get(0));
-//					wbtnRecordStudent.setText("Recording Started");
+					// wbtnRecordStudent.setText("Recording Started");
 					wbtnRecordStudent.setEnabled(false);
-					InstructorNoa.getDesktopPane().getSelectedFrame().putClientProperty("recording", true);
+					InstructorNoa.getDesktopPane().getSelectedFrame()
+							.putClientProperty("recording", true);
 					try {
-						InstructorNoa.getDesktopPane().getSelectedFrame().setFrameIcon(new ImageIcon(
-									ImageIO.read(Recorder.class
-											.getResourceAsStream("/icons/menubar/rec-icon.png"))));
+						InstructorNoa
+								.getDesktopPane()
+								.getSelectedFrame()
+								.setFrameIcon(
+										new ImageIcon(
+												ImageIO.read(Recorder.class
+														.getResourceAsStream("/icons/menubar/rec-icon.png"))));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -458,10 +483,11 @@ public class Recorder extends CustomRecorderDialog{
 		try {
 			new Config();
 			ServerService service;
-			if (InstructorNoa.getServerService() == null)
+			if (InstructorNoa.getServerService() == null) {
 				service = new ServerService();
-			else
+			} else {
 				service = InstructorNoa.getServerService();
+			}
 
 			StopStudentRecordCommand cmd = new StopStudentRecordCommand(
 					InetAddress.getLocalHost().getHostAddress(), ip,
@@ -477,10 +503,11 @@ public class Recorder extends CustomRecorderDialog{
 		try {
 			new Config();
 			ServerService service;
-			if (InstructorNoa.getServerService() == null)
+			if (InstructorNoa.getServerService() == null) {
 				service = new ServerService();
-			else
+			} else {
 				service = InstructorNoa.getServerService();
+			}
 
 			StartStudentRecordCommand cmd = new StartStudentRecordCommand(
 					InetAddress.getLocalHost().getHostAddress(), ip,
@@ -494,10 +521,11 @@ public class Recorder extends CustomRecorderDialog{
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
-//					UIManager.setLookAndFeel(WebLookAndFeel.class
-//							.getCanonicalName());
+					// UIManager.setLookAndFeel(WebLookAndFeel.class
+					// .getCanonicalName());
 
 					new Config();
 					new i18n();

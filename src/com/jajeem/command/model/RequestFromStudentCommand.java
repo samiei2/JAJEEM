@@ -12,7 +12,7 @@ public class RequestFromStudentCommand extends Command {
 
 	public RequestFromStudentCommand(String from, String to, int port) {
 		super(from, to, port);
-		
+
 	}
 
 	public Student getStudent() {

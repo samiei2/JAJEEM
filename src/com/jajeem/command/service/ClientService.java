@@ -37,9 +37,9 @@ import com.jajeem.command.handler.SetDuplicateLoginCommandHanlder;
 import com.jajeem.command.handler.SetGrantCommandHanlder;
 import com.jajeem.command.handler.SetInternetCommandHandler;
 import com.jajeem.command.handler.SetLockCommandHandler;
+import com.jajeem.command.handler.SetPowerCommandHandler;
 import com.jajeem.command.handler.SetStudentLogoutCommandHanlder;
 import com.jajeem.command.handler.SetTeacherLogoutCommandHanlder;
-import com.jajeem.command.handler.SetPowerCommandHandler;
 import com.jajeem.command.handler.SetVolumeCommandHandler;
 import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
 import com.jajeem.command.handler.StartApplicationCommandHanlder;
@@ -76,8 +76,6 @@ import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
-import com.jajeem.command.model.StudentLogoutCommand;
-import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
@@ -111,6 +109,8 @@ import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.model.StopVideoChatCommand;
 import com.jajeem.command.model.StopWhiteBoardCommand;
+import com.jajeem.command.model.StudentLogoutCommand;
+import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
@@ -258,8 +258,9 @@ public class ClientService implements IConnectorSevice, Runnable {
 			try {
 				Object o = oi.readObject();
 
-				if (!(o instanceof Command))
+				if (!(o instanceof Command)) {
 					throw new ClassNotFoundException("Object is not a message");
+				}
 
 				final Command cmd = (Command) o;
 
@@ -395,7 +396,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setWhiteBlackAppCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -423,7 +424,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setVolumeCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -438,7 +439,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setLockCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -453,7 +454,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setPowerCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -468,7 +469,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setVolumeCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -483,7 +484,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								openWebsiteCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -498,7 +499,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								whiteboardHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -513,7 +514,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								whiteboardHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -528,7 +529,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setAuthenticateCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -543,7 +544,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								setGrantCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -558,7 +559,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								messageCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -573,12 +574,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								chatCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartMoviePlayerCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -588,12 +589,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								videoCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartIntercomCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -603,7 +604,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							startIntercomCommandHandler.run(cmd);
 						}
 					});
-					
+
 				} else if (cmd instanceof StopIntercomCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -613,7 +614,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							stopIntercomCommandHandler.run(cmd);
 						}
 					});
-					
+
 				} else if (cmd instanceof StartApplicationCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -623,12 +624,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								startApplicationCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof SendFileCollectCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -638,12 +639,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								sendfileCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof SendFileAssignmentCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -653,12 +654,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								sendfileassignmentCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartModelCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -668,12 +669,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								startModelCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof IntercomRequestCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -683,12 +684,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								intercomRequestCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartStudentRecordCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -698,12 +699,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								startRecorderCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StopStudentRecordCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -713,12 +714,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								stopRecorderCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StopModelCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -728,12 +729,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								stopModelCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof SendRecordingErrorCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -743,12 +744,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								stopModelCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof SendRecordingSuccessCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -758,12 +759,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								stopModelCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartCallAllCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -773,12 +774,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								startCallAllCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StopCallAllCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -788,12 +789,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								stopCallAllCommandHanlder.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartSpeechCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -803,12 +804,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								hnldr.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof SendSpeechFileCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -818,12 +819,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								hnldr.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof FinishedQuizCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -833,12 +834,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								hnldr.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof FinishedSurveyCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -848,12 +849,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								hnldr.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StartVideoChatCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -863,7 +864,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							startVideoChatCommandHandler.run(cmd);
 						}
 					});
-					
+
 				} else if (cmd instanceof StopVideoChatCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -873,7 +874,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 							stopVideoChatCommandHandler.run(cmd);
 						}
 					});
-					
+
 				} else if (cmd instanceof RequestCourseListCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -883,12 +884,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								requestCourseListCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof GetCourseListCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -898,12 +899,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								getCourseListCommandHandler.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof DuplicateLoginCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -913,12 +914,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								duplicateLogin.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof TeacherLogoutCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -928,12 +929,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								logout.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				} else if (cmd instanceof StudentLogoutCommand) {
 					pool.InsertThread(new Runnable() {
 
@@ -943,12 +944,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 							try {
 								logout.run(cmd);
 							} catch (Exception e) {
-								
+
 								e.printStackTrace();
 							}
 						}
 					});
-					
+
 				}
 
 			} catch (Exception ex) {
@@ -984,6 +985,7 @@ class MyThread implements Runnable {
 		fileName = fname;
 	}
 
+	@Override
 	@SuppressWarnings({ "resource", "unused" })
 	public void run() {
 		try {
@@ -995,28 +997,34 @@ class MyThread implements Runnable {
 			byte[] info = new byte[2048];
 			byte[] temp = file.getPath().trim().getBytes();
 			int len = file.getPath().trim().length();
-			for (int k = 0; k < len; k++)
+			for (int k = 0; k < len; k++) {
 				info[k] = temp[k];
-			for (int k = len; k < 2048; k++)
+			}
+			for (int k = len; k < 2048; k++) {
 				info[k] = 0x00;
+			}
 			out.write(info, 0, 2048);
 
 			len = file.getName().trim().length();
 			temp = file.getName().trim().getBytes();
-			for (int k = 0; k < len; k++)
+			for (int k = 0; k < len; k++) {
 				info[k] = temp[k];
-			for (int k = len; k < 2048; k++)
+			}
+			for (int k = len; k < 2048; k++) {
 				info[k] = 0x00;
+			}
 			out.write(info, 0, 2048);
 
 			FileInputStream inp = new FileInputStream(file);
 			long fileLength = inp.available();
 			len = String.valueOf(inp.available()).length();
 			temp = String.valueOf(inp.available()).getBytes();
-			for (int k = 0; k < len; k++)
+			for (int k = 0; k < len; k++) {
 				info[k] = temp[k];
-			for (int k = len; k < 2048; k++)
+			}
+			for (int k = len; k < 2048; k++) {
 				info[k] = 0x00;
+			}
 			out.write(info, 0, 2048);
 			inp.close();
 

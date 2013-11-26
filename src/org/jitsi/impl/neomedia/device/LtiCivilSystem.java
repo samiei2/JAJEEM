@@ -6,43 +6,38 @@
  */
 package org.jitsi.impl.neomedia.device;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
 
-import org.jitsi.service.neomedia.*;
+import org.jitsi.service.neomedia.MediaType;
 
 /**
  * FMJ auto-detect of CIVIL video capture devices.
- *
+ * 
  * @author Ken Larson
  */
-public class LtiCivilSystem
-    extends DeviceSystem
-{
-    private static final String LOCATOR_PROTOCOL = LOCATOR_PROTOCOL_CIVIL;
+public class LtiCivilSystem extends DeviceSystem {
+	private static final String LOCATOR_PROTOCOL = LOCATOR_PROTOCOL_CIVIL;
 
-    /**
-     * Creates an instance of LtiCivilSystem and auto-detects CIVIL video
-     * capture devices.
-     *
-     * @throws java.lang.Exception if FMJ is not present in the classpath or if
-     * detection fails for some other reason.
-     */
-    public LtiCivilSystem()
-        throws Exception
-    {
-        super(MediaType.VIDEO, LOCATOR_PROTOCOL);
-    }
+	/**
+	 * Creates an instance of LtiCivilSystem and auto-detects CIVIL video
+	 * capture devices.
+	 * 
+	 * @throws java.lang.Exception
+	 *             if FMJ is not present in the classpath or if detection fails
+	 *             for some other reason.
+	 */
+	public LtiCivilSystem() throws Exception {
+		super(MediaType.VIDEO, LOCATOR_PROTOCOL);
+	}
 
-    @Override
-    protected void doInitialize()
-        throws Exception
-    {
-        // Done using reflection to avoid compile-time dependency on FMJ.
-        Class<?> clazz
-            = Class.forName("net.sf.fmj.media.cdp.civil.CaptureDevicePlugger");
-        Method addCaptureDevices = clazz.getMethod("addCaptureDevices");
-        Object captureDevicePlugger = clazz.newInstance();
+	@Override
+	protected void doInitialize() throws Exception {
+		// Done using reflection to avoid compile-time dependency on FMJ.
+		Class<?> clazz = Class
+				.forName("net.sf.fmj.media.cdp.civil.CaptureDevicePlugger");
+		Method addCaptureDevices = clazz.getMethod("addCaptureDevices");
+		Object captureDevicePlugger = clazz.newInstance();
 
-        addCaptureDevices.invoke(captureDevicePlugger);
-    }
+		addCaptureDevices.invoke(captureDevicePlugger);
+	}
 }

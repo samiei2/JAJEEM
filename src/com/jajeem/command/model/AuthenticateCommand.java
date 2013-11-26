@@ -6,17 +6,18 @@ public class AuthenticateCommand extends Command {
 	 * 
 	 */
 	private static final long serialVersionUID = -6190735680180412086L;
-	
+
 	private String username;
 	private char[] password;
 
-	public AuthenticateCommand(String from, String to, int port, String username, char[] password) {
+	public AuthenticateCommand(String from, String to, int port,
+			String username, char[] password) {
 		super(from, to, port);
-		
+
 		this.setUsername(username);
 		this.setPassword(password);
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}

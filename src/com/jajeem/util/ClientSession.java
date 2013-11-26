@@ -5,8 +5,8 @@ import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 import com.jajeem.core.model.Student;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.recorder.design.CaptureScreenToFile;
-//import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 import com.jajeem.survey.design.client.alt.Survey_Window;
+//import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class ClientSession {
 	private static Quiz_Window quizWindowHndl;
@@ -16,7 +16,8 @@ public class ClientSession {
 	private static String recordingServerAddress;
 	private static TransparentIntercomInProgressFrame studentIntercomPanel;
 	private static Student currentStudent;
-//	private static WhiteboardClient whiteboardWindowHndl;
+
+	// private static WhiteboardClient whiteboardWindowHndl;
 
 	public static Quiz_Window getQuizWindowHndl() {
 		return quizWindowHndl;
@@ -41,24 +42,22 @@ public class ClientSession {
 	public static void setRecorder(CaptureScreenToFile recorder) {
 		ClientSession.recorder = recorder;
 	}
-	
 
 	public static void setRecordedFileName(String fileName) {
 		recordingFileName = fileName;
 	}
-	
-	public static String getRecordedFileName(){
+
+	public static String getRecordedFileName() {
 		return recordingFileName;
 	}
 
 	public static void setReturnRecordedFileServer(String from) {
 		recordingServerAddress = from;
 	}
-	
-	public static String getReturnRecordedFileServer(){
+
+	public static String getReturnRecordedFileServer() {
 		return recordingServerAddress;
 	}
-	
 
 	public static TransparentIntercomInProgressFrame getStudentIntercomPanel() {
 		return studentIntercomPanel;

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -13,21 +12,18 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 
 import javax.swing.GroupLayout;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
@@ -38,11 +34,8 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.filemanager.Packet;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
-import com.alee.laf.text.WebTextField;
-import javax.swing.ListSelectionModel;
 
 public class FileAssignmentTab extends WebPanel {
 	/**
@@ -56,7 +49,6 @@ public class FileAssignmentTab extends WebPanel {
 	private FileAssignmentTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
-	private int currentIndex;
 	private FileManagerMain parentFrame;
 
 	/**
@@ -159,8 +151,13 @@ public class FileAssignmentTab extends WebPanel {
 		webTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "#", "File Name", "Time" }) {
+			/**
+					 * 
+					 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
+			@Override
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
@@ -176,6 +173,7 @@ public class FileAssignmentTab extends WebPanel {
 
 	private void initEvents() {
 		wbtnBrowse.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String fileName = "";
 				JFileChooser chooser = new JFileChooser();
@@ -209,6 +207,7 @@ public class FileAssignmentTab extends WebPanel {
 		});
 
 		wbtnClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileNames.clear();
 				DefaultTableModel model = (DefaultTableModel) webTable
@@ -226,6 +225,7 @@ public class FileAssignmentTab extends WebPanel {
 		});
 
 		wbtnSend.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String fileName = fileNames.get(webTable.getSelectedRow());
 				File file = new File(fileName);
@@ -236,9 +236,11 @@ public class FileAssignmentTab extends WebPanel {
 							.getValueAt(webTable.getSelectedRow(), 2)
 							.toString().split(" ")[0];
 					Integer.parseInt(time);
-					if (file.exists())
-						if (!file.isDirectory())
+					if (file.exists()) {
+						if (!file.isDirectory()) {
 							SendFile(file);
+						}
+					}
 				} catch (Exception ex) {
 
 				}
@@ -249,8 +251,9 @@ public class FileAssignmentTab extends WebPanel {
 
 			@Override
 			public void success(FileTransferObject evt, Class t) {
-				if (t != FileAssignmentTab.class)
+				if (t != FileAssignmentTab.class) {
 					return;
+				}
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
@@ -275,6 +278,7 @@ public class FileAssignmentTab extends WebPanel {
 						@Override
 						public void run() {
 							ActionListener taskPerformer = new ActionListener() {
+								@Override
 								public void actionPerformed(ActionEvent evt) {
 									updateDisplay();
 								}
@@ -299,8 +303,9 @@ public class FileAssignmentTab extends WebPanel {
 									// Convert remaining milliseconds to mm:ss
 									// format and
 									// display
-									if (remaining < 0)
+									if (remaining < 0) {
 										remaining = 0;
+									}
 									int minutes = (int) (remaining / 60000);
 									int seconds = (int) ((remaining % 60000) / 1000);
 									model.setValueAt(format.format(minutes)
@@ -347,8 +352,9 @@ public class FileAssignmentTab extends WebPanel {
 
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				if (t != FileAssignmentTab.class)
+				if (t != FileAssignmentTab.class) {
 					return;
+				}
 				// DefaultTableModel model =
 				// (DefaultTableModel)webTable.getModel();
 				// model.setValueAt("Failed", currentIndex, 2);
@@ -380,10 +386,11 @@ public class FileAssignmentTab extends WebPanel {
 		try {
 			new Config();
 			ServerService service;
-			if (InstructorNoa.getServerService() == null)
+			if (InstructorNoa.getServerService() == null) {
 				service = new ServerService();
-			else
+			} else {
 				service = InstructorNoa.getServerService();
+			}
 			SendFileAssignmentCommand cmd;
 			ArrayList<String> ips = InstructorNoa.getAllStudentIPs();
 			for (int i = 0; i < ips.size(); i++) {
@@ -447,14 +454,14 @@ public class FileAssignmentTab extends WebPanel {
 							ips.add(((String) InstructorNoa.getDesktopPane()
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
-							WebOptionPane.showMessageDialog(null,
+							JOptionPane.showMessageDialog(null,
 									"No student is selected!");
 							ips = null;
 						}
 					}
 
 					if (ips == null) {
-						WebOptionPane.showMessageDialog(null,
+						JOptionPane.showMessageDialog(null,
 								"No student is selected!");
 						return;
 					}
@@ -471,28 +478,34 @@ public class FileAssignmentTab extends WebPanel {
 							byte[] info = new byte[2048];
 							byte[] temp = file.getPath().getBytes();
 							int len = file.getPath().length();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 
 							len = file.getName().length();
 							temp = file.getName().getBytes();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 
 							FileInputStream inp = new FileInputStream(file);
 							long fileLength = inp.available();
 							len = String.valueOf(inp.available()).length();
 							temp = String.valueOf(inp.available()).getBytes();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 							inp.close();
 
@@ -515,12 +528,13 @@ public class FileAssignmentTab extends WebPanel {
 						}
 						progwin.dispose();
 						// confirmationDialog.dispose();
-						if (ips.size() != 0)
+						if (ips.size() != 0) {
 							new FileTransferEvent().fireSuccess(null,
 									FileAssignmentTab.class);
-						else
+						} else {
 							new FileTransferEvent().fireFailure(null,
 									FileAssignmentTab.class);
+						}
 					} catch (Exception e) {
 						progwin.dispose();
 						// confirmationDialog.dispose();

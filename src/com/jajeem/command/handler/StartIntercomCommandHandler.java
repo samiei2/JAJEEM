@@ -9,7 +9,6 @@ import com.jajeem.command.model.Command;
 import com.jajeem.core.design.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
-import com.jajeem.util.Session;
 
 public class StartIntercomCommandHandler implements ICommandHandler {
 
@@ -29,8 +28,9 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 			Student.getTransmitter().start("audio");
 			Student.setIntercomButtonStop();
 			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
-			if(ClientSession.getStudentIntercomPanel()!=null)
+			if (ClientSession.getStudentIntercomPanel() != null) {
 				ClientSession.getStudentIntercomPanel().dispose();
+			}
 			ClientSession.setStudentIntercomInProgress(frame);
 			frame.setVisible(true);
 		} catch (Exception e) {

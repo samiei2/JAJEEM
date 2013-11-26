@@ -10,10 +10,11 @@ public class StopSurveyCommandHanlder implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		@SuppressWarnings("unused")
-		StopSurveyCommand command = (StopSurveyCommand)cmd;
+		StopSurveyCommand command = (StopSurveyCommand) cmd;
 		Survey_Window wndHndl = ClientSession.getSurvey_WindowHndl();
-		if(wndHndl != null)
+		if (wndHndl != null) {
 			wndHndl.dispose();
+		}
 	}
 
 }

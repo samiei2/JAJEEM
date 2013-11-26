@@ -28,9 +28,7 @@ import jrdesktop.utilities.ClipbrdUtility;
 import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.FileMng.FileTransGUI;
 
-import com.alee.laf.desktoppane.WebInternalFrame;
 import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.util.Session;
 
 /**
  * Viewer.java
@@ -69,8 +67,9 @@ public class Viewer extends Thread {
 		if (connected) {
 			setRecorder(new Recorder(this, client.clientConfig, false));
 			getRecorder().viewerGUI.Start();
-		} else
+		} else {
 			Stop();
+		}
 	}
 
 	public void StartThumbs(JInternalFrame panel) {
@@ -79,8 +78,9 @@ public class Viewer extends Thread {
 			setRecorder(new Recorder(this, client.clientConfig, true));
 			getRecorder().screenPlayer.thumb = true;
 			getRecorder().viewerGUIThumbs.Start(panel);
-		} else
+		} else {
 			Stop();
+		}
 	}
 
 	public void Stop() {
@@ -88,13 +88,12 @@ public class Viewer extends Thread {
 			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
 					.getAllFrames();
 			for (JInternalFrame frame : frames) {
-				if (client.clientConfig.server_address.equals((String) frame
+				if (client.clientConfig.server_address.equals(frame
 						.getClientProperty("ip"))) {
 					frame.putClientProperty("live", false);
-					try{
-						//Session.getLoggedInStudents().remove(frame.getClientProperty("ip").toString());
-					}
-					catch(Exception e){
+					try {
+						// Session.getLoggedInStudents().remove(frame.getClientProperty("ip").toString());
+					} catch (Exception e) {
 					}
 					try {
 						frame.setFrameIcon(new ImageIcon(
@@ -116,8 +115,9 @@ public class Viewer extends Thread {
 		connected = false;
 
 		index = client.connect();
-		if (index == -1)
+		if (index == -1) {
 			return -1;
+		}
 
 		setHostProperties();
 		connected = true;
@@ -166,8 +166,9 @@ public class Viewer extends Thread {
 	}
 
 	public void getClipboardContent() {
-		if (!getRecorder().viewerOptions.getClipboardTransfer())
+		if (!getRecorder().viewerOptions.getClipboardTransfer()) {
 			return;
+		}
 		try {
 			Object clipContent = client.rmiServer.getClipboardContent();
 			getRecorder().clipbrdUtility.setContent(clipContent);
@@ -177,11 +178,13 @@ public class Viewer extends Thread {
 	}
 
 	public void setClipboardContect() {
-		if (!getRecorder().viewerOptions.getClipboardTransfer())
+		if (!getRecorder().viewerOptions.getClipboardTransfer()) {
 			return;
+		}
 		Object clipContent = getRecorder().clipbrdUtility.getContent();
-		if (clipContent == null)
+		if (clipContent == null) {
 			return;
+		}
 		try {
 			client.rmiServer.setClipboardContent(clipContent);
 		} catch (RemoteException re) {
@@ -192,14 +195,15 @@ public class Viewer extends Thread {
 	public void getScreenCapture() {
 
 		try {
-			if (getRecorder().viewerOptions.isScreenCompressionEnabled())
+			if (getRecorder().viewerOptions.isScreenCompressionEnabled()) {
 				getRecorder().screenPlayer.UpdateScreen(client.rmiServer
 						.getChangedScreenBlocks(index,
 								getRecorder().viewerOptions.getCapture()
 										.isEmpty()));
-			else
+			} else {
 				getRecorder().screenPlayer.UpdateScreen(client.rmiServer
 						.getScreenCapture(index));
+			}
 		} catch (RemoteException re) {
 			Stop();
 
@@ -214,8 +218,9 @@ public class Viewer extends Thread {
 	 */
 
 	public void getScreenRect() {
-		if (!connected)
+		if (!connected) {
 			return; // try to remove this test
+		}
 		try {
 			getRecorder().viewerOptions.setScreenRect(client.rmiServer
 					.getScreenRect(index));
@@ -262,8 +267,9 @@ public class Viewer extends Thread {
 		if ((getRecorder().viewerGUI != null && !getRecorder().viewerGUI
 				.isActive())
 				|| (getRecorder().viewerGUIThumbs != null && !getRecorder().viewerGUIThumbs
-						.isActive()))
+						.isActive())) {
 			return;
+		}
 		setMouseEvents();
 		setKeyEvents();
 		setClipboardContect();
@@ -275,15 +281,17 @@ public class Viewer extends Thread {
 		if ((getRecorder().viewerGUI != null && !getRecorder().viewerGUI
 				.isActive())
 				|| (getRecorder().viewerGUIThumbs != null && !getRecorder().viewerGUIThumbs
-						.isActive()))
+						.isActive())) {
 			return;
+		}
 		getClipboardContent();
 	}
 
 	public void SendFiles() {
 		File[] files = getRecorder().fileManager.getFiles();
-		if (files.length == 0)
+		if (files.length == 0) {
 			return;
+		}
 		new FileTransGUI(getRecorder()).SendFiles(files);
 	}
 
@@ -294,8 +302,9 @@ public class Viewer extends Thread {
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}
-		if (fileList == null)
+		if (fileList == null) {
 			return;
+		}
 		new FileTransGUI(getRecorder()).ReceiveFiles(fileList);
 	}
 
@@ -387,17 +396,20 @@ public class Viewer extends Thread {
 		 * return index;
 		 */
 
-		for (int i = 0; i < viewers.size(); i++)
-			if (viewers.get(i).equals(_recorder))
+		for (int i = 0; i < viewers.size(); i++) {
+			if (viewers.get(i).equals(_recorder)) {
 				return i;
+			}
+		}
 		return -1;
 	}
 
 	public static synchronized int removeViewer(Recorder _recorder) {
 		int index = getViewerIndex(_recorder);
 
-		if (index == -1)
+		if (index == -1) {
 			return index;
+		}
 
 		String viewer = viewers.get(index).viewerOptions.getInetAddress()
 				.toString();
@@ -450,16 +462,18 @@ public class Viewer extends Thread {
 	public static void _Start() {
 		running = false;
 
-		if (!RMIServer.Start())
+		if (!RMIServer.Start()) {
 			return;
+		}
 		init();
 	}
 
 	public static void _Start(Config serverConfig) {
 		running = false;
 
-		if (!RMIServer.Start(serverConfig))
+		if (!RMIServer.Start(serverConfig)) {
 			return;
+		}
 		init();
 	}
 
@@ -468,8 +482,9 @@ public class Viewer extends Thread {
 			running = false;
 			disconnectAllViewers();
 			SysTray.updateServerStatus(Commons.SERVER_STOPPED);
-		} else
+		} else {
 			SysTray.updateServerStatus(Commons.CONNECTION_FAILED);
+		}
 		RMIServer.Stop();
 	}
 
@@ -479,13 +494,15 @@ public class Viewer extends Thread {
 
 	public static void disconnectAllViewers() {
 		Enumeration<Integer> viewerEnum = viewers.keys();
-		while (viewerEnum.hasMoreElements())
+		while (viewerEnum.hasMoreElements()) {
 			removeViewer(viewerEnum.nextElement());
+		}
 	}
 
 	public static void setScreenCapture(byte[] data, int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).screenPlayer.UpdateScreen(data);
 		viewers.get(index).viewerOptions.connectionInfos
 				.incReceivedData(data.length);
@@ -493,84 +510,98 @@ public class Viewer extends Thread {
 
 	public static void setChangedScreenBlocks(
 			HashMap<String, byte[]> changedBlocks, int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).screenPlayer.UpdateScreen(changedBlocks);
-		if (viewers.containsKey(index))
+		if (viewers.containsKey(index)) {
 			viewers.get(index).viewerOptions.connectionInfos
 					.incReceivedData(ScreenCapture
 							.getChangedBlocksSize(changedBlocks));
+		}
 	}
 
 	public static void setScreenRect(Rectangle rect, int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).viewerOptions.setScreenRect(rect);
 	}
 
 	public static ArrayList getMouseEvents(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return new ArrayList<MouseEvent>();
+		}
 		return viewers.get(index).eventsListener.getMouseEvents();
 	}
 
 	public static ArrayList getKeyEvents(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return new ArrayList<KeyEvent>();
+		}
 		return viewers.get(index).eventsListener.getKeyEvents();
 	}
 
 	public static void setClipboardContent(Object object, int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).clipbrdUtility.setContent(object);
 	}
 
 	public static Object getClipboardContent(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return null;
+		}
 		return viewers.get(index).clipbrdUtility.getContent();
 	}
 
 	public static void setOptionsChanged(int index, boolean bool) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).viewerOptions.setChanged(bool);
 	}
 
 	public static boolean isOptionsChanged(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return false;
+		}
 		return viewers.get(index).viewerOptions.isChanged();
 	}
 
 	public static Object getOptions(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return null;
+		}
 		return viewers.get(index).viewerOptions.getOptions();
 	}
 
 	public static Object getOption(int index, int option) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return null;
+		}
 		return viewers.get(index).viewerOptions.getOption(option);
 	}
 
 	public static ArrayList getConnectionInfos(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return null;
+		}
 		return viewers.get(index).viewerOptions.connectionInfos.getData();
 	}
 
 	public static void displayConnectionInfos(int index) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).viewerOptions.connectionInfos.display();
 	}
 
 	public static void setHostProperties(int index, Hashtable props) {
-		if (!viewers.containsKey(index))
+		if (!viewers.containsKey(index)) {
 			return;
+		}
 		viewers.get(index).viewerOptions.setProperties(props);
 	}
 

@@ -10,7 +10,8 @@ public class IntercomRequestCommand extends Command {
 	private static final long serialVersionUID = -4780626236611125738L;
 	private Student student;
 
-	public IntercomRequestCommand(String from, String to, int port, Student student) {
+	public IntercomRequestCommand(String from, String to, int port,
+			Student student) {
 		super(from, to, port);
 		this.setStudent(student);
 	}

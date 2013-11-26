@@ -6,57 +6,53 @@
  */
 package net.java.sip.communicator.impl.protocol.jabber.extensions.jingle;
 
-import net.java.sip.communicator.impl.protocol.jabber.extensions.*;
+import net.java.sip.communicator.impl.protocol.jabber.extensions.AbstractPacketExtension;
 
 /**
  * The redirect <tt>PacketExtension</tt>.
- *
+ * 
  * @author Sebastien Vincent
  */
-public class RedirectPacketExtension
-    extends AbstractPacketExtension
-{
-    /**
-     * The name of the "redirect" element.
-     */
-    public static final String ELEMENT_NAME = "redirect";
+public class RedirectPacketExtension extends AbstractPacketExtension {
+	/**
+	 * The name of the "redirect" element.
+	 */
+	public static final String ELEMENT_NAME = "redirect";
 
-    /**
-     * The namespace.
-     */
-    public static final String NAMESPACE = "http://www.google.com/session";
+	/**
+	 * The namespace.
+	 */
+	public static final String NAMESPACE = "http://www.google.com/session";
 
-    /**
-     * The redirect text.
-     */
-    private String redir = null;
+	/**
+	 * The redirect text.
+	 */
+	private String redir = null;
 
-    /**
-     * Creates a new {@link RedirectPacketExtension} instance.
-     */
-    public RedirectPacketExtension()
-    {
-        super(NAMESPACE, ELEMENT_NAME);
-    }
+	/**
+	 * Creates a new {@link RedirectPacketExtension} instance.
+	 */
+	public RedirectPacketExtension() {
+		super(NAMESPACE, ELEMENT_NAME);
+	}
 
-    /**
-     * Set redirection.
-     *
-     * @param redir redirection
-     */
-    public void setRedir(String redir)
-    {
-        this.setText(redir);
-        this.redir = redir;
-    }
+	/**
+	 * Set redirection.
+	 * 
+	 * @param redir
+	 *            redirection
+	 */
+	public void setRedir(String redir) {
+		this.setText(redir);
+		this.redir = redir;
+	}
 
-    /**
-     * Get redirection.
-     *
-     * @return redirection
-     */
-    public String getRedir()
-    {
-        return redir;
-    }
+	/**
+	 * Get redirection.
+	 * 
+	 * @return redirection
+	 */
+	public String getRedir() {
+		return redir;
+	}
 }

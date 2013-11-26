@@ -2,7 +2,6 @@ package com.jajeem.command.model;
 
 public class StopVideoChatCommand extends Command {
 
-
 	/**
 	 * 
 	 */

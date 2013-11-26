@@ -21,11 +21,11 @@ public class StartSurveyCommand extends Command {
 	public void setSurvey(Survey currentSurvey) {
 		survey = currentSurvey;
 	}
-	
-	public Survey getSurvey(){
+
+	public Survey getSurvey() {
 		return survey;
 	}
-	
+
 	public String getServer() {
 		return server;
 	}
@@ -37,16 +37,16 @@ public class StartSurveyCommand extends Command {
 	public void setRun(Run run) {
 		this.run = run;
 	}
-	
-	public Run getRun(){
+
+	public Run getRun() {
 		return run;
 	}
 
 	public void setReceivingPort(int i) {
 		receivingPort = i;
 	}
-	
-	public int getReceivingPort(){
+
+	public int getReceivingPort() {
 		return receivingPort;
 	}
 

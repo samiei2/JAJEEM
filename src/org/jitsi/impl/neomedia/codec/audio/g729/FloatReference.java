@@ -9,7 +9,6 @@ package org.jitsi.impl.neomedia.codec.audio.g729;
 /**
  * @author Lubomir Marinov
  */
-class FloatReference
-{
-    float value;
+class FloatReference {
+	float value;
 }

@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -23,6 +24,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
@@ -63,12 +65,11 @@ public class InstructorCourseDialog extends JDialog {
 		setTitle("Instructors");
 		this.course = course;
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 610, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		final InstructorCourseDialog frame = this;
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
@@ -149,21 +150,21 @@ public class InstructorCourseDialog extends JDialog {
 				instructorFilterTF, personTextFilterator);
 		FilterList<Instructor> filterList = new FilterList<Instructor>(
 				getInstructorList(), textMatcherEditor);
-		SortedList<Instructor> sortedInstructor = new SortedList<Instructor>(filterList,
-				null);
+		SortedList<Instructor> sortedInstructor = new SortedList<Instructor>(
+				filterList, null);
 		AdvancedTableModel<Instructor> model = GlazedListsSwing
 				.eventTableModelWithThreadProxyList(sortedInstructor,
 						new InstructorTableFormat());
 
-		instructorSelectionModel = new EventSelectionModel<Instructor>(filterList);
+		instructorSelectionModel = new EventSelectionModel<Instructor>(
+				filterList);
 		instructorTable.setSelectionModel(instructorSelectionModel);
 		instructorTable.setModel(model);
-		TableComparatorChooser<Instructor> tableSorter = TableComparatorChooser
-				.install(instructorTable, sortedInstructor,
-						TableComparatorChooser.SINGLE_COLUMN);
+		TableComparatorChooser.install(instructorTable, sortedInstructor,
+				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
-		StripedTableCellRenderer.installInTable(instructorTable, Color.lightGray,
-				Color.white, null, null);
+		StripedTableCellRenderer.installInTable(instructorTable,
+				Color.lightGray, Color.white, null, null);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		return panel;
@@ -172,33 +173,40 @@ public class InstructorCourseDialog extends JDialog {
 	public class InstructorTableFormat implements TableFormat<Instructor>,
 			WritableTableFormat<Instructor> {
 
+		@Override
 		public int getColumnCount() {
 			return 4;
 		}
 
+		@Override
 		public String getColumnName(int column) {
-			if (column == 0)
+			if (column == 0) {
 				return "ID";
-			if (column == 1)
+			}
+			if (column == 1) {
 				return "First name";
-			else if (column == 2)
+			} else if (column == 2) {
 				return "Last Name";
-			else if (column == 3)
+			} else if (column == 3) {
 				return "Username";
+			}
 
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Instructor instructor, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return instructor.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return instructor.getFirstName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return instructor.getLastName();
-			else if (column == 3)
+			} else if (column == 3) {
 				return instructor.getUsername();
+			}
 
 			throw new IllegalStateException();
 		}
@@ -209,8 +217,8 @@ public class InstructorCourseDialog extends JDialog {
 		}
 
 		@Override
-		public Instructor setColumnValue(Instructor baseObject, Object editedValue,
-				int column) {
+		public Instructor setColumnValue(Instructor baseObject,
+				Object editedValue, int column) {
 			return baseObject;
 		}
 	}

@@ -50,7 +50,6 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 	private Timer timer; // Updates the count every second
 	private long remaining; // How many milliseconds remain in the countdown.
 	private long lastUpdate; // When count was last updated
-	private int total;
 	private ArrayList<ArrayList<QuizResponse>> quizResponse;
 	private Quiz currentQuiz;
 
@@ -302,39 +301,110 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1.setHorizontalGroup(
-			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_webPanel_1.setVerticalGroup(
-			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addGap(13)
-							.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_webPanel_1.createSequentialGroup()
-							.addGap(5)
-							.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
+		gl_webPanel_1
+				.setHorizontalGroup(gl_webPanel_1
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_webPanel_1
+										.createSequentialGroup()
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																webLabel_1,
+																GroupLayout.PREFERRED_SIZE,
+																70,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webLabel_2,
+																GroupLayout.PREFERRED_SIZE,
+																43,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webLabel,
+																GroupLayout.PREFERRED_SIZE,
+																43,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																webComboBox,
+																GroupLayout.PREFERRED_SIZE,
+																114,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webTextField,
+																GroupLayout.PREFERRED_SIZE,
+																154,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webScrollPane,
+																GroupLayout.DEFAULT_SIZE,
+																270,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		gl_webPanel_1
+				.setVerticalGroup(gl_webPanel_1
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_webPanel_1
+										.createSequentialGroup()
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																webLabel,
+																GroupLayout.PREFERRED_SIZE,
+																21,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webComboBox,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(12)
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																webLabel_1,
+																GroupLayout.PREFERRED_SIZE,
+																14,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webTextField,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_webPanel_1
+																		.createSequentialGroup()
+																		.addGap(13)
+																		.addComponent(
+																				webLabel_2,
+																				GroupLayout.PREFERRED_SIZE,
+																				14,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_webPanel_1
+																		.createSequentialGroup()
+																		.addGap(5)
+																		.addComponent(
+																				webScrollPane,
+																				GroupLayout.DEFAULT_SIZE,
+																				79,
+																				Short.MAX_VALUE)))
+										.addContainerGap()));
 
 		webTextArea = new WebTextArea();
 		webTextArea.setEditable(false);
@@ -355,7 +425,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 			public void itemStateChanged(ItemEvent e) {
 				Quiz currentQuiz = parentPanel.getParentPanel().getCurrentRun()
 						.getQuiz();
-				if (currentQuiz != null && webComboBox.getSelectedIndex()!=-1) {
+				if (currentQuiz != null && webComboBox.getSelectedIndex() != -1) {
 					System.out.println(webComboBox.getSelectedIndex());
 					currentQuestion = currentQuiz.getQuestionList().get(
 							webComboBox.getSelectedIndex());
@@ -376,9 +446,11 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 					if (webComboBox.getSelectedIndex() != -1
 							&& quizResponse.size() != 0) {
-						for (int i = 0; i < quizResponse.get(webComboBox.getSelectedIndex()).size(); i++) {
+						for (int i = 0; i < quizResponse.get(
+								webComboBox.getSelectedIndex()).size(); i++) {
 							System.out.println(webComboBox.getSelectedIndex());
-							QuizResponse ex = quizResponse.get(webComboBox.getSelectedIndex()).get(i);
+							QuizResponse ex = quizResponse.get(
+									webComboBox.getSelectedIndex()).get(i);
 							Student student = ex.getStudent();
 							Question question = ex.getQuestion();
 							ImageIcon imgToolTip = null;
@@ -386,10 +458,11 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 								imgToolTip = new ImageIcon(
 										ImageIO.read(Quiz_SecondPage_Question_View.class
 												.getResourceAsStream("/icons/bullet-red.png")));
-								if (ex.getQuestion().isResponseValid())
+								if (ex.getQuestion().isResponseValid()) {
 									imgToolTip = new ImageIcon(
 											ImageIO.read(Quiz_SecondPage_Question_View.class
 													.getResourceAsStream("/icons/bullet-green.png")));
+								}
 							} catch (Exception exp) {
 								JajeemExcetionHandler.logError(exp);
 							}
@@ -398,64 +471,90 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 							String QuestionOption = "";
 							if (question.getType() == 0) { // setting student's
 															// answer
-								if (question.getStudentAnswer()[0])
+								if (question.getStudentAnswer()[0]) {
 									StudentOption = "First Option";
-								if (question.getStudentAnswer()[1])
+								}
+								if (question.getStudentAnswer()[1]) {
 									StudentOption = "Second Option";
-								if (question.getStudentAnswer()[2])
+								}
+								if (question.getStudentAnswer()[2]) {
 									StudentOption = "Third Option";
-								if (question.getStudentAnswer()[3])
+								}
+								if (question.getStudentAnswer()[3]) {
 									StudentOption = "Fourth Option";
-								if (question.getStudentAnswer()[4])
+								}
+								if (question.getStudentAnswer()[4]) {
 									StudentOption = "Fifth Option";
-								if (StudentOption == "")
+								}
+								if (StudentOption == "") {
 									StudentOption = "None Selected";
+								}
 							} else if (question.getType() == 1) {
-								if (question.getStudentAnswer()[0])
+								if (question.getStudentAnswer()[0]) {
 									StudentOption += "First Option,";
-								if (question.getStudentAnswer()[1])
+								}
+								if (question.getStudentAnswer()[1]) {
 									StudentOption += "Second Option,";
-								if (question.getStudentAnswer()[2])
+								}
+								if (question.getStudentAnswer()[2]) {
 									StudentOption += "Third Option,";
-								if (question.getStudentAnswer()[3])
+								}
+								if (question.getStudentAnswer()[3]) {
 									StudentOption += "Fourth Option,";
-								if (question.getStudentAnswer()[4])
+								}
+								if (question.getStudentAnswer()[4]) {
 									StudentOption += "Fifth Option";
-								if (StudentOption == "")
+								}
+								if (StudentOption == "") {
 									StudentOption = "None Selected";
-							} else
+								}
+							} else {
 								StudentOption = question.getStudentTextAnswer();
+							}
 
 							Question temp2 = currentQuestion;
 							if (temp2.getType() == 0) { // setting questions
 														// correct answer
-								if (temp2.getCorrectAnswer()[0])
+								if (temp2.getCorrectAnswer()[0]) {
 									QuestionOption = "First Option";
-								if (temp2.getCorrectAnswer()[1])
+								}
+								if (temp2.getCorrectAnswer()[1]) {
 									QuestionOption = "Second Option";
-								if (temp2.getCorrectAnswer()[2])
+								}
+								if (temp2.getCorrectAnswer()[2]) {
 									QuestionOption = "Third Option";
-								if (temp2.getCorrectAnswer()[3])
+								}
+								if (temp2.getCorrectAnswer()[3]) {
 									QuestionOption = "Fourth Option";
-								if (temp2.getCorrectAnswer()[4])
+								}
+								if (temp2.getCorrectAnswer()[4]) {
 									QuestionOption = "Fifth Option";
-								if (QuestionOption == "")
+								}
+								if (QuestionOption == "") {
 									QuestionOption = "None Selected";
+								}
 							} else if (temp2.getType() == 1) {
-								if (temp2.getCorrectAnswer()[0])
+								if (temp2.getCorrectAnswer()[0]) {
 									QuestionOption += "First Option,";
-								if (temp2.getCorrectAnswer()[1])
+								}
+								if (temp2.getCorrectAnswer()[1]) {
 									QuestionOption += "Second Option,";
-								if (temp2.getCorrectAnswer()[2])
+								}
+								if (temp2.getCorrectAnswer()[2]) {
 									QuestionOption += "Third Option,";
-								if (temp2.getCorrectAnswer()[3])
+								}
+								if (temp2.getCorrectAnswer()[3]) {
 									QuestionOption += "Fourth Option,";
-								if (temp2.getCorrectAnswer()[4])
+								}
+								if (temp2.getCorrectAnswer()[4]) {
 									QuestionOption += "Fifth Option";
-								if (QuestionOption == "")
+								}
+								if (QuestionOption == "") {
 									QuestionOption = "None Selected";
-							} else
+								}
+							} else {
 								QuestionOption = "N/A";
+							}
 
 							model.addRow(new Object[] { imgToolTip,
 									student.getId(), student.getFullName(),
@@ -497,6 +596,7 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 			// ///Setting the timer
 			ActionListener taskPerformer = new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent evt) {
 					updateDisplay();
 				}
@@ -511,8 +611,9 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 					lastUpdate = now; // remember this update time
 					// Convert remaining milliseconds to mm:ss format and
 					// display
-					if (remaining < 0)
+					if (remaining < 0) {
 						remaining = 0;
+					}
 					int minutes = (int) (remaining / 60000);
 					int seconds = (int) ((remaining % 60000) / 1000);
 					webTextField_1.setText(format.format(minutes) + ":"
@@ -585,103 +686,144 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		if (currentQuestion != null && question != null && student != null) {
 			int index = -1;
-			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find question index in the response list
-				if (currentQuiz.getQuestionList().get(i).getId().equals(question
-						.getId())) {
+			for (int i = 0; i < currentQuiz.getQuestionList().size(); i++) {// find
+																			// question
+																			// index
+																			// in
+																			// the
+																			// response
+																			// list
+				if (currentQuiz.getQuestionList().get(i).getId()
+						.equals(question.getId())) {
 					index = i;
 					break;
 				}
 			}
 			for (int j = 0; j < quizResponse.get(index).size(); j++) {
-				if (quizResponse.get(index).get(j).getStudent().getId() == student.getId()) {
+				if (quizResponse.get(index).get(j).getStudent().getId() == student
+						.getId()) {
 					quizResponse.get(index).set(j, e);
 					found = true;
 					break;
 				}
 			}
-			if (!found)
+			if (!found) {
 				quizResponse.get(index).add(e);
+			}
 
-			if (question.getId().equals(currentQuestion.getId())) {// if the student
-																// id is equal
-																// to current
-																// students id
-																// then show
-																// it's result
-																// otherwise
-																// just save it
+			if (question.getId().equals(currentQuestion.getId())) {// if the
+																	// student
+																	// id is
+																	// equal
+																	// to
+																	// current
+																	// students
+																	// id
+																	// then show
+																	// it's
+																	// result
+																	// otherwise
+																	// just save
+																	// it
 				DefaultTableModel model = (DefaultTableModel) webTable
 						.getModel();
 				String StudentOption = "";
 				String QuestionOption = "";
 				if (question.getType() == 0) { // setting student's answer
-					if (question.getStudentAnswer()[0])
+					if (question.getStudentAnswer()[0]) {
 						StudentOption = "First Option";
-					if (question.getStudentAnswer()[1])
+					}
+					if (question.getStudentAnswer()[1]) {
 						StudentOption = "Second Option";
-					if (question.getStudentAnswer()[2])
+					}
+					if (question.getStudentAnswer()[2]) {
 						StudentOption = "Third Option";
-					if (question.getStudentAnswer()[3])
+					}
+					if (question.getStudentAnswer()[3]) {
 						StudentOption = "Fourth Option";
-					if (question.getStudentAnswer()[4])
+					}
+					if (question.getStudentAnswer()[4]) {
 						StudentOption = "Fifth Option";
-					if (StudentOption == "")
+					}
+					if (StudentOption == "") {
 						StudentOption = "None Selected";
+					}
 				} else if (question.getType() == 1) {
-					if (question.getStudentAnswer()[0])
+					if (question.getStudentAnswer()[0]) {
 						StudentOption += "First Option,";
-					if (question.getStudentAnswer()[1])
+					}
+					if (question.getStudentAnswer()[1]) {
 						StudentOption += "Second Option,";
-					if (question.getStudentAnswer()[2])
+					}
+					if (question.getStudentAnswer()[2]) {
 						StudentOption += "Third Option,";
-					if (question.getStudentAnswer()[3])
+					}
+					if (question.getStudentAnswer()[3]) {
 						StudentOption += "Fourth Option,";
-					if (question.getStudentAnswer()[4])
+					}
+					if (question.getStudentAnswer()[4]) {
 						StudentOption += "Fifth Option";
-					if (StudentOption == "")
+					}
+					if (StudentOption == "") {
 						StudentOption = "None Selected";
-				} else
+					}
+				} else {
 					StudentOption = question.getStudentTextAnswer();
+				}
 
 				Question temp2 = currentQuiz.getQuestionList().get(index);
 				if (temp2.getType() == 0) { // setting questions correct answer
-					if (temp2.getCorrectAnswer()[0])
+					if (temp2.getCorrectAnswer()[0]) {
 						QuestionOption = "First Option";
-					if (temp2.getCorrectAnswer()[1])
+					}
+					if (temp2.getCorrectAnswer()[1]) {
 						QuestionOption = "Second Option";
-					if (temp2.getCorrectAnswer()[2])
+					}
+					if (temp2.getCorrectAnswer()[2]) {
 						QuestionOption = "Third Option";
-					if (temp2.getCorrectAnswer()[3])
+					}
+					if (temp2.getCorrectAnswer()[3]) {
 						QuestionOption = "Fourth Option";
-					if (temp2.getCorrectAnswer()[4])
+					}
+					if (temp2.getCorrectAnswer()[4]) {
 						QuestionOption = "Fifth Option";
-					if (QuestionOption == "")
+					}
+					if (QuestionOption == "") {
 						QuestionOption = "None Selected";
+					}
 				} else if (temp2.getType() == 1) {
-					if (temp2.getCorrectAnswer()[0])
+					if (temp2.getCorrectAnswer()[0]) {
 						QuestionOption += "First Option,";
-					if (temp2.getCorrectAnswer()[1])
+					}
+					if (temp2.getCorrectAnswer()[1]) {
 						QuestionOption += "Second Option,";
-					if (temp2.getCorrectAnswer()[2])
+					}
+					if (temp2.getCorrectAnswer()[2]) {
 						QuestionOption += "Third Option,";
-					if (temp2.getCorrectAnswer()[3])
+					}
+					if (temp2.getCorrectAnswer()[3]) {
 						QuestionOption += "Fourth Option,";
-					if (temp2.getCorrectAnswer()[4])
+					}
+					if (temp2.getCorrectAnswer()[4]) {
 						QuestionOption += "Fifth Option";
-					if (QuestionOption == "")
+					}
+					if (QuestionOption == "") {
 						QuestionOption = "None Selected";
-				} else
+					}
+				} else {
 					QuestionOption = "N/A";
+				}
 
 				ImageIcon imgToolTip = null;
 				try {
 					imgToolTip = new ImageIcon(
 							ImageIO.read(Quiz_SecondPage_Question_View.class
 									.getResourceAsStream("/icons/bullet-red.png")));
-					if (e.getQuestion().isResponseValid())
+					if (e.getQuestion().isResponseValid()) {
 						imgToolTip = new ImageIcon(
 								ImageIO.read(Quiz_SecondPage_Question_View.class
 										.getResourceAsStream("/icons/bullet-green.png")));
+					}
 				} catch (Exception exp) {
 					JajeemExcetionHandler.logError(exp);
 				}
@@ -697,49 +839,67 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 						imgToolTip = new ImageIcon(
 								ImageIO.read(Quiz_SecondPage_Question_View.class
 										.getResourceAsStream("/icons/bullet-red.png")));
-						if (temp.getQuestion().isResponseValid())
+						if (temp.getQuestion().isResponseValid()) {
 							imgToolTip = new ImageIcon(
 									ImageIO.read(Quiz_SecondPage_Question_View.class
 											.getResourceAsStream("/icons/bullet-green.png")));
+						}
 					} catch (Exception exp) {
 						JajeemExcetionHandler.logError(exp);
 					}
-					
+
 					StudentOption = "";
-					if (temp.getQuestion().getType() == 0) { // setting student's answer
-						if (temp.getQuestion().getStudentAnswer()[0])
+					if (temp.getQuestion().getType() == 0) { // setting
+																// student's
+																// answer
+						if (temp.getQuestion().getStudentAnswer()[0]) {
 							StudentOption = "First Option";
-						if (temp.getQuestion().getStudentAnswer()[1])
+						}
+						if (temp.getQuestion().getStudentAnswer()[1]) {
 							StudentOption = "Second Option";
-						if (temp.getQuestion().getStudentAnswer()[2])
+						}
+						if (temp.getQuestion().getStudentAnswer()[2]) {
 							StudentOption = "Third Option";
-						if (temp.getQuestion().getStudentAnswer()[3])
+						}
+						if (temp.getQuestion().getStudentAnswer()[3]) {
 							StudentOption = "Fourth Option";
-						if (temp.getQuestion().getStudentAnswer()[4])
+						}
+						if (temp.getQuestion().getStudentAnswer()[4]) {
 							StudentOption = "Fifth Option";
-						if (StudentOption == "")
+						}
+						if (StudentOption == "") {
 							StudentOption = "None Selected";
+						}
 					} else if (temp.getQuestion().getType() == 1) {
-						if (temp.getQuestion().getStudentAnswer()[0])
+						if (temp.getQuestion().getStudentAnswer()[0]) {
 							StudentOption += "First Option,";
-						if (temp.getQuestion().getStudentAnswer()[1])
+						}
+						if (temp.getQuestion().getStudentAnswer()[1]) {
 							StudentOption += "Second Option,";
-						if (temp.getQuestion().getStudentAnswer()[2])
+						}
+						if (temp.getQuestion().getStudentAnswer()[2]) {
 							StudentOption += "Third Option,";
-						if (temp.getQuestion().getStudentAnswer()[3])
+						}
+						if (temp.getQuestion().getStudentAnswer()[3]) {
 							StudentOption += "Fourth Option,";
-						if (temp.getQuestion().getStudentAnswer()[4])
+						}
+						if (temp.getQuestion().getStudentAnswer()[4]) {
 							StudentOption += "Fifth Option";
-						if (StudentOption == "")
+						}
+						if (StudentOption == "") {
 							StudentOption = "None Selected";
-					} else
-						StudentOption = temp.getQuestion().getStudentTextAnswer();
-					
-					model.addRow(new Object[] { imgToolTip, temp.getStudent().getId(),
+						}
+					} else {
+						StudentOption = temp.getQuestion()
+								.getStudentTextAnswer();
+					}
+
+					model.addRow(new Object[] { imgToolTip,
+							temp.getStudent().getId(),
 							temp.getStudent().getFullName(), QuestionOption,
 							StudentOption });
 				}
-				
+
 				model.fireTableDataChanged();
 				webTable.repaint();
 				webTable.updateUI();
@@ -772,8 +932,9 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 		@Override
 		public Class<?> getColumnClass(int arg0) {
 			// TODO Auto-generated method stub
-			if (arg0 == 0)
+			if (arg0 == 0) {
 				return Icon.class;
+			}
 			return super.getColumnClass(arg0);
 		}
 	}

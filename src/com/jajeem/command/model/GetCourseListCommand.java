@@ -12,9 +12,10 @@ public class GetCourseListCommand extends Command {
 	private static final long serialVersionUID = -5737607136098935225L;
 	private ArrayList<Course> courseList;
 
-	public GetCourseListCommand(String from, String to, int port, ArrayList<Course> courseList) {
+	public GetCourseListCommand(String from, String to, int port,
+			ArrayList<Course> courseList) {
 		super(from, to, port);
-		
+
 		this.setCourseList(courseList);
 	}
 

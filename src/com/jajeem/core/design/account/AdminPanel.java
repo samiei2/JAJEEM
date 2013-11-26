@@ -1,10 +1,13 @@
 package com.jajeem.core.design.account;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
@@ -22,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,6 +38,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
@@ -44,7 +49,6 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.text.WebTextField;
@@ -57,20 +61,16 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
-import com.jajeem.util.CustomButton;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-import java.awt.Dimension;
-import javax.swing.JButton;
-
 
 @SuppressWarnings("deprecation")
-public class AdminPanel extends CustomAccountFrame{
+public class AdminPanel extends CustomAccountFrame {
 	Font font = new Font("Arial", Font.BOLD, 12);
-	
+
 	private static AdminPanel frame;
 	private WebFrame mainFrame;
 	@SuppressWarnings("unused")
@@ -85,196 +85,216 @@ public class AdminPanel extends CustomAccountFrame{
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-	
+
 	public AdminPanel() throws Exception {
-		
+
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		loadData();
-		
+		// loadData();
+
 		final CustomAccountCheckBox chckbxNewCheckBox = new CustomAccountCheckBox();
 		chckbxNewCheckBox.setSelected(true);
 		chckbxNewCheckBox.setText("Instructor");
 		chckbxNewCheckBox.setForeground(Color.WHITE);
 		chckbxNewCheckBox.setFont(font);
-		
-		
+
 		final CustomAccountCheckBox checkBox = new CustomAccountCheckBox();
 		checkBox.setText("Courses");
 		checkBox.setForeground(Color.WHITE);
 		checkBox.setFont(font);
-		
+
 		final CustomAccountCheckBox checkBox_1 = new CustomAccountCheckBox();
 		checkBox_1.setText("Students");
 		checkBox_1.setForeground(Color.WHITE);
 		checkBox_1.setFont(font);
-		
+
 		GroupLayout groupLayout = new GroupLayout(getTopContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addGap(4)
+						.addComponent(chckbxNewCheckBox,
+								GroupLayout.PREFERRED_SIZE, 75,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(3)
+						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE,
+								74, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																chckbxNewCheckBox,
+																GroupLayout.PREFERRED_SIZE,
+																41,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																checkBox,
+																GroupLayout.PREFERRED_SIZE,
+																41,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																checkBox_1,
+																GroupLayout.PREFERRED_SIZE,
+																41,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap()));
 		getTopContentPane().setLayout(groupLayout);
-		
+
 		WebButton webButton = new WebButton();
-		
+		webButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+
 		WebButton webButton_1 = new WebButton();
-		
+		webButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			}
+		});
+
 		WebButton webButton_2 = new WebButton();
+		webButton_2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setState(Frame.ICONIFIED);
+			}
+		});
 		GroupLayout groupLayout_2 = new GroupLayout(getCloseContentPane());
-		groupLayout_2.setHorizontalGroup(
-			groupLayout_2.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout_2.createSequentialGroup()
-					.addContainerGap(17, Short.MAX_VALUE)
-					.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-					.addGap(18))
-		);
-		groupLayout_2.setVerticalGroup(
-			groupLayout_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout_2.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(22, Short.MAX_VALUE))
-		);
+		groupLayout_2.setHorizontalGroup(groupLayout_2.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				groupLayout_2
+						.createSequentialGroup()
+						.addContainerGap(17, Short.MAX_VALUE)
+						.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE,
+								42, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE,
+								42, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webButton, GroupLayout.PREFERRED_SIZE,
+								42, GroupLayout.PREFERRED_SIZE).addGap(18)));
+		groupLayout_2.setVerticalGroup(groupLayout_2.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout_2
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								groupLayout_2
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(webButton_2,
+												GroupLayout.PREFERRED_SIZE, 42,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(webButton_1,
+												GroupLayout.PREFERRED_SIZE, 42,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(webButton,
+												GroupLayout.PREFERRED_SIZE, 42,
+												GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(22, Short.MAX_VALUE)));
 		getCloseContentPane().setLayout(groupLayout_2);
-		
+
 		final JPanel cards = new JPanel();
 		cards.setOpaque(false);
 		GroupLayout groupLayout_1 = new GroupLayout(getMainContentPane());
-		groupLayout_1.setHorizontalGroup(
-			groupLayout_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		groupLayout_1.setVerticalGroup(
-			groupLayout_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		groupLayout_1.setHorizontalGroup(groupLayout_1.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout_1
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(cards, GroupLayout.DEFAULT_SIZE, 561,
+								Short.MAX_VALUE).addContainerGap()));
+		groupLayout_1.setVerticalGroup(groupLayout_1.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout_1
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(cards, GroupLayout.DEFAULT_SIZE, 231,
+								Short.MAX_VALUE).addContainerGap()));
 		CardLayout cardlayout = new CardLayout(0, 0);
 		cards.setLayout(cardlayout);
-		
-		WebPanel instructorPanel = new WebPanel(); 
+
+		WebPanel instructorPanel = new WebPanel();
 		instructorPanel.setOpaque(false);
 		instructorPanel.setLayout(new BorderLayout(0, 0));
 		instructorPanel.add(initInstructor());
-		
-		WebPanel coursesPanel = new WebPanel(); 
+
+		WebPanel coursesPanel = new WebPanel();
 		coursesPanel.setOpaque(false);
 		coursesPanel.setLayout(new BorderLayout(0, 0));
 		coursesPanel.add(initCourse());
-		
+
 		WebPanel studentPanel = new WebPanel();
 		studentPanel.setOpaque(false);
 		studentPanel.setLayout(new BorderLayout(0, 0));
 		studentPanel.add(initStudent());
-		
-		
-		cards.add(instructorPanel,"instructor");
-		cards.add(coursesPanel,"course");
-		cards.add(studentPanel,"student");
+
+		cards.add(instructorPanel, "instructor");
+		cards.add(coursesPanel, "course");
+		cards.add(studentPanel, "student");
 		getMainContentPane().setLayout(groupLayout_1);
 		pack();
 		mainFrame = this;
-		
-		
+
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				chckbxNewCheckBox.setSelected(true);
 				checkBox.setSelected(false);
 				checkBox_1.setSelected(false);
-				CardLayout cl_cards = (CardLayout)(cards.getLayout());
-		        cl_cards.show(cards, "instructor");
+				CardLayout cl_cards = (CardLayout) (cards.getLayout());
+				cl_cards.show(cards, "instructor");
 			}
 		});
-		
+
 		checkBox.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				chckbxNewCheckBox.setSelected(false);
 				checkBox.setSelected(true);
 				checkBox_1.setSelected(false);
-				CardLayout cl_cards = (CardLayout)(cards.getLayout());
-		        cl_cards.show(cards, "course");
+				CardLayout cl_cards = (CardLayout) (cards.getLayout());
+				cl_cards.show(cards, "course");
 			}
 		});
-		
+
 		checkBox_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				checkBox.setSelected(false);
 				chckbxNewCheckBox.setSelected(false);
 				checkBox_1.setSelected(true);
-				CardLayout cl_cards = (CardLayout)(cards.getLayout());
-		        cl_cards.show(cards, "student");
+				CardLayout cl_cards = (CardLayout) (cards.getLayout());
+				cl_cards.show(cards, "student");
 			}
 		});
-		
-//		setVisible(true);
+
+		// setVisible(true);
 	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private void loadData() throws SQLException {
 
-		InstructorService instructorService = new InstructorService();
-		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
-				.list();
-		getInstructorList().addAll(instructorList);
-
-		StudentService studentService = new StudentService();
-		ArrayList<com.jajeem.core.model.Student> studentList = studentService
-				.list();
-		getStudentList().addAll(studentList);
-
-		RoomService rs = new RoomService();
-		ArrayList<Course> courseList = rs.getCourseDAO().list();
-
-		for (Course course : courseList) {
-			Instructor ins = instructorService
-					.getById(course.getInstructorId());
-
-			if (ins != null) {
-				course.setInstructor(instructorService.getById(
-						course.getInstructorId()).getUsername());
-				getCourseList().add(course);
-			} else {
-				course.setInstructor("");
-				getCourseList().add(course);
-			}
-		}
-
-	}
-
-	@SuppressWarnings({"unused" })
+	@SuppressWarnings({ "unused" })
 	private WebPanel initCourse() throws Exception {
 
 		final WebPanel panel = new WebPanel();
@@ -297,7 +317,8 @@ public class AdminPanel extends CustomAccountFrame{
 		buttonPanel.setSize(new Dimension(0, 60));
 		bottomPanel.add(buttonPanel);
 
-		CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+		CustomAccountButton addButton = new CustomAccountButton(
+				"/icons/noa_en/accountadd.png");
 		addButton.setMargin(new Insets(0, 5, 0, 0));
 		addButton.setHorizontalAlignment(SwingConstants.LEFT);
 		addButton.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -316,7 +337,8 @@ public class AdminPanel extends CustomAccountFrame{
 			}
 		});
 
-		CustomAccountButton deleteButton = new CustomAccountButton("/icons/noa_en/accountdelete.png");
+		CustomAccountButton deleteButton = new CustomAccountButton(
+				"/icons/noa_en/accountdelete.png");
 		deleteButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		deleteButton.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteButton.setMargin(new Insets(0, 5, 0, 0));
@@ -324,16 +346,17 @@ public class AdminPanel extends CustomAccountFrame{
 		deleteButton.setSize(50, 30);
 		deleteButton.setText(i18n.getParam("Delete"));
 		deleteButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) throws HeadlessException {
 
 				int resp;
 				try {
-					resp = WebOptionPane.showConfirmDialog(
+					resp = JOptionPane.showConfirmDialog(
 							panel,
 							i18n.getParam("Do you want to Delete selected item(s)?"),
 							i18n.getParam("Confirm"),
-							WebOptionPane.YES_NO_OPTION,
-							WebOptionPane.QUESTION_MESSAGE);
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
 					if (resp == 0) {
 						if (!courseSelectionModel.isSelectionEmpty()) {
 							RoomService rs = new RoomService();
@@ -381,36 +404,73 @@ public class AdminPanel extends CustomAccountFrame{
 
 		WebButton studentButton = new WebButton(i18n.getParam("Details"));
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(
-			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_buttonPanel.createSequentialGroup()
-					.addGap(5)
-					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-					.addGap(32)
-					.addComponent(editButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_buttonPanel.setVerticalGroup(
-			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_buttonPanel.createSequentialGroup()
-					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_buttonPanel.createSequentialGroup()
-							.addGap(10)
-							.addComponent(editButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_buttonPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_buttonPanel.createSequentialGroup()
-							.addGap(10)
-							.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-								.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_buttonPanel
+						.createSequentialGroup()
+						.addGap(5)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
+								90, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
+								83, GroupLayout.PREFERRED_SIZE)
+						.addGap(32)
+						.addComponent(editButton, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(studentButton,
+								GroupLayout.PREFERRED_SIZE, 89,
+								GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		gl_buttonPanel
+				.setVerticalGroup(gl_buttonPanel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_buttonPanel
+										.createSequentialGroup()
+										.addGroup(
+												gl_buttonPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_buttonPanel
+																		.createSequentialGroup()
+																		.addGap(10)
+																		.addComponent(
+																				editButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				31,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_buttonPanel
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				studentButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				31,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_buttonPanel
+																		.createSequentialGroup()
+																		.addGap(10)
+																		.addGroup(
+																				gl_buttonPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								addButton,
+																								GroupLayout.PREFERRED_SIZE,
+																								31,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								deleteButton,
+																								GroupLayout.PREFERRED_SIZE,
+																								31,
+																								GroupLayout.PREFERRED_SIZE))))
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		buttonPanel.setLayout(gl_buttonPanel);
 		studentButton.addActionListener(new ActionListener() {
 
@@ -418,15 +478,16 @@ public class AdminPanel extends CustomAccountFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
 						try {
-//							new CourseStudentDialog(course, true);
-							new StudentsAndQuizListDialog(course,true,course.getId(),"course");
+							// new CourseStudentDialog(course, true);
+							new StudentsAndQuizListDialog(course, true, course
+									.getId(), "course");
 						} catch (Exception e1) {
 							JajeemExcetionHandler.logError(e1);
 							e1.printStackTrace();
@@ -444,9 +505,9 @@ public class AdminPanel extends CustomAccountFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
@@ -461,25 +522,25 @@ public class AdminPanel extends CustomAccountFrame{
 			}
 		});
 
-//		WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
-//		buttonPanel.add(quizButton);
-//		quizButton.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (!courseSelectionModel.isSelectionEmpty()) {
-//					if (courseSelectionModel.getSelected().size() > 1) {
-//						WebOptionPane.showMessageDialog(frame,
-//								"Please select one course.", "Message",
-//								WebOptionPane.INFORMATION_MESSAGE);
-//					} else {
-//						Course course = courseSelectionModel.getSelected().get(
-//								0);
-//						new Quiz_OpenDialog(course.getId(), "course");
-//					}
-//				}
-//			}
-//		});
+		// WebButton quizButton = new WebButton(i18n.getParam("Quizzes"));
+		// buttonPanel.add(quizButton);
+		// quizButton.addActionListener(new ActionListener() {
+		//
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// if (!courseSelectionModel.isSelectionEmpty()) {
+		// if (courseSelectionModel.getSelected().size() > 1) {
+		// WebOptionPane.showMessageDialog(frame,
+		// "Please select one course.", "Message",
+		// WebOptionPane.INFORMATION_MESSAGE);
+		// } else {
+		// Course course = courseSelectionModel.getSelected().get(
+		// 0);
+		// new Quiz_OpenDialog(course.getId(), "course");
+		// }
+		// }
+		// }
+		// });
 
 		JPanel paginationPanel = new JPanel();
 		paginationPanel.setOpaque(false);
@@ -555,7 +616,7 @@ public class AdminPanel extends CustomAccountFrame{
 		courseTable.setModel(model);
 		TableComparatorChooser<Course> tableSorter = TableComparatorChooser
 				.install(courseTable, sortedCourse,
-						TableComparatorChooser.SINGLE_COLUMN);
+						AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		MultiLineCellRenderer multiLineRenderer = new MultiLineCellRenderer(
 				SwingConstants.LEFT, SwingConstants.CENTER);
@@ -570,52 +631,73 @@ public class AdminPanel extends CustomAccountFrame{
 		StripedTableCellRenderer.installInTable(courseTable, Color.lightGray,
 				Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 723, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(20, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														topPanel,
+														GroupLayout.DEFAULT_SIZE,
+														723, Short.MAX_VALUE)
+												.addComponent(
+														bottomPanel,
+														GroupLayout.DEFAULT_SIZE,
+														723, Short.MAX_VALUE)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addGap(10)
+																.addComponent(
+																		jScrollPane1,
+																		GroupLayout.DEFAULT_SIZE,
+																		713,
+																		Short.MAX_VALUE)))
+								.addGap(20)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
+								405, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)));
 		panel.setLayout(gl_panel);
-		
+
 		courseTable.addMouseListener(new MouseAdapter() {
-			   public void mouseClicked(MouseEvent e) {
-			      if (e.getClickCount() == 2) {
-			         JTable target = (JTable)e.getSource();
-			         int row = target.getSelectedRow();
-			         int column = target.getSelectedColumn();
-			         if (!courseSelectionModel.isSelectionEmpty()) {
-							if (courseSelectionModel.getSelected().size() > 1) {
-								WebOptionPane.showMessageDialog(frame,
-										"Please select one course.", "Message",
-										WebOptionPane.INFORMATION_MESSAGE);
-							} else {
-								Course course = courseSelectionModel.getSelected().get(
-										0);
-								try {
-//									new CourseStudentDialog(course, true);
-									new StudentsAndQuizListDialog(course,true,course.getId(),"course");
-								} catch (Exception e1) {
-									JajeemExcetionHandler.logError(e1);
-									e1.printStackTrace();
-								}
-					      }
-			          }
-			      }
-			   }
-			});
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JTable target = (JTable) e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					if (!courseSelectionModel.isSelectionEmpty()) {
+						if (courseSelectionModel.getSelected().size() > 1) {
+							JOptionPane.showMessageDialog(frame,
+									"Please select one course.", "Message",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							Course course = courseSelectionModel.getSelected()
+									.get(0);
+							try {
+								// new CourseStudentDialog(course, true);
+								new StudentsAndQuizListDialog(course, true,
+										course.getId(), "course");
+							} catch (Exception e1) {
+								JajeemExcetionHandler.logError(e1);
+								e1.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		});
 
 		return panel;
 	}
@@ -642,7 +724,8 @@ public class AdminPanel extends CustomAccountFrame{
 		buttonPanel.setOpaque(false);
 		bottomPanel.add(buttonPanel);
 
-		CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+		CustomAccountButton addButton = new CustomAccountButton(
+				"/icons/noa_en/accountadd.png");
 		addButton.setText(i18n.getParam("Add"));
 		addButton.setMargin(new Insets(0, 5, 0, 0));
 		addButton.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -661,7 +744,8 @@ public class AdminPanel extends CustomAccountFrame{
 			}
 		});
 
-		CustomAccountButton deleteButton = new CustomAccountButton("/icons/noa_en/accountdelete.png");
+		CustomAccountButton deleteButton = new CustomAccountButton(
+				"/icons/noa_en/accountdelete.png");
 		deleteButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		deleteButton.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteButton.setMargin(new Insets(0, 5, 0, 0));
@@ -669,12 +753,14 @@ public class AdminPanel extends CustomAccountFrame{
 		deleteButton.setText(i18n.getParam("delete"));
 
 		deleteButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int resp = WebOptionPane.showConfirmDialog(panel,
-						"Do you want to Delete selected item(s)?", "Confirm",
-						WebOptionPane.YES_NO_OPTION,
-						WebOptionPane.QUESTION_MESSAGE);
+				int resp = JOptionPane
+						.showConfirmDialog(panel,
+								"Do you want to Delete selected item(s)?",
+								"Confirm", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
 				if (resp == 0) {
 					if (!instructorSelectionModel.isSelectionEmpty()) {
 						InstructorService insService = new InstructorService();
@@ -682,11 +768,10 @@ public class AdminPanel extends CustomAccountFrame{
 								.getSelected()) {
 							try {
 								if (instructor.getUsername().equals("admin")) {
-									WebOptionPane.showMessageDialog(
+									JOptionPane.showMessageDialog(
 											getRootPane(),
 											"You cannot delete admin account!",
-											"Error",
-											WebOptionPane.ERROR_MESSAGE);
+											"Error", JOptionPane.ERROR_MESSAGE);
 								} else {
 									insService.delete(instructor);
 								}
@@ -710,9 +795,9 @@ public class AdminPanel extends CustomAccountFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (!instructorSelectionModel.isSelectionEmpty()) {
 					if (instructorSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one instructor.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Instructor instructor = instructorSelectionModel
 								.getSelected().get(0);
@@ -721,50 +806,85 @@ public class AdminPanel extends CustomAccountFrame{
 				}
 			}
 		});
-		
+
 		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(
-			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_buttonPanel.createSequentialGroup()
-					.addGap(5)
-					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-					.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_buttonPanel.setVerticalGroup(
-			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_buttonPanel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
+		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				gl_buttonPanel
+						.createSequentialGroup()
+						.addGap(5)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
+								90, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
+								76, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 27,
+								Short.MAX_VALUE)
+						.addComponent(quizButton, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(databaseManager,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		gl_buttonPanel
+				.setVerticalGroup(gl_buttonPanel
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_buttonPanel
+										.createSequentialGroup()
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addGroup(
+												gl_buttonPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_buttonPanel
+																		.createParallelGroup(
+																				Alignment.BASELINE)
+																		.addComponent(
+																				databaseManager,
+																				GroupLayout.PREFERRED_SIZE,
+																				29,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				quizButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				29,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_buttonPanel
+																		.createParallelGroup(
+																				Alignment.BASELINE)
+																		.addComponent(
+																				addButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				29,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				deleteButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				29,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap()));
 		buttonPanel.setLayout(gl_buttonPanel);
 		databaseManager.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(databaseDialog==null){
+				if (databaseDialog == null) {
 					DatabaseManager manager = new DatabaseManager(mainFrame);
 					databaseDialog = manager;
 					manager.setVisible(true);
-				}
-				else{
+				} else {
 					databaseDialog.toFront();
 				}
 			}
-			
+
 		});
 
 		JPanel paginationPanel = new JPanel();
@@ -824,29 +944,47 @@ public class AdminPanel extends CustomAccountFrame{
 		instructorTable.setModel(model);
 		TableComparatorChooser<Instructor> tableSorter = TableComparatorChooser
 				.install(instructorTable, sortedInstructor,
-						TableComparatorChooser.SINGLE_COLUMN);
+						AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		StripedTableCellRenderer.installInTable(instructorTable,
 				Color.lightGray, Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														topPanel,
+														GroupLayout.DEFAULT_SIZE,
+														733, Short.MAX_VALUE)
+												.addComponent(
+														bottomPanel,
+														GroupLayout.DEFAULT_SIZE,
+														733, Short.MAX_VALUE)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addGap(10)
+																.addComponent(
+																		jScrollPane1,
+																		GroupLayout.DEFAULT_SIZE,
+																		723,
+																		Short.MAX_VALUE)))
+								.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
+								407, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
+								51, GroupLayout.PREFERRED_SIZE)));
 		panel.setLayout(gl_panel);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
@@ -857,8 +995,8 @@ public class AdminPanel extends CustomAccountFrame{
 	private WebPanel initStudent() throws Exception {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable studentTable = new JTable();
@@ -866,13 +1004,13 @@ public class AdminPanel extends CustomAccountFrame{
 				i18n.getParam("Click on a cell to edit"));
 
 		jScrollPane1.setViewportView(studentTable);
-		panel.add(jScrollPane1);
 
 		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
+		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
 
 		JPanel buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
 		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
@@ -895,12 +1033,14 @@ public class AdminPanel extends CustomAccountFrame{
 		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
 		buttonPanel.add(deleteButton);
 		deleteButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int resp = WebOptionPane.showConfirmDialog(panel,
-						"Do you want to Delete selected item(s)?", "Confirm",
-						WebOptionPane.YES_NO_OPTION,
-						WebOptionPane.QUESTION_MESSAGE);
+				int resp = JOptionPane
+						.showConfirmDialog(panel,
+								"Do you want to Delete selected item(s)?",
+								"Confirm", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
 				if (resp == 0) {
 					if (!studentSelectionModel.isSelectionEmpty()) {
 
@@ -930,9 +1070,9 @@ public class AdminPanel extends CustomAccountFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (!studentSelectionModel.isSelectionEmpty()) {
 					if (studentSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one student.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Student student = studentSelectionModel.getSelected()
 								.get(0);
@@ -948,6 +1088,7 @@ public class AdminPanel extends CustomAccountFrame{
 		});
 
 		JPanel paginationPanel = new JPanel();
+		paginationPanel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
@@ -965,8 +1106,8 @@ public class AdminPanel extends CustomAccountFrame{
 		});
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
@@ -1002,10 +1143,37 @@ public class AdminPanel extends CustomAccountFrame{
 		studentTable.setModel(model);
 		TableComparatorChooser<Student> tableSorter = TableComparatorChooser
 				.install(studentTable, sortedStudent,
-						TableComparatorChooser.SINGLE_COLUMN);
+						AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 743,
+						Short.MAX_VALUE)
+				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 743,
+						Short.MAX_VALUE)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGap(10)
+								.addComponent(jScrollPane1,
+										GroupLayout.DEFAULT_SIZE, 733,
+										Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
+								436, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)));
+		panel.setLayout(gl_panel);
 		studentTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		return panel;
@@ -1014,28 +1182,32 @@ public class AdminPanel extends CustomAccountFrame{
 	public class CourseTableFormat implements TableFormat<Course>,
 			WritableTableFormat<Course> {
 
+		@Override
 		public int getColumnCount() {
 			return 8;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
+				}
+				if (column == 1) {
 					return i18n.getParam("Course Name");
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Instructor Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Class Type");
-				else if (column == 4)
+				} else if (column == 4) {
 					return i18n.getParam("Level");
-				else if (column == 5)
+				} else if (column == 5) {
 					return i18n.getParam("Start Date");
-				else if (column == 6)
+				} else if (column == 6) {
 					return i18n.getParam("Sessions");
-				else if (column == 7)
+				} else if (column == 7) {
 					return i18n.getParam("Weekly Time");
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
@@ -1043,25 +1215,27 @@ public class AdminPanel extends CustomAccountFrame{
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Course course, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return course.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return course.getName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return course.getInstructor();
-			else if (column == 3)
+			} else if (column == 3) {
 				return course.getClassType();
-			else if (column == 4)
+			} else if (column == 4) {
 				return course.getLevel();
-			else if (column == 5) {
+			} else if (column == 5) {
 				Date startDate = new Date(course.getStartDate());
 				SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 				return dt.format(startDate);
-			} else if (column == 6)
+			} else if (column == 6) {
 				return course.getSession();
-			else if (column == 7) {
+			} else if (column == 7) {
 				ArrayList<String> daysCell = new ArrayList<String>();
 
 				for (int i = 0; i < 5; i++) {
@@ -1109,24 +1283,26 @@ public class AdminPanel extends CustomAccountFrame{
 	public class InstructorTableFormat implements TableFormat<Instructor>,
 			WritableTableFormat<Instructor> {
 
+		@Override
 		public int getColumnCount() {
 			return 5;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
-
+				}
+				if (column == 1) {
 					return i18n.getParam("First name");
-
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Last Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Username");
-				else if (column == 4)
+				} else if (column == 4) {
 					return i18n.getParam("Password");
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
@@ -1134,18 +1310,21 @@ public class AdminPanel extends CustomAccountFrame{
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Instructor instructor, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return instructor.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return instructor.getFirstName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return instructor.getLastName();
-			else if (column == 3)
+			} else if (column == 3) {
 				return instructor.getUsername();
-			else if (column == 4)
+			} else if (column == 4) {
 				return instructor.getPassword();
+			}
 
 			throw new IllegalStateException();
 		}
@@ -1165,9 +1344,9 @@ public class AdminPanel extends CustomAccountFrame{
 				baseObject.setLastName((String) editedValue);
 			} else if (column == 3) {
 				if (baseObject.getUsername().equals("admin")) {
-					WebOptionPane.showMessageDialog(getRootPane(),
+					JOptionPane.showMessageDialog(getRootPane(),
 							"You cannot change admin's username!", "Error",
-							WebOptionPane.ERROR_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 
 				} else {
 					baseObject.setUsername((String) editedValue);
@@ -1191,22 +1370,26 @@ public class AdminPanel extends CustomAccountFrame{
 	public class StudentTableFormat implements TableFormat<Student>,
 			WritableTableFormat<Student> {
 
+		@Override
 		public int getColumnCount() {
 			return 5;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
+				}
+				if (column == 1) {
 					return i18n.getParam("First name");
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Last Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Username");
-				else if (column == 4)
+				} else if (column == 4) {
 					return i18n.getParam("Password");
+				}
 			} catch (Exception e) {
 				JajeemExcetionHandler.logError(e);
 				e.printStackTrace();
@@ -1214,18 +1397,21 @@ public class AdminPanel extends CustomAccountFrame{
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Student student, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return student.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return student.getFirstName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return student.getLastName();
-			else if (column == 3)
+			} else if (column == 3) {
 				return student.getUsername();
-			else if (column == 4)
+			} else if (column == 4) {
 				return student.getPassword();
+			}
 
 			throw new IllegalStateException();
 		}
@@ -1304,9 +1490,9 @@ public class AdminPanel extends CustomAccountFrame{
 		this.studentSelectionModel = studentSelectionModel;
 	}
 
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					new Config();

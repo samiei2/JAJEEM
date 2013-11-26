@@ -20,7 +20,6 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
 
-
 public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 	/**
 	 * 
@@ -67,50 +66,131 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 		webPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(12)
-									.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
-									.addGap(0, 0, Short.MAX_VALUE))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(4)
-							.addComponent(webPanel, 0, 0, Short.MAX_VALUE)))
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(56)
-							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(150, Short.MAX_VALUE))
-		);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								wblblQuestion,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								groupLayout
+																										.createSequentialGroup()
+																										.addComponent(
+																												wblblQuestionType,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												webComboBox,
+																												GroupLayout.PREFERRED_SIZE,
+																												115,
+																												GroupLayout.PREFERRED_SIZE))
+																						.addGroup(
+																								groupLayout
+																										.createSequentialGroup()
+																										.addGap(12)
+																										.addComponent(
+																												wblblQuestion_1,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												webScrollPane,
+																												GroupLayout.PREFERRED_SIZE,
+																												278,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addGap(0,
+																												0,
+																												Short.MAX_VALUE))))
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addGap(4)
+																		.addComponent(
+																				webPanel,
+																				0,
+																				0,
+																				Short.MAX_VALUE)))
+										.addGap(10)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(wblblQuestion,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(22)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								webComboBox,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								wblblQuestionType,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE))
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				webScrollPane,
+																				GroupLayout.PREFERRED_SIZE,
+																				76,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addGap(56)
+																		.addComponent(
+																				wblblQuestion_1,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addComponent(webPanel,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(150, Short.MAX_VALUE)));
 
 		webTextField = new WebTextField();
 
@@ -123,32 +203,57 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 		webTextField_4 = new WebTextField();
 
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel.setHorizontalGroup(
-			gl_webPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addGap(33)
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(webTextField_4, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-						.addComponent(webTextField_3, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-						.addComponent(webTextField_2, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-						.addComponent(webTextField_1, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-						.addComponent(webTextField, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_webPanel.setVerticalGroup(
-			gl_webPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webTextField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webTextField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webTextField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+		gl_webPanel.setHorizontalGroup(gl_webPanel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_webPanel
+						.createSequentialGroup()
+						.addGap(33)
+						.addGroup(
+								gl_webPanel
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(webTextField_4,
+												GroupLayout.DEFAULT_SIZE, 296,
+												Short.MAX_VALUE)
+										.addComponent(webTextField_3,
+												GroupLayout.DEFAULT_SIZE, 296,
+												Short.MAX_VALUE)
+										.addComponent(webTextField_2,
+												GroupLayout.DEFAULT_SIZE, 296,
+												Short.MAX_VALUE)
+										.addComponent(webTextField_1,
+												GroupLayout.DEFAULT_SIZE, 296,
+												Short.MAX_VALUE)
+										.addComponent(webTextField,
+												GroupLayout.DEFAULT_SIZE, 296,
+												Short.MAX_VALUE))
+						.addContainerGap()));
+		gl_webPanel.setVerticalGroup(gl_webPanel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_webPanel
+						.createSequentialGroup()
+						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webTextField_1,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webTextField_2,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webTextField_3,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webTextField_4,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE).addContainerGap()));
 		webPanel.setLayout(gl_webPanel);
 
 		webTextArea = new WebTextArea();
@@ -520,7 +625,7 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 		webTextField_2.setText("");
 		webTextField_3.setText("");
 		webTextField_4.setText("");
-//		webTextField_5.setText("");
+		// webTextField_5.setText("");
 		webComboBox.setSelectedIndex(0);
 		webTextField.setVisible(true);
 		webTextField_1.setVisible(true);

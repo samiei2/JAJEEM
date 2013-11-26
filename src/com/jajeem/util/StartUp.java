@@ -3,9 +3,7 @@ package com.jajeem.util;
 import java.io.File;
 
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
-import com.alee.laf.WebLookAndFeel;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.recorder.design.RecorderServer;
 
@@ -14,9 +12,9 @@ public class StartUp {
 	static H2Connection conn;
 
 	public StartUp() {
-//		conn = new H2Connection();
-//		BaseDAO.setH2Connection(conn);
-//		initDatabase.initialize();
+		// conn = new H2Connection();
+		// BaseDAO.setH2Connection(conn);
+		// initDatabase.initialize();
 		if (!new File("util").exists()) {
 			JOptionPane
 					.showMessageDialog(null,
@@ -29,15 +27,14 @@ public class StartUp {
 				new InstructorServer().Startup();
 			}
 		}).start();
-		
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				new RecorderServer().Startup();
 			}
 		}).start();
-		
-		
+
 		// create folders
 		FileUtil.createDirectories();
 
@@ -47,7 +44,7 @@ public class StartUp {
 
 		try {
 			// Setting up WebLookAndFeel style
-//			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+			// UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

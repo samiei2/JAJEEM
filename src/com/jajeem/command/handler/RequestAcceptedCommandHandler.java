@@ -37,7 +37,8 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 					IntercomRequestCommand irc = new IntercomRequestCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")), Student.getStudentModel());
+									.getParam("serverPort")),
+							Student.getStudentModel());
 					StudentLogin.getServerService().send(irc);
 				}
 			} catch (Exception e) {
@@ -59,7 +60,8 @@ public class RequestAcceptedCommandHandler implements ICommandHandler {
 					IntercomRequestCommand irc = new IntercomRequestCommand(
 							InetAddress.getLocalHost().getHostAddress(),
 							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")), Student.getStudentModel());
+									.getParam("serverPort")),
+							Student.getStudentModel());
 					StudentLogin.getServerService().send(irc);
 				}
 			} catch (Exception e) {

@@ -6,12 +6,13 @@ import com.jajeem.events.SurveyEvent;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.exception.JajeemExcetionHandler;
 
-public class SendSurveyResponseCommandHandler implements ICommandHandler{
+public class SendSurveyResponseCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		SendSurveyResponseCommand command = (SendSurveyResponseCommand)cmd;
-		JajeemExcetionHandler.logMessage("Surevey Response Received from "+command.getFrom());
+		SendSurveyResponseCommand command = (SendSurveyResponseCommand) cmd;
+		JajeemExcetionHandler.logMessage("Surevey Response Received from "
+				+ command.getFrom());
 		SurveyResponse resp = command.getEvent();
 		new SurveyEvent().fireResponseEvent(resp);
 	}

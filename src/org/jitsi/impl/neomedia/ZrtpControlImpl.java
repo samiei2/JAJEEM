@@ -6,406 +6,406 @@
  */
 package org.jitsi.impl.neomedia;
 
-import gnu.java.zrtp.*;
-import gnu.java.zrtp.utils.*;
+import gnu.java.zrtp.ZrtpCodes;
+import gnu.java.zrtp.utils.ZrtpUtils;
 
-import java.util.*;
+import java.util.EnumSet;
 
-import org.jitsi.impl.neomedia.transform.zrtp.*;
-import org.jitsi.service.neomedia.*;
-import org.jitsi.service.neomedia.event.*;
+import org.jitsi.impl.neomedia.transform.zrtp.SecurityEventManager;
+import org.jitsi.impl.neomedia.transform.zrtp.ZRTPTransformEngine;
+import org.jitsi.service.neomedia.MediaType;
+import org.jitsi.service.neomedia.SrtpControl;
+import org.jitsi.service.neomedia.ZrtpControl;
+import org.jitsi.service.neomedia.event.SrtpListener;
 
 /**
  * Controls zrtp in the MediaStream.
- *
+ * 
  * @author Damian Minkov
  */
-public class ZrtpControlImpl
-    implements ZrtpControl
-{
-    /**
-     * The listener interested in security events about zrtp.
-     */
-    private SrtpListener zrtpListener = null;
+public class ZrtpControlImpl implements ZrtpControl {
+	/**
+	 * The listener interested in security events about zrtp.
+	 */
+	private SrtpListener zrtpListener = null;
 
-    /**
-     * Additional info codes for and data to support ZRTP4J.
-     * These could be added to the library. However they are specific for this
-     * implementation, needing them for various GUI changes.
-     */
-    public static enum ZRTPCustomInfoCodes
-    {
-        ZRTPNotEnabledByUser,
-        ZRTPDisabledByCallEnd,
-        ZRTPEngineInitFailure,
-        ZRTPEnabledByDefault
-    }
+	/**
+	 * Additional info codes for and data to support ZRTP4J. These could be
+	 * added to the library. However they are specific for this implementation,
+	 * needing them for various GUI changes.
+	 */
+	public static enum ZRTPCustomInfoCodes {
+		ZRTPNotEnabledByUser, ZRTPDisabledByCallEnd, ZRTPEngineInitFailure, ZRTPEnabledByDefault
+	}
 
-    /**
-     * The zrtp engine control by this ZrtpControl.
-     */
-    private ZRTPTransformEngine zrtpEngine = null;
+	/**
+	 * The zrtp engine control by this ZrtpControl.
+	 */
+	private ZRTPTransformEngine zrtpEngine = null;
 
-    /**
-     * This is the connector, required to send ZRTP packets
-     * via the DatagramSocket.
-     */
-    private AbstractRTPConnector zrtpConnector = null;
+	/**
+	 * This is the connector, required to send ZRTP packets via the
+	 * DatagramSocket.
+	 */
+	private AbstractRTPConnector zrtpConnector = null;
 
-    /**
-     * Whether current is master session.
-     */
-    private boolean masterSession = false;
+	/**
+	 * Whether current is master session.
+	 */
+	private boolean masterSession = false;
 
-    /**
-     * Creates the control.
-     */
-    ZrtpControlImpl()
-    {
-    }
+	/**
+	 * Creates the control.
+	 */
+	ZrtpControlImpl() {
+	}
 
-    /**
-     * Cleans up the current zrtp control and its engine.
-     */
-    public void cleanup()
-    {
-        if(zrtpEngine != null)
-        {
-            zrtpEngine.stopZrtp();
-            zrtpEngine.cleanup();
-        }
+	/**
+	 * Cleans up the current zrtp control and its engine.
+	 */
+	@Override
+	public void cleanup() {
+		if (zrtpEngine != null) {
+			zrtpEngine.stopZrtp();
+			zrtpEngine.cleanup();
+		}
 
-        zrtpEngine = null;
-        zrtpConnector = null;
-    }
+		zrtpEngine = null;
+		zrtpConnector = null;
+	}
 
-    /**
-     * Sets a <tt>ZrtpListener</tt> that will listen for zrtp security events.
-     *
-     * @param zrtpListener the <tt>ZrtpListener</tt> to set
-     */
-    public void setSrtpListener(SrtpListener zrtpListener)
-    {
-        this.zrtpListener = zrtpListener;
-    }
+	/**
+	 * Sets a <tt>ZrtpListener</tt> that will listen for zrtp security events.
+	 * 
+	 * @param zrtpListener
+	 *            the <tt>ZrtpListener</tt> to set
+	 */
+	@Override
+	public void setSrtpListener(SrtpListener zrtpListener) {
+		this.zrtpListener = zrtpListener;
+	}
 
-    /**
-     * Returns the <tt>ZrtpListener</tt> which listens for security events.
-     *
-     * @return the <tt>ZrtpListener</tt> which listens for  security events
-     */
-    public SrtpListener getSrtpListener()
-    {
-        return this.zrtpListener;
-    }
+	/**
+	 * Returns the <tt>ZrtpListener</tt> which listens for security events.
+	 * 
+	 * @return the <tt>ZrtpListener</tt> which listens for security events
+	 */
+	@Override
+	public SrtpListener getSrtpListener() {
+		return this.zrtpListener;
+	}
 
-    /**
-     * Method for getting the default secure status value for communication
-     *
-     * @return the default enabled/disabled status value for secure
-     * communication
-     */
-    public boolean getSecureCommunicationStatus()
-    {
-        return
-            (zrtpEngine != null) && zrtpEngine.getSecureCommunicationStatus();
-    }
+	/**
+	 * Method for getting the default secure status value for communication
+	 * 
+	 * @return the default enabled/disabled status value for secure
+	 *         communication
+	 */
+	@Override
+	public boolean getSecureCommunicationStatus() {
+		return (zrtpEngine != null)
+				&& zrtpEngine.getSecureCommunicationStatus();
+	}
 
-    /**
-     * Sets the SAS verification
-     *
-     * @param verified the new SAS verification status
-     */
-    public void setSASVerification(boolean verified)
-    {
-        ZRTPTransformEngine engine = getTransformEngine();
+	/**
+	 * Sets the SAS verification
+	 * 
+	 * @param verified
+	 *            the new SAS verification status
+	 */
+	@Override
+	public void setSASVerification(boolean verified) {
+		ZRTPTransformEngine engine = getTransformEngine();
 
-        if (verified)
-            engine.SASVerified();
-        else
-            engine.resetSASVerified();
-    }
+		if (verified) {
+			engine.SASVerified();
+		} else {
+			engine.resetSASVerified();
+		}
+	}
 
-    /**
-     * Returns the zrtp engine currently used by this stream.
-     * @return the zrtp engine
-     */
-    public ZRTPTransformEngine getTransformEngine()
-    {
-        if(zrtpEngine == null)
-        {
-            zrtpEngine = new ZRTPTransformEngine();
+	/**
+	 * Returns the zrtp engine currently used by this stream.
+	 * 
+	 * @return the zrtp engine
+	 */
+	@Override
+	public ZRTPTransformEngine getTransformEngine() {
+		if (zrtpEngine == null) {
+			zrtpEngine = new ZRTPTransformEngine();
 
-            // NOTE: set paranoid mode before initializing
-            // zrtpEngine.setParanoidMode(paranoidMode);
-            zrtpEngine.initialize(
-                    "GNUZRTP4J.zid",
-                    false,
-                    ZrtpConfigureUtils.getZrtpConfiguration());
-            zrtpEngine.setUserCallback(new SecurityEventManager(this));
-        }
-        return zrtpEngine;
-    }
+			// NOTE: set paranoid mode before initializing
+			// zrtpEngine.setParanoidMode(paranoidMode);
+			zrtpEngine.initialize("GNUZRTP4J.zid", false,
+					ZrtpConfigureUtils.getZrtpConfiguration());
+			zrtpEngine.setUserCallback(new SecurityEventManager(this));
+		}
+		return zrtpEngine;
+	}
 
-    /**
-     * When in multistream mode, enables the master session.
-     * @param masterSession whether current control, controls the master session.
-     */
-    public void setMasterSession(boolean masterSession)
-    {
-        // by default its not master, change only if set to be master
-        // sometimes (jingle) streams are re-initing and
-        // we must reuse old value (true) event that false is submitted
-        if(masterSession)
-            this.masterSession = masterSession;
-    }
+	/**
+	 * When in multistream mode, enables the master session.
+	 * 
+	 * @param masterSession
+	 *            whether current control, controls the master session.
+	 */
+	@Override
+	public void setMasterSession(boolean masterSession) {
+		// by default its not master, change only if set to be master
+		// sometimes (jingle) streams are re-initing and
+		// we must reuse old value (true) event that false is submitted
+		if (masterSession) {
+			this.masterSession = masterSession;
+		}
+	}
 
-    /**
-     * Starts and enables zrtp in the stream holding this control.
-     * @param mediaType the media type of the stream this control controls.
-     */
-    public void start(MediaType mediaType)
-    {
-        boolean zrtpAutoStart;
+	/**
+	 * Starts and enables zrtp in the stream holding this control.
+	 * 
+	 * @param mediaType
+	 *            the media type of the stream this control controls.
+	 */
+	@Override
+	public void start(MediaType mediaType) {
+		boolean zrtpAutoStart;
 
-        // ZRTP engine initialization
-        ZRTPTransformEngine engine = getTransformEngine();
-        // Create security user callback for each peer.
-        SecurityEventManager securityEventManager = engine.getUserCallback();
+		// ZRTP engine initialization
+		ZRTPTransformEngine engine = getTransformEngine();
+		// Create security user callback for each peer.
+		SecurityEventManager securityEventManager = engine.getUserCallback();
 
-        // Decide if this will become the ZRTP Master session:
-        // - Statement: audio media session will be started before video
-        //   media session
-        // - if no other audio session was started before then this will
-        //   become
-        //   ZRTP Master session
-        // - only the ZRTP master sessions start in "auto-sensing" mode
-        //   to immediately catch ZRTP communication from other client
-        // - after the master session has completed its key negotiation
-        //   it will start other media sessions (see SCCallback)
-        if (masterSession)
-        {
-            zrtpAutoStart = true;
-            securityEventManager.setDHSession(true);
+		// Decide if this will become the ZRTP Master session:
+		// - Statement: audio media session will be started before video
+		// media session
+		// - if no other audio session was started before then this will
+		// become
+		// ZRTP Master session
+		// - only the ZRTP master sessions start in "auto-sensing" mode
+		// to immediately catch ZRTP communication from other client
+		// - after the master session has completed its key negotiation
+		// it will start other media sessions (see SCCallback)
+		if (masterSession) {
+			zrtpAutoStart = true;
+			securityEventManager.setDHSession(true);
 
-            // we know that audio is considered as master for zrtp
-            securityEventManager.setSessionType(
-                mediaType.equals(MediaType.AUDIO) ?
-                    SecurityEventManager.AUDIO_SESSION
-                    : SecurityEventManager.VIDEO_SESSION
-            );
-        }
-        else
-        {
-            // check whether video was not already started
-            // it may happen when using multistreams, audio has inited
-            // and started video
-            // initially engine has value enableZrtp = false
-            zrtpAutoStart = zrtpEngine.isEnableZrtp();
-            securityEventManager.setSessionType(
-                mediaType.equals(MediaType.AUDIO) ?
-                    SecurityEventManager.AUDIO_SESSION
-                    : SecurityEventManager.VIDEO_SESSION);
-        }
-        engine.setConnector(zrtpConnector);
+			// we know that audio is considered as master for zrtp
+			securityEventManager
+					.setSessionType(mediaType.equals(MediaType.AUDIO) ? SecurityEventManager.AUDIO_SESSION
+							: SecurityEventManager.VIDEO_SESSION);
+		} else {
+			// check whether video was not already started
+			// it may happen when using multistreams, audio has inited
+			// and started video
+			// initially engine has value enableZrtp = false
+			zrtpAutoStart = zrtpEngine.isEnableZrtp();
+			securityEventManager
+					.setSessionType(mediaType.equals(MediaType.AUDIO) ? SecurityEventManager.AUDIO_SESSION
+							: SecurityEventManager.VIDEO_SESSION);
+		}
+		engine.setConnector(zrtpConnector);
 
-        securityEventManager.setSrtpListener(zrtpListener);
+		securityEventManager.setSrtpListener(zrtpListener);
 
-        // tells the engine whether to autostart(enable)
-        // zrtp communication, if false it just passes packets without
-        // transformation
-        engine.setEnableZrtp(zrtpAutoStart);
+		// tells the engine whether to autostart(enable)
+		// zrtp communication, if false it just passes packets without
+		// transformation
+		engine.setEnableZrtp(zrtpAutoStart);
 
-        engine.sendInfo(
-            ZrtpCodes.MessageSeverity.Info,
-            EnumSet.of(
-                    ZRTPCustomInfoCodes.ZRTPEnabledByDefault));
-    }
+		engine.sendInfo(ZrtpCodes.MessageSeverity.Info,
+				EnumSet.of(ZRTPCustomInfoCodes.ZRTPEnabledByDefault));
+	}
 
-    /**
-     * Start multi-stream ZRTP sessions.
-     *
-     * After the ZRTP Master (DH) session reached secure state the SCCallback
-     * calls this method to start the multi-stream ZRTP sessions.
-     *
-     * enable auto-start mode (auto-sensing) to the engine.
-     * @param master master SRTP data
-     */
-    public void setMultistream(SrtpControl master)
-    {
-        if(master == null || master == this)
-            return;
+	/**
+	 * Start multi-stream ZRTP sessions.
+	 * 
+	 * After the ZRTP Master (DH) session reached secure state the SCCallback
+	 * calls this method to start the multi-stream ZRTP sessions.
+	 * 
+	 * enable auto-start mode (auto-sensing) to the engine.
+	 * 
+	 * @param master
+	 *            master SRTP data
+	 */
+	@Override
+	public void setMultistream(SrtpControl master) {
+		if (master == null || master == this) {
+			return;
+		}
 
-        if(!(master instanceof ZrtpControlImpl))
-            throw new IllegalArgumentException("master is no ZRTP control");
+		if (!(master instanceof ZrtpControlImpl)) {
+			throw new IllegalArgumentException("master is no ZRTP control");
+		}
 
-        ZRTPTransformEngine engine = getTransformEngine();
+		ZRTPTransformEngine engine = getTransformEngine();
 
-        engine.setMultiStrParams(((ZrtpControlImpl) master)
-            .getTransformEngine().getMultiStrParams());
-        engine.setEnableZrtp(true);
-    }
+		engine.setMultiStrParams(((ZrtpControlImpl) master)
+				.getTransformEngine().getMultiStrParams());
+		engine.setEnableZrtp(true);
+	}
 
-    /**
-     * Return the zrtp hello hash String.
-     *
-     * @param  index
-     *         Hello hash of the Hello packet identfied by index. Index must
-     *         be 0 <= index < SUPPORTED_ZRTP_VERSIONS.
-     * @return String the zrtp hello hash.
-     */
-    public String getHelloHash(int index)
-    {
-        return getTransformEngine().getHelloHash(index);
-    }
+	/**
+	 * Return the zrtp hello hash String.
+	 * 
+	 * @param index
+	 *            Hello hash of the Hello packet identfied by index. Index must
+	 *            be 0 <= index < SUPPORTED_ZRTP_VERSIONS.
+	 * @return String the zrtp hello hash.
+	 */
+	@Override
+	public String getHelloHash(int index) {
+		return getTransformEngine().getHelloHash(index);
+	}
 
-    /**
-     * Get the ZRTP Hello Hash data - separate strings.
-     *
-     * @param  index
-     *         Hello hash of the Hello packet identfied by index. Index must
-     *         be 0 <= index < SUPPORTED_ZRTP_VERSIONS.
-     * @return String array containing the version string at offset 0, the Hello
-     *         hash value as hex-digits at offset 1. Hello hash is available
-     *         immediately after class instantiation. Returns <code>null</code>
-     *         if ZRTP is not available.
-     */
-    public String[] getHelloHashSep(int index)
-    {
-        return getTransformEngine().getHelloHashSep(index);
-    }
+	/**
+	 * Get the ZRTP Hello Hash data - separate strings.
+	 * 
+	 * @param index
+	 *            Hello hash of the Hello packet identfied by index. Index must
+	 *            be 0 <= index < SUPPORTED_ZRTP_VERSIONS.
+	 * @return String array containing the version string at offset 0, the Hello
+	 *         hash value as hex-digits at offset 1. Hello hash is available
+	 *         immediately after class instantiation. Returns <code>null</code>
+	 *         if ZRTP is not available.
+	 */
+	@Override
+	public String[] getHelloHashSep(int index) {
+		return getTransformEngine().getHelloHashSep(index);
+	}
 
-    /**
-     * Get the peer's Hello Hash data.
-     *
-     * Use this method to get the peer's Hello Hash data. The method returns the
-     * data as a string.
-     *
-     * @return a String containing the Hello hash value as hex-digits.
-     *         Peer Hello hash is available after we received a Hello packet
-     *         from our peer. If peer's hello hash is not available return null.
-     */
-    public String getPeerHelloHash() {
-        if (zrtpEngine != null)
-            return zrtpEngine.getPeerHelloHash();
-        else
-            return new String();
-    }
+	/**
+	 * Get the peer's Hello Hash data.
+	 * 
+	 * Use this method to get the peer's Hello Hash data. The method returns the
+	 * data as a string.
+	 * 
+	 * @return a String containing the Hello hash value as hex-digits. Peer
+	 *         Hello hash is available after we received a Hello packet from our
+	 *         peer. If peer's hello hash is not available return null.
+	 */
+	@Override
+	public String getPeerHelloHash() {
+		if (zrtpEngine != null) {
+			return zrtpEngine.getPeerHelloHash();
+		} else {
+			return new String();
+		}
+	}
 
-    /**
-     * Get number of supported ZRTP protocol versions.
-     *
-     * @return the number of supported ZRTP protocol versions.
-     */
-    public int getNumberSupportedVersions()
-    {
-        return ((zrtpEngine != null) ? zrtpEngine.getNumberSupportedVersions(): 0);
-    }
+	/**
+	 * Get number of supported ZRTP protocol versions.
+	 * 
+	 * @return the number of supported ZRTP protocol versions.
+	 */
+	@Override
+	public int getNumberSupportedVersions() {
+		return ((zrtpEngine != null) ? zrtpEngine.getNumberSupportedVersions()
+				: 0);
+	}
 
-    /**
-     * Get negotiated ZRTP protocol version.
-     *
-     * @return the integer representation of the negotiated ZRTP protocol version.
-     */
-    public int getCurrentProtocolVersion()
-    {
-        return ((zrtpEngine != null) ? zrtpEngine.getCurrentProtocolVersion() : 0);
-    }
+	/**
+	 * Get negotiated ZRTP protocol version.
+	 * 
+	 * @return the integer representation of the negotiated ZRTP protocol
+	 *         version.
+	 */
+	@Override
+	public int getCurrentProtocolVersion() {
+		return ((zrtpEngine != null) ? zrtpEngine.getCurrentProtocolVersion()
+				: 0);
+	}
 
-    /**
-     * Sets the <tt>RTPConnector</tt> which is to use or uses this ZRTP engine.
-     *
-     * @param connector the <tt>RTPConnector</tt> which is to use or uses this
-     * ZRTP engine
-     */
-    public void setConnector(AbstractRTPConnector connector)
-    {
-        zrtpConnector = connector;
-    }
+	/**
+	 * Sets the <tt>RTPConnector</tt> which is to use or uses this ZRTP engine.
+	 * 
+	 * @param connector
+	 *            the <tt>RTPConnector</tt> which is to use or uses this ZRTP
+	 *            engine
+	 */
+	@Override
+	public void setConnector(AbstractRTPConnector connector) {
+		zrtpConnector = connector;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * net.java.sip.communicator.service.neomedia.ZrtpControl#getSecurityString
-     * ()
-     */
-    public String getSecurityString()
-    {
-        return getTransformEngine().getUserCallback().getSecurityString();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.java.sip.communicator.service.neomedia.ZrtpControl#getSecurityString
+	 * ()
+	 */
+	@Override
+	public String getSecurityString() {
+		return getTransformEngine().getUserCallback().getSecurityString();
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * net.java.sip.communicator.service.neomedia.ZrtpControl#getCiperString
-     * ()
-     */
-    public String getCipherString()
-    {
-        return getTransformEngine().getUserCallback().getCipherString();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.java.sip.communicator.service.neomedia.ZrtpControl#getCiperString ()
+	 */
+	@Override
+	public String getCipherString() {
+		return getTransformEngine().getUserCallback().getCipherString();
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * net.java.sip.communicator.service.neomedia.ZrtpControl#isSecurityVerified
-     * ()
-     */
-    public boolean isSecurityVerified()
-    {
-        return getTransformEngine().getUserCallback().isSecurityVerified();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.java.sip.communicator.service.neomedia.ZrtpControl#isSecurityVerified
+	 * ()
+	 */
+	@Override
+	public boolean isSecurityVerified() {
+		return getTransformEngine().getUserCallback().isSecurityVerified();
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * net.java.sip.communicator.service.neomedia.ZrtpControl#getPeerZid
-     * ()
-     */
-    public byte[] getPeerZid()
-    {
-        return getTransformEngine().getPeerZid();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.java.sip.communicator.service.neomedia.ZrtpControl#getPeerZid ()
+	 */
+	@Override
+	public byte[] getPeerZid() {
+		return getTransformEngine().getPeerZid();
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * net.java.sip.communicator.service.neomedia.ZrtpControl#getPeerZidString
-     * ()
-     */
-    public String getPeerZidString()
-    {
-        byte[] zid = getPeerZid();
-        String s = new String(ZrtpUtils.bytesToHexString(zid, zid.length));
-        return s;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.java.sip.communicator.service.neomedia.ZrtpControl#getPeerZidString
+	 * ()
+	 */
+	@Override
+	public String getPeerZidString() {
+		byte[] zid = getPeerZid();
+		String s = new String(ZrtpUtils.bytesToHexString(zid, zid.length));
+		return s;
+	}
 
-    /**
-     * Returns false, ZRTP exchanges is keys over the media path.
-     *
-     * @return false
-     */
-    public boolean requiresSecureSignalingTransport()
-    {
-        return false;
-    }
+	/**
+	 * Returns false, ZRTP exchanges is keys over the media path.
+	 * 
+	 * @return false
+	 */
+	@Override
+	public boolean requiresSecureSignalingTransport() {
+		return false;
+	}
 
-    /**
-     * Returns the timeout value that will we will wait
-     * and fire timeout secure event if call is not secured.
-     * The value is in milliseconds.
-     * @return the timeout value that will we will wait
-     *  and fire timeout secure event if call is not secured.
-     */
-    public long getTimeoutValue()
-    {
-        // this is the default value as mentioned in rfc6189
-        // we will later grab this setting from zrtp
-        return 3750;
-    }
+	/**
+	 * Returns the timeout value that will we will wait and fire timeout secure
+	 * event if call is not secured. The value is in milliseconds.
+	 * 
+	 * @return the timeout value that will we will wait and fire timeout secure
+	 *         event if call is not secured.
+	 */
+	@Override
+	public long getTimeoutValue() {
+		// this is the default value as mentioned in rfc6189
+		// we will later grab this setting from zrtp
+		return 3750;
+	}
 }

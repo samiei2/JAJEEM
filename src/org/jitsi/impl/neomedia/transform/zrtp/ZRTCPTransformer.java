@@ -6,95 +6,92 @@
  */
 package org.jitsi.impl.neomedia.transform.zrtp;
 
-import org.jitsi.impl.neomedia.*;
-import org.jitsi.impl.neomedia.transform.*;
+import org.jitsi.impl.neomedia.RawPacket;
+import org.jitsi.impl.neomedia.transform.PacketTransformer;
 
 /**
  * PacketTransformer that delegates the forward/reverse transformation of
  * packets to different packet transformers.
- *
+ * 
  * @author Werner Dittmann <Werner.Dittmann@t-online.de>
  */
-public class ZRTCPTransformer
-    implements PacketTransformer
-{
-    /**
-     * We support different SRTCP contexts for input and output traffic:
-     *
-     * Transform() uses the srtcpOut to perform encryption
-     * reverseTransform() uses srtcpIn to perform decryption
-     */
-    private PacketTransformer srtcpIn = null;
-    private PacketTransformer srtcpOut = null;
+public class ZRTCPTransformer implements PacketTransformer {
+	/**
+	 * We support different SRTCP contexts for input and output traffic:
+	 * 
+	 * Transform() uses the srtcpOut to perform encryption reverseTransform()
+	 * uses srtcpIn to perform decryption
+	 */
+	private PacketTransformer srtcpIn = null;
+	private PacketTransformer srtcpOut = null;
 
-    /**
-     * Close the transformer engine.
-     *
-     * The close functions closes all stored default crypto contexts. This deletes key data
-     * and forces a cleanup of the crypto contexts.
-     */
-    public void close()
-    {
-        if (srtcpOut != null)
-        {
-            srtcpOut.close();
-            srtcpOut = null;
-        }
-        if (srtcpIn != null)
-        {
-            srtcpIn.close();
-            srtcpIn = null;
-        }
-    }
-    /**
-     * Encrypt a SRTCP packet
-     *
-     * Currently SRTCP packet encryption / decryption is not supported
-     * So this method does not change the packet content
-     *
-     * @param pkt plain SRTCP packet to be encrypted
-     * @return encrypted SRTCP packet
-     */
-    public RawPacket transform(RawPacket pkt)
-    {
-        if (srtcpOut == null)
-        {
-            return pkt;
-        }
-        return srtcpOut.transform(pkt);
-    }
+	/**
+	 * Close the transformer engine.
+	 * 
+	 * The close functions closes all stored default crypto contexts. This
+	 * deletes key data and forces a cleanup of the crypto contexts.
+	 */
+	@Override
+	public void close() {
+		if (srtcpOut != null) {
+			srtcpOut.close();
+			srtcpOut = null;
+		}
+		if (srtcpIn != null) {
+			srtcpIn.close();
+			srtcpIn = null;
+		}
+	}
 
-    /**
-     * Decrypt a SRTCP packet
-     *
-     * Currently SRTCP packet encryption / decryption is not supported
-     * So this method does not change the packet content
-     *
-     * @param pkt encrypted SRTCP packet to be decrypted
-     * @return decrypted SRTCP packet
-     */
-    public RawPacket reverseTransform(RawPacket pkt)
-    {
-        if (srtcpIn == null)
-        {
-            return pkt;
-        }
-        return srtcpIn.reverseTransform(pkt);
-    }
+	/**
+	 * Encrypt a SRTCP packet
+	 * 
+	 * Currently SRTCP packet encryption / decryption is not supported So this
+	 * method does not change the packet content
+	 * 
+	 * @param pkt
+	 *            plain SRTCP packet to be encrypted
+	 * @return encrypted SRTCP packet
+	 */
+	@Override
+	public RawPacket transform(RawPacket pkt) {
+		if (srtcpOut == null) {
+			return pkt;
+		}
+		return srtcpOut.transform(pkt);
+	}
 
-    /**
-     * @param srtcpIn the srtcpIn to set
-     */
-    public void setSrtcpIn(PacketTransformer srtcpIn)
-    {
-        this.srtcpIn = srtcpIn;
-    }
+	/**
+	 * Decrypt a SRTCP packet
+	 * 
+	 * Currently SRTCP packet encryption / decryption is not supported So this
+	 * method does not change the packet content
+	 * 
+	 * @param pkt
+	 *            encrypted SRTCP packet to be decrypted
+	 * @return decrypted SRTCP packet
+	 */
+	@Override
+	public RawPacket reverseTransform(RawPacket pkt) {
+		if (srtcpIn == null) {
+			return pkt;
+		}
+		return srtcpIn.reverseTransform(pkt);
+	}
 
-    /**
-     * @param srtcpOut the srtcpOut to set
-     */
-    public void setSrtcpOut(PacketTransformer srtcpOut)
-    {
-        this.srtcpOut = srtcpOut;
-    }
+	/**
+	 * @param srtcpIn
+	 *            the srtcpIn to set
+	 */
+	public void setSrtcpIn(PacketTransformer srtcpIn) {
+		this.srtcpIn = srtcpIn;
+	}
+
+	/**
+	 * @param srtcpOut
+	 *            the srtcpOut to set
+	 */
+	public void setSrtcpOut(PacketTransformer srtcpOut) {
+		this.srtcpOut = srtcpOut;
+	}
 }

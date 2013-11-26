@@ -6,32 +6,29 @@
  */
 package net.java.sip.communicator.impl.protocol.jabber.extensions.jingle;
 
-import net.java.sip.communicator.impl.protocol.jabber.extensions.*;
+import net.java.sip.communicator.impl.protocol.jabber.extensions.AbstractPacketExtension;
 
 /**
  * Represents the content <tt>inputevt</tt> element that may be find in
  * <tt>content</tt> part of a Jingle media negociation.
- *
+ * 
  * @author Sebastien Vincent
  */
-public class InputEvtPacketExtension extends AbstractPacketExtension
-{
-    /**
-     * Name of the XML element representing the extension.
-     */
-    public final static String ELEMENT_NAME = "inputevt";
+public class InputEvtPacketExtension extends AbstractPacketExtension {
+	/**
+	 * Name of the XML element representing the extension.
+	 */
+	public final static String ELEMENT_NAME = "inputevt";
 
-    /**
-     * Namespace..
-     */
-    public final static String NAMESPACE =
-        "http://jitsi.org/protocol/inputevt";
+	/**
+	 * Namespace..
+	 */
+	public final static String NAMESPACE = "http://jitsi.org/protocol/inputevt";
 
-    /**
-     * Constructs a new <tt>inputevt</tt> extension.
-     */
-    public InputEvtPacketExtension()
-    {
-        super(NAMESPACE, ELEMENT_NAME);
-    }
+	/**
+	 * Constructs a new <tt>inputevt</tt> extension.
+	 */
+	public InputEvtPacketExtension() {
+		super(NAMESPACE, ELEMENT_NAME);
+	}
 }

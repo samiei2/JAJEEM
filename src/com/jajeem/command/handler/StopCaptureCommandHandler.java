@@ -7,7 +7,7 @@ public class StopCaptureCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) {
-		
+
 		VNCCaptureService vnc = new VNCCaptureService();
 		vnc.stopServer();
 	}

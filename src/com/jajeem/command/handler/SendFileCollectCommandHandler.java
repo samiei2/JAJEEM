@@ -22,31 +22,35 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 		try {
 			String myDocuments = null;
 
-	    	try {
-	    	    Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-	    	    p.waitFor();
+			try {
+				Process p = Runtime
+						.getRuntime()
+						.exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+				p.waitFor();
 
-	    	    InputStream in = p.getInputStream();
-	    	    byte[] b = new byte[in.available()];
-	    	    in.read(b);
-	    	    in.close();
+				InputStream in = p.getInputStream();
+				byte[] b = new byte[in.available()];
+				in.read(b);
+				in.close();
 
-	    	    myDocuments = new String(b);
-	    	    myDocuments = myDocuments.split("\\s\\s+")[4];
+				myDocuments = new String(b);
+				myDocuments = myDocuments.split("\\s\\s+")[4];
 
-	    	} catch(Throwable t) {
-	    	    t.printStackTrace();
-	    	}
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
 
-	    	System.out.println(myDocuments);
+			System.out.println(myDocuments);
 			String outboxPath = FileUtil.getOutboxPath();
 			File file = new File(outboxPath);
-			if (!file.exists())
+			if (!file.exists()) {
 				file.mkdirs();
+			}
 			ArrayList<File> filesList = getDirectoryContent(file);
 			for (int i = 0; i < filesList.size(); i++) {
-				if(filesList.get(i).exists())
+				if (filesList.get(i).exists()) {
 					SendFileCollect(filesList.get(i), sendFileCommand.getFrom());
+				}
 			}
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
@@ -73,7 +77,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 		return list;
 	}
 
-	protected void SendFileCollect(final File file,final String server) {
+	protected void SendFileCollect(final File file, final String server) {
 		try {
 			Thread fileSender = new Thread(new Runnable() {
 
@@ -87,27 +91,33 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 						byte[] info = new byte[2048];
 						byte[] temp = file.getPath().getBytes();
 						int len = file.getPath().length();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 
 						len = file.getName().length();
 						temp = file.getName().getBytes();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 
 						FileInputStream inp = new FileInputStream(file);
 						len = String.valueOf(inp.available()).length();
 						temp = String.valueOf(inp.available()).getBytes();
-						for (int k = 0; k < len; k++)
+						for (int k = 0; k < len; k++) {
 							info[k] = temp[k];
-						for (int k = len; k < 2048; k++)
+						}
+						for (int k = len; k < 2048; k++) {
 							info[k] = 0x00;
+						}
 						out.write(info, 0, 2048);
 						inp.close();
 
@@ -121,7 +131,8 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 
 						System.out.println(file.getAbsolutePath() + " Sent");
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e, SendFileCollectCommandHandler.class);
+						JajeemExcetionHandler.logError(e,
+								SendFileCollectCommandHandler.class);
 						System.out.println(file.getAbsolutePath() + " Failed");
 					}
 				}

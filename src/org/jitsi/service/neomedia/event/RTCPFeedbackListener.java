@@ -9,19 +9,18 @@ package org.jitsi.service.neomedia.event;
 /**
  * Represents a listener of RTCP feedback messages such as PLI (Picture Loss
  * Indication) or FIR (Full Intra-frame Request).
- *
+ * 
  * @author Sebastien Vincent
  */
-public interface RTCPFeedbackListener
-{
-    /**
-     * Notifies this <tt>RTCPFeedbackListener</tt> that an RTCP feedback message
-     * has been received
-     *
-     * @param event an <tt>RTCPFeedbackEvent</tt> which specifies the details of
-     * the notification event such as the feedback message type and the payload
-     * type
-     */
-    public void rtcpFeedbackReceived(RTCPFeedbackEvent event);
+public interface RTCPFeedbackListener {
+	/**
+	 * Notifies this <tt>RTCPFeedbackListener</tt> that an RTCP feedback message
+	 * has been received
+	 * 
+	 * @param event
+	 *            an <tt>RTCPFeedbackEvent</tt> which specifies the details of
+	 *            the notification event such as the feedback message type and
+	 *            the payload type
+	 */
+	public void rtcpFeedbackReceived(RTCPFeedbackEvent event);
 }
-

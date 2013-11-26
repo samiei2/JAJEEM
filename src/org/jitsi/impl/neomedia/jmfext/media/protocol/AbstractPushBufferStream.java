@@ -6,54 +6,55 @@
  */
 package org.jitsi.impl.neomedia.jmfext.media.protocol;
 
-import javax.media.control.*;
-import javax.media.protocol.*;
+import javax.media.control.FormatControl;
+import javax.media.protocol.BufferTransferHandler;
+import javax.media.protocol.PushBufferDataSource;
+import javax.media.protocol.PushBufferStream;
 
 /**
  * Provides a base implementation of <tt>PushBufferStream</tt> in order to
  * facilitate implementers by taking care of boilerplate in the most common
  * cases.
- *
+ * 
  * @author Lyubomir Marinov
  */
-public abstract class AbstractPushBufferStream
-    extends AbstractBufferStream
-    implements PushBufferStream
-{
+public abstract class AbstractPushBufferStream extends AbstractBufferStream
+		implements PushBufferStream {
 
-    /**
-     * The <tt>BufferTransferHandler</tt> which is notified by this
-     * <tt>PushBufferStream</tt> when data is available for reading.
-     */
-    protected BufferTransferHandler transferHandler;
+	/**
+	 * The <tt>BufferTransferHandler</tt> which is notified by this
+	 * <tt>PushBufferStream</tt> when data is available for reading.
+	 */
+	protected BufferTransferHandler transferHandler;
 
-    /**
-     * Initializes a new <tt>AbstractPushBufferStream</tt> instance which is to
-     * have its <tt>Format</tt>-related information abstracted by a specific
-     * <tt>FormatControl</tt>.
-     *
-     * @param dataSource the <tt>PushBufferDataSource</tt> which is creating the
-     * new instance so that it becomes one of its <tt>streams</tt>
-     * @param formatControl the <tt>FormatControl</tt> which is to abstract the
-     * <tt>Format</tt>-related information of the new instance
-     */
-    protected AbstractPushBufferStream(
-            PushBufferDataSource dataSource,
-            FormatControl formatControl)
-    {
-        super(dataSource, formatControl);
-    }
+	/**
+	 * Initializes a new <tt>AbstractPushBufferStream</tt> instance which is to
+	 * have its <tt>Format</tt>-related information abstracted by a specific
+	 * <tt>FormatControl</tt>.
+	 * 
+	 * @param dataSource
+	 *            the <tt>PushBufferDataSource</tt> which is creating the new
+	 *            instance so that it becomes one of its <tt>streams</tt>
+	 * @param formatControl
+	 *            the <tt>FormatControl</tt> which is to abstract the
+	 *            <tt>Format</tt>-related information of the new instance
+	 */
+	protected AbstractPushBufferStream(PushBufferDataSource dataSource,
+			FormatControl formatControl) {
+		super(dataSource, formatControl);
+	}
 
-    /**
-     * Sets the <tt>BufferTransferHandler</tt> which is to be notified by this
-     * <tt>PushBufferStream</tt> when data is available for reading.
-     *
-     * @param transferHandler the <tt>BufferTransferHandler</tt> which is to be
-     * notified by this <tt>PushBufferStream</tt> when data is available for
-     * reading
-     */
-    public void setTransferHandler(BufferTransferHandler transferHandler)
-    {
-        this.transferHandler = transferHandler;
-    }
+	/**
+	 * Sets the <tt>BufferTransferHandler</tt> which is to be notified by this
+	 * <tt>PushBufferStream</tt> when data is available for reading.
+	 * 
+	 * @param transferHandler
+	 *            the <tt>BufferTransferHandler</tt> which is to be notified by
+	 *            this <tt>PushBufferStream</tt> when data is available for
+	 *            reading
+	 */
+	@Override
+	public void setTransferHandler(BufferTransferHandler transferHandler) {
+		this.transferHandler = transferHandler;
+	}
 }

@@ -1,7 +1,9 @@
 package com.jajeem.message.design;
 
 import info.clearthought.layout.TableLayout;
+import info.clearthought.layout.TableLayoutConstants;
 
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 import com.alee.extended.panel.CenterPanel;
 import com.alee.extended.panel.GroupPanel;
@@ -22,8 +25,6 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.exception.JajeemExcetionHandler;
 
-import java.awt.Toolkit;
-
 public class MessageReceive extends JDialog {
 
 	/**
@@ -31,8 +32,7 @@ public class MessageReceive extends JDialog {
 	 */
 	private static final long serialVersionUID = 6562220877713666056L;
 
-	private WebLabel messageLabel = new WebLabel("",
-			WebLabel.TRAILING);
+	private WebLabel messageLabel = new WebLabel("", WebLabel.TRAILING);
 	private ExampleDialog exampleDialog = new ExampleDialog(this);
 
 	/**
@@ -48,8 +48,9 @@ public class MessageReceive extends JDialog {
 	 * Create the dialog.
 	 */
 	public MessageReceive(String text, String name) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MessageReceive.class.getResource("/icons/menubar/message.png")));
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				MessageReceive.class.getResource("/icons/menubar/message.png")));
+
 		setMessageLabel(text);
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
@@ -58,7 +59,7 @@ public class MessageReceive extends JDialog {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
 		}
-		
+
 		setBounds(100, 100, 450, 300);
 
 		// Enabling dialog decoration
@@ -96,12 +97,15 @@ public class MessageReceive extends JDialog {
 
 		public ExampleDialog(Window owner) {
 			setIconImages(WebLookAndFeel.getImages());
-			setDefaultCloseOperation(WebDialog.DISPOSE_ON_CLOSE);
-//			setModal(true);
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			// setModal(true);
 
-			TableLayout layout = new TableLayout(new double[][] {
-					{ TableLayout.PREFERRED, TableLayout.FILL },
-					{ TableLayout.PREFERRED, TableLayout.PREFERRED } });
+			TableLayout layout = new TableLayout(
+					new double[][] {
+							{ TableLayoutConstants.PREFERRED,
+									TableLayoutConstants.FILL },
+							{ TableLayoutConstants.PREFERRED,
+									TableLayoutConstants.PREFERRED } });
 			layout.setHGap(5);
 			layout.setVGap(5);
 			WebPanel content = new WebPanel(layout);
@@ -112,6 +116,7 @@ public class MessageReceive extends JDialog {
 
 			WebButton okButton = new WebButton("Ok");
 			ActionListener listener = new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					dispose();
 				}

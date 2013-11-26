@@ -1,18 +1,24 @@
 package com.jajeem.util;
 
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.export.*;
-import net.sf.jasperreports.view.JasperViewer;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.HashMap;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class JasperReport {
 
-	public static void generate(String templateName, String outputName, String query) {
+	public static void generate(String templateName, String outputName,
+			String query) {
 		String fileName = FileUtil.getJapserTemplatesPath() + templateName
 				+ ".jasper";
 		String outFileName = FileUtil.getReportsPath() + outputName + ".pdf";
@@ -46,10 +52,10 @@ public class JasperReport {
 
 			// Export the PDF file
 			exporter.exportReport();
-			
+
 			JasperViewer jv = new JasperViewer(print, false);
-	        jv.setTitle("Classmate Report");
-	        jv.setVisible(true);
+			jv.setTitle("Classmate Report");
+			jv.setVisible(true);
 
 		} catch (JRException e) {
 			e.printStackTrace();

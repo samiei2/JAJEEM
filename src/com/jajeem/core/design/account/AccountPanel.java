@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
 
@@ -29,6 +29,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
@@ -39,7 +40,6 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.tabbedpane.WebTabbedPane;
@@ -83,6 +83,7 @@ public class AccountPanel extends WebFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					new Config();
@@ -114,7 +115,7 @@ public class AccountPanel extends WebFrame {
 
 		setTitle(i18n.getParam("My account" + " - "
 				+ instructorModel.getFullName()));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(200, 50, 800, 600);
 		contentPane = new WebPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -123,7 +124,7 @@ public class AccountPanel extends WebFrame {
 
 		loadData();
 
-		WebTabbedPane tabbedPane = new WebTabbedPane(JTabbedPane.TOP);
+		WebTabbedPane tabbedPane = new WebTabbedPane(SwingConstants.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
 		WebPanel courseTab = new WebPanel();
@@ -135,7 +136,7 @@ public class AccountPanel extends WebFrame {
 		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
 		studentTab.setLayout(new BorderLayout(0, 0));
 		studentTab.add(initStudent());
-		
+
 		setVisible(true);
 
 	}
@@ -199,9 +200,9 @@ public class AccountPanel extends WebFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
@@ -230,9 +231,9 @@ public class AccountPanel extends WebFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
@@ -254,9 +255,9 @@ public class AccountPanel extends WebFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!courseSelectionModel.isSelectionEmpty()) {
 					if (courseSelectionModel.getSelected().size() > 1) {
-						WebOptionPane.showMessageDialog(frame,
+						JOptionPane.showMessageDialog(frame,
 								"Please select one course.", "Message",
-								WebOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Course course = courseSelectionModel.getSelected().get(
 								0);
@@ -345,9 +346,8 @@ public class AccountPanel extends WebFrame {
 		courseSelectionModel = new EventSelectionModel<Course>(filterList);
 		courseTable.setSelectionModel(courseSelectionModel);
 		courseTable.setModel(model);
-		TableComparatorChooser<Course> tableSorter = TableComparatorChooser
-				.install(courseTable, sortedCourse,
-						TableComparatorChooser.SINGLE_COLUMN);
+		TableComparatorChooser.install(courseTable, sortedCourse,
+				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		MultiLineCellRenderer multiLineRenderer = new MultiLineCellRenderer(
 				SwingConstants.LEFT, SwingConstants.CENTER);
@@ -428,9 +428,8 @@ public class AccountPanel extends WebFrame {
 		studentSelectionModel = new EventSelectionModel<Student>(filterList);
 		studentTable.setSelectionModel(studentSelectionModel);
 		studentTable.setModel(model);
-		TableComparatorChooser<Student> tableSorter = TableComparatorChooser
-				.install(studentTable, sortedStudent,
-						TableComparatorChooser.SINGLE_COLUMN);
+		TableComparatorChooser.install(studentTable, sortedStudent,
+				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
@@ -442,53 +441,59 @@ public class AccountPanel extends WebFrame {
 	public class CourseTableFormat implements TableFormat<Course>,
 			WritableTableFormat<Course> {
 
+		@Override
 		public int getColumnCount() {
 			return 8;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
+				}
+				if (column == 1) {
 					return i18n.getParam("Course Name");
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Instructor Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Class Type");
-				else if (column == 4)
+				} else if (column == 4) {
 					return i18n.getParam("Level");
-				else if (column == 5)
+				} else if (column == 5) {
 					return i18n.getParam("Start Date");
-				else if (column == 6)
+				} else if (column == 6) {
 					return i18n.getParam("Sessions");
-				else if (column == 7)
+				} else if (column == 7) {
 					return i18n.getParam("Weekly Time");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Course course, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return course.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return course.getName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return course.getInstructor();
-			else if (column == 3)
+			} else if (column == 3) {
 				return course.getClassType();
-			else if (column == 4)
+			} else if (column == 4) {
 				return course.getLevel();
-			else if (column == 5) {
+			} else if (column == 5) {
 				Date startDate = new Date(course.getStartDate());
 				SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 				return dt.format(startDate);
-			} else if (column == 6)
+			} else if (column == 6) {
 				return course.getSession();
-			else if (column == 7) {
+			} else if (column == 7) {
 				ArrayList<String> daysCell = new ArrayList<String>();
 
 				for (int i = 0; i < 5; i++) {
@@ -536,20 +541,24 @@ public class AccountPanel extends WebFrame {
 	public class StudentTableFormat implements TableFormat<Student>,
 			WritableTableFormat<Student> {
 
+		@Override
 		public int getColumnCount() {
 			return 4;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
+				}
+				if (column == 1) {
 					return i18n.getParam("First name");
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Last Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Username");
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -557,16 +566,19 @@ public class AccountPanel extends WebFrame {
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Student student, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return student.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return student.getFirstName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return student.getLastName();
-			else if (column == 3)
+			} else if (column == 3) {
 				return student.getUsername();
+			}
 
 			throw new IllegalStateException();
 		}

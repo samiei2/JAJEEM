@@ -9,7 +9,7 @@ public class FinishedQuizCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		FinishedQuizCommand command = (FinishedQuizCommand)cmd;
+		FinishedQuizCommand command = (FinishedQuizCommand) cmd;
 		QuizFinished evt = new QuizFinished(this);
 		evt.setQuizRun(command.getRun());
 		new QuizEvent().fireQuizFinished(evt);

@@ -8,9 +8,9 @@ public class SetPowerCommandHandler implements ICommandHandler {
 	@SuppressWarnings("unused")
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		
+
 		String command = "";
-		
+
 		switch (((PowerCommand) cmd).getType()) {
 		case "turnOff":
 			command = "shutdown -s";

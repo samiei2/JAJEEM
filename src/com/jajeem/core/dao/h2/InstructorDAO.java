@@ -18,11 +18,12 @@ public class InstructorDAO implements IInstructorDAO {
 	Logger logger = Logger.getLogger(InstructorDAO.class);
 
 	public InstructorDAO() {
-		
+
 	}
 
 	@Override
-	public boolean authenticate(String username, char[] pass) throws SQLException {
+	public boolean authenticate(String username, char[] pass)
+			throws SQLException {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -67,20 +68,23 @@ public class InstructorDAO implements IInstructorDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -132,14 +136,16 @@ public class InstructorDAO implements IInstructorDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -177,20 +183,23 @@ public class InstructorDAO implements IInstructorDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -198,11 +207,11 @@ public class InstructorDAO implements IInstructorDAO {
 
 		return instructor;
 	}
-	
+
 	public Instructor getById(int id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		try {
 			con = BaseDAO.getConnection();
@@ -211,7 +220,6 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
 
 		Instructor instructor = null;
 		try {
@@ -225,26 +233,29 @@ public class InstructorDAO implements IInstructorDAO {
 				instructor.setUsername(rs.getString("username"));
 				instructor.setPassword(rs.getString("password"));
 				instructor.setLanguage(rs.getString("language"));
-			} 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -253,11 +264,10 @@ public class InstructorDAO implements IInstructorDAO {
 		return instructor;
 	}
 
-	
 	public Instructor get(String user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		Connection con = null;
 		try {
 			con = BaseDAO.getConnection();
@@ -266,7 +276,6 @@ public class InstructorDAO implements IInstructorDAO {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
 
 		Instructor instructor = null;
 		try {
@@ -280,26 +289,29 @@ public class InstructorDAO implements IInstructorDAO {
 				instructor.setUsername(rs.getString("username"));
 				instructor.setPassword(rs.getString("password"));
 				instructor.setLanguage(rs.getString("language"));
-			} 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -307,7 +319,7 @@ public class InstructorDAO implements IInstructorDAO {
 
 		return instructor;
 	}
-	
+
 	public ArrayList<Instructor> getByCourseId(int courseId)
 			throws SQLException {
 
@@ -341,20 +353,23 @@ public class InstructorDAO implements IInstructorDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -398,14 +413,16 @@ public class InstructorDAO implements IInstructorDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -442,14 +459,16 @@ public class InstructorDAO implements IInstructorDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -490,20 +509,23 @@ public class InstructorDAO implements IInstructorDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -512,5 +534,4 @@ public class InstructorDAO implements IInstructorDAO {
 		return allInstructors;
 	}
 
-	
 }

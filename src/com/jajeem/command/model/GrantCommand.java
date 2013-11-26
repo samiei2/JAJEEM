@@ -12,7 +12,8 @@ public class GrantCommand extends Command {
 	private boolean granted = false;
 	private Student student;
 
-	public GrantCommand(String from, String to, int port, boolean grant, Student stu) {
+	public GrantCommand(String from, String to, int port, boolean grant,
+			Student stu) {
 		super(from, to, port);
 
 		this.setGranted(grant);

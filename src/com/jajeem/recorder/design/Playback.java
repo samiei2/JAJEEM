@@ -36,6 +36,7 @@ public class Playback implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 
 		// make sure we have something to play
@@ -56,19 +57,18 @@ public class Playback implements Runnable {
 		AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
 		float rate = 44100.0f;
 		int channels = 2;
-		int frameSize = 4;
 		int sampleSize = 16;
 		boolean bigEndian = true;
 
 		AudioFormat format = new AudioFormat(encoding, rate, sampleSize,
 				channels, (sampleSize / 8) * channels, rate, bigEndian);
 
-		AudioInputStream playbackInputStream = AudioSystem
-				.getAudioInputStream(format, audioInputStream);
+		AudioInputStream playbackInputStream = AudioSystem.getAudioInputStream(
+				format, audioInputStream);
 
 		if (playbackInputStream == null) {
-			shutDown("Unable to convert stream of format "
-					+ audioInputStream + " to format " + format);
+			shutDown("Unable to convert stream of format " + audioInputStream
+					+ " to format " + format);
 			return;
 		}
 
@@ -109,8 +109,7 @@ public class Playback implements Runnable {
 				}
 				int numBytesRemaining = numBytesRead;
 				while (numBytesRemaining > 0) {
-					numBytesRemaining -= line.write(data, 0,
-							numBytesRemaining);
+					numBytesRemaining -= line.write(data, 0, numBytesRemaining);
 				}
 			} catch (Exception e) {
 				shutDown("Error during playback: " + e);

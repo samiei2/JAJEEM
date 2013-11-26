@@ -8,15 +8,14 @@ package org.jitsi.service.neomedia;
 
 /**
  * Represents a factory of <tt>StreamConnector</tt> instances.
- *
+ * 
  * @author Lyubomir Marinov
  */
-public interface StreamConnectorFactory
-{
-    /**
-     * Initializes a <tt>StreamConnector</tt> instance.
-     *
-     * @return a <tt>StreamConnector</tt> instance
-     */
-    public StreamConnector createStreamConnector();
+public interface StreamConnectorFactory {
+	/**
+	 * Initializes a <tt>StreamConnector</tt> instance.
+	 * 
+	 * @return a <tt>StreamConnector</tt> instance
+	 */
+	public StreamConnector createStreamConnector();
 }

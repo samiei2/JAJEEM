@@ -22,19 +22,19 @@ public class SessionDAO implements ISessionDAO {
 	Logger logger = Logger.getLogger(SessionDAO.class);
 
 	public SessionDAO() {
-		
+
 	}
 
 	@Override
 	public Session create(Session session) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Session (roomId, instructorId, attendantId, courseId, start, end) " +
-				" VALUES (?, ?, ? ,? ,? ,?);");
+		ps = con.prepareStatement("INSERT INTO Session (roomId, instructorId, attendantId, courseId, start, end) "
+				+ " VALUES (?, ?, ? ,? ,? ,?);");
 		ps.setInt(1, session.getRoom().getId());
 		ps.setInt(2, session.getInstructor().getId());
 		ps.setInt(3, session.getAttendant().getId());
@@ -69,14 +69,16 @@ public class SessionDAO implements ISessionDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -87,12 +89,12 @@ public class SessionDAO implements ISessionDAO {
 
 	@Override
 	public Session get(Session session) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Session WHERE Session.id = ?;");
 		ps.setInt(1, session.getId());
 
@@ -114,20 +116,23 @@ public class SessionDAO implements ISessionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -138,14 +143,14 @@ public class SessionDAO implements ISessionDAO {
 
 	@Override
 	public boolean update(Session session) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("UPDATE Session SET roomId=?, instructorId=?, attendantId=?, courseId=?, start=?, end=? WHERE id = ?");
-		
+
 		ps.setInt(1, session.getRoom().getId());
 		ps.setInt(2, session.getInstructor().getId());
 		ps.setInt(3, session.getAttendant().getId());
@@ -171,14 +176,16 @@ public class SessionDAO implements ISessionDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -189,12 +196,12 @@ public class SessionDAO implements ISessionDAO {
 
 	@Override
 	public boolean delete(Session session) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("DELETE FROM Session WHERE Session.id = ?;");
 		ps.setInt(1, session.getId());
 
@@ -215,14 +222,16 @@ public class SessionDAO implements ISessionDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -233,14 +242,14 @@ public class SessionDAO implements ISessionDAO {
 
 	@Override
 	public ArrayList<Session> list() throws SQLException {
-		
+
 		ArrayList<Session> allSessions = new ArrayList<>();
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Session");
 
 		try {
@@ -263,20 +272,23 @@ public class SessionDAO implements ISessionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

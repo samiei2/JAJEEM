@@ -10,10 +10,10 @@ public class Question implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// properties
-	private UUID id ;
+	private UUID id;
 	private int instructorId = -1;
 	private String title = "";
-	private UUID quizId ;
+	private UUID quizId;
 	private byte type = 0;
 	private int point = 0;
 	private String imagePath = "";
@@ -54,14 +54,15 @@ public class Question implements Serializable {
 		this.answer3 = toCopy.answer3;
 		this.answer4 = toCopy.answer4;
 		this.answer5 = toCopy.answer5;
-		
+
 		this.correctAnswer = new boolean[] { toCopy.correctAnswer[0],
 				toCopy.correctAnswer[1], toCopy.correctAnswer[2],
 				toCopy.correctAnswer[3], toCopy.correctAnswer[4] };
-		if(toCopy.studentAnswer != null)
-		this.studentAnswer = new boolean[] { toCopy.studentAnswer[0],
-				toCopy.studentAnswer[1], toCopy.studentAnswer[2],
-				toCopy.studentAnswer[3], toCopy.studentAnswer[4] };
+		if (toCopy.studentAnswer != null) {
+			this.studentAnswer = new boolean[] { toCopy.studentAnswer[0],
+					toCopy.studentAnswer[1], toCopy.studentAnswer[2],
+					toCopy.studentAnswer[3], toCopy.studentAnswer[4] };
+		}
 		this.studentTextAnswer = toCopy.studentTextAnswer;
 		this.validResponse = toCopy.validResponse;
 		this.response = new Response();

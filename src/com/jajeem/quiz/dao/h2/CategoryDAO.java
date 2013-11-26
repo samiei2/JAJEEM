@@ -18,7 +18,7 @@ public class CategoryDAO implements ICategoryDAO {
 	Logger logger = Logger.getLogger(QuestionDAO.class);
 
 	public CategoryDAO() {
-		
+
 	}
 
 	@Override
@@ -61,14 +61,16 @@ public class CategoryDAO implements ICategoryDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -77,6 +79,7 @@ public class CategoryDAO implements ICategoryDAO {
 		return category;
 	}
 
+	@Override
 	public Category get(Category category) throws SQLException {
 
 		PreparedStatement ps = null;
@@ -102,20 +105,23 @@ public class CategoryDAO implements ICategoryDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -154,14 +160,16 @@ public class CategoryDAO implements ICategoryDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -198,14 +206,16 @@ public class CategoryDAO implements ICategoryDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -241,20 +251,23 @@ public class CategoryDAO implements ICategoryDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.dao.IResponseDAO;
 import com.jajeem.survey.model.Response;
@@ -21,15 +19,13 @@ public class ResponseDAO implements IResponseDAO {
 	Logger logger = Logger.getLogger(ResponseDAO.class);
 
 	public ResponseDAO() {
-		
+
 	}
 
 	@Override
 	public Response create(Response response) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyResponse (runId, studentId, answer, bool1, bool2, bool3, bool4, bool5,iid, surveyQuestionId) "
@@ -44,9 +40,9 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setString(8, String.valueOf(response.getBoolAnswer()[4]));
 		ps.setObject(9, response.getId());
 		ps.setObject(10, response.getSurveyQuestionId());
-		
+
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -54,14 +50,16 @@ public class ResponseDAO implements IResponseDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -87,13 +85,17 @@ public class ResponseDAO implements IResponseDAO {
 				response.setRunId((UUID) rs.getObject("runId"));
 				response.setStudentId(rs.getInt("studentId"));
 				response.setAnswer(rs.getString("answer"));
-				boolean[] list = new boolean[]{
-						(rs.getString("bool1") != null && rs.getString("bool1") == "true")? true : false,
-						(rs.getString("bool2") != null && rs.getString("bool2") == "true")? true : false,
-						(rs.getString("bool3") != null && rs.getString("bool3") == "true")? true : false,
-						(rs.getString("bool4") != null && rs.getString("bool4") == "true")? true : false,
-						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
-				};
+				boolean[] list = new boolean[] {
+						(rs.getString("bool1") != null && rs.getString("bool1") == "true") ? true
+								: false,
+						(rs.getString("bool2") != null && rs.getString("bool2") == "true") ? true
+								: false,
+						(rs.getString("bool3") != null && rs.getString("bool3") == "true") ? true
+								: false,
+						(rs.getString("bool4") != null && rs.getString("bool4") == "true") ? true
+								: false,
+						(rs.getString("bool5") != null && rs.getString("bool5") == "true") ? true
+								: false };
 				response.setBoolAnswer(list);
 
 			} else {
@@ -105,20 +107,23 @@ public class ResponseDAO implements IResponseDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -131,12 +136,10 @@ public class ResponseDAO implements IResponseDAO {
 	public boolean update(Response response) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE SurveyResponse SET runId = ?, studentId = ?, " +
-				"answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
+		ps = con.prepareStatement("UPDATE SurveyResponse SET runId = ?, studentId = ?, "
+				+ "answer = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
 
 		ps.setObject(1, response.getRunId());
 		ps.setInt(2, response.getStudentId());
@@ -149,21 +152,23 @@ public class ResponseDAO implements IResponseDAO {
 		ps.setObject(9, response.getId());
 
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -176,29 +181,29 @@ public class ResponseDAO implements IResponseDAO {
 	public boolean delete(Response response) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM SurveyResponse WHERE SurveyResponse.iid = ?;");
 		ps.setObject(1, response.getId());
 
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -228,13 +233,17 @@ public class ResponseDAO implements IResponseDAO {
 				response.setRunId((UUID) rs.getObject("runId"));
 				response.setStudentId(rs.getInt("studentId"));
 				response.setAnswer(rs.getString("answer"));
-				boolean[] list = new boolean[]{
-						(rs.getString("bool1") != null && rs.getString("bool1") == "true")? true : false,
-						(rs.getString("bool2") != null && rs.getString("bool2") == "true")? true : false,
-						(rs.getString("bool3") != null && rs.getString("bool3") == "true")? true : false,
-						(rs.getString("bool4") != null && rs.getString("bool4") == "true")? true : false,
-						(rs.getString("bool5") != null && rs.getString("bool5") == "true")? true : false
-				};
+				boolean[] list = new boolean[] {
+						(rs.getString("bool1") != null && rs.getString("bool1") == "true") ? true
+								: false,
+						(rs.getString("bool2") != null && rs.getString("bool2") == "true") ? true
+								: false,
+						(rs.getString("bool3") != null && rs.getString("bool3") == "true") ? true
+								: false,
+						(rs.getString("bool4") != null && rs.getString("bool4") == "true") ? true
+								: false,
+						(rs.getString("bool5") != null && rs.getString("bool5") == "true") ? true
+								: false };
 				response.setBoolAnswer(list);
 
 				allResponses.add(response);
@@ -244,20 +253,23 @@ public class ResponseDAO implements IResponseDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -266,7 +278,7 @@ public class ResponseDAO implements IResponseDAO {
 		return allResponses;
 	}
 
-	public boolean Contains(Response response) throws SQLException{
+	public boolean Contains(Response response) throws SQLException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -279,27 +291,30 @@ public class ResponseDAO implements IResponseDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				return true;
-			} 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			response.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

@@ -96,7 +96,8 @@ public class RoomService implements IRoomService {
 		return courseDAO;
 	}
 
-	public ArrayList<Course> getCoursesByInstructorId(int id) throws SQLException {
+	public ArrayList<Course> getCoursesByInstructorId(int id)
+			throws SQLException {
 		return courseDAO.getCoursesByInstructorId(id);
 	}
 

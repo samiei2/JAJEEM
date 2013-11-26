@@ -8,20 +8,29 @@ package org.jitsi.examples;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.jitsi.service.libjitsi.*;
-import org.jitsi.service.neomedia.*;
-import org.jitsi.service.neomedia.device.*;
-import org.jitsi.service.neomedia.format.*;
+import org.jitsi.service.libjitsi.LibJitsi;
+import org.jitsi.service.neomedia.DefaultStreamConnector;
+import org.jitsi.service.neomedia.MediaDirection;
+import org.jitsi.service.neomedia.MediaService;
+import org.jitsi.service.neomedia.MediaStream;
+import org.jitsi.service.neomedia.MediaStreamTarget;
+import org.jitsi.service.neomedia.MediaType;
+import org.jitsi.service.neomedia.MediaUseCase;
+import org.jitsi.service.neomedia.StreamConnector;
+import org.jitsi.service.neomedia.VideoMediaStream;
+import org.jitsi.service.neomedia.device.MediaDevice;
+import org.jitsi.service.neomedia.format.MediaFormat;
+import org.jitsi.service.neomedia.format.MediaFormatFactory;
 
-import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.exception.VideoConnectionException;
 
 /**
@@ -33,7 +42,7 @@ import com.jajeem.exception.VideoConnectionException;
  */
 public class AVSendOnly {
 	JFrame frame = null;
-	
+
 	private boolean transmitting = false;
 	/**
 	 * The port which is the source of the transmission i.e. from which the
@@ -217,7 +226,7 @@ public class AVSendOnly {
 		 * Do start the transmission i.e. start the initialized MediaStream
 		 * instances.
 		 */
-		for (MediaStream mediaStream : mediaStreams)
+		for (MediaStream mediaStream : mediaStreams) {
 			if (mediaStream != null) {
 				if (type.equals("both")) {
 					mediaStream.start();
@@ -228,12 +237,13 @@ public class AVSendOnly {
 					continue;
 				}
 			}
+		}
 
 		setTransmitting(true);
 
 		// trying to add a local view of webcam, most of the time webcam has not
 		// started yet, so we wait for it...
-		for (MediaStream mediaStream : mediaStreams)
+		for (MediaStream mediaStream : mediaStreams) {
 			if (mediaStream != null) {
 				if (type.equals("both")) {
 					if (mediaStream.getName().equals("video")) {
@@ -244,33 +254,39 @@ public class AVSendOnly {
 							cmp = ((VideoMediaStream) mediaStream)
 									.getLocalVisualComponent();
 							Thread.sleep(1000);
-							if(i==10) ///tries for 30 * 1000 miliseconds = 30 seconds
+							if (i == 10) {
 								break;
+							}
 							i++;
 						}
 						try {
 							if (cmp != null) {
-								if(frame == null){
+								if (frame == null) {
 									frame = new JFrame();
 									frame.setLayout(new BorderLayout(0, 0));
 									frame.add(cmp);
 									frame.setSize(400, 400);
 									frame.setVisible(true);
 								}
+							} else {
+								JOptionPane
+										.showMessageDialog(null,
+												"Could not start webchat,the other system is probably is not responding!");
+								throw new VideoConnectionException(
+										"Video Error");
 							}
-							else{
-								JOptionPane.showMessageDialog(null, "Could not start webchat,the other system is probably is not responding!");
-								throw new VideoConnectionException("Video Error");
-							}
-						}catch (Exception e) {
-							if(e instanceof VideoConnectionException)
-								throw new VideoConnectionException("Video Error");
-							else
+						} catch (Exception e) {
+							if (e instanceof VideoConnectionException) {
+								throw new VideoConnectionException(
+										"Video Error");
+							} else {
 								e.printStackTrace();
+							}
 						}
 					}
 				}
 			}
+		}
 
 		return null;
 	}
@@ -292,12 +308,12 @@ public class AVSendOnly {
 					}
 				}
 			}
-			
+
 			mediaStreams = null;
 
 			setTransmitting(false);
-			
-			if(frame!=null){
+
+			if (frame != null) {
 				frame.setVisible(false);
 				frame = null;
 			}
@@ -433,20 +449,6 @@ public class AVSendOnly {
 			argMap.put(key, value);
 		}
 		return argMap;
-	}
-
-	/**
-	 * Outputs human-readable description about the usage of the
-	 * <tt>AVTransmit2</tt> application and the command-line arguments it
-	 * accepts as valid.
-	 */
-	private static void prUsage() {
-		PrintStream err = System.err;
-
-		err.println("Usage: " + AVSendOnly.class.getName() + " <args>");
-		err.println("Valid args:");
-		for (String[] arg : ARGS)
-			err.println("  " + arg[0] + " " + arg[1]);
 	}
 
 	public InetAddress getRemoteAddr() {

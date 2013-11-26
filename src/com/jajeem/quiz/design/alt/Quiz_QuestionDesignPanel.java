@@ -26,7 +26,6 @@ import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 
-
 public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 	/**
 	 * 
@@ -90,56 +89,157 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webTextField_6 = new WebTextField();
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-									.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(12)
-									.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
-									.addGap(0, 0, Short.MAX_VALUE))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(4)
-							.addComponent(webPanel, 0, 0, Short.MAX_VALUE)))
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(wblblQuestionType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(webTextField_6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(wblblPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webScrollPane, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(56)
-							.addComponent(wblblQuestion_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(150, Short.MAX_VALUE))
-		);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								wblblQuestion,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								groupLayout
+																										.createSequentialGroup()
+																										.addComponent(
+																												wblblQuestionType,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												webComboBox,
+																												GroupLayout.PREFERRED_SIZE,
+																												115,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED,
+																												70,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												wblblPoint,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												webTextField_6,
+																												GroupLayout.PREFERRED_SIZE,
+																												50,
+																												GroupLayout.PREFERRED_SIZE))
+																						.addGroup(
+																								groupLayout
+																										.createSequentialGroup()
+																										.addGap(12)
+																										.addComponent(
+																												wblblQuestion_1,
+																												GroupLayout.PREFERRED_SIZE,
+																												GroupLayout.DEFAULT_SIZE,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												webScrollPane,
+																												GroupLayout.PREFERRED_SIZE,
+																												278,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addGap(0,
+																												0,
+																												Short.MAX_VALUE))))
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addGap(4)
+																		.addComponent(
+																				webPanel,
+																				0,
+																				0,
+																				Short.MAX_VALUE)))
+										.addGap(10)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(wblblQuestion,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(22)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				groupLayout
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								webComboBox,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								wblblQuestionType,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								webTextField_6,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								wblblPoint,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE))
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				webScrollPane,
+																				GroupLayout.PREFERRED_SIZE,
+																				76,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addGap(56)
+																		.addComponent(
+																				wblblQuestion_1,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addComponent(webPanel,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(150, Short.MAX_VALUE)));
 
 		webTextField = new WebTextField();
 
@@ -768,22 +868,23 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 				});
 
 		webRadioButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webRadioButton.setSelected(false);
-//						return;
-//					}
-//					if (webTextField.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webRadioButton.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webRadioButton.setSelected(false);
+					// return;
+					// }
+					// if (webTextField.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webRadioButton.setSelected(false);
+					// return;
+					// }
 					webRadioButton.setSelected(true);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -804,22 +905,23 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		});
 
 		webRadioButton_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webRadioButton_1.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_1.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webRadioButton_1.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webRadioButton_1.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_1.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webRadioButton_1.setSelected(false);
+					// return;
+					// }
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(true);
 					webRadioButton_2.setSelected(false);
@@ -840,22 +942,23 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		});
 
 		webRadioButton_2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webRadioButton_2.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_2.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webRadioButton_2.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webRadioButton_2.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_2.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webRadioButton_2.setSelected(false);
+					// return;
+					// }
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(true);
@@ -876,22 +979,23 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		});
 
 		webRadioButton_3.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webRadioButton_3.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_3.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webRadioButton_3.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webRadioButton_3.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_3.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webRadioButton_3.setSelected(false);
+					// return;
+					// }
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -912,22 +1016,23 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		});
 
 		webRadioButton_4.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webRadioButton_4.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_4.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webRadioButton_4.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webRadioButton_4.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_4.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webRadioButton_4.setSelected(false);
+					// return;
+					// }
 					webRadioButton.setSelected(false);
 					webRadioButton_1.setSelected(false);
 					webRadioButton_2.setSelected(false);
@@ -952,20 +1057,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webCheckBox.setSelected(false);
-//						return;
-//					}
-//					if (webTextField.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webCheckBox.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webCheckBox.setSelected(false);
+					// return;
+					// }
+					// if (webTextField.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webCheckBox.setSelected(false);
+					// return;
+					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -984,20 +1089,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webCheckBox_1.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_1.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webCheckBox_1.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webCheckBox_1.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_1.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webCheckBox_1.setSelected(false);
+					// return;
+					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1016,20 +1121,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webCheckBox_2.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_2.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webCheckBox_2.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webCheckBox_2.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_2.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webCheckBox_2.setSelected(false);
+					// return;
+					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1048,20 +1153,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webCheckBox_3.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_3.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webCheckBox_3.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webCheckBox_3.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_3.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webCheckBox_3.setSelected(false);
+					// return;
+					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1080,20 +1185,20 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-//					if (webTextArea.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Question is empty,please first type in the question!");
-//						webCheckBox_4.setSelected(false);
-//						return;
-//					}
-//					if (webTextField_4.getText().equals("")) {
-//						JOptionPane
-//								.showMessageDialog(null,
-//										"Answer is empty,please first type in the answer!");
-//						webCheckBox_4.setSelected(false);
-//						return;
-//					}
+					// if (webTextArea.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Question is empty,please first type in the question!");
+					// webCheckBox_4.setSelected(false);
+					// return;
+					// }
+					// if (webTextField_4.getText().equals("")) {
+					// JOptionPane
+					// .showMessageDialog(null,
+					// "Answer is empty,please first type in the answer!");
+					// webCheckBox_4.setSelected(false);
+					// return;
+					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
@@ -1337,7 +1442,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews {
 		webTextField_2.setText("");
 		webTextField_3.setText("");
 		webTextField_4.setText("");
-//		webTextField_5.setText("");
+		// webTextField_5.setText("");
 		webTextField_6.setText("");
 		webCheckBox.setSelected(false);
 		webCheckBox_1.setSelected(false);

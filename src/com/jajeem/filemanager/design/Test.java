@@ -1,11 +1,5 @@
 package com.jajeem.filemanager.design;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-
-import com.jajeem.events.FileTransferEvent;
 import com.jajeem.filemanager.InstructorServer;
 
 public class Test {
@@ -15,7 +9,7 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -23,7 +17,7 @@ public class Test {
 			}
 		}).start();
 		new FileManagerMain().setVisible(true);
-		
+
 	}
 
 }

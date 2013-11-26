@@ -13,15 +13,15 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.swing.GroupLayout;
-import javax.swing.JComponent;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
@@ -45,14 +45,12 @@ public class FileSendTab extends WebPanel {
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
 	private int currentIndex;
-	private FileManagerMain parentPanel;
 	private WebCheckBox chckbxSendToAll;
 
 	/**
 	 * Create the panel.
 	 */
 	public FileSendTab(FileManagerMain main) {
-		parentPanel = main;
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
@@ -153,8 +151,13 @@ public class FileSendTab extends WebPanel {
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "#", "File Name", "Status" }) {
+			/**
+					 * 
+					 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
+			@Override
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
@@ -170,6 +173,7 @@ public class FileSendTab extends WebPanel {
 
 	private void initEvents() {
 		wbtnBrowse.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setMultiSelectionEnabled(true);
@@ -178,11 +182,12 @@ public class FileSendTab extends WebPanel {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File[] files = chooser.getSelectedFiles();
 					for (int i = 0; i < files.length; i++) {
-						if (files[i].isDirectory())
+						if (files[i].isDirectory()) {
 							fileNames
 									.addAll(getPath(getDirectoryContent(files[i])));
-						else
+						} else {
 							fileNames.add(files[i].getAbsolutePath());
+						}
 					}
 					if (fileNames.size() != 0) {
 						wbtnSend.setEnabled(true);
@@ -207,6 +212,7 @@ public class FileSendTab extends WebPanel {
 		});
 
 		wbtnClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileNames.clear();
 				DefaultTableModel model = (DefaultTableModel) webTable
@@ -221,6 +227,7 @@ public class FileSendTab extends WebPanel {
 		});
 
 		wbtnSend.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<String> listOfFiles = new ArrayList<>();
 				int[] list = webTable.getSelectedRows();
@@ -243,8 +250,9 @@ public class FileSendTab extends WebPanel {
 
 			@Override
 			public void success(FileTransferObject evt, Class t) {
-				if (t != FileSendTab.class)
+				if (t != FileSendTab.class) {
 					return;
+				}
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
@@ -266,8 +274,9 @@ public class FileSendTab extends WebPanel {
 
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				if (t != FileSendTab.class)
+				if (t != FileSendTab.class) {
 					return;
+				}
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
@@ -348,18 +357,18 @@ public class FileSendTab extends WebPanel {
 							if (InstructorNoa.getDesktopPane()
 									.getSelectedFrame() != null) {
 								ips = new ArrayList<>();
-								ips.add(((String) InstructorNoa.getDesktopPane()
-										.getSelectedFrame()
+								ips.add(((String) InstructorNoa
+										.getDesktopPane().getSelectedFrame()
 										.getClientProperty("ip")));
 							} else {
-								WebOptionPane.showMessageDialog(null,
+								JOptionPane.showMessageDialog(null,
 										"No student is selected!");
 								ips = null;
 							}
 						}
 					}
 					if (ips == null) {
-						WebOptionPane.showMessageDialog(null,
+						JOptionPane.showMessageDialog(null,
 								"No student is selected!");
 						return;
 					}
@@ -375,28 +384,34 @@ public class FileSendTab extends WebPanel {
 							byte[] info = new byte[2048];
 							byte[] temp = file.getPath().getBytes();
 							int len = file.getPath().length();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 
 							len = file.getName().length();
 							temp = file.getName().getBytes();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 
 							FileInputStream inp = new FileInputStream(file);
 							long fileLength = inp.available();
 							len = String.valueOf(inp.available()).length();
 							temp = String.valueOf(inp.available()).getBytes();
-							for (int k = 0; k < len; k++)
+							for (int k = 0; k < len; k++) {
 								info[k] = temp[k];
-							for (int k = len; k < 2048; k++)
+							}
+							for (int k = len; k < 2048; k++) {
 								info[k] = 0x00;
+							}
 							out.write(info, 0, 2048);
 							inp.close();
 

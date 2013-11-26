@@ -15,9 +15,12 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.alee.extended.window.ComponentMoveAdapter;
@@ -35,8 +38,6 @@ import com.jajeem.core.design.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 
 public class Chat extends WebFrame {
 
@@ -60,6 +61,7 @@ public class Chat extends WebFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Chat frame = new Chat("", 0, false, -1, "");
@@ -93,8 +95,9 @@ public class Chat extends WebFrame {
 
 		new Config();
 		File dir = new File("Messages/");
-		if (!dir.exists())
+		if (!dir.exists()) {
 			dir.mkdir();
+		}
 		file = new File(dir, "/chat_" + to + ".txt");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Chat.class.getResource("/icons/menubar/chat.png")));
@@ -113,7 +116,7 @@ public class Chat extends WebFrame {
 		boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
 		WebLookAndFeel.setDecorateFrames(true);
 
-		setDefaultCloseOperation(WebFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
 		ComponentMoveAdapter.install(getRootPane(), Chat.this);
 		setBounds(200, 200, 450, 300);

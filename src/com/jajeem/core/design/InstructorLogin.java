@@ -14,6 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +23,6 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.progressbar.WebProgressBar;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.text.WebPasswordField;
@@ -59,6 +59,7 @@ public class InstructorLogin extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 
@@ -290,13 +291,13 @@ public class InstructorLogin extends JFrame {
 							frame.dispose();
 							progressBarFrame.setVisible(false);
 						} else if (usernameTF.getText().equals("admin")) {
-							int resp = WebOptionPane
+							int resp = JOptionPane
 									.showConfirmDialog(
 											null,
 											"You are about to login as adminstrator without a course, are you sure?",
 											"Confirm",
-											WebOptionPane.YES_NO_OPTION,
-											WebOptionPane.QUESTION_MESSAGE);
+											JOptionPane.YES_NO_OPTION,
+											JOptionPane.QUESTION_MESSAGE);
 							if (resp == 0) {
 								InstructorNoa.main(null);
 							} else {

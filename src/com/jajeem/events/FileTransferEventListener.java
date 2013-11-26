@@ -2,8 +2,8 @@ package com.jajeem.events;
 
 import java.util.EventListener;
 
-public interface FileTransferEventListener extends EventListener{
-	
+public interface FileTransferEventListener extends EventListener {
+
 	@SuppressWarnings("rawtypes")
 	public void success(FileTransferObject evt, Class t);
 

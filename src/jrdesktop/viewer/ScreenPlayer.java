@@ -25,6 +25,11 @@ import jrdesktop.utilities.ImageUtility;
 
 public class ScreenPlayer extends JLabel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Recorder recorder;
 
 	private float screenScale = 1.0f;
@@ -89,7 +94,7 @@ public class ScreenPlayer extends JLabel {
 				oldscreenScale = screenScale;
 			}
 		} else {
-			if (!isSelecting)
+			if (!isSelecting) {
 				if (!selectionRect.equals(oldselectionRect)) {
 					// screenRect = selectionRect;
 					oldselectionRect = selectionRect;
@@ -103,6 +108,7 @@ public class ScreenPlayer extends JLabel {
 								recorder.viewerOptions.getColorQuality());
 					}
 				}
+			}
 
 			if (screenScale != screenScale) {
 				Dimension dimension = new Dimension(
@@ -169,7 +175,7 @@ public class ScreenPlayer extends JLabel {
 	}
 
 	public void DrawSelectingRect(Graphics g) {
-		if (isSelecting)
+		if (isSelecting) {
 			if (srcx != destx || srcy != desty) {
 				// Compute upper-left and lower-right coordinates for selection
 				// rectangle corners.
@@ -196,6 +202,7 @@ public class ScreenPlayer extends JLabel {
 
 				PartialScreenMode = true;
 			}
+		}
 	}
 
 	public boolean isPartialScreenMode() {
@@ -218,10 +225,11 @@ public class ScreenPlayer extends JLabel {
 		oldselectionRect = Commons.diffRect;
 		// screenRect = Commons.emptyRect;
 		recorder.viewerOptions.setScreenRect(new Rectangle(0, 0, 0, 0));
-		if (recorder.config.reverseConnection)
+		if (recorder.config.reverseConnection) {
 			recorder.viewerOptions.setChanged(true);
-		else
+		} else {
 			recorder.viewer.setOption(Commons.RECT_OPTION);
+		}
 	}
 
 	public void doneSelecting() {
@@ -238,10 +246,11 @@ public class ScreenPlayer extends JLabel {
 				rect.height = (int) (rect.height * screenScale);
 				rect.width = (int) (rect.width * screenScale);
 				recorder.viewerOptions.setScreenRect(rect);
-				if (recorder.config.reverseConnection)
+				if (recorder.config.reverseConnection) {
 					recorder.viewerOptions.setChanged(true);
-				else
+				} else {
 					recorder.viewer.setOption(Commons.RECT_OPTION);
+				}
 				recorder.viewerGUI.jBtnPartialComplete.setIcon(new ImageIcon(
 						Commons.DEFAULT_SCREEN_ICON));
 			}

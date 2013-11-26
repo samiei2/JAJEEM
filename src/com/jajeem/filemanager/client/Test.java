@@ -9,14 +9,14 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				Audio.playSound("util/Ding.aiff");
-				//new ClientFileServer().Startup();
+				// new ClientFileServer().Startup();
 			}
 		}).start();
-		//new ClientFileManagerMain().setVisible(true);
+		// new ClientFileManagerMain().setVisible(true);
 	}
 
 }

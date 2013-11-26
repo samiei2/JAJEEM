@@ -25,7 +25,7 @@ public class StartVideoChatCommandHandler implements ICommandHandler {
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getReceiverOnly().initialize("both");
 			Student.setIntercomButtonStop();
-			
+
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();

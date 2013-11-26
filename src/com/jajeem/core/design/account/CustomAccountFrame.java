@@ -1,18 +1,9 @@
 package com.jajeem.core.design.account;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
-
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.laf.rootpane.WebFrame;
-import com.jajeem.util.CustomPanel;
-import com.sun.awt.AWTUtilities;
-import com.sun.jndi.toolkit.url.Uri;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -20,16 +11,25 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.alee.laf.button.WebButton;
+import com.alee.laf.rootpane.WebFrame;
+import com.jajeem.util.CustomPanel;
+import com.sun.awt.AWTUtilities;
 
 public class CustomAccountFrame extends WebFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	CustomPanel panelTop;
 	CustomPanel panelContent;
 	CustomPanel panelClose;
@@ -40,8 +40,7 @@ public class CustomAccountFrame extends WebFrame {
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
 		System.setProperty("sun.java2d.noddraw", "true");
-	    AWTUtilities.setWindowOpaque(this, false);
-		
+		AWTUtilities.setWindowOpaque(this, false);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -77,21 +76,30 @@ public class CustomAccountFrame extends WebFrame {
 						.addGap(28)
 						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE,
 								237, GroupLayout.PREFERRED_SIZE)
-						.addGap(87)
+						.addPreferredGap(ComponentPlacement.RELATED, 117,
+								Short.MAX_VALUE)
 						.addComponent(panelClose, GroupLayout.PREFERRED_SIZE,
-								173, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(59, Short.MAX_VALUE)));
-		gl_panel_1.setVerticalGroup(gl_panel_1
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 55,
-						GroupLayout.PREFERRED_SIZE)
-				.addComponent(panelClose, GroupLayout.PREFERRED_SIZE, 55,
-						GroupLayout.PREFERRED_SIZE));
+								173, GroupLayout.PREFERRED_SIZE).addGap(29)));
+		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel_1
+						.createSequentialGroup()
+						.addGroup(
+								gl_panel_1
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(panelTop,
+												GroupLayout.PREFERRED_SIZE, 55,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(panelClose,
+												GroupLayout.PREFERRED_SIZE, 55,
+												GroupLayout.PREFERRED_SIZE))
+						.addContainerGap()));
 		panelClose.setLayout(null);
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
 
 		this.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
 				posX = e.getX();
 				posY = e.getY();
@@ -99,9 +107,11 @@ public class CustomAccountFrame extends WebFrame {
 		});
 
 		this.addMouseMotionListener(new MouseAdapter() {
+			@Override
 			public void mouseDragged(MouseEvent evt) {
 				// sets frame position when mouse dragged
-				setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen() - posY);
+				setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
+						- posY);
 			}
 		});
 
@@ -109,14 +119,15 @@ public class CustomAccountFrame extends WebFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					int i = WebOptionPane.showConfirmDialog(getContentPane(),
+					int i = JOptionPane.showConfirmDialog(getContentPane(),
 							"Are you sure you want to close this window?");
-					if (i == 0)
+					if (i == 0) {
 						dispose();
-					else if (i == 1)
+					} else if (i == 1) {
 						return;
-					else
+					} else {
 						return;
+					}
 				}
 			}
 		});
@@ -170,8 +181,9 @@ class CustomAccountCheckBox extends JCheckBox {
 	protected void paintComponent(Graphics g) {
 		// super.paintComponent(g);
 		Graphics g2 = g.create();
-		if (isSelected)
+		if (isSelected) {
 			g2.drawImage(originalImage, 0, 0, getWidth(), getHeight(), null);
+		}
 		String text = getText();
 		g2.drawString(text, 13, 25);
 		g2.dispose();

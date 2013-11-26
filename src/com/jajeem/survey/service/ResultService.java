@@ -10,15 +10,17 @@ import com.jajeem.survey.model.Response;
 import com.jajeem.survey.model.Run;
 
 public class ResultService {
-	public void create(ArrayList<ArrayList<SurveyResponse>> e,ArrayList<Run> run){
+	public void create(ArrayList<ArrayList<SurveyResponse>> e,
+			ArrayList<Run> run) {
 		RunDAO rundao = new RunDAO();
 		ResponseDAO responsedao = new ResponseDAO();
 		try {
 			for (int i = 0; i < run.size(); i++) {
-				if(rundao.Contains(run.get(i)))
+				if (rundao.Contains(run.get(i))) {
 					rundao.update(run.get(i));
-				else
+				} else {
 					rundao.create(run.get(i));
+				}
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -29,10 +31,11 @@ public class ResultService {
 				resp.setStudentId(e.get(i).get(j).getStudent().getId());
 				resp.setSurveyQuestionId(e.get(i).get(j).getQuestion().getId());
 				try {
-					if(responsedao.Contains(resp))
+					if (responsedao.Contains(resp)) {
 						responsedao.update(resp);
-					else
+					} else {
 						responsedao.create(resp);
+					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

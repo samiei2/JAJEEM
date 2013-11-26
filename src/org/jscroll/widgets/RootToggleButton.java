@@ -20,80 +20,87 @@
 
 package org.jscroll.widgets;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+
 import javax.swing.JToggleButton;
-
-import java.awt.*;
-
 
 /**
  * This class creates a base toggle button. A
- * {@link org.jscroll.widgets.JScrollInternalFrame JScrollInternalFrame}
- * object is associated with every instance of this class.
- *
+ * {@link org.jscroll.widgets.JScrollInternalFrame JScrollInternalFrame} object
+ * is associated with every instance of this class.
+ * 
  * @author <a href="mailto:tessier@gabinternet.com">Tom Tessier</a>
- * @version 1.0  11-Aug-2001
+ * @version 1.0 11-Aug-2001
  */
-public class RootToggleButton extends JToggleButton implements DesktopConstants,
-    FrameAccessorInterface {
-    private JScrollInternalFrame associatedFrame;
-    private Color defaultColor;
+public class RootToggleButton extends JToggleButton implements
+		DesktopConstants, FrameAccessorInterface {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JScrollInternalFrame associatedFrame;
+	private Color defaultColor;
 
-    /**
-     * creates the RootToggleButton
-     *
-     * @param title the title of the button
-     */
-    public RootToggleButton(String title) {
-        super(title);
+	/**
+	 * creates the RootToggleButton
+	 * 
+	 * @param title
+	 *            the title of the button
+	 */
+	public RootToggleButton(String title) {
+		super(title);
 
-        setButtonFormat();
-        setToolTipText(title);
+		setButtonFormat();
+		setToolTipText(title);
 
-        defaultColor = getForeground();
-    }
+		defaultColor = getForeground();
+	}
 
-    private void setButtonFormat() {
-        Font buttonFont = getFont();
-        setFont(new Font(buttonFont.getFontName(), buttonFont.getStyle(),
-                buttonFont.getSize() - 1));
-        setMargin(new Insets(0, 0, 0, 0));
-    }
+	private void setButtonFormat() {
+		Font buttonFont = getFont();
+		setFont(new Font(buttonFont.getFontName(), buttonFont.getStyle(),
+				buttonFont.getSize() - 1));
+		setMargin(new Insets(0, 0, 0, 0));
+	}
 
-    /**
-     *  sets the associated frame
-     *
-     * @param associatedFrame the JScrollInternalFrame object to associate with
-     * the menu item
-     */
-    public void setAssociatedFrame(JScrollInternalFrame associatedFrame) {
-        this.associatedFrame = associatedFrame;
-    }
+	/**
+	 * sets the associated frame
+	 * 
+	 * @param associatedFrame
+	 *            the JScrollInternalFrame object to associate with the menu
+	 *            item
+	 */
+	@Override
+	public void setAssociatedFrame(JScrollInternalFrame associatedFrame) {
+		this.associatedFrame = associatedFrame;
+	}
 
-    /**
-     *  returns the associated frame
-     *
-     * @return the JScrollInternalFrame object associated with this menu item
-     */
-    public JScrollInternalFrame getAssociatedFrame() {
-        return associatedFrame;
-    }
+	/**
+	 * returns the associated frame
+	 * 
+	 * @return the JScrollInternalFrame object associated with this menu item
+	 */
+	@Override
+	public JScrollInternalFrame getAssociatedFrame() {
+		return associatedFrame;
+	}
 
-    /**
-     *  flags the contents as "changed" by setting the foreground color to
-     * {@link
-     * org.jscroll.widgets.DesktopConstants#CONTENTS_CHANGED_COLOR
-     * CONTENTS_CHANGED_COLOR}.
-     * Used to notify the user when the contents of an inactive internal frame
-     * have changed.
-     *
-     * @param changed <code>boolean</code> indicating whether contents have
-     * changed
-     */
-    public void flagContentsChanged(boolean changed) {
-        if (changed) {
-            setForeground(CONTENTS_CHANGED_COLOR);
-        } else {
-            setForeground(defaultColor);
-        }
-    }
+	/**
+	 * flags the contents as "changed" by setting the foreground color to
+	 * {@link org.jscroll.widgets.DesktopConstants#CONTENTS_CHANGED_COLOR
+	 * CONTENTS_CHANGED_COLOR}. Used to notify the user when the contents of an
+	 * inactive internal frame have changed.
+	 * 
+	 * @param changed
+	 *            <code>boolean</code> indicating whether contents have changed
+	 */
+	public void flagContentsChanged(boolean changed) {
+		if (changed) {
+			setForeground(CONTENTS_CHANGED_COLOR);
+		} else {
+			setForeground(defaultColor);
+		}
+	}
 }

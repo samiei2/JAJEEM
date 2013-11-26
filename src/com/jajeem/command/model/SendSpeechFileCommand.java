@@ -1,20 +1,21 @@
 package com.jajeem.command.model;
 
-
-public class SendSpeechFileCommand extends Command{
+public class SendSpeechFileCommand extends Command {
 
 	String file;
+
 	public SendSpeechFileCommand(String from, String to, int port) {
 		super(from, to, port);
 	}
-	
-	public void setFile(String file){
+
+	public void setFile(String file) {
 		this.file = file;
 	}
-	
-	public String getFile(){
+
+	public String getFile() {
 		return file;
 	}
+
 	/**
 	 * 
 	 */

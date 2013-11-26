@@ -16,13 +16,14 @@ import java.util.Calendar;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -34,6 +35,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
@@ -44,7 +46,6 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.tabbedpane.WebTabbedPane;
@@ -62,10 +63,13 @@ import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion.Setting;
 
 public class StudentsAndQuizListDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**
@@ -73,9 +77,9 @@ public class StudentsAndQuizListDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			StudentsAndQuizListDialog dialog = new StudentsAndQuizListDialog(new Course(),true
-					,0,"course");
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			StudentsAndQuizListDialog dialog = new StudentsAndQuizListDialog(
+					new Course(), true, 0, "course");
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,33 +89,32 @@ public class StudentsAndQuizListDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public StudentsAndQuizListDialog(final Course course, boolean isAdmin,int id,String type) {
+	public StudentsAndQuizListDialog(final Course course, boolean isAdmin,
+			int id, String type) {
 		setTitle("Course Details");
-		
+
 		new Config();
 		new i18n();
-		
+
 		setBounds(100, 100, 710, 622);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
+
 		WebPanel webPanel = new WebPanel();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addComponent(webPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(webPanel, GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
-		);
-		
+		gl_contentPanel.setHorizontalGroup(gl_contentPanel.createParallelGroup(
+				Alignment.TRAILING).addComponent(webPanel, Alignment.LEADING,
+				GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE));
+		gl_contentPanel.setVerticalGroup(gl_contentPanel.createParallelGroup(
+				Alignment.LEADING).addComponent(webPanel,
+				GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE));
+
 		WebTabbedPane webTabbedPane = new WebTabbedPane();
 		webPanel.add(webTabbedPane, BorderLayout.CENTER);
 		try {
-			webTabbedPane.add("Students",new StudentList(course, isAdmin));
-			webTabbedPane.add("Quizes",new QuizList(id, type));
+			webTabbedPane.add("Students", new StudentList(course, isAdmin));
+			webTabbedPane.add("Quizes", new QuizList(id, type));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -126,7 +129,7 @@ public class StudentsAndQuizListDialog extends JDialog {
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 				okButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
@@ -138,8 +141,7 @@ public class StudentsAndQuizListDialog extends JDialog {
 	}
 }
 
-class StudentList extends WebPanel
-{
+class StudentList extends WebPanel {
 	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
@@ -148,8 +150,8 @@ class StudentList extends WebPanel
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
 	private Course course;
 	private StudentCourseService studentCourseService = new StudentCourseService();
-	
-	public StudentList(final Course course, boolean isAdmin) throws Exception{
+
+	public StudentList(final Course course, boolean isAdmin) throws Exception {
 		this.course = course;
 		setVisible(true);
 		setBounds(400, 100, 610, 500);
@@ -190,14 +192,14 @@ class StudentList extends WebPanel
 						panel.add(deleteButton);
 					}
 					deleteButton.addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-							int resp = WebOptionPane.showConfirmDialog(
+							int resp = JOptionPane.showConfirmDialog(
 									contentPanel,
 									"Do you want to Delete selected item(s)?",
-									"Confirm", WebOptionPane.YES_NO_OPTION,
-									WebOptionPane.QUESTION_MESSAGE);
+									"Confirm", JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE);
 							if (resp == 0) {
 								if (!studentSelectionModel.isSelectionEmpty()) {
 									for (Student student : studentSelectionModel
@@ -221,8 +223,7 @@ class StudentList extends WebPanel
 					});
 				}
 			}
-			
-			
+
 			{
 				JPanel panel = new JPanel();
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
@@ -252,7 +253,7 @@ class StudentList extends WebPanel
 		loadData();
 		add(initStudent());
 	}
-	
+
 	private void loadData() throws SQLException {
 		ArrayList<com.jajeem.core.model.Student> studentList = studentCourseService
 				.getcourseStudentsById(course.getId());
@@ -319,9 +320,8 @@ class StudentList extends WebPanel
 		studentSelectionModel = new EventSelectionModel<Student>(filterList);
 		studentTable.setSelectionModel(studentSelectionModel);
 		studentTable.setModel(model);
-		TableComparatorChooser<Student> tableSorter = TableComparatorChooser
-				.install(studentTable, sortedStudent,
-						TableComparatorChooser.SINGLE_COLUMN);
+		TableComparatorChooser.install(studentTable, sortedStudent,
+				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
@@ -333,33 +333,40 @@ class StudentList extends WebPanel
 	public class StudentTableFormat implements TableFormat<Student>,
 			WritableTableFormat<Student> {
 
+		@Override
 		public int getColumnCount() {
 			return 4;
 		}
 
+		@Override
 		public String getColumnName(int column) {
-			if (column == 0)
+			if (column == 0) {
 				return "ID";
-			if (column == 1)
+			}
+			if (column == 1) {
 				return "First name";
-			else if (column == 2)
+			} else if (column == 2) {
 				return "Last Name";
-			else if (column == 3)
+			} else if (column == 3) {
 				return "Username";
+			}
 
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Student student, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return student.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return student.getFirstName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return student.getLastName();
-			else if (column == 3)
+			} else if (column == 3) {
 				return student.getUsername();
+			}
 
 			throw new IllegalStateException();
 		}
@@ -385,7 +392,8 @@ class StudentList extends WebPanel
 		this.studentList = studentList;
 	}
 }
-class QuizList extends WebPanel{
+
+class QuizList extends WebPanel {
 	/**
 	 * 
 	 */
@@ -393,8 +401,8 @@ class QuizList extends WebPanel{
 	private WebTable wbTblQuestion;
 	private WebTable wbTblQuiz;
 	private ArrayList<Quiz> quizList = new ArrayList<>();
-	
-	public QuizList(final int id, final String type){
+
+	public QuizList(final int id, final String type) {
 		WebPanel webPanel = new WebPanel();
 		add(webPanel, BorderLayout.CENTER);
 		WebPanel webPanel_1 = new WebPanel();
@@ -407,11 +415,10 @@ class QuizList extends WebPanel{
 						.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(
-								gl_webPanel
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(webPanel_1,
-												GroupLayout.DEFAULT_SIZE, 617,
-												Short.MAX_VALUE))
+								gl_webPanel.createParallelGroup(
+										Alignment.LEADING).addComponent(
+										webPanel_1, GroupLayout.DEFAULT_SIZE,
+										617, Short.MAX_VALUE))
 						.addContainerGap()));
 		gl_webPanel.setVerticalGroup(gl_webPanel.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -502,13 +509,12 @@ class QuizList extends WebPanel{
 		webPanel_1.setLayout(gl_webPanel_1);
 		webPanel.setLayout(gl_webPanel);
 		setVisible(true);
-		Populate(id,type);
+		Populate(id, type);
 	}
-	
-	public void Populate(final int id, final String type){
+
+	public void Populate(final int id, final String type) {
 		QuizService qs = new QuizService();
-		DefaultTableModel model = (DefaultTableModel) wbTblQuiz
-				.getModel();
+		DefaultTableModel model = (DefaultTableModel) wbTblQuiz.getModel();
 		try {
 			ArrayList<Quiz> list = null;
 			if (type.equals("course")) {
@@ -523,22 +529,24 @@ class QuizList extends WebPanel{
 					Quiz z = list.get(i);
 					quizList.add(z);
 					String title = z.getTitle();
-					if (title == "" || title == null)
+					if (title == "" || title == null) {
 						title = "No Title";
+					}
 					if (wbTblQuiz.getRowCount() == 0) {
 						model.addRow(new Object[] { 1, title,
 								z.getQuestionList().size() });
 					} else {
 						model.addRow(new Object[] {
-								Integer.parseInt(String.valueOf(model.getValueAt(
-										wbTblQuiz.getRowCount() - 1, 0))) + 1,
+								Integer.parseInt(String.valueOf(model
+										.getValueAt(
+												wbTblQuiz.getRowCount() - 1, 0))) + 1,
 								title, z.getQuestionList().size() });
 					}
 				}
 			}
-			if (wbTblQuiz.getRowCount() != 0)
-				wbTblQuiz.getSelectionModel()
-						.setSelectionInterval(0, 0);
+			if (wbTblQuiz.getRowCount() != 0) {
+				wbTblQuiz.getSelectionModel().setSelectionInterval(0, 0);
+			}
 		} catch (SQLException e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();

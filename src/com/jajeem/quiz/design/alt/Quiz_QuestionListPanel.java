@@ -1,6 +1,5 @@
 package com.jajeem.quiz.design.alt;
 
-import java.awt.CardLayout;
 import java.awt.Component;
 
 import javax.swing.GroupLayout;
@@ -47,6 +46,7 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 			boolean[] columnEditables = new boolean[] { false, false, false,
 					false };
 
+			@Override
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}

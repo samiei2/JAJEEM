@@ -9,7 +9,7 @@ public class FinishedSurveyCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		FinishedSurveyCommand command = (FinishedSurveyCommand)cmd;
+		FinishedSurveyCommand command = (FinishedSurveyCommand) cmd;
 		SurveyFinished evt = new SurveyFinished(this);
 		evt.setSurveyRun(command.getRun());
 		new SurveyEvent().fireSurveyFinished(evt);

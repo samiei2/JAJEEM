@@ -1,6 +1,6 @@
 package com.jajeem.command.model;
 
-public class SendRecordingErrorCommand extends Command{
+public class SendRecordingErrorCommand extends Command {
 
 	public SendRecordingErrorCommand(String from, String to, int port) {
 		super(from, to, port);
@@ -10,5 +10,5 @@ public class SendRecordingErrorCommand extends Command{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 }

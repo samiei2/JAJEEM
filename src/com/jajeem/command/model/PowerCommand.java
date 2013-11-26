@@ -6,12 +6,12 @@ public class PowerCommand extends Command {
 	 * 
 	 */
 	private static final long serialVersionUID = 2909074411682367952L;
-	
+
 	private String type;
 
 	public PowerCommand(String from, String to, int port, String type) {
 		super(from, to, port);
-		
+
 		this.setType(type);
 	}
 

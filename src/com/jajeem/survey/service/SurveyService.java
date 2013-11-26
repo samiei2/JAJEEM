@@ -3,27 +3,28 @@ package com.jajeem.survey.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.jajeem.quiz.dao.h2.QuizDAO;
 import com.jajeem.survey.dao.h2.QuestionDAO;
 import com.jajeem.survey.dao.h2.ResponseDAO;
 import com.jajeem.survey.dao.h2.RunDAO;
 import com.jajeem.survey.dao.h2.SurveyDAO;
 import com.jajeem.survey.model.Survey;
 
-public class SurveyService implements ISurveyService{
+public class SurveyService implements ISurveyService {
 	private SurveyDAO surveyDAO;
 	private QuestionDAO questionDAO;
 	private RunDAO runDAO;
 	private ResponseDAO responseDAO;
-	
+
 	@Override
 	public Survey create(Survey survey) throws SQLException {
-		surveyDAO = new SurveyDAO();//TODO remove this line
-		if(surveyDAO != null)
-			if(surveyDAO.Contains(survey))
+		surveyDAO = new SurveyDAO();// TODO remove this line
+		if (surveyDAO != null) {
+			if (surveyDAO.Contains(survey)) {
 				surveyDAO.update(survey);
-			else
+			} else {
 				surveyDAO.create(survey);
+			}
+		}
 		return null;
 	}
 
@@ -47,22 +48,23 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public ArrayList<Survey> list() throws SQLException {
-		surveyDAO = new SurveyDAO();//TODO remove this line
-		if(surveyDAO != null)
+		surveyDAO = new SurveyDAO();// TODO remove this line
+		if (surveyDAO != null) {
 			return surveyDAO.list();
+		}
 		return null;
 	}
 
 	@Override
 	public void copy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void getResponses() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public SurveyDAO getSurveyDAO() {
@@ -96,5 +98,5 @@ public class SurveyService implements ISurveyService{
 	public void setResponseDAO(ResponseDAO responseDAO) {
 		this.responseDAO = responseDAO;
 	}
-	
+
 }

@@ -11,27 +11,29 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		SendFileAssignmentCommand command = (SendFileAssignmentCommand)cmd;
+		SendFileAssignmentCommand command = (SendFileAssignmentCommand) cmd;
 		final String file = command.getFile();
 		final String time = command.getTime();
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				JOptionPane.showMessageDialog(null, "Please answer "+file+" in your inbox in "+ time +" minutes and then put it in your outbox.");
+				JOptionPane.showMessageDialog(null, "Please answer " + file
+						+ " in your inbox in " + time
+						+ " minutes and then put it in your outbox.");
 			}
-		}).start(); 
+		}).start();
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				AssignmentTimer timer = new AssignmentTimer();
 				timer.start(time);
 				timer.setLocationRelativeTo(Student.getFrmJajeemProject());
 				timer.setVisible(true);
-				
+
 			}
 		}).start();
-		
+
 	}
 }

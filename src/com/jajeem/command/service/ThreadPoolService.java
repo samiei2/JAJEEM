@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class ThreadPoolService {
 	static ArrayList<Thread> pool = new ArrayList<>();
+
 	@SuppressWarnings("unused")
-	public ThreadPoolService(){
+	public ThreadPoolService() {
 		Thread t = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				PoolStatusChecker();
@@ -19,17 +20,18 @@ public class ThreadPoolService {
 			}
 		});
 	}
-	
-	public void InsertThread(Runnable r){
+
+	public void InsertThread(Runnable r) {
 		Thread t = new Thread(r);
 		t.start();
 		pool.add(t);
 	}
-	
-	public void PoolStatusChecker(){
+
+	public void PoolStatusChecker() {
 		for (int i = 0; i < pool.size(); i++) {
-			if(!pool.get(i).isAlive())
+			if (!pool.get(i).isAlive()) {
 				pool.remove(i);
+			}
 		}
 	}
 }

@@ -20,11 +20,15 @@
 
 package org.jscroll;
 
-import org.jscroll.widgets.*;
-
-import javax.swing.*;
-
 import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+
+import org.jscroll.widgets.DesktopConstants;
+import org.jscroll.widgets.DesktopMediator;
 
 /**
  * The main scrollable desktop class. <BR>
@@ -95,6 +99,10 @@ import java.awt.BorderLayout;
  * @version 1.0 12-Aug-2001
  */
 public class JScrollDesktopPane extends JPanel implements DesktopConstants {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static int count; // count used solely to name untitled frames
 	private DesktopMediator desktopMediator;
 	private ImageIcon defaultFrameIcon;
@@ -123,7 +131,7 @@ public class JScrollDesktopPane extends JPanel implements DesktopConstants {
 	 */
 	public JScrollDesktopPane(JMenuBar mb) {
 		this();
-//		registerMenuBar(mb);
+		// registerMenuBar(mb);
 	}
 
 	/**
@@ -251,33 +259,6 @@ public class JScrollDesktopPane extends JPanel implements DesktopConstants {
 	}
 
 	/**
-	 * wraps a given internal frame in a JScrollInternalFrame for use by
-	 * JScrollDesktopPane
-	 * 
-	 * @param f
-	 *            the JInternalFrame reference
-	 * 
-	 * @return
-	 */
-	private JScrollInternalFrame getWrappedFrame(JInternalFrame f) {
-		// wrap it in a JScrollInternalFrame
-		JScrollInternalFrame b = new JScrollInternalFrame();
-		b.setContentPane(f.getContentPane());
-		b.setTitle(f.getTitle());
-		b.setResizable(f.isResizable());
-		b.setClosable(f.isClosable());
-		b.setMaximizable(f.isMaximizable());
-		b.setIconifiable(f.isIconifiable());
-		b.setFrameIcon(f.getFrameIcon());
-//		b.pack();
-		b.saveSize();
-
-		b.setVisible(f.isVisible());
-
-		return b;
-	}
-
-	/**
 	 * removes the specified internal frame from the scrollable desktop
 	 * 
 	 * @param f
@@ -352,7 +333,7 @@ public class JScrollDesktopPane extends JPanel implements DesktopConstants {
 	public void setDesktopMediator(DesktopMediator desktopMediator) {
 		this.desktopMediator = desktopMediator;
 	}
-	
+
 	public JInternalFrame[] getAllFrames() {
 		return desktopMediator.getAllFrames();
 	}

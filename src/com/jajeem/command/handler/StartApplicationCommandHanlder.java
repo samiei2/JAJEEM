@@ -28,11 +28,12 @@ public class StartApplicationCommandHanlder implements ICommandHandler {
 		File[] tempfileList = fileUtil.finder(pathToStartMenu);
 		ArrayList<File> listOfAllLinks = new ArrayList<>();
 		for (int i = 0; i < tempfileList.length; i++) {
-			if (tempfileList[i].isDirectory())
+			if (tempfileList[i].isDirectory()) {
 				listOfAllLinks
 						.addAll(getPath(getDirectoryContent(tempfileList[i])));
-			else
+			} else {
 				listOfAllLinks.add(tempfileList[i]);
+			}
 		}
 
 		for (int i = 0; i < listOfAllLinks.size(); i++) {

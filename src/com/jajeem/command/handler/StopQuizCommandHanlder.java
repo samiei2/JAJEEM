@@ -10,10 +10,11 @@ public class StopQuizCommandHanlder implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		@SuppressWarnings("unused")
-		StopQuizCommand command = (StopQuizCommand)cmd;
+		StopQuizCommand command = (StopQuizCommand) cmd;
 		Quiz_Window wndHndl = ClientSession.getQuizWindowHndl();
-		if(wndHndl != null)
+		if (wndHndl != null) {
 			wndHndl.dispose();
+		}
 	}
 
 }

@@ -11,7 +11,7 @@ public interface IConnectorSevice {
 	void stop();
 
 	void broadcast();
-	
+
 	void process(DataInputStream d);
 
 	void send(Command cmd);

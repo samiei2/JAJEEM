@@ -1,22 +1,22 @@
 package com.jajeem.command.model;
 
-
-public class SendFileAssignmentCommand extends Command{
+public class SendFileAssignmentCommand extends Command {
 
 	String file;
 	private String time;
+
 	public SendFileAssignmentCommand(String from, String to, int port) {
 		super(from, to, port);
 	}
-	
-	public void setFile(String file){
+
+	public void setFile(String file) {
 		this.file = file;
 	}
-	
-	public String getFile(){
+
+	public String getFile() {
 		return file;
 	}
-	
+
 	public String getTime() {
 		return time;
 	}
@@ -24,6 +24,7 @@ public class SendFileAssignmentCommand extends Command{
 	public void setTime(String time) {
 		this.time = time;
 	}
+
 	/**
 	 * 
 	 */

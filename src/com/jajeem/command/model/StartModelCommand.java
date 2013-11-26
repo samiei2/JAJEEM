@@ -10,7 +10,7 @@ public class StartModelCommand extends Command {
 
 	public StartModelCommand(String from, String to, int port, String leader) {
 		super(from, to, port);
-		
+
 		this.leader = leader;
 	}
 

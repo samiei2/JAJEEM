@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,9 +13,7 @@ import javax.swing.JOptionPane;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.filemanager.Packet;
 import com.jajeem.util.FileUtil;
-import com.jajeem.util.StartUp;
 
 public class ClientFileServer {
 	public void Startup() {
@@ -24,11 +21,13 @@ public class ClientFileServer {
 		String inboxPath = FileUtil.getInboxPath();
 		String outboxPath = FileUtil.getOutboxPath();
 		File file = new File(outboxPath);
-		if (!file.exists())
+		if (!file.exists()) {
 			file.mkdirs();
+		}
 		file = new File(inboxPath);
-		if (!file.exists())
+		if (!file.exists()) {
 			file.mkdirs();
+		}
 		StartServer();
 	}
 
@@ -47,7 +46,7 @@ public class ClientFileServer {
 									this);
 							byte[] path = new byte[2048];
 							in.read(path, 0, 2048);
-							String pathStr = new String(path);
+							new String(path);
 							byte[] name = new byte[2048];
 							in.read(name, 0, 2048);
 							byte[] filelen = new byte[2048];
@@ -58,8 +57,9 @@ public class ClientFileServer {
 							String inboxPath = FileUtil.getInboxPath();
 							String nameStr = new String(name);
 							File inbox = new File(inboxPath);
-							if (!inbox.exists())
+							if (!inbox.exists()) {
 								inbox.mkdirs();
+							}
 							File output = new File(inbox, nameStr);
 							FileOutputStream fos = new FileOutputStream(output);
 
@@ -69,7 +69,7 @@ public class ClientFileServer {
 							while ((x = in.read(b)) > 0) {
 								fos.write(b, 0, x);
 								bytesRead += x;
-								
+
 								evt.setProgressValue(((double) bytesRead / (double) fileLength) * 100.0);
 								new FileTransferEvent().fireProgress(evt,
 										ClientProgressWindow.class);
@@ -86,8 +86,10 @@ public class ClientFileServer {
 							new FileTransferEvent().fireSuccess(obj,
 									ClientFileInbox.class);
 
-							JOptionPane.showConfirmDialog(null, "A new file has been received from the teacher!");
-							
+							JOptionPane
+									.showConfirmDialog(null,
+											"A new file has been received from the teacher!");
+
 							File foler = new File(FileUtil.getInboxPath());
 							Desktop desktop = null;
 							if (Desktop.isDesktopSupported()) {

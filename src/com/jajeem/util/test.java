@@ -10,6 +10,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.metal.MetalIconFactory;
@@ -42,6 +43,7 @@ public class test {
 
 		exit.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				System.exit(0);
@@ -64,6 +66,7 @@ public class test {
 
 		icon.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				JOptionPane.showMessageDialog(null,

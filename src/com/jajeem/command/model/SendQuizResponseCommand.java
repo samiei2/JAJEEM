@@ -8,12 +8,13 @@ public class SendQuizResponseCommand extends Command {
 	 */
 	private static final long serialVersionUID = 5868787236750407407L;
 	QuizResponse event;
+
 	public SendQuizResponseCommand(String from, String to, int port) {
-		super(from, to,  port);
+		super(from, to, port);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void setEvent(QuizResponse evt){
+
+	public void setEvent(QuizResponse evt) {
 		event = evt;
 	}
 

@@ -43,9 +43,9 @@ public class Survey_QuestionListPanel extends Survey_AbstractViews {
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "#", "Type", "Content" }) {
-			boolean[] columnEditables = new boolean[] { false, false, 
-					false };
+			boolean[] columnEditables = new boolean[] { false, false, false };
 
+			@Override
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
@@ -150,7 +150,7 @@ public class Survey_QuestionListPanel extends Survey_AbstractViews {
 										.WebComboboxSelectionChanged(
 												"Single Choice");
 								// ///////////////////////////////////////////////
-								
+
 							} else if (parentPanel.getParentPanel()
 									.getCurrentQuestion().getType() == 1) {
 								parentPanel.getWebQuestionDesignPanel()
@@ -160,7 +160,7 @@ public class Survey_QuestionListPanel extends Survey_AbstractViews {
 										.WebComboboxSelectionChanged(
 												"Multiple Choice");
 								// ///////////////////////////////////////////////
-								
+
 							} else if (parentPanel.getParentPanel()
 									.getCurrentQuestion().getType() == 2) {
 								parentPanel.getWebQuestionDesignPanel()

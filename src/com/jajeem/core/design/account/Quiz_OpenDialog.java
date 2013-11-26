@@ -2,38 +2,31 @@ package com.jajeem.core.design.account;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.combobox.WebComboBox;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
-import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
-import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class Quiz_OpenDialog extends JDialog {
@@ -46,8 +39,8 @@ public class Quiz_OpenDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Quiz_OpenDialog dialog = new Quiz_OpenDialog(1,"course");
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			Quiz_OpenDialog dialog = new Quiz_OpenDialog(1, "course");
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
@@ -64,8 +57,7 @@ public class Quiz_OpenDialog extends JDialog {
 	public Quiz_OpenDialog(final int id, final String type) {
 		setTitle("Quizzes");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Quiz_OpenDialog.class
-						.getResource("/icons/noa_en/quiz.png")));
+				Quiz_OpenDialog.class.getResource("/icons/noa_en/quiz.png")));
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -87,8 +79,9 @@ public class Quiz_OpenDialog extends JDialog {
 							Quiz z = list.get(i);
 							quizList.add(z);
 							String title = z.getTitle();
-							if (title == "" || title == null)
+							if (title == "" || title == null) {
 								title = "No Title";
+							}
 							if (wbTblQuiz.getRowCount() == 0) {
 								model.addRow(new Object[] { 1, title,
 										z.getQuestionList().size() });
@@ -100,16 +93,17 @@ public class Quiz_OpenDialog extends JDialog {
 							}
 						}
 					}
-					if (wbTblQuiz.getRowCount() != 0)
+					if (wbTblQuiz.getRowCount() != 0) {
 						wbTblQuiz.getSelectionModel()
 								.setSelectionInterval(0, 0);
+					}
 				} catch (SQLException e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
 		});
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(true);
 		setBounds(100, 0, 653, 479);
 		setLocationByPlatform(true);
@@ -119,6 +113,7 @@ public class Quiz_OpenDialog extends JDialog {
 
 		WebButton wbtnOk = new WebButton();
 		wbtnOk.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}

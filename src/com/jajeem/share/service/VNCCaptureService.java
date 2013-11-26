@@ -31,7 +31,7 @@ public class VNCCaptureService implements ICaptureService {
 		viewer.Stop();
 		viewer.destroy();
 	}
-	
+
 	public void startClientDialog() {
 		ConnectionDialog.showOptions();
 	}

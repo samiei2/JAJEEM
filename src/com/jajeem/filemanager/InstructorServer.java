@@ -9,7 +9,6 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
-import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
@@ -21,187 +20,214 @@ import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 
 public class InstructorServer {
-	
+
 	static long requestNumber = 0;
 	FileTransferEvent fileEvents = new FileTransferEvent();
-	public void Startup(){
+
+	public void Startup() {
 		fileEvents.addEventListener(new FileTransferEventListener() {
-			
+
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void success(FileTransferObject evt, Class t) {
-				// 
-				
+				//
+
 			}
-			
+
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void progress(FileTransferObject evt, Class t) {
-				// 
+				//
 			}
-			
+
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileSendRequest(FileTransferObject evt, Class t) {
 				//
-				
+
 			}
-			
+
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileAcceptRequest(final FileTransferObject evt, Class t) {
-				if(t!=InstructorServer.class)
-					return;
-				final Socket client = evt.getClientSocket();
-				if(client.isConnected() && client.isClosed()){
-					new FileTransferEvent().fireFailure(evt,FileInbox.class);
+				if (t != InstructorServer.class) {
 					return;
 				}
-//				JOptionPane dialog = new JOptionPane("File transfer in progress,please wait ...", JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new Object[]{"Cancel"}, null);
-//				final JDialog confirmationDialog = dialog.createDialog("File Transfer");
+				final Socket client = evt.getClientSocket();
+				if (client.isConnected() && client.isClosed()) {
+					new FileTransferEvent().fireFailure(evt, FileInbox.class);
+					return;
+				}
+				// JOptionPane dialog = new
+				// JOptionPane("File transfer in progress,please wait ...",
+				// JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null ,
+				// new Object[]{"Cancel"}, null);
+				// final JDialog confirmationDialog =
+				// dialog.createDialog("File Transfer");
 				final InstructorProgressWindow progwin = new InstructorProgressWindow();
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						try{
-							
+						try {
+
 							InputStream in = client.getInputStream();
-						    
-						    byte[] path = new byte[2048];
-						    in.read(path, 0, 2048);
-						    @SuppressWarnings("unused")
+
+							byte[] path = new byte[2048];
+							in.read(path, 0, 2048);
+							@SuppressWarnings("unused")
 							String pathStr = new String(path);
-						    byte[] name = new byte[2048];
-						    in.read(name, 0, 2048);
-						    String nameStr = new String(name);
-						    byte[] filelen = new byte[2048];
-						    in.read(filelen, 0, 2048);
-						    String temp = new String(filelen).trim();
-						    int fileLength = Integer.parseInt(temp);
-						    
+							byte[] name = new byte[2048];
+							in.read(name, 0, 2048);
+							String nameStr = new String(name);
+							byte[] filelen = new byte[2048];
+							in.read(filelen, 0, 2048);
+							String temp = new String(filelen).trim();
+							int fileLength = Integer.parseInt(temp);
+
 							String inboxPath = FileUtil.getInboxPath();
-						    File inbox = new File(inboxPath);
-						    inbox.mkdirs();
-						    File file;
-						    String StudentName = InstructorNoa.getStudentNameByIP(client.getInetAddress().getHostAddress());
-						    if(StudentName!=null && StudentName!="")
-						    	file = new File(inbox,StudentName);
-						    else
-						    	file = new File(inbox,client.getInetAddress().getHostAddress());
-						    file.mkdir();
-						    File output = new File(file,nameStr);
-						    FileOutputStream fos = new FileOutputStream(output);
-						    
-						    int x=0;
-						    byte[] b = new byte[4194304];
-						    long bytesRead = 0;
-						    while((x = in.read(b)) > 0)
-						    {
-						        fos.write(b, 0, x);
-						        bytesRead += x;
-						        evt.setProgressValue(((double)bytesRead/(double)fileLength)*100.0);
-						        new FileTransferEvent().fireProgress(evt,InstructorProgressWindow.class);
-						    }
-						    fos.flush();
-						    fos.close();
-						    in.close();
-						    client.close();
-						    
-						    evt.setFileName(output.getAbsolutePath());
-						    if(evt.getClientSocket().getLocalPort()==54321)
-						    	new FileTransferEvent().fireSuccess(evt,FileInbox.class);
-						    if(evt.getClientSocket().getLocalPort()==54322)
-						    	new FileTransferEvent().fireSuccess(evt,FileCollect.class);
-//						    confirmationDialog.dispose();
-						    progwin.dispose();
-						}
-						catch(Exception e){
+							File inbox = new File(inboxPath);
+							inbox.mkdirs();
+							File file;
+							String StudentName = InstructorNoa
+									.getStudentNameByIP(client.getInetAddress()
+											.getHostAddress());
+							if (StudentName != null && StudentName != "") {
+								file = new File(inbox, StudentName);
+							} else {
+								file = new File(inbox, client.getInetAddress()
+										.getHostAddress());
+							}
+							file.mkdir();
+							File output = new File(file, nameStr);
+							FileOutputStream fos = new FileOutputStream(output);
+
+							int x = 0;
+							byte[] b = new byte[4194304];
+							long bytesRead = 0;
+							while ((x = in.read(b)) > 0) {
+								fos.write(b, 0, x);
+								bytesRead += x;
+								evt.setProgressValue(((double) bytesRead / (double) fileLength) * 100.0);
+								new FileTransferEvent().fireProgress(evt,
+										InstructorProgressWindow.class);
+							}
+							fos.flush();
+							fos.close();
+							in.close();
+							client.close();
+
+							evt.setFileName(output.getAbsolutePath());
+							if (evt.getClientSocket().getLocalPort() == 54321) {
+								new FileTransferEvent().fireSuccess(evt,
+										FileInbox.class);
+							}
+							if (evt.getClientSocket().getLocalPort() == 54322) {
+								new FileTransferEvent().fireSuccess(evt,
+										FileCollect.class);
+							}
+							// confirmationDialog.dispose();
 							progwin.dispose();
-//							confirmationDialog.dispose();
-							JajeemExcetionHandler.logError(e,InstructorServer.class);
-							new FileTransferEvent().fireFailure(null,FileInbox.class);
+						} catch (Exception e) {
+							progwin.dispose();
+							// confirmationDialog.dispose();
+							JajeemExcetionHandler.logError(e,
+									InstructorServer.class);
+							new FileTransferEvent().fireFailure(null,
+									FileInbox.class);
 						}
 					}
 				}).start();
-//				confirmationDialog.setVisible(true);
+				// confirmationDialog.setVisible(true);
 				progwin.setVisible(true);
 			}
-			
+
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void fail(FileTransferObject evt, Class t) {
-				
+
 			}
 
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void fileRejectRequest(FileTransferObject evt, Class t) {
-				if(t!=InstructorServer.class)
+				if (t != InstructorServer.class) {
 					return;
+				}
 				try {
 					evt.getClientSocket().close();
 				} catch (IOException e) {
-					JajeemExcetionHandler.logError(e,InstructorServer.class);
+					JajeemExcetionHandler.logError(e, InstructorServer.class);
 					e.printStackTrace();
 				}
 			}
 		}, InstructorServer.class);
-		
+
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				StartFileListenerServer();
 			}
-		}).start(); 
-		
+		}).start();
+
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				StartFileCollectionListenerServer();
 			}
-		}).start(); 
+		}).start();
 	}
 
 	@SuppressWarnings("resource")
 	private void StartFileListenerServer() {
 		try {
-			ServerSocket internalsocket=new ServerSocket(54321);
-			while(true){
+			ServerSocket internalsocket = new ServerSocket(54321);
+			while (true) {
 				final Socket client = internalsocket.accept();
 				FileTransferObject obj = new FileTransferObject(this);
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
-				new FileTransferEvent().fireFileSendRequest(obj,FileInbox.class);
-				JOptionPane.showMessageDialog(null, client.getInetAddress().getHostAddress() + " has sent you a file,you can check it in your File Manager Inbox!");
+				new FileTransferEvent().fireFileSendRequest(obj,
+						FileInbox.class);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								client.getInetAddress().getHostAddress()
+										+ " has sent you a file,you can check it in your File Manager Inbox!");
 				Session.getFileRequestList().add(obj);
 			}
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e,InstructorServer.class);
-			WebOptionPane.showMessageDialog(null, "An error has occured in file server.File services might not work correctly,please restart the application!");
+			JajeemExcetionHandler.logError(e, InstructorServer.class);
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"An error has occured in file server.File services might not work correctly,please restart the application!");
 		}
 	}
-	
+
 	@SuppressWarnings("resource")
 	private void StartFileCollectionListenerServer() {
 		try {
-			ServerSocket internalsocket=new ServerSocket(54322);
-			while(true){
+			ServerSocket internalsocket = new ServerSocket(54322);
+			while (true) {
 				final Socket client = internalsocket.accept();
 				FileTransferObject obj = new FileTransferObject(this);
 				obj.setClientSocket(client);
 				obj.setRequestNumber(requestNumber++);
-				new FileTransferEvent().fireFileSendRequest(obj,FileCollect.class);
+				new FileTransferEvent().fireFileSendRequest(obj,
+						FileCollect.class);
 			}
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e,InstructorServer.class);
-			WebOptionPane.showMessageDialog(null, "An error has occured in file server.File services might not work correctly,please restart the application!");
+			JajeemExcetionHandler.logError(e, InstructorServer.class);
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"An error has occured in file server.File services might not work correctly,please restart the application!");
 		}
 	}
-	
-	
-	public static void main(String[] list){
+
+	public static void main(String[] list) {
 		new InstructorServer().Startup();
 	}
 }

@@ -6,363 +6,343 @@
  */
 package org.jitsi.impl.neomedia.codec.video.h264;
 
-import java.awt.*;
+import java.awt.Dimension;
 
-import javax.media.*;
-import javax.media.format.*;
+import javax.media.Buffer;
+import javax.media.Format;
+import javax.media.ResourceUnavailableException;
+import javax.media.format.VideoFormat;
 
-import net.sf.fmj.media.*;
+import net.sf.fmj.media.AbstractCodec;
 
-import org.jitsi.impl.neomedia.codec.*;
-import org.jitsi.impl.neomedia.codec.video.*;
-import org.jitsi.service.neomedia.codec.*;
-import org.jitsi.service.neomedia.control.*;
+import org.jitsi.impl.neomedia.codec.AbstractCodec2;
+import org.jitsi.impl.neomedia.codec.FFmpeg;
+import org.jitsi.impl.neomedia.codec.video.AVFrame;
+import org.jitsi.impl.neomedia.codec.video.AVFrameFormat;
+import org.jitsi.service.neomedia.codec.Constants;
+import org.jitsi.service.neomedia.control.KeyFrameControl;
 
 /**
  * Decodes H.264 NAL units and returns the resulting frames as FFmpeg
  * <tt>AVFrame</tt>s (i.e. in YUV format).
- *
+ * 
  * @author Damian Minkov
  * @author Lyubomir Marinov
  * @author Sebastien Vincent
  */
-public class JNIDecoder
-    extends AbstractCodec
-{
-    /**
-     * The default output <tt>VideoFormat</tt>.
-     */
-    private static final VideoFormat[] DEFAULT_OUTPUT_FORMATS
-        = new VideoFormat[] { new AVFrameFormat(FFmpeg.PIX_FMT_YUV420P) };
+public class JNIDecoder extends AbstractCodec {
+	/**
+	 * The default output <tt>VideoFormat</tt>.
+	 */
+	private static final VideoFormat[] DEFAULT_OUTPUT_FORMATS = new VideoFormat[] { new AVFrameFormat(
+			FFmpeg.PIX_FMT_YUV420P) };
 
-    /**
-     * Plugin name.
-     */
-    private static final String PLUGIN_NAME = "H.264 Decoder";
+	/**
+	 * Plugin name.
+	 */
+	private static final String PLUGIN_NAME = "H.264 Decoder";
 
-    /**
-     *  The codec context native pointer we will use.
-     */
-    private long avctx;
+	/**
+	 * The codec context native pointer we will use.
+	 */
+	private long avctx;
 
-    /**
-     * The <tt>AVFrame</tt> in which the video frame decoded from the encoded
-     * media data is stored.
-     */
-    private AVFrame avframe;
+	/**
+	 * The <tt>AVFrame</tt> in which the video frame decoded from the encoded
+	 * media data is stored.
+	 */
+	private AVFrame avframe;
 
-    /**
-     * If decoder has got a picture.
-     */
-    private final boolean[] got_picture = new boolean[1];
+	/**
+	 * If decoder has got a picture.
+	 */
+	private final boolean[] got_picture = new boolean[1];
 
-    private boolean gotPictureAtLeastOnce;
+	private boolean gotPictureAtLeastOnce;
 
-    /**
-     * The last known height of {@link #avctx} i.e. the video output by this
-     * <tt>JNIDecoder</tt>. Used to detect changes in the output size.
-     */
-    private int height;
+	/**
+	 * The last known height of {@link #avctx} i.e. the video output by this
+	 * <tt>JNIDecoder</tt>. Used to detect changes in the output size.
+	 */
+	private int height;
 
-    /**
-     * The <tt>KeyFrameControl</tt> used by this <tt>JNIDecoder</tt> to
-     * control its key frame-related logic.
-     */
-    private KeyFrameControl keyFrameControl;
+	/**
+	 * The <tt>KeyFrameControl</tt> used by this <tt>JNIDecoder</tt> to control
+	 * its key frame-related logic.
+	 */
+	private KeyFrameControl keyFrameControl;
 
-    /**
-     * Array of output <tt>VideoFormat</tt>s.
-     */
-    private final VideoFormat[] outputFormats;
+	/**
+	 * Array of output <tt>VideoFormat</tt>s.
+	 */
+	private final VideoFormat[] outputFormats;
 
-    /**
-     * The last known width of {@link #avctx} i.e. the video output by this
-     * <tt>JNIDecoder</tt>. Used to detect changes in the output size.
-     */
-    private int width;
+	/**
+	 * The last known width of {@link #avctx} i.e. the video output by this
+	 * <tt>JNIDecoder</tt>. Used to detect changes in the output size.
+	 */
+	private int width;
 
-    /**
-     * Initializes a new <tt>JNIDecoder</tt> instance which is to decode H.264
-     * NAL units into frames in YUV format.
-     */
-    public JNIDecoder()
-    {
-        inputFormats = new VideoFormat[] { new VideoFormat(Constants.H264) };
-        outputFormats = DEFAULT_OUTPUT_FORMATS;
-    }
+	/**
+	 * Initializes a new <tt>JNIDecoder</tt> instance which is to decode H.264
+	 * NAL units into frames in YUV format.
+	 */
+	public JNIDecoder() {
+		inputFormats = new VideoFormat[] { new VideoFormat(Constants.H264) };
+		outputFormats = DEFAULT_OUTPUT_FORMATS;
+	}
 
-    /**
-     * Check <tt>Format</tt>.
-     *
-     * @param format <tt>Format</tt> to check
-     * @return true if <tt>Format</tt> is H264_RTP
-     */
-    public boolean checkFormat(Format format)
-    {
-        return format.getEncoding().equals(Constants.H264_RTP);
-    }
+	/**
+	 * Check <tt>Format</tt>.
+	 * 
+	 * @param format
+	 *            <tt>Format</tt> to check
+	 * @return true if <tt>Format</tt> is H264_RTP
+	 */
+	public boolean checkFormat(Format format) {
+		return format.getEncoding().equals(Constants.H264_RTP);
+	}
 
-    /**
-     * Close <tt>Codec</tt>.
-     */
-    @Override
-    public synchronized void close()
-    {
-        if (opened)
-        {
-            opened = false;
-            super.close();
+	/**
+	 * Close <tt>Codec</tt>.
+	 */
+	@Override
+	public synchronized void close() {
+		if (opened) {
+			opened = false;
+			super.close();
 
-            FFmpeg.avcodec_close(avctx);
-            FFmpeg.av_free(avctx);
-            avctx = 0;
+			FFmpeg.avcodec_close(avctx);
+			FFmpeg.av_free(avctx);
+			avctx = 0;
 
-            if (avframe != null)
-            {
-                avframe.free();
-                avframe = null;
-            }
+			if (avframe != null) {
+				avframe.free();
+				avframe = null;
+			}
 
-            gotPictureAtLeastOnce = false;
-        }
-    }
+			gotPictureAtLeastOnce = false;
+		}
+	}
 
-    /**
-     * Ensure frame rate.
-     *
-     * @param frameRate frame rate
-     * @return frame rate
-     */
-    private float ensureFrameRate(float frameRate)
-    {
-        return frameRate;
-    }
+	/**
+	 * Ensure frame rate.
+	 * 
+	 * @param frameRate
+	 *            frame rate
+	 * @return frame rate
+	 */
+	private float ensureFrameRate(float frameRate) {
+		return frameRate;
+	}
 
-    /**
-     * Get matching outputs for a specified input <tt>Format</tt>.
-     *
-     * @param inputFormat input <tt>Format</tt>
-     * @return array of matching outputs or null if there are no matching
-     * outputs.
-     */
-    protected Format[] getMatchingOutputFormats(Format inputFormat)
-    {
-        VideoFormat inputVideoFormat = (VideoFormat) inputFormat;
+	/**
+	 * Get matching outputs for a specified input <tt>Format</tt>.
+	 * 
+	 * @param inputFormat
+	 *            input <tt>Format</tt>
+	 * @return array of matching outputs or null if there are no matching
+	 *         outputs.
+	 */
+	protected Format[] getMatchingOutputFormats(Format inputFormat) {
+		VideoFormat inputVideoFormat = (VideoFormat) inputFormat;
 
-        return
-            new Format[]
-            {
-                new AVFrameFormat(
-                        inputVideoFormat.getSize(),
-                        ensureFrameRate(inputVideoFormat.getFrameRate()),
-                        FFmpeg.PIX_FMT_YUV420P)
-            };
-    }
+		return new Format[] { new AVFrameFormat(inputVideoFormat.getSize(),
+				ensureFrameRate(inputVideoFormat.getFrameRate()),
+				FFmpeg.PIX_FMT_YUV420P) };
+	}
 
-    /**
-     * Get plugin name.
-     *
-     * @return "H.264 Decoder"
-     */
-    @Override
-    public String getName()
-    {
-        return PLUGIN_NAME;
-    }
+	/**
+	 * Get plugin name.
+	 * 
+	 * @return "H.264 Decoder"
+	 */
+	@Override
+	public String getName() {
+		return PLUGIN_NAME;
+	}
 
-    /**
-     * Get all supported output <tt>Format</tt>s.
-     *
-     * @param inputFormat input <tt>Format</tt> to determine corresponding
-     * output <tt>Format/tt>s
-     * @return an array of supported output <tt>Format</tt>s
-     */
-    @Override
-    public Format[] getSupportedOutputFormats(Format inputFormat)
-    {
-        Format[] supportedOutputFormats;
+	/**
+	 * Get all supported output <tt>Format</tt>s.
+	 * 
+	 * @param inputFormat
+	 *            input <tt>Format</tt> to determine corresponding output
+	 *            <tt>Format/tt>s
+	 * @return an array of supported output <tt>Format</tt>s
+	 */
+	@Override
+	public Format[] getSupportedOutputFormats(Format inputFormat) {
+		Format[] supportedOutputFormats;
 
-        if (inputFormat == null)
-            supportedOutputFormats = outputFormats;
-        else
-        {
-            // mismatch input format
-            if (!(inputFormat instanceof VideoFormat)
-                    || (AbstractCodec2.matches(inputFormat, inputFormats)
-                            == null))
-                supportedOutputFormats = new Format[0];
-            else
-            {
-                // match input format
-                supportedOutputFormats = getMatchingOutputFormats(inputFormat);
-            }
-        }
-        return supportedOutputFormats;
-    }
+		if (inputFormat == null) {
+			supportedOutputFormats = outputFormats;
+		} else {
+			// mismatch input format
+			if (!(inputFormat instanceof VideoFormat)
+					|| (AbstractCodec2.matches(inputFormat, inputFormats) == null)) {
+				supportedOutputFormats = new Format[0];
+			} else {
+				// match input format
+				supportedOutputFormats = getMatchingOutputFormats(inputFormat);
+			}
+		}
+		return supportedOutputFormats;
+	}
 
-    /**
-     * Inits the codec instances.
-     *
-     * @throws ResourceUnavailableException if codec initialization failed
-     */
-    @Override
-    public synchronized void open()
-        throws ResourceUnavailableException
-    {
-        if (opened)
-            return;
+	/**
+	 * Inits the codec instances.
+	 * 
+	 * @throws ResourceUnavailableException
+	 *             if codec initialization failed
+	 */
+	@Override
+	public synchronized void open() throws ResourceUnavailableException {
+		if (opened) {
+			return;
+		}
 
-        if (avframe != null)
-        {
-            avframe.free();
-            avframe = null;
-        }
-        avframe = new AVFrame();
+		if (avframe != null) {
+			avframe.free();
+			avframe = null;
+		}
+		avframe = new AVFrame();
 
-        long avcodec = FFmpeg.avcodec_find_decoder(FFmpeg.CODEC_ID_H264);
+		long avcodec = FFmpeg.avcodec_find_decoder(FFmpeg.CODEC_ID_H264);
 
-        avctx = FFmpeg.avcodec_alloc_context3(avcodec);
-        FFmpeg.avcodeccontext_set_workaround_bugs(avctx,
-                FFmpeg.FF_BUG_AUTODETECT);
+		avctx = FFmpeg.avcodec_alloc_context3(avcodec);
+		FFmpeg.avcodeccontext_set_workaround_bugs(avctx,
+				FFmpeg.FF_BUG_AUTODETECT);
 
-        /* allow to pass incomplete frame to decoder */
-        FFmpeg.avcodeccontext_add_flags2(avctx,
-                FFmpeg.CODEC_FLAG2_CHUNKS);
+		/* allow to pass incomplete frame to decoder */
+		FFmpeg.avcodeccontext_add_flags2(avctx, FFmpeg.CODEC_FLAG2_CHUNKS);
 
-        if (FFmpeg.avcodec_open2(avctx, avcodec) < 0)
-            throw new RuntimeException("Could not open codec CODEC_ID_H264");
+		if (FFmpeg.avcodec_open2(avctx, avcodec) < 0) {
+			throw new RuntimeException("Could not open codec CODEC_ID_H264");
+		}
 
-        gotPictureAtLeastOnce = false;
+		gotPictureAtLeastOnce = false;
 
-        opened = true;
-        super.open();
-    }
+		opened = true;
+		super.open();
+	}
 
-    /**
-     * Decodes H.264 media data read from a specific input <tt>Buffer</tt> into
-     * a specific output <tt>Buffer</tt>.
-     *
-     * @param in input <tt>Buffer</tt>
-     * @param out output <tt>Buffer</tt>
-     * @return <tt>BUFFER_PROCESSED_OK</tt> if <tt>in</tt> has been successfully
-     * processed
-     */
-    @Override
-    public synchronized int process(Buffer in, Buffer out)
-    {
-        if (!checkInputBuffer(in))
-            return BUFFER_PROCESSED_FAILED;
-        if (isEOM(in) || !opened)
-        {
-            propagateEOM(out);
-            return BUFFER_PROCESSED_OK;
-        }
-        if (in.isDiscard())
-        {
-            out.setDiscard(true);
-            return BUFFER_PROCESSED_OK;
-        }
+	/**
+	 * Decodes H.264 media data read from a specific input <tt>Buffer</tt> into
+	 * a specific output <tt>Buffer</tt>.
+	 * 
+	 * @param in
+	 *            input <tt>Buffer</tt>
+	 * @param out
+	 *            output <tt>Buffer</tt>
+	 * @return <tt>BUFFER_PROCESSED_OK</tt> if <tt>in</tt> has been successfully
+	 *         processed
+	 */
+	@Override
+	public synchronized int process(Buffer in, Buffer out) {
+		if (!checkInputBuffer(in)) {
+			return BUFFER_PROCESSED_FAILED;
+		}
+		if (isEOM(in) || !opened) {
+			propagateEOM(out);
+			return BUFFER_PROCESSED_OK;
+		}
+		if (in.isDiscard()) {
+			out.setDiscard(true);
+			return BUFFER_PROCESSED_OK;
+		}
 
-        // Ask FFmpeg to decode.
-        got_picture[0] = false;
-        // TODO Take into account the offset of inputBuffer.
-        FFmpeg.avcodec_decode_video(
-                avctx,
-                avframe.getPtr(),
-                got_picture,
-                (byte[]) in.getData(), in.getLength());
+		// Ask FFmpeg to decode.
+		got_picture[0] = false;
+		// TODO Take into account the offset of inputBuffer.
+		FFmpeg.avcodec_decode_video(avctx, avframe.getPtr(), got_picture,
+				(byte[]) in.getData(), in.getLength());
 
-        if (!got_picture[0])
-        {
-            if ((in.getFlags() & Buffer.FLAG_RTP_MARKER) != 0)
-            {
-                if (keyFrameControl != null)
-                    keyFrameControl.requestKeyFrame(!gotPictureAtLeastOnce);
-            }
+		if (!got_picture[0]) {
+			if ((in.getFlags() & Buffer.FLAG_RTP_MARKER) != 0) {
+				if (keyFrameControl != null) {
+					keyFrameControl.requestKeyFrame(!gotPictureAtLeastOnce);
+				}
+			}
 
-            out.setDiscard(true);
-            return BUFFER_PROCESSED_OK;
-        }
-        gotPictureAtLeastOnce = true;
+			out.setDiscard(true);
+			return BUFFER_PROCESSED_OK;
+		}
+		gotPictureAtLeastOnce = true;
 
-        // format
-        int width = FFmpeg.avcodeccontext_get_width(avctx);
-        int height = FFmpeg.avcodeccontext_get_height(avctx);
+		// format
+		int width = FFmpeg.avcodeccontext_get_width(avctx);
+		int height = FFmpeg.avcodeccontext_get_height(avctx);
 
-        if ((width > 0)
-                && (height > 0)
-                && ((this.width != width) || (this.height != height)))
-        {
-            this.width = width;
-            this.height = height;
+		if ((width > 0) && (height > 0)
+				&& ((this.width != width) || (this.height != height))) {
+			this.width = width;
+			this.height = height;
 
-            // Output in same size and frame rate as input.
-            Dimension outSize = new Dimension(this.width, this.height);
-            VideoFormat inFormat = (VideoFormat) in.getFormat();
-            float outFrameRate = ensureFrameRate(inFormat.getFrameRate());
+			// Output in same size and frame rate as input.
+			Dimension outSize = new Dimension(this.width, this.height);
+			VideoFormat inFormat = (VideoFormat) in.getFormat();
+			float outFrameRate = ensureFrameRate(inFormat.getFrameRate());
 
-            outputFormat
-                = new AVFrameFormat(
-                        outSize,
-                        outFrameRate,
-                        FFmpeg.PIX_FMT_YUV420P);
-        }
-        out.setFormat(outputFormat);
+			outputFormat = new AVFrameFormat(outSize, outFrameRate,
+					FFmpeg.PIX_FMT_YUV420P);
+		}
+		out.setFormat(outputFormat);
 
-        // data
-        if (out.getData() != avframe)
-            out.setData(avframe);
+		// data
+		if (out.getData() != avframe) {
+			out.setData(avframe);
+		}
 
-        // timeStamp
-        long pts = FFmpeg.AV_NOPTS_VALUE; // TODO avframe_get_pts(avframe);
+		// timeStamp
+		long pts = FFmpeg.AV_NOPTS_VALUE; // TODO avframe_get_pts(avframe);
 
-        if (pts == FFmpeg.AV_NOPTS_VALUE)
-            out.setTimeStamp(Buffer.TIME_UNKNOWN);
-        else
-        {
-            out.setTimeStamp(pts);
+		if (pts == FFmpeg.AV_NOPTS_VALUE) {
+			out.setTimeStamp(Buffer.TIME_UNKNOWN);
+		} else {
+			out.setTimeStamp(pts);
 
-            int outFlags = out.getFlags();
+			int outFlags = out.getFlags();
 
-            outFlags |= Buffer.FLAG_RELATIVE_TIME;
-            outFlags &= ~(Buffer.FLAG_RTP_TIME | Buffer.FLAG_SYSTEM_TIME);
-            out.setFlags(outFlags);
-        }
+			outFlags |= Buffer.FLAG_RELATIVE_TIME;
+			outFlags &= ~(Buffer.FLAG_RTP_TIME | Buffer.FLAG_SYSTEM_TIME);
+			out.setFlags(outFlags);
+		}
 
-        return BUFFER_PROCESSED_OK;
-    }
+		return BUFFER_PROCESSED_OK;
+	}
 
-    /**
-     * Sets the <tt>Format</tt> of the media data to be input for processing in
-     * this <tt>Codec</tt>.
-     *
-     * @param format the <tt>Format</tt> of the media data to be input for
-     * processing in this <tt>Codec</tt>
-     * @return the <tt>Format</tt> of the media data to be input for processing
-     * in this <tt>Codec</tt> if <tt>format</tt> is compatible with this
-     * <tt>Codec</tt>; otherwise, <tt>null</tt>
-     */
-    @Override
-    public Format setInputFormat(Format format)
-    {
-        Format setFormat = super.setInputFormat(format);
+	/**
+	 * Sets the <tt>Format</tt> of the media data to be input for processing in
+	 * this <tt>Codec</tt>.
+	 * 
+	 * @param format
+	 *            the <tt>Format</tt> of the media data to be input for
+	 *            processing in this <tt>Codec</tt>
+	 * @return the <tt>Format</tt> of the media data to be input for processing
+	 *         in this <tt>Codec</tt> if <tt>format</tt> is compatible with this
+	 *         <tt>Codec</tt>; otherwise, <tt>null</tt>
+	 */
+	@Override
+	public Format setInputFormat(Format format) {
+		Format setFormat = super.setInputFormat(format);
 
-        if (setFormat != null)
-            reset();
-        return setFormat;
-    }
+		if (setFormat != null) {
+			reset();
+		}
+		return setFormat;
+	}
 
-    /**
-     * Sets the <tt>KeyFrameControl</tt> to be used by this
-     * <tt>DePacketizer</tt> as a means of control over its key frame-related
-     * logic.
-     *
-     * @param keyFrameControl the <tt>KeyFrameControl</tt> to be used by this
-     * <tt>DePacketizer</tt> as a means of control over its key frame-related
-     * logic
-     */
-    public void setKeyFrameControl(KeyFrameControl keyFrameControl)
-    {
-        this.keyFrameControl = keyFrameControl;
-    }
+	/**
+	 * Sets the <tt>KeyFrameControl</tt> to be used by this
+	 * <tt>DePacketizer</tt> as a means of control over its key frame-related
+	 * logic.
+	 * 
+	 * @param keyFrameControl
+	 *            the <tt>KeyFrameControl</tt> to be used by this
+	 *            <tt>DePacketizer</tt> as a means of control over its key
+	 *            frame-related logic
+	 */
+	public void setKeyFrameControl(KeyFrameControl keyFrameControl) {
+		this.keyFrameControl = keyFrameControl;
+	}
 }

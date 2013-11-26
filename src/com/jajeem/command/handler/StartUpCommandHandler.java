@@ -37,7 +37,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 			} else {
 				StudentLogin.getLoginDialog().setVisible(false);
 			}
-			
+
 			Student.setCountdown(30000);
 		} else if (Integer.parseInt(Config.getParam("server")) == 1
 				&& cmd.getPort() == Integer.parseInt(Config

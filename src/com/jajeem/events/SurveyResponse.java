@@ -8,41 +8,51 @@ import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Response;
 import com.jajeem.survey.model.Run;
 
-public class SurveyResponse extends EventObject implements Serializable{
+public class SurveyResponse extends EventObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Student student;
 	private Response response;
 	private Question question;
 	private Run SurveyRun;
 	private int listenPort;
+
 	public SurveyResponse(Object source) {
-	    super(source);
+		super(source);
 	}
+
 	public Student getStudent() {
 		return student;
 	}
+
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+
 	public Response getResponse() {
 		return this.response;
 	}
+
 	public Question getQuestion() {
 		return question;
 	}
-	public void setQuestion(Question question){
+
+	public void setQuestion(Question question) {
 		this.question = question;
 	}
+
 	public Run getSurveyRun() {
 		return SurveyRun;
 	}
+
 	public void setSurveyRun(Run SurveyRun) {
 		this.SurveyRun = SurveyRun;
 	}
+
 	public int getListeningPort() {
 		return listenPort;
 	}
-	public void setListeningPort(int i){
+
+	public void setListeningPort(int i) {
 		listenPort = i;
 	}
 }

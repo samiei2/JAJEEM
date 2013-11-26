@@ -66,25 +66,41 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		WebLabel webLabel = new WebLabel();
 		webLabel.setText("Results");
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel.setHorizontalGroup(
-			gl_webPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addGroup(gl_webPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_webPanel.setVerticalGroup(
-			gl_webPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_webPanel
+				.setHorizontalGroup(gl_webPanel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_webPanel
+										.createSequentialGroup()
+										.addGroup(
+												gl_webPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_webPanel
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				webLabel,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																webScrollPane,
+																GroupLayout.DEFAULT_SIZE,
+																760,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		gl_webPanel.setVerticalGroup(gl_webPanel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_webPanel
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 13,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(10)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE,
+								235, Short.MAX_VALUE).addContainerGap()));
 
 		webTable = new WebTable();
 		webTable.setEditable(false);
@@ -212,64 +228,76 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (surveyResponse != null) {
 					currentStudent = new Student();
-					if (webComboBox.getSelectedIndex() != -1)
+					if (webComboBox.getSelectedIndex() != -1) {
 						currentStudent.setId(Integer.parseInt(webComboBox
 								.getSelectedItem().toString()));
+					}
 
-					WebTableModel model = (WebTableModel) webTable
-							.getModel();
+					WebTableModel model = (WebTableModel) webTable.getModel();
 					model.getDataVector().removeAllElements();
 					model.fireTableDataChanged();
 
 					for (int i = 0; i < surveyResponse.size(); i++) { // iterates
-																	// through
-																	// questions
+																		// through
+																		// questions
 						for (int j = 0; j < surveyResponse.get(i).size(); j++) { // iterates
-																				// through
-																				// responses
+																					// through
+																					// responses
 							SurveyResponse ex = surveyResponse.get(i).get(j);
 							Student student = ex.getStudent();
 							Question question = ex.getQuestion();
 							if (currentStudent.getId() == student.getId()) {
-								
 
 								String StudentOption = "";
 								if (question.getType() == 0) { // setting
 																// student's
 																// answer
-									if (question.getStudentAnswer()[0])
+									if (question.getStudentAnswer()[0]) {
 										StudentOption = "First Option";
-									if (question.getStudentAnswer()[1])
+									}
+									if (question.getStudentAnswer()[1]) {
 										StudentOption = "Second Option";
-									if (question.getStudentAnswer()[2])
+									}
+									if (question.getStudentAnswer()[2]) {
 										StudentOption = "Third Option";
-									if (question.getStudentAnswer()[3])
+									}
+									if (question.getStudentAnswer()[3]) {
 										StudentOption = "Fourth Option";
-									if (question.getStudentAnswer()[4])
+									}
+									if (question.getStudentAnswer()[4]) {
 										StudentOption = "Fifth Option";
-									if (StudentOption == "")
+									}
+									if (StudentOption == "") {
 										StudentOption = "None Selected";
+									}
 								} else if (question.getType() == 1) {
-									if (question.getStudentAnswer()[0])
+									if (question.getStudentAnswer()[0]) {
 										StudentOption += "First Option,";
-									if (question.getStudentAnswer()[1])
+									}
+									if (question.getStudentAnswer()[1]) {
 										StudentOption += "Second Option,";
-									if (question.getStudentAnswer()[2])
+									}
+									if (question.getStudentAnswer()[2]) {
 										StudentOption += "Third Option,";
-									if (question.getStudentAnswer()[3])
+									}
+									if (question.getStudentAnswer()[3]) {
 										StudentOption += "Fourth Option,";
-									if (question.getStudentAnswer()[4])
+									}
+									if (question.getStudentAnswer()[4]) {
 										StudentOption += "Fifth Option";
-									if (StudentOption == "")
+									}
+									if (StudentOption == "") {
 										StudentOption = "None Selected";
-								} else
+									}
+								} else {
 									StudentOption = question
 											.getStudentTextAnswer();
+								}
 
-
-								model.addRow(new Object[] { webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-										question.getTitle(), 
-										StudentOption });
+								model.addRow(new Object[] {
+										webTable.getRowCount() == 0 ? 1
+												: webTable.getRowCount() + 1,
+										question.getTitle(), StudentOption });
 							}
 						}
 					}
@@ -285,69 +313,75 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		boolean found = false;
 		for (int i = 0; i < (webComboBox.getModel()).getSize(); i++) {
 			if (webComboBox.getItemAt(i).toString()
-					.equals(String.valueOf(student.getId())))
+					.equals(String.valueOf(student.getId()))) {
 				found = true;
+			}
 		}
 		if (!found) {
 			webComboBox.addItem(student.getId());
 			id = student.getId();
 		}
-		if (webComboBox.getSelectedIndex() == -1)
+		if (webComboBox.getSelectedIndex() == -1) {
 			webComboBox.setSelectedIndex(0);
+		}
 
 		found = false;
 		if (currentStudent != null && question != null && student != null) {
 			int index = -1;
 			for (int i = 0; i < currentSurvey.getQuestionList().size(); i++) {// find
-																			// question
-																			// index
-																			// in
-																			// the
-																			// response
-																			// list
-				if (currentSurvey.getQuestionList().get(i).getId().equals(question
-						.getId()))
+																				// question
+																				// index
+																				// in
+																				// the
+																				// response
+																				// list
+				if (currentSurvey.getQuestionList().get(i).getId()
+						.equals(question.getId())) {
 					index = i;
+				}
 			}
 			for (int i = 0; i < surveyResponse.size(); i++) {// search in
-															// results,if this
-															// question is
-															// already answered
-															// by this
-															// student,then
-															// update,otherwise
-															// save
+																// results,if
+																// this
+																// question is
+																// already
+																// answered
+																// by this
+																// student,then
+																// update,otherwise
+																// save
 				for (int j = 0; j < surveyResponse.get(i).size(); j++) { // search
-																		// in
-																		// student's
-																		// response
-																		// list
-																		// of
-																		// the
-																		// question
-																		// surveyresponse.get(i)
-																		// =
-																		// list
-																		// of
-																		// responses
-																		// of
-																		// students
-																		// who
-																		// answered
-																		// this
-																		// question
+																			// in
+																			// student's
+																			// response
+																			// list
+																			// of
+																			// the
+																			// question
+																			// surveyresponse.get(i)
+																			// =
+																			// list
+																			// of
+																			// responses
+																			// of
+																			// students
+																			// who
+																			// answered
+																			// this
+																			// question
 					if (surveyResponse.get(i).get(j).getStudent().getId() == student
 							.getId()
-							&& surveyResponse.get(i).get(j).getQuestion().getId().equals(question
-									.getId())) {
+							&& surveyResponse.get(i).get(j).getQuestion()
+									.getId().equals(question.getId())) {
 						surveyResponse.get(i).set(j, e);
 						found = true;
 						break;
 					}
 				}
 			}
-			if (!found)
+			if (!found) {
 				surveyResponse.get(index).add(e);
+			}
 
 			if (student.getId() == currentStudent.getId()) {// if the student id
 															// is equal to
@@ -359,11 +393,11 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 				model.getDataVector().removeAllElements();
 				model.fireTableDataChanged();
 				for (int i = 0; i < surveyResponse.size(); i++) { // iterate
-																// through
-																// questions
+																	// through
+																	// questions
 					for (int j = 0; j < surveyResponse.get(i).size(); j++) { // iterate
-																			// through
-																			// answers
+																				// through
+																				// answers
 						SurveyResponse resp = surveyResponse.get(i).get(j);
 						Question tempq = resp.getQuestion();
 						Student temps = resp.getStudent();
@@ -372,44 +406,58 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 							String StudentOption = "";
 							if (tempq.getType() == 0) { // setting student's
 														// answer
-								if (tempq.getStudentAnswer()[0])
+								if (tempq.getStudentAnswer()[0]) {
 									StudentOption = "First Option";
-								if (tempq.getStudentAnswer()[1])
+								}
+								if (tempq.getStudentAnswer()[1]) {
 									StudentOption = "Second Option";
-								if (tempq.getStudentAnswer()[2])
+								}
+								if (tempq.getStudentAnswer()[2]) {
 									StudentOption = "Third Option";
-								if (tempq.getStudentAnswer()[3])
+								}
+								if (tempq.getStudentAnswer()[3]) {
 									StudentOption = "Fourth Option";
-								if (tempq.getStudentAnswer()[4])
+								}
+								if (tempq.getStudentAnswer()[4]) {
 									StudentOption = "Fifth Option";
-								if (StudentOption == "")
+								}
+								if (StudentOption == "") {
 									StudentOption = "None Selected";
+								}
 							} else if (tempq.getType() == 1) {
-								if (tempq.getStudentAnswer()[0])
+								if (tempq.getStudentAnswer()[0]) {
 									StudentOption += "First Option,";
-								if (tempq.getStudentAnswer()[1])
+								}
+								if (tempq.getStudentAnswer()[1]) {
 									StudentOption += "Second Option,";
-								if (tempq.getStudentAnswer()[2])
+								}
+								if (tempq.getStudentAnswer()[2]) {
 									StudentOption += "Third Option,";
-								if (tempq.getStudentAnswer()[3])
+								}
+								if (tempq.getStudentAnswer()[3]) {
 									StudentOption += "Fourth Option,";
-								if (tempq.getStudentAnswer()[4])
+								}
+								if (tempq.getStudentAnswer()[4]) {
 									StudentOption += "Fifth Option";
-								if (StudentOption == "")
+								}
+								if (StudentOption == "") {
 									StudentOption = "None Selected";
-							} else
+								}
+							} else {
 								StudentOption = tempq.getStudentTextAnswer();
+							}
 
-							model.addRow(new Object[] { webTable.getRowCount() == 0 ? 1 : webTable.getRowCount() + 1,
-									tempq.getTitle(), 
-									StudentOption });
+							model.addRow(new Object[] {
+									webTable.getRowCount() == 0 ? 1 : webTable
+											.getRowCount() + 1,
+									tempq.getTitle(), StudentOption });
 						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void LoadSurvey(Survey currentSurvey2) {
 		currentSurvey = currentSurvey2;
 		surveyResponse = parentPanel.getSurveyResponse();
@@ -425,7 +473,7 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		surveyResponse.clear();
 		surveyResponse = null;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -442,8 +490,9 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 
 		@Override
 		public Class<?> getColumnClass(int arg0) {
-			if (arg0 == 0)
+			if (arg0 == 0) {
 				return Icon.class;
+			}
 			return super.getColumnClass(arg0);
 		}
 	}

@@ -6,86 +6,83 @@
  */
 package org.jitsi.service.neomedia.event;
 
-import java.util.*;
+import java.util.EventObject;
 
 /**
- * Represents an event coming from RTCP that meant to tell codec
- * to do something (i.e send a keyframe, ...).
- *
+ * Represents an event coming from RTCP that meant to tell codec to do something
+ * (i.e send a keyframe, ...).
+ * 
  * @author Sebastien Vincent
  */
-public class RTCPFeedbackEvent
-    extends EventObject
-{
-    /**
-     * Serial version UID.
-     */
-    private static final long serialVersionUID = 0L;
+public class RTCPFeedbackEvent extends EventObject {
+	/**
+	 * Serial version UID.
+	 */
+	private static final long serialVersionUID = 0L;
 
-    /**
-     * Transport layer type (payload type).
-     */
-    public static final int PT_TL = 205;
+	/**
+	 * Transport layer type (payload type).
+	 */
+	public static final int PT_TL = 205;
 
-    /**
-     * Payload-specific type (payload type).
-     */
-    public static final int PT_PS = 206;
+	/**
+	 * Payload-specific type (payload type).
+	 */
+	public static final int PT_PS = 206;
 
-    /**
-     * Picture Loss Indication message type.
-     */
-    public static final int FMT_PLI = 1;
+	/**
+	 * Picture Loss Indication message type.
+	 */
+	public static final int FMT_PLI = 1;
 
-    /**
-     * Full Intra-frame Request message type.
-     */
-    public static final int FMT_FIR = 4;
+	/**
+	 * Full Intra-frame Request message type.
+	 */
+	public static final int FMT_FIR = 4;
 
-    /**
-     * Feedback message type.
-     */
-    private final int feedbackMessageType;
+	/**
+	 * Feedback message type.
+	 */
+	private final int feedbackMessageType;
 
-    /**
-     * Payload type.
-     */
-    private final int payloadType;
+	/**
+	 * Payload type.
+	 */
+	private final int payloadType;
 
-    /**
-     * Constructor.
-     *
-     * @param src source
-     * @param feedbackMessageType FMT
-     * @param payloadType PT
-     */
-    public RTCPFeedbackEvent(Object src, int feedbackMessageType,
-            int payloadType)
-    {
-        super(src);
+	/**
+	 * Constructor.
+	 * 
+	 * @param src
+	 *            source
+	 * @param feedbackMessageType
+	 *            FMT
+	 * @param payloadType
+	 *            PT
+	 */
+	public RTCPFeedbackEvent(Object src, int feedbackMessageType,
+			int payloadType) {
+		super(src);
 
-        this.feedbackMessageType = feedbackMessageType;
-        this.payloadType = payloadType;
-    }
+		this.feedbackMessageType = feedbackMessageType;
+		this.payloadType = payloadType;
+	}
 
-    /**
-     * Get feedback message type.
-     *
-     * @return message type
-     */
-    public int getFeedbackMessageType()
-    {
-        return feedbackMessageType;
-    }
+	/**
+	 * Get feedback message type.
+	 * 
+	 * @return message type
+	 */
+	public int getFeedbackMessageType() {
+		return feedbackMessageType;
+	}
 
-    /**
-     * Get payload type of RTCP packet.
-     *
-     * @return payload type
-     */
-    public int getPayloadType()
-    {
-        return payloadType;
-    }
+	/**
+	 * Get payload type of RTCP packet.
+	 * 
+	 * @return payload type
+	 */
+	public int getPayloadType() {
+		return payloadType;
+	}
 }
-

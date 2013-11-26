@@ -9,9 +9,10 @@ public class FinishedQuizCommand extends Command {
 	private static final long serialVersionUID = -4014963068838321817L;
 	private String server;
 	private Run run;
+
 	public FinishedQuizCommand(String from, String to, int port) {
 		super(from, to, port);
-		
+
 	}
 
 	public String getServer() {
@@ -25,8 +26,8 @@ public class FinishedQuizCommand extends Command {
 	public void setRun(Run run) {
 		this.run = run;
 	}
-	
-	public Run getRun(){
+
+	public Run getRun() {
 		return run;
 	}
 

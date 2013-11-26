@@ -19,7 +19,7 @@ public class ChatCommandHanlder implements ICommandHandler {
 		Chat currentChat = null;
 
 		if (Integer.parseInt(Config.getParam("server")) != 1) {
-			
+
 			for (Chat chat : Student.getChatList()) {
 				if (chat.getGroupId() == ((ChatCommand) cmd).getGroupId()) {
 					currentChat = chat;

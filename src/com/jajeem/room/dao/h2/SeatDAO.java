@@ -18,19 +18,19 @@ public class SeatDAO implements ISeatDAO {
 	Logger logger = Logger.getLogger(SeatDAO.class);
 
 	public SeatDAO() {
-		
+
 	}
 
 	@Override
 	public Seat create(Seat seat) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO Seat (Roomid, name, row, col) " +
-				" VALUES (?, ?, ? , ?);");
+		ps = con.prepareStatement("INSERT INTO Seat (Roomid, name, row, col) "
+				+ " VALUES (?, ?, ? , ?);");
 		ps.setInt(1, seat.getClassId());
 		ps.setString(2, seat.getName());
 		ps.setInt(3, seat.getRow());
@@ -63,14 +63,16 @@ public class SeatDAO implements ISeatDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -81,12 +83,12 @@ public class SeatDAO implements ISeatDAO {
 
 	@Override
 	public Seat get(Seat seat) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Seat WHERE Seat.id = ?;");
 		ps.setInt(1, seat.getId());
 
@@ -106,20 +108,23 @@ public class SeatDAO implements ISeatDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -130,14 +135,14 @@ public class SeatDAO implements ISeatDAO {
 
 	@Override
 	public boolean update(Seat seat) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("UPDATE Seat SET Roomid=?, name=?, row=?, col=? WHERE id = ?");
-		
+
 		ps.setInt(1, seat.getClassId());
 		ps.setString(2, seat.getName());
 		ps.setInt(3, seat.getRow());
@@ -161,14 +166,16 @@ public class SeatDAO implements ISeatDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -179,12 +186,12 @@ public class SeatDAO implements ISeatDAO {
 
 	@Override
 	public boolean delete(Seat seat) throws SQLException {
-		
+
 		PreparedStatement ps = null;
 		int rs = 0;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("DELETE FROM Seat WHERE Seat.id = ?;");
 		ps.setInt(1, seat.getId());
 
@@ -205,14 +212,16 @@ public class SeatDAO implements ISeatDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -223,14 +232,14 @@ public class SeatDAO implements ISeatDAO {
 
 	@Override
 	public ArrayList<Seat> list() throws SQLException {
-		
+
 		ArrayList<Seat> allSeats = new ArrayList<>();
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		Connection con = BaseDAO.getConnection();
-		
+
 		ps = con.prepareStatement("SELECT * FROM Seat");
 
 		try {
@@ -251,20 +260,23 @@ public class SeatDAO implements ISeatDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

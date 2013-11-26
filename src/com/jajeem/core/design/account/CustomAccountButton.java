@@ -13,6 +13,10 @@ import javax.swing.event.ChangeListener;
 import com.alee.laf.button.WebButton;
 
 public class CustomAccountButton extends WebButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	BufferedImage background;
 	BufferedImage rollover;
 	BufferedImage selected;
@@ -27,8 +31,7 @@ public class CustomAccountButton extends WebButton {
 
 	public void init() {
 		try {
-			URL inp = CustomAccountButton.class
-					.getResource(uri);
+			URL inp = CustomAccountButton.class.getResource(uri);
 			background = ImageIO.read(inp);
 			// inp =
 			// CustomAccountButton.class.getResource("/icons/noa_en/buttondisable.png");

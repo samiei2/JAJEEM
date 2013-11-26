@@ -17,7 +17,7 @@ public class FileUtil {
 	public static String getInboxPath() {
 		return getMyDocumentsPath() + "ClassMate\\Inbox";
 	}
-	
+
 	public static String getRecorderPath() {
 		return getMyDocumentsPath() + "ClassMate\\Recorder";
 	}
@@ -53,33 +53,33 @@ public class FileUtil {
 	public static void createDirectories() {
 		String reportsPath = getMyDocumentsPath() + "\\Reports";
 		File file = new File(reportsPath);
-		if (!file.exists())
+		if (!file.exists()) {
 			file.mkdir();
+		}
 	}
-	
-	public static void copyFileUsingStream(File source, File dest) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            if(!dest.exists()){
-            	dest.createNewFile();
-            }
-            os = new FileOutputStream(dest);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        	throw e;
-        }
-        finally {
-            is.close();
-            os.close();
-        }
-    }
+
+	public static void copyFileUsingStream(File source, File dest)
+			throws IOException {
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			is = new FileInputStream(source);
+			if (!dest.exists()) {
+				dest.createNewFile();
+			}
+			os = new FileOutputStream(dest);
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = is.read(buffer)) > 0) {
+				os.write(buffer, 0, length);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			is.close();
+			os.close();
+		}
+	}
 
 }

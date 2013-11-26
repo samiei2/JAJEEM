@@ -1,6 +1,6 @@
 package com.jajeem.command.model;
 
-public class SendRecordingSuccessCommand extends Command{
+public class SendRecordingSuccessCommand extends Command {
 
 	public SendRecordingSuccessCommand(String from, String to, int port) {
 		super(from, to, port);
@@ -10,5 +10,5 @@ public class SendRecordingSuccessCommand extends Command{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 }

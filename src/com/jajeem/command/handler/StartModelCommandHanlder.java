@@ -2,7 +2,7 @@ package com.jajeem.command.handler;
 
 import java.net.InetAddress;
 
-import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jitsi.examples.AVSendOnly;
@@ -58,12 +58,14 @@ public class StartModelCommandHanlder implements ICommandHandler {
 				VNCCaptureService vnc = new VNCCaptureService();
 				vnc.startClient(conf);
 				vnc.getViewer().getRecorder().setViewOnly(true);
-				vnc.getViewer().getRecorder().viewerGUI.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				vnc.getViewer().getRecorder().viewerGUI
+						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 				Student.setVncViewer(vnc);
 			} else {
 				Student.getVncViewer().getViewer().getRecorder()
 						.setViewOnly(true);
-				Student.getVncViewer().getViewer().getRecorder().viewerGUI.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				Student.getVncViewer().getViewer().getRecorder().viewerGUI
+						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 				Student.getVncViewer().startClient(conf);
 			}
 		}

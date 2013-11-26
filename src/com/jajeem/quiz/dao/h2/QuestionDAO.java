@@ -20,7 +20,7 @@ public class QuestionDAO implements IQuestionDAO {
 	Logger logger = Logger.getLogger(QuestionDAO.class);
 
 	public QuestionDAO() {
-		
+
 	}
 
 	@SuppressWarnings("unused")
@@ -32,10 +32,10 @@ public class QuestionDAO implements IQuestionDAO {
 
 		Connection con = BaseDAO.getConnection();
 		try {
-			ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url," +
-					" answer1, answer2, answer3, answer4, answer5, bool1, bool2, bool3, bool4, bool5,iid) "
+			ps = con.prepareStatement("INSERT INTO QuizQuestion (instructorId, title, quizId, type, point, imagePath, url,"
+					+ " answer1, answer2, answer3, answer4, answer5, bool1, bool2, bool3, bool4, bool5,iid) "
 					+ " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ? , ? , ? , ?, ? ,? ,? ,? ,?,?);");
-			
+
 			ps.setInt(1, question.getInstructorId());
 			ps.setString(2, question.getTitle());
 			ps.setObject(3, question.getQuizId());
@@ -55,23 +55,23 @@ public class QuestionDAO implements IQuestionDAO {
 			ps.setBoolean(17, question.getCorrectAnswer()[4]);
 			ps.setObject(18, question.getId());
 
-		
 			rs = ps.executeUpdate();
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -106,13 +106,9 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
-				boolean[] list = new boolean[]{
-						rs.getBoolean("bool1"),
-						rs.getBoolean("bool2"),
-						rs.getBoolean("bool3"),
-						rs.getBoolean("bool4"),
-						rs.getBoolean("bool5")
-				};
+				boolean[] list = new boolean[] { rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"), rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"), rs.getBoolean("bool5") };
 				question.setCorrectAnswer(list);
 
 			} else {
@@ -124,20 +120,23 @@ public class QuestionDAO implements IQuestionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -152,11 +151,11 @@ public class QuestionDAO implements IQuestionDAO {
 
 		PreparedStatement ps = null;
 		int rs = 0;
-		
+
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("UPDATE QuizQuestion SET instructorId = ?, title = ?, quizId = ?, type = ?, point = ?, imagePath = ?" +
-				", url = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
+		ps = con.prepareStatement("UPDATE QuizQuestion SET instructorId = ?, title = ?, quizId = ?, type = ?, point = ?, imagePath = ?"
+				+ ", url = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer5 = ?, bool1 = ?, bool2 = ?, bool3 = ?, bool4 = ?, bool5 = ? WHERE iid = ?");
 
 		ps.setInt(1, question.getInstructorId());
 		ps.setString(2, question.getTitle());
@@ -185,14 +184,16 @@ public class QuestionDAO implements IQuestionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -229,14 +230,16 @@ public class QuestionDAO implements IQuestionDAO {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -275,13 +278,9 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
-				boolean[] list = new boolean[]{
-						rs.getBoolean("bool1"),
-						rs.getBoolean("bool2"),
-						rs.getBoolean("bool3"),
-						rs.getBoolean("bool4"),
-						rs.getBoolean("bool5")
-				};
+				boolean[] list = new boolean[] { rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"), rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"), rs.getBoolean("bool5") };
 				question.setCorrectAnswer(list);
 
 				allQuestions.add(question);
@@ -291,20 +290,23 @@ public class QuestionDAO implements IQuestionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -318,13 +320,12 @@ public class QuestionDAO implements IQuestionDAO {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		Connection con = BaseDAO.getConnection();
 		try {
 			ps = con.prepareStatement("SELECT * FROM QuizQuestion where Quizid=? ;");
 			ps.setObject(1, id);
 
-		
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Question question = new Question();
@@ -342,13 +343,9 @@ public class QuestionDAO implements IQuestionDAO {
 				question.setAnswer3(rs.getString("answer3"));
 				question.setAnswer4(rs.getString("answer4"));
 				question.setAnswer5(rs.getString("answer5"));
-				boolean[] list = new boolean[]{
-						rs.getBoolean("bool1"),
-						rs.getBoolean("bool2"),
-						rs.getBoolean("bool3"),
-						rs.getBoolean("bool4"),
-						rs.getBoolean("bool5")
-				};
+				boolean[] list = new boolean[] { rs.getBoolean("bool1"),
+						rs.getBoolean("bool2"), rs.getBoolean("bool3"),
+						rs.getBoolean("bool4"), rs.getBoolean("bool5") };
 				question.setCorrectAnswer(list);
 
 				allQuestions.add(question);
@@ -358,20 +355,23 @@ public class QuestionDAO implements IQuestionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -380,7 +380,7 @@ public class QuestionDAO implements IQuestionDAO {
 		return allQuestions;
 	}
 
-	public boolean Contains(Question question) throws SQLException{
+	public boolean Contains(Question question) throws SQLException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -399,20 +399,23 @@ public class QuestionDAO implements IQuestionDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

@@ -14,8 +14,8 @@ public class i18n {
 	public i18n() {
 		try {
 			File path = new File("lang/" + Config.getParam("lang") + ".txt");
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(new FileInputStream(path), "UTF-8"));
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					new FileInputStream(path), "UTF-8"));
 			i18n.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,7 +31,7 @@ public class i18n {
 	 * @throws Exception
 	 */
 	public static void load(BufferedReader in) throws Exception {
-		
+
 		props.clear();
 		props.load(in);
 		in.close();
@@ -47,12 +47,14 @@ public class i18n {
 	 */
 	public static String getParam(String key) throws Exception {
 
-		if (props == null || props.isEmpty())
+		if (props == null || props.isEmpty()) {
 			throw new Exception("lang file is not loaded before!");
-		
-		String p = props.getProperty(key.trim().replaceAll("\\s", "").toLowerCase());
-		
-		if(p == null) {
+		}
+
+		String p = props.getProperty(key.trim().replaceAll("\\s", "")
+				.toLowerCase());
+
+		if (p == null) {
 			p = key;
 		}
 

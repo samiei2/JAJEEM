@@ -8,12 +8,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import com.jajeem.core.dao.h2.StudentDAO;
 import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.quiz.dao.h2.QuizDAO;
-import com.jajeem.quiz.model.Quiz;
 import com.jajeem.survey.dao.IRunDAO;
 import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
@@ -24,15 +20,13 @@ public class RunDAO implements IRunDAO {
 	Logger logger = Logger.getLogger(RunDAO.class);
 
 	public RunDAO() {
-		
+
 	}
 
 	@Override
 	public Run create(Run run) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("INSERT INTO SurveyRun (instructorId, courseId, surveyId, start, end,iid) "
@@ -45,7 +39,7 @@ public class RunDAO implements IRunDAO {
 		ps.setObject(6, run.getId());
 
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,29 +47,31 @@ public class RunDAO implements IRunDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 		}
-		
-		try{
+
+		try {
 			SurveyDAO surveydao = new SurveyDAO();
 			Survey survey = run.getSurvey();
-			if(surveydao.Contains(survey))
+			if (surveydao.Contains(survey)) {
 				surveydao.update(survey);
-			else
+			} else {
 				surveydao.create(survey);
-		}
-		catch(Exception e){
-			
+			}
+		} catch (Exception e) {
+
 		}
 
 		return run;
@@ -110,20 +106,23 @@ public class RunDAO implements IRunDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -136,8 +135,6 @@ public class RunDAO implements IRunDAO {
 	public boolean update(Run run) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("UPDATE SurveyRun SET instructorId = ?, courseId = ?, "
@@ -151,36 +148,38 @@ public class RunDAO implements IRunDAO {
 		ps.setObject(6, run.getId());
 
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 		}
-		
-		try{
+
+		try {
 			SurveyDAO surveydao = new SurveyDAO();
 			Survey survey = run.getSurvey();
-			if(surveydao.Contains(survey))
+			if (surveydao.Contains(survey)) {
 				surveydao.update(survey);
-			else
+			} else {
 				surveydao.create(survey);
-		}
-		catch(Exception e){
-			
+			}
+		} catch (Exception e) {
+
 		}
 
 		return false;
@@ -190,29 +189,29 @@ public class RunDAO implements IRunDAO {
 	public boolean delete(Run run) throws SQLException {
 
 		PreparedStatement ps = null;
-		int rs = 0;
-
 		Connection con = BaseDAO.getConnection();
 
 		ps = con.prepareStatement("DELETE FROM SurveyRun WHERE SurveyRun.iid = ?;");
 		ps.setObject(1, run.getId());
 
 		try {
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(null);
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -252,20 +251,23 @@ public class RunDAO implements IRunDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
@@ -274,7 +276,7 @@ public class RunDAO implements IRunDAO {
 		return allRuns;
 	}
 
-	public boolean Contains(Run run) throws SQLException{
+	public boolean Contains(Run run) throws SQLException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -294,20 +296,23 @@ public class RunDAO implements IRunDAO {
 			new JajeemExcetionHandler(e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}
 			try {
-				if (con != null)
+				if (con != null) {
 					con.close();
+				}
 			} catch (Exception e) {
 				new JajeemExcetionHandler(e);
 			}

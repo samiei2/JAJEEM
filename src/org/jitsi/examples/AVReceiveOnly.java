@@ -6,15 +6,12 @@
  */
 package org.jitsi.examples;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 import org.jitsi.service.libjitsi.LibJitsi;
 import org.jitsi.service.neomedia.DefaultStreamConnector;
@@ -39,7 +36,7 @@ import org.jitsi.service.neomedia.format.MediaFormatFactory;
  */
 public class AVReceiveOnly {
 
-	JDialog frame ;
+	JDialog frame;
 	/**
 	 * The port which is the target of the transmission i.e. on which the media
 	 * is to be received.
@@ -224,7 +221,7 @@ public class AVReceiveOnly {
 		 * Do start the transmission i.e. start the initialized MediaStream
 		 * instances.
 		 */
-		for (MediaStream mediaStream : mediaStreams)
+		for (MediaStream mediaStream : mediaStreams) {
 			if (mediaStream != null) {
 				if (type.equals("both")) {
 					mediaStream.start();
@@ -235,6 +232,7 @@ public class AVReceiveOnly {
 					continue;
 				}
 			}
+		}
 
 		for (MediaStream mediaStream : mediaStreams) {
 			if (mediaStream != null) {
@@ -248,10 +246,10 @@ public class AVReceiveOnly {
 					}
 
 					if (cmp != null) {
-						
-						if(frame == null){
+
+						if (frame == null) {
 							frame = new JDialog();
-	//						frame.setLayout(new BorderLayout(0, 0));
+							// frame.setLayout(new BorderLayout(0, 0));
 							frame.getContentPane().add(cmp);
 							frame.setSize(400, 400);
 							frame.repaint();
@@ -366,8 +364,9 @@ public class AVReceiveOnly {
 					long waitingPeriod = 2 * 600000;
 
 					try {
-						while ((System.currentTimeMillis() - then) < waitingPeriod)
+						while ((System.currentTimeMillis() - then) < waitingPeriod) {
 							Thread.sleep(1000);
+						}
 					} catch (InterruptedException ie) {
 					}
 				} finally {
@@ -382,20 +381,6 @@ public class AVReceiveOnly {
 			LibJitsi.stop();
 		}
 		// }
-	}
-
-	/**
-	 * Outputs human-readable description about the usage of the
-	 * <tt>AVReceive2</tt> application and the command-line arguments it accepts
-	 * as valid.
-	 */
-	private static void prUsage() {
-		PrintStream err = System.err;
-
-		err.println("Usage: " + AVReceiveOnly.class.getName() + " <args>");
-		err.println("Valid args:");
-		for (String[] arg : ARGS)
-			err.println("  " + arg[0] + " " + arg[1]);
 	}
 
 	public InetAddress getRemoteAddr() {

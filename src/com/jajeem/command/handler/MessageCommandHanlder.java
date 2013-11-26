@@ -11,8 +11,8 @@ public class MessageCommandHanlder implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		@SuppressWarnings("unused")
 		MessageReceive messageDialog = new MessageReceive(
-				((MessageCommand) cmd).getMessage(), InstructorNoa
-						.getStudentNameByIP((cmd.getFrom())));
+				((MessageCommand) cmd).getMessage(),
+				InstructorNoa.getStudentNameByIP((cmd.getFrom())));
 
 	}
 

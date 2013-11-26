@@ -53,6 +53,7 @@ public class MultiLineCellRenderer extends JPanel implements TableCellRenderer {
 		foreground = null;
 	}
 
+	@Override
 	public void setForeground(Color foreground) {
 		super.setForeground(foreground);
 		Component[] comps = this.getComponents();
@@ -65,16 +66,19 @@ public class MultiLineCellRenderer extends JPanel implements TableCellRenderer {
 		}
 	}
 
+	@Override
 	public void setBackground(Color background) {
 		this.background = background;
 		super.setBackground(background);
 	}
 
+	@Override
 	public void setFont(Font font) {
 		this.font = font;
 	}
 
 	// Implementation of TableCellRenderer interface
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		removeAll();
@@ -191,4 +195,3 @@ public class MultiLineCellRenderer extends JPanel implements TableCellRenderer {
 
 	protected static Border border = new EmptyBorder(1, 2, 1, 2);
 }
-

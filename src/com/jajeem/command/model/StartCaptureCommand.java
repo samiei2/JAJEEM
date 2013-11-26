@@ -11,5 +11,4 @@ public class StartCaptureCommand extends Command {
 		super(from, to, port);
 	}
 
-
 }

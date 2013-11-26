@@ -10,37 +10,33 @@ import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.core.design.Student;
 import com.jajeem.core.design.StudentLogin;
 import com.jajeem.util.ClientSession;
-import com.jajeem.util.Session;
 
 public class StartCallAllCommandHanlder implements ICommandHandler {
 
 	@SuppressWarnings("unused")
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		StartCallAllCommand command = (StartCallAllCommand)cmd;
+		StartCallAllCommand command = (StartCallAllCommand) cmd;
 		if (Student.getReceiverOnly() == null) {
-			String ip = InetAddress.getLocalHost()
-					.getHostAddress().toString();
-			ip = ip.substring(0,
-					ip.lastIndexOf("."))
-					+ ".255";
-			AVReceiveOnly ar = new AVReceiveOnly("10010",
-					ip, "5010");
+			String ip = InetAddress.getLocalHost().getHostAddress().toString();
+			ip = ip.substring(0, ip.lastIndexOf(".")) + ".255";
+			AVReceiveOnly ar = new AVReceiveOnly("10010", ip, "5010");
 			ar.initialize("audio");
 			Student.setReceiverOnly(ar);
 			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
-			if(ClientSession.getStudentIntercomPanel()!=null)
+			if (ClientSession.getStudentIntercomPanel() != null) {
 				ClientSession.getStudentIntercomPanel().dispose();
+			}
 			ClientSession.setStudentIntercomInProgress(frame);
 			frame.setVisible(true);
 		} else {
-			Student.getReceiverOnly()
-					.setRemoteAddr(
-							InetAddress.getByName(StudentLogin.getServerIp()));
+			Student.getReceiverOnly().setRemoteAddr(
+					InetAddress.getByName(StudentLogin.getServerIp()));
 			Student.getReceiverOnly().initialize("audio");
 			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
-			if(ClientSession.getStudentIntercomPanel()!=null)
+			if (ClientSession.getStudentIntercomPanel() != null) {
 				ClientSession.getStudentIntercomPanel().dispose();
+			}
 			ClientSession.setStudentIntercomInProgress(frame);
 			frame.setVisible(true);
 		}

@@ -10,15 +10,16 @@ public class StopRecorderCommandHandler implements ICommandHandler {
 	@SuppressWarnings({ "static-access" })
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		StopStudentRecordCommand command = (StopStudentRecordCommand)cmd;
-		
+		StopStudentRecordCommand command = (StopStudentRecordCommand) cmd;
+
 		CaptureScreenToFile recorder = ClientSession.getRecorder();
-		
+
 		ClientSession.setReturnRecordedFileServer(command.getFrom());
-		if(recorder!=null)
+		if (recorder != null) {
 			recorder.StopCapture();
-//		Thread.sleep(1000);
-//		if(new File(fileName).exists())
-//			SendFileCollect(new File(fileName), server);
+			// Thread.sleep(1000);
+			// if(new File(fileName).exists())
+			// SendFileCollect(new File(fileName), server);
+		}
 	}
 }

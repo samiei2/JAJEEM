@@ -6,83 +6,84 @@
  */
 package org.jitsi.service.neomedia;
 
-import java.net.*;
+import java.net.MulticastSocket;
+import java.net.Socket;
 
 /**
  * Implements a {@link StreamConnector} which wraps a specific
  * <tt>StreamConnector</tt> instance.
- *
- * @param <T> the very type of the <tt>StreamConnector</tt> wrapped by
- * <tt>StreamConnectorDelegate</tt>
- *
+ * 
+ * @param <T>
+ *            the very type of the <tt>StreamConnector</tt> wrapped by
+ *            <tt>StreamConnectorDelegate</tt>
+ * 
  * @author Lyubomir Marinov
  */
-public class StreamConnectorDelegate<T extends StreamConnector>
-    implements StreamConnector
-{
-    /**
-     * The <tt>StreamConnector</tt> wrapped by this instance.
-     */
-    protected final T streamConnector;
+public class StreamConnectorDelegate<T extends StreamConnector> implements
+		StreamConnector {
+	/**
+	 * The <tt>StreamConnector</tt> wrapped by this instance.
+	 */
+	protected final T streamConnector;
 
-    /**
-     * Initializes a new <tt>StreamConnectorDelegate</tt> which is to wrap a
-     * specific <tt>StreamConnector</tt>.
-     *
-     * @param streamConnector the <tt>StreamConnector</tt> to be wrapped by the
-     * new instance
-     */
-    public StreamConnectorDelegate(T streamConnector)
-    {
-        if (streamConnector == null)
-            throw new NullPointerException("streamConnector");
+	/**
+	 * Initializes a new <tt>StreamConnectorDelegate</tt> which is to wrap a
+	 * specific <tt>StreamConnector</tt>.
+	 * 
+	 * @param streamConnector
+	 *            the <tt>StreamConnector</tt> to be wrapped by the new instance
+	 */
+	public StreamConnectorDelegate(T streamConnector) {
+		if (streamConnector == null) {
+			throw new NullPointerException("streamConnector");
+		}
 
-        this.streamConnector = streamConnector;
-    }
+		this.streamConnector = streamConnector;
+	}
 
-    /**
-     * Releases the resources allocated by this instance in the course of its
-     * execution and prepares it to be garbage collected. Calls
-     * {@link StreamConnector#close()} on the <tt>StreamConnector</tt> wrapped
-     * by this instance.
-     */
-    public void close()
-    {
-        streamConnector.close();
-    }
+	/**
+	 * Releases the resources allocated by this instance in the course of its
+	 * execution and prepares it to be garbage collected. Calls
+	 * {@link StreamConnector#close()} on the <tt>StreamConnector</tt> wrapped
+	 * by this instance.
+	 */
+	@Override
+	public void close() {
+		streamConnector.close();
+	}
 
-    public MulticastSocket getControlSocket()
-    {
-        return streamConnector.getControlSocket();
-    }
+	@Override
+	public MulticastSocket getControlSocket() {
+		return streamConnector.getControlSocket();
+	}
 
-    public Socket getControlTCPSocket()
-    {
-        return streamConnector.getControlTCPSocket();
-    }
+	@Override
+	public Socket getControlTCPSocket() {
+		return streamConnector.getControlTCPSocket();
+	}
 
-    public MulticastSocket getDataSocket()
-    {
-        return streamConnector.getDataSocket();
-    }
+	@Override
+	public MulticastSocket getDataSocket() {
+		return streamConnector.getDataSocket();
+	}
 
-    public Socket getDataTCPSocket()
-    {
-        return streamConnector.getDataTCPSocket();
-    }
+	@Override
+	public Socket getDataTCPSocket() {
+		return streamConnector.getDataTCPSocket();
+	}
 
-    public Protocol getProtocol()
-    {
-        return streamConnector.getProtocol();
-    }
+	@Override
+	public Protocol getProtocol() {
+		return streamConnector.getProtocol();
+	}
 
-    public void started()
-    {
-        streamConnector.started();
-    }
+	@Override
+	public void started() {
+		streamConnector.started();
+	}
 
-    public void stopped()
-    {
-        streamConnector.stopped();
-    }
+	@Override
+	public void stopped() {
+		streamConnector.stopped();
+	}
 }

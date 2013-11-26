@@ -13,18 +13,17 @@ import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,12 +39,10 @@ import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
-import com.jajeem.room.model.Session;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.ResultService;
-import com.jajeem.survey.service.RunService;
 import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.Config;
 
@@ -72,17 +69,17 @@ public class Survey_Main extends WebFrame {
 	private Survey_Main mainFrame;
 	private List<String> studentIps;
 	private int gIndex;
-	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					@SuppressWarnings("unused")
-					Survey_Main frame = new Survey_Main(-1,null);
+					Survey_Main frame = new Survey_Main(-1, null);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
@@ -93,8 +90,9 @@ public class Survey_Main extends WebFrame {
 
 	/**
 	 * Create the frame.
-	 * @param list 
-	 * @param groupIndex 
+	 * 
+	 * @param list
+	 * @param groupIndex
 	 */
 	public Survey_Main(int groupIndex, List<String> list) {
 		studentIps = list;
@@ -104,7 +102,7 @@ public class Survey_Main extends WebFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Survey_Main.class.getResource("/icons/noa_en/survey.png")));
 		setTitle("Survey");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 987, 683);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -119,24 +117,42 @@ public class Survey_Main extends WebFrame {
 				TitledBorder.TOP, null, null));
 		webPanel_2.setBackground(SystemColor.control);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(webPanel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 855, Short.MAX_VALUE)
-						.addComponent(webPanel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webPanel_2, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		gl_contentPane
+				.setHorizontalGroup(gl_contentPane
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								Alignment.TRAILING,
+								gl_contentPane
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_contentPane
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																webPanel_2,
+																Alignment.LEADING,
+																GroupLayout.PREFERRED_SIZE,
+																855,
+																Short.MAX_VALUE)
+														.addComponent(
+																webPanel_1,
+																Alignment.LEADING,
+																GroupLayout.DEFAULT_SIZE,
+																855,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				Alignment.LEADING,
+				gl_contentPane
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE,
+								52, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(webPanel_2, GroupLayout.DEFAULT_SIZE,
+								480, Short.MAX_VALUE).addContainerGap()));
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
@@ -171,86 +187,138 @@ public class Survey_Main extends WebFrame {
 		wbtnOpen = new WebButton();
 		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
 		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnOpen.setIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/folder_green_open-x16.png")));
+		wbtnOpen.setIcon(new ImageIcon(Survey_Main.class
+				.getResource("/icons/noa_en/folder_green_open-x16.png")));
 		wbtnOpen.setText("Open");
 
 		wbtnSave = new WebButton();
 		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSave.setIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/documentx16.png")));
+		wbtnSave.setIcon(new ImageIcon(Survey_Main.class
+				.getResource("/icons/noa_en/documentx16.png")));
 		wbtnSave.setText("Save");
 
 		wbtnSaveResults = new WebButton();
 		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/documentx16.png")));
+		wbtnSaveResults.setIcon(new ImageIcon(Survey_Main.class
+				.getResource("/icons/noa_en/documentx16.png")));
 		wbtnSaveResults.setText("Save Results");
 		wbtnSaveResults.setVisible(false);
 
 		wbtnStart = new WebButton();
 		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnStart.setIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/startx16.png")));
+		wbtnStart.setIcon(new ImageIcon(Survey_Main.class
+				.getResource("/icons/noa_en/startx16.png")));
 		wbtnStart.setText("Start");
 
 		wbtnContent = new WebButton();
 		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnContent.setIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/contentx16.png")));
+		wbtnContent.setIcon(new ImageIcon(Survey_Main.class
+				.getResource("/icons/noa_en/contentx16.png")));
 		wbtnContent.setText("Content");
 		wbtnContent.setEnabled(false);
-		
+
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1.setHorizontalGroup(
-			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
-					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_webPanel_1.setVerticalGroup(
-			gl_webPanel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_webPanel_1.createSequentialGroup()
-					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(115, Short.MAX_VALUE))
-		);
+		gl_webPanel_1.setHorizontalGroup(gl_webPanel_1.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_webPanel_1
+						.createSequentialGroup()
+						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 54,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 56,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 56,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(wbtnSaveResults,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 461,
+								Short.MAX_VALUE)
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE,
+								48, GroupLayout.PREFERRED_SIZE)));
+		gl_webPanel_1
+				.setVerticalGroup(gl_webPanel_1
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_webPanel_1
+										.createSequentialGroup()
+										.addGroup(
+												gl_webPanel_1
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_webPanel_1
+																		.createParallelGroup(
+																				Alignment.BASELINE)
+																		.addComponent(
+																				wbtnStart,
+																				GroupLayout.PREFERRED_SIZE,
+																				48,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				wbtnContent,
+																				GroupLayout.PREFERRED_SIZE,
+																				48,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_webPanel_1
+																		.createParallelGroup(
+																				Alignment.BASELINE)
+																		.addComponent(
+																				wbtnNew,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				wbtnOpen,
+																				GroupLayout.PREFERRED_SIZE,
+																				48,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				wbtnSave,
+																				GroupLayout.PREFERRED_SIZE,
+																				48,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				wbtnSaveResults,
+																				GroupLayout.PREFERRED_SIZE,
+																				48,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap(115, Short.MAX_VALUE)));
 		webPanel_1.setLayout(gl_webPanel_1);
 		contentPane.setLayout(gl_contentPane);
-	
+
 		initEvents();
 		initSurveyEventListener();
-		if(!ValidateSession())
+		if (!ValidateSession()) {
 			return;
+		}
 		setVisible(true);
-		
+
 	}
 
 	private void initSurveyEventListener() {
-		if(gIndex!=-1){
-			if(studentIps != null){
-				if(studentIps.size()!=0){
+		if (gIndex != -1) {
+			if (studentIps != null) {
+				if (studentIps.size() != 0) {
 					new Config();
 					ClientService clientService2 = null;
 					try {
 						clientService2 = new ClientService(
-								Config.getParam("broadcastingIp"), Integer.parseInt(Config
-										.getParam("surveyport"))+gIndex+1);
+								Config.getParam("broadcastingIp"),
+								Integer.parseInt(Config.getParam("surveyport"))
+										+ gIndex + 1);
 					} catch (NumberFormatException e2) {
 						JajeemExcetionHandler.logError(e2);
 						e2.printStackTrace();
@@ -261,14 +329,13 @@ public class Survey_Main extends WebFrame {
 					clientService2.start();
 				}
 			}
-		}
-		else{
+		} else {
 			new Config();
 			ClientService clientService2 = null;
 			try {
 				clientService2 = new ClientService(
-						Config.getParam("broadcastingIp"), Integer.parseInt(Config
-								.getParam("surveyport")));
+						Config.getParam("broadcastingIp"),
+						Integer.parseInt(Config.getParam("surveyport")));
 			} catch (NumberFormatException e2) {
 				JajeemExcetionHandler.logError(e2);
 				e2.printStackTrace();
@@ -284,19 +351,20 @@ public class Survey_Main extends WebFrame {
 		if (com.jajeem.util.Session.getCourse() == null) {
 			int i = JOptionPane.showConfirmDialog(null,
 					"No class has started yet!\n Do you want to continue?");
-			if(i==0)
+			if (i == 0) {
 				return true;
-			else{
+			} else {
 				dispose();
 				return false;
 			}
-		}	
+		}
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			int i = JOptionPane.showConfirmDialog(null,
-					"No instructor has logged in.Please first Log in!\n Do you want to continue?");
-			if(i==0)
+			int i = JOptionPane
+					.showConfirmDialog(null,
+							"No instructor has logged in.Please first Log in!\n Do you want to continue?");
+			if (i == 0) {
 				return true;
-			else{
+			} else {
 				dispose();
 				return false;
 			}
@@ -308,23 +376,26 @@ public class Survey_Main extends WebFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				if(gIndex==-1)
+				if (gIndex == -1) {
 					com.jajeem.util.Session.setSurveyWindowOpen(true);
-				else
+				} else {
 					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gIndex] = true;
+				}
 				newSurveyRun();
 			}
-			
+
 			@Override
-			public void windowClosing(WindowEvent arg0){
-				if(gIndex==-1)
+			public void windowClosing(WindowEvent arg0) {
+				if (gIndex == -1) {
 					com.jajeem.util.Session.setSurveyWindowOpen(false);
-				else
+				} else {
 					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gIndex] = false;
+				}
 				StopSurveyCommand();
 			}
 		});
 		wbtnNew.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (getCurrentCardName().equals("secondPage")) { // if we are on
 																	// the
@@ -369,6 +440,7 @@ public class Survey_Main extends WebFrame {
 			}
 		});
 		wbtnContent.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int i = JOptionPane
 						.showConfirmDialog(
@@ -402,6 +474,7 @@ public class Survey_Main extends WebFrame {
 			}
 		});
 		wbtnSave.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int i = JOptionPane
 						.showConfirmDialog(
@@ -412,8 +485,8 @@ public class Survey_Main extends WebFrame {
 					try {
 						qs.create(currentRun.getSurvey());
 						eventsEnabled = false;
-//						firstPage.clear();
-//						newSurveyRun();
+						// firstPage.clear();
+						// newSurveyRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
 						JajeemExcetionHandler.logError(e1);
@@ -421,8 +494,8 @@ public class Survey_Main extends WebFrame {
 					}
 				} else if (i == 1) {
 					eventsEnabled = false;
-//					firstPage.clear();
-//					newSurveyRun();
+					// firstPage.clear();
+					// newSurveyRun();
 					eventsEnabled = true;
 				} else {
 					return;
@@ -430,6 +503,7 @@ public class Survey_Main extends WebFrame {
 			}
 		});
 		wbtnSaveResults.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<Run> results = secondPage.getRunResults();
 				ResultService service = new ResultService();
@@ -438,6 +512,7 @@ public class Survey_Main extends WebFrame {
 			}
 		});
 		wbtnStart.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (wbtnStart.getText() == "Start") {
 					if (firstPage.getWebQuestionListPanel().getWebTable()
@@ -489,8 +564,9 @@ public class Survey_Main extends WebFrame {
 				} // / end wbtnStart.getText() == "Start" if
 				else {
 					StopSurveyCommand();
-					if(secondPage.getPanel_bottom_21().getTimer()!=null){
-						if(secondPage.getPanel_bottom_21().getTimer().isRunning()){
+					if (secondPage.getPanel_bottom_21().getTimer() != null) {
+						if (secondPage.getPanel_bottom_21().getTimer()
+								.isRunning()) {
 							secondPage.getPanel_bottom_21().getTimer().stop();
 						}
 					}
@@ -502,6 +578,7 @@ public class Survey_Main extends WebFrame {
 			}
 		});
 		wbtnOpen.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Survey_OpenDialog open = new Survey_OpenDialog(mainFrame);
 				open.setVisible(true);
@@ -517,21 +594,15 @@ public class Survey_Main extends WebFrame {
 
 		currentRun.setCourse(getCurrentCourse());
 		currentRun.setInstructor(getCurrentInstructor());
-		currentRun.setInstructorId(getCurrentInstructor()
-				.getId());
-		currentRun.getSurvey().setInstructorId(
-				getCurrentInstructor().getId());
+		currentRun.setInstructorId(getCurrentInstructor().getId());
+		currentRun.getSurvey().setInstructorId(getCurrentInstructor().getId());
 		currentRun.getSurvey().setCourse(getCurrentCourse());
-		currentRun
-				.getSurvey()
-				.getQuestionList()
-				.get(0)
-				.setInstructorId(
-						getCurrentInstructor().getId());
-		
-		currentRun.getSurvey().getQuestionList()
-		.get(0).setId(UUID.randomUUID());
-		
+		currentRun.getSurvey().getQuestionList().get(0)
+				.setInstructorId(getCurrentInstructor().getId());
+
+		currentRun.getSurvey().getQuestionList().get(0)
+				.setId(UUID.randomUUID());
+
 		currentQuestion = currentRun.getSurvey().getQuestionList().get(0);
 
 		((DefaultTableModel) firstPage.getWebQuestionListPanel().getWebTable()
@@ -543,39 +614,40 @@ public class Survey_Main extends WebFrame {
 
 	private void StopSurveyCommand() {
 		try {
-			if(gIndex!=-1){
-				if(studentIps!=null){
-					if(studentIps.size()!=0){
+			if (gIndex != -1) {
+				if (studentIps != null) {
+					if (studentIps.size() != 0) {
 						new Config();
 						ServerService service;
-						if(InstructorNoa.getServerService() == null)
+						if (InstructorNoa.getServerService() == null) {
 							service = new ServerService();
-						else
+						} else {
 							service = InstructorNoa.getServerService();
+						}
 						for (int i = 0; i < studentIps.size(); i++) {
-							StopSurveyCommand cmd = new StopSurveyCommand(InetAddress
-									.getLocalHost().getHostAddress(),
+							StopSurveyCommand cmd = new StopSurveyCommand(
+									InetAddress.getLocalHost().getHostAddress(),
 									studentIps.get(i), Integer.parseInt(Config
 											.getParam("port")));
 							service.send(cmd);
 						}
 					}
 				}
-			}
-			else{
+			} else {
 				new Config();
 				ServerService service;
-				if(InstructorNoa.getServerService() == null)
+				if (InstructorNoa.getServerService() == null) {
 					service = new ServerService();
-				else
+				} else {
 					service = InstructorNoa.getServerService();
+				}
 				StopSurveyCommand cmd = new StopSurveyCommand(InetAddress
 						.getLocalHost().getHostAddress(),
-						Config.getParam("broadcastingIp"), Integer.parseInt(Config
-								.getParam("port")));
+						Config.getParam("broadcastingIp"),
+						Integer.parseInt(Config.getParam("port")));
 				service.send(cmd);
 			}
-			
+
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			e.printStackTrace();
@@ -584,47 +656,51 @@ public class Survey_Main extends WebFrame {
 
 	protected void StartSurveyCommand() {
 		try {
-			if(gIndex!=-1){
-				if(studentIps!=null){
-					if(!studentIps.isEmpty()){
+			if (gIndex != -1) {
+				if (studentIps != null) {
+					if (!studentIps.isEmpty()) {
 						currentRun.setStart(System.currentTimeMillis());
 						new Config();
 						ServerService service;
-						if(InstructorNoa.getServerService() == null)
+						if (InstructorNoa.getServerService() == null) {
 							service = new ServerService();
-						else
+						} else {
 							service = InstructorNoa.getServerService();
+						}
 						for (int i = 0; i < studentIps.size(); i++) {
-							StartSurveyCommand cmd = new StartSurveyCommand(InetAddress
-									.getLocalHost().getHostAddress(),
+							StartSurveyCommand cmd = new StartSurveyCommand(
+									InetAddress.getLocalHost().getHostAddress(),
 									studentIps.get(i), Integer.parseInt(Config
 											.getParam("port")));
 
-							cmd.setServer(InetAddress.getLocalHost().getHostAddress());
+							cmd.setServer(InetAddress.getLocalHost()
+									.getHostAddress());
 							cmd.setRun(currentRun);
 							cmd.setSurvey(currentRun.getSurvey());
-							cmd.setReceivingPort(Integer.parseInt(Config.getParam("surveyport"))+gIndex+1);
+							cmd.setReceivingPort(Integer.parseInt(Config
+									.getParam("surveyport")) + gIndex + 1);
 							service.send(cmd);
 						}
 					}
 				}
-			}
-			else{
+			} else {
 				currentRun.setStart(System.currentTimeMillis());
 				new Config();
 				ServerService service;
-				if(InstructorNoa.getServerService() == null)
+				if (InstructorNoa.getServerService() == null) {
 					service = new ServerService();
-				else
+				} else {
 					service = InstructorNoa.getServerService();
+				}
 				StartSurveyCommand cmd = new StartSurveyCommand(InetAddress
 						.getLocalHost().getHostAddress(),
-						Config.getParam("broadcastingIp"), Integer.parseInt(Config
-								.getParam("port")));
+						Config.getParam("broadcastingIp"),
+						Integer.parseInt(Config.getParam("port")));
 				cmd.setServer(InetAddress.getLocalHost().getHostAddress());
 				cmd.setRun(currentRun);
 				cmd.setSurvey(currentRun.getSurvey());
-				cmd.setReceivingPort(Integer.parseInt(Config.getParam("surveyport")));
+				cmd.setReceivingPort(Integer.parseInt(Config
+						.getParam("surveyport")));
 				service.send(cmd);
 			}
 		} catch (Exception ex) {
@@ -645,25 +721,26 @@ public class Survey_Main extends WebFrame {
 
 	Instructor getCurrentInstructor() {
 		if (com.jajeem.util.Session.getInstructor() == null) {
-//			int i = JOptionPane.showConfirmDialog(null,
-//					"No instructor has logged in.Please first Log in!\n Do you want to continue?");
-//			if(i==0)
-				return new Instructor();
-//			else{
-//				dispose();
-//			}
+			// int i = JOptionPane.showConfirmDialog(null,
+			// "No instructor has logged in.Please first Log in!\n Do you want to continue?");
+			// if(i==0)
+			return new Instructor();
+			// else{
+			// dispose();
+			// }
 		}
 		return com.jajeem.util.Session.getInstructor();
 	}
 
 	Course getCurrentCourse() {
 		if (com.jajeem.util.Session.getCourse() == null) {
-//			int i = JOptionPane.showConfirmDialog(null, "No class has started yet!\n Do you want to continue?");
-//			if(i==0)
-				return new Course();
-//			else{
-//				dispose();
-//			}
+			// int i = JOptionPane.showConfirmDialog(null,
+			// "No class has started yet!\n Do you want to continue?");
+			// if(i==0)
+			return new Course();
+			// else{
+			// dispose();
+			// }
 		}
 		return com.jajeem.util.Session.getCourse();
 	}
@@ -699,7 +776,7 @@ public class Survey_Main extends WebFrame {
 
 	public int listeningPort() {
 		try {
-			return Integer.parseInt(Config.getParam("surveyport"))+gIndex+1;
+			return Integer.parseInt(Config.getParam("surveyport")) + gIndex + 1;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

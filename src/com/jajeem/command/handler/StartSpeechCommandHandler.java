@@ -11,12 +11,12 @@ public class StartSpeechCommandHandler implements ICommandHandler {
 	@SuppressWarnings("unused")
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		StartSpeechCommand command = (StartSpeechCommand)cmd;
+		StartSpeechCommand command = (StartSpeechCommand) cmd;
 		Process proc = Runtime.getRuntime().exec("util/iCalabo/iCalabo.exe");
 	}
-	
-	public static void main(String[] arg){
-		ProcessBuilder pb = new ProcessBuilder(new String[]{"iCalabo.exe"});
+
+	public static void main(String[] arg) {
+		ProcessBuilder pb = new ProcessBuilder(new String[] { "iCalabo.exe" });
 		pb.directory(new File("util/iCalabo/"));
 		try {
 			pb.start();

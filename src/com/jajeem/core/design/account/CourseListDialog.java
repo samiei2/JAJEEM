@@ -3,7 +3,14 @@ package com.jajeem.core.design.account;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -12,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
 
@@ -20,6 +28,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
@@ -30,31 +39,13 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
-import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.core.design.account.AdminPanel.StudentTableFormat;
-import com.jajeem.core.model.Instructor;
-import com.jajeem.core.model.Student;
-import com.jajeem.core.model.StudentCourse;
-import com.jajeem.core.service.InstructorService;
-import com.jajeem.core.service.StudentCourseService;
-import com.jajeem.core.service.StudentService;
 import com.jajeem.room.model.Course;
-import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class CourseListDialog extends JDialog {
 
@@ -80,13 +71,12 @@ public class CourseListDialog extends JDialog {
 		new i18n();
 
 		getCourseList().addAll(courseArray);
-		
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 610, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		final CourseListDialog frame = this;
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
@@ -105,7 +95,7 @@ public class CourseListDialog extends JDialog {
 				buttonPane.add(panel);
 				{
 					WebButton okButton = new WebButton("Ok");
-//					panel.add(okButton);
+					// panel.add(okButton);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -119,12 +109,12 @@ public class CourseListDialog extends JDialog {
 
 		loadData();
 		getContentPane().add(initCourse());
-		
+
 		setVisible(true);
 	}
 
 	private void loadData() throws SQLException {
-		
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -208,9 +198,8 @@ public class CourseListDialog extends JDialog {
 		courseSelectionModel = new EventSelectionModel<Course>(filterList);
 		courseTable.setSelectionModel(courseSelectionModel);
 		courseTable.setModel(model);
-		TableComparatorChooser<Course> tableSorter = TableComparatorChooser
-				.install(courseTable, sortedCourse,
-						TableComparatorChooser.SINGLE_COLUMN);
+		TableComparatorChooser.install(courseTable, sortedCourse,
+				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
 		MultiLineCellRenderer multiLineRenderer = new MultiLineCellRenderer(
 				SwingConstants.LEFT, SwingConstants.CENTER);
@@ -239,53 +228,59 @@ public class CourseListDialog extends JDialog {
 	public class CourseTableFormat implements TableFormat<Course>,
 			WritableTableFormat<Course> {
 
+		@Override
 		public int getColumnCount() {
 			return 8;
 		}
 
+		@Override
 		public String getColumnName(int column) {
 			try {
-				if (column == 0)
+				if (column == 0) {
 					return i18n.getParam("ID");
-				if (column == 1)
+				}
+				if (column == 1) {
 					return i18n.getParam("Course Name");
-				else if (column == 2)
+				} else if (column == 2) {
 					return i18n.getParam("Instructor Name");
-				else if (column == 3)
+				} else if (column == 3) {
 					return i18n.getParam("Class Type");
-				else if (column == 4)
+				} else if (column == 4) {
 					return i18n.getParam("Level");
-				else if (column == 5)
+				} else if (column == 5) {
 					return i18n.getParam("Start Date");
-				else if (column == 6)
+				} else if (column == 6) {
 					return i18n.getParam("Sessions");
-				else if (column == 7)
+				} else if (column == 7) {
 					return i18n.getParam("Weekly Time");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
 		}
 
+		@Override
 		public Object getColumnValue(Course course, int column) {
 
-			if (column == 0)
+			if (column == 0) {
 				return course.getId();
-			if (column == 1)
+			}
+			if (column == 1) {
 				return course.getName();
-			else if (column == 2)
+			} else if (column == 2) {
 				return course.getInstructor();
-			else if (column == 3)
+			} else if (column == 3) {
 				return course.getClassType();
-			else if (column == 4)
+			} else if (column == 4) {
 				return course.getLevel();
-			else if (column == 5) {
+			} else if (column == 5) {
 				Date startDate = new Date(course.getStartDate());
 				SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 				return dt.format(startDate);
-			} else if (column == 6)
+			} else if (column == 6) {
 				return course.getSession();
-			else if (column == 7) {
+			} else if (column == 7) {
 				ArrayList<String> daysCell = new ArrayList<String>();
 
 				for (int i = 0; i < 5; i++) {

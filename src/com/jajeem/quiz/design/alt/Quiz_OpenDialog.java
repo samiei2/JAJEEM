@@ -14,6 +14,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -40,7 +41,7 @@ public class Quiz_OpenDialog extends JDialog {
 	public static void main(String[] args) {
 		try {
 			Quiz_OpenDialog dialog = new Quiz_OpenDialog(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
@@ -56,8 +57,7 @@ public class Quiz_OpenDialog extends JDialog {
 	public Quiz_OpenDialog(Quiz_Main frame) {
 		setTitle("Open");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Quiz_OpenDialog.class
-						.getResource("/icons/noa_en/quiz.png")));
+				Quiz_OpenDialog.class.getResource("/icons/noa_en/quiz.png")));
 		parentFrame = frame;
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
@@ -75,8 +75,9 @@ public class Quiz_OpenDialog extends JDialog {
 							Quiz z = list.get(i);
 							quizList.add(z);
 							String title = z.getTitle();
-							if (title == "" || title == null)
+							if (title == "" || title == null) {
 								title = "No Title";
+							}
 							if (wbTblQuiz.getRowCount() == 0) {
 								model.addRow(new Object[] { 1, title,
 										z.getQuestionList().size() });
@@ -88,16 +89,17 @@ public class Quiz_OpenDialog extends JDialog {
 							}
 						}
 					}
-					if (wbTblQuiz.getRowCount() != 0)
+					if (wbTblQuiz.getRowCount() != 0) {
 						wbTblQuiz.getSelectionModel()
 								.setSelectionInterval(0, 0);
+					}
 				} catch (SQLException e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
 		});
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(true);
 		setBounds(100, 0, 653, 479);
 		setLocationByPlatform(true);
@@ -107,6 +109,7 @@ public class Quiz_OpenDialog extends JDialog {
 
 		WebButton wbtnOpen = new WebButton();
 		wbtnOpen.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				parentFrame.setCurrentQuiz(quizList.get(wbTblQuiz
 						.getSelectedRow()));
@@ -118,6 +121,7 @@ public class Quiz_OpenDialog extends JDialog {
 
 		WebButton wbtnCancel = new WebButton();
 		wbtnCancel.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}

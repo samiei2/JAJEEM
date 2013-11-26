@@ -12,19 +12,20 @@ public class StartQuizCommand extends Command {
 	private String server;
 	private Run run;
 	private int receivePort;
+
 	public StartQuizCommand(String from, String to, int port) {
 		super(from, to, port);
-		
+
 	}
 
 	public void setQuiz(Quiz currentQuiz) {
 		quiz = currentQuiz;
 	}
-	
-	public Quiz getQuiz(){
+
+	public Quiz getQuiz() {
 		return quiz;
 	}
-	
+
 	public String getServer() {
 		return server;
 	}
@@ -36,16 +37,16 @@ public class StartQuizCommand extends Command {
 	public void setRun(Run run) {
 		this.run = run;
 	}
-	
-	public Run getRun(){
+
+	public Run getRun() {
 		return run;
 	}
 
 	public void setReceivePort(int i) {
 		receivePort = i;
 	}
-	
-	public int getReceivePort(){
+
+	public int getReceivePort() {
 		return receivePort;
 	}
 

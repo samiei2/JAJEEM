@@ -16,15 +16,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -39,6 +36,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameEvent;
@@ -52,18 +50,14 @@ import org.jitsi.examples.AVReceiveOnly;
 import org.jscroll.widgets.RootDesktopPane;
 
 import com.alee.extended.panel.GroupPanel;
-import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
-import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuItem;
 import com.alee.laf.menu.WebPopupMenu;
-import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.slider.WebSlider;
 import com.alee.laf.table.WebTable;
@@ -72,7 +66,6 @@ import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartIntercomCommand;
@@ -85,6 +78,7 @@ import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopVideoChatCommand;
+import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ClientService;
@@ -198,11 +192,11 @@ public class InstructorNoaUtil {
 																.getSelectedFrame()
 																.getClientProperty(
 																		"ip"))) {
-									WebOptionPane.showMessageDialog(
+									JOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
 											"Information",
-											WebOptionPane.INFORMATION_MESSAGE);
+											JOptionPane.INFORMATION_MESSAGE);
 									return;
 								}
 							}
@@ -259,12 +253,12 @@ public class InstructorNoaUtil {
 													e.printStackTrace();
 												}
 											} else {
-												WebOptionPane.showMessageDialog(
+												JOptionPane.showMessageDialog(
 														InstructorNoa
 																.getCenterPanel(),
 														"Another voice or video function is already running, please stop it first",
 														"Information",
-														WebOptionPane.INFORMATION_MESSAGE);
+														JOptionPane.INFORMATION_MESSAGE);
 											}
 										} else {
 											StartIntercomCommand si = new StartIntercomCommand(
@@ -321,11 +315,11 @@ public class InstructorNoaUtil {
 											.isTransmitting() && InstructorNoa
 											.getTransmittingType().equals(
 													"intercom"))) {
-								WebOptionPane.showMessageDialog(
+								JOptionPane.showMessageDialog(
 										InstructorNoa.getCenterPanel(),
 										"Another voice or video function is already running, please stop it first",
 										"Information",
-										WebOptionPane.INFORMATION_MESSAGE);
+										JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
 
@@ -339,7 +333,7 @@ public class InstructorNoaUtil {
 										ServerService serv = InstructorNoa
 												.getServerService();
 										StartVideoChatCommand cmd = new StartVideoChatCommand(
-												Inet4Address.getLocalHost()
+												InetAddress.getLocalHost()
 														.getHostAddress(),
 												Config.getParam("broadcastingIp"),
 												Integer.parseInt(Config
@@ -388,7 +382,7 @@ public class InstructorNoaUtil {
 												ServerService serv = InstructorNoa
 														.getServerService();
 												StopVideoChatCommand cmd = new StopVideoChatCommand(
-														Inet4Address
+														InetAddress
 																.getLocalHost()
 																.getHostAddress(),
 														Config.getParam("broadcastingIp"),
@@ -401,12 +395,12 @@ public class InstructorNoaUtil {
 														.getParam("Video Chat"));
 											}
 										} else {
-											WebOptionPane.showMessageDialog(
+											JOptionPane.showMessageDialog(
 													InstructorNoa
 															.getCenterPanel(),
 													"Another voice or video function is already running, please stop it first",
 													"Information",
-													WebOptionPane.INFORMATION_MESSAGE);
+													JOptionPane.INFORMATION_MESSAGE);
 										}
 									}
 								} catch (Exception e1) {
@@ -542,20 +536,19 @@ public class InstructorNoaUtil {
 						// recorder action
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-//								boolean decorateFrames = WebLookAndFeel
-//										.isDecorateDialogs();
-//								WebLookAndFeel
-//										.setDecorateDialogs(true);
+								// boolean decorateFrames = WebLookAndFeel
+								// .isDecorateDialogs();
+								// WebLookAndFeel
+								// .setDecorateDialogs(true);
 
-								Recorder recorder = new Recorder(
-										null,
-										true, true);
+								Recorder recorder = new Recorder(null, true,
+										true);
 								recorder.setLocationRelativeTo(rightButtonPanel);
 								recorder.setVisible(true);
 								getRecorder_Button().setEnabled(false);
 								// Restoring frame decoration option
-//								WebLookAndFeel
-//										.setDecorateDialogs(decorateFrames);
+								// WebLookAndFeel
+								// .setDecorateDialogs(decorateFrames);
 							} catch (Exception e) {
 								JajeemExcetionHandler.logError(e);
 							}
@@ -579,7 +572,7 @@ public class InstructorNoaUtil {
 								ServerService serv = InstructorNoa
 										.getServerService();
 								StartSpeechCommand cmd = new StartSpeechCommand(
-										Inet4Address.getLocalHost()
+										InetAddress.getLocalHost()
 												.getHostAddress(), Config
 												.getParam("broadcastingIp"),
 										Integer.parseInt(Config
@@ -678,7 +671,10 @@ public class InstructorNoaUtil {
 									Group group = InstructorNoa.getGroups()
 											.get(groupIndex);
 									if (group.getStudentIps().isEmpty()) {
-										WebOptionPane.showMessageDialog(null, "Cannot start exam on an empty group!\nPlease add some students to the group first!");
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Cannot start exam on an empty group!\nPlease add some students to the group first!");
 										return;
 									} else {
 										try {
@@ -1046,6 +1042,7 @@ public class InstructorNoaUtil {
 
 				case "whiteBoard":
 					button.addActionListener(new ActionListener() {
+						@Override
 						public void actionPerformed(ActionEvent arg0) {
 
 							Component card = getActiveCard();
@@ -1250,11 +1247,12 @@ public class InstructorNoaUtil {
 						final ArrayList<File> lnkList = new ArrayList<>();
 						final ArrayList<File> exeList = new ArrayList<>();
 						for (int i = 0; i < tempfileList.length; i++) {
-							if (tempfileList[i].isDirectory())
+							if (tempfileList[i].isDirectory()) {
 								listOfAllLinks
 										.addAll(getPath(getDirectoryContent(tempfileList[i])));
-							else
+							} else {
 								listOfAllLinks.add(tempfileList[i]);
+							}
 						}
 
 						Collections.sort(listOfAllLinks);
@@ -1297,6 +1295,7 @@ public class InstructorNoaUtil {
 							Class[] columnTypes = new Class[] { String.class,
 									Boolean.class };
 
+							@Override
 							@SuppressWarnings({ "unchecked", "rawtypes" })
 							public Class getColumnClass(int columnIndex) {
 								return columnTypes[columnIndex];
@@ -1350,6 +1349,7 @@ public class InstructorNoaUtil {
 						programPopupButton.setContent(programPopupContent);
 
 						programsList.addMouseListener(new MouseAdapter() {
+							@Override
 							public void mouseClicked(MouseEvent evt) {
 								boolean value = (boolean) programsList
 										.getValueAt(
@@ -1526,6 +1526,7 @@ public class InstructorNoaUtil {
 							private ProgramList fileChooser = new ProgramList(
 									model);
 
+							@Override
 							public void actionPerformed(ActionEvent e) {
 								fileChooser.setVisible(true);
 							}
@@ -1544,6 +1545,7 @@ public class InstructorNoaUtil {
 						programPopupButton.setContent(programPopupContent);
 
 						programsList.addMouseListener(new MouseAdapter() {
+							@Override
 							public void mouseClicked(MouseEvent evt) {
 								WebList list = (WebList) evt.getSource();
 								if (evt.getClickCount() == 2) {
@@ -1906,7 +1908,7 @@ public class InstructorNoaUtil {
 
 				case "volume":
 					final WebSlider slider1 = new WebSlider(
-							WebSlider.HORIZONTAL);
+							SwingConstants.HORIZONTAL);
 					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
@@ -2023,11 +2025,11 @@ public class InstructorNoaUtil {
 																.getSelectedFrame()
 																.getClientProperty(
 																		"ip"))) {
-									WebOptionPane.showMessageDialog(
+									JOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
 											"Information",
-											WebOptionPane.INFORMATION_MESSAGE);
+											JOptionPane.INFORMATION_MESSAGE);
 									return;
 								}
 
@@ -2110,8 +2112,8 @@ public class InstructorNoaUtil {
 			final RootDesktopPane desktopPane, final String hostIp,
 			final String hostName) throws NumberFormatException, Exception {
 		String frameName = hostName;
-		final CustomInternalPanel internalFrame = new CustomInternalPanel(frameName,
-				false, false, false, false);
+		final CustomInternalPanel internalFrame = new CustomInternalPanel(
+				frameName, false, false, false, false);
 
 		// get current list of students, if some one is new, add him/her
 		JInternalFrame[] frames = desktopPane.getAllFrames();
@@ -2121,10 +2123,9 @@ public class InstructorNoaUtil {
 				listOfStudents.add((String) frame.getClientProperty("ip"));
 			}
 		}
-		
 
 		for (JInternalFrame frame : frames) {
-			if (hostIp.equals((String) frame.getClientProperty("ip"))) {
+			if (hostIp.equals(frame.getClientProperty("ip"))) {
 				if (!((Viewer) frame.getClientProperty("vnc")).isConnected()) {
 					jrdesktop.Config con = new jrdesktop.Config(false, "",
 							hostIp,
@@ -2156,7 +2157,7 @@ public class InstructorNoaUtil {
 				return null;
 			}
 		}
-		
+
 		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
 				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
 				false, false);
@@ -2262,10 +2263,11 @@ public class InstructorNoaUtil {
 
 			@Override
 			public void internalFrameClosed(InternalFrameEvent arg0) {
-				try{
-					Session.getLoggedInStudents().remove(internalFrame.getClientProperty("ip").toString());
-				}catch(Exception e){
-					
+				try {
+					Session.getLoggedInStudents().remove(
+							internalFrame.getClientProperty("ip").toString());
+				} catch (Exception e) {
+
 				}
 			}
 
@@ -2290,7 +2292,7 @@ public class InstructorNoaUtil {
 				// .putClientProperty("isselected", true);
 			}
 		});
-		
+
 		WebPopupMenu popup = new WebPopupMenu();
 		WebMenu menu = new WebMenu();
 
@@ -2360,8 +2362,7 @@ public class InstructorNoaUtil {
 					}
 				});
 
-		TooltipManager.setTooltip(((JComponent) internalFrame.getComponent(1)),
-				"No Group");
+		TooltipManager.setTooltip((internalFrame.getComponent(1)), "No Group");
 		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
 
 		WebMenu menuItemgroups = new WebMenu("Grouping");
@@ -2416,10 +2417,11 @@ public class InstructorNoaUtil {
 			public void stateChanged(ChangeEvent arg0) {
 				if (InstructorNoa.getConversationIps().contains(
 						InstructorNoa.getDesktopPane().getSelectedFrame()
-								.getClientProperty("ip")))
+								.getClientProperty("ip"))) {
 					menuItemConversations.setEnabled(false);
-				else
+				} else {
 					menuItemConversations.setEnabled(true);
+				}
 			}
 		});
 		menuItemSendFile.addActionListener(new ActionListener() {
@@ -2492,7 +2494,7 @@ public class InstructorNoaUtil {
 			}
 		});
 		menuItemLogout.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LogoutActionListener();
@@ -2507,7 +2509,7 @@ public class InstructorNoaUtil {
 		menuItemActions.add(menuItemLock);
 		menuItemActions.add(menuItemRecord);
 		menuItemActions.add(menuItemLogout);
-		
+
 		popup.add(menuItemgroups);
 		popup.add(menuItemActions);
 
@@ -2545,6 +2547,7 @@ public class InstructorNoaUtil {
 		menuItemGroupO.putClientProperty("group_no", 14);
 
 		ActionListener actionListenerGroupMenuItem = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				WebMenuItem menuItem = (WebMenuItem) e.getSource();
 				String group = (String) menuItem.getClientProperty("group");
@@ -2560,8 +2563,7 @@ public class InstructorNoaUtil {
 						InstructorNoa.getGroups().get(currentGroup)
 								.getStudentNames().remove(hostName);
 						TooltipManager.setTooltip(
-								((JComponent) internalFrame.getComponent(1)),
-								"No Group");
+								(internalFrame.getComponent(1)), "No Group");
 					}
 
 				} else {
@@ -2579,8 +2581,8 @@ public class InstructorNoaUtil {
 						InstructorNoa.getGroups().get(groupIndex)
 								.getStudentNames().add(hostName);
 						TooltipManager.setTooltip(
-								((JComponent) internalFrame.getComponent(1)),
-								"Group " + group);
+								(internalFrame.getComponent(1)), "Group "
+										+ group);
 					} else if (currentGroup > -1 && groupIndex > -1) {
 						InstructorNoa.getGroups().get(currentGroup)
 								.getStudentIps().remove(hostIp);
@@ -2592,8 +2594,8 @@ public class InstructorNoaUtil {
 						InstructorNoa.getGroups().get(groupIndex)
 								.getStudentNames().add(hostName);
 						TooltipManager.setTooltip(
-								((JComponent) internalFrame.getComponent(1)),
-								"Group " + group);
+								(internalFrame.getComponent(1)), "Group "
+										+ group);
 					}
 				}
 			}
@@ -2623,25 +2625,26 @@ public class InstructorNoaUtil {
 			for (JInternalFrame frame : frames) {
 				listOfStudents.add((String) frame.getClientProperty("ip"));
 			}
-			if(!listOfStudents.contains(hostIp)){
+			if (!listOfStudents.contains(hostIp)) {
 				DefaultTableModel model = (DefaultTableModel) InstructorNoa
 						.getStudentListTable().getModel();
 				model.addRow(new Object[] { hostIp, hostName });
-	
+
 				desktopPane.add(internalFrame, BorderLayout.CENTER);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 						.tileInternalFrames();
 			}
 		}
-		
+
 		return internalFrame;
 	}
 
 	protected static void internalFrameMouseClicked(MouseEvent e) {
 		if (previousFrame != null
 				&& !previousFrame.equals(InstructorNoa.getDesktopPane()
-						.getSelectedFrame()))
+						.getSelectedFrame())) {
 			previousFrame.putClientProperty("isselected", false);
+		}
 		if (InstructorNoa.getDesktopPane().getSelectedFrame()
 				.getClientProperty("isselected").equals(false)) {
 			InstructorNoa.getDesktopPane().getSelectedFrame()
@@ -2667,25 +2670,26 @@ public class InstructorNoaUtil {
 			}
 		}
 	}
-	
+
 	protected static void LogoutActionListener() {
-		try{
-			String username = InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString();
+		try {
+			String username = InstructorNoa.getDesktopPane().getSelectedFrame()
+					.getClientProperty("ip").toString();
 			Session.getLoggedInStudents().remove(username);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 		}
 		TeacherLogoutCommand cmd;
 		try {
 			cmd = new TeacherLogoutCommand(InetAddress.getLocalHost()
-					.getHostAddress(), InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip").toString(), Integer.parseInt(Config.getParam("port")));
+					.getHostAddress(), InstructorNoa.getDesktopPane()
+					.getSelectedFrame().getClientProperty("ip").toString(),
+					Integer.parseInt(Config.getParam("port")));
 			InstructorNoa.getServerService().send(cmd);
 		} catch (Exception e) {
 		}
-		try{
+		try {
 			InstructorNoa.getDesktopPane().getSelectedFrame().dispose();
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -2774,11 +2778,11 @@ public class InstructorNoaUtil {
 				|| InstructorNoa.getConversationIps().contains(
 						InstructorNoa.getDesktopPane().getSelectedFrame()
 								.getClientProperty("ip"))) {
-			WebOptionPane
+			JOptionPane
 					.showMessageDialog(
 							InstructorNoa.getCenterPanel(),
 							"Another voice or video function is already running, please stop it first",
-							"Information", WebOptionPane.INFORMATION_MESSAGE);
+							"Information", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
@@ -2819,12 +2823,12 @@ public class InstructorNoaUtil {
 								e.printStackTrace();
 							}
 						} else {
-							WebOptionPane
+							JOptionPane
 									.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
 											"Information",
-											WebOptionPane.INFORMATION_MESSAGE);
+											JOptionPane.INFORMATION_MESSAGE);
 						}
 					} else {
 						StartIntercomCommand si = new StartIntercomCommand(
@@ -2914,8 +2918,9 @@ public class InstructorNoaUtil {
 			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
 				selectedStudent = (String) InstructorNoa.getDesktopPane()
 						.getSelectedFrame().getClientProperty("ip");
-			} else
+			} else {
 				return "";
+			}
 		}
 
 		return selectedStudent;
@@ -2941,8 +2946,8 @@ public class InstructorNoaUtil {
 		InstructorNoa.getConversationPairs().add(ipFrom + "|" + ipTo);
 
 	}
-	
-	public static boolean getCallAllActive(){
+
+	public static boolean getCallAllActive() {
 		return callAllActive;
 	}
 

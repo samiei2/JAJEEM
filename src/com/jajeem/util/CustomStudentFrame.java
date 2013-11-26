@@ -25,22 +25,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.plaf.metal.MetalIconFactory;
-
-import com.alee.laf.optionpane.WebOptionPane;
-import com.sun.media.sound.Toolkit;
-
-import net.miginfocom.swing.MigLayout;
-import java.awt.GridLayout;
-import java.io.IOException;
 
 public class CustomStudentFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -177,7 +168,7 @@ public class CustomStudentFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-//				mainFrame.setExtendedState(JFrame.ICONIFIED);
+				// mainFrame.setExtendedState(JFrame.ICONIFIED);
 				trayIcon.add();
 				mainFrame.setVisible(false);
 			}
@@ -236,6 +227,7 @@ public class CustomStudentFrame extends JFrame {
 		getContentPane().setLayout(groupLayout);
 
 		this.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
 				posX = e.getX();
 				posY = e.getY();
@@ -243,6 +235,7 @@ public class CustomStudentFrame extends JFrame {
 		});
 
 		this.addMouseMotionListener(new MouseAdapter() {
+			@Override
 			public void mouseDragged(MouseEvent evt) {
 				// sets frame position when mouse dragged
 				setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
@@ -255,14 +248,15 @@ public class CustomStudentFrame extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					int i = WebOptionPane.showConfirmDialog(getContentPane(),
+					int i = JOptionPane.showConfirmDialog(getContentPane(),
 							"Are you sure you want to close this window?");
-					if (i == 0)
+					if (i == 0) {
 						dispose();
-					else if (i == 1)
+					} else if (i == 1) {
 						return;
-					else
+					} else {
 						return;
+					}
 				}
 			}
 		});
@@ -292,16 +286,16 @@ public class CustomStudentFrame extends JFrame {
 	}
 }
 
-class StudentTrayIcon{
+class StudentTrayIcon {
 	TrayIcon icon;
 	JFrame mainFrame;
 	Thread _notificationThread;
 	SystemTray tray;
-	
-	public StudentTrayIcon(){
-		
+
+	public StudentTrayIcon() {
+
 	}
-	
+
 	public void add() {
 		try {
 			tray.add(icon);
@@ -322,10 +316,12 @@ class StudentTrayIcon{
 	}
 
 	private void SetupTrayIcon() throws AWTException, InterruptedException {
-		icon = new TrayIcon(getImage(),"Noavaran Co. ClassMate", createPopupMenu());
+		icon = new TrayIcon(getImage(), "Noavaran Co. ClassMate",
+				createPopupMenu());
 
 		icon.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.setVisible(true);
 				_notificationThread.interrupt();
@@ -333,9 +329,9 @@ class StudentTrayIcon{
 			}
 
 		});
-		
+
 		_notificationThread = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				while (true) {
@@ -345,35 +341,35 @@ class StudentTrayIcon{
 						e.printStackTrace();
 					}
 					icon.displayMessage("Warning", "Click me! =)",
-					TrayIcon.MessageType.WARNING);
+							TrayIcon.MessageType.WARNING);
 				}
 			}
 		});
-//		_notificationThread.start();
+		// _notificationThread.start();
 	}
-	
+
 	private static Image getImage() throws HeadlessException {
 		ImageIcon originalImage = null;
 		try {
-			originalImage = new ImageIcon(StudentTrayIcon.class.getResource("/icons/noa_en/logo.png"));
+			originalImage = new ImageIcon(
+					StudentTrayIcon.class.getResource("/icons/noa_en/logo.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
-        Image img = new BufferedImage(originalImage.getIconWidth(),
-        		originalImage.getIconHeight(),
-                BufferedImage.TYPE_4BYTE_ABGR);
- 
-        originalImage.paintIcon(new Panel(), img.getGraphics(), 0, 0);
- 
-        return img;
+
+		Image img = new BufferedImage(originalImage.getIconWidth(),
+				originalImage.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+
+		originalImage.paintIcon(new Panel(), img.getGraphics(), 0, 0);
+
+		return img;
 	}
 
-	private static PopupMenu createPopupMenu() throws
-	HeadlessException {
+	private static PopupMenu createPopupMenu() throws HeadlessException {
 		PopupMenu menu = new PopupMenu();
 		MenuItem exit = new MenuItem("Exit");
 		exit.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}

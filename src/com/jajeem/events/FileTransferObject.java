@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.EventObject;
 
-public class FileTransferObject extends EventObject implements Serializable{
+public class FileTransferObject extends EventObject implements Serializable {
 
 	double progressValue = 0;
+
 	public FileTransferObject(Object source) {
 		super(source);
 	}
@@ -22,8 +23,8 @@ public class FileTransferObject extends EventObject implements Serializable{
 	public void setProgressValue(double i) {
 		progressValue = i;
 	}
-	
-	public double getProgressValue(){
+
+	public double getProgressValue() {
 		return progressValue;
 	}
 
@@ -34,6 +35,7 @@ public class FileTransferObject extends EventObject implements Serializable{
 	public void setClientSocket(Socket clientSocket) {
 		this.clientSocket = clientSocket;
 	}
+
 	public long getRequestNumber() {
 		return requestNumber;
 	}
