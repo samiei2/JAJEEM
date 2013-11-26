@@ -46,7 +46,7 @@ public class CustomStudentFrame extends JFrame {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
-		setSize(300, 550);
+//		setSize(300, 550);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -81,7 +81,7 @@ public class CustomStudentFrame extends JFrame {
 								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		GridBagLayout gbl_panelMain = new GridBagLayout();
 		gbl_panelMain.rowHeights = new int[] { 0, 0, 0 };
-		gbl_panelMain.columnWeights = new double[] { 0.05, 0.9, 0.05 };
+		gbl_panelMain.columnWeights = new double[] { 0.1, 0.8, 0.1 };
 		gbl_panelMain.rowWeights = new double[] { 0.84, 0.02, 0.14 };
 		panelMain.setLayout(gbl_panelMain);
 
@@ -168,9 +168,9 @@ public class CustomStudentFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// mainFrame.setExtendedState(JFrame.ICONIFIED);
-				trayIcon.add();
-				mainFrame.setVisible(false);
+				 mainFrame.setExtendedState(JFrame.ICONIFIED);
+//				trayIcon.add();
+//				mainFrame.setVisible(false);
 			}
 		});
 
@@ -273,7 +273,7 @@ public class CustomStudentFrame extends JFrame {
 			}
 		});
 
-		trayIcon = new StudentTrayIcon(mainFrame);
+//		trayIcon = new StudentTrayIcon(mainFrame);
 	}
 
 	public static void main(String[] args) {

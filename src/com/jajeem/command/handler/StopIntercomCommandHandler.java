@@ -17,7 +17,7 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 				InstructorNoa.getTransmitter().stop();
 			} else {
 				Student.getTransmitter().stop();
-				Student.setIntercomButtonStart();
+//				Student.setIntercomButtonStart();
 				if (ClientSession.getStudentIntercomPanel() != null) {
 					ClientSession.getStudentIntercomPanel().dispose();
 				}

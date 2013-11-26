@@ -52,6 +52,7 @@ import org.jscroll.widgets.RootDesktopPane;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.desktoppane.WebInternalFrame;
 import com.alee.laf.list.DefaultListModel;
 import com.alee.laf.list.WebList;
 import com.alee.laf.menu.WebMenu;
@@ -2013,24 +2014,26 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent arg0) {
 							try {
 
-								if (InstructorNoa.getTransmitter()
-										.isTransmitting()
-										|| InstructorNoa.getSendOnly()
-												.isTransmitting()
-										|| InstructorNoa
-												.getConversationIps()
-												.contains(
-														InstructorNoa
-																.getDesktopPane()
-																.getSelectedFrame()
-																.getClientProperty(
-																		"ip"))) {
+								if ((InstructorNoa.getTransmitter().isTransmitting()
+										|| InstructorNoa.getSendOnly().isTransmitting()) && !callAllActive) {
 									JOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
 											"Information",
 											JOptionPane.INFORMATION_MESSAGE);
 									return;
+								}
+								
+								if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
+									if(InstructorNoa.getConversationIps().contains(
+											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))){
+										JOptionPane.showMessageDialog(
+												InstructorNoa.getCenterPanel(),
+												"Another voice or video function is already running, please stop it first",
+												"Information",
+												JOptionPane.INFORMATION_MESSAGE);
+										return;
+									}
 								}
 
 								if (InstructorNoa.getSendOnly()
@@ -2108,11 +2111,11 @@ public class InstructorNoaUtil {
 	 *            String
 	 */
 	@SuppressWarnings("unused")
-	public static CustomInternalPanel createFrame(
+	public static WebInternalFrame createFrame(
 			final RootDesktopPane desktopPane, final String hostIp,
 			final String hostName) throws NumberFormatException, Exception {
 		String frameName = hostName;
-		final CustomInternalPanel internalFrame = new CustomInternalPanel(
+		final WebInternalFrame internalFrame = new WebInternalFrame(
 				frameName, false, false, false, false);
 
 		// get current list of students, if some one is new, add him/her

@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -36,6 +37,10 @@ import com.jajeem.util.CustomTextField;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
 import com.jajeem.util.i18n;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 public class StudentLogin extends CustomLoginFrame {
 
@@ -54,8 +59,10 @@ public class StudentLogin extends CustomLoginFrame {
 
 	private static ServerService serverService;
 
-	static WebTextField username = new WebTextField(15);
-	static WebPasswordField password = new WebPasswordField(15);
+	static JTextField username = new WebTextField(15);
+	static JPasswordField password = new WebPasswordField(15);
+	private JTextField textField;
+	private JPasswordField textField_1;
 
 	/**
 	 * Launch the application.
@@ -67,7 +74,7 @@ public class StudentLogin extends CustomLoginFrame {
 			new Config();
 			new i18n();
 
-			new Student();
+			new Student().getMainFrame().setVisible(true);
 			new StudentLogin();
 
 		} catch (Exception e) {
@@ -85,12 +92,6 @@ public class StudentLogin extends CustomLoginFrame {
 	public StudentLogin() throws Exception {
 
 		initilization();
-
-		CustomLogoLabel lblNewLabel = new CustomLogoLabel(
-				"/icons/noa_en/new/username.png");
-
-		CustomLogoLabel label = new CustomLogoLabel(
-				"/icons/noa_en/new/password.png");
 
 		WebButton wbtnLogin = new WebButton();
 		wbtnLogin.addActionListener(new ActionListener() {
@@ -132,119 +133,62 @@ public class StudentLogin extends CustomLoginFrame {
 		wbtnLogin.setBorder(new MatteBorder(5, 3, 5, 3, Color.GRAY));
 		wbtnLogin.setBackground(Color.GRAY);
 		wbtnLogin.setRound(10);
-		wbtnLogin.setUndecorated(true);
 		wbtnLogin.setText("Login");
-
-		CustomTextField textField = new CustomTextField(
-				"/icons/noa_en/new/logintextbox.png");
-		textField.setColumns(10);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblUsername.setForeground(SystemColor.controlDkShadow);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setForeground(SystemColor.controlDkShadow);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 20));
+		
+		textField = new CustomTextField("/icons/noa_en/new/logintextbox.png");
 		textField.setMargin(new Insets(0, 10, 0, 0));
 		username = textField;
-
-		CustomPasswordField textField_1 = new CustomPasswordField(
-				"/icons/noa_en/new/logintextbox.png");
-		textField_1.setColumns(10);
+		textField.setColumns(10);
+		
+		textField_1 = new CustomPasswordField("/icons/noa_en/new/logintextbox.png");
 		textField_1.setMargin(new Insets(0, 10, 0, 0));
 		password = textField_1;
+		textField_1.setColumns(10);
 
 		GroupLayout groupLayout = new GroupLayout(getMainContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								label,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								lblNewLabel,
-																								GroupLayout.DEFAULT_SIZE,
-																								99,
-																								Short.MAX_VALUE))
-																		.addGap(18)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								textField_1,
-																								GroupLayout.DEFAULT_SIZE,
-																								319,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								textField,
-																								GroupLayout.DEFAULT_SIZE,
-																								319,
-																								Short.MAX_VALUE)))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(154)
-																		.addComponent(
-																				wbtnLogin,
-																				GroupLayout.PREFERRED_SIZE,
-																				143,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																lblNewLabel,
-																GroupLayout.PREFERRED_SIZE,
-																28,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																textField,
-																GroupLayout.PREFERRED_SIZE,
-																27,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																label,
-																GroupLayout.PREFERRED_SIZE,
-																26,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																textField_1,
-																GroupLayout.PREFERRED_SIZE,
-																29,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(57)
-										.addComponent(wbtnLogin,
-												GroupLayout.PREFERRED_SIZE, 28,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(10)
+									.addComponent(wbtnLogin, 100, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(34, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(textField)
+						.addComponent(lblUsername, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(wbtnLogin, 28, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(46, Short.MAX_VALUE))
+		);
 		getMainContentPane().setLayout(groupLayout);
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -254,7 +198,8 @@ public class StudentLogin extends CustomLoginFrame {
 		HotkeyManager.registerHotkey(this, wbtnLogin, Hotkey.ENTER);
 
 		setLoginDialog(this);
-		getLoginDialog().pack();
+		setSize(450,275);
+//		super.pack();
 		getLoginDialog().setLocationRelativeTo(this);
 
 	}

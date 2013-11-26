@@ -24,4 +24,5 @@ pcip=PC IP
 studentname=Student Name
 empty=Empty
 groupa=Group A
-
+tooltipchatinstructor=Chat with instructor
+buttonfilemanager=File Manager

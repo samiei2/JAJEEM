@@ -10,9 +10,11 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -153,6 +155,9 @@ public class InstructorNoa {
 				try {
 
 					new InstructorNoa();
+//					Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment()
+//							.getMaximumWindowBounds();
+//					frame.setPreferredSize(new Dimension(800, 600));
 					frame.pack();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -368,8 +373,8 @@ public class InstructorNoa {
 		webPanel.setUndecorated(true);
 		webPanel.setOpaque(false);
 
-		WebPanel webPanel_1 = new WebPanel();
-		webPanel_1.setOpaque(false);
+		WebPanel topButtonPanel = new WebPanel();
+		topButtonPanel.setOpaque(false);
 		GroupLayout groupLayout = new GroupLayout(frame.getMainContentPane());
 		groupLayout
 				.setHorizontalGroup(groupLayout
@@ -412,7 +417,7 @@ public class InstructorNoa {
 																		.addPreferredGap(
 																				ComponentPlacement.RELATED)
 																		.addComponent(
-																				webPanel_1,
+																				topButtonPanel,
 																				GroupLayout.PREFERRED_SIZE,
 																				657,
 																				GroupLayout.PREFERRED_SIZE)))
@@ -430,7 +435,7 @@ public class InstructorNoa {
 																Alignment.LEADING,
 																false)
 														.addComponent(
-																webPanel_1, 0,
+																topButtonPanel, 0,
 																0,
 																Short.MAX_VALUE)
 														.addComponent(
@@ -513,16 +518,16 @@ public class InstructorNoa {
 
 		CustomPanel panelClock = new CustomPanel("/icons/noa_en/clockPanel.png");
 		panelClock.setOpaque(false);
-		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1
-				.setHorizontalGroup(gl_webPanel_1
+		GroupLayout gl_topPanel = new GroupLayout(topButtonPanel);
+		gl_topPanel
+				.setHorizontalGroup(gl_topPanel
 						.createParallelGroup(Alignment.LEADING)
 						.addGroup(
-								gl_webPanel_1
+								gl_topPanel
 										.createSequentialGroup()
 										.addContainerGap()
 										.addGroup(
-												gl_webPanel_1
+												gl_topPanel
 														.createParallelGroup(
 																Alignment.LEADING)
 														.addComponent(
@@ -537,7 +542,7 @@ public class InstructorNoa {
 																GroupLayout.PREFERRED_SIZE))
 										.addGap(18)
 										.addGroup(
-												gl_webPanel_1
+												gl_topPanel
 														.createParallelGroup(
 																Alignment.LEADING)
 														.addComponent(
@@ -555,24 +560,24 @@ public class InstructorNoa {
 												GroupLayout.PREFERRED_SIZE,
 												254, Short.MAX_VALUE)
 										.addContainerGap()));
-		gl_webPanel_1
-				.setVerticalGroup(gl_webPanel_1
+		gl_topPanel
+				.setVerticalGroup(gl_topPanel
 						.createParallelGroup(Alignment.TRAILING)
 						.addGroup(
-								gl_webPanel_1
+								gl_topPanel
 										.createSequentialGroup()
 										.addGroup(
-												gl_webPanel_1
+												gl_topPanel
 														.createParallelGroup(
 																Alignment.LEADING)
 														.addGroup(
-																gl_webPanel_1
+																gl_topPanel
 																		.createSequentialGroup()
 																		.addContainerGap(
 																				41,
 																				Short.MAX_VALUE)
 																		.addGroup(
-																				gl_webPanel_1
+																				gl_topPanel
 																						.createParallelGroup(
 																								Alignment.BASELINE)
 																						.addComponent(
@@ -588,7 +593,7 @@ public class InstructorNoa {
 																		.addPreferredGap(
 																				ComponentPlacement.RELATED)
 																		.addGroup(
-																				gl_webPanel_1
+																				gl_topPanel
 																						.createParallelGroup(
 																								Alignment.BASELINE)
 																						.addComponent(
@@ -896,7 +901,7 @@ public class InstructorNoa {
 		panel_2.setLayout(gl_panel_2);
 		panel_1.setLayout(gl_panel_1);
 		panelClock.setLayout(gl_panelClock);
-		webPanel_1.setLayout(gl_webPanel_1);
+		topButtonPanel.setLayout(gl_topPanel);
 
 		// webLabel_1.setIcon(new
 		// ImageIcon(InstructorNoa.class.getResource("/icons/noa_en/new/classmate.png")));
@@ -983,7 +988,7 @@ public class InstructorNoa {
 		surveyButton.setRound(10);
 		surveyButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		surveyButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		surveyButton.setForeground(Color.GRAY);
+		surveyButton.setForeground(Color.LIGHT_GRAY);
 		surveyButton.setText(i18n.getParam("Survey"));
 		surveyButton.setBottomBgColor(new Color(225, 234, 244));
 		surveyButton.setTopBgColor(new Color(116, 166, 219));
@@ -998,7 +1003,7 @@ public class InstructorNoa {
 		whiteBoardButton.setRound(10);
 		whiteBoardButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		whiteBoardButton.setForeground(Color.GRAY);
+		whiteBoardButton.setForeground(Color.LIGHT_GRAY);
 		whiteBoardButton.setText(i18n.getParam("White board"));
 		whiteBoardButton.setBottomBgColor(new Color(225, 234, 244));
 		whiteBoardButton.setTopBgColor(new Color(116, 166, 219));
@@ -1013,7 +1018,7 @@ public class InstructorNoa {
 		powerButton.setRound(10);
 		powerButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		powerButton.setForeground(Color.GRAY);
+		powerButton.setForeground(Color.LIGHT_GRAY);
 		powerButton.setText(i18n.getParam("PC Controller"));
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
@@ -1301,7 +1306,7 @@ public class InstructorNoa {
 		internetButton.setRound(10);
 		internetButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		internetButton.setForeground(Color.GRAY);
+		internetButton.setForeground(Color.LIGHT_GRAY);
 		internetButton.setText(i18n.getParam("Internet Controller"));
 		internetButton.setBottomBgColor(new Color(225, 234, 244));
 		internetButton.setTopBgColor(new Color(116, 166, 219));
@@ -1471,7 +1476,7 @@ public class InstructorNoa {
 		programButton.setRound(10);
 		programButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		programButton.setForeground(Color.GRAY);
+		programButton.setForeground(Color.LIGHT_GRAY);
 		programButton.setText(i18n.getParam("Allow & Restrict Program"));
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
@@ -1486,7 +1491,7 @@ public class InstructorNoa {
 		programStartButton.setRound(10);
 		programStartButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		programStartButton.setForeground(Color.GRAY);
+		programStartButton.setForeground(Color.LIGHT_GRAY);
 		programStartButton.setText(i18n.getParam("Program Starter"));
 		programStartButton.setBottomBgColor(new Color(225, 234, 244));
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
@@ -1501,7 +1506,7 @@ public class InstructorNoa {
 		conversationButton.setRound(10);
 		conversationButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		conversationButton.setBottomSelectedBgColor(new Color(75, 113, 158));
-		conversationButton.setForeground(Color.GRAY);
+		conversationButton.setForeground(Color.LIGHT_GRAY);
 		conversationButton.setText(i18n.getParam("Conversations"));
 		conversationButton.setBottomBgColor(new Color(225, 234, 244));
 		conversationButton.setTopBgColor(new Color(116, 166, 219));
@@ -1521,7 +1526,8 @@ public class InstructorNoa {
 		monitorButton.setIconTextGap(20);
 		monitorButton.putClientProperty("key", "monitor");
 		monitorButton.setFont(font);
-		monitorButton.setText("Monitoring");
+		monitorButton.setForeground(Color.WHITE);
+		monitorButton.setText(i18n.getParam("monitoring"));
 		monitorButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(monitorButton);
 
@@ -1820,6 +1826,7 @@ public class InstructorNoa {
 		InstructorNoaUtil instructorNoaUtil = new InstructorNoaUtil();
 		instructorNoaUtil.addEventsRightPanel(rightButtonPanel);
 		instructorNoaUtil.addEventsBottomPanel(bottomButtonPanel, frame);
+		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
 
 		getGroupList().addMouseListener(new MouseAdapter() {
 			@Override

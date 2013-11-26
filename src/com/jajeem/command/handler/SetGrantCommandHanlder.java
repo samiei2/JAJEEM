@@ -14,6 +14,7 @@ public class SetGrantCommandHanlder implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (((GrantCommand) cmd).isGranted()) {
 
+//			Student.getFrmJajeemProject().pack();
 			Student.getFrmJajeemProject().setVisible(true);
 
 			Student.setStudentModel(((GrantCommand) cmd).getStudent());

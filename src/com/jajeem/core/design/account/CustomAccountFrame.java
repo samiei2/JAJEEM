@@ -44,56 +44,48 @@ public class CustomAccountFrame extends WebFrame {
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
-		getContentPane().add(panel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.NORTH);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
 
 		panelContent = new CustomPanel("/icons/noa_en/accountmainpanel.png");
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 753,
-						Short.MAX_VALUE)
-				.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, 753,
-						Short.MAX_VALUE));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 55,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(panelContent, GroupLayout.DEFAULT_SIZE,
-								320, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+		);
 
 		panelClose = new CustomPanel("/icons/noa_en/accountclosepanel.png");
 
 		panelTop = new CustomPanel("/icons/noa_en/accounttoppanel.png");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addGap(28)
-						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE,
-								237, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 117,
-								Short.MAX_VALUE)
-						.addComponent(panelClose, GroupLayout.PREFERRED_SIZE,
-								173, GroupLayout.PREFERRED_SIZE).addGap(29)));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addGroup(
-								gl_panel_1
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(panelTop,
-												GroupLayout.PREFERRED_SIZE, 55,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(panelClose,
-												GroupLayout.PREFERRED_SIZE, 55,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap()));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addGap(26)
+					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+					.addComponent(panelClose, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addGap(31))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panelClose, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 		panelClose.setLayout(null);
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);

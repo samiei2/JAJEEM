@@ -108,107 +108,78 @@ public class AdminPanel extends CustomAccountFrame {
 		checkBox_1.setFont(font);
 
 		GroupLayout groupLayout = new GroupLayout(getTopContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addGap(4)
-						.addComponent(chckbxNewCheckBox,
-								GroupLayout.PREFERRED_SIZE, 75,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(3)
-						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE,
-								74, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																chckbxNewCheckBox,
-																GroupLayout.PREFERRED_SIZE,
-																41,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																checkBox,
-																GroupLayout.PREFERRED_SIZE,
-																41,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																checkBox_1,
-																GroupLayout.PREFERRED_SIZE,
-																41,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(5)
+					.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 		getTopContentPane().setLayout(groupLayout);
 
-		WebButton webButton = new WebButton();
-		webButton.addActionListener(new ActionListener() {
+		CustomAccountButton webButtonClose = new CustomAccountButton("/icons/noa_en/close.png");
+		webButtonClose.setUndecorated(true);
+		webButtonClose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 
-		WebButton webButton_1 = new WebButton();
-		webButton_1.addActionListener(new ActionListener() {
+		CustomAccountButton webButtonMax = new CustomAccountButton("/icons/noa_en/max.png");
+		webButtonMax.setUndecorated(true);
+		webButtonMax.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 			}
 		});
 
-		WebButton webButton_2 = new WebButton();
-		webButton_2.addActionListener(new ActionListener() {
+		CustomAccountButton webButtonMin = new CustomAccountButton("/icons/noa_en/min.png");
+		webButtonMin.setUndecorated(true);
+		webButtonMin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setState(Frame.ICONIFIED);
 			}
 		});
 		GroupLayout groupLayout_2 = new GroupLayout(getCloseContentPane());
-		groupLayout_2.setHorizontalGroup(groupLayout_2.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				groupLayout_2
-						.createSequentialGroup()
-						.addContainerGap(17, Short.MAX_VALUE)
-						.addComponent(webButton_2, GroupLayout.PREFERRED_SIZE,
-								42, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webButton_1, GroupLayout.PREFERRED_SIZE,
-								42, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webButton, GroupLayout.PREFERRED_SIZE,
-								42, GroupLayout.PREFERRED_SIZE).addGap(18)));
-		groupLayout_2.setVerticalGroup(groupLayout_2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout_2
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								groupLayout_2
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(webButton_2,
-												GroupLayout.PREFERRED_SIZE, 42,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webButton_1,
-												GroupLayout.PREFERRED_SIZE, 42,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webButton,
-												GroupLayout.PREFERRED_SIZE, 42,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(22, Short.MAX_VALUE)));
+		groupLayout_2.setHorizontalGroup(
+			groupLayout_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addContainerGap(24, Short.MAX_VALUE)
+					.addComponent(webButtonMin, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(webButtonMax, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(webButtonClose, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addGap(17))
+		);
+		groupLayout_2.setVerticalGroup(
+			groupLayout_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addGap(5)
+					.addGroup(groupLayout_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(webButtonMin, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout_2.createParallelGroup(Alignment.LEADING)
+							.addComponent(webButtonMax, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+							.addComponent(webButtonClose, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		getCloseContentPane().setLayout(groupLayout_2);
 
 		final JPanel cards = new JPanel();
@@ -404,73 +375,36 @@ public class AdminPanel extends CustomAccountFrame {
 
 		WebButton studentButton = new WebButton(i18n.getParam("Details"));
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_buttonPanel
-						.createSequentialGroup()
-						.addGap(5)
-						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
-								83, GroupLayout.PREFERRED_SIZE)
-						.addGap(32)
-						.addComponent(editButton, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(studentButton,
-								GroupLayout.PREFERRED_SIZE, 89,
-								GroupLayout.PREFERRED_SIZE).addContainerGap()));
-		gl_buttonPanel
-				.setVerticalGroup(gl_buttonPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_buttonPanel
-										.createSequentialGroup()
-										.addGroup(
-												gl_buttonPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_buttonPanel
-																		.createSequentialGroup()
-																		.addGap(10)
-																		.addComponent(
-																				editButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_buttonPanel
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				studentButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				31,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_buttonPanel
-																		.createSequentialGroup()
-																		.addGap(10)
-																		.addGroup(
-																				gl_buttonPanel
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								addButton,
-																								GroupLayout.PREFERRED_SIZE,
-																								31,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								deleteButton,
-																								GroupLayout.PREFERRED_SIZE,
-																								31,
-																								GroupLayout.PREFERRED_SIZE))))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addGap(13)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(editButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(editButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(studentButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(12, Short.MAX_VALUE))
+		);
 		buttonPanel.setLayout(gl_buttonPanel);
 		studentButton.addActionListener(new ActionListener() {
 
@@ -666,7 +600,7 @@ public class AdminPanel extends CustomAccountFrame {
 								405, Short.MAX_VALUE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
+								56,
 								GroupLayout.PREFERRED_SIZE)));
 		panel.setLayout(gl_panel);
 
@@ -809,68 +743,32 @@ public class AdminPanel extends CustomAccountFrame {
 
 		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_buttonPanel
-						.createSequentialGroup()
-						.addGap(5)
-						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
-								76, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 27,
-								Short.MAX_VALUE)
-						.addComponent(quizButton, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(databaseManager,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE).addContainerGap()));
-		gl_buttonPanel
-				.setVerticalGroup(gl_buttonPanel
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_buttonPanel
-										.createSequentialGroup()
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGroup(
-												gl_buttonPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_buttonPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				databaseManager,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				quizButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_buttonPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				addButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				deleteButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(5)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+					.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 		buttonPanel.setLayout(gl_buttonPanel);
 		databaseManager.addActionListener(new ActionListener() {
 
@@ -949,42 +847,26 @@ public class AdminPanel extends CustomAccountFrame {
 		StripedTableCellRenderer.installInTable(instructorTable,
 				Color.lightGray, Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(
-														topPanel,
-														GroupLayout.DEFAULT_SIZE,
-														733, Short.MAX_VALUE)
-												.addComponent(
-														bottomPanel,
-														GroupLayout.DEFAULT_SIZE,
-														733, Short.MAX_VALUE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGap(10)
-																.addComponent(
-																		jScrollPane1,
-																		GroupLayout.DEFAULT_SIZE,
-																		723,
-																		Short.MAX_VALUE)))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
-								407, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								51, GroupLayout.PREFERRED_SIZE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(bottomPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE))
+						.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
+		);
 		panel.setLayout(gl_panel);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
@@ -1011,12 +893,14 @@ public class AdminPanel extends CustomAccountFrame {
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
 		bottomPanel.add(buttonPanel);
 
-		WebButton addButton = new WebButton(i18n.getParam("Add"));
-		buttonPanel.add(addButton);
+		CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+		addButton.setMargin(new Insets(0, 5, 0, 0));
+		addButton.setHorizontalAlignment(SwingConstants.LEFT);
+		addButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		addButton.setUndecorated(true);
+		addButton.setText(i18n.getParam("Add"));
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -1030,8 +914,12 @@ public class AdminPanel extends CustomAccountFrame {
 			}
 		});
 
-		WebButton deleteButton = new WebButton(i18n.getParam("Delete"));
-		buttonPanel.add(deleteButton);
+		CustomAccountButton deleteButton = new CustomAccountButton("/icons/noa_en/accountdelete.png");
+		deleteButton.setMargin(new Insets(0, 5, 0, 0));
+		deleteButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		deleteButton.setHorizontalAlignment(SwingConstants.LEFT);
+		deleteButton.setUndecorated(true);
+		deleteButton.setText(i18n.getParam("Delete"));
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1062,8 +950,36 @@ public class AdminPanel extends CustomAccountFrame {
 			}
 		});
 
-		WebButton courseButton = new WebButton(i18n.getParam("Courses"));
-		buttonPanel.add(courseButton);
+		CustomAccountButton courseButton = new CustomAccountButton("/icons/noa_en/accountcourse.png");
+		courseButton.setMargin(new Insets(0, 5, 0, 0));
+		courseButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		courseButton.setHorizontalAlignment(SwingConstants.LEFT);
+		courseButton.setText(i18n.getParam("Courses"));
+		courseButton.setUndecorated(true);
+		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(4)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(courseButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addGap(81))
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addComponent(courseButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		buttonPanel.setLayout(gl_buttonPanel);
 		courseButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -1148,31 +1064,23 @@ public class AdminPanel extends CustomAccountFrame {
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 743,
-						Short.MAX_VALUE)
-				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 743,
-						Short.MAX_VALUE)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(10)
-								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 733,
-										Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
-								436, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE))
+				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
+		);
 		panel.setLayout(gl_panel);
 		studentTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 

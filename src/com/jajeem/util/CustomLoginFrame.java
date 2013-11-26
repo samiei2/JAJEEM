@@ -25,6 +25,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.alee.laf.button.WebButton;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.SystemColor;
 
 public class CustomLoginFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,98 +55,53 @@ public class CustomLoginFrame extends JFrame {
 		CustomLogoLabel lblNewLabel = new CustomLogoLabel(
 				"/icons/noa_en/new/loginlogo.png");
 
-		CustomLogoLabel customLogoLabel_1 = new CustomLogoLabel(
-				"/icons/noa_en/new/welcomto.png");
-
 		CustomLogoLabel customLogoLabel_2 = new CustomLogoLabel(
 				"/icons/noa_en/new/loginclassmate.png");
 
 		contentPanel = new JPanel();
 		contentPanel.setOpaque(false);
+		
+		JLabel lblWelcomeTo = new JLabel("Welcome To");
+		lblWelcomeTo.setForeground(SystemColor.controlDkShadow);
+		lblWelcomeTo.setFont(new Font("Tahoma", Font.BOLD, 19));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addGap(25)
-																.addComponent(
-																		contentPanel,
-																		GroupLayout.PREFERRED_SIZE,
-																		0,
-																		Short.MAX_VALUE))
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addGap(40)
-																.addComponent(
-																		lblNewLabel,
-																		GroupLayout.PREFERRED_SIZE,
-																		79,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGap(18)
-																								.addComponent(
-																										customLogoLabel_1,
-																										GroupLayout.PREFERRED_SIZE,
-																										123,
-																										GroupLayout.PREFERRED_SIZE))
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGap(50)
-																								.addComponent(
-																										customLogoLabel_2,
-																										GroupLayout.PREFERRED_SIZE,
-																										200,
-																										GroupLayout.PREFERRED_SIZE)))))
-								.addGap(19)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(33)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		customLogoLabel_1,
-																		GroupLayout.PREFERRED_SIZE,
-																		20,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		customLogoLabel_2,
-																		GroupLayout.PREFERRED_SIZE,
-																		30,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(18))
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblNewLabel,
-																		GroupLayout.PREFERRED_SIZE,
-																		69,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(5)))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(contentPanel,
-										GroupLayout.DEFAULT_SIZE, 122,
-										Short.MAX_VALUE).addGap(21)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(25)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(contentPanel, 425, 425, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblNewLabel, 78, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(145)
+									.addComponent(customLogoLabel_2, 138, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(50)
+									.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE)))
+					.addGap(21))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(23)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblWelcomeTo)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(customLogoLabel_2, 30, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(11))
+						.addComponent(lblNewLabel, 78, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(contentPanel, 131, 146, Short.MAX_VALUE)
+					.addGap(21))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
-		pack();
+//		pack();
+//		repaint();
 
 		this.addMouseListener(new MouseAdapter() {
 			@Override

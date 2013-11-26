@@ -35,13 +35,12 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
 import com.jajeem.command.model.RequestCourseListCommand;
-import com.jajeem.command.model.RequestFromStudentCommand;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
+import com.jajeem.message.design.MessageSend;
 import com.jajeem.recorder.design.RecorderStudent;
 import com.jajeem.share.service.VNCCaptureService;
-import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomButtonStudent;
 import com.jajeem.util.CustomStudentFrame;
@@ -125,7 +124,7 @@ public class Student {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mainFram.setSize(340, 420);
+		mainFram.setSize(441, 436);
 
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
@@ -138,22 +137,20 @@ public class Student {
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		GroupLayout groupLayout = new GroupLayout(mainFram.getMainContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 253,
-								Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(17, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		ImageIcon imgToolTip = null;
 		try {
@@ -209,10 +206,10 @@ public class Student {
 		buttonContactInstructor.setIconTextGap(20);
 		buttonContactInstructor.setFont(font);
 		buttonContactInstructor.setForeground(Color.WHITE);
-		buttonContactInstructor.setText("Contact Instructor");
 		try {
+			buttonContactInstructor.setText(i18n.getParam("Chat"));
 			TooltipManager.setTooltip(buttonContactInstructor, imgToolTip,
-					i18n.getParam("Call Instructor."), TooltipWay.down);
+					i18n.getParam("tooltipChatInstructor"), TooltipWay.down);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -225,8 +222,8 @@ public class Student {
 		buttonFileManager.setIconTextGap(20);
 		buttonFileManager.setFont(font);
 		buttonFileManager.setForeground(Color.WHITE);
-		buttonFileManager.setText("File Manager");
 		try {
+			buttonFileManager.setText(i18n.getParam("File Manager"));
 			TooltipManager.setTooltip(buttonFileManager, imgToolTip,
 					i18n.getParam("File Manager to send or receive files"),
 					TooltipWay.down);
@@ -281,53 +278,33 @@ public class Student {
 		}
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(buttonContactInstructor,
-												GroupLayout.PREFERRED_SIZE,
-												279, Short.MAX_VALUE)
-										.addComponent(buttonFileManager,
-												GroupLayout.PREFERRED_SIZE,
-												279, Short.MAX_VALUE)
-										.addComponent(buttonMoviePlayer,
-												GroupLayout.PREFERRED_SIZE,
-												279, Short.MAX_VALUE)
-										.addComponent(buttonRecording,
-												GroupLayout.PREFERRED_SIZE,
-												279, Short.MAX_VALUE)
-										.addComponent(buttonAccountManager,
-												GroupLayout.PREFERRED_SIZE,
-												279, Short.MAX_VALUE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(buttonContactInstructor,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonFileManager,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonMoviePlayer,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonRecording,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonAccountManager,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(14, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(35, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(15, Short.MAX_VALUE))
+		);
 		panel.setLayout(gl_panel);
 
 		mainFram.getMainContentPane().setLayout(groupLayout);
@@ -396,14 +373,8 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					buttonContactInstructor.setEnabled(false);
-					buttonContactInstructor.setText("Wait for teacher...");
-					RequestFromStudentCommand cmd = new RequestFromStudentCommand(
-							InetAddress.getLocalHost().getHostAddress(),
-							StudentLogin.getServerIp(), Integer.parseInt(Config
-									.getParam("serverPort")));
-					cmd.setStudent(ClientSession.getCurrentStudent());
-					StudentLogin.getServerService().send(cmd);
+					MessageSend.main(new String[] { StudentLogin.getServerIp(),
+							Config.getParam("serverPort") });
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();

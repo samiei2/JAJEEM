@@ -21,13 +21,16 @@ public class VNCCaptureService implements ICaptureService {
 
 	@Override
 	public void startClient(Config viewerConfig) {
-		setViewer(new Viewer(viewerConfig));
-		getViewer().Start();
+		viewer = new Viewer(viewerConfig);
+		setViewer(viewer);
+		viewer.Start();
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void stopClient() {
+		viewer.getRecorder().Stop();
+		viewer.getRecorder().viewerGUI.dispose();
 		viewer.Stop();
 		viewer.destroy();
 	}

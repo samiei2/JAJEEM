@@ -108,7 +108,6 @@ public class Viewer extends Thread {
 		}
 		disconnect();
 		interrupt();
-
 	}
 
 	public int connect() {

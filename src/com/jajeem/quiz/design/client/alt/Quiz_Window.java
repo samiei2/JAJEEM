@@ -40,6 +40,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.StudentLogin;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
@@ -311,14 +312,14 @@ public class Quiz_Window extends WebFrame {
 									resp.setStudent(getStudent());
 									resp.setQuizRun(currentRun);
 									resp.setListeningPort(listenPort);
-									new QuizEvent().fireResponseEvent(resp);
+//									new QuizEvent().fireResponseEvent(resp);
 									SendQuizResponseCommand cmd = new SendQuizResponseCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(), server,
 											listenPort);
 									cmd.setEvent(resp);
 
-									ServerService service = new ServerService();
+									ServerService service = StudentLogin.getServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
 									JajeemExcetionHandler.logError(e);
@@ -1083,7 +1084,7 @@ public class Quiz_Window extends WebFrame {
 													server, listenPort);
 											cmd.setEvent(resp);
 
-											ServerService service = new ServerService();
+											ServerService service = StudentLogin.getServerService();
 											service.send(cmd);
 										} catch (NumberFormatException e) {
 											JajeemExcetionHandler.logError(e);
