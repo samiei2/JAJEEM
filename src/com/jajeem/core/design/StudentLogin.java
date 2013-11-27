@@ -74,7 +74,7 @@ public class StudentLogin extends CustomLoginFrame {
 			new Config();
 			new i18n();
 
-			new Student().getMainFrame().setVisible(true);
+			new Student();
 			new StudentLogin();
 
 		} catch (Exception e) {

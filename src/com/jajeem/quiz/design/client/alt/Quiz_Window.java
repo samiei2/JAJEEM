@@ -331,7 +331,9 @@ public class Quiz_Window extends WebFrame {
 							}
 
 							private Student getStudent() {
-								return privateStudent;// TODO correct this code
+								Student temp ;
+								temp = ClientSession.getCurrentStudent();
+								return temp;// TODO correct this code
 							}
 						}).start();
 
@@ -1096,7 +1098,7 @@ public class Quiz_Window extends WebFrame {
 									}
 
 									private Student getStudent() {
-										return privateStudent;// TODO correct
+										return ClientSession.getCurrentStudent();// TODO correct
 																// this code
 									}
 								}).start();
