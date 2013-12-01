@@ -312,29 +312,6 @@ public class AVReceiveOnly {
 	 */
 	private static final String REMOTE_PORT_BASE_ARG_NAME = "--remote-port-base=";
 
-	/**
-	 * The list of command-line arguments accepted as valid by the
-	 * <tt>AVReceive2</tt> application along with their human-readable usage
-	 * descriptions.
-	 */
-	private static final String[][] ARGS = {
-			{
-					LOCAL_PORT_BASE_ARG_NAME,
-					"The port on which media is to be received. The specified value"
-							+ " will be used as the port to receive the audio RTP on,"
-							+ " the next port after it will be used to receive the"
-							+ " audio RTCP on. Respectively, the subsequent ports will"
-							+ " be used to receive the video RTP and RTCP on." },
-			{ REMOTE_HOST_ARG_NAME,
-					"The name of the host from which the media is to be received." },
-			{
-					REMOTE_PORT_BASE_ARG_NAME,
-					"The port from which media is to be received. The specified"
-							+ " vaue will be used as the port to receive the audio RTP"
-							+ " from, the next port after it will be used to receive"
-							+ " the audio RTCP from. Respectively, the subsequent ports"
-							+ " will be used to receive the video RTP and RTCP from." } };
-
 	public static void main(String[] args) throws Exception {
 		// We need three parameters to do the transmission. For example,
 		// ant run-example -Drun.example.name=AVReceive2

@@ -87,8 +87,9 @@ public class Student {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public Student() {
+	public Student() throws Exception {
 		try {
 			new Config();
 			new i18n();
@@ -137,20 +138,23 @@ public class Student {
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		GroupLayout groupLayout = new GroupLayout(mainFram.getMainContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(17, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(17, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
 
 		ImageIcon imgToolTip = null;
 		try {
@@ -238,7 +242,7 @@ public class Student {
 		buttonMoviePlayer.setIconTextGap(20);
 		buttonMoviePlayer.setFont(font);
 		buttonMoviePlayer.setForeground(Color.WHITE);
-		buttonMoviePlayer.setText("Movie Player");
+		buttonMoviePlayer.setText(i18n.getParam("Movie Player"));
 		try {
 			TooltipManager.setTooltip(buttonMoviePlayer, imgToolTip,
 					i18n.getParam("Movie Player"), TooltipWay.down);
@@ -253,7 +257,7 @@ public class Student {
 		buttonRecording.setIconTextGap(20);
 		buttonRecording.setFont(font);
 		buttonRecording.setForeground(Color.WHITE);
-		buttonRecording.setText("Recorder");
+		buttonRecording.setText(i18n.getParam("Recorder"));
 		try {
 			TooltipManager.setTooltip(buttonRecording, imgToolTip,
 					i18n.getParam("Record voice or desktop"), TooltipWay.down);
@@ -269,7 +273,7 @@ public class Student {
 		buttonAccountManager.setIconTextGap(20);
 		buttonAccountManager.setFont(font);
 		buttonAccountManager.setForeground(Color.WHITE);
-		buttonAccountManager.setText("Account");
+		buttonAccountManager.setText(i18n.getParam("Account"));
 		try {
 			TooltipManager.setTooltip(buttonAccountManager, imgToolTip,
 					i18n.getParam("Record voice or desktop"), TooltipWay.down);
@@ -278,33 +282,64 @@ public class Student {
 		}
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(35, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(15, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.LEADING, false)
+												.addComponent(
+														buttonFileManager,
+														GroupLayout.PREFERRED_SIZE,
+														308,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														buttonMoviePlayer,
+														GroupLayout.PREFERRED_SIZE,
+														308,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														buttonRecording,
+														GroupLayout.PREFERRED_SIZE,
+														308,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														buttonAccountManager,
+														GroupLayout.PREFERRED_SIZE,
+														308,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														buttonContactInstructor,
+														GroupLayout.PREFERRED_SIZE,
+														308,
+														GroupLayout.PREFERRED_SIZE))
+								.addContainerGap(35, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(buttonContactInstructor,
+								GroupLayout.PREFERRED_SIZE, 41,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonFileManager,
+								GroupLayout.PREFERRED_SIZE, 41,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonMoviePlayer,
+								GroupLayout.PREFERRED_SIZE, 41,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonRecording,
+								GroupLayout.PREFERRED_SIZE, 41,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonAccountManager,
+								GroupLayout.PREFERRED_SIZE, 41,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(15, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
 
 		mainFram.getMainContentPane().setLayout(groupLayout);

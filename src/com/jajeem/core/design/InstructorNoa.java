@@ -217,7 +217,7 @@ public class InstructorNoa {
 		frame = new CustomTeacherFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
-		frame.setTitle("Classmate");
+		frame.setTitle(i18n.getParam("Classmate"));
 
 		langListModel.addElement("English");
 		langListModel.addElement("فارسی");
@@ -322,9 +322,9 @@ public class InstructorNoa {
 
 		getGroupList().setModel(new AbstractListModel() {
 			String[] values = new String[] { i18n.getParam("Group A"),
-					"Group B", "Group C", "Group D", "Group E", "Group F",
-					"Group G", "Group H", "Group I", "Group J", "Group K",
-					"Group L", "Group M", "Group N", "Group O" };
+					i18n.getParam("Group B"), i18n.getParam("Group C"), i18n.getParam("Group D"), i18n.getParam("Group E"), i18n.getParam("Group F"),
+					i18n.getParam("Group G"), i18n.getParam("Group H"), i18n.getParam("Group I"), i18n.getParam("Group J"), i18n.getParam("Group K"),
+					i18n.getParam("Group L"), i18n.getParam("Group M"), i18n.getParam("Group N"), i18n.getParam("Group O") };
 
 			@Override
 			public int getSize() {
@@ -367,12 +367,11 @@ public class InstructorNoa {
 		bottomButtonPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		bottomButtonPanel.setOpaque(false);
 
-		
 		// create the scrollable desktop instance and add it to the JFrame
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
 		setDesktopPaneScroll(scrollableDesktop);
 
-		// /Armin codes Clean Up actions and move to proper place
+		/// @Armin codes Clean Up actions and move to proper place
 		WebPopupMenu popup = new WebPopupMenu();
 		WebMenuItem menuItemThumbView = new WebMenuItem("Thumbnail View");
 		WebMenuItem menuItemGroupView = new WebMenuItem("Group View");
@@ -987,7 +986,7 @@ public class InstructorNoa {
 		monitorButton.putClientProperty("key", "monitor");
 		monitorButton.setFont(font);
 		monitorButton.setForeground(Color.WHITE);
-		monitorButton.setText(i18n.getParam("monitoring"));
+		monitorButton.setText(i18n.getParam("Monitoring"));
 		monitorButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(monitorButton);
 
@@ -1052,7 +1051,7 @@ public class InstructorNoa {
 		modelButton.putClientProperty("key", "model");
 		modelButton.setFont(font);
 		modelButton.setForeground(Color.WHITE);
-		modelButton.setText(i18n.getParam("Modelling"));
+		modelButton.setText(i18n.getParam("Modeling"));
 		modelButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(modelButton);
 
@@ -1167,7 +1166,7 @@ public class InstructorNoa {
 		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
 				"SummaryofStudents" };
 		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				"Answer rate", "Student result", "Summary of students" });
+				i18n.getParam("Answer rate"), i18n.getParam("Student result"), i18n.getParam("Summary of students") });
 
 		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
 		reportGoButton.addActionListener(new ActionListener() {
@@ -1280,31 +1279,60 @@ public class InstructorNoa {
 		copyRightLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		copyRightLabel.setText(i18n.getParam("Copy Right \u00A9 2013"));
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		GroupLayout groupLayout = new GroupLayout(frame.getMainContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(bottomButtonPanel, Alignment.TRAILING, 956, 956, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(centerPanel, 759, 759, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(rightButtonPanel, 187, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(rightButtonPanel, GroupLayout.PREFERRED_SIZE, 297, Short.MAX_VALUE)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
-		);
-		
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																bottomButtonPanel,
+																Alignment.TRAILING,
+																956, 956,
+																Short.MAX_VALUE)
+														.addGroup(
+																Alignment.TRAILING,
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				centerPanel,
+																				759,
+																				759,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
+																		.addComponent(
+																				rightButtonPanel,
+																				187,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								groupLayout
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(rightButtonPanel,
+												GroupLayout.PREFERRED_SIZE,
+												297, Short.MAX_VALUE)
+										.addComponent(centerPanel,
+												GroupLayout.DEFAULT_SIZE, 307,
+												Short.MAX_VALUE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(bottomButtonPanel,
+								GroupLayout.PREFERRED_SIZE, 47,
+								GroupLayout.PREFERRED_SIZE)));
+
 		frame.getMainContentPane().setLayout(groupLayout);
 
 		// Add Event Handlers
@@ -1368,7 +1396,7 @@ public class InstructorNoa {
 
 		WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
 				PopupWay.downCenter);
-		
+
 		GroupPanel langPopupContent = new GroupPanel(5, false, langList);
 		langPopupContent.setMargin(15);
 		langPopupButton.setContent(langPopupContent);
@@ -1376,63 +1404,129 @@ public class InstructorNoa {
 		CustomPanel panelClock = new CustomPanel("/icons/noa_en/clockPanel.png");
 		panelClock.setOpaque(false);
 		GroupLayout gl_topPanel = new GroupLayout(topButtonPanel);
-		gl_topPanel.setHorizontalGroup(
-			gl_topPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_topPanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_topPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_topPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(panelClock, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_topPanel.setVerticalGroup(
-			gl_topPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_topPanel.createSequentialGroup()
-					.addContainerGap(22, Short.MAX_VALUE)
-					.addGroup(gl_topPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelClock, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_topPanel.createSequentialGroup()
-							.addGroup(gl_topPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(viewModeButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(languageButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_topPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(volumeButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(callAllButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap())
-		);
+		gl_topPanel
+				.setHorizontalGroup(gl_topPanel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_topPanel
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_topPanel
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																volumeButton,
+																GroupLayout.PREFERRED_SIZE,
+																150,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																viewModeButton,
+																GroupLayout.PREFERRED_SIZE,
+																150,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												gl_topPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																callAllButton,
+																GroupLayout.PREFERRED_SIZE,
+																150,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																languageButton,
+																GroupLayout.PREFERRED_SIZE,
+																150,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.RELATED,
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(panelClock,
+												GroupLayout.PREFERRED_SIZE,
+												196, GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
+		gl_topPanel
+				.setVerticalGroup(gl_topPanel
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								gl_topPanel
+										.createSequentialGroup()
+										.addContainerGap(22, Short.MAX_VALUE)
+										.addGroup(
+												gl_topPanel
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																panelClock,
+																GroupLayout.PREFERRED_SIZE,
+																68,
+																GroupLayout.PREFERRED_SIZE)
+														.addGroup(
+																gl_topPanel
+																		.createSequentialGroup()
+																		.addGroup(
+																				gl_topPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								viewModeButton,
+																								33,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								languageButton,
+																								33,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.PREFERRED_SIZE))
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				gl_topPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								volumeButton,
+																								33,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								callAllButton,
+																								33,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.PREFERRED_SIZE))))
+										.addContainerGap()));
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
 		GroupLayout gl_panelClock = new GroupLayout(panelClock);
-		gl_panelClock.setHorizontalGroup(
-			gl_panelClock.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelClock.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 176, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panelClock.setVerticalGroup(
-			gl_panelClock.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panelClock.createSequentialGroup()
-					.addGap(4)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 64, Short.MAX_VALUE))
-		);
-		
+		gl_panelClock.setHorizontalGroup(gl_panelClock.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panelClock
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 176,
+								Short.MAX_VALUE).addContainerGap()));
+		gl_panelClock.setVerticalGroup(gl_panelClock.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				Alignment.LEADING,
+				gl_panelClock
+						.createSequentialGroup()
+						.addGap(4)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 64,
+								Short.MAX_VALUE)));
+
 		final DateFormat dateFormat = new SimpleDateFormat(
 				"yyyy/MM/dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 
 		ImageIcon _dIcon = new ImageIcon(
 				InstructorNoa.class.getResource("/icons/noa_en/clockdd.png"));
-		ImageIcon _dIconScaled = new ImageIcon(_dIcon.getImage()
-				.getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+		new ImageIcon(_dIcon.getImage().getScaledInstance(15, 15,
+				Image.SCALE_SMOOTH));
 
 		ImageIcon _0Icon = new ImageIcon(
 				InstructorNoa.class.getResource("/icons/noa_en/0.png"));
@@ -1477,24 +1571,36 @@ public class InstructorNoa {
 		panel_2.setOpaque(false);
 
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblDate))
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblDate)
-					.addGap(6))
-		);
+		gl_panel_1
+				.setHorizontalGroup(gl_panel_1
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panel_1
+										.createSequentialGroup()
+										.addGroup(
+												gl_panel_1
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_panel_1
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				lblDate))
+														.addComponent(
+																panel_2,
+																GroupLayout.PREFERRED_SIZE,
+																169,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				gl_panel_1
+						.createSequentialGroup()
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 38,
+								Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblDate).addGap(6)));
 
 		lblHour1 = new JLabel();
 		lblHour1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1521,35 +1627,45 @@ public class InstructorNoa {
 		label.setIcon(_ddIconScaled);
 
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(6)
-					.addComponent(lblHour1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblHour2)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(label)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblMin1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblMin2)
-					.addContainerGap(29, Short.MAX_VALUE))
-		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+		gl_panel_2.setHorizontalGroup(gl_panel_2.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel_2.createSequentialGroup().addGap(6)
+						.addComponent(lblHour1)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblHour2)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(label)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblMin1)
+						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(lblMin2)
-						.addComponent(lblMin1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(lblHour2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblHour1, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
-					.addContainerGap())
-		);
+						.addContainerGap(29, Short.MAX_VALUE)));
+		gl_panel_2.setVerticalGroup(gl_panel_2.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel_2
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gl_panel_2
+										.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblMin2)
+										.addComponent(lblMin1,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(label,
+												GroupLayout.PREFERRED_SIZE, 26,
+												Short.MAX_VALUE)
+										.addComponent(lblHour2,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(lblHour1,
+												GroupLayout.DEFAULT_SIZE, 26,
+												Short.MAX_VALUE))
+						.addContainerGap()));
 		panel_2.setLayout(gl_panel_2);
-		
+
 		final HashMap<String, ImageIcon> clockIcons = new HashMap<String, ImageIcon>();
 		clockIcons.put("0", _0Icon);
 		clockIcons.put("1", _1Icon);
@@ -1650,17 +1766,17 @@ public class InstructorNoa {
 		topButtonPanel.setLayout(gl_topPanel);
 		instructorNoaUtil.addEventsTopPanel(topButtonPanel);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(455, Short.MAX_VALUE)
-					.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 519, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE)
-		);
+		gl_panel_3.setHorizontalGroup(gl_panel_3.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel_3
+						.createSequentialGroup()
+						.addContainerGap(455, Short.MAX_VALUE)
+						.addComponent(topButtonPanel,
+								GroupLayout.PREFERRED_SIZE, 519,
+								GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		gl_panel_3.setVerticalGroup(gl_panel_3.createParallelGroup(
+				Alignment.LEADING).addComponent(topButtonPanel,
+				GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE));
 		panel_3.setLayout(gl_panel_3);
 
 		getGroupList().addMouseListener(new MouseAdapter() {

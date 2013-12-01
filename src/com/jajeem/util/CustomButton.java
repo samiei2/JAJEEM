@@ -8,6 +8,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 

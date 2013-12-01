@@ -312,14 +312,15 @@ public class Quiz_Window extends WebFrame {
 									resp.setStudent(getStudent());
 									resp.setQuizRun(currentRun);
 									resp.setListeningPort(listenPort);
-//									new QuizEvent().fireResponseEvent(resp);
+									// new QuizEvent().fireResponseEvent(resp);
 									SendQuizResponseCommand cmd = new SendQuizResponseCommand(
 											InetAddress.getLocalHost()
 													.getHostAddress(), server,
 											listenPort);
 									cmd.setEvent(resp);
 
-									ServerService service = StudentLogin.getServerService();
+									ServerService service = StudentLogin
+											.getServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
 									JajeemExcetionHandler.logError(e);
@@ -331,7 +332,7 @@ public class Quiz_Window extends WebFrame {
 							}
 
 							private Student getStudent() {
-								Student temp ;
+								Student temp;
 								temp = ClientSession.getCurrentStudent();
 								return temp;// TODO correct this code
 							}
@@ -1086,7 +1087,8 @@ public class Quiz_Window extends WebFrame {
 													server, listenPort);
 											cmd.setEvent(resp);
 
-											ServerService service = StudentLogin.getServerService();
+											ServerService service = StudentLogin
+													.getServerService();
 											service.send(cmd);
 										} catch (NumberFormatException e) {
 											JajeemExcetionHandler.logError(e);
@@ -1098,8 +1100,10 @@ public class Quiz_Window extends WebFrame {
 									}
 
 									private Student getStudent() {
-										return ClientSession.getCurrentStudent();// TODO correct
-																// this code
+										return ClientSession
+												.getCurrentStudent();// TODO
+																		// correct
+										// this code
 									}
 								}).start();
 							}

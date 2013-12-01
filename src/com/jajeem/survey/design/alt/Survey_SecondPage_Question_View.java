@@ -701,7 +701,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 																				// the
 																				// response
 																				// list
-			// System.out.println(i+","+currentSurvey.getQuestionList().get(i).getId()+","+currentSurvey.getQuestionList().size());
+				// System.out.println(i+","+currentSurvey.getQuestionList().get(i).getId()+","+currentSurvey.getQuestionList().size());
 				if (currentSurvey.getQuestionList().get(i).getId()
 						.equals(question.getId())) {
 					index = i;

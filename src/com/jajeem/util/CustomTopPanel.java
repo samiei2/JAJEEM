@@ -17,8 +17,6 @@ public class CustomTopPanel extends WebPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private float xScaleFactor = (float) 0.1;
-	private float yScaleFactor = (float) 0.1;
 	private BufferedImage originalImage;
 
 	public CustomTopPanel() {

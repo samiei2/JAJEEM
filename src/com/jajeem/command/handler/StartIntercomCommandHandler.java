@@ -26,7 +26,7 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 			Student.getTransmitter().setRemoteAddr(
 					InetAddress.getByName(cmd.getFrom()));
 			Student.getTransmitter().start("audio");
-//			Student.setIntercomButtonStop();
+			// Student.setIntercomButtonStop();
 			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
 			if (ClientSession.getStudentIntercomPanel() != null) {
 				ClientSession.getStudentIntercomPanel().dispose();

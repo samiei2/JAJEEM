@@ -1,8 +1,11 @@
 package com.jajeem.quiz.design.alt;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class QuizMain2 extends CustomQuizFrame {
@@ -12,6 +15,8 @@ public class QuizMain2 extends CustomQuizFrame {
 	private static final long serialVersionUID = 1L;
 
 	public QuizMain2() {
+
+		mainFrame = this;
 
 		CustomQuizButton webButtonAdd = new CustomQuizButton(
 				"/icons/noa_en/quizadd.png");
@@ -79,65 +84,16 @@ public class QuizMain2 extends CustomQuizFrame {
 						.addContainerGap()));
 		getTopPane().setLayout(groupLayout);
 
-		JLabel lblQuestion = new JLabel("Question : ");
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		getMainContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(new CardLayout(0, 0));
 
-		JLabel lblQuestionType = new JLabel("Question Type : ");
+	}
 
-		JLabel lblQuestion_1 = new JLabel("Question : ");
-
-		CustomQuizComboBox comboBox = new CustomQuizComboBox(
-				"/icons/noa_en/quizcombobox.png");
-		GroupLayout groupLayout_1 = new GroupLayout(getMainContentPane());
-		groupLayout_1
-				.setHorizontalGroup(groupLayout_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout_1
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lblQuestion)
-														.addGroup(
-																groupLayout_1
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblQuestionType)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				comboBox,
-																				GroupLayout.PREFERRED_SIZE,
-																				110,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																lblQuestion_1))
-										.addContainerGap(368, Short.MAX_VALUE)));
-		groupLayout_1
-				.setVerticalGroup(groupLayout_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout_1
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(lblQuestion)
-										.addGap(18)
-										.addGroup(
-												groupLayout_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblQuestionType)
-														.addComponent(
-																comboBox,
-																GroupLayout.PREFERRED_SIZE,
-																30,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(18).addComponent(lblQuestion_1)
-										.addContainerGap(292, Short.MAX_VALUE)));
-		getMainContentPane().setLayout(groupLayout_1);
+	public static void main(String[] args) {
+		QuizMain2 main = new QuizMain2();
+		main.pack();
+		main.setVisible(true);
 	}
 }

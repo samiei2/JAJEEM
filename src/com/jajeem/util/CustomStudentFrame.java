@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -46,7 +47,7 @@ public class CustomStudentFrame extends JFrame {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
-//		setSize(300, 550);
+		// setSize(300, 550);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -168,9 +169,9 @@ public class CustomStudentFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				 mainFrame.setExtendedState(JFrame.ICONIFIED);
-//				trayIcon.add();
-//				mainFrame.setVisible(false);
+				mainFrame.setExtendedState(Frame.ICONIFIED);
+				// trayIcon.add();
+				// mainFrame.setVisible(false);
 			}
 		});
 
@@ -273,7 +274,7 @@ public class CustomStudentFrame extends JFrame {
 			}
 		});
 
-//		trayIcon = new StudentTrayIcon(mainFrame);
+		// trayIcon = new StudentTrayIcon(mainFrame);
 	}
 
 	public static void main(String[] args) {

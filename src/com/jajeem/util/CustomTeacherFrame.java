@@ -6,6 +6,9 @@ import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,16 +30,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.alee.laf.button.WebButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Component;
 
 public class CustomTeacherFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -50,7 +47,7 @@ public class CustomTeacherFrame extends JFrame {
 	private JPanel panel_2;
 
 	public CustomTeacherFrame() {
-		
+
 		mainFrame = this;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -59,66 +56,78 @@ public class CustomTeacherFrame extends JFrame {
 		Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getMaximumWindowBounds();
 		setSize(winSize.width, winSize.height);
-//		WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
+		// WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
 		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, 1024, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-					.addGap(0))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, 560, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addComponent(panel, 1024, GroupLayout.PREFERRED_SIZE,
+								Short.MAX_VALUE).addGap(0)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING).addComponent(panel, 560,
+				GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE));
 
 		JPanel panelClose = new JPanel();
 		panelClose.setOpaque(false);
 		panelMain = new CustomMainPanel("/icons/noa_en/new/teacherMain2.png");
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelMain, Alignment.LEADING, 1024, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(panelClose, Alignment.LEADING, 1024, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-					.addGap(1))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(panelClose, 38, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addComponent(panelMain, 522, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.TRAILING)
+												.addComponent(
+														panelMain,
+														Alignment.LEADING,
+														1024,
+														GroupLayout.PREFERRED_SIZE,
+														Short.MAX_VALUE)
+												.addComponent(
+														panelClose,
+														Alignment.LEADING,
+														1024,
+														GroupLayout.PREFERRED_SIZE,
+														Short.MAX_VALUE))
+								.addGap(1)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addComponent(panelClose, 38,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelMain, 522,
+								GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)));
 
 		panel1 = new JPanel();
 		panel1.setOpaque(false);
 		GroupLayout gl_panelMain = new GroupLayout(panelMain);
-		gl_panelMain.setHorizontalGroup(
-			gl_panelMain.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelMain.createSequentialGroup()
-					.addGap(24)
-					.addComponent(panel1, 904, 1549, Short.MAX_VALUE)
-					.addGap(26))
-		);
-		gl_panelMain.setVerticalGroup(
-			gl_panelMain.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panelMain.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel1, GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
-					.addGap(23))
-		);
+		gl_panelMain.setHorizontalGroup(gl_panelMain.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panelMain.createSequentialGroup().addGap(24)
+						.addComponent(panel1, 904, 1549, Short.MAX_VALUE)
+						.addGap(26)));
+		gl_panelMain.setVerticalGroup(gl_panelMain.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				Alignment.TRAILING,
+				gl_panelMain
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(panel1, GroupLayout.DEFAULT_SIZE, 781,
+								Short.MAX_VALUE).addGap(23)));
 		GridBagLayout gbl_panel1 = new GridBagLayout();
-		gbl_panel1.columnWidths = new int[]{0};
-		gbl_panel1.rowHeights = new int[]{0,0};
-		gbl_panel1.columnWeights = new double[]{1.0};
-		gbl_panel1.rowWeights = new double[]{0.2,0.8};
+		gbl_panel1.columnWidths = new int[] { 0 };
+		gbl_panel1.rowHeights = new int[] { 0, 0 };
+		gbl_panel1.columnWeights = new double[] { 1.0 };
+		gbl_panel1.rowWeights = new double[] { 0.2, 0.8 };
 		panel1.setLayout(gbl_panel1);
-		
+
 		panel_1 = new JPanel();
 		panel_1.setOpaque(false);
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -127,7 +136,7 @@ public class CustomTeacherFrame extends JFrame {
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 0;
 		panel1.add(panel_1, gbc_panel_1);
-		
+
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
@@ -140,17 +149,18 @@ public class CustomTeacherFrame extends JFrame {
 		CustomMainPanel panelCloseButton = new CustomMainPanel(
 				"/icons/noa_en/new/closePanel.png");
 		GroupLayout gl_panelClose = new GroupLayout(panelClose);
-		gl_panelClose.setHorizontalGroup(
-			gl_panelClose.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelClose.createSequentialGroup()
-					.addContainerGap(797, Short.MAX_VALUE)
-					.addComponent(panelCloseButton, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(65))
-		);
-		gl_panelClose.setVerticalGroup(
-			gl_panelClose.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelCloseButton, 38, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-		);
+		gl_panelClose.setHorizontalGroup(gl_panelClose.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_panelClose
+						.createSequentialGroup()
+						.addContainerGap(797, Short.MAX_VALUE)
+						.addComponent(panelCloseButton,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE,
+								GroupLayout.PREFERRED_SIZE).addGap(65)));
+		gl_panelClose.setVerticalGroup(gl_panelClose.createParallelGroup(
+				Alignment.LEADING).addComponent(panelCloseButton, 38,
+				GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE));
 
 		CustomMainButton webButtonMin = new CustomMainButton(
 				"/icons/noa_en/new/minbutton", 23, 23, 0, 0);
@@ -178,10 +188,9 @@ public class CustomTeacherFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(mainFrame.getExtendedState() == Frame.MAXIMIZED_BOTH){
+				if (mainFrame.getExtendedState() == Frame.MAXIMIZED_BOTH) {
 					mainFrame.setSize(oldWidth, oldHeight);
-				}
-				else{
+				} else {
 					oldWidth = mainFrame.getWidth();
 					oldHeight = mainFrame.getHeight();
 					mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -189,27 +198,52 @@ public class CustomTeacherFrame extends JFrame {
 			}
 		});
 		GroupLayout gl_panelCloseButton = new GroupLayout(panelCloseButton);
-		gl_panelCloseButton.setHorizontalGroup(
-			gl_panelCloseButton.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelCloseButton.createSequentialGroup()
-					.addGap(21)
-					.addComponent(webButtonMin, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(26)
-					.addComponent(webButtonMax, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(26)
-					.addComponent(webButtonClose, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(19))
-		);
-		gl_panelCloseButton.setVerticalGroup(
-			gl_panelCloseButton.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelCloseButton.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelCloseButton.createParallelGroup(Alignment.TRAILING)
-						.addComponent(webButtonMax, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonMin, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonClose, 23, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gl_panelCloseButton
+				.setHorizontalGroup(gl_panelCloseButton.createParallelGroup(
+						Alignment.TRAILING).addGroup(
+						gl_panelCloseButton
+								.createSequentialGroup()
+								.addGap(21)
+								.addComponent(webButtonMin, 23,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(webButtonMax, 23,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(26)
+								.addComponent(webButtonClose, 23,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.PREFERRED_SIZE).addGap(19)));
+		gl_panelCloseButton
+				.setVerticalGroup(gl_panelCloseButton
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panelCloseButton
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_panelCloseButton
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																webButtonMax,
+																23,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webButtonMin,
+																23,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																webButtonClose,
+																23,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		panelCloseButton.setLayout(gl_panelCloseButton);
 		panelClose.setLayout(gl_panelClose);
 		panel.setLayout(gl_panel);
@@ -227,7 +261,7 @@ public class CustomTeacherFrame extends JFrame {
 			@Override
 			public void mouseDragged(MouseEvent evt) {
 				// sets frame position when mouse dragged
-				if(mainFrame.getCursor().getType() == Cursor.DEFAULT_CURSOR){
+				if (mainFrame.getCursor().getType() == Cursor.DEFAULT_CURSOR) {
 					setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
 							- posY);
 				}
@@ -272,7 +306,7 @@ public class CustomTeacherFrame extends JFrame {
 	public Container getTopContentPane() {
 		return panel_1;
 	}
-	
+
 	public Container getMainContentPane() {
 		return panel_2;
 	}

@@ -6,6 +6,7 @@ import com.jajeem.core.model.Student;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.recorder.design.CaptureScreenToFile;
 import com.jajeem.survey.design.client.alt.Survey_Window;
+
 //import com.jajeem.whiteboard.client.Client.WhiteboardClient;
 
 public class ClientSession {

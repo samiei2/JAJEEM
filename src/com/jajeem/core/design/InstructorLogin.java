@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -111,7 +112,7 @@ public class InstructorLogin extends JFrame {
 	 */
 	public InstructorLogin() throws Exception {
 		setResizable(false);
-		setTitle("Welcome to Classmate");
+		setTitle(i18n.getParam("Welcome to Classmate"));
 
 		new Config();
 		new i18n();
@@ -148,13 +149,13 @@ public class InstructorLogin extends JFrame {
 		bottomPanel.add(subBottomPanel1);
 
 		courseCombo = new WebComboBox();
-		courseCombo.setToolTipText("Select a course to login");
+		courseCombo.setToolTipText(i18n.getParam("Select a course to login"));
 		subBottomPanel1.add(courseCombo);
 
 		JPanel subBottomPanel2 = new JPanel();
 		bottomPanel.add(subBottomPanel2);
 
-		WebButton loginButton = new WebButton("Login");
+		WebButton loginButton = new WebButton(i18n.getParam("Login"));
 		subBottomPanel2.add(loginButton);
 
 		JPanel centerPanel = new JPanel();
@@ -165,14 +166,14 @@ public class InstructorLogin extends JFrame {
 		centerPanel.add(topPanel);
 		topPanel.setLayout(new GridLayout(2, 4, 0, 0));
 
-		WebLabel usernameLabel = new WebLabel("Username");
+		WebLabel usernameLabel = new WebLabel(i18n.getParam("Username"));
 		topPanel.add(usernameLabel);
 
 		usernameTF = new WebTextField();
 		topPanel.add(usernameTF);
 		usernameTF.setColumns(10);
 
-		WebLabel passwordLabel = new WebLabel("Password");
+		WebLabel passwordLabel = new WebLabel(i18n.getParam("Password"));
 		topPanel.add(passwordLabel);
 
 		passwordTF = new WebPasswordField();
@@ -182,7 +183,7 @@ public class InstructorLogin extends JFrame {
 		JPanel middlePanel = new JPanel();
 		centerPanel.add(middlePanel);
 
-		WebButton getCourseButton = new WebButton("Get courses");
+		WebButton getCourseButton = new WebButton(i18n.getParam("Get courses"));
 		middlePanel.add(getCourseButton);
 		setLocationRelativeTo(null);
 
@@ -291,13 +292,18 @@ public class InstructorLogin extends JFrame {
 							frame.dispose();
 							progressBarFrame.setVisible(false);
 						} else if (usernameTF.getText().equals("admin")) {
-							int resp = JOptionPane
-									.showConfirmDialog(
-											null,
-											"You are about to login as adminstrator without a course, are you sure?",
-											"Confirm",
-											JOptionPane.YES_NO_OPTION,
-											JOptionPane.QUESTION_MESSAGE);
+							int resp = -1;
+							try {
+								resp = JOptionPane
+										.showConfirmDialog(
+												null,
+												i18n.getParam("You are about to login as adminstrator without a course, are you sure?"),
+												i18n.getParam("Confirm"),
+												JOptionPane.YES_NO_OPTION,
+												JOptionPane.QUESTION_MESSAGE);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
 							if (resp == 0) {
 								InstructorNoa.main(null);
 							} else {

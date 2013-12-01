@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,6 +59,7 @@ import com.alee.laf.list.WebList;
 import com.alee.laf.menu.WebMenu;
 import com.alee.laf.menu.WebMenuItem;
 import com.alee.laf.menu.WebPopupMenu;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.slider.WebSlider;
@@ -96,7 +98,6 @@ import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.survey.design.alt.Survey_Main;
 import com.jajeem.util.Config;
-import com.jajeem.util.CustomInternalPanel;
 import com.jajeem.util.CustomPowerPanel;
 import com.jajeem.util.CustomTeacherFrame;
 import com.jajeem.util.FileUtil;
@@ -258,8 +259,8 @@ public class InstructorNoaUtil {
 												JOptionPane.showMessageDialog(
 														InstructorNoa
 																.getCenterPanel(),
-														"Another voice or video function is already running, please stop it first",
-														"Information",
+														i18n.getParam("Another voice or video function is already running, please stop it first"),
+														i18n.getParam("Information"),
 														JOptionPane.INFORMATION_MESSAGE);
 											}
 										} else {
@@ -400,8 +401,8 @@ public class InstructorNoaUtil {
 											JOptionPane.showMessageDialog(
 													InstructorNoa
 															.getCenterPanel(),
-													"Another voice or video function is already running, please stop it first",
-													"Information",
+													i18n.getParam("Another voice or video function is already running, please stop it first"),
+													i18n.getParam("Information"),
 													JOptionPane.INFORMATION_MESSAGE);
 										}
 									}
@@ -673,10 +674,14 @@ public class InstructorNoaUtil {
 									Group group = InstructorNoa.getGroups()
 											.get(groupIndex);
 									if (group.getStudentIps().isEmpty()) {
-										JOptionPane
-												.showMessageDialog(
-														null,
-														"Cannot start exam on an empty group!\nPlease add some students to the group first!");
+										try {
+											JOptionPane
+													.showMessageDialog(
+															null,
+															i18n.getParam("Cannot start exam on an empty group!\nPlease add some students to the group first!"));
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
 										return;
 									} else {
 										try {
@@ -1541,11 +1546,12 @@ public class InstructorNoaUtil {
 								i18n.getParam("Run"));
 
 						CustomPowerPanel panel = new CustomPowerPanel();
-						WebScrollPane scrollpane = new WebScrollPane(programsList);
+						WebScrollPane scrollpane = new WebScrollPane(
+								programsList);
 						scrollpane.setOpaque(true);
 						GroupPanel programPopupContent = new GroupPanel(5,
-								false, scrollpane,
-								runButton, chooseAppButton, sendToAll);
+								false, scrollpane, runButton, chooseAppButton,
+								sendToAll);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
@@ -2023,8 +2029,10 @@ public class InstructorNoaUtil {
 						public void actionPerformed(ActionEvent arg0) {
 							try {
 
-								if ((InstructorNoa.getTransmitter().isTransmitting()
-										|| InstructorNoa.getSendOnly().isTransmitting()) && !callAllActive) {
+								if ((InstructorNoa.getTransmitter()
+										.isTransmitting() || InstructorNoa
+										.getSendOnly().isTransmitting())
+										&& !callAllActive) {
 									JOptionPane.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
 											"Another voice or video function is already running, please stop it first",
@@ -2032,10 +2040,16 @@ public class InstructorNoaUtil {
 											JOptionPane.INFORMATION_MESSAGE);
 									return;
 								}
-								
-								if(InstructorNoa.getDesktopPane().getSelectedFrame()!=null){
-									if(InstructorNoa.getConversationIps().contains(
-											InstructorNoa.getDesktopPane().getSelectedFrame().getClientProperty("ip"))){
+
+								if (InstructorNoa.getDesktopPane()
+										.getSelectedFrame() != null) {
+									if (InstructorNoa.getConversationIps()
+											.contains(
+													InstructorNoa
+															.getDesktopPane()
+															.getSelectedFrame()
+															.getClientProperty(
+																	"ip"))) {
 										JOptionPane.showMessageDialog(
 												InstructorNoa.getCenterPanel(),
 												"Another voice or video function is already running, please stop it first",
@@ -2124,8 +2138,8 @@ public class InstructorNoaUtil {
 			final RootDesktopPane desktopPane, final String hostIp,
 			final String hostName) throws NumberFormatException, Exception {
 		String frameName = hostName;
-		final WebInternalFrame internalFrame = new WebInternalFrame(
-				frameName, false, false, false, false);
+		final WebInternalFrame internalFrame = new WebInternalFrame(frameName,
+				false, false, false, false);
 
 		// get current list of students, if some one is new, add him/her
 		JInternalFrame[] frames = desktopPane.getAllFrames();
@@ -2374,26 +2388,26 @@ public class InstructorNoaUtil {
 					}
 				});
 
-		TooltipManager.setTooltip((internalFrame.getComponent(1)), "No Group");
+		TooltipManager.setTooltip((internalFrame.getComponent(1)), i18n.getParam("No Group"));
 		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
 
-		WebMenu menuItemgroups = new WebMenu("Grouping");
-		WebMenuItem menuItemUngroup = new WebMenuItem("Ungroup");
-		WebMenuItem menuItemGroupA = new WebMenuItem("Group A");
-		WebMenuItem menuItemGroupB = new WebMenuItem("Group B");
-		WebMenuItem menuItemGroupC = new WebMenuItem("Group C");
-		WebMenuItem menuItemGroupD = new WebMenuItem("Group D");
-		WebMenuItem menuItemGroupE = new WebMenuItem("Group E");
-		WebMenuItem menuItemGroupF = new WebMenuItem("Group F");
-		WebMenuItem menuItemGroupG = new WebMenuItem("Group G");
-		WebMenuItem menuItemGroupH = new WebMenuItem("Group H");
-		WebMenuItem menuItemGroupI = new WebMenuItem("Group I");
-		WebMenuItem menuItemGroupJ = new WebMenuItem("Group J");
-		WebMenuItem menuItemGroupK = new WebMenuItem("Group K");
-		WebMenuItem menuItemGroupL = new WebMenuItem("Group L");
-		WebMenuItem menuItemGroupM = new WebMenuItem("Group M");
-		WebMenuItem menuItemGroupN = new WebMenuItem("Group N");
-		WebMenuItem menuItemGroupO = new WebMenuItem("Group O");
+		WebMenu menuItemgroups = new WebMenu(i18n.getParam("Grouping"));
+		WebMenuItem menuItemUngroup = new WebMenuItem(i18n.getParam("Ungroup"));
+		WebMenuItem menuItemGroupA = new WebMenuItem(i18n.getParam("Group A"));
+		WebMenuItem menuItemGroupB = new WebMenuItem(i18n.getParam("Group B"));
+		WebMenuItem menuItemGroupC = new WebMenuItem(i18n.getParam("Group C"));
+		WebMenuItem menuItemGroupD = new WebMenuItem(i18n.getParam("Group D"));
+		WebMenuItem menuItemGroupE = new WebMenuItem(i18n.getParam("Group E"));
+		WebMenuItem menuItemGroupF = new WebMenuItem(i18n.getParam("Group F"));
+		WebMenuItem menuItemGroupG = new WebMenuItem(i18n.getParam("Group G"));
+		WebMenuItem menuItemGroupH = new WebMenuItem(i18n.getParam("Group H"));
+		WebMenuItem menuItemGroupI = new WebMenuItem(i18n.getParam("Group I"));
+		WebMenuItem menuItemGroupJ = new WebMenuItem(i18n.getParam("Group J"));
+		WebMenuItem menuItemGroupK = new WebMenuItem(i18n.getParam("Group K"));
+		WebMenuItem menuItemGroupL = new WebMenuItem(i18n.getParam("Group L"));
+		WebMenuItem menuItemGroupM = new WebMenuItem(i18n.getParam("Group M"));
+		WebMenuItem menuItemGroupN = new WebMenuItem(i18n.getParam("Group N"));
+		WebMenuItem menuItemGroupO = new WebMenuItem(i18n.getParam("Group O"));
 
 		menuItemgroups.add(menuItemUngroup);
 		menuItemgroups.addSeparator();
@@ -2413,16 +2427,16 @@ public class InstructorNoaUtil {
 		menuItemgroups.add(menuItemGroupN);
 		menuItemgroups.add(menuItemGroupO);
 
-		WebMenu menuItemActions = new WebMenu("Actions");
-		WebMenuItem menuItemSendFile = new WebMenuItem("Send File");
-		WebMenuItem menuItemIntercom = new WebMenuItem("Intercom");
+		WebMenu menuItemActions = new WebMenu(i18n.getParam("Actions"));
+		WebMenuItem menuItemSendFile = new WebMenuItem(i18n.getParam("Send File"));
+		WebMenuItem menuItemIntercom = new WebMenuItem(i18n.getParam("Intercom"));
 		final WebMenu menuItemConversations = new WebMenu(
-				"Conversation With : ");
-		WebMenuItem menuItemMonitor = new WebMenuItem("Monitor");
-		WebMenuItem menuItemChat = new WebMenuItem("Chat");
-		WebMenuItem menuItemLock = new WebMenuItem("Lock");
-		WebMenuItem menuItemRecord = new WebMenuItem("Record");
-		WebMenuItem menuItemLogout = new WebMenuItem("Logout");
+				i18n.getParam("Conversation With : "));
+		WebMenuItem menuItemMonitor = new WebMenuItem(i18n.getParam("Monitor"));
+		WebMenuItem menuItemChat = new WebMenuItem(i18n.getParam("Chat"));
+		WebMenuItem menuItemLock = new WebMenuItem(i18n.getParam("Lock"));
+		WebMenuItem menuItemRecord = new WebMenuItem(i18n.getParam("Record"));
+		WebMenuItem menuItemLogout = new WebMenuItem(i18n.getParam("Logout"));
 		menuItemActions.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -2574,8 +2588,12 @@ public class InstructorNoaUtil {
 								.getStudentIps().remove(hostIp);
 						InstructorNoa.getGroups().get(currentGroup)
 								.getStudentNames().remove(hostName);
-						TooltipManager.setTooltip(
-								(internalFrame.getComponent(1)), "No Group");
+						try {
+							TooltipManager.setTooltip(
+									(internalFrame.getComponent(1)), i18n.getParam("No Group"));
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 
 				} else {
@@ -2605,9 +2623,13 @@ public class InstructorNoaUtil {
 								.getStudentIps().add(hostIp);
 						InstructorNoa.getGroups().get(groupIndex)
 								.getStudentNames().add(hostName);
-						TooltipManager.setTooltip(
-								(internalFrame.getComponent(1)), "Group "
-										+ group);
+						try {
+							TooltipManager.setTooltip(
+									(internalFrame.getComponent(1)), i18n.getParam("Group ")
+											+ group);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
@@ -2790,11 +2812,15 @@ public class InstructorNoaUtil {
 				|| InstructorNoa.getConversationIps().contains(
 						InstructorNoa.getDesktopPane().getSelectedFrame()
 								.getClientProperty("ip"))) {
-			JOptionPane
-					.showMessageDialog(
-							InstructorNoa.getCenterPanel(),
-							"Another voice or video function is already running, please stop it first",
-							"Information", JOptionPane.INFORMATION_MESSAGE);
+			try {
+				WebOptionPane
+						.showMessageDialog(
+								InstructorNoa.getCenterPanel(),
+								i18n.getParam("Another voice or video function is already running, please stop it first"),
+								i18n.getParam("Information"), JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return;
 		}
 
@@ -2835,11 +2861,11 @@ public class InstructorNoaUtil {
 								e.printStackTrace();
 							}
 						} else {
-							JOptionPane
+							WebOptionPane
 									.showMessageDialog(
 											InstructorNoa.getCenterPanel(),
-											"Another voice or video function is already running, please stop it first",
-											"Information",
+											i18n.getParam("Another voice or video function is already running, please stop it first"),
+											i18n.getParam("Information"),
 											JOptionPane.INFORMATION_MESSAGE);
 						}
 					} else {

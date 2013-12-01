@@ -11,6 +11,7 @@ import net.java.sip.communicator.impl.protocol.jabber.extensions.DefaultPacketEx
 import org.jivesoftware.smack.provider.IQProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.xmlpull.v1.XmlPullParser;
+
 //import net.java.sip.communicator.impl.protocol.jabber.extensions.gtalk.*;
 
 /**

@@ -344,34 +344,6 @@ public class AVSendOnly {
 	 */
 	private static final String REMOTE_PORT_BASE_ARG_NAME = "--remote-port-base=";
 
-	/**
-	 * The list of command-line arguments accepted as valid by the
-	 * <tt>AVTransmit2</tt> application along with their human-readable usage
-	 * descriptions.
-	 */
-	private static final String[][] ARGS = {
-			{
-					LOCAL_PORT_BASE_ARG_NAME,
-					"The port which is the source of the transmission i.e. from"
-							+ " which the media is to be transmitted. The specified"
-							+ " value will be used as the port to transmit the audio"
-							+ " RTP from, the next port after it will be used to"
-							+ " transmit the audio RTCP from. Respectively, the"
-							+ " subsequent ports will be used to transmit the video RTP"
-							+ " and RTCP from." },
-			{
-					REMOTE_HOST_ARG_NAME,
-					"The name of the host which is the target of the transmission"
-							+ " i.e. to which the media is to be transmitted" },
-			{
-					REMOTE_PORT_BASE_ARG_NAME,
-					"The port which is the target of the transmission i.e. to which"
-							+ " the media is to be transmitted. The specified value"
-							+ " will be used as the port to transmit the audio RTP to"
-							+ " the next port after it will be used to transmit the"
-							+ " audio RTCP to. Respectively, the subsequent ports will"
-							+ " be used to transmit the video RTP and RTCP to." } };
-
 	public static void main(String[] args) throws Exception {
 		// We need two parameters to do the transmission. For example,
 		// ant run-example -Drun.example.name=AVTransmit2

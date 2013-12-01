@@ -93,7 +93,7 @@ public class LoadingDialog extends JDialog {
 					scaledWidth, scaledHeight, Image.SCALE_FAST));
 		}
 
-		Toolkit tk = Toolkit.getDefaultToolkit();
+		Toolkit.getDefaultToolkit();
 		setSize(scaledWidth, scaledHeight);
 		setLocationRelativeTo(null);
 

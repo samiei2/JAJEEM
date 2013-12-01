@@ -3,7 +3,12 @@ package com.jajeem.quiz.design.alt;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
@@ -32,8 +38,11 @@ public class CustomQuizFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JPanel panelTop;
 	CustomPanel panelContent;
+	JFrame mainFrame;
+	int posX, posY;
 
 	public CustomQuizFrame() {
+		mainFrame = this;
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
 
@@ -94,6 +103,42 @@ public class CustomQuizFrame extends JFrame {
 								258, Short.MAX_VALUE).addContainerGap()));
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
+
+		this.addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent evt) {
+				// sets frame position when mouse dragged
+				if (mainFrame.getCursor().getType() == Cursor.DEFAULT_CURSOR) {
+					setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
+							- posY);
+				}
+			}
+		});
+
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					int i = JOptionPane.showConfirmDialog(getContentPane(),
+							"Are you sure you want to close this window?");
+					if (i == 0) {
+						dispose();
+					} else if (i == 1) {
+						return;
+					} else {
+						return;
+					}
+				}
+			}
+		});
+
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				posX = e.getX();
+				posY = e.getY();
+			}
+		});
 	}
 
 	public Container getMainContentPane() {

@@ -1,63 +1,49 @@
 package com.jajeem.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
-import javax.swing.JDesktopPane;
-import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javax.swing.JTextArea;
+import com.jajeem.ui.textbox.JajeemTextField;
+import com.alee.laf.combobox.WebComboBox;
 
-import javax.swing.JInternalFrame;
-import javax.swing.plaf.InternalFrameUI;
+public class testtt extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-import com.alee.laf.desktoppane.WebInternalFrame;
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
-public class testtt extends JFrame{
 	public testtt() {
 		
-		JDesktopPane desktopPane = new JDesktopPane();
-		getContentPane().add(desktopPane, BorderLayout.CENTER);
+		JajeemTextField jajeemTextField = new JajeemTextField();
 		
-		JInternalFrame internalFrame = new JInternalFrame("jlk");
-		internalFrame.setBounds(10, 11, 182, 160);
-		desktopPane.add(internalFrame);
-		
-		WebInternalFrame webInternalFrame = new WebInternalFrame();
-		webInternalFrame.setBounds(202, 11, 222, 160);
-		desktopPane.add(webInternalFrame);
-		internalFrame.setVisible(true);
+		WebComboBox webComboBox = new WebComboBox();
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(107, Short.MAX_VALUE)
+					.addComponent(jajeemTextField, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
+					.addGap(97))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(40)
+					.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(119, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(83)
+					.addComponent(jajeemTextField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(77, Short.MAX_VALUE))
+		);
+		getContentPane().setLayout(groupLayout);
 	}
-}
 
-class CustomInterFrame extends JInternalFrame{
-	BufferedImage background;
-	
-	public CustomInterFrame() {
-		try {
-			background = ImageIO.read(getClass().getResource("/icons/noa_en/new/jinternalpanel.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setOpaque(false);
-		
+	public static void main(String[] args) {
+		testtt t = new testtt();
+		t.setVisible(true);
 	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-//		super.paintComponent(g);
-		Graphics g2 = g.create();
-		g2.drawImage(background, 0, 0, getWidth(), getHeight(),null);
-		g2.dispose();
-	}
-}
-
-class MyInternalFrameUI extends InternalFrameUI{
-	
 }
