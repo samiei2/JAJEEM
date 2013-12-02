@@ -1,6 +1,7 @@
 package com.jajeem.filemanager.design;
 
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,6 +37,7 @@ import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
+import com.jajeem.util.i18n;
 
 public class FileAssignmentTab extends WebPanel {
 	/**
@@ -55,22 +57,23 @@ public class FileAssignmentTab extends WebPanel {
 	 * Create the panel.
 	 * 
 	 * @param fileManagerMain
+	 * @throws Exception 
 	 */
-	public FileAssignmentTab(FileManagerMain fileManagerMain) {
+	public FileAssignmentTab(FileManagerMain fileManagerMain) throws Exception {
 		parentFrame = fileManagerMain;
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
 		wbtnBrowse = new WebButton();
-		wbtnBrowse.setText("Browse");
+		wbtnBrowse.setText(i18n.getParam("Browse"));
 
 		wbtnClear = new WebButton();
 		wbtnClear.setEnabled(false);
-		wbtnClear.setText("Clear");
+		wbtnClear.setText(i18n.getParam("Clear"));
 
 		wbtnSend = new WebButton();
 		wbtnSend.setEnabled(false);
-		wbtnSend.setText("Send Assignment");
+		wbtnSend.setText(i18n.getParam("Send Assignment"));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout
 				.setHorizontalGroup(groupLayout
@@ -150,7 +153,7 @@ public class FileAssignmentTab extends WebPanel {
 		webTable = new WebTable();
 		webTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", "File Name", "Time" }) {
+				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("Time") }) {
 			/**
 					 * 
 					 */
@@ -186,14 +189,24 @@ public class FileAssignmentTab extends WebPanel {
 							.getModel();
 					String time = "";
 					while (true) {
-						time = JOptionPane.showInputDialog(
-								"Please Set Time : ", 0);
+						try {
+							time = JOptionPane.showInputDialog(
+									i18n.getParam("Please Set Time : "), 0);
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 						try {
 							Integer.parseInt(time);
 							break;
 						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null,
-									"Invalid time.Please enter a correct one!");
+							try {
+								JOptionPane.showMessageDialog(null,
+										i18n.getParam("Invalid time.Please enter a correct one!"));
+							} catch (Exception e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
 						}
 					}
 					model.addRow(new Object[] {
@@ -218,9 +231,14 @@ public class FileAssignmentTab extends WebPanel {
 				webTable.updateUI();
 				wbtnSend.setEnabled(false);
 				wbtnClear.setEnabled(false);
-				JOptionPane
-						.showMessageDialog(null,
-								"Note: Running assignments will keep running until they end!");
+				try {
+					JOptionPane
+							.showMessageDialog(null,
+									i18n.getParam("Note: Running assignments will keep running until they end!"));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -358,8 +376,13 @@ public class FileAssignmentTab extends WebPanel {
 				// DefaultTableModel model =
 				// (DefaultTableModel)webTable.getModel();
 				// model.setValueAt("Failed", currentIndex, 2);
-				JOptionPane.showMessageDialog(null,
-						"Sending assignment failed!");
+				try {
+					JOptionPane.showMessageDialog(null,
+							i18n.getParam("Sending assignment failed!"));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 			@Override
@@ -454,15 +477,25 @@ public class FileAssignmentTab extends WebPanel {
 							ips.add(((String) InstructorNoa.getDesktopPane()
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
-							JOptionPane.showMessageDialog(null,
-									"No student is selected!");
+							try {
+								JOptionPane.showMessageDialog(null,
+										i18n.getParam("No student is selected!"));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							ips = null;
 						}
 					}
 
 					if (ips == null) {
-						JOptionPane.showMessageDialog(null,
-								"No student is selected!");
+						try {
+							JOptionPane.showMessageDialog(null,
+									i18n.getParam("No student is selected!"));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						return;
 					}
 					try {

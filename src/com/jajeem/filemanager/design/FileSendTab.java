@@ -1,6 +1,7 @@
 package com.jajeem.filemanager.design;
 
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -31,6 +32,7 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
+import com.jajeem.util.i18n;
 
 public class FileSendTab extends WebPanel {
 	/**
@@ -49,23 +51,24 @@ public class FileSendTab extends WebPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws Exception 
 	 */
-	public FileSendTab(FileManagerMain main) {
+	public FileSendTab(FileManagerMain main) throws Exception {
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
 		wbtnBrowse = new WebButton();
-		wbtnBrowse.setText("Browse");
+		wbtnBrowse.setText(i18n.getParam("Browse"));
 
 		wbtnClear = new WebButton();
 		wbtnClear.setEnabled(false);
-		wbtnClear.setText("Clear");
+		wbtnClear.setText(i18n.getParam("Clear"));
 
 		wbtnSend = new WebButton();
 		wbtnSend.setEnabled(false);
-		wbtnSend.setText("Send");
+		wbtnSend.setText(i18n.getParam("Send"));
 
-		chckbxSendToAll = new WebCheckBox("Send to all");
+		chckbxSendToAll = new WebCheckBox(i18n.getParam("Send to all"));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout
 				.setHorizontalGroup(groupLayout
@@ -150,7 +153,7 @@ public class FileSendTab extends WebPanel {
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", "File Name", "Status" }) {
+				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("Status") }) {
 			/**
 					 * 
 					 */
@@ -203,10 +206,14 @@ public class FileSendTab extends WebPanel {
 				webTable.repaint();
 				webTable.updateUI();
 				for (int i = 0; i < fileNames.size(); i++) {
-					model.addRow(new Object[] {
-							webTable.getRowCount() == 0 ? 1 : webTable
-									.getRowCount() + 1, fileNames.get(i),
-							"Idle" });
+					try {
+						model.addRow(new Object[] {
+								webTable.getRowCount() == 0 ? 1 : webTable
+										.getRowCount() + 1, fileNames.get(i),
+										i18n.getParam("Idle") });
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -257,7 +264,7 @@ public class FileSendTab extends WebPanel {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
 					System.out.println(currentIndex);
-					model.setValueAt("Success", currentIndex, 2);
+					model.setValueAt(i18n.getParam("Success"), currentIndex, 2);
 				} catch (Exception e) {
 				}
 			}
@@ -280,7 +287,7 @@ public class FileSendTab extends WebPanel {
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
-					model.setValueAt("Failed", currentIndex, 2);
+					model.setValueAt(i18n.getParam("Failed"), currentIndex, 2);
 				} catch (Exception e) {
 
 				}
@@ -361,15 +368,25 @@ public class FileSendTab extends WebPanel {
 										.getDesktopPane().getSelectedFrame()
 										.getClientProperty("ip")));
 							} else {
-								JOptionPane.showMessageDialog(null,
-										"No student is selected!");
+								try {
+									JOptionPane.showMessageDialog(null,
+											i18n.getParam("No student is selected!"));
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								ips = null;
 							}
 						}
 					}
 					if (ips == null) {
-						JOptionPane.showMessageDialog(null,
-								"No student is selected!");
+						try {
+							JOptionPane.showMessageDialog(null,
+									i18n.getParam("No student is selected!"));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						return;
 					}
 					System.out.println("Ips Count : " + ips.size());

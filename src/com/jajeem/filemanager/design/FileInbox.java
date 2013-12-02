@@ -26,6 +26,7 @@ import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
+import com.jajeem.util.i18n;
 
 public class FileInbox extends WebPanel {
 	/**
@@ -42,25 +43,26 @@ public class FileInbox extends WebPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws Exception 
 	 */
-	public FileInbox() {
+	public FileInbox() throws Exception {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
 		wbtnAccept = new WebButton();
 		wbtnAccept.setEnabled(false);
-		wbtnAccept.setText("Accept File");
+		wbtnAccept.setText(i18n.getParam("Accept File"));
 
 		wbtnRejectFile = new WebButton();
 		wbtnRejectFile.setEnabled(false);
-		wbtnRejectFile.setText("Reject File");
+		wbtnRejectFile.setText(i18n.getParam("Reject File"));
 
 		wbtnDismissAll = new WebButton();
 		wbtnDismissAll.setEnabled(false);
-		wbtnDismissAll.setText("Clear");
+		wbtnDismissAll.setText(i18n.getParam("Clear"));
 
 		wbtnRefresh = new WebButton();
-		wbtnRefresh.setText("Refresh");
+		wbtnRefresh.setText(i18n.getParam("Refresh"));
 		wbtnRefresh.setVisible(false);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout
@@ -155,7 +157,7 @@ public class FileInbox extends WebPanel {
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", "File Name", "From", "Status" }) {
+				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("From"), i18n.getParam("Status") }) {
 			/**
 			 * 
 			 */
@@ -182,7 +184,7 @@ public class FileInbox extends WebPanel {
 		PopulateInbox();
 	}
 
-	private void PopulateInbox() {
+	private void PopulateInbox() throws Exception {
 
 		String inboxPath = FileUtil.getInboxPath();
 		File inbox = new File(inboxPath);
@@ -198,7 +200,7 @@ public class FileInbox extends WebPanel {
 				model.addRow(new Object[] {
 						webTable.getRowCount() == 0 ? 1 : webTable
 								.getRowCount() + 1, list[i].getAbsolutePath(),
-						"N/A", "Received" });
+								i18n.getParam("N/A"), i18n.getParam("Received") });
 			}
 			for (int i = 0; i < Session.getFileRequestList().size(); i++) {
 				fileSendRequestList.add((FileTransferObject) Session
@@ -206,10 +208,10 @@ public class FileInbox extends WebPanel {
 				model.addRow(new Object[] {
 						webTable.getRowCount() == 0 ? 1 : webTable
 								.getRowCount() + 1,
-						"Cannot show file name until accept",
+								i18n.getParam("Cannot show file name until accept"),
 						((FileTransferObject) Session.getFileRequestList().get(
 								i)).getClientSocket().getInetAddress()
-								.getHostAddress(), "Pending" });
+								.getHostAddress(), i18n.getParam("Pending") });
 				wbtnAccept.setEnabled(true);
 				wbtnRejectFile.setEnabled(true);
 				wbtnDismissAll.setEnabled(true);
@@ -262,7 +264,11 @@ public class FileInbox extends WebPanel {
 				model.fireTableDataChanged();
 				webTable.repaint();
 				webTable.updateUI();
-				PopulateInbox();
+				try {
+					PopulateInbox();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -320,7 +326,7 @@ public class FileInbox extends WebPanel {
 							.getModel();
 					model.setValueAt(evt.getFileName(),
 							webTable.getSelectedRow(), 1);
-					model.setValueAt("Success", webTable.getSelectedRow(), 3);
+					model.setValueAt(i18n.getParam("Success"), webTable.getSelectedRow(), 3);
 					Desktop.getDesktop()
 							.open(new File(FileUtil.getInboxPath()));
 					Audio.playSound("util/Ding.aiff");
@@ -341,9 +347,9 @@ public class FileInbox extends WebPanel {
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
-					model.setValueAt("N/A", webTable.getSelectedRow(), 1);
+					model.setValueAt(i18n.getParam("N/A"), webTable.getSelectedRow(), 1);
 					System.out.println(webTable.getSelectedRow());
-					model.setValueAt("Failed", webTable.getSelectedRow(), 3);
+					model.setValueAt(i18n.getParam("Failed"), webTable.getSelectedRow(), 3);
 				} catch (Exception e) {
 				}
 			}
@@ -360,9 +366,9 @@ public class FileInbox extends WebPanel {
 					model.addRow(new Object[] {
 							webTable.getRowCount() == 0 ? 1 : webTable
 									.getRowCount() + 1,
-							"Cannot show file name until accept",
+									i18n.getParam("Cannot show file name until accept"),
 							evt.getClientSocket().getInetAddress()
-									.getHostAddress(), "Pending" });
+									.getHostAddress(), i18n.getParam("Pending") });
 					wbtnAccept.setEnabled(true);
 					wbtnRejectFile.setEnabled(true);
 					wbtnDismissAll.setEnabled(true);

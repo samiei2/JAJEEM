@@ -29,6 +29,7 @@ import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Audio;
 import com.jajeem.util.Config;
+import com.jajeem.util.i18n;
 
 public class FileCollect extends WebPanel {
 	/**
@@ -44,22 +45,23 @@ public class FileCollect extends WebPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws Exception 
 	 */
 	@SuppressWarnings("serial")
-	public FileCollect() {
+	public FileCollect() throws Exception {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
 		wbtnCollectFiles = new WebButton();
-		wbtnCollectFiles.setText("Collect Files");
+		wbtnCollectFiles.setText(i18n.getParam("Collect Files"));
 
 		wbtnDeleteCollectedFiles = new WebButton();
 		wbtnDeleteCollectedFiles.setEnabled(false);
-		wbtnDeleteCollectedFiles.setText("Delete Collected Files");
+		wbtnDeleteCollectedFiles.setText(i18n.getParam("Delete Collected Files"));
 
 		wbtnOpen = new WebButton();
 		wbtnOpen.setEnabled(false);
-		wbtnOpen.setText("Open");
+		wbtnOpen.setText(i18n.getParam("Open"));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout
 				.setHorizontalGroup(groupLayout
@@ -138,7 +140,7 @@ public class FileCollect extends WebPanel {
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", "File Name", "Status" }) {
+				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("Status") }) {
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			@Override
@@ -227,7 +229,7 @@ public class FileCollect extends WebPanel {
 					model.addRow(new Object[] {
 							webTable.getRowCount() == 0 ? 1 : webTable
 									.getRowCount() + 1, evt.getFileName(),
-							"Received" });
+									i18n.getParam("Received") });
 					files.add(evt.getFileName());
 					if (webTable.getRowCount() != 0) {
 						wbtnDeleteCollectedFiles.setEnabled(true);

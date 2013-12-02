@@ -15,6 +15,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.util.i18n;
 
 /**
  * 
@@ -54,20 +55,40 @@ public class FileManagerMain extends javax.swing.JFrame {
 	private void initComponents() {
 		setLookAndFeel();
 		webPanel1 = new com.alee.laf.panel.WebPanel();
-		fileSendTab = new FileSendTab(this);
-		fileCollectTab = new FileCollect();
-		fileInboxTab = new FileInbox();
-		fileAssignmentTab = new FileAssignmentTab(this);
+		try {
+			fileSendTab = new FileSendTab(this);
+		} catch (Exception e3) {
+			e3.printStackTrace();
+		}
+		try {
+			fileCollectTab = new FileCollect();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		try {
+			fileInboxTab = new FileInbox();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		try {
+			fileAssignmentTab = new FileAssignmentTab(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		fileAssignmentTab.setParent(this);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		webTabbedPane = new WebTabbedPane();
-		webTabbedPane.addTab("File Send", fileSendTab);
-		webTabbedPane.addTab("File Assignments", fileAssignmentTab);
-		webTabbedPane.addTab("File Collect", fileCollectTab);
-		webTabbedPane.addTab("File Inbox", fileInboxTab);
+		try{
+			webTabbedPane.addTab(i18n.getParam("File Send"), fileSendTab);
+			webTabbedPane.addTab(i18n.getParam("File Assignments"), fileAssignmentTab);
+			webTabbedPane.addTab(i18n.getParam("File Collect"), fileCollectTab);
+			webTabbedPane.addTab(i18n.getParam("File Inbox"), fileInboxTab);
+		}
+		catch(Exception e){
+		}
 
 		javax.swing.GroupLayout webPanel1Layout = new javax.swing.GroupLayout(
 				webPanel1);
