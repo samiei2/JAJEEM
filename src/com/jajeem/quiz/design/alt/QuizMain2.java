@@ -7,6 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import com.alee.laf.label.WebLabel;
 
 public class QuizMain2 extends CustomQuizFrame {
 	/**
@@ -87,7 +88,25 @@ public class QuizMain2 extends CustomQuizFrame {
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		getMainContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new CardLayout(0, 0));
+		
+		WebLabel wblblQuestion = new WebLabel();
+		wblblQuestion.setText("Question : ");
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(509, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(wblblQuestion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(356, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 
 	}
 

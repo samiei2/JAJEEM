@@ -710,4 +710,3 @@ class CustomLoginButton extends WebButton {
 		super.paintComponent(g);
 	}
 }
-

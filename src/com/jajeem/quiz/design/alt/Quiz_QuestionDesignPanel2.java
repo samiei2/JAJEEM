@@ -25,6 +25,7 @@ import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.ui.combobox.JajeemComboBox;
 
 public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 	/**
@@ -49,7 +50,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 	private WebCheckBox webCheckBox_2;
 	private WebCheckBox webCheckBox_3;
 	private WebCheckBox webCheckBox_4;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 	private WebPanel webPanelOptions;
 	private WebLabel wblblQuestion;
 	private Quiz_FirstPage parentPanel;
@@ -73,7 +74,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 		WebLabel wblblQuestion_1 = new WebLabel();
 		wblblQuestion_1.setText("Question");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"Single Choice", "Multiple Choice", "Essay" }));
 
@@ -1283,11 +1284,11 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 		this.webTextArea = webTextArea;
 	}
 
-	public WebComboBox getWebComboBox() {
+	public JajeemComboBox getWebComboBox() {
 		return webComboBox;
 	}
 
-	public void setWebComboBox(WebComboBox webComboBox) {
+	public void setWebComboBox(JajeemComboBox webComboBox) {
 		this.webComboBox = webComboBox;
 	}
 

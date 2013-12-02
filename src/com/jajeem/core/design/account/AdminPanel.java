@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,6 +67,7 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("deprecation")
 public class AdminPanel extends CustomAccountFrame {
@@ -324,7 +326,9 @@ public class AdminPanel extends CustomAccountFrame {
 		panel.setMargin(new Insets(5, 5, 5, 5));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPane1.setOpaque(false);
 		JTable courseTable = new JTable();
+		courseTable.setOpaque(false);
 		TooltipManager.setTooltip(courseTable,
 				i18n.getParam("Select a course and push edit button to edit"));
 
@@ -425,6 +429,7 @@ public class AdminPanel extends CustomAccountFrame {
 		});
 
 		WebButton studentButton = new WebButton(i18n.getParam("Details"));
+		studentButton.setHorizontalTextPosition(SwingConstants.LEADING);
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
 		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -569,6 +574,11 @@ public class AdminPanel extends CustomAccountFrame {
 		bottomPanel.add(paginationPanel);
 
 		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
+		nextButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		nextButton.setForeground(Color.DARK_GRAY);
+		nextButton.setHorizontalTextPosition(SwingConstants.LEADING);
+		nextButton.setIcon(new ImageIcon(new ImageIcon(AdminPanel.class.getResource("/icons/noa_en/pdf.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		nextButton.setUndecorated(true);
 		paginationPanel.add(nextButton);
 		nextButton.addActionListener(new ActionListener() {
 			@Override
@@ -651,42 +661,27 @@ public class AdminPanel extends CustomAccountFrame {
 		StripedTableCellRenderer.installInTable(courseTable, Color.lightGray,
 				Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(
-														topPanel,
-														GroupLayout.DEFAULT_SIZE,
-														723, Short.MAX_VALUE)
-												.addComponent(
-														bottomPanel,
-														GroupLayout.DEFAULT_SIZE,
-														723, Short.MAX_VALUE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGap(10)
-																.addComponent(
-																		jScrollPane1,
-																		GroupLayout.DEFAULT_SIZE,
-																		713,
-																		Short.MAX_VALUE)))
-								.addGap(20)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
-								405, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								56, GroupLayout.PREFERRED_SIZE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(bottomPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+								.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE))))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
+		);
 		panel.setLayout(gl_panel);
 
 		courseTable.addMouseListener(new MouseAdapter() {
@@ -908,12 +903,30 @@ public class AdminPanel extends CustomAccountFrame {
 
 		JPanel paginationPanel = new JPanel();
 		paginationPanel.setOpaque(false);
-		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.TRAILING);
 		bottomPanel.add(paginationPanel);
 
 		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
-		paginationPanel.add(nextButton);
+		nextButton.setForeground(Color.DARK_GRAY);
+		nextButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		nextButton.setHorizontalTextPosition(SwingConstants.LEADING);
+		nextButton.setIcon(new ImageIcon(new ImageIcon(AdminPanel.class.getResource("/icons/noa_en/pdf.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		nextButton.setUndecorated(true);
+		GroupLayout gl_paginationPanel = new GroupLayout(paginationPanel);
+		gl_paginationPanel.setHorizontalGroup(
+			gl_paginationPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_paginationPanel.createSequentialGroup()
+					.addContainerGap(300, Short.MAX_VALUE)
+					.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_paginationPanel.setVerticalGroup(
+			gl_paginationPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_paginationPanel.createSequentialGroup()
+					.addContainerGap(17, Short.MAX_VALUE)
+					.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		paginationPanel.setLayout(gl_paginationPanel);
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -968,46 +981,27 @@ public class AdminPanel extends CustomAccountFrame {
 		StripedTableCellRenderer.installInTable(instructorTable,
 				Color.lightGray, Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						Alignment.TRAILING,
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addComponent(
-														bottomPanel,
-														Alignment.LEADING,
-														GroupLayout.DEFAULT_SIZE,
-														733, Short.MAX_VALUE)
-												.addGroup(
-														Alignment.LEADING,
-														gl_panel.createSequentialGroup()
-																.addContainerGap()
-																.addComponent(
-																		jScrollPane1,
-																		GroupLayout.DEFAULT_SIZE,
-																		723,
-																		Short.MAX_VALUE))
-												.addComponent(
-														topPanel,
-														Alignment.LEADING,
-														GroupLayout.DEFAULT_SIZE,
-														733, Short.MAX_VALUE))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
-								414, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								56, GroupLayout.PREFERRED_SIZE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(bottomPanel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 864, Short.MAX_VALUE)
+								.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE))))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
+		);
 		panel.setLayout(gl_panel);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
@@ -1176,6 +1170,11 @@ public class AdminPanel extends CustomAccountFrame {
 		bottomPanel.add(paginationPanel);
 
 		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
+		nextButton.setForeground(Color.DARK_GRAY);
+		nextButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		nextButton.setHorizontalTextPosition(SwingConstants.LEADING);
+		nextButton.setIcon(new ImageIcon(new ImageIcon(AdminPanel.class.getResource("/icons/noa_en/pdf.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		nextButton.setUndecorated(true);
 		paginationPanel.add(nextButton);
 		nextButton.addActionListener(new ActionListener() {
 			@Override
@@ -1230,30 +1229,27 @@ public class AdminPanel extends CustomAccountFrame {
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(topPanel, GroupLayout.DEFAULT_SIZE, 743,
-						Short.MAX_VALUE)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(jScrollPane1,
-										GroupLayout.DEFAULT_SIZE, 733,
-										Short.MAX_VALUE))
-				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 743,
-						Short.MAX_VALUE));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(topPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE,
-								419, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								51, GroupLayout.PREFERRED_SIZE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(bottomPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+								.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE))))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+					.addGap(7)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		);
 		panel.setLayout(gl_panel);
 		studentTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
