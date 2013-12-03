@@ -1863,7 +1863,8 @@ public class InstructorNoaUtil {
 											ips[0]);
 									InstructorNoa.getConversationIps().remove(
 											ips[1]);
-
+									model.remove(programsList.getSelectedIndex());
+									programsList.repaint();
 								} catch (Exception e) {
 									JajeemExcetionHandler.logError(e);
 									e.printStackTrace();
@@ -2431,7 +2432,7 @@ public class InstructorNoaUtil {
 		WebMenuItem menuItemSendFile = new WebMenuItem(i18n.getParam("Send File"));
 		WebMenuItem menuItemIntercom = new WebMenuItem(i18n.getParam("Intercom"));
 		final WebMenu menuItemConversations = new WebMenu(
-				i18n.getParam("Conversation With : "));
+				i18n.getParam("Conversation With "));
 		WebMenuItem menuItemMonitor = new WebMenuItem(i18n.getParam("Monitor"));
 		WebMenuItem menuItemChat = new WebMenuItem(i18n.getParam("Chat"));
 		WebMenuItem menuItemLock = new WebMenuItem(i18n.getParam("Lock"));
@@ -2467,16 +2468,21 @@ public class InstructorNoaUtil {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				menuItemConversations.removeAll();
-				WebMenuItem tempItem;
+				WebMenuItem tempItem = null;
 				for (int i = 0; i < InstructorNoa.getDesktopPane()
 						.getAllFrames().length; i++) {
-					if (!InstructorNoa.getDesktopPane().getAllFrames()[i]
+					if (InstructorNoa.getDesktopPane()
+							.getSelectedFrame() != null && !InstructorNoa.getDesktopPane().getAllFrames()[i]
 							.equals(InstructorNoa.getDesktopPane()
 									.getSelectedFrame())) {
-						tempItem = new WebMenuItem(InstructorNoa
-								.getDesktopPane().getAllFrames()[i]
-								.getClientProperty("username").toString());
+						if(InstructorNoa.getDesktopPane()
+								.getSelectedFrame().getClientProperty("live").equals(true))
+							tempItem = new WebMenuItem(InstructorNoa
+									.getDesktopPane().getAllFrames()[i]
+									.getClientProperty("username").toString());
 						final int index = i;
+						if(tempItem==null)
+							continue;
 						tempItem.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
@@ -2492,7 +2498,6 @@ public class InstructorNoaUtil {
 						menuItemConversations.add(tempItem);
 					}
 				}
-
 			}
 		});
 		menuItemMonitor.addActionListener(new ActionListener() {
@@ -2971,8 +2976,10 @@ public class InstructorNoaUtil {
 			si = new StartIntercomCommand(InetAddress.getLocalHost()
 					.getHostAddress(), ipFrom, Integer.parseInt(Config
 					.getParam("port")));
+			si.setFrom(ipTo);
 			InstructorNoa.getServerService().send(si);
 
+			si.setFrom(ipFrom);
 			si.setTo(ipTo);
 			InstructorNoa.getServerService().send(si);
 		} catch (Exception e) {

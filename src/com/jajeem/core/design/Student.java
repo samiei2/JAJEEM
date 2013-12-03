@@ -159,7 +159,7 @@ public class Student {
 		ImageIcon imgToolTip = null;
 		try {
 			imgToolTip = new ImageIcon(ImageIO.read(Student.class
-					.getResourceAsStream(("/icons/menubar/tooltip.png"))));
+					.getResourceAsStream("/icons/menubar/tooltip.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -422,8 +422,8 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Enabling dialog decoration
-				boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
-				WebLookAndFeel.setDecorateDialogs(true);
+//				boolean decorateFrames = WebLookAndFeel.isDecorateDialogs();
+//				WebLookAndFeel.setDecorateDialogs(true);
 
 				RecorderStudent recorder = new RecorderStudent(
 						new ArrayList<String>(), false, false);
@@ -431,7 +431,7 @@ public class Student {
 				recorder.setVisible(true);
 				buttonRecording.setEnabled(false);
 				// Restoring frame decoration option
-				WebLookAndFeel.setDecorateDialogs(decorateFrames);
+//				WebLookAndFeel.setDecorateDialogs(decorateFrames);
 			}
 		});
 

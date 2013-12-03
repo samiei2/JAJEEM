@@ -74,7 +74,7 @@ public class CustomTeacherFrame extends JFrame {
 
 		JPanel panelClose = new JPanel();
 		panelClose.setOpaque(false);
-		panelMain = new CustomMainPanel("/icons/noa_en/new/teacherMain2.png");
+		panelMain = new CustomMainPanel("/icons/noa_en/new/teacherMain.png");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel
 				.createParallelGroup(Alignment.LEADING)

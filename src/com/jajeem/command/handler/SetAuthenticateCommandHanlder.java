@@ -40,22 +40,34 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 		synchronized (authenticateLock) {
 			if (Session.getLoggedInStudents().containsValue(
 					((AuthenticateCommand) cmd).getUsername())) {
-				DuplicateLoginCommand dup = new DuplicateLoginCommand(
-						InetAddress.getLocalHost().getHostAddress(),
-						((AuthenticateCommand) cmd).getFrom(),
-						Integer.parseInt(Config.getParam("port")));
-				serverService.send(dup);
-				return;
+				String ip = Session.getLoggedInStudents().get(((AuthenticateCommand) cmd).getUsername());
+				if(ip.equals(((AuthenticateCommand) cmd).getFrom())){
+					if (grant) {
+						Session.getLoggedInStudents().put(
+								((AuthenticateCommand) cmd).getFrom(),
+								((AuthenticateCommand) cmd).getUsername());
+						grantCommand.setGranted(grant);
+						serverService.send(grantCommand);
+					}
+				}
+				else{
+					DuplicateLoginCommand dup = new DuplicateLoginCommand(
+							InetAddress.getLocalHost().getHostAddress(),
+							((AuthenticateCommand) cmd).getFrom(),
+							Integer.parseInt(Config.getParam("port")));
+					serverService.send(dup);
+					return;
+				}
 			} else {
 				if (grant) {
 					Session.getLoggedInStudents().put(
 							((AuthenticateCommand) cmd).getFrom(),
 							((AuthenticateCommand) cmd).getUsername());
+					grantCommand.setGranted(grant);
+					serverService.send(grantCommand);
 				}
 			}
 		}
-
-		grantCommand.setGranted(grant);
 
 		if (grant) {
 
@@ -82,21 +94,11 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 								((AuthenticateCommand) cmd).getUsername());
 					} catch (Exception e) {
 					}
-					// frame.putClientProperty("username",
-					// ((AuthenticateCommand) cmd).getUsername());
-					// System.out.println(frame.getTitle());
-					// frame.setTitle(((AuthenticateCommand)
-					// cmd).getUsername());
-					// ((WebInternalFrame)frame).close();
-					// ((WebInternalFrame)frame).setTitle("arminiak");
-					// ((WebInternalFrame)frame).open();
 
 					break;
 				}
 			}
 		}
-
-		serverService.send(grantCommand);
 	}
 
 	@SuppressWarnings("unused")

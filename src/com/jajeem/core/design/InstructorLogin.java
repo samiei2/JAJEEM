@@ -83,6 +83,7 @@ public class InstructorLogin extends JFrame {
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));
 		getContentPane().setBackground(new Color(0, 0, 0, 0));
+		setIconImage(new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/logo.png")).getImage());
 		
 		
 		new Config();
