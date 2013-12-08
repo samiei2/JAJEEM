@@ -34,11 +34,11 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.TRAILING).addComponent(webScrollPane,
-				Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 465,
+				Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE,
 				Short.MAX_VALUE));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addComponent(webScrollPane,
-				GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE));
+				GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE));
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},

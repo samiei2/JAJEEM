@@ -77,25 +77,25 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE))
+							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		
@@ -112,6 +112,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		wbtxtfldPoints = textField_1;
 		
 		JCheckBox chckbxAuto = new JCheckBox("Auto");
+		chckbxAuto.setOpaque(false);
 		wbchckbxAuto = chckbxAuto;
 		
 		JLabel lblTime = new JLabel("Time : ");
@@ -214,21 +215,22 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		);
 		panel_1.setLayout(gl_panel_1);
 		
-		Quiz_QuestionDesignPanel quiz_QuestionDesignPanel = new Quiz_QuestionDesignPanel((WebPanel) null);
+		Quiz_QuestionDesignPanel quiz_QuestionDesignPanel = new Quiz_QuestionDesignPanel(this);
+		webQuestionDesignPanel = quiz_QuestionDesignPanel;
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(99, Short.MAX_VALUE))
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 239, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(97, Short.MAX_VALUE))
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);

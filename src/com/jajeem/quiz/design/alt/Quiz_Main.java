@@ -1,10 +1,23 @@
 package com.jajeem.quiz.design.alt;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+
+import com.alee.laf.button.WebButton;
+import com.alee.laf.label.WebLabel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -15,26 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-
-import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
-import com.alee.laf.scroll.WebScrollPane;
-import com.jajeem.command.model.StartQuizCommand;
-import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.command.model.StartQuizCommand;
+import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.core.design.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
@@ -46,8 +45,7 @@ import com.jajeem.quiz.service.ResultService;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
 
-public class Quiz_Main extends WebFrame {
-
+public class Quiz_Main extends BaseQuizFrame {
 	/**
 	 * 
 	 */
@@ -69,244 +67,115 @@ public class Quiz_Main extends WebFrame {
 	private Quiz_Main mainFrame;
 	private List<String> studentIps;
 	private int gIndex;
+	private WebPanel webPanelCards;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					new Quiz_Main(-1, null);
-				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param list
-	 * @param groupIndex
-	 */
 	public Quiz_Main(int groupIndex, List<String> list) {
 		studentIps = list;
 		gIndex = groupIndex;
 		currentRun = new Run();
 		mainFrame = this;
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Quiz_Main.class.getResource("/icons/noa_en/quiz.png")));
-		setTitle("Quiz");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 987, 683);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
 
-		WebPanel webPanel_1 = new WebPanel();
-		webPanel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-		webPanel_1.setBackground(SystemColor.control);
+		CustomQuizButton webButtonAdd = new CustomQuizButton(
+				"/icons/noa_en/quizadd.png");
+		webButtonAdd.setUndecorated(true);
+		wbtnNew  = webButtonAdd;
 
-		WebPanel webPanel_2 = new WebPanel();
-		webPanel_2.setBorder(new TitledBorder(null, "", TitledBorder.CENTER,
-				TitledBorder.TOP, null, null));
-		webPanel_2.setBackground(SystemColor.control);
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								Alignment.TRAILING,
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																webPanel_2,
-																Alignment.LEADING,
-																GroupLayout.PREFERRED_SIZE,
-																855,
-																Short.MAX_VALUE)
-														.addComponent(
-																webPanel_1,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																855,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
-				gl_contentPane
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE,
-								52, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webPanel_2, GroupLayout.DEFAULT_SIZE,
-								480, Short.MAX_VALUE).addContainerGap()));
+		CustomQuizButton webButtonOpen = new CustomQuizButton(
+				"/icons/noa_en/quizopen.png");
+		webButtonOpen.setUndecorated(true);
+		wbtnOpen = webButtonOpen;
 
+		CustomQuizButton webButtonSave = new CustomQuizButton(
+				"/icons/noa_en/quizsave.png");
+		webButtonSave.setUndecorated(true);
+		wbtnSave = webButtonSave;
+
+		CustomQuizButton webButtonStart = new CustomQuizButton(
+				"/icons/noa_en/quizstart.png");
+		webButtonStart.setUndecorated(true);
+		wbtnStart = webButtonStart;
+
+		CustomQuizButton webButtonContent = new CustomQuizButton(
+				"/icons/noa_en/quizcontent.png");
+		webButtonContent.setUndecorated(true);
+		wbtnContent = webButtonContent;
+		
+		CustomQuizButton webButtonSaveResults = new CustomQuizButton("/icons/noa_en/quizsave.png");
+		webButtonSaveResults.setVisible(false);
+		webButtonSaveResults.setUndecorated(true);
+		wbtnSaveResults = webButtonSaveResults;
+		
+		
+		GroupLayout groupLayout = new GroupLayout(getTopPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
+					.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		getTopPane().setLayout(groupLayout);
+
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		getMainContentPane().add(panel, BorderLayout.CENTER);
+		
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
-		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
-		gl_webPanel_2.setHorizontalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addComponent(webScrollPane,
-				GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE));
-		gl_webPanel_2.setVerticalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addComponent(webScrollPane,
-				GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE));
-
-		webPanel = new WebPanel();
-		webScrollPane.setViewportView(webPanel);
-		webPanel.setLayout(new CardLayout(0, 0));
-		webPanel_2.setLayout(gl_webPanel_2);
-
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		
+		webPanelCards = new WebPanel();
+		webScrollPane.setViewportView(webPanelCards);
+		webPanelCards.setLayout(new CardLayout(0,0));
+		panel.setLayout(gl_panel);
+		
 		firstPage = new Quiz_FirstPage(this);
 		firstPage.setName("firstPage");
 		secondPage = new Quiz_SecondPage(this);
 		secondPage.setName("secondPage");
 
-		webPanel.add(firstPage, "firstPage");
-		webPanel.add(secondPage, "secondPage");
-
-		wbtnNew = new WebButton();
-		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setText("New");
-		wbtnNew.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/Addx16.png")));
-
-		wbtnOpen = new WebButton();
-		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnOpen.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/folder_green_open-x16.png")));
-		wbtnOpen.setText("Open");
-
-		wbtnSave = new WebButton();
-		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSave.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/documentx16.png")));
-		wbtnSave.setText("Save");
-
-		wbtnSaveResults = new WebButton();
-		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/documentx16.png")));
-		wbtnSaveResults.setText("Save Results");
-		wbtnSaveResults.setVisible(false);
-
-		wbtnStart = new WebButton();
-		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/startx16.png")));
-		wbtnStart.setText("Start");
-
-		wbtnContent = new WebButton();
-		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnContent.setIcon(new ImageIcon(Quiz_Main.class
-				.getResource("/icons/noa_en/contentx16.png")));
-		wbtnContent.setText("Content");
-		wbtnContent.setEnabled(false);
-
-		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1.setHorizontalGroup(gl_webPanel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel_1
-						.createSequentialGroup()
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 54,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 56,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 56,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSaveResults,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 461,
-								Short.MAX_VALUE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE,
-								48, GroupLayout.PREFERRED_SIZE)));
-		gl_webPanel_1
-				.setVerticalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				wbtnStart,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnContent,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_webPanel_1
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				wbtnNew,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnOpen,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnSave,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnSaveResults,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(115, Short.MAX_VALUE)));
-		webPanel_1.setLayout(gl_webPanel_1);
-		contentPane.setLayout(gl_contentPane);
-
+		webPanelCards.add(firstPage, "firstPage");
+		webPanelCards.add(secondPage, "secondPage");
+		
 		initEvents();
 		initQuizEventListener();
 		if (!ValidateSession()) {
 			return;
 		}
+		
 		setVisible(true);
-
 	}
-
+	
 	private void initQuizEventListener() {
 		if (gIndex != -1) {
 			if (studentIps != null) {
@@ -348,7 +217,7 @@ public class Quiz_Main extends WebFrame {
 
 	private boolean ValidateSession() {
 		if (com.jajeem.util.Session.getCourse() == null) {
-			int i = JOptionPane.showConfirmDialog(null,
+			int i = WebOptionPane.showConfirmDialog(null,
 					"No class has started yet!\n Do you want to continue?");
 			if (i == 0) {
 				return true;
@@ -358,7 +227,7 @@ public class Quiz_Main extends WebFrame {
 			}
 		}
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			int i = JOptionPane
+			int i = WebOptionPane
 					.showConfirmDialog(null,
 							"No instructor has logged in.Please first Log in!\n Do you want to continue?");
 			if (i == 0) {
@@ -400,7 +269,7 @@ public class Quiz_Main extends WebFrame {
 																	// the
 																	// second
 																	// page
-					int i = JOptionPane
+					int i = WebOptionPane
 							.showConfirmDialog(
 									null,
 									"If you leave this page the quiz will stop and results will be lost.Are you sure you want to continue?");
@@ -441,7 +310,7 @@ public class Quiz_Main extends WebFrame {
 		wbtnContent.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane
+				int i = WebOptionPane
 						.showConfirmDialog(
 								null,
 								"If you leave this page the quiz will stop and results will be lost.Are you sure you want to continue?");
@@ -475,7 +344,7 @@ public class Quiz_Main extends WebFrame {
 		wbtnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane
+				int i = WebOptionPane
 						.showConfirmDialog(
 								null,
 								"Are you sure you want to save current quiz?\nNote:If you select No current quiz will be disposed.");
@@ -507,7 +376,7 @@ public class Quiz_Main extends WebFrame {
 				ArrayList<Run> results = secondPage.getRunResults();
 				ResultService service = new ResultService();
 				service.create(secondPage.getQuizResponse(), results);
-				JOptionPane.showMessageDialog(null, "Results Saved!");
+				WebOptionPane.showMessageDialog(null, "Results Saved!");
 			}
 		});
 		wbtnStart.addActionListener(new ActionListener() {
@@ -516,7 +385,7 @@ public class Quiz_Main extends WebFrame {
 				if (wbtnStart.getText() == "Start") {
 					if (firstPage.getWebQuestionListPanel().getWebTable()
 							.getRowCount() == 0) {
-						JOptionPane
+						WebOptionPane
 								.showMessageDialog(null,
 										"At least one question is required for the quiz to start!");
 						return;
@@ -527,7 +396,7 @@ public class Quiz_Main extends WebFrame {
 						Question question = currentQuiz.getQuestionList()
 								.get(i);
 						if (question.getTitle().equals("")) {
-							JOptionPane
+							WebOptionPane
 									.showMessageDialog(
 											null,
 											"Question "
@@ -541,7 +410,7 @@ public class Quiz_Main extends WebFrame {
 								&& question.getAnswer4().equals("")
 								&& question.getAnswer5().equals("")
 								&& question.getType() != 2) {
-							JOptionPane.showMessageDialog(null,
+							WebOptionPane.showMessageDialog(null,
 									"No answer is entered for the question "
 											+ (i + 1)
 											+ ".Please enter at least one.");
@@ -553,7 +422,7 @@ public class Quiz_Main extends WebFrame {
 									&& !question.getCorrectAnswer()[2]
 									&& !question.getCorrectAnswer()[3]
 									&& !question.getCorrectAnswer()[4]) {
-								JOptionPane.showMessageDialog(null,
+								WebOptionPane.showMessageDialog(null,
 										"No correct answer is selected for question "
 												+ (i + 1)
 												+ ".Please select one.");
@@ -738,7 +607,7 @@ public class Quiz_Main extends WebFrame {
 
 	Instructor getCurrentInstructor() {
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			// int i = JOptionPane.showConfirmDialog(null,
+			// int i = WebOptionPane.showConfirmDialog(null,
 			// "No instructor has logged in.Please first Log in!\n Do you want to continue?");
 			// if(i==0)
 			return new Instructor();
@@ -751,7 +620,7 @@ public class Quiz_Main extends WebFrame {
 
 	Course getCurrentCourse() {
 		if (com.jajeem.util.Session.getCourse() == null) {
-			// int i = JOptionPane.showConfirmDialog(null,
+			// int i = WebOptionPane.showConfirmDialog(null,
 			// "No class has started yet!\n Do you want to continue?");
 			// if(i==0)
 			return new Course();
@@ -800,5 +669,11 @@ public class Quiz_Main extends WebFrame {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	public static void main(String[] args) {
+		Quiz_Main main = new Quiz_Main(-1, null);
+		main.pack();
+		main.setVisible(true);
 	}
 }

@@ -138,6 +138,7 @@ public class WindowResizeAdapter extends MouseAdapter implements SwingConstants 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		resizing = false;
+		componentTemp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	@Override

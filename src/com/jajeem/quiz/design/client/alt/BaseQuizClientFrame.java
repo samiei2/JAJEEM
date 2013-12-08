@@ -1,4 +1,4 @@
-package com.jajeem.quiz.design.alt;
+package com.jajeem.quiz.design.client.alt;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,13 +19,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
 import com.alee.laf.rootpane.WebFrame;
+import com.jajeem.quiz.design.alt.CustomQuizButton;
 import com.jajeem.util.CustomPanel;
 import com.jajeem.util.WindowResizeAdapter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javaQuery.core.keyType;
 
-public class BaseQuizFrame extends WebFrame {
+public class BaseQuizClientFrame extends WebFrame {
 	/**
 	 * 
 	 */
@@ -35,7 +36,7 @@ public class BaseQuizFrame extends WebFrame {
 	JFrame mainFrame;
 	int posX, posY;
 
-	public BaseQuizFrame() {
+	public BaseQuizClientFrame() {
 		WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = this;
@@ -50,35 +51,23 @@ public class BaseQuizFrame extends WebFrame {
 		panelTop = new JPanel();
 		panelTop.setOpaque(false);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.TRAILING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addComponent(
-														panel_1,
-														Alignment.LEADING,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-												.addComponent(
-														panelTop,
-														Alignment.LEADING,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-								.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 52,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE,
-								Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(panelTop, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		panelContent = new CustomPanel("/icons/noa_en/quizdesignpanel.png");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
@@ -95,7 +84,7 @@ public class BaseQuizFrame extends WebFrame {
 						.createSequentialGroup()
 						.addContainerGap()
 						.addComponent(panelContent, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE).addContainerGap()));
+								GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)));
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
 		
@@ -110,20 +99,17 @@ public class BaseQuizFrame extends WebFrame {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(0)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(customQuizButton, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-							.addGap(38))
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(0))
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(414, Short.MAX_VALUE)
+					.addComponent(customQuizButton, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addGap(30))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(customQuizButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 
