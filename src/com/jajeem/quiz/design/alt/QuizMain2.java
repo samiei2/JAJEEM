@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.alee.laf.label.WebLabel;
 
-public class QuizMain2 extends CustomQuizFrame {
+public class QuizMain2 extends BaseQuizFrame {
 	/**
 	 * 
 	 */

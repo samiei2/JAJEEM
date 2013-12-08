@@ -76,8 +76,8 @@ public class JajeemComboBoxUI extends BasicComboBoxUI{
     	
     	expand = new ImageIcon(JajeemComboBoxUI.class.getResource("/icons/noa_en/arrow.png"));
 		collapse = new ImageIcon(JajeemComboBoxUI.class.getResource("/icons/noa_en/arrowup.png"));
-		expandIcon =new ImageIcon(expand.getImage().getScaledInstance(16, 11, Image.SCALE_SMOOTH));
-		collapseIcon = new ImageIcon(collapse.getImage().getScaledInstance(16, 11, Image.SCALE_SMOOTH));;
+		expandIcon =new ImageIcon(expand.getImage().getScaledInstance(15, 9, Image.SCALE_SMOOTH));
+		collapseIcon = new ImageIcon(collapse.getImage().getScaledInstance(15, 9, Image.SCALE_SMOOTH));;
     }
 
     @SuppressWarnings ("UnusedParameters")
@@ -516,7 +516,7 @@ public class JajeemComboBoxUI extends BasicComboBoxUI{
     @Override
     public void paintCurrentValueBackground ( Graphics g, Rectangle bounds, boolean hasFocus )
     {
-        Graphics2D g2d = ( Graphics2D ) g;
+        Graphics2D g2d = ( Graphics2D ) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if ( drawBorder )
         {
@@ -563,6 +563,7 @@ public class JajeemComboBoxUI extends BasicComboBoxUI{
             g2d.setPaint ( comboBox.isEnabled () ? StyleConstants.borderColor : StyleConstants.disabledBorderColor );
             g2d.drawLine ( lx, insets.top + 1, lx, comboBox.getHeight () - insets.bottom - 2 );
         }
+        g2d.dispose();
     }
 
     /**

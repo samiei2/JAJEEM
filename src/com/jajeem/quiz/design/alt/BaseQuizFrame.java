@@ -31,7 +31,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import com.jajeem.util.CustomButton;
 import com.jajeem.util.CustomPanel;
 
-public class CustomQuizFrame extends JFrame {
+public class BaseQuizFrame extends JFrame {
 	/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class CustomQuizFrame extends JFrame {
 	JFrame mainFrame;
 	int posX, posY;
 
-	public CustomQuizFrame() {
+	public BaseQuizFrame() {
 		mainFrame = this;
 		setUndecorated(true);
 		setBackground(new Color(0, 255, 0, 0));

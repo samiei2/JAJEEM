@@ -1,5 +1,7 @@
 package com.jajeem.ui.textbox;
 
+import java.awt.Insets;
+
 import javax.swing.JTextField;
 
 import com.alee.laf.text.WebTextFieldUI;

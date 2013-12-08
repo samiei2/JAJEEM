@@ -17,6 +17,12 @@ import com.alee.laf.combobox.WebComboBox;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.jajeem.ui.combobox.JajeemComboBox;
+import com.jajeem.ui.radiobutton.JajeemRadioButton;
+import com.alee.laf.radiobutton.WebRadioButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
+import com.jajeem.ui.checkbox.JajeemCheckBox;
 
 public class testtt {
 
@@ -40,20 +46,58 @@ public class testtt {
                 frame.getContentPane().add(panel);
                 
                 JajeemComboBox jajeemComboBox = new JajeemComboBox();
+                jajeemComboBox.setModel(new DefaultComboBoxModel(new String[] {"test 1", "test 2", "test 3"}));
+                
+                JajeemRadioButton jmrdbtnSdfasfasdfa = new JajeemRadioButton();
+                jmrdbtnSdfasfasdfa.setText("sdfasfasdfa");
+                
+                WebRadioButton wbrdbtnAdsfasdf = new WebRadioButton();
+                wbrdbtnAdsfasdf.setText("adsfasdf");
+                
+                JajeemRadioButton jmrdbtnSadfasdfasdfas = new JajeemRadioButton();
+                jmrdbtnSadfasdfasdfas.setFont(new Font("Tahoma", Font.BOLD, 13));
+                jmrdbtnSadfasdfasdfas.setIconTextGap(12);
+                jmrdbtnSadfasdfasdfas.setText("sadfasdfasdfas");
+                
+                JajeemCheckBox jajeemCheckBox = new JajeemCheckBox();
+                jajeemCheckBox.setText("");
                 GroupLayout gl_panel = new GroupLayout(panel);
                 gl_panel.setHorizontalGroup(
                 	gl_panel.createParallelGroup(Alignment.LEADING)
                 		.addGroup(gl_panel.createSequentialGroup()
-                			.addGap(96)
-                			.addComponent(jajeemComboBox, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
-                			.addContainerGap(136, Short.MAX_VALUE))
+                			.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                				.addGroup(gl_panel.createSequentialGroup()
+                					.addContainerGap()
+                					.addComponent(jajeemComboBox, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE))
+                				.addGroup(gl_panel.createSequentialGroup()
+                					.addGap(28)
+                					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                						.addComponent(jmrdbtnSadfasdfasdfas, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+                						.addGroup(gl_panel.createSequentialGroup()
+                							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                								.addComponent(wbrdbtnAdsfasdf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                								.addComponent(jmrdbtnSdfasfasdfa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                							.addGap(90)
+                							.addComponent(jajeemCheckBox, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)))))
+                			.addContainerGap(98, Short.MAX_VALUE))
                 );
                 gl_panel.setVerticalGroup(
                 	gl_panel.createParallelGroup(Alignment.LEADING)
                 		.addGroup(gl_panel.createSequentialGroup()
-                			.addGap(84)
+                			.addContainerGap()
                 			.addComponent(jajeemComboBox, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-                			.addContainerGap(128, Short.MAX_VALUE))
+                			.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                				.addGroup(gl_panel.createSequentialGroup()
+                					.addGap(64)
+                					.addComponent(jmrdbtnSdfasfasdfa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                					.addPreferredGap(ComponentPlacement.RELATED)
+                					.addComponent(wbrdbtnAdsfasdf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                					.addPreferredGap(ComponentPlacement.RELATED)
+                					.addComponent(jajeemCheckBox, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+                			.addGap(18)
+                			.addComponent(jmrdbtnSadfasdfasdfas, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                			.addContainerGap(37, Short.MAX_VALUE))
                 );
                 panel.setLayout(gl_panel);
 //                frame.pack();

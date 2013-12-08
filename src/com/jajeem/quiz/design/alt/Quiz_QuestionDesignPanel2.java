@@ -1,7 +1,6 @@
 package com.jajeem.quiz.design.alt;
 
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -10,50 +9,47 @@ import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.UIManager;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import com.alee.laf.checkbox.WebCheckBox;
-import com.alee.laf.combobox.WebComboBox;
-import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.radiobutton.WebRadioButton;
-import com.alee.laf.scroll.WebScrollPane;
-import com.alee.laf.text.WebTextArea;
-import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.ui.combobox.JajeemComboBox;
+import com.jajeem.util.CustomPanel;
 
-public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
+public class Quiz_QuestionDesignPanel2 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private WebTextField webTextField;
-	private WebTextField webTextField_1;
-	private WebTextField webTextField_2;
-	private WebTextField webTextField_3;
-	private WebTextField webTextField_4;
-	private WebTextField webTextField_6;
-	private WebTextArea webTextArea;
-	private WebScrollPane webScrollPane;
-	private WebRadioButton webRadioButton;
-	private WebRadioButton webRadioButton_1;
-	private WebRadioButton webRadioButton_2;
-	private WebRadioButton webRadioButton_3;
-	private WebRadioButton webRadioButton_4;
-	private WebCheckBox webCheckBox;
-	private WebCheckBox webCheckBox_1;
-	private WebCheckBox webCheckBox_2;
-	private WebCheckBox webCheckBox_3;
-	private WebCheckBox webCheckBox_4;
-	private JajeemComboBox webComboBox;
-	private WebPanel webPanelOptions;
-	private WebLabel wblblQuestion;
 	private Quiz_FirstPage parentPanel;
+	private JTextField textField;
+	private JajeemComboBox webComboBoxQuestionType;
+	private JTextArea textPaneQuestionContent;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JRadioButton radioButton_1;
+	private JRadioButton radioButton;
+	private JRadioButton radioButton_2;
+	private JRadioButton radioButton_3;
+	private JRadioButton radioButton_4;
+	private JCheckBox checkBox;
+	private JCheckBox checkBox_1;
+	private JCheckBox checkBox_2;
+	private JCheckBox checkBox_3;
+	private JCheckBox checkBox_4;
+	private JPanel panel_2;
 
 	/**
 	 * Create the panel.
@@ -62,443 +58,332 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Quiz_QuestionDesignPanel2(WebPanel quiz_FirstPage) {
+		CustomPanel mainPanel = new CustomPanel("/icons/noa_en/quizbackpanel.png");
+		JPanel contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
 		this.parentPanel = (Quiz_FirstPage) quiz_FirstPage;
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 
-		setBorder(UIManager.getBorder("TitledBorder.border"));
-		setWblblQuestion(new WebLabel());
-		getWblblQuestion().setText("Question ?");
+		GroupLayout groupLayout = new GroupLayout(contentPanel);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		
+		CustomPanel panelQuestionDetails = new CustomPanel("/icons/noa_en/quizradioback.png");
+		panelQuestionDetails.setOpaque(false);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelQuestionDetails, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelQuestionDetails, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		
+		JPanel panelCard3 = new JPanel();
+		panelCard3.setOpaque(false);
+		GroupLayout gl_panelCard3_2 = new GroupLayout(panelCard3);
+		gl_panelCard3_2.setHorizontalGroup(
+			gl_panelCard3_2.createParallelGroup(Alignment.TRAILING)
+				.addGap(0, 50, Short.MAX_VALUE)
+		);
+		gl_panelCard3_2.setVerticalGroup(
+			gl_panelCard3_2.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 166, Short.MAX_VALUE)
+		);
+		panelCard3.setLayout(gl_panelCard3_2);
+		
+		JPanel panelCard2 = new JPanel();
+		panelCard2.setOpaque(false);
+		
+		checkBox = new JCheckBox("");
+		checkBox.setOpaque(false);
+		
+		checkBox_1 = new JCheckBox("");
+		checkBox_1.setOpaque(false);
+		
+		checkBox_2 = new JCheckBox("");
+		checkBox_2.setOpaque(false);
+		
+		checkBox_3 = new JCheckBox("");
+		checkBox_3.setOpaque(false);
+		
+		checkBox_4 = new JCheckBox("");
+		checkBox_4.setOpaque(false);
+		GroupLayout gl_panelCard2_2 = new GroupLayout(panelCard2);
+		gl_panelCard2_2.setHorizontalGroup(
+			gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCard2_2.createSequentialGroup()
+					.addContainerGap(7, Short.MAX_VALUE)
+					.addGroup(gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(checkBox, Alignment.TRAILING)
+						.addComponent(checkBox_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_2, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_3, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_4, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_panelCard2_2.setVerticalGroup(
+			gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCard2_2.createSequentialGroup()
+					.addGap(10)
+					.addComponent(checkBox)
+					.addGap(10)
+					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(checkBox_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(checkBox_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(checkBox_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(42, Short.MAX_VALUE))
+		);
+		panelCard2.setLayout(gl_panelCard2_2);
+		
+		JPanel panelCard1 = new JPanel();
+		panelCard1.setOpaque(false);
+		
+		radioButton = new JRadioButton("");
+		radioButton.setOpaque(false);
+		
+		radioButton_1 = new JRadioButton("");
+		radioButton_1.setOpaque(false);
+		
+		radioButton_2 = new JRadioButton("");
+		radioButton_2.setOpaque(false);
+		
+		radioButton_3 = new JRadioButton("");
+		radioButton_3.setOpaque(false);
+		
+		radioButton_4 = new JRadioButton("");
+		radioButton_4.setOpaque(false);
 
-		WebLabel wblblQuestionType = new WebLabel();
-		wblblQuestionType.setText("Question Type");
+		GroupLayout gl_panelCard1_2 = new GroupLayout(panelCard1);
+		gl_panelCard1_2.setHorizontalGroup(
+			gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCard1_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(radioButton)
+						.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(radioButton_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(radioButton_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(radioButton_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(7, Short.MAX_VALUE))
+		);
+		gl_panelCard1_2.setVerticalGroup(
+			gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCard1_2.createSequentialGroup()
+					.addGap(10)
+					.addComponent(radioButton)
+					.addGap(10)
+					.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(radioButton_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(radioButton_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(radioButton_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(34, Short.MAX_VALUE))
+		);
+		panelCard1.setLayout(gl_panelCard1_2);
+		
+		panel_2 = new JPanel();
+		panel_2.setOpaque(false);
+		panel_2.setLayout(new CardLayout());
+		
+		panel_2.add(panelCard1, "Single Choice");
+		panel_2.add(panelCard2, "Multiple Choice");
+		panel_2.add(panelCard3, "Essay");
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		GroupLayout gl_panelQuestionDetails = new GroupLayout(panelQuestionDetails);
+		gl_panelQuestionDetails.setHorizontalGroup(
+			gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelQuestionDetails.createSequentialGroup()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panelQuestionDetails.setVerticalGroup(
+			gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelQuestionDetails.createSequentialGroup()
+					.addGroup(gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		
+		textField_1 = new JTextField();
+		textField_1.setOpaque(false);
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setOpaque(false);
+		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setOpaque(false);
+		textField_3.setColumns(10);
+		
+		textField_4 = new JTextField();
+		textField_4.setOpaque(false);
+		textField_4.setColumns(10);
+		
+		textField_5 = new JTextField();
+		textField_5.setOpaque(false);
+		textField_5.setColumns(10);
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+						.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+						.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+						.addComponent(textField_3, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+						.addComponent(textField_4, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+						.addComponent(textField_5, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_3.setLayout(gl_panel_3);
+		panelQuestionDetails.setLayout(gl_panelQuestionDetails);
+		
+		panel_1.setLayout(gl_panel_1);
+		
+		JLabel lblQuestion = new JLabel("Question ");
+		
+		JLabel lblType = new JLabel("Type : ");
+		
+		webComboBoxQuestionType = new JajeemComboBox();
+		webComboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Single Choice", "Multiple Choice", "Essay"}));
+		
+		JLabel label = new JLabel("Question ");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		JLabel lblPoint = new JLabel("Point : ");
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblQuestion)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(label)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)))
+							.addContainerGap(61, Short.MAX_VALUE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblPoint, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblType, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(webComboBoxQuestionType, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(91, Short.MAX_VALUE))))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblQuestion)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblType)
+						.addComponent(webComboBoxQuestionType, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPoint)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(19)
+							.addComponent(label))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		
+		textPaneQuestionContent = new JTextArea();
+		scrollPane.setViewportView(textPaneQuestionContent);
+		panel.setLayout(gl_panel);
+		contentPanel.setLayout(groupLayout);
+		GroupLayout gl_mainPanel = new GroupLayout(mainPanel);
+		gl_mainPanel.setHorizontalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
+		);
+		gl_mainPanel.setVerticalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 386, GroupLayout.PREFERRED_SIZE)
+		);
+		mainPanel.setLayout(gl_mainPanel);
 
-		WebLabel wblblQuestion_1 = new WebLabel();
-		wblblQuestion_1.setText("Question");
-
-		webComboBox = new JajeemComboBox();
-		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"Single Choice", "Multiple Choice", "Essay" }));
-
-		setWebScrollPane(new WebScrollPane((Component) null));
-		getWebScrollPane().setEnabled(false);
-
-		WebPanel webPanel = new WebPanel();
-		webPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-
-		WebLabel wblblPoint = new WebLabel();
-		wblblPoint.setText("Point");
-
-		webTextField_6 = new WebTextField();
-
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								wblblQuestion,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addComponent(
-																												wblblQuestionType,
-																												GroupLayout.PREFERRED_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												webComboBox,
-																												GroupLayout.PREFERRED_SIZE,
-																												115,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED,
-																												70,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												wblblPoint,
-																												GroupLayout.PREFERRED_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												webTextField_6,
-																												GroupLayout.PREFERRED_SIZE,
-																												50,
-																												GroupLayout.PREFERRED_SIZE))
-																						.addGroup(
-																								groupLayout
-																										.createSequentialGroup()
-																										.addGap(12)
-																										.addComponent(
-																												wblblQuestion_1,
-																												GroupLayout.PREFERRED_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												webScrollPane,
-																												GroupLayout.PREFERRED_SIZE,
-																												278,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addGap(0,
-																												0,
-																												Short.MAX_VALUE))))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(4)
-																		.addComponent(
-																				webPanel,
-																				0,
-																				0,
-																				Short.MAX_VALUE)))
-										.addGap(10)));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(wblblQuestion,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(22)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				groupLayout
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								webComboBox,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wblblQuestionType,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								webTextField_6,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								wblblPoint,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webScrollPane,
-																				GroupLayout.PREFERRED_SIZE,
-																				76,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addGap(56)
-																		.addComponent(
-																				wblblQuestion_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(webPanel,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(150, Short.MAX_VALUE)));
-
-		webTextField = new WebTextField();
-
-		webTextField_1 = new WebTextField();
-
-		webTextField_2 = new WebTextField();
-
-		webTextField_3 = new WebTextField();
-
-		webTextField_4 = new WebTextField();
-
-		webPanelOptions = new WebPanel(new CardLayout());
-
-		WebPanel card1 = new WebPanel();
-		WebPanel card2 = new WebPanel();
-		WebPanel card3 = new WebPanel();
-
-		webPanelOptions.add(card1, "Single Choice");
-
-		webRadioButton = new WebRadioButton();
-
-		webRadioButton_1 = new WebRadioButton();
-
-		webRadioButton_2 = new WebRadioButton();
-
-		webRadioButton_3 = new WebRadioButton();
-
-		webRadioButton_4 = new WebRadioButton();
-
-		GroupLayout gl_card1 = new GroupLayout(card1);
-		gl_card1.setHorizontalGroup(gl_card1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_card1.createSequentialGroup()
-						.addGroup(
-								gl_card1.createParallelGroup(Alignment.LEADING)
-										.addComponent(webRadioButton,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webRadioButton_1,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webRadioButton_4,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webRadioButton_3,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webRadioButton_2,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		gl_card1.setVerticalGroup(gl_card1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_card1.createSequentialGroup()
-						.addComponent(webRadioButton,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(webRadioButton_1,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(webRadioButton_2,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(11)
-						.addComponent(webRadioButton_3,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(13)
-						.addComponent(webRadioButton_4,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(14, Short.MAX_VALUE)));
-		card1.setLayout(gl_card1);
-		webPanelOptions.add(card2, "Multiple Choice");
-
-		webCheckBox = new WebCheckBox();
-
-		webCheckBox_1 = new WebCheckBox();
-
-		webCheckBox_2 = new WebCheckBox();
-
-		webCheckBox_3 = new WebCheckBox();
-
-		webCheckBox_4 = new WebCheckBox();
-
-		GroupLayout gl_card2 = new GroupLayout(card2);
-		gl_card2.setHorizontalGroup(gl_card2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_card2.createSequentialGroup()
-						.addGroup(
-								gl_card2.createParallelGroup(Alignment.LEADING)
-										.addComponent(webCheckBox,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webCheckBox_1,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webCheckBox_2,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webCheckBox_3,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(webCheckBox_4,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		gl_card2.setVerticalGroup(gl_card2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_card2.createSequentialGroup()
-						.addComponent(webCheckBox, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(webCheckBox_1,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(webCheckBox_2,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(webCheckBox_3,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 20,
-								Short.MAX_VALUE)
-						.addComponent(webCheckBox_4,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)));
-		card2.setLayout(gl_card2);
-		webPanelOptions.add(card3, "Essay");
-
-		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel.setHorizontalGroup(gl_webPanel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webPanelOptions,
-								GroupLayout.PREFERRED_SIZE, 17,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(
-								gl_webPanel
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(webTextField_4,
-												GroupLayout.DEFAULT_SIZE, 342,
-												Short.MAX_VALUE)
-										.addComponent(webTextField_3,
-												GroupLayout.DEFAULT_SIZE, 342,
-												Short.MAX_VALUE)
-										.addComponent(webTextField_2,
-												GroupLayout.DEFAULT_SIZE, 342,
-												Short.MAX_VALUE)
-										.addComponent(webTextField_1,
-												GroupLayout.DEFAULT_SIZE, 342,
-												Short.MAX_VALUE)
-										.addComponent(webTextField,
-												GroupLayout.DEFAULT_SIZE, 342,
-												Short.MAX_VALUE))
-						.addContainerGap()));
-		gl_webPanel
-				.setVerticalGroup(gl_webPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																webPanelOptions,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.LEADING,
-																gl_webPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				webTextField,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webTextField_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webTextField_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webTextField_3,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webTextField_4,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		webPanel.setLayout(gl_webPanel);
-
-		webTextArea = new WebTextArea();
-
-		getWebScrollPane().setViewportView(webTextArea);
-		setLayout(groupLayout);
-
-		initEvents();
+//		initEvents();
 	}
 
 	private void initEvents() {
-		webComboBox.addItemListener(new ItemListener() {
+		webComboBoxQuestionType.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				_itemStateChanged(e);
 			}
 		});
 
-		webTextArea.getDocument().addDocumentListener(new DocumentListener() {
+		textPaneQuestionContent.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
@@ -510,12 +395,12 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 								.getWebQuestionListPanel()
 								.getWebTable()
 								.setValueAt(
-										webTextArea.getText(),
+										textPaneQuestionContent.getText(),
 										parentPanel.getWebQuestionListPanel()
 												.getWebTable().getSelectedRow(),
 										3);
 						parentPanel.getParentPanel().getCurrentQuestion()
-								.setTitle(webTextArea.getText());
+								.setTitle(textPaneQuestionContent.getText());
 					}
 				}
 			}
@@ -530,12 +415,12 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 								.getWebQuestionListPanel()
 								.getWebTable()
 								.setValueAt(
-										webTextArea.getText(),
+										textPaneQuestionContent.getText(),
 										parentPanel.getWebQuestionListPanel()
 												.getWebTable().getSelectedRow(),
 										3);
 						parentPanel.getParentPanel().getCurrentQuestion()
-								.setTitle(webTextArea.getText());
+								.setTitle(textPaneQuestionContent.getText());
 					}
 				}
 			}
@@ -546,7 +431,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 			}
 		});
 
-		webTextField.getDocument().addDocumentListener(new DocumentListener() {
+		textField_1.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
@@ -555,7 +440,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 							.getSelectedRow() != -1
 							&& parentPanel.getParentPanel().isEventsEnabled()) {
 						parentPanel.getParentPanel().getCurrentQuestion()
-								.setAnswer1(webTextField.getText());
+								.setAnswer1(textField_1.getText());
 					}
 				}
 			}
@@ -567,7 +452,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 							.getSelectedRow() != -1
 							&& parentPanel.getParentPanel().isEventsEnabled()) {
 						parentPanel.getParentPanel().getCurrentQuestion()
-								.setAnswer1(webTextField.getText());
+								.setAnswer1(textField_1.getText());
 					}
 				}
 			}
@@ -577,8 +462,8 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 
 			}
 		});
-
-		webTextField_1.getDocument().addDocumentListener(
+		
+		textField_2.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
@@ -590,7 +475,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer2(webTextField_1.getText());
+										.setAnswer2(textField_2.getText());
 							}
 						}
 					}
@@ -604,7 +489,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer2(webTextField_1.getText());
+										.setAnswer2(textField_2.getText());
 							}
 						}
 					}
@@ -615,7 +500,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 					}
 				});
 
-		webTextField_2.getDocument().addDocumentListener(
+		textField_3.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
@@ -627,7 +512,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer3(webTextField_2.getText());
+										.setAnswer3(textField_3.getText());
 							}
 						}
 					}
@@ -641,7 +526,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer3(webTextField_2.getText());
+										.setAnswer3(textField_3.getText());
 							}
 						}
 					}
@@ -652,7 +537,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 					}
 				});
 
-		webTextField_3.getDocument().addDocumentListener(
+		textField_4.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
@@ -664,7 +549,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer4(webTextField_3.getText());
+										.setAnswer4(textField_4.getText());
 							}
 						}
 					}
@@ -678,7 +563,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer4(webTextField_3.getText());
+										.setAnswer4(textField_4.getText());
 							}
 						}
 					}
@@ -689,7 +574,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 					}
 				});
 
-		webTextField_4.getDocument().addDocumentListener(
+		textField_5.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
@@ -701,7 +586,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer5(webTextField_4.getText());
+										.setAnswer5(textField_5.getText());
 							}
 						}
 					}
@@ -715,7 +600,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.isEventsEnabled()) {
 								parentPanel.getParentPanel()
 										.getCurrentQuestion()
-										.setAnswer5(webTextField_4.getText());
+										.setAnswer5(textField_5.getText());
 							}
 						}
 					}
@@ -726,7 +611,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 					}
 				});
 
-		webTextField_6.getDocument().addDocumentListener(
+		textField.getDocument().addDocumentListener(
 				new DocumentListener() {
 
 					@Override
@@ -741,13 +626,13 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.getParentPanel()
 											.getCurrentQuestion()
 											.setPoint(
-													Integer.parseInt(webTextField_6
+													Integer.parseInt(textField
 															.getText()));
 									parentPanel
 											.getWebQuestionListPanel()
 											.getWebTable()
 											.setValueAt(
-													webTextField_6.getText(),
+													textField.getText(),
 													parentPanel
 															.getWebQuestionListPanel()
 															.getWebTable()
@@ -808,13 +693,13 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 											.getParentPanel()
 											.getCurrentQuestion()
 											.setPoint(
-													Integer.parseInt(webTextField_6
+													Integer.parseInt(textField
 															.getText()));
 									parentPanel
 											.getWebQuestionListPanel()
 											.getWebTable()
 											.setValueAt(
-													webTextField_6.getText(),
+													textField.getText(),
 													parentPanel
 															.getWebQuestionListPanel()
 															.getWebTable()
@@ -868,347 +753,207 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 					}
 				});
 
-		webRadioButton.addActionListener(new ActionListener() {
+		radioButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webRadioButton.setSelected(false);
-					// return;
-					// }
-					// if (webTextField.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webRadioButton.setSelected(false);
-					// return;
-					// }
-					webRadioButton.setSelected(true);
-					webRadioButton_1.setSelected(false);
-					webRadioButton_2.setSelected(false);
-					webRadioButton_3.setSelected(false);
-					webRadioButton_4.setSelected(false);
+					radioButton.setSelected(true);
+					radioButton_1.setSelected(false);
+					radioButton_2.setSelected(false);
+					radioButton_3.setSelected(false);
+					radioButton_4.setSelected(false);
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
 									new boolean[] {
-											webRadioButton.isSelected(),
-											webRadioButton_1.isSelected(),
-											webRadioButton_2.isSelected(),
-											webRadioButton_3.isSelected(),
-											webRadioButton_4.isSelected() });
+											radioButton.isSelected(),
+											radioButton_1.isSelected(),
+											radioButton_2.isSelected(),
+											radioButton_3.isSelected(),
+											radioButton_4.isSelected() });
 				}
 			}
 		});
 
-		webRadioButton_1.addActionListener(new ActionListener() {
+		radioButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webRadioButton_1.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_1.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webRadioButton_1.setSelected(false);
-					// return;
-					// }
-					webRadioButton.setSelected(false);
-					webRadioButton_1.setSelected(true);
-					webRadioButton_2.setSelected(false);
-					webRadioButton_3.setSelected(false);
-					webRadioButton_4.setSelected(false);
+					radioButton.setSelected(false);
+					radioButton_1.setSelected(true);
+					radioButton_2.setSelected(false);
+					radioButton_3.setSelected(false);
+					radioButton_4.setSelected(false);
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
 									new boolean[] {
-											webRadioButton.isSelected(),
-											webRadioButton_1.isSelected(),
-											webRadioButton_2.isSelected(),
-											webRadioButton_3.isSelected(),
-											webRadioButton_4.isSelected() });
+											radioButton.isSelected(),
+											radioButton_1.isSelected(),
+											radioButton_2.isSelected(),
+											radioButton_3.isSelected(),
+											radioButton_4.isSelected() });
 				}
 			}
 		});
 
-		webRadioButton_2.addActionListener(new ActionListener() {
+		radioButton_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webRadioButton_2.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_2.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webRadioButton_2.setSelected(false);
-					// return;
-					// }
-					webRadioButton.setSelected(false);
-					webRadioButton_1.setSelected(false);
-					webRadioButton_2.setSelected(true);
-					webRadioButton_3.setSelected(false);
-					webRadioButton_4.setSelected(false);
+					radioButton.setSelected(false);
+					radioButton_1.setSelected(false);
+					radioButton_2.setSelected(true);
+					radioButton_3.setSelected(false);
+					radioButton_4.setSelected(false);
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
 									new boolean[] {
-											webRadioButton.isSelected(),
-											webRadioButton_1.isSelected(),
-											webRadioButton_2.isSelected(),
-											webRadioButton_3.isSelected(),
-											webRadioButton_4.isSelected() });
+											radioButton.isSelected(),
+											radioButton_1.isSelected(),
+											radioButton_2.isSelected(),
+											radioButton_3.isSelected(),
+											radioButton_4.isSelected() });
 				}
 			}
 		});
 
-		webRadioButton_3.addActionListener(new ActionListener() {
+		radioButton_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webRadioButton_3.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_3.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webRadioButton_3.setSelected(false);
-					// return;
-					// }
-					webRadioButton.setSelected(false);
-					webRadioButton_1.setSelected(false);
-					webRadioButton_2.setSelected(false);
-					webRadioButton_3.setSelected(true);
-					webRadioButton_4.setSelected(false);
+					radioButton.setSelected(false);
+					radioButton_1.setSelected(false);
+					radioButton_2.setSelected(false);
+					radioButton_3.setSelected(true);
+					radioButton_4.setSelected(false);
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
 									new boolean[] {
-											webRadioButton.isSelected(),
-											webRadioButton_1.isSelected(),
-											webRadioButton_2.isSelected(),
-											webRadioButton_3.isSelected(),
-											webRadioButton_4.isSelected() });
+											radioButton.isSelected(),
+											radioButton_1.isSelected(),
+											radioButton_2.isSelected(),
+											radioButton_3.isSelected(),
+											radioButton_4.isSelected() });
 				}
 			}
 		});
 
-		webRadioButton_4.addActionListener(new ActionListener() {
+		radioButton_4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webRadioButton_4.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_4.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webRadioButton_4.setSelected(false);
-					// return;
-					// }
-					webRadioButton.setSelected(false);
-					webRadioButton_1.setSelected(false);
-					webRadioButton_2.setSelected(false);
-					webRadioButton_3.setSelected(false);
-					webRadioButton_4.setSelected(true);
+					radioButton.setSelected(false);
+					radioButton_1.setSelected(false);
+					radioButton_2.setSelected(false);
+					radioButton_3.setSelected(false);
+					radioButton_4.setSelected(true);
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
 									new boolean[] {
-											webRadioButton.isSelected(),
-											webRadioButton_1.isSelected(),
-											webRadioButton_2.isSelected(),
-											webRadioButton_3.isSelected(),
-											webRadioButton_4.isSelected() });
+											radioButton.isSelected(),
+											radioButton_1.isSelected(),
+											radioButton_2.isSelected(),
+											radioButton_3.isSelected(),
+											radioButton_4.isSelected() });
 				}
 			}
 		});
 
-		webCheckBox.addActionListener(new ActionListener() {
+		checkBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webCheckBox.setSelected(false);
-					// return;
-					// }
-					// if (webTextField.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webCheckBox.setSelected(false);
-					// return;
-					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
-									new boolean[] { webCheckBox.isSelected(),
-											webCheckBox_1.isSelected(),
-											webCheckBox_2.isSelected(),
-											webCheckBox_3.isSelected(),
-											webCheckBox_4.isSelected() });
+									new boolean[] { checkBox.isSelected(),
+											checkBox_1.isSelected(),
+											checkBox_2.isSelected(),
+											checkBox_3.isSelected(),
+											checkBox_4.isSelected() });
 				}
 			}
 		});
 
-		webCheckBox_1.addActionListener(new ActionListener() {
+		checkBox_1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webCheckBox_1.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_1.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webCheckBox_1.setSelected(false);
-					// return;
-					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
-									new boolean[] { webCheckBox.isSelected(),
-											webCheckBox_1.isSelected(),
-											webCheckBox_2.isSelected(),
-											webCheckBox_3.isSelected(),
-											webCheckBox_4.isSelected() });
+									new boolean[] { checkBox.isSelected(),
+											checkBox_1.isSelected(),
+											checkBox_2.isSelected(),
+											checkBox_3.isSelected(),
+											checkBox_4.isSelected() });
 				}
 			}
 		});
 
-		webCheckBox_2.addActionListener(new ActionListener() {
+		checkBox_2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webCheckBox_2.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_2.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webCheckBox_2.setSelected(false);
-					// return;
-					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
-									new boolean[] { webCheckBox.isSelected(),
-											webCheckBox_1.isSelected(),
-											webCheckBox_2.isSelected(),
-											webCheckBox_3.isSelected(),
-											webCheckBox_4.isSelected() });
+									new boolean[] { checkBox.isSelected(),
+											checkBox_1.isSelected(),
+											checkBox_2.isSelected(),
+											checkBox_3.isSelected(),
+											checkBox_4.isSelected() });
 				}
 			}
 		});
 
-		webCheckBox_3.addActionListener(new ActionListener() {
+		checkBox_3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webCheckBox_3.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_3.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webCheckBox_3.setSelected(false);
-					// return;
-					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
-									new boolean[] { webCheckBox.isSelected(),
-											webCheckBox_1.isSelected(),
-											webCheckBox_2.isSelected(),
-											webCheckBox_3.isSelected(),
-											webCheckBox_4.isSelected() });
+									new boolean[] { checkBox.isSelected(),
+											checkBox_1.isSelected(),
+											checkBox_2.isSelected(),
+											checkBox_3.isSelected(),
+											checkBox_4.isSelected() });
 				}
 			}
 		});
 
-		webCheckBox_4.addActionListener(new ActionListener() {
+		checkBox_4.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (parentPanel.getParentPanel().isEventsEnabled()) {
-					// if (webTextArea.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Question is empty,please first type in the question!");
-					// webCheckBox_4.setSelected(false);
-					// return;
-					// }
-					// if (webTextField_4.getText().equals("")) {
-					// JOptionPane
-					// .showMessageDialog(null,
-					// "Answer is empty,please first type in the answer!");
-					// webCheckBox_4.setSelected(false);
-					// return;
-					// }
 					parentPanel
 							.getParentPanel()
 							.getCurrentQuestion()
 							.setCorrectAnswer(
-									new boolean[] { webCheckBox.isSelected(),
-											webCheckBox_1.isSelected(),
-											webCheckBox_2.isSelected(),
-											webCheckBox_3.isSelected(),
-											webCheckBox_4.isSelected() });
+									new boolean[] { checkBox.isSelected(),
+											checkBox_1.isSelected(),
+											checkBox_2.isSelected(),
+											checkBox_3.isSelected(),
+											checkBox_4.isSelected() });
 				}
 			}
 		});
@@ -1216,36 +961,36 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 
 	public void _itemStateChanged(ItemEvent arg0) {
 		if (parentPanel.getParentPanel().isEventsEnabled()) {
-			CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
-			cl.show(webPanelOptions, (String) arg0.getItem());
+			CardLayout cl = (CardLayout) (panel_2.getLayout());
+			cl.show(panel_2, (String) arg0.getItem());
 			if (((String) arg0.getItem()).equals("Essay")) {
-				webTextField.setVisible(false);
-				webTextField_1.setVisible(false);
-				webTextField_2.setVisible(false);
-				webTextField_3.setVisible(false);
-				webTextField_4.setVisible(false);
-				webTextField.setText("");
-				webTextField_1.setText("");
-				webTextField_2.setText("");
-				webTextField_3.setText("");
-				webTextField_4.setText("");
+				textField_1.setVisible(false);
+				textField_2.setVisible(false);
+				textField_3.setVisible(false);
+				textField_4.setVisible(false);
+				textField_5.setVisible(false);
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				textField_5.setText("");
 			} else {
-				webTextField.setVisible(true);
-				webTextField_1.setVisible(true);
-				webTextField_2.setVisible(true);
-				webTextField_3.setVisible(true);
-				webTextField_4.setVisible(true);
+				textField_1.setVisible(true);
+				textField_2.setVisible(true);
+				textField_3.setVisible(true);
+				textField_4.setVisible(true);
+				textField_5.setVisible(true);
 			}
-			webRadioButton.setSelected(false);
-			webRadioButton_1.setSelected(false);
-			webRadioButton_2.setSelected(false);
-			webRadioButton_3.setSelected(false);
-			webRadioButton_4.setSelected(false);
-			webCheckBox.setSelected(false);
-			webCheckBox_1.setSelected(false);
-			webCheckBox_2.setSelected(false);
-			webCheckBox_3.setSelected(false);
-			webCheckBox_4.setSelected(false);
+			radioButton.setSelected(false);
+			radioButton_1.setSelected(false);
+			radioButton_2.setSelected(false);
+			radioButton_3.setSelected(false);
+			radioButton_4.setSelected(false);
+			checkBox.setSelected(false);
+			checkBox_1.setSelected(false);
+			checkBox_2.setSelected(false);
+			checkBox_3.setSelected(false);
+			checkBox_4.setSelected(false);
 			parentPanel
 					.getParentPanel()
 					.getCurrentQuestion()
@@ -1261,7 +1006,7 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 						.getWebTable()
 						.getModel()
 						.setValueAt(
-								webComboBox.getSelectedItem().toString(),
+								webComboBoxQuestionType.getSelectedItem().toString(),
 								parentPanel.getWebQuestionListPanel()
 										.getWebTable().getSelectedRow(), 1);
 				parentPanel
@@ -1271,225 +1016,201 @@ public class Quiz_QuestionDesignPanel2 extends Quiz_AbstractViews {
 						.getQuestionList()
 						.get(parentPanel.getWebQuestionListPanel()
 								.getWebTable().getSelectedRow())
-						.setType((byte) webComboBox.getSelectedIndex());
+						.setType((byte) webComboBoxQuestionType.getSelectedIndex());
 			}
 		}
 	}
 
-	public WebTextArea getWebTextArea() {
-		return webTextArea;
+	public JTextArea getWebTextArea() {
+		return textPaneQuestionContent;
 	}
 
-	public void setWebTextArea(WebTextArea webTextArea) {
-		this.webTextArea = webTextArea;
+	public void setWebTextArea(JTextArea webTextArea) {
+		this.textPaneQuestionContent = webTextArea;
 	}
 
 	public JajeemComboBox getWebComboBox() {
-		return webComboBox;
+		return webComboBoxQuestionType;
 	}
 
 	public void setWebComboBox(JajeemComboBox webComboBox) {
-		this.webComboBox = webComboBox;
+		this.webComboBoxQuestionType = webComboBox;
 	}
 
-	public WebRadioButton getWebRadioButton() {
-		return webRadioButton;
+	public JRadioButton getWebRadioButton() {
+		return radioButton;
 	}
 
-	public void setWebRadioButton(WebRadioButton webRadioButton) {
-		this.webRadioButton = webRadioButton;
+	public void setWebRadioButton(JRadioButton webRadioButton) {
+		this.radioButton = webRadioButton;
 	}
 
-	public WebRadioButton getWebRadioButton_1() {
-		return webRadioButton_1;
+	public JRadioButton getWebRadioButton_1() {
+		return radioButton_1;
 	}
 
-	public void setWebRadioButton_1(WebRadioButton webRadioButton_1) {
-		this.webRadioButton_1 = webRadioButton_1;
+	public void setWebRadioButton_1(JRadioButton webRadioButton_1) {
+		this.radioButton_1 = webRadioButton_1;
 	}
 
-	public WebRadioButton getWebRadioButton_2() {
-		return webRadioButton_2;
+	public JRadioButton getWebRadioButton_2() {
+		return radioButton_2;
 	}
 
-	public void setWebRadioButton_2(WebRadioButton webRadioButton_2) {
-		this.webRadioButton_2 = webRadioButton_2;
+	public void setWebRadioButton_2(JRadioButton webRadioButton_2) {
+		this.radioButton_2 = webRadioButton_2;
 	}
 
-	public WebRadioButton getWebRadioButton_3() {
-		return webRadioButton_3;
+	public JRadioButton getWebRadioButton_3() {
+		return radioButton_3;
 	}
 
-	public void setWebRadioButton_3(WebRadioButton webRadioButton_3) {
-		this.webRadioButton_3 = webRadioButton_3;
+	public void setWebRadioButton_3(JRadioButton webRadioButton_3) {
+		this.radioButton_3 = webRadioButton_3;
 	}
 
-	public WebRadioButton getWebRadioButton_4() {
-		return webRadioButton_4;
+	public JRadioButton getWebRadioButton_4() {
+		return radioButton_4;
 	}
 
-	public void setWebRadioButton_4(WebRadioButton webRadioButton_4) {
-		this.webRadioButton_4 = webRadioButton_4;
+	public void setWebRadioButton_4(JRadioButton webRadioButton_4) {
+		this.radioButton_4 = webRadioButton_4;
 	}
 
-	public WebCheckBox getWebCheckBox() {
-		return webCheckBox;
+	public JCheckBox getWebCheckBox() {
+		return checkBox;
 	}
 
-	public void setWebCheckBox(WebCheckBox webCheckBox) {
-		this.webCheckBox = webCheckBox;
+	public void setWebCheckBox(JCheckBox webCheckBox) {
+		this.checkBox = webCheckBox;
 	}
 
-	public WebCheckBox getWebCheckBox_1() {
-		return webCheckBox_1;
+	public JCheckBox getWebCheckBox_1() {
+		return checkBox_1;
 	}
 
-	public void setWebCheckBox_1(WebCheckBox webCheckBox_1) {
-		this.webCheckBox_1 = webCheckBox_1;
+	public void setWebCheckBox_1(JCheckBox webCheckBox_1) {
+		this.checkBox_1 = webCheckBox_1;
 	}
 
-	public WebCheckBox getWebCheckBox_2() {
-		return webCheckBox_2;
+	public JCheckBox getWebCheckBox_2() {
+		return checkBox_2;
 	}
 
-	public void setWebCheckBox_2(WebCheckBox webCheckBox_2) {
-		this.webCheckBox_2 = webCheckBox_2;
+	public void setWebCheckBox_2(JCheckBox webCheckBox_2) {
+		this.checkBox_2 = webCheckBox_2;
 	}
 
-	public void setWebCheckBox_3(WebCheckBox webCheckBox_3) {
-		this.webCheckBox_3 = webCheckBox_3;
+	public void setWebCheckBox_3(JCheckBox webCheckBox_3) {
+		this.checkBox_3 = webCheckBox_3;
 	}
 
-	public WebCheckBox getWebCheckBox_3() {
-		return webCheckBox_3;
+	public JCheckBox getWebCheckBox_3() {
+		return checkBox_3;
 	}
 
-	public WebCheckBox getWebCheckBox_4() {
-		return webCheckBox_4;
+	public JCheckBox getWebCheckBox_4() {
+		return checkBox_4;
 	}
 
-	public void setWebCheckBox_4(WebCheckBox webCheckBox_4) {
-		this.webCheckBox_4 = webCheckBox_4;
+	public void setWebCheckBox_4(JCheckBox webCheckBox_4) {
+		this.checkBox_4 = webCheckBox_4;
 	}
 
-	public WebTextField getWebTextField() {
-		return webTextField;
+	public JTextField getWebTextField() {
+		return textField;
 	}
 
-	public void setWebTextField(WebTextField webTextField) {
-		this.webTextField = webTextField;
+	public void setWebTextField(JTextField webTextField) {
+		this.textField = webTextField;
 	}
 
-	public WebTextField getWebTextField_1() {
-		return webTextField_1;
+	public JTextField getWebTextField_1() {
+		return textField_1;
 	}
 
-	public void setWebTextField_1(WebTextField webTextField_1) {
-		this.webTextField_1 = webTextField_1;
+	public void setWebTextField_1(JTextField webTextField_1) {
+		this.textField_1 = webTextField_1;
 	}
 
-	public WebTextField getWebTextField_2() {
-		return webTextField_2;
+	public JTextField getWebTextField_2() {
+		return textField_2;
 	}
 
-	public void setWebTextField_2(WebTextField webTextField_2) {
-		this.webTextField_2 = webTextField_2;
+	public void setWebTextField_2(JTextField webTextField_2) {
+		this.textField_2 = webTextField_2;
 	}
 
-	public WebTextField getWebTextField_3() {
-		return webTextField_3;
+	public JTextField getWebTextField_3() {
+		return textField_3;
 	}
 
-	public void setWebTextField_3(WebTextField webTextField_3) {
-		this.webTextField_3 = webTextField_3;
+	public void setWebTextField_3(JTextField webTextField_3) {
+		this.textField_3 = webTextField_3;
 	}
 
-	public WebTextField getWebTextField_4() {
-		return webTextField_4;
+	public JTextField getWebTextField_4() {
+		return textField_4;
 	}
 
-	public void setWebTextField_4(WebTextField webTextField_4) {
-		this.webTextField_4 = webTextField_4;
-	}
-
-	public WebTextField getWebTextField_6() {
-		return webTextField_6;
-	}
-
-	public void setWebTextField_6(WebTextField webTextField_6) {
-		this.webTextField_6 = webTextField_6;
-	}
-
-	public WebLabel getWblblQuestion() {
-		return wblblQuestion;
-	}
-
-	public void setWblblQuestion(WebLabel wblblQuestion) {
-		this.wblblQuestion = wblblQuestion;
-	}
-
-	public WebScrollPane getWebScrollPane() {
-		return webScrollPane;
-	}
-
-	public void setWebScrollPane(WebScrollPane webScrollPane) {
-		this.webScrollPane = webScrollPane;
+	public void setWebTextField_4(JTextField webTextField_4) {
+		this.textField_4 = webTextField_4;
 	}
 
 	public void clear() {
-		webTextArea.setText("");
-		webTextField.setText("");
-		webTextField_1.setText("");
-		webTextField_2.setText("");
-		webTextField_3.setText("");
-		webTextField_4.setText("");
+		textPaneQuestionContent.setText("");
+		textField_1.setText("");
+		textField_2.setText("");
+		textField_3.setText("");
+		textField_4.setText("");
+		textField_5.setText("");
 		// webTextField_5.setText("");
-		webTextField_6.setText("");
-		webCheckBox.setSelected(false);
-		webCheckBox_1.setSelected(false);
-		webCheckBox_2.setSelected(false);
-		webCheckBox_3.setSelected(false);
-		webCheckBox_4.setSelected(false);
-		webRadioButton.setSelected(false);
-		webRadioButton_1.setSelected(false);
-		webRadioButton_2.setSelected(false);
-		webRadioButton_3.setSelected(false);
-		webRadioButton_4.setSelected(false);
-		webComboBox.setSelectedIndex(0);
-		CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
-		cl.show(webPanelOptions, "Single Choice");
-		webTextField.setVisible(true);
-		webTextField_1.setVisible(true);
-		webTextField_2.setVisible(true);
-		webTextField_3.setVisible(true);
-		webTextField_4.setVisible(true);
+		textField.setText("");
+		checkBox.setSelected(false);
+		checkBox_1.setSelected(false);
+		checkBox_2.setSelected(false);
+		checkBox_3.setSelected(false);
+		checkBox_4.setSelected(false);
+		radioButton.setSelected(false);
+		radioButton_1.setSelected(false);
+		radioButton_2.setSelected(false);
+		radioButton_3.setSelected(false);
+		radioButton_4.setSelected(false);
+		webComboBoxQuestionType.setSelectedIndex(0);
+		CardLayout cl = (CardLayout) (panel_2.getLayout());
+		cl.show(panel_2, "Single Choice");
+		textField_1.setVisible(true);
+		textField_2.setVisible(true);
+		textField_3.setVisible(true);
+		textField_4.setVisible(true);
+		textField_5.setVisible(true);
 	}
 
 	public void WebComboboxSelectionChanged(String item) {
-		CardLayout cl = (CardLayout) (webPanelOptions.getLayout());
-		cl.show(webPanelOptions, item);
+		CardLayout cl = (CardLayout) (panel_2.getLayout());
+		cl.show(panel_2, item);
 		if (item.equals("Essay")) {
-			webTextField.setVisible(false);
-			webTextField_1.setVisible(false);
-			webTextField_2.setVisible(false);
-			webTextField_3.setVisible(false);
-			webTextField_4.setVisible(false);
+			textField_1.setVisible(false);
+			textField_1.setVisible(false);
+			textField_1.setVisible(false);
+			textField_1.setVisible(false);
+			textField_1.setVisible(false);
 		} else {
-			webTextField.setVisible(true);
-			webTextField_1.setVisible(true);
-			webTextField_2.setVisible(true);
-			webTextField_3.setVisible(true);
-			webTextField_4.setVisible(true);
+			textField_1.setVisible(true);
+			textField_1.setVisible(true);
+			textField_1.setVisible(true);
+			textField_1.setVisible(true);
+			textField_1.setVisible(true);
 		}
-		webRadioButton.setSelected(false);
-		webRadioButton_1.setSelected(false);
-		webRadioButton_2.setSelected(false);
-		webRadioButton_3.setSelected(false);
-		webRadioButton_4.setSelected(false);
-		webCheckBox.setSelected(false);
-		webCheckBox_1.setSelected(false);
-		webCheckBox_2.setSelected(false);
-		webCheckBox_3.setSelected(false);
-		webCheckBox_4.setSelected(false);
+		radioButton.setSelected(false);
+		radioButton_1.setSelected(false);
+		radioButton_2.setSelected(false);
+		radioButton_3.setSelected(false);
+		radioButton_4.setSelected(false);
+		checkBox.setSelected(false);
+		checkBox_1.setSelected(false);
+		checkBox_2.setSelected(false);
+		checkBox_3.setSelected(false);
+		checkBox_4.setSelected(false);
 	}
 }
