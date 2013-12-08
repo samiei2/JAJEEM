@@ -24,6 +24,7 @@ import com.jajeem.events.QuizResponse;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.ui.combobox.JajeemComboBox;
 
 public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 	/**
@@ -32,7 +33,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private WebTable webTable;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 
 	private WebLabel wblblScore;
 	private Quiz_SecondPage parentPanel;
@@ -56,7 +57,7 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 		WebLabel wblblStudent = new WebLabel();
 		wblblStudent.setText("Student");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 
 		WebLabel wblblStudentName = new WebLabel();
 		wblblStudentName.setText("Student Name");

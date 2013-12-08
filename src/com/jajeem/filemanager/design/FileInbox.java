@@ -46,114 +46,61 @@ public class FileInbox extends WebPanel {
 	 * @throws Exception 
 	 */
 	public FileInbox() throws Exception {
-
+//		new i18n();
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
-		wbtnAccept = new WebButton();
+		wbtnAccept = new CustomFileButton("/icons/noa_en/fileacceptbutton.png");
+		wbtnAccept.setUndecorated(true);
 		wbtnAccept.setEnabled(false);
-		wbtnAccept.setText(i18n.getParam("Accept File"));
+//		wbtnAccept.setText(i18n.getParam("Accept File"));
 
-		wbtnRejectFile = new WebButton();
+		wbtnRejectFile = new CustomFileButton("/icons/noa_en/filerejectbutton.png");
+		wbtnRejectFile.setUndecorated(true);
 		wbtnRejectFile.setEnabled(false);
-		wbtnRejectFile.setText(i18n.getParam("Reject File"));
+//		wbtnRejectFile.setText(i18n.getParam("Reject File"));
 
-		wbtnDismissAll = new WebButton();
+		wbtnDismissAll = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
+		wbtnDismissAll.setUndecorated(true);
 		wbtnDismissAll.setEnabled(false);
-		wbtnDismissAll.setText(i18n.getParam("Clear"));
+//		wbtnDismissAll.setText(i18n.getParam("Clear"));
 
-		wbtnRefresh = new WebButton();
-		wbtnRefresh.setText(i18n.getParam("Refresh"));
+		wbtnRefresh = new CustomFileButton("/icons/noa_en/filebrowsebutton.png");
+		wbtnRefresh.setUndecorated(true);
+//		wbtnRefresh.setText(i18n.getParam("Refresh"));
 		wbtnRefresh.setVisible(false);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnAccept,
-																				GroupLayout.PREFERRED_SIZE,
-																				85,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnRejectFile,
-																				GroupLayout.PREFERRED_SIZE,
-																				92,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				364,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				wbtnRefresh,
-																				GroupLayout.PREFERRED_SIZE,
-																				91,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnDismissAll,
-																				GroupLayout.PREFERRED_SIZE,
-																				91,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																webScrollPane,
-																GroupLayout.DEFAULT_SIZE,
-																735,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(webScrollPane,
-												GroupLayout.DEFAULT_SIZE, 249,
-												Short.MAX_VALUE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				wbtnDismissAll,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnAccept,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnRejectFile,
-																				GroupLayout.PREFERRED_SIZE,
-																				23,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																wbtnRefresh,
-																GroupLayout.PREFERRED_SIZE,
-																24,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(1)
+							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},

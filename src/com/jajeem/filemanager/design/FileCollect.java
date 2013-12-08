@@ -49,94 +49,49 @@ public class FileCollect extends WebPanel {
 	 */
 	@SuppressWarnings("serial")
 	public FileCollect() throws Exception {
-
+//		new i18n();
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
-		wbtnCollectFiles = new WebButton();
-		wbtnCollectFiles.setText(i18n.getParam("Collect Files"));
+		wbtnCollectFiles = new CustomFileButton("/icons/noa_en/filecollectbutton.png");
+		wbtnCollectFiles.setUndecorated(true);
+//		wbtnCollectFiles.setText(i18n.getParam("Collect Files"));
 
-		wbtnDeleteCollectedFiles = new WebButton();
+		wbtnDeleteCollectedFiles = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
+		wbtnDeleteCollectedFiles.setUndecorated(true);
 		wbtnDeleteCollectedFiles.setEnabled(false);
-		wbtnDeleteCollectedFiles.setText(i18n.getParam("Delete Collected Files"));
+//		wbtnDeleteCollectedFiles.setText(i18n.getParam("Delete Collected Files"));
 
-		wbtnOpen = new WebButton();
+		wbtnOpen = new CustomFileButton("/icons/noa_en/fileopenbutton.png");
+		wbtnOpen.setUndecorated(true);
 		wbtnOpen.setEnabled(false);
-		wbtnOpen.setText(i18n.getParam("Open"));
+//		wbtnOpen.setText(i18n.getParam("Open"));
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																Alignment.LEADING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnOpen,
-																				GroupLayout.PREFERRED_SIZE,
-																				96,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnDeleteCollectedFiles,
-																				GroupLayout.PREFERRED_SIZE,
-																				144,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				360,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				wbtnCollectFiles,
-																				GroupLayout.PREFERRED_SIZE,
-																				96,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																webScrollPane,
-																GroupLayout.DEFAULT_SIZE,
-																702,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(webScrollPane,
-												GroupLayout.DEFAULT_SIZE, 207,
-												Short.MAX_VALUE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wbtnOpen,
-																GroupLayout.PREFERRED_SIZE,
-																24,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnDeleteCollectedFiles,
-																GroupLayout.PREFERRED_SIZE,
-																24,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnCollectFiles,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnCollectFiles, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnDeleteCollectedFiles, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
+							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(wbtnCollectFiles, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnDeleteCollectedFiles, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},

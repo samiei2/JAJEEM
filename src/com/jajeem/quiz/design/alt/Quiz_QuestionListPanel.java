@@ -30,7 +30,7 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 	public Quiz_QuestionListPanel(WebPanel parent) {
 		this.parentPanel = (Quiz_FirstPage) parent;
 
-		webScrollPane = new WebScrollPane((Component) null);
+		webScrollPane = new WebScrollPane(parentPanel);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.TRAILING).addComponent(webScrollPane,
@@ -145,7 +145,7 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 							// parentPanel.getQuestionDesignPanel().getWebTextField_5().setText(parentPanel.getParentPanel().getCurrentQuestion().getUrl());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField_6()
+									.getWebTextField()
 									.setText(
 											String.valueOf(parentPanel
 													.getParentPanel()

@@ -19,10 +19,12 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.checkbox.WebCheckBox;
+import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
@@ -54,102 +56,55 @@ public class FileSendTab extends WebPanel {
 	 * @throws Exception 
 	 */
 	public FileSendTab(FileManagerMain main) throws Exception {
+//		new i18n();
 		currentPanel = this;
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
-		wbtnBrowse = new WebButton();
-		wbtnBrowse.setText(i18n.getParam("Browse"));
+		wbtnBrowse = new CustomFileButton("/icons/noa_en/filebrowsebutton.png");
+		wbtnBrowse.setUndecorated(true);
+//		wbtnBrowse.setText(i18n.getParam("Browse"));
 
-		wbtnClear = new WebButton();
+		wbtnClear = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
+		wbtnClear.setUndecorated(true);
 		wbtnClear.setEnabled(false);
-		wbtnClear.setText(i18n.getParam("Clear"));
+//		wbtnClear.setText(i18n.getParam("Clear"));
 
-		wbtnSend = new WebButton();
+		wbtnSend = new CustomFileButton("/icons/noa_en/fileacceptbutton.png");
+		wbtnSend.setUndecorated(true);
 		wbtnSend.setEnabled(false);
-		wbtnSend.setText(i18n.getParam("Send"));
+//		wbtnSend.setText(i18n.getParam("Send"));
 
 		chckbxSendToAll = new WebCheckBox(i18n.getParam("Send to all"));
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webScrollPane,
-																Alignment.TRAILING,
-																GroupLayout.DEFAULT_SIZE,
-																430,
-																Short.MAX_VALUE)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnClear,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnSend,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				chckbxSendToAll)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				58,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				wbtnBrowse,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(webScrollPane,
-												GroupLayout.DEFAULT_SIZE, 248,
-												Short.MAX_VALUE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wbtnClear,
-																GroupLayout.PREFERRED_SIZE,
-																24,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnSend,
-																GroupLayout.PREFERRED_SIZE,
-																24,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnBrowse,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																chckbxSendToAll))
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(chckbxSendToAll, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+							.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxSendToAll, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},
@@ -178,7 +133,7 @@ public class FileSendTab extends WebPanel {
 		wbtnBrowse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
+				JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getDefaultDirectory());
 				chooser.setMultiSelectionEnabled(true);
 				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				int result = chooser.showOpenDialog(currentPanel);
@@ -316,12 +271,6 @@ public class FileSendTab extends WebPanel {
 	@SuppressWarnings("deprecation")
 	protected void SendFile(final File file) {
 		try {
-			// JOptionPane dialog = new
-			// JOptionPane("File transfer in progress,please wait ...",
-			// JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new
-			// Object[]{"Cancel"}, null);
-			// final JDialog confirmationDialog = dialog.createDialog(this,
-			// "File Transfer");
 			final FileSendProgressWindow progwin = new FileSendProgressWindow();
 			Thread fileSender = new Thread(new Runnable() {
 

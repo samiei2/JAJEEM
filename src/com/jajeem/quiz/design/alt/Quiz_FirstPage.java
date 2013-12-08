@@ -1,6 +1,7 @@
 package com.jajeem.quiz.design.alt;
 
 import java.awt.Color;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -28,6 +29,14 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
+import com.jajeem.util.CustomButton;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class Quiz_FirstPage extends Quiz_AbstractViews {
 	/**
@@ -36,14 +45,17 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 	private static final long serialVersionUID = 1L;
 	private Quiz_QuestionListPanel webQuestionListPanel;
 	private Quiz_QuestionDesignPanel webQuestionDesignPanel;
-	private WebTextField wbtxtfldDirection;
-	private WebTextField wbtxtfldPoints;
-	private WebTextField wbtxtfldTime;
+	private JTextField wbtxtfldDirection;
+	private JTextField wbtxtfldPoints;
+	private JTextField wbtxtfldTime;
 	private WebButton wbtnAdd;
 	private WebButton wbtnCopy;
 	private WebButton wbtnDelete;
 	private Quiz_Main parentPanel;
-	private WebCheckBox wbchckbxAuto;
+	private JCheckBox wbchckbxAuto;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	// private static final AtomicInteger counter = new AtomicInteger();
 
@@ -51,269 +63,179 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 	 * Create the panel.
 	 */
 	public Quiz_FirstPage(WebFrame parent) {
+		setOpaque(false);
 		this.parentPanel = (Quiz_Main) parent;
-
-		webQuestionDesignPanel = new Quiz_QuestionDesignPanel(this);
-		webQuestionDesignPanel.setBorder(UIManager
-				.getBorder("TitledBorder.border"));
-
-		webQuestionListPanel = new Quiz_QuestionListPanel(this);
-		webQuestionListPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-
-		WebPanel webPanel = new WebPanel();
-		webPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-
-		wbtnAdd = new WebButton();
-		wbtnAdd.setText("Add");
-
-		wbtnCopy = new WebButton();
-		wbtnCopy.setText("Copy");
-
-		wbtnDelete = new WebButton();
-		wbtnDelete.setText("Delete");
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setOpaque(false);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(webQuestionDesignPanel,
-												GroupLayout.PREFERRED_SIZE,
-												392, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnAdd,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnCopy,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnDelete,
-																				GroupLayout.PREFERRED_SIZE,
-																				95,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																webQuestionListPanel,
-																GroupLayout.DEFAULT_SIZE,
-																348,
-																Short.MAX_VALUE)
-														.addComponent(webPanel,
-																0, 0,
-																Short.MAX_VALUE))
-										.addGap(6)));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																webQuestionDesignPanel,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.LEADING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				webPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				81,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webQuestionListPanel,
-																				GroupLayout.PREFERRED_SIZE,
-																				375,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																wbtnAdd,
-																GroupLayout.PREFERRED_SIZE,
-																29,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnCopy,
-																GroupLayout.PREFERRED_SIZE,
-																29,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtnDelete,
-																GroupLayout.PREFERRED_SIZE,
-																29,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap()));
-
-		WebLabel wblblDirection = new WebLabel();
-		wblblDirection.setText("Direction : ");
-
-		wbtxtfldDirection = new WebTextField();
-
-		WebLabel wblblPoints = new WebLabel();
-		wblblPoints.setText("Total : ");
-
-		wbtxtfldPoints = new WebTextField();
-
-		WebLabel wblblT = new WebLabel();
-		wblblT.setText("Time : ");
-
-		wbtxtfldTime = new WebTextField();
-
-		wbchckbxAuto = new WebCheckBox();
-		wbchckbxAuto.setText("Auto");
-		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel
-				.setHorizontalGroup(gl_webPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				wblblDirection,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtxtfldDirection,
-																				GroupLayout.PREFERRED_SIZE,
-																				0,
-																				Short.MAX_VALUE))
-														.addGroup(
-																gl_webPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				wblblPoints,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				wbtxtfldPoints,
-																				GroupLayout.PREFERRED_SIZE,
-																				60,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(18)
-																		.addComponent(
-																				wbchckbxAuto,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(44)
-																		.addComponent(
-																				wblblT,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtxtfldTime,
-																				GroupLayout.PREFERRED_SIZE,
-																				70,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addGap(6)));
-		gl_webPanel
-				.setVerticalGroup(gl_webPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblDirection,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldDirection,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_webPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																wblblPoints,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldPoints,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbchckbxAuto,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wbtxtfldTime,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wblblT,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
-		webPanel.setLayout(gl_webPanel);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		
+		JLabel lblDirection = new JLabel("Direction : ");
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		wbtxtfldDirection = textField;
+		
+		JLabel lblPoints = new JLabel("Total : ");
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		wbtxtfldPoints = textField_1;
+		
+		JCheckBox chckbxAuto = new JCheckBox("Auto");
+		wbchckbxAuto = chckbxAuto;
+		
+		JLabel lblTime = new JLabel("Time : ");
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		wbtxtfldTime = textField_2;
+		
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addComponent(lblDirection)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addComponent(lblPoints)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(chckbxAuto)
+							.addGap(54)
+							.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDirection)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPoints)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxAuto)
+						.addComponent(lblTime)
+						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(31, Short.MAX_VALUE))
+		);
+		panel_2.setLayout(gl_panel_2);
+		
+		Quiz_QuestionListPanel quiz_QuestionListPanel = new Quiz_QuestionListPanel(this);
+		quiz_QuestionListPanel.setOpaque(false);
+		webQuestionListPanel = quiz_QuestionListPanel;
+		
+		CustomQuizButton cstmqzbtnAdd = new CustomQuizButton("/icons/noa_en/quizaddbutton.png");
+		cstmqzbtnAdd.setMargin(new Insets(0, 10, 0, 0));
+		cstmqzbtnAdd.setHorizontalAlignment(SwingConstants.LEFT);
+		cstmqzbtnAdd.setUndecorated(true);
+		cstmqzbtnAdd.setText("Add");
+		wbtnAdd = cstmqzbtnAdd;
+		
+		CustomQuizButton cstmqzbtnCopy = new CustomQuizButton("/icons/noa_en/quizcopybutton.png");
+		cstmqzbtnCopy.setUndecorated(true);
+		cstmqzbtnCopy.setText("Copy");
+		cstmqzbtnCopy.setMargin(new Insets(0, 10, 0, 0));
+		cstmqzbtnCopy.setHorizontalAlignment(SwingConstants.LEFT);
+		wbtnCopy = cstmqzbtnCopy;
+		
+		CustomQuizButton cstmqzbtnDelete = new CustomQuizButton("/icons/noa_en/quizdeletebutton.png");
+		cstmqzbtnDelete.setUndecorated(true);
+		cstmqzbtnDelete.setText("Delete");
+		cstmqzbtnDelete.setMargin(new Insets(0, 10, 0, 0));
+		cstmqzbtnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+		wbtnDelete = cstmqzbtnDelete;
+		
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(quiz_QuestionListPanel, GroupLayout.PREFERRED_SIZE, 388, Short.MAX_VALUE)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addComponent(cstmqzbtnAdd, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cstmqzbtnCopy, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cstmqzbtnDelete, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(quiz_QuestionListPanel, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(cstmqzbtnAdd, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cstmqzbtnCopy, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cstmqzbtnDelete, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		panel_1.setLayout(gl_panel_1);
+		
+		Quiz_QuestionDesignPanel quiz_QuestionDesignPanel = new Quiz_QuestionDesignPanel((WebPanel) null);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(99, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(97, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 
-		initEvents();
+
+
+//		initEvents();
 	}
 
 	private void initEvents() {
@@ -351,7 +273,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 					try {
 						parentPanel.getCurrentQuestion().setPoint(
 								Integer.parseInt(webQuestionDesignPanel
-										.getWebTextField_6().getText()));
+										.getWebTextField().getText()));
 					} catch (Exception ex) {
 						JajeemExcetionHandler.logError(ex);
 					}
@@ -554,7 +476,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 							.setEnabled(false);
 					webQuestionDesignPanel.getWebTextField_4()
 							.setEnabled(false);
-					webQuestionDesignPanel.getWebTextField_6()
+					webQuestionDesignPanel.getWebTextField()
 							.setEnabled(false);
 					webQuestionDesignPanel.getWebRadioButton()
 							.setEnabled(false);
@@ -646,7 +568,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				webQuestionDesignPanel.getWebTextField_6().setEnabled(
+				webQuestionDesignPanel.getWebTextField().setEnabled(
 						!wbchckbxAuto.isSelected());
 				if (wbchckbxAuto.isSelected()
 						&& parentPanel.getCurrentRun().getQuiz()
@@ -681,7 +603,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 										.getRowCount() - 1, 2);
 					}
 					webQuestionDesignPanel
-							.getWebTextField_6()
+							.getWebTextField()
 							.setText(
 									String.valueOf(((DefaultTableModel) webQuestionListPanel
 											.getWebTable().getModel())
@@ -757,7 +679,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								webQuestionListPanel.getWebTable()
 										.getRowCount() - 1, 2);
 			}
-			webQuestionDesignPanel.getWebTextField_6().setText(
+			webQuestionDesignPanel.getWebTextField().setText(
 					String.valueOf(webQuestionListPanel
 							.getWebTable()
 							.getModel()
@@ -797,19 +719,19 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		return parentPanel;
 	}
 
-	public WebCheckBox getWbchckbxAuto() {
+	public JCheckBox getWbchckbxAuto() {
 		return wbchckbxAuto;
 	}
 
-	public void setWbchckbxAuto(WebCheckBox wbchckbxAuto) {
+	public void setWbchckbxAuto(JCheckBox wbchckbxAuto) {
 		this.wbchckbxAuto = wbchckbxAuto;
 	}
 
-	public WebTextField getWbtxtfldPoints() {
+	public JTextField getWbtxtfldPoints() {
 		return wbtxtfldPoints;
 	}
 
-	public void setWbtxtfldPoints(WebTextField wbtxtfldPoints) {
+	public void setWbtxtfldPoints(JTextField wbtxtfldPoints) {
 		this.wbtxtfldPoints = wbtxtfldPoints;
 	}
 

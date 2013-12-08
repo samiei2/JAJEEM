@@ -11,8 +11,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 public class i18n {
 	private static Properties props = new Properties();
 
-	public i18n() {
+	static{
 		try {
+			new Config();
 			File path = new File("lang/" + Config.getParam("lang") + ".txt");
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					new FileInputStream(path), "UTF-8"));
@@ -20,7 +21,9 @@ public class i18n {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public i18n() {
 	}
 
 	/**
