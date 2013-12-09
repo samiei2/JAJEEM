@@ -17,10 +17,12 @@ import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.core.design.account.CustomAccountButton;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.filemanager.design.CustomFileButton;
 import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 
@@ -43,64 +45,37 @@ public class ClientFileInbox extends WebPanel {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 
-		wbtnOpen = new WebButton();
-		wbtnOpen.setText("Open");
+		wbtnOpen = new CustomFileButton("/icons/noa_en/fileopenbutton.png");
+		wbtnOpen.setUndecorated(true);
+//		wbtnOpen.setText("Open");
 
-		wbtnRefresh = new WebButton();
-		wbtnRefresh.setText("Refresh");
+		wbtnRefresh = new CustomFileButton("/icons/noa_en/filerefreshbutton.png");
+		wbtnRefresh.setUndecorated(true);
+//		wbtnRefresh.setText("Refresh");
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webScrollPane,
-																GroupLayout.DEFAULT_SIZE,
-																735,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wbtnRefresh,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				wbtnOpen,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE,
-								244, Short.MAX_VALUE)
-						.addGap(11)
-						.addGroup(
-								groupLayout
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(wbtnOpen,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(wbtnRefresh,
-												GroupLayout.PREFERRED_SIZE, 24,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+					.addGap(11)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 
 		webTable = new WebTable();
 		webTable.setModel(new DefaultTableModel(new Object[][] {},

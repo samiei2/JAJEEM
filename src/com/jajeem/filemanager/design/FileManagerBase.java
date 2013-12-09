@@ -11,20 +11,26 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
 import com.jajeem.util.CustomPanel;
+import com.jajeem.util.WindowResizeAdapter;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class FileManagerBase extends JFrame{
 	private CustomFileButton customFileCloseButton;
 	private CustomPanel panel;
 	int posX,posY;
 	JFrame mainFrame;
+	private JPanel panelContent;
 	public FileManagerBase() {
-		
+		WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
+		WindowResizeAdapter.install(this, SwingConstants.SOUTH);
+		WindowResizeAdapter.install(this, SwingConstants.EAST);
 		mainFrame = this;
 		setUndecorated(true);
 		setBackground(new Color(0,0,0,0));
@@ -46,6 +52,25 @@ public class FileManagerBase extends JFrame{
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
 		);
 		
+		panelContent = new JPanel();
+		panelContent.setOpaque(false);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		panel.setLayout(gl_panel);
+		
 		customFileCloseButton = new CustomFileButton("/icons/noa_en/fileclosebutton.png");
 		customFileCloseButton.setUndecorated(true);
 		customFileCloseButton.setText("");
@@ -53,9 +78,9 @@ public class FileManagerBase extends JFrame{
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(357)
+					.addContainerGap(357, Short.MAX_VALUE)
 					.addComponent(customFileCloseButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(40, Short.MAX_VALUE))
+					.addGap(40))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -102,7 +127,7 @@ public class FileManagerBase extends JFrame{
 	}
 	
 	public Container getMainContentPane() {
-		return panel;
+		return panelContent;
 	}
 	
 	public JButton getCloseButton(){

@@ -17,32 +17,30 @@
 
 package com.jajeem.ui.checkbox;
 
-import com.alee.laf.WebLookAndFeel;
-import com.alee.managers.hotkey.HotkeyData;
-import com.alee.managers.hotkey.HotkeyInfo;
-import com.alee.managers.hotkey.HotkeyManager;
-import com.alee.managers.language.LanguageManager;
-import com.alee.managers.language.LanguageMethods;
-import com.alee.managers.language.updaters.LanguageUpdater;
-import com.alee.managers.settings.DefaultValue;
-import com.alee.managers.settings.SettingsManager;
-import com.alee.managers.settings.SettingsMethods;
-import com.alee.managers.settings.SettingsProcessor;
-import com.alee.managers.tooltip.TooltipWay;
-import com.alee.utils.ReflectUtils;
-import com.alee.utils.SizeUtils;
-import com.alee.utils.SwingUtils;
-import com.alee.utils.laf.ShapeProvider;
-import com.alee.utils.swing.FontMethods;
-import com.alee.utils.swing.SizeMethods;
-import com.jajeem.ui.radiobutton.JajeemRadioButton;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Composite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+
+import com.alee.managers.hotkey.HotkeyData;
+import com.alee.managers.hotkey.HotkeyInfo;
+import com.alee.managers.hotkey.HotkeyManager;
+import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.ui.radiobutton.JajeemRadioButton;
 
 /**
  * User: mgarin Date: 28.06.11 Time: 0:50

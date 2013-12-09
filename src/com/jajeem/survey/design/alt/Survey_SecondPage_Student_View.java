@@ -21,6 +21,7 @@ import com.jajeem.core.model.Student;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
+import com.jajeem.ui.combobox.JajeemComboBox;
 
 public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 	/**
@@ -29,7 +30,7 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private WebTable webTable;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 	private Survey_SecondPage parentPanel;
 
 	private Student currentStudent;
@@ -49,7 +50,7 @@ public class Survey_SecondPage_Student_View extends Survey_AbstractViews {
 		WebLabel wblblStudent = new WebLabel();
 		wblblStudent.setText("Student");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 
 		WebLabel wblblStudentName = new WebLabel();
 		wblblStudentName.setText("Student Name");

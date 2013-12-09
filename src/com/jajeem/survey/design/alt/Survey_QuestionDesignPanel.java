@@ -19,6 +19,7 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.text.WebTextArea;
 import com.alee.laf.text.WebTextField;
+import com.jajeem.ui.combobox.JajeemComboBox;
 
 public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 	/**
@@ -32,7 +33,7 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 	private WebTextField webTextField_4;
 	private WebTextArea webTextArea;
 	private WebScrollPane webScrollPane;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 	private WebLabel wblblQuestion;
 	private Survey_FirstPage parentPanel;
 
@@ -55,7 +56,7 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 		WebLabel wblblQuestion_1 = new WebLabel();
 		wblblQuestion_1.setText("Question");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"Single Choice", "Multiple Choice", "Essay" }));
 
@@ -554,11 +555,11 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 		this.webTextArea = webTextArea;
 	}
 
-	public WebComboBox getWebComboBox() {
+	public JajeemComboBox getWebComboBox() {
 		return webComboBox;
 	}
 
-	public void setWebComboBox(WebComboBox webComboBox) {
+	public void setWebComboBox(JajeemComboBox webComboBox) {
 		this.webComboBox = webComboBox;
 	}
 

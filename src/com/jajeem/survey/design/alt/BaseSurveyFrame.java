@@ -1,15 +1,17 @@
-package com.jajeem.quiz.design.alt;
+package com.jajeem.survey.design.alt;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
@@ -21,29 +23,37 @@ import javax.swing.SwingConstants;
 import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.util.CustomPanel;
 import com.jajeem.util.WindowResizeAdapter;
+import com.jajeem.util.test;
+import com.sun.awt.AWTUtilities;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javaQuery.core.keyType;
 
-public class BaseQuizFrame extends WebFrame {
+public class BaseSurveyFrame extends WebFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	JPanel panelTop;
-	CustomPanel panelContent;
+	CustomSurveyPanel panelContent;
 	JFrame mainFrame;
 	int posX, posY;
-	CustomQuizButton customQuizButton;
+	private CustomSurveyButton customQuizButton;
 
-	public BaseQuizFrame() {
+	public BaseSurveyFrame() {
 		WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = this;
 		setUndecorated(true);
-		setBackground(new Color(0, 255, 0, 0));
+		setBackground(new Color(0, 0, 0, 0));
+//		System.setProperty("sun.java2d.noddraw", "true");
+//		AWTUtilities.setWindowOpaque(this, false);
 
-		CustomPanel panel = new CustomPanel("/icons/noa_en/quizmain.png");
+		CustomSurveyPanel panel = new CustomSurveyPanel("/icons/noa_en/accountmainpanel.png");
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
@@ -81,7 +91,7 @@ public class BaseQuizFrame extends WebFrame {
 						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE,
 								Short.MAX_VALUE).addContainerGap()));
 
-		panelContent = new CustomPanel("/icons/noa_en/quizdesignpanel.png");
+		panelContent = new CustomSurveyPanel("/icons/noa_en/quizdesignpanel.png");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -100,8 +110,7 @@ public class BaseQuizFrame extends WebFrame {
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
 		
-		customQuizButton = new CustomQuizButton("/icons/noa_en/fileclosebutton.png");
-		
+		customQuizButton = new CustomSurveyButton("/icons/noa_en/fileclosebutton.png");
 		customQuizButton.setUndecorated(true);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -174,5 +183,47 @@ public class BaseQuizFrame extends WebFrame {
 	
 	public Container getCloseButton(){
 		return customQuizButton;
+	}
+	
+	public static void main(String[] args) {
+		BaseSurveyFrame frame = new BaseSurveyFrame();
+		frame.setSize(800, 600);
+		frame.setVisible(true);
+	}
+}
+
+class CustomSurveyPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private BufferedImage originalImage;
+
+	CustomSurveyPanel(String imageURI) {
+		try {
+			originalImage = ImageIO.read(test.class.getResource(imageURI));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setOpaque(false);
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		Graphics g2 = g.create();
+		g2.drawImage(originalImage, 0, 0, getWidth(), getHeight(), null);
+		g2.dispose();
+	}
+
+	@Override
+	public int getWidth() {
+		int w = super.getWidth();
+		return w;
+	}
+
+	@Override
+	public int getHeight() {
+		int h = super.getHeight();
+		return h;
 	}
 }

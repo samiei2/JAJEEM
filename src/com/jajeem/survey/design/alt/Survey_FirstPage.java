@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
@@ -24,6 +25,8 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
+import javax.swing.SwingConstants;
+import java.awt.Insets;
 
 public class Survey_FirstPage extends Survey_AbstractViews {
 	/**
@@ -41,8 +44,8 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 	/**
 	 * Create the panel.
 	 */
-	public Survey_FirstPage(WebFrame parent) {
-		this.parentPanel = (Survey_Main) parent;
+	public Survey_FirstPage(Survey_Main survey_Main) {
+		this.parentPanel = survey_Main;
 
 		webQuestionDesignPanel = new Survey_QuestionDesignPanel(this);
 		webQuestionDesignPanel.setBorder(UIManager
@@ -55,13 +58,22 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 		webPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 
-		wbtnAdd = new WebButton();
+		wbtnAdd = new CustomSurveyButton("/icons/noa_en/quizaddbutton.png");
+		wbtnAdd.setMargin(new Insets(0, 10, 0, 0));
+		wbtnAdd.setHorizontalAlignment(SwingConstants.LEFT);
+		wbtnAdd.setUndecorated(true);
 		wbtnAdd.setText("Add");
 
-		wbtnCopy = new WebButton();
+		wbtnCopy = new CustomSurveyButton("/icons/noa_en/quizcopybutton.png");
+		wbtnCopy.setMargin(new Insets(0, 10, 0, 0));
+		wbtnCopy.setHorizontalAlignment(SwingConstants.LEFT);
+		wbtnCopy.setUndecorated(true);
 		wbtnCopy.setText("Copy");
 
-		wbtnDelete = new WebButton();
+		wbtnDelete = new CustomSurveyButton("/icons/noa_en/quizdeletebutton.png");
+		wbtnDelete.setMargin(new Insets(0, 10, 0, 0));
+		wbtnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+		wbtnDelete.setUndecorated(true);
 		wbtnDelete.setText("Delete");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout

@@ -30,6 +30,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -56,7 +57,7 @@ public class CustomTeacherFrame extends JFrame {
 		Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getMaximumWindowBounds();
 		setSize(winSize.width, winSize.height);
-		// WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
+		 WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
 		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JPanel panel = new JPanel();

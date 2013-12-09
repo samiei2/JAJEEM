@@ -1,12 +1,30 @@
 package com.jajeem.survey.design.alt;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JScrollPane;
+import com.alee.laf.table.WebTable;
+import com.alee.laf.panel.WebPanel;
+import java.awt.CardLayout;
+
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.SystemColor;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
@@ -18,19 +36,16 @@ import java.util.UUID;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
-import com.alee.laf.scroll.WebScrollPane;
 import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.service.ClientService;
@@ -45,43 +60,37 @@ import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.ResultService;
 import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.Config;
+import com.jajeem.util.WindowResizeAdapter;
 
-public class Survey_Main extends WebFrame {
+public class Survey_Main {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private WebButton wbtnNew;
-	private WebButton wbtnContent;
-	private WebButton wbtnStart;
-	private WebButton wbtnSaveResults;
-	private WebButton wbtnSave;
-	private WebButton wbtnOpen;
-
+	private BaseSurveyFrame frame;
+	
 	private Run currentRun;
 	private Question currentQuestion;
 	private boolean eventsEnabled = true;
 	private Survey_FirstPage firstPage;
 	private Survey_SecondPage secondPage;
-	private WebPanel webPanel;
 	private Survey_Main mainFrame;
 	private List<String> studentIps;
 	private int gIndex;
+	private CustomSurveyButton wbtnNew;
+	private CustomSurveyButton wbtnOpen;
+	private CustomSurveyButton wbtnSave;
+	private CustomSurveyButton wbtnSaveResults;
+	private CustomSurveyButton wbtnContent;
+	private CustomSurveyButton wbtnStart;
+	private WebPanel webPanel;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
-					@SuppressWarnings("unused")
-					Survey_Main frame = new Survey_Main(-1, null);
+					Survey_Main frame = new Survey_Main(0,null);
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -90,224 +99,112 @@ public class Survey_Main extends WebFrame {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @param list
-	 * @param groupIndex
 	 */
 	public Survey_Main(int groupIndex, List<String> list) {
 		studentIps = list;
 		gIndex = groupIndex;
 		currentRun = new Run();
-		mainFrame = this;
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Survey_Main.class.getResource("/icons/noa_en/survey.png")));
-		setTitle("Survey");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 987, 683);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-
-		WebPanel webPanel_1 = new WebPanel();
-		webPanel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-		webPanel_1.setBackground(SystemColor.control);
-
-		WebPanel webPanel_2 = new WebPanel();
-		webPanel_2.setBorder(new TitledBorder(null, "", TitledBorder.CENTER,
-				TitledBorder.TOP, null, null));
-		webPanel_2.setBackground(SystemColor.control);
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								Alignment.TRAILING,
-								gl_contentPane
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPane
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																webPanel_2,
-																Alignment.LEADING,
-																GroupLayout.PREFERRED_SIZE,
-																855,
-																Short.MAX_VALUE)
-														.addComponent(
-																webPanel_1,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																855,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				Alignment.LEADING,
-				gl_contentPane
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE,
-								52, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webPanel_2, GroupLayout.DEFAULT_SIZE,
-								480, Short.MAX_VALUE).addContainerGap()));
-
-		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
-		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
-		gl_webPanel_2.setHorizontalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addComponent(webScrollPane,
-				GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE));
-		gl_webPanel_2.setVerticalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addComponent(webScrollPane,
-				GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE));
-
+		frame = new BaseSurveyFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setUndecorated(true);
+		frame.setBackground(new Color(0,0,0,0));
+		WindowResizeAdapter.install(frame, SwingConstants.SOUTH_EAST);
+		
+		wbtnNew = new CustomSurveyButton("/icons/noa_en/quizadd.png");
+		wbtnNew.setUndecorated(true);
+		wbtnNew.setText("");
+		
+		wbtnOpen = new CustomSurveyButton("/icons/noa_en/quizopen.png");
+		wbtnOpen.setUndecorated(true);
+		wbtnOpen.setText("");
+		
+		wbtnSave = new CustomSurveyButton("/icons/noa_en/quizsave.png");
+		wbtnSave.setUndecorated(true);
+		wbtnSave.setText("");
+		
+		wbtnSaveResults = new CustomSurveyButton("/icons/noa_en/quizsave.png");
+		wbtnSaveResults.setUndecorated(true);
+		wbtnSaveResults.setText("");
+		
+		wbtnStart = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
+		wbtnStart.putClientProperty("action","Start");
+		wbtnStart.setUndecorated(true);
+		wbtnStart.setText("");
+		
+		wbtnContent = new CustomSurveyButton("/icons/noa_en/quizcontent.png");
+		wbtnContent.setUndecorated(true);
+		wbtnContent.setText("");
+		GroupLayout groupLayout = new GroupLayout(frame.getTopPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
+					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		frame.getTopPane().setLayout(groupLayout);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GroupLayout groupLayout_1 = new GroupLayout(frame.getMainContentPane());
+		groupLayout_1.setHorizontalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		groupLayout_1.setVerticalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		
 		webPanel = new WebPanel();
-		webScrollPane.setViewportView(webPanel);
+		scrollPane.setViewportView(webPanel);
 		webPanel.setLayout(new CardLayout(0, 0));
-		webPanel_2.setLayout(gl_webPanel_2);
-
+		
 		firstPage = new Survey_FirstPage(this);
 		firstPage.setName("firstPage");
 		secondPage = new Survey_SecondPage(this);
 		secondPage.setName("secondPage");
-
+		
 		webPanel.add(firstPage, "firstPage");
 		webPanel.add(secondPage, "secondPage");
-
-		wbtnNew = new WebButton();
-		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnNew.setVerticalAlignment(SwingConstants.TOP);
-		wbtnNew.setText("New");
-		wbtnNew.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/Addx16.png")));
-
-		wbtnOpen = new WebButton();
-		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnOpen.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/folder_green_open-x16.png")));
-		wbtnOpen.setText("Open");
-
-		wbtnSave = new WebButton();
-		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSave.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/documentx16.png")));
-		wbtnSave.setText("Save");
-
-		wbtnSaveResults = new WebButton();
-		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnSaveResults.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/documentx16.png")));
-		wbtnSaveResults.setText("Save Results");
-		wbtnSaveResults.setVisible(false);
-
-		wbtnStart = new WebButton();
-		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnStart.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/startx16.png")));
-		wbtnStart.setText("Start");
-
-		wbtnContent = new WebButton();
-		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
-		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
-		wbtnContent.setIcon(new ImageIcon(Survey_Main.class
-				.getResource("/icons/noa_en/contentx16.png")));
-		wbtnContent.setText("Content");
-		wbtnContent.setEnabled(false);
-
-		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1.setHorizontalGroup(gl_webPanel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel_1
-						.createSequentialGroup()
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 54,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 56,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 56,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnSaveResults,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 461,
-								Short.MAX_VALUE)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE,
-								48, GroupLayout.PREFERRED_SIZE)));
-		gl_webPanel_1
-				.setVerticalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				wbtnStart,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnContent,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_webPanel_1
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				wbtnNew,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnOpen,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnSave,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				wbtnSaveResults,
-																				GroupLayout.PREFERRED_SIZE,
-																				48,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(115, Short.MAX_VALUE)));
-		webPanel_1.setLayout(gl_webPanel_1);
-		contentPane.setLayout(gl_contentPane);
-
+		
+		frame.getMainContentPane().setLayout(groupLayout_1);
+		frame.pack();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2
+				- frame.getSize().height / 2);
 		initEvents();
 		initSurveyEventListener();
 		if (!ValidateSession()) {
 			return;
 		}
-		setVisible(true);
-
+//		frame.setSize(808, 528);
+		frame.setVisible(true);
 	}
-
+	
 	private void initSurveyEventListener() {
 		if (gIndex != -1) {
 			if (studentIps != null) {
@@ -349,23 +246,23 @@ public class Survey_Main extends WebFrame {
 
 	private boolean ValidateSession() {
 		if (com.jajeem.util.Session.getCourse() == null) {
-			int i = JOptionPane.showConfirmDialog(null,
+			int i = WebOptionPane.showConfirmDialog(null,
 					"No class has started yet!\n Do you want to continue?");
 			if (i == 0) {
 				return true;
 			} else {
-				dispose();
+				frame.dispose();
 				return false;
 			}
 		}
 		if (com.jajeem.util.Session.getInstructor() == null) {
-			int i = JOptionPane
+			int i = WebOptionPane
 					.showConfirmDialog(null,
 							"No instructor has logged in.Please first Log in!\n Do you want to continue?");
 			if (i == 0) {
 				return true;
 			} else {
-				dispose();
+				frame.dispose();
 				return false;
 			}
 		}
@@ -373,7 +270,27 @@ public class Survey_Main extends WebFrame {
 	}
 
 	private void initEvents() {
-		addWindowListener(new WindowAdapter() {
+		((CustomSurveyButton)frame.getCloseButton()).addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.setVisible(false);
+			}
+		});
+		frame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				if (gIndex == -1) {
+					com.jajeem.util.Session.setSurveyWindowOpen(false);
+				} else {
+					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gIndex] = false;
+				}
+				StopSurveyCommand();
+				super.componentHidden(e);
+				frame.dispose();
+			}
+		});
+		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				if (gIndex == -1) {
@@ -383,16 +300,6 @@ public class Survey_Main extends WebFrame {
 				}
 				newSurveyRun();
 			}
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				if (gIndex == -1) {
-					com.jajeem.util.Session.setSurveyWindowOpen(false);
-				} else {
-					com.jajeem.util.Session.getIsSurveyWindowsOpen()[gIndex] = false;
-				}
-				StopSurveyCommand();
-			}
 		});
 		wbtnNew.addActionListener(new ActionListener() {
 			@Override
@@ -401,7 +308,7 @@ public class Survey_Main extends WebFrame {
 																	// the
 																	// second
 																	// page
-					int i = JOptionPane
+					int i = WebOptionPane
 							.showConfirmDialog(
 									null,
 									"If you leave this page the survey will stop and results will be lost.Are you sure you want to continue?");
@@ -422,11 +329,13 @@ public class Survey_Main extends WebFrame {
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
 					wbtnSaveResults.setVisible(false);
-					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
-							.getResource("/icons/noa_en/startx16.png")));
-					wbtnStart.setEnabled(true);
-
+//					wbtnStart.setText("Start");
+//					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
+//							.getResource("/icons/noa_en/startx16.png")));
+//					wbtnStart.setEnabled(true);
+					wbtnStart.putClientProperty("action","Start");
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
+					
 					eventsEnabled = false;
 					secondPage.clear();
 					eventsEnabled = true;
@@ -442,7 +351,7 @@ public class Survey_Main extends WebFrame {
 		wbtnContent.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane
+				int i = WebOptionPane
 						.showConfirmDialog(
 								null,
 								"If you leave this page the survey will stop and results will be lost.Are you sure you want to continue?");
@@ -463,9 +372,11 @@ public class Survey_Main extends WebFrame {
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
 				wbtnSaveResults.setVisible(false);
-				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(Survey_Main.class
-						.getResource("/icons/noa_en/startx16.png")));
+//				wbtnStart.setText("Start");
+//				wbtnStart.setIcon(new ImageIcon(Survey_Main.class
+//						.getResource("/icons/noa_en/startx16.png")));
+				wbtnStart.putClientProperty("action","Start");
+				wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 				wbtnStart.setEnabled(true);
 
 				eventsEnabled = false;
@@ -476,7 +387,7 @@ public class Survey_Main extends WebFrame {
 		wbtnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int i = JOptionPane
+				int i = WebOptionPane
 						.showConfirmDialog(
 								null,
 								"Are you sure you want to save current survey?\nNote:If you select No current survey will be disposed.");
@@ -494,8 +405,6 @@ public class Survey_Main extends WebFrame {
 					}
 				} else if (i == 1) {
 					eventsEnabled = false;
-					// firstPage.clear();
-					// newSurveyRun();
 					eventsEnabled = true;
 				} else {
 					return;
@@ -508,16 +417,16 @@ public class Survey_Main extends WebFrame {
 				ArrayList<Run> results = secondPage.getRunResults();
 				ResultService service = new ResultService();
 				service.create(secondPage.getSurveyResponse(), results);
-				JOptionPane.showMessageDialog(null, "Results Saved!");
+				WebOptionPane.showMessageDialog(null, "Results Saved!");
 			}
 		});
 		wbtnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (wbtnStart.getText() == "Start") {
+				if (wbtnStart.getClientProperty("action").toString() == "Start") {
 					if (firstPage.getWebQuestionListPanel().getWebTable()
 							.getRowCount() == 0) {
-						JOptionPane
+						WebOptionPane
 								.showMessageDialog(null,
 										"At least one question is required for the survey to start!");
 						return;
@@ -528,7 +437,7 @@ public class Survey_Main extends WebFrame {
 						Question question = currentSurvey.getQuestionList()
 								.get(i);
 						if (question.getTitle().equals("")) {
-							JOptionPane
+							WebOptionPane
 									.showMessageDialog(
 											null,
 											"Question "
@@ -542,7 +451,7 @@ public class Survey_Main extends WebFrame {
 								&& question.getAnswer4().equals("")
 								&& question.getAnswer5().equals("")
 								&& question.getType() != 2) {
-							JOptionPane.showMessageDialog(null,
+							WebOptionPane.showMessageDialog(null,
 									"No answer is entered for the question "
 											+ (i + 1)
 											+ ".Please enter at least one.");
@@ -553,10 +462,13 @@ public class Survey_Main extends WebFrame {
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					wbtnSaveResults.setVisible(true);
-					wbtnStart.setText("Stop");
+//					wbtnStart.setText("Stop");
+					wbtnStart.putClientProperty("action","Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
-							.getResource("/icons/noa_en/stop-redx16.png")));
+//					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
+//							.getResource("/icons/noa_en/stop-redx16.png")));
+					wbtnStart.putClientProperty("action","Stop");
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstopicon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 					CardLayout cl = (CardLayout) (webPanel.getLayout());
 					cl.show(webPanel, "secondPage");
 					secondPage.LoadSurvey(currentSurvey);
@@ -570,9 +482,11 @@ public class Survey_Main extends WebFrame {
 							secondPage.getPanel_bottom_21().getTimer().stop();
 						}
 					}
-					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
-							.getResource("/icons/noa_en/startx16.png")));
+//					wbtnStart.setText("Start");
+//					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
+//							.getResource("/icons/noa_en/startx16.png")));
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
+					wbtnStart.putClientProperty("action","Start");
 					wbtnStart.setEnabled(false);
 				} // / end else
 			}
@@ -783,5 +697,9 @@ public class Survey_Main extends WebFrame {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public JFrame getFrame(){
+		return frame;
 	}
 }

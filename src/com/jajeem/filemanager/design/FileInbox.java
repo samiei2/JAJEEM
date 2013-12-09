@@ -1,22 +1,23 @@
 package com.jajeem.filemanager.design;
 
-import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.button.WebButton;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
@@ -28,95 +29,94 @@ import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
 
-public class FileInbox extends WebPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class FileInbox extends JPanel {
+	private CustomFileButton wbtnRefresh;
+	private CustomFileButton wbtnDismissAll;
+	private CustomFileButton wbtnReject;
+	private CustomFileButton wbtnAccept;
 	private WebTable webTable;
-	private WebButton wbtnDismissAll;
-	private WebButton wbtnRejectFile;
-	private WebButton wbtnAccept;
+
 	private FileTransferEvent fileEvent = new FileTransferEvent();
 	private ArrayList<FileTransferObject> fileSendRequestList = new ArrayList<>();
-	private WebButton wbtnRefresh;
 
 	/**
 	 * Create the panel.
-	 * @throws Exception 
 	 */
-	public FileInbox() throws Exception {
-//		new i18n();
-		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
+	public FileInbox() {
+		setOpaque(false);
+
+		JScrollPane scrollPane = new JScrollPane();
 
 		wbtnAccept = new CustomFileButton("/icons/noa_en/fileacceptbutton.png");
+		wbtnAccept.setToolTipText("Accept Request");
 		wbtnAccept.setUndecorated(true);
-		wbtnAccept.setEnabled(false);
-//		wbtnAccept.setText(i18n.getParam("Accept File"));
+		wbtnAccept.setText("");
 
-		wbtnRejectFile = new CustomFileButton("/icons/noa_en/filerejectbutton.png");
-		wbtnRejectFile.setUndecorated(true);
-		wbtnRejectFile.setEnabled(false);
-//		wbtnRejectFile.setText(i18n.getParam("Reject File"));
+		wbtnReject = new CustomFileButton("/icons/noa_en/filerejectbutton.png");
+		wbtnReject.setToolTipText("Reject Request");
+		wbtnReject.setUndecorated(true);
+		wbtnReject.setText("");
 
-		wbtnDismissAll = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
+		wbtnDismissAll = new CustomFileButton("/icons/noa_en/filerejectallbutton.png");
+		wbtnDismissAll.setToolTipText("Reject All Request");
 		wbtnDismissAll.setUndecorated(true);
-		wbtnDismissAll.setEnabled(false);
-//		wbtnDismissAll.setText(i18n.getParam("Clear"));
+		wbtnDismissAll.setText("");
 
-		wbtnRefresh = new CustomFileButton("/icons/noa_en/filebrowsebutton.png");
+		wbtnRefresh = new CustomFileButton("/icons/noa_en/filerefreshbutton.png");
+		wbtnRefresh.setToolTipText("Refresh");
 		wbtnRefresh.setUndecorated(true);
-//		wbtnRefresh.setText(i18n.getParam("Refresh"));
-		wbtnRefresh.setVisible(false);
+		wbtnRefresh.setText("");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnReject, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
-							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-							.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(1)
-							.addComponent(wbtnRejectFile, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(wbtnDismissAll, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnReject, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnAccept, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnRefresh, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 
 		webTable = new WebTable();
-		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("From"), i18n.getParam("Status") }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false,
-					false };
+		try {
+			webTable.setModel(new DefaultTableModel(new Object[][] {},
+					new String[] { "#", i18n.getParam("File Name"),
+							i18n.getParam("From"), i18n.getParam("Status") }) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] { false, false,
+						false, false };
 
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(55);
 		webTable.getColumnModel().getColumn(0).setMinWidth(55);
 		webTable.getColumnModel().getColumn(0).setMaxWidth(55);
@@ -124,11 +124,21 @@ public class FileInbox extends WebPanel {
 		webTable.getColumnModel().getColumn(2).setMaxWidth(95);
 		webTable.getColumnModel().getColumn(3).setMinWidth(95);
 		webTable.getColumnModel().getColumn(3).setMaxWidth(95);
-
-		webScrollPane.setViewportView(webTable);
+		scrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
 		initEvents();
-		PopulateInbox();
+		
+		Thread _populateInbox = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					PopulateInbox();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		_populateInbox.start();
 	}
 
 	private void PopulateInbox() throws Exception {
@@ -147,7 +157,7 @@ public class FileInbox extends WebPanel {
 				model.addRow(new Object[] {
 						webTable.getRowCount() == 0 ? 1 : webTable
 								.getRowCount() + 1, list[i].getAbsolutePath(),
-								i18n.getParam("N/A"), i18n.getParam("Received") });
+						i18n.getParam("N/A"), i18n.getParam("Received") });
 			}
 			for (int i = 0; i < Session.getFileRequestList().size(); i++) {
 				fileSendRequestList.add((FileTransferObject) Session
@@ -155,12 +165,12 @@ public class FileInbox extends WebPanel {
 				model.addRow(new Object[] {
 						webTable.getRowCount() == 0 ? 1 : webTable
 								.getRowCount() + 1,
-								i18n.getParam("Cannot show file name until accept"),
+						i18n.getParam("Cannot show file name until accept"),
 						((FileTransferObject) Session.getFileRequestList().get(
 								i)).getClientSocket().getInetAddress()
 								.getHostAddress(), i18n.getParam("Pending") });
 				wbtnAccept.setEnabled(true);
-				wbtnRejectFile.setEnabled(true);
+				wbtnReject.setEnabled(true);
 				wbtnDismissAll.setEnabled(true);
 			}
 			Session.getFileRequestList().clear();
@@ -181,7 +191,7 @@ public class FileInbox extends WebPanel {
 			}
 		});
 
-		wbtnRejectFile.addActionListener(new ActionListener() {
+		wbtnReject.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new FileTransferEvent().fireRejectFileRequest(
@@ -197,7 +207,7 @@ public class FileInbox extends WebPanel {
 				if (webTable.getRowCount() == 0) {
 					wbtnAccept.setEnabled(false);
 					wbtnDismissAll.setEnabled(false);
-					wbtnRejectFile.setEnabled(false);
+					wbtnReject.setEnabled(false);
 				}
 			}
 		});
@@ -239,7 +249,7 @@ public class FileInbox extends WebPanel {
 				webTable.updateUI();
 				wbtnAccept.setEnabled(false);
 				wbtnDismissAll.setEnabled(false);
-				wbtnRejectFile.setEnabled(false);
+				wbtnReject.setEnabled(false);
 			}
 		});
 
@@ -252,10 +262,10 @@ public class FileInbox extends WebPanel {
 						if (selectedRow != -1) {
 							if (fileSendRequestList.get(selectedRow) == null) {
 								wbtnAccept.setEnabled(false);
-								wbtnRejectFile.setEnabled(false);
+								wbtnReject.setEnabled(false);
 							} else {
 								wbtnAccept.setEnabled(true);
-								wbtnRejectFile.setEnabled(true);
+								wbtnReject.setEnabled(true);
 							}
 						}
 					}
@@ -273,7 +283,8 @@ public class FileInbox extends WebPanel {
 							.getModel();
 					model.setValueAt(evt.getFileName(),
 							webTable.getSelectedRow(), 1);
-					model.setValueAt(i18n.getParam("Success"), webTable.getSelectedRow(), 3);
+					model.setValueAt(i18n.getParam("Success"),
+							webTable.getSelectedRow(), 3);
 					Desktop.getDesktop()
 							.open(new File(FileUtil.getInboxPath()));
 					Audio.playSound("util/Ding.aiff");
@@ -294,9 +305,11 @@ public class FileInbox extends WebPanel {
 				try {
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
-					model.setValueAt(i18n.getParam("N/A"), webTable.getSelectedRow(), 1);
+					model.setValueAt(i18n.getParam("N/A"),
+							webTable.getSelectedRow(), 1);
 					System.out.println(webTable.getSelectedRow());
-					model.setValueAt(i18n.getParam("Failed"), webTable.getSelectedRow(), 3);
+					model.setValueAt(i18n.getParam("Failed"),
+							webTable.getSelectedRow(), 3);
 				} catch (Exception e) {
 				}
 			}
@@ -313,11 +326,11 @@ public class FileInbox extends WebPanel {
 					model.addRow(new Object[] {
 							webTable.getRowCount() == 0 ? 1 : webTable
 									.getRowCount() + 1,
-									i18n.getParam("Cannot show file name until accept"),
+							i18n.getParam("Cannot show file name until accept"),
 							evt.getClientSocket().getInetAddress()
 									.getHostAddress(), i18n.getParam("Pending") });
 					wbtnAccept.setEnabled(true);
-					wbtnRejectFile.setEnabled(true);
+					wbtnReject.setEnabled(true);
 					wbtnDismissAll.setEnabled(true);
 					Session.getFileRequestList().clear();
 				} catch (Exception e) {

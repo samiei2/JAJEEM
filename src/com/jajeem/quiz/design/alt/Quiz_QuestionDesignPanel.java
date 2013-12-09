@@ -10,12 +10,10 @@ import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,7 +22,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
+import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.panel.WebPanel;
+import com.alee.laf.radiobutton.WebRadioButton;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.CustomPanel;
@@ -43,16 +43,16 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	private JRadioButton radioButton_1;
-	private JRadioButton radioButton;
-	private JRadioButton radioButton_2;
-	private JRadioButton radioButton_3;
-	private JRadioButton radioButton_4;
-	private JCheckBox checkBox;
-	private JCheckBox checkBox_1;
-	private JCheckBox checkBox_2;
-	private JCheckBox checkBox_3;
-	private JCheckBox checkBox_4;
+	private WebRadioButton radioButton_1;
+	private WebRadioButton radioButton;
+	private WebRadioButton radioButton_2;
+	private WebRadioButton radioButton_3;
+	private WebRadioButton radioButton_4;
+	private WebCheckBox checkBox;
+	private WebCheckBox checkBox_1;
+	private WebCheckBox checkBox_2;
+	private WebCheckBox checkBox_3;
+	private WebCheckBox checkBox_4;
 	private JPanel panel_2;
 	private JLabel lblQuestion;
 	private JScrollPane scrollPane;
@@ -128,66 +128,66 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		JPanel panelCard2 = new JPanel();
 		panelCard2.setOpaque(false);
 		
-		checkBox = new JCheckBox("");
+		checkBox = new WebCheckBox("");
 		checkBox.setOpaque(false);
 		
-		checkBox_1 = new JCheckBox("");
+		checkBox_1 = new WebCheckBox("");
 		checkBox_1.setOpaque(false);
 		
-		checkBox_2 = new JCheckBox("");
+		checkBox_2 = new WebCheckBox("");
 		checkBox_2.setOpaque(false);
 		
-		checkBox_3 = new JCheckBox("");
+		checkBox_3 = new WebCheckBox("");
 		checkBox_3.setOpaque(false);
 		
-		checkBox_4 = new JCheckBox("");
+		checkBox_4 = new WebCheckBox("");
 		checkBox_4.setOpaque(false);
 		GroupLayout gl_panelCard2_2 = new GroupLayout(panelCard2);
 		gl_panelCard2_2.setHorizontalGroup(
 			gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCard2_2.createSequentialGroup()
-					.addContainerGap(7, Short.MAX_VALUE)
+					.addContainerGap()
 					.addGroup(gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(checkBox, Alignment.TRAILING)
-						.addComponent(checkBox_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkBox_2, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkBox_3, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-						.addComponent(checkBox_4, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(checkBox_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		gl_panelCard2_2.setVerticalGroup(
 			gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCard2_2.createSequentialGroup()
-					.addGap(10)
-					.addComponent(checkBox)
-					.addGap(10)
+					.addGap(13)
+					.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(13)
 					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addGap(12)
 					.addComponent(checkBox_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(checkBox_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(checkBox_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(1, Short.MAX_VALUE))
+					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		panelCard2.setLayout(gl_panelCard2_2);
 		
 		JPanel panelCard1 = new JPanel();
 		panelCard1.setOpaque(false);
 		
-		radioButton = new JRadioButton("");
+		radioButton = new WebRadioButton("");
 		radioButton.setOpaque(false);
 		
-		radioButton_1 = new JRadioButton("");
+		radioButton_1 = new WebRadioButton("");
 		radioButton_1.setOpaque(false);
 		
-		radioButton_2 = new JRadioButton("");
+		radioButton_2 = new WebRadioButton("");
 		radioButton_2.setOpaque(false);
 		
-		radioButton_3 = new JRadioButton("");
+		radioButton_3 = new WebRadioButton("");
 		radioButton_3.setOpaque(false);
 		
-		radioButton_4 = new JRadioButton("");
+		radioButton_4 = new WebRadioButton("");
 		radioButton_4.setOpaque(false);
 
 		GroupLayout gl_panelCard1_2 = new GroupLayout(panelCard1);
@@ -206,11 +206,11 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		gl_panelCard1_2.setVerticalGroup(
 			gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCard1_2.createSequentialGroup()
-					.addGap(10)
+					.addGap(13)
 					.addComponent(radioButton)
-					.addGap(10)
+					.addGap(13)
 					.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addGap(12)
 					.addComponent(radioButton_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(radioButton_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
@@ -1037,83 +1037,83 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		this.webComboBoxQuestionType = webComboBox;
 	}
 
-	public JRadioButton getWebRadioButton() {
+	public WebRadioButton getWebRadioButton() {
 		return radioButton;
 	}
 
-	public void setWebRadioButton(JRadioButton webRadioButton) {
+	public void setWebRadioButton(WebRadioButton webRadioButton) {
 		this.radioButton = webRadioButton;
 	}
 
-	public JRadioButton getWebRadioButton_1() {
+	public WebRadioButton getWebRadioButton_1() {
 		return radioButton_1;
 	}
 
-	public void setWebRadioButton_1(JRadioButton webRadioButton_1) {
+	public void setWebRadioButton_1(WebRadioButton webRadioButton_1) {
 		this.radioButton_1 = webRadioButton_1;
 	}
 
-	public JRadioButton getWebRadioButton_2() {
+	public WebRadioButton getWebRadioButton_2() {
 		return radioButton_2;
 	}
 
-	public void setWebRadioButton_2(JRadioButton webRadioButton_2) {
+	public void setWebRadioButton_2(WebRadioButton webRadioButton_2) {
 		this.radioButton_2 = webRadioButton_2;
 	}
 
-	public JRadioButton getWebRadioButton_3() {
+	public WebRadioButton getWebRadioButton_3() {
 		return radioButton_3;
 	}
 
-	public void setWebRadioButton_3(JRadioButton webRadioButton_3) {
+	public void setWebRadioButton_3(WebRadioButton webRadioButton_3) {
 		this.radioButton_3 = webRadioButton_3;
 	}
 
-	public JRadioButton getWebRadioButton_4() {
+	public WebRadioButton getWebRadioButton_4() {
 		return radioButton_4;
 	}
 
-	public void setWebRadioButton_4(JRadioButton webRadioButton_4) {
+	public void setWebRadioButton_4(WebRadioButton webRadioButton_4) {
 		this.radioButton_4 = webRadioButton_4;
 	}
 
-	public JCheckBox getWebCheckBox() {
+	public WebCheckBox getWebCheckBox() {
 		return checkBox;
 	}
 
-	public void setWebCheckBox(JCheckBox webCheckBox) {
+	public void setWebCheckBox(WebCheckBox webCheckBox) {
 		this.checkBox = webCheckBox;
 	}
 
-	public JCheckBox getWebCheckBox_1() {
+	public WebCheckBox getWebCheckBox_1() {
 		return checkBox_1;
 	}
 
-	public void setWebCheckBox_1(JCheckBox webCheckBox_1) {
+	public void setWebCheckBox_1(WebCheckBox webCheckBox_1) {
 		this.checkBox_1 = webCheckBox_1;
 	}
 
-	public JCheckBox getWebCheckBox_2() {
+	public WebCheckBox getWebCheckBox_2() {
 		return checkBox_2;
 	}
 
-	public void setWebCheckBox_2(JCheckBox webCheckBox_2) {
+	public void setWebCheckBox_2(WebCheckBox webCheckBox_2) {
 		this.checkBox_2 = webCheckBox_2;
 	}
 
-	public void setWebCheckBox_3(JCheckBox webCheckBox_3) {
+	public void setWebCheckBox_3(WebCheckBox webCheckBox_3) {
 		this.checkBox_3 = webCheckBox_3;
 	}
 
-	public JCheckBox getWebCheckBox_3() {
+	public WebCheckBox getWebCheckBox_3() {
 		return checkBox_3;
 	}
 
-	public JCheckBox getWebCheckBox_4() {
+	public WebCheckBox getWebCheckBox_4() {
 		return checkBox_4;
 	}
 
-	public void setWebCheckBox_4(JCheckBox webCheckBox_4) {
+	public void setWebCheckBox_4(WebCheckBox webCheckBox_4) {
 		this.checkBox_4 = webCheckBox_4;
 	}
 

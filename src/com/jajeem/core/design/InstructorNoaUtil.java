@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -1003,19 +1005,19 @@ public class InstructorNoaUtil {
 													groupsSurveyWindows[groupIndex] = new Survey_Main(
 															groupIndex,
 															group.getStudentIps());
-													groupsSurveyWindows[groupIndex]
-															.setVisible(true);
+													groupsSurveyWindows[groupIndex].
+															getFrame().setVisible(true);
 												} else {
-													groupsSurveyWindows[groupIndex]
+													groupsSurveyWindows[groupIndex].getFrame()
 															.toFront();
-													groupsSurveyWindows[groupIndex]
+													groupsSurveyWindows[groupIndex].getFrame()
 															.repaint();
 												}
 											} else {
 												groupsSurveyWindows[groupIndex] = new Survey_Main(
 														groupIndex,
 														group.getStudentIps());
-												groupsSurveyWindows[groupIndex]
+												groupsSurveyWindows[groupIndex].getFrame()
 														.setVisible(true);
 											}
 
@@ -1028,14 +1030,14 @@ public class InstructorNoaUtil {
 								if (Session.isSurveyWindowOpen()) {
 									if (survey == null) {
 										survey = new Survey_Main(-1, null);
-										survey.setVisible(true);
+										survey.getFrame().setVisible(true);
 									} else {
-										survey.toFront();
-										survey.repaint();
+										survey.getFrame().toFront();
+										survey.getFrame().repaint();
 									}
 								} else {
 									survey = new Survey_Main(-1, null);
-									survey.setVisible(true);
+									survey.getFrame().setVisible(true);
 								}
 							}
 						}

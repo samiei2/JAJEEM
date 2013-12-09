@@ -19,7 +19,6 @@ public class CustomPanel extends WebPanel {
 		try {
 			originalImage = ImageIO.read(CustomPanel.class.getResource(Uri));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setOpaque(false);

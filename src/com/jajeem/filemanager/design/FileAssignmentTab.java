@@ -1,7 +1,6 @@
 package com.jajeem.filemanager.design;
 
 import java.awt.Component;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,19 +13,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-import com.alee.laf.button.WebButton;
-import com.alee.laf.panel.WebPanel;
-import com.alee.laf.scroll.WebScrollPane;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.service.ServerService;
@@ -39,15 +37,11 @@ import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
 
-public class FileAssignmentTab extends WebPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class FileAssignmentTab extends JPanel {
 	private WebTable webTable;
-	private WebButton wbtnBrowse;
-	private WebButton wbtnSend;
-	private WebButton wbtnClear;
+	private CustomFileButton wbtnBrowse;
+	private CustomFileButton wbtnClear;
+	private CustomFileButton wbtnSend;
 	private FileAssignmentTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
@@ -55,81 +49,82 @@ public class FileAssignmentTab extends WebPanel {
 
 	/**
 	 * Create the panel.
-	 * 
-	 * @param fileManagerMain
-	 * @throws Exception 
 	 */
-	public FileAssignmentTab(FileManagerMain fileManagerMain) throws Exception {
-//		new i18n();
-		parentFrame = fileManagerMain;
-		currentPanel = this;
-		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
-
-		wbtnBrowse = new CustomFileButton("/icons/noa_en/filebrowsebutton.png");
-		wbtnBrowse.setUndecorated(true);
-//		wbtnBrowse.setText(i18n.getParam("Browse"));
-
-		wbtnClear = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
-		wbtnClear.setUndecorated(true);
-		wbtnClear.setEnabled(false);
-//		wbtnClear.setText(i18n.getParam("Clear"));
-
+	public FileAssignmentTab(FileManagerMain parent) {
+		parentFrame = parent;
+		JScrollPane scrollPane = new JScrollPane();
+		
 		wbtnSend = new CustomFileButton("/icons/noa_en/fileacceptbutton.png");
 		wbtnSend.setUndecorated(true);
-		wbtnSend.setEnabled(false);
-//		wbtnSend.setText(i18n.getParam("Send Assignment"));
+		wbtnSend.setToolTipText("Send Assignment File");
+		wbtnSend.setText("");
+		
+		wbtnClear = new CustomFileButton("/icons/noa_en/fileclearbutton.png");
+		wbtnClear.setToolTipText("Clear Files");
+		wbtnClear.setUndecorated(true);
+		wbtnClear.setText("");
+		
+		wbtnBrowse = new CustomFileButton("/icons/noa_en/filebrowsebutton.png");
+		wbtnBrowse.setUndecorated(true);
+		wbtnBrowse.setToolTipText("Browse");
+		wbtnBrowse.setText("");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webScrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 306, Short.MAX_VALUE)
-							.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
+							.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnSend, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnClear, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnBrowse, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
-
+		
 		webTable = new WebTable();
 		webTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		webTable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "#", i18n.getParam("File Name"), i18n.getParam("Time") }) {
-			/**
-					 * 
-					 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false };
+		try {
+			webTable.setModel(new DefaultTableModel(new Object[][] {},
+					new String[] { "#", i18n.getParam("File Name"), i18n.getParam("Time") }) {
+				/**
+						 * 
+						 */
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] { false, false, false };
 
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		webTable.getColumnModel().getColumn(0).setPreferredWidth(45);
 		webTable.getColumnModel().getColumn(0).setMaxWidth(45);
 		webTable.getColumnModel().getColumn(2).setPreferredWidth(120);
 		webTable.getColumnModel().getColumn(2).setMaxWidth(120);
-		webScrollPane.setViewportView(webTable);
+		scrollPane.setViewportView(webTable);
 		setLayout(groupLayout);
+
 		initEvents();
 	}
-
+	
 	private void initEvents() {
 		wbtnBrowse.addActionListener(new ActionListener() {
 			@Override
@@ -146,7 +141,7 @@ public class FileAssignmentTab extends WebPanel {
 					String time = "";
 					while (true) {
 						try {
-							time = JOptionPane.showInputDialog(
+							time = WebOptionPane.showInputDialog(
 									i18n.getParam("Please Set Time : "), 0);
 						} catch (Exception e2) {
 							// TODO Auto-generated catch block
@@ -157,7 +152,7 @@ public class FileAssignmentTab extends WebPanel {
 							break;
 						} catch (Exception e1) {
 							try {
-								JOptionPane.showMessageDialog(null,
+								WebOptionPane.showMessageDialog(null,
 										i18n.getParam("Invalid time.Please enter a correct one!"));
 							} catch (Exception e2) {
 								// TODO Auto-generated catch block
@@ -188,7 +183,7 @@ public class FileAssignmentTab extends WebPanel {
 				wbtnSend.setEnabled(false);
 				wbtnClear.setEnabled(false);
 				try {
-					JOptionPane
+					WebOptionPane
 							.showMessageDialog(null,
 									i18n.getParam("Note: Running assignments will keep running until they end!"));
 				} catch (Exception e1) {
@@ -333,7 +328,7 @@ public class FileAssignmentTab extends WebPanel {
 				// (DefaultTableModel)webTable.getModel();
 				// model.setValueAt("Failed", currentIndex, 2);
 				try {
-					JOptionPane.showMessageDialog(null,
+					WebOptionPane.showMessageDialog(null,
 							i18n.getParam("Sending assignment failed!"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -388,12 +383,6 @@ public class FileAssignmentTab extends WebPanel {
 	@SuppressWarnings("deprecation")
 	protected void SendFile(final File file) {
 		try {
-			// JOptionPane dialog = new
-			// JOptionPane("File transfer in progress,please wait ...",
-			// JOptionPane.WARNING_MESSAGE, JOptionPane.CANCEL_OPTION,null , new
-			// Object[]{"Cancel"}, null);
-			// final JDialog confirmationDialog = dialog.createDialog(this,
-			// "File Transfer");
 			final FileAssignmentProgressWindow progwin = new FileAssignmentProgressWindow();
 			Thread fileSender = new Thread(new Runnable() {
 
@@ -434,7 +423,7 @@ public class FileAssignmentTab extends WebPanel {
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
 							try {
-								JOptionPane.showMessageDialog(null,
+								WebOptionPane.showMessageDialog(null,
 										i18n.getParam("No student is selected!"));
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
@@ -446,7 +435,7 @@ public class FileAssignmentTab extends WebPanel {
 
 					if (ips == null) {
 						try {
-							JOptionPane.showMessageDialog(null,
+							WebOptionPane.showMessageDialog(null,
 									i18n.getParam("No student is selected!"));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -536,13 +525,6 @@ public class FileAssignmentTab extends WebPanel {
 			});
 			fileSender.start();
 			progwin.setVisible(true);
-			// confirmationDialog.setVisible(true);
-			// System.out.println(dialog.getValue().toString());
-			// int command = dialog.getValue() instanceof String &&
-			// dialog.getValue().toString().equals("Cancel") ? 0 : -1;
-			// if(command==0 && !fileSender.isInterrupted())
-			// fileSender.interrupt();
-			// System.out.println(fileSender.isAlive()+":"+command);
 		} catch (Exception e) {
 			JajeemExcetionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);

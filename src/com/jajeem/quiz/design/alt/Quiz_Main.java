@@ -2,6 +2,9 @@ package com.jajeem.quiz.design.alt;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,6 +23,9 @@ import com.alee.laf.scroll.WebScrollPane;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.InetAddress;
@@ -91,9 +97,11 @@ public class Quiz_Main extends BaseQuizFrame {
 		wbtnSave = webButtonSave;
 
 		CustomQuizButton webButtonStart = new CustomQuizButton(
-				"/icons/noa_en/quizstart.png");
+				"/icons/noa_en/emptybutton.png");
 		webButtonStart.setUndecorated(true);
 		wbtnStart = webButtonStart;
+		wbtnStart.putClientProperty("action", "Start");
+		wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 
 		CustomQuizButton webButtonContent = new CustomQuizButton(
 				"/icons/noa_en/quizcontent.png");
@@ -173,6 +181,11 @@ public class Quiz_Main extends BaseQuizFrame {
 			return;
 		}
 		
+		pack();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
+				- getSize().height / 2);
+		
 		setVisible(true);
 	}
 	
@@ -241,6 +254,26 @@ public class Quiz_Main extends BaseQuizFrame {
 	}
 
 	private void initEvents() {
+		((CustomQuizButton)getCloseButton()).addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				if(gIndex==-1)
+					com.jajeem.util.Session.setQuizWindowOpen(false);
+				else
+					com.jajeem.util.Session.getIsQuizWindowsOpen()[gIndex] = false;
+				StopQuizCommand();
+				super.componentHidden(e);
+				dispose();
+			}
+		});
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
@@ -251,17 +284,8 @@ public class Quiz_Main extends BaseQuizFrame {
 				}
 				newQuizRun();
 			}
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				if (gIndex == -1) {
-					com.jajeem.util.Session.setQuizWindowOpen(false);
-				} else {
-					com.jajeem.util.Session.getIsQuizWindowsOpen()[gIndex] = false;
-				}
-				StopQuizCommand();
-			}
 		});
+		
 		wbtnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -290,9 +314,11 @@ public class Quiz_Main extends BaseQuizFrame {
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
 					wbtnSaveResults.setVisible(false);
-					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/icons/noa_en/startx16.png")));
+//					wbtnStart.setText("Start");
+//					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
+//							.getResource("/icons/noa_en/startx16.png")));
+					wbtnStart.putClientProperty("action", "Start");
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 					wbtnStart.setEnabled(true);
 
 					eventsEnabled = false;
@@ -331,9 +357,11 @@ public class Quiz_Main extends BaseQuizFrame {
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
 				wbtnSaveResults.setVisible(false);
-				wbtnStart.setText("Start");
-				wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-						.getResource("/icons/noa_en/startx16.png")));
+//				wbtnStart.setText("Start");
+//				wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
+//						.getResource("/icons/noa_en/startx16.png")));
+				wbtnStart.putClientProperty("action", "Start");
+				wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 				wbtnStart.setEnabled(true);
 
 				eventsEnabled = false;
@@ -434,10 +462,12 @@ public class Quiz_Main extends BaseQuizFrame {
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					wbtnSaveResults.setVisible(true);
-					wbtnStart.setText("Stop");
+//					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/icons/noa_en/stop-redx16.png")));
+//					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
+//							.getResource("/icons/noa_en/stop-redx16.png")));
+					wbtnStart.putClientProperty("action", "Stop");
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstopicon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 					CardLayout cl = (CardLayout) (webPanel.getLayout());
 					cl.show(webPanel, "secondPage");
 					secondPage.LoadQuiz(currentQuiz);
@@ -453,9 +483,11 @@ public class Quiz_Main extends BaseQuizFrame {
 									.setText("");
 						}
 					}
-					wbtnStart.setText("Start");
-					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-							.getResource("/icons/noa_en/startx16.png")));
+//					wbtnStart.setText("Start");
+//					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
+//							.getResource("/icons/noa_en/startx16.png")));
+					wbtnStart.putClientProperty("action", "Start");
+					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 					wbtnStart.setEnabled(false);
 				} // / end else
 			}

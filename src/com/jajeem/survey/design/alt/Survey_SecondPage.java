@@ -20,13 +20,14 @@ import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
 import com.jajeem.survey.model.Run;
 import com.jajeem.survey.model.Survey;
+import com.jajeem.ui.combobox.JajeemComboBox;
 
 @SuppressWarnings("serial")
 public class Survey_SecondPage extends Survey_AbstractViews {
 
 	private Survey_SecondPage_Question_View panel_bottom_21;
 	private Survey_SecondPage_Student_View panel_bottom_22;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 	private WebPanel cards;
 	private Survey_Main parentPanel;
 	private Survey currentSurvey;
@@ -53,70 +54,34 @@ public class Survey_SecondPage extends Survey_AbstractViews {
 		cards.add(panel_bottom_21, "Question");
 		cards.add(panel_bottom_22, "Student");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"Question", "Student" }));
 
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addGap(21)
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																cards,
-																GroupLayout.DEFAULT_SIZE,
-																688,
-																Short.MAX_VALUE)
-														.addGroup(
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				wblblView,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				webComboBox,
-																				GroupLayout.PREFERRED_SIZE,
-																				89,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout
-				.setVerticalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																webComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																wblblView,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(cards,
-												GroupLayout.DEFAULT_SIZE, 277,
-												Short.MAX_VALUE)
-										.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(21)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(cards, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wblblView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(cards, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 		setLayout(groupLayout);
 		responseRecieved = new SurveyEvent();
 		initEvents();

@@ -28,13 +28,14 @@ import com.jajeem.events.SurveyResponse;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
+import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.Config;
 
 @SuppressWarnings("serial")
 public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 
 	private WebTable webTable;
-	private WebComboBox webComboBox;
+	private JajeemComboBox webComboBox;
 	private WebTextArea webTextArea;
 	private WebTextField webTextField;
 	private Survey_SecondPage parentPanel;
@@ -231,7 +232,7 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 		WebLabel webLabel_2 = new WebLabel();
 		webLabel_2.setText("Question");
 
-		webComboBox = new WebComboBox();
+		webComboBox = new JajeemComboBox();
 
 		webTextField = new WebTextField();
 		webTextField.setEnabled(false);

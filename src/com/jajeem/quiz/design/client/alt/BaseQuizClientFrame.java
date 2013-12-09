@@ -38,6 +38,8 @@ public class BaseQuizClientFrame extends WebFrame {
 
 	public BaseQuizClientFrame() {
 		WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
+		WindowResizeAdapter.install(this, SwingConstants.EAST);
+		WindowResizeAdapter.install(this, SwingConstants.SOUTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = this;
 		setUndecorated(true);
@@ -64,27 +66,27 @@ public class BaseQuizClientFrame extends WebFrame {
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelTop, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
 		panelContent = new CustomPanel("/icons/noa_en/quizdesignpanel.png");
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panelContent, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE).addContainerGap()));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panelContent, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelContent, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
 		
