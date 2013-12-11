@@ -3,6 +3,8 @@ package com.jajeem.command.handler;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.JInternalFrame;
 
@@ -38,9 +40,17 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 				((AuthenticateCommand) cmd).getPassword());
 
 		synchronized (authenticateLock) {
-			if (Session.getLoggedInStudents().containsValue(
+			HashMap<String, String> map = Session.getLoggedInStudents();
+			HashMap<String, String> reversemap = new HashMap<>();
+			Iterator iter = map.keySet().iterator();
+			while (iter.hasNext()) {
+				String key = (String) iter.next();
+				reversemap.put(map.get(key),key);
+			}
+			if (map.containsValue(
 					((AuthenticateCommand) cmd).getUsername())) {
-				String ip = Session.getLoggedInStudents().get(((AuthenticateCommand) cmd).getUsername());
+				String username = ((AuthenticateCommand) cmd).getUsername();
+				String ip = reversemap.get(username);
 				if(ip.equals(((AuthenticateCommand) cmd).getFrom())){
 					if (grant) {
 						Session.getLoggedInStudents().put(

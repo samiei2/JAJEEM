@@ -175,8 +175,9 @@ public class CustomStudentFrame extends JFrame {
 			}
 		});
 
-		CustomMainButton webButtonClose = new CustomMainButton(
-				"/icons/noa_en/close", 20, 20);
+		CustomCloseButton webButtonClose = new CustomCloseButton(
+				"/icons/noa_en/close.png");
+		webButtonClose.setUndecorated(true);
 		webButtonClose.addActionListener(new ActionListener() {
 
 			@Override

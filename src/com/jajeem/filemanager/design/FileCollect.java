@@ -159,9 +159,18 @@ public class FileCollect extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop().open(
-							new File((String) webTable.getValueAt(
-									webTable.getSelectedRow(), 1)));
+					if(webTable.getRowCount() != 0)
+						if(webTable.getSelectedRow()!=-1){
+							Desktop.getDesktop().open(
+									new File((String) webTable.getValueAt(
+											webTable.getSelectedRow(), 1)));
+						}
+						else{
+							WebOptionPane.showMessageDialog(null, "No row is selected!\nPlease select a row first!");
+						}
+					else{
+						WebOptionPane.showMessageDialog(null, "Table is empty!");
+					}
 					// Desktop.getDesktop().open(new
 					// File(files.get(webTable.getSelectedRow())));
 				} catch (IOException e1) {

@@ -69,7 +69,7 @@ public class Quiz_Main extends BaseQuizFrame {
 	private boolean eventsEnabled = true;
 	private Quiz_FirstPage firstPage;
 	private Quiz_SecondPage secondPage;
-	private WebPanel webPanel;
+//	private WebPanel webPanel;
 	private Quiz_Main mainFrame;
 	private List<String> studentIps;
 	private int gIndex;
@@ -105,6 +105,7 @@ public class Quiz_Main extends BaseQuizFrame {
 
 		CustomQuizButton webButtonContent = new CustomQuizButton(
 				"/icons/noa_en/quizcontent.png");
+		webButtonContent.setEnabled(false);
 		webButtonContent.setUndecorated(true);
 		wbtnContent = webButtonContent;
 		
@@ -185,7 +186,7 @@ public class Quiz_Main extends BaseQuizFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
 				- getSize().height / 2);
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
 	
@@ -308,8 +309,8 @@ public class Quiz_Main extends BaseQuizFrame {
 						return;
 					}
 
-					CardLayout cl = (CardLayout) (webPanel.getLayout());
-					cl.show(webPanel, "firstPage");
+					CardLayout cl = (CardLayout) (webPanelCards.getLayout());
+					cl.show(webPanelCards, "firstPage");
 					wbtnContent.setEnabled(false);
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
@@ -351,8 +352,8 @@ public class Quiz_Main extends BaseQuizFrame {
 					return;
 				}
 
-				CardLayout cl = (CardLayout) (webPanel.getLayout());
-				cl.show(webPanel, "firstPage");
+				CardLayout cl = (CardLayout) (webPanelCards.getLayout());
+				cl.show(webPanelCards, "firstPage");
 				wbtnContent.setEnabled(false);
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
@@ -410,7 +411,7 @@ public class Quiz_Main extends BaseQuizFrame {
 		wbtnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (wbtnStart.getText() == "Start") {
+				if (wbtnStart.getClientProperty("action") == "Start") {
 					if (firstPage.getWebQuestionListPanel().getWebTable()
 							.getRowCount() == 0) {
 						WebOptionPane
@@ -462,14 +463,11 @@ public class Quiz_Main extends BaseQuizFrame {
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					wbtnSaveResults.setVisible(true);
-//					wbtnStart.setText("Stop");
 					wbtnContent.setEnabled(true);
-//					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
-//							.getResource("/icons/noa_en/stop-redx16.png")));
 					wbtnStart.putClientProperty("action", "Stop");
 					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstopicon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
-					CardLayout cl = (CardLayout) (webPanel.getLayout());
-					cl.show(webPanel, "secondPage");
+					CardLayout cl = (CardLayout) (webPanelCards.getLayout());
+					cl.show(webPanelCards, "secondPage");
 					secondPage.LoadQuiz(currentQuiz);
 					StartQuizCommand();
 				} // / end wbtnStart.getText() == "Start" if
@@ -629,7 +627,7 @@ public class Quiz_Main extends BaseQuizFrame {
 
 	private String getCurrentCardName() {
 		WebPanel card = null;
-		for (Component comp : webPanel.getComponents()) {
+		for (Component comp : webPanelCards.getComponents()) {
 			if (comp.isVisible() == true) {
 				card = (WebPanel) comp;
 			}

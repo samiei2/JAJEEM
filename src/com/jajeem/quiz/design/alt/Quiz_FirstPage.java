@@ -216,20 +216,21 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 		panel_1.setLayout(gl_panel_1);
 		
 		Quiz_QuestionDesignPanel quiz_QuestionDesignPanel = new Quiz_QuestionDesignPanel(this);
+		quiz_QuestionDesignPanel.setOpaque(false);
 		webQuestionDesignPanel = quiz_QuestionDesignPanel;
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, 239, Short.MAX_VALUE)
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(quiz_QuestionDesignPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(quiz_QuestionDesignPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);

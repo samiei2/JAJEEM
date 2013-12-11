@@ -162,11 +162,6 @@ public class InstructorNoa {
 				try {
 
 					new InstructorNoa();
-					// Rectangle winSize =
-					// GraphicsEnvironment.getLocalGraphicsEnvironment()
-					// .getMaximumWindowBounds();
-					// frame.setPreferredSize(new Dimension(800, 600));
-					// frame.pack();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					JajeemExcetionHandler.logError(e);

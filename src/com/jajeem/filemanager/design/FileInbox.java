@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
@@ -194,15 +195,20 @@ public class FileInbox extends JPanel {
 		wbtnReject.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new FileTransferEvent().fireRejectFileRequest(
-						fileSendRequestList.get(webTable.getSelectedRow()),
-						InstructorServer.class);
-				fileSendRequestList.remove(webTable.getSelectedRow());
-				DefaultTableModel model = (DefaultTableModel) webTable
-						.getModel();
-				model.removeRow(webTable.getSelectedRow());
-				model.fireTableDataChanged();
-				webTable.updateUI();
+				if(webTable.getSelectedRow()!=-1){
+					new FileTransferEvent().fireRejectFileRequest(
+							fileSendRequestList.get(webTable.getSelectedRow()),
+							InstructorServer.class);
+					fileSendRequestList.remove(webTable.getSelectedRow());
+					DefaultTableModel model = (DefaultTableModel) webTable
+							.getModel();
+					model.removeRow(webTable.getSelectedRow());
+					model.fireTableDataChanged();
+					webTable.updateUI();
+				}
+				else{
+					WebOptionPane.showMessageDialog(null, "No row is selected!\nPlease select a row first!");
+				}
 
 				if (webTable.getRowCount() == 0) {
 					wbtnAccept.setEnabled(false);

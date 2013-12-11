@@ -66,41 +66,24 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		WebPanel webPanel_4 = new WebPanel();
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								Alignment.TRAILING,
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																webPanel_4,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																780,
-																Short.MAX_VALUE)
-														.addComponent(
-																webPanel,
-																Alignment.LEADING,
-																GroupLayout.DEFAULT_SIZE,
-																780,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webPanel, GroupLayout.PREFERRED_SIZE,
-								143, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(webPanel_4, GroupLayout.PREFERRED_SIZE,
-								262, Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(webPanel_4, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
+						.addComponent(webPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webPanel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(webPanel_4, GroupLayout.PREFERRED_SIZE, 287, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		WebScrollPane webScrollPane_1 = new WebScrollPane((Component) null);
 		webPanel_4.add(webScrollPane_1, BorderLayout.CENTER);
@@ -266,23 +249,20 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 										.addContainerGap(22, Short.MAX_VALUE)));
 		webPanel_3.setLayout(gl_webPanel_3);
 		GroupLayout gl_webPanel_2 = new GroupLayout(webPanel_2);
-		gl_webPanel_2.setHorizontalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel_2
-						.createSequentialGroup()
-						.addComponent(webPanel_3, GroupLayout.PREFERRED_SIZE,
-								394, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(99, Short.MAX_VALUE)));
-		gl_webPanel_2.setVerticalGroup(gl_webPanel_2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				Alignment.TRAILING,
-				gl_webPanel_2
-						.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)
-						.addComponent(webPanel_3, GroupLayout.PREFERRED_SIZE,
-								115, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+		gl_webPanel_2.setHorizontalGroup(
+			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_2.createSequentialGroup()
+					.addGap(0, 0, Short.MAX_VALUE)
+					.addComponent(webPanel_3, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_webPanel_2.setVerticalGroup(
+			gl_webPanel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_webPanel_2.createSequentialGroup()
+					.addContainerGap(16, Short.MAX_VALUE)
+					.addComponent(webPanel_3, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		webPanel_2.setLayout(gl_webPanel_2);
 
 		WebLabel webLabel = new WebLabel();
@@ -302,110 +282,39 @@ public class Quiz_SecondPage_Question_View extends Quiz_AbstractViews {
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
-		gl_webPanel_1
-				.setHorizontalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webLabel_1,
-																GroupLayout.PREFERRED_SIZE,
-																70,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webLabel_2,
-																GroupLayout.PREFERRED_SIZE,
-																43,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webLabel,
-																GroupLayout.PREFERRED_SIZE,
-																43,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																webComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																114,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webTextField,
-																GroupLayout.PREFERRED_SIZE,
-																154,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webScrollPane,
-																GroupLayout.DEFAULT_SIZE,
-																270,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		gl_webPanel_1
-				.setVerticalGroup(gl_webPanel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_webPanel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																webLabel,
-																GroupLayout.PREFERRED_SIZE,
-																21,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webComboBox,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(12)
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																webLabel_1,
-																GroupLayout.PREFERRED_SIZE,
-																14,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																webTextField,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addGroup(
-												gl_webPanel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addGap(13)
-																		.addComponent(
-																				webLabel_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				14,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_webPanel_1
-																		.createSequentialGroup()
-																		.addGap(5)
-																		.addComponent(
-																				webScrollPane,
-																				GroupLayout.DEFAULT_SIZE,
-																				79,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
+		gl_webPanel_1.setHorizontalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(webLabel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webScrollPane, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_webPanel_1.setVerticalGroup(
+			gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel_1.createSequentialGroup()
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(webLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(12)
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(webLabel_1, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_webPanel_1.createSequentialGroup()
+							.addGap(5)
+							.addComponent(webScrollPane, 79, 79, Short.MAX_VALUE))
+						.addGroup(gl_webPanel_1.createSequentialGroup()
+							.addGap(13)
+							.addComponent(webLabel_2, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 
 		webTextArea = new WebTextArea();
 		webTextArea.setEditable(false);

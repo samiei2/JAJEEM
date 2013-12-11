@@ -322,6 +322,8 @@ public class FileSendTab extends JPanel {
 								try {
 									WebOptionPane.showMessageDialog(null,
 											i18n.getParam("No student is selected!"));
+									progwin.setVisible(false);
+									return;
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -334,6 +336,8 @@ public class FileSendTab extends JPanel {
 						try {
 							WebOptionPane.showMessageDialog(null,
 									i18n.getParam("No student is selected!"));
+							progwin.setVisible(false);
+							return;
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -101,15 +101,15 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panelQuestionDetails, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addComponent(panelQuestionDetails, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap()
 					.addComponent(panelQuestionDetails, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JPanel panelCard3 = new JPanel();
@@ -158,15 +158,15 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		gl_panelCard2_2.setVerticalGroup(
 			gl_panelCard2_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCard2_2.createSequentialGroup()
-					.addGap(13)
+					.addGap(18)
 					.addComponent(checkBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(13)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(12)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(checkBox_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(checkBox_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(checkBox_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(14, Short.MAX_VALUE))
 		);
@@ -196,32 +196,32 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 				.addGroup(gl_panelCard1_2.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(radioButton)
+						.addComponent(radioButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(radioButton_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(radioButton_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(radioButton_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(7, Short.MAX_VALUE))
+					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		gl_panelCard1_2.setVerticalGroup(
 			gl_panelCard1_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCard1_2.createSequentialGroup()
-					.addGap(13)
-					.addComponent(radioButton)
-					.addGap(13)
+					.addGap(18)
+					.addComponent(radioButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(12)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(radioButton_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(radioButton_3, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.RELATED,12,Short.MAX_VALUE)
 					.addComponent(radioButton_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(1, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelCard1.setLayout(gl_panelCard1_2);
 		
 		panel_2 = new JPanel();
-		panel_2.setOpaque(false);
+		panel_2.setBackground(Color.BLACK);
 		panel_2.setLayout(new CardLayout());
 		
 		panel_2.add(panelCard1, "Single Choice");
@@ -229,23 +229,22 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		panel_2.add(panelCard3, "Essay");
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setOpaque(false);
+		panel_3.setBackground(Color.RED);
 		GroupLayout gl_panelQuestionDetails = new GroupLayout(panelQuestionDetails);
 		gl_panelQuestionDetails.setHorizontalGroup(
 			gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelQuestionDetails.createSequentialGroup()
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panelQuestionDetails.setVerticalGroup(
 			gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelQuestionDetails.createSequentialGroup()
 					.addGroup(gl_panelQuestionDetails.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panel_2, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-						.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(1, Short.MAX_VALUE))
+						.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		
 		textField_1 = new JTextField();
@@ -1228,10 +1227,5 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 
 	public JComponent getWebScrollPane() {
 		return scrollPane;
-	}
-	
-	public static void main(String[] args) {
-		Quiz_QuestionDesignPanel test = new Quiz_QuestionDesignPanel(null);
-		test.setVisible(true);
 	}
 }

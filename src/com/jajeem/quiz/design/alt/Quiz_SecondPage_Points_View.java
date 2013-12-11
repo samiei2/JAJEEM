@@ -112,7 +112,8 @@ public class Quiz_SecondPage_Points_View extends Quiz_AbstractViews {
 	public void clearTable() {
 		((DefaultTableModel) webTable.getModel()).getDataVector().clear();
 		((DefaultTableModel) webTable.getModel()).fireTableDataChanged();
-		quizResponse.clear();
+		if(quizResponse != null)
+			quizResponse.clear();
 		quizResponse = null;
 	}
 

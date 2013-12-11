@@ -45,6 +45,7 @@ import com.jajeem.command.handler.SetWhiteBlackAppCommandHandler;
 import com.jajeem.command.handler.StartApplicationCommandHanlder;
 import com.jajeem.command.handler.StartCallAllCommandHanlder;
 import com.jajeem.command.handler.StartCaptureCommandHandler;
+import com.jajeem.command.handler.StartConversationCommandHanlder;
 import com.jajeem.command.handler.StartIntercomCommandHandler;
 import com.jajeem.command.handler.StartModelCommandHanlder;
 import com.jajeem.command.handler.StartMoviePlayerCommandHandler;
@@ -58,6 +59,7 @@ import com.jajeem.command.handler.StartViewerCommandHandler;
 import com.jajeem.command.handler.StartWhiteBoardCommandHandler;
 import com.jajeem.command.handler.StopCallAllCommandHanlder;
 import com.jajeem.command.handler.StopCaptureCommandHandler;
+import com.jajeem.command.handler.StopConversationCommandHanlder;
 import com.jajeem.command.handler.StopIntercomCommandHandler;
 import com.jajeem.command.handler.StopModelCommandHanlder;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
@@ -89,6 +91,7 @@ import com.jajeem.command.model.SendSurveyResponseCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartCaptureCommand;
+import com.jajeem.command.model.StartConversationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartMoviePlayerCommand;
@@ -102,6 +105,7 @@ import com.jajeem.command.model.StartViewerCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
 import com.jajeem.command.model.StopCaptureCommand;
+import com.jajeem.command.model.StopConversationCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopQuizCommand;
@@ -949,7 +953,34 @@ public class ClientService implements IConnectorSevice, Runnable {
 							}
 						}
 					});
+				} else if (cmd instanceof StartConversationCommand) {
+					pool.InsertThread(new Runnable() {
 
+						@Override
+						public void run() {
+							StartConversationCommandHanlder startConversationCommand = new StartConversationCommandHanlder();
+							try {
+								startConversationCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
+				} else if (cmd instanceof StopConversationCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							StopConversationCommandHanlder stopConversationCommand = new StopConversationCommandHanlder();
+							try {
+								stopConversationCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
 				}
 
 			} catch (Exception ex) {

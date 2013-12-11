@@ -687,7 +687,8 @@ public class Quiz_SecondPage_Student_View extends Quiz_AbstractViews {
 		studentList.clear();
 		currentStudent = null;
 		currentQuiz = null;
-		quizResponse.clear();
+		if(quizResponse!=null)
+			quizResponse.clear();
 		quizResponse = null;
 	}
 

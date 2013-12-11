@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +43,7 @@ import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
@@ -73,6 +75,7 @@ import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCallAllCommand;
+import com.jajeem.command.model.StartConversationCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StartModelCommand;
 import com.jajeem.command.model.StartSpeechCommand;
@@ -80,6 +83,7 @@ import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.StartVideoChatCommand;
 import com.jajeem.command.model.StartWhiteBoardCommand;
 import com.jajeem.command.model.StopCallAllCommand;
+import com.jajeem.command.model.StopConversationCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
 import com.jajeem.command.model.StopVideoChatCommand;
@@ -91,6 +95,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
@@ -366,6 +371,7 @@ public class InstructorNoaUtil {
 															.setTransmittingType("videoChat");
 												} catch (Exception e) {
 													try {
+														InstructorNoa.getSendOnly().setTransmitting(false);
 														button.setText(i18n
 																.getParam("Video Chat"));
 														button.setEnabled(true);
@@ -777,14 +783,19 @@ public class InstructorNoaUtil {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							try {
-								if (InstructorNoa.getInstructorModel()
-										.getUsername().equals("admin")) {
-									new AdminPanel().setVisible(true);
-								} else {
-
-									new AccountPanel(InstructorNoa
-											.getInstructorModel(),
-											InstructorNoa.getCourseModel());
+								if(InstructorNoa.getInstructorModel()!=null){
+									if (InstructorNoa.getInstructorModel()
+											.getUsername().equals("admin")) {
+										new AdminPanel().setVisible(true);
+									} else {
+	
+										new AccountPanel(InstructorNoa
+												.getInstructorModel(),
+												InstructorNoa.getCourseModel());
+									}
+								}
+								else{
+									WebOptionPane.showMessageDialog(null, "You have not logged in as an autheticated user,this might cause database or program corruptions!");									
 								}
 							} catch (Exception e) {
 								JajeemExcetionHandler.logError(e);
@@ -1053,7 +1064,7 @@ public class InstructorNoaUtil {
 					button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
-
+							button.setEnabled(false);
 							Component card = getActiveCard();
 
 							if (((JComponent) card).getClientProperty(
@@ -1232,6 +1243,7 @@ public class InstructorNoaUtil {
 								}
 
 							}
+							button.setEnabled(true);
 						}
 					});
 					break;
@@ -1788,12 +1800,12 @@ public class InstructorNoaUtil {
 						WebButtonPopup programPopupButton = new WebButtonPopup(
 								(WebButton) button, PopupWay.upCenter);
 
-						WebButton runButton = new WebButton(
+						WebButton stopButton = new WebButton(
 								i18n.getParam("Stop"));
 
 						GroupPanel programPopupContent = new GroupPanel(5,
 								false, new WebScrollPane(programsList),
-								runButton);
+								stopButton);
 						programPopupContent.setMargin(15);
 						programPopupContent.setOpaque(false);
 						programsList.setOpaque(false);
@@ -1833,7 +1845,7 @@ public class InstructorNoaUtil {
 							}
 						});
 
-						runButton.addActionListener(new ActionListener() {
+						stopButton.addActionListener(new ActionListener() {
 
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
@@ -1848,15 +1860,13 @@ public class InstructorNoaUtil {
 								String[] ips = pair.split("\\|");
 
 								try {
-									StopIntercomCommand si;
+									StopConversationCommand si;
 
-									si = new StopIntercomCommand(InetAddress
+									si = new StopConversationCommand(InetAddress
 											.getLocalHost().getHostAddress(),
 											ips[0], Integer.parseInt(Config
 													.getParam("port")));
-									InstructorNoa.getServerService().send(si);
-
-									si.setTo(ips[1]);
+									si.setConversationTo(ips[1]);
 									InstructorNoa.getServerService().send(si);
 
 									InstructorNoa.getConversationPairs()
@@ -2242,20 +2252,7 @@ public class InstructorNoaUtil {
 			}
 		});
 
-		internalFrame.addInternalFrameListener(new InternalFrameListener() {
-
-			@Override
-			public void internalFrameOpened(InternalFrameEvent arg0) {
-			}
-
-			@Override
-			public void internalFrameIconified(InternalFrameEvent arg0) {
-			}
-
-			@Override
-			public void internalFrameDeiconified(InternalFrameEvent arg0) {
-			}
-
+		internalFrame.addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameDeactivated(InternalFrameEvent arg0) {
 
@@ -2281,15 +2278,8 @@ public class InstructorNoaUtil {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
-				// InstructorNoa.getDesktopPane().getSelectedFrame()
-				// .putClientProperty("isselected", false);
 			}
-
-			@Override
-			public void internalFrameClosing(InternalFrameEvent arg0) {
-			}
-
+			
 			@Override
 			public void internalFrameClosed(InternalFrameEvent arg0) {
 				try {
@@ -2317,8 +2307,6 @@ public class InstructorNoaUtil {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				// InstructorNoa.getDesktopPane().getSelectedFrame()
-				// .putClientProperty("isselected", true);
 			}
 		});
 
@@ -2332,28 +2320,7 @@ public class InstructorNoaUtil {
 				.getComponent(0)).setComponentPopupMenu(popup);
 
 		((JComponent) internalFrame.getComponent(1))
-				.addMouseListener(new MouseListener() {
-
-					@Override
-					public void mouseReleased(MouseEvent e) {
-
-					}
-
-					@Override
-					public void mousePressed(MouseEvent e) {
-
-					}
-
-					@Override
-					public void mouseExited(MouseEvent e) {
-
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						// JOptionPane.showMessageDialog(null, "mcv");
-					}
-
+				.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						internalFrameMouseClicked(e);
@@ -2363,28 +2330,7 @@ public class InstructorNoaUtil {
 		((ScreenPlayer) ((JViewport) ((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
 				.getComponent(0)).getComponent(1)).getComponent(0))
 				.getComponent(0)).getComponent(0)).getComponent(0))
-				.addMouseListener(new MouseListener() {
-
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						// JOptionPane.showMessageDialog(null, "not");
-					}
-
-					@Override
-					public void mousePressed(MouseEvent e) {
-
-					}
-
-					@Override
-					public void mouseExited(MouseEvent e) {
-						// JOptionPane.showMessageDialog(null, "not");
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						// JOptionPane.showMessageDialog(null, "not");
-					}
-
+				.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						internalFrameMouseClicked(e);
@@ -2681,33 +2627,35 @@ public class InstructorNoaUtil {
 	}
 
 	protected static void internalFrameMouseClicked(MouseEvent e) {
-		if (previousFrame != null
-				&& !previousFrame.equals(InstructorNoa.getDesktopPane()
-						.getSelectedFrame())) {
-			previousFrame.putClientProperty("isselected", false);
-		}
-		if (InstructorNoa.getDesktopPane().getSelectedFrame()
-				.getClientProperty("isselected").equals(false)) {
-			InstructorNoa.getDesktopPane().getSelectedFrame()
-					.putClientProperty("isselected", true);
-			try {
-				InstructorNoa.getDesktopPane().getSelectedFrame()
-						.setSelected(true);
-				previousFrame = InstructorNoa.getDesktopPane()
-						.getSelectedFrame();
-			} catch (PropertyVetoException ex) {
-				ex.printStackTrace();
+		if(e.getButton() == MouseEvent.BUTTON1){
+			if (previousFrame != null
+					&& !previousFrame.equals(InstructorNoa.getDesktopPane()
+							.getSelectedFrame())) {
+				previousFrame.putClientProperty("isselected", false);
 			}
-		} else {
-			InstructorNoa.getDesktopPane().getSelectedFrame()
-					.putClientProperty("isselected", false);
-			try {
+			if (InstructorNoa.getDesktopPane().getSelectedFrame()
+					.getClientProperty("isselected").equals(false)) {
 				InstructorNoa.getDesktopPane().getSelectedFrame()
-						.setSelected(false);
-				previousFrame = InstructorNoa.getDesktopPane()
-						.getSelectedFrame();
-			} catch (PropertyVetoException ex) {
-				ex.printStackTrace();
+						.putClientProperty("isselected", true);
+				try {
+					InstructorNoa.getDesktopPane().getSelectedFrame()
+							.setSelected(true);
+					previousFrame = InstructorNoa.getDesktopPane()
+							.getSelectedFrame();
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
+			} else {
+				InstructorNoa.getDesktopPane().getSelectedFrame()
+						.putClientProperty("isselected", false);
+				try {
+					InstructorNoa.getDesktopPane().getSelectedFrame()
+							.setSelected(false);
+					previousFrame = InstructorNoa.getDesktopPane()
+							.getSelectedFrame();
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
@@ -2973,25 +2921,34 @@ public class InstructorNoaUtil {
 
 	private static void StartIntercomePair(String ipFrom, String ipTo) {
 
-		StartIntercomCommand si;
-		try {
-			si = new StartIntercomCommand(InetAddress.getLocalHost()
-					.getHostAddress(), ipFrom, Integer.parseInt(Config
-					.getParam("port")));
-			si.setFrom(ipTo);
-			InstructorNoa.getServerService().send(si);
+//		StartIntercomCommand si;
+//		try {
+//			si = new StartIntercomCommand(InetAddress.getLocalHost()
+//					.getHostAddress(), ipFrom, Integer.parseInt(Config
+//					.getParam("port")));
+//			si.setFrom(ipTo);
+//			InstructorNoa.getServerService().send(si);
+//
+//			si.setFrom(ipFrom);
+//			si.setTo(ipTo);
+//			InstructorNoa.getServerService().send(si);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
 
-			si.setFrom(ipFrom);
-			si.setTo(ipTo);
-			InstructorNoa.getServerService().send(si);
+
+		try {
+			StartConversationCommand command = new StartConversationCommand(InetAddress.getLocalHost().getHostAddress(), ipFrom, Integer.parseInt(Config.getParam("port")));
+			command.setConversationTo(ipTo);
+			InstructorNoa.getServerService().send(command);
+			
+			InstructorNoa.getConversationIps().add(ipFrom);
+			InstructorNoa.getConversationIps().add(ipTo);
+			InstructorNoa.getConversationPairs().add(ipFrom + "|" + ipTo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		InstructorNoa.getConversationIps().add(ipFrom);
-		InstructorNoa.getConversationIps().add(ipTo);
-		InstructorNoa.getConversationPairs().add(ipFrom + "|" + ipTo);
-
 	}
 
 	public static boolean getCallAllActive() {
