@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExcetionHandler;

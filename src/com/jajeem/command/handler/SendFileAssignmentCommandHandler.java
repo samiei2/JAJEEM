@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileAssignmentCommand;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.filemanager.client.AssignmentTimer;
 
 public class SendFileAssignmentCommandHandler implements ICommandHandler {

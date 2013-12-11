@@ -1,4 +1,4 @@
-package com.jajeem.util;
+package com.jajeem.core.design.ui;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -35,6 +35,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.alee.laf.button.WebButton;
+import com.jajeem.util.CustomButton;
+import com.jajeem.util.WindowResizeAdapter;
+import com.jajeem.util.test;
 
 public class CustomTeacherFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -310,150 +313,5 @@ public class CustomTeacherFrame extends JFrame {
 
 	public Container getMainContentPane() {
 		return panel_2;
-	}
-}
-
-class CustomMainPanel extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private BufferedImage originalImage;
-
-	CustomMainPanel(String imageURI) {
-		try {
-			originalImage = ImageIO.read(test.class.getResource(imageURI));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setOpaque(false);
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		Graphics g2 = g.create();
-		g2.drawImage(originalImage, 0, 0, getWidth(), getHeight(), null);
-		g2.dispose();
-	}
-
-	@Override
-	public int getWidth() {
-		int w = super.getWidth();
-		return w;
-	}
-
-	@Override
-	public int getHeight() {
-		int h = super.getHeight();
-		return h;
-	}
-}
-
-class CustomMainButton extends WebButton {
-	private static final long serialVersionUID = 1L;
-	private BufferedImage originalImage;
-	int width, height = 20;
-	int x = 10;
-	int y = 5;
-	BufferedImage background;
-	BufferedImage rollover;
-	BufferedImage selected;
-
-	boolean isRollOver, isPressed;
-
-	CustomMainButton(String imageURI) {
-		try {
-			originalImage = ImageIO.read(test.class.getResource(imageURI));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setUndecorated(false);
-	}
-
-	CustomMainButton(String imageURI, int w, int h) {
-
-		{
-			try {
-				URL inp = CustomButton.class.getResource(imageURI + ".png");
-				background = ImageIO.read(inp);
-				inp = CustomButton.class.getResource(imageURI + "Hover.png");
-				rollover = ImageIO.read(inp);
-				inp = CustomButton.class.getResource(imageURI + "Pressed.png");
-				selected = ImageIO.read(inp);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			getModel().addChangeListener(new ChangeListener() {
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					ButtonModel model = (ButtonModel) e.getSource();
-					if (model.isRollover()) {
-						isRollOver = true;
-					} else {
-						isRollOver = false;
-					}
-					if (model.isPressed()) {
-						isPressed = true;
-					} else {
-						isPressed = false;
-					}
-				}
-			});
-		}
-
-		setOpaque(false);
-		width = w;
-		height = h;
-	}
-
-	CustomMainButton(String imageURI, int w, int h, int x, int y) {
-		{
-			try {
-				URL inp = CustomButton.class.getResource(imageURI + ".png");
-				background = ImageIO.read(inp);
-				// inp = CustomButton.class.getResource(imageURI+"Hover.png");
-				// rollover = ImageIO.read(inp);
-				// inp = CustomButton.class.getResource(imageURI+"Pressed.png");
-				// selected = ImageIO.read(inp);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			getModel().addChangeListener(new ChangeListener() {
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					ButtonModel model = (ButtonModel) e.getSource();
-					if (model.isRollover()) {
-						isRollOver = true;
-					} else {
-						isRollOver = false;
-					}
-					if (model.isPressed()) {
-						isPressed = true;
-					} else {
-						isPressed = false;
-					}
-				}
-			});
-		}
-		try {
-			originalImage = ImageIO.read(test.class.getResource(imageURI
-					+ ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setOpaque(false);
-		width = w;
-		height = h;
-		this.x = x;
-		this.y = y;
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		Graphics g2 = g.create();
-		if (background != null) {
-			g2.drawImage(background, x, y, width, height, null);
-		}
-		g2.dispose();
 	}
 }

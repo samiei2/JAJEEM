@@ -1,4 +1,4 @@
-package com.jajeem.util;
+package com.jajeem.core.design.ui;
 
 import static java.lang.Thread.sleep;
 
@@ -33,6 +33,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.jajeem.util.CustomCloseButton;
 
 public class CustomStudentFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -171,7 +173,7 @@ public class CustomStudentFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				mainFrame.setExtendedState(Frame.ICONIFIED);
 				// trayIcon.add();
-				// mainFrame.setVisible(false);
+				// mainFrame.setVisible(flse);
 			}
 		});
 

@@ -4,10 +4,10 @@ import java.net.InetAddress;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartUpCommand;
-import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.InstructorNoaUtil;
-import com.jajeem.core.design.Student;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.Student;
+import com.jajeem.core.design.student.StudentLogin;
+import com.jajeem.core.design.teacher.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoaUtil;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {

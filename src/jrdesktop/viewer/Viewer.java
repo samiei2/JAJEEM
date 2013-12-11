@@ -28,7 +28,7 @@ import jrdesktop.utilities.ClipbrdUtility;
 import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.FileMng.FileTransGUI;
 
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 
 /**
  * Viewer.java

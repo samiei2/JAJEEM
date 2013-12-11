@@ -19,7 +19,7 @@ import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.table.WebTable;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;

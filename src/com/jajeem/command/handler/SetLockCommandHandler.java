@@ -1,7 +1,7 @@
 package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
 

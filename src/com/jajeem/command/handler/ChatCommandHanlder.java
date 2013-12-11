@@ -4,8 +4,8 @@ import java.net.InetAddress;
 
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.util.Config;

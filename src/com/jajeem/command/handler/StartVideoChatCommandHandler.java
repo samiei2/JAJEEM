@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import org.jitsi.service.libjitsi.LibJitsi;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
 
 public class StartVideoChatCommandHandler implements ICommandHandler {

@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.teacher;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -9,7 +9,7 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;

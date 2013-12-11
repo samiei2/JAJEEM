@@ -6,7 +6,7 @@ import org.jitsi.service.libjitsi.LibJitsi;
 import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
 

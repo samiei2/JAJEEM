@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.GetCourseListCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.room.model.Course;

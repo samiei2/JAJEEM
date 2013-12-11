@@ -40,7 +40,7 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.quiz.model.Question;

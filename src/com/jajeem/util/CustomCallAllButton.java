@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import com.alee.laf.button.WebButton;
-import com.jajeem.core.design.InstructorNoaUtil;
+import com.jajeem.core.design.teacher.InstructorNoaUtil;
 
 public class CustomCallAllButton extends WebButton {
 	/**

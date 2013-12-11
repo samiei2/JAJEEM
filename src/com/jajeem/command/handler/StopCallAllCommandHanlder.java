@@ -1,7 +1,7 @@
 package com.jajeem.command.handler;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.util.ClientSession;
 
 public class StopCallAllCommandHanlder implements ICommandHandler {

@@ -41,7 +41,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.QuizEvent;
 import com.jajeem.events.QuizEventListener;
@@ -515,7 +515,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 	}
 	
 	private void initEvents(Run run) {
-		privateStudent = com.jajeem.core.design.Student.getStudentModel();
+		privateStudent = com.jajeem.core.design.student.Student.getStudentModel();
 		currentRun = run;
 		currentRun.setStudent(privateStudent);
 

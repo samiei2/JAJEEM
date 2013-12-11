@@ -8,7 +8,7 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.StartIntercomCommand;
 import com.jajeem.command.model.StopIntercomCommand;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.util.Config;
 
 public class IntercomRequestCommandHanlder implements ICommandHandler {

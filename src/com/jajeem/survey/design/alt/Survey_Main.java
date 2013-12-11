@@ -50,7 +50,7 @@ import com.jajeem.command.model.StartSurveyCommand;
 import com.jajeem.command.model.StopSurveyCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;

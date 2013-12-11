@@ -32,7 +32,7 @@ public class VNCCaptureService implements ICaptureService {
 		viewer.getRecorder().Stop();
 		viewer.getRecorder().viewerGUI.dispose();
 		viewer.Stop();
-		viewer.destroy();
+//		viewer.destroy();
 	}
 
 	public void startClientDialog() {

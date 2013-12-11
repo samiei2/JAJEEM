@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.teacher;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -87,6 +87,7 @@ import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.core.design.ui.CustomTeacherFrame;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
@@ -102,7 +103,6 @@ import com.jajeem.util.CustomJList;
 import com.jajeem.util.CustomPanel;
 import com.jajeem.util.CustomPowerButton;
 import com.jajeem.util.CustomPowerPanel;
-import com.jajeem.util.CustomTeacherFrame;
 import com.jajeem.util.CustomTopButton;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
@@ -242,7 +242,7 @@ public class InstructorNoa {
 		});
 
 		langListModel.addElement("English");
-		langListModel.addElement("فارسی");
+		langListModel.addElement("�?ارسی");
 		langList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {

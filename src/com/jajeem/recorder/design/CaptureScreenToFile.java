@@ -44,7 +44,7 @@ import com.alee.laf.StyleConstants;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.model.SendRecordingErrorCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;

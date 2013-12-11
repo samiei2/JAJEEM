@@ -9,7 +9,7 @@ import org.jitsi.examples.AVSendOnly;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartModelCommand;
-import com.jajeem.core.design.Student;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
 

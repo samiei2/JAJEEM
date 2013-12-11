@@ -1,15 +1,50 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.student;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.managers.tooltip.TooltipManager;
+import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.command.model.RequestCourseListCommand;
+import com.jajeem.core.design.ui.BaseStudentFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import com.jajeem.core.design.ui.CustomMainButton;
+import com.jajeem.core.design.ui.CustomStudentButton;
+import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.filemanager.client.ClientFileManagerMain;
+
+import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.Timer;
+
+import java.awt.Font;
+import javax.swing.SwingConstants;
+
+import org.jitsi.examples.AVReceiveOnly;
+import org.jitsi.examples.AVSendOnly;
+import org.jitsi.examples.AVTransmit2;
+import org.jitsi.impl.neomedia.codec.audio.silk.InitEncoderFLP;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -18,44 +53,31 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-
-import org.jitsi.examples.AVReceiveOnly;
-import org.jitsi.examples.AVSendOnly;
-import org.jitsi.examples.AVTransmit2;
-
-import com.alee.laf.WebLookAndFeel;
-import com.alee.managers.tooltip.TooltipManager;
-import com.alee.managers.tooltip.TooltipWay;
-import com.jajeem.command.model.RequestCourseListCommand;
-import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.recorder.design.RecorderStudent;
 import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.util.Config;
-import com.jajeem.util.CustomButtonStudent;
-import com.jajeem.util.CustomStudentFrame;
+import com.jajeem.util.CustomButton;
+import com.jajeem.util.CustomCloseButton;
 import com.jajeem.util.i18n;
 
 public class Student {
-	CustomStudentFrame frm;
-	static CustomStudentFrame jajeemProject;
+
+	private JPanel contentPane;
+	private JLabel lblNewLabel_1;
+	private CustomCloseButton buttonMin;
+	private CustomCloseButton buttonClose;
+	
+	BaseStudentFrame frm;
+	static BaseStudentFrame jajeemProject;
 	Font font = new Font("Arial", Font.BOLD, 20);
-	private CustomButtonStudent buttonFileManager;
-	private CustomButtonStudent buttonMoviePlayer;
-	private CustomButtonStudent buttonRecording;
-	private CustomButtonStudent buttonContactInstructor;
-	private static CustomButtonStudent buttonContactInstructorTemp;
-	private CustomButtonStudent buttonAccountManager;
+	private CustomStudentButton buttonFileManager;
+	private CustomStudentButton buttonMoviePlayer;
+	private CustomStudentButton buttonRecording;
+	private CustomStudentButton buttonContactInstructor;
+	private static CustomStudentButton buttonContactInstructorTemp;
+	private CustomStudentButton buttonAccountManager;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
 
@@ -67,16 +89,20 @@ public class Student {
 
 	private static com.jajeem.core.model.Student studentModel;
 	private static boolean granted = false;
-	private static CustomButtonStudent recordButtonStatic;
+	private static CustomStudentButton recordButtonStatic;
 	private Timer timer;
 	private static int countdown = 30000;
 
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
 					Student frame = new Student();
+//					frame.getMainFrame().setSize(400, 500);
+//					frame.getMainFrame().pack();
 					frame.getMainFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -112,50 +138,7 @@ public class Student {
 		});
 		timer.setInitialDelay(0);
 		timer.start();
-
-		CustomStudentFrame mainFram = new CustomStudentFrame();
-		mainFram.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Student.class.getResource("/icons/noa_en/logo.png")));
-		jajeemProject = mainFram;
-		setMainFrame(mainFram);
-		mainFram.setResizable(false);
-		// mainFram.setAlwaysOnTop(true);
-		try {
-			mainFram.setTitle(i18n.getParam("Classmate"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mainFram.setSize(441, 436);
-
-		GraphicsEnvironment ge = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
-		GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
-		Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
-		int x = (int) rect.getMaxX() - mainFram.getWidth();
-		int y = (int) ((rect.getMaxY() - mainFram.getHeight()));
-		mainFram.setLocation(x, y);
-
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		GroupLayout groupLayout = new GroupLayout(mainFram.getMainContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(17, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
-
+		
 		ImageIcon imgToolTip = null;
 		try {
 			imgToolTip = new ImageIcon(ImageIO.read(Student.class
@@ -202,8 +185,8 @@ public class Student {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		buttonContactInstructor = new CustomButtonStudent(imgMessage);
+		
+		buttonContactInstructor = new CustomStudentButton(imgMessage);
 		buttonContactInstructor.setUndecorated(true);
 		buttonContactInstructor.setHorizontalAlignment(SwingConstants.LEADING);
 		buttonContactInstructor.setMargin(0, 10, 0, 0);
@@ -218,8 +201,8 @@ public class Student {
 			e.printStackTrace();
 		}
 		buttonContactInstructorTemp = buttonContactInstructor;
-
-		buttonFileManager = new CustomButtonStudent(imgFile);
+		
+		buttonFileManager = new CustomStudentButton(imgFile);
 		buttonFileManager.setUndecorated(true);
 		buttonFileManager.setHorizontalAlignment(SwingConstants.LEADING);
 		buttonFileManager.setMargin(0, 10, 0, 0);
@@ -234,8 +217,8 @@ public class Student {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		buttonMoviePlayer = new CustomButtonStudent(imgVideo);
+		
+		buttonMoviePlayer = new CustomStudentButton(imgVideo);
 		buttonMoviePlayer.setUndecorated(true);
 		buttonMoviePlayer.setHorizontalAlignment(SwingConstants.LEADING);
 		buttonMoviePlayer.setMargin(0, 10, 0, 0);
@@ -249,8 +232,8 @@ public class Student {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		buttonRecording = new CustomButtonStudent(imgRecord);
+		
+		buttonRecording = new CustomStudentButton(imgRecord);
 		buttonRecording.setUndecorated(true);
 		buttonRecording.setHorizontalAlignment(SwingConstants.LEADING);
 		buttonRecording.setMargin(0, 10, 0, 0);
@@ -265,8 +248,8 @@ public class Student {
 			e.printStackTrace();
 		}
 		recordButtonStatic = buttonRecording;
-
-		buttonAccountManager = new CustomButtonStudent(imgAccount);
+		
+		buttonAccountManager = new CustomStudentButton(imgAccount);
 		buttonAccountManager.setUndecorated(true);
 		buttonAccountManager.setHorizontalAlignment(SwingConstants.LEADING);
 		buttonAccountManager.setMargin(0, 10, 0, 0);
@@ -280,79 +263,144 @@ public class Student {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING, false)
-												.addComponent(
-														buttonFileManager,
-														GroupLayout.PREFERRED_SIZE,
-														308,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														buttonMoviePlayer,
-														GroupLayout.PREFERRED_SIZE,
-														308,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														buttonRecording,
-														GroupLayout.PREFERRED_SIZE,
-														308,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														buttonAccountManager,
-														GroupLayout.PREFERRED_SIZE,
-														308,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														buttonContactInstructor,
-														GroupLayout.PREFERRED_SIZE,
-														308,
-														GroupLayout.PREFERRED_SIZE))
-								.addContainerGap(35, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(buttonContactInstructor,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonFileManager,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonMoviePlayer,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonRecording,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(buttonAccountManager,
-								GroupLayout.PREFERRED_SIZE, 41,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(15, Short.MAX_VALUE)));
-		panel.setLayout(gl_panel);
-
-		mainFram.getMainContentPane().setLayout(groupLayout);
-
-		initEvents();
-
+		
+		BaseStudentFrame frame = new BaseStudentFrame();
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPanel());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(buttonContactInstructor, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(buttonFileManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(buttonMoviePlayer, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(buttonRecording, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(buttonAccountManager, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(20, Short.MAX_VALUE))
+		);
+		frame.getContentPanel().setLayout(groupLayout);
+		
+		JLabel lblNewLabel = new JLabel("ClassMate");
+		lblNewLabel.setForeground(Color.DARK_GRAY);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Century", Font.PLAIN, 30));
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		GroupLayout groupLayout_1 = new GroupLayout(frame.getLogoPanel());
+		groupLayout_1.setHorizontalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout_1.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout_1.setVerticalGroup(
+			groupLayout_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_1, 80, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNewLabel, 20, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		frame.getLogoPanel().setLayout(groupLayout_1);
+		
+		frame.setPreferredSize(new Dimension(300, 500));
+		
+		buttonClose = new CustomCloseButton("/icons/noa_en/close.png");
+		buttonClose.setUndecorated(true);
+		
+		buttonMin = new CustomCloseButton("/icons/noa_en/min.png");
+		buttonMin.setUndecorated(true);
+		GroupLayout groupLayout_2 = new GroupLayout(frame.getClosePanel());
+		groupLayout_2.setHorizontalGroup(
+			groupLayout_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(buttonMin, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(buttonClose, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout_2.setVerticalGroup(
+			groupLayout_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout_2.createSequentialGroup()
+					.addGroup(groupLayout_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout_2.createSequentialGroup()
+							.addGap(6)
+							.addComponent(buttonClose, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout_2.createSequentialGroup()
+							.addGap(12)
+							.addComponent(buttonMin, GroupLayout.PREFERRED_SIZE, 8, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		frame.getClosePanel().setLayout(groupLayout_2);
+		
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setSize(new Dimension(300,500));
+		GraphicsEnvironment ge = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+//		GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
+		Rectangle rect = ge.getMaximumWindowBounds();
+		int x = (int) rect.getMaxX() - frame.getWidth();
+		int y = (int) ((rect.getMaxY() - frame.getHeight()));
+		frame.setLocation(x, y);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
+				Student.class.getResource("/icons/noa_en/logo.png")));
+		frame.setResizable(false);
+		jajeemProject = frame;
+		setMainFrame(frame);
+		
+		InitEvents();
 	}
 
-	public static Window getFrmJajeemProject() {
-		return jajeemProject;
-	}
-
-	private void initEvents() {
+	private void InitEvents() {
+		getMainFrame().addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentShown(ComponentEvent e) {
+				lblNewLabel_1.setIcon(
+						new ImageIcon(
+								new ImageIcon(Student.class.getResource("/icons/noa_en/New/loginlogo.png"))
+								.getImage()
+								.getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getHeight(), Image.SCALE_SMOOTH)));
+				super.componentShown(e);
+			}
+		});
+		
+		buttonClose.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getMainFrame().setVisible(false);
+			}
+		});
+		
+		buttonMin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getMainFrame().setExtendedState(JFrame.ICONIFIED);
+			}
+		});
+		
 		buttonFileManager.addActionListener(new ActionListener() {
 
 			@Override
@@ -445,7 +493,10 @@ public class Student {
 							.getLocalHost().getHostAddress(), StudentLogin
 							.getServerIp(), Integer.parseInt(Config
 							.getParam("serverPort")), studentModel);
-					StudentLogin.getServerService().send(gcc);
+					if(StudentLogin.getServerService()!=null)
+						StudentLogin.getServerService().send(gcc);
+					else
+						WebOptionPane.showMessageDialog(null, "You are not logged in!\nPlease log in first!", "Error", WebOptionPane.ERROR_MESSAGE);
 				} catch (Exception e1) {
 					JajeemExcetionHandler.logError(e1);
 					e1.printStackTrace();
@@ -453,12 +504,16 @@ public class Student {
 			}
 		});
 	}
-
-	public CustomStudentFrame getMainFrame() {
+	
+	public static Window getFrmJajeemProject() {
+		return jajeemProject;
+	}
+	
+	public BaseStudentFrame getMainFrame() {
 		return frm;
 	}
 
-	private void setMainFrame(CustomStudentFrame std) {
+	private void setMainFrame(BaseStudentFrame std) {
 		this.frm = std;
 	}
 
@@ -522,12 +577,12 @@ public class Student {
 		Student.granted = granted;
 	}
 
-	public static CustomButtonStudent getRecordButtonStatic() {
+	public static CustomStudentButton getRecordButtonStatic() {
 		return recordButtonStatic;
 	}
 
 	public static void setRecordButtonStatic(
-			CustomButtonStudent recordButtonStatic) {
+			CustomStudentButton recordButtonStatic) {
 		Student.recordButtonStatic = recordButtonStatic;
 	}
 
@@ -539,7 +594,7 @@ public class Student {
 		Student.countdown = countdown;
 	}
 
-	public static CustomButtonStudent getButtonContactInstructor() {
+	public static CustomStudentButton getButtonContactInstructor() {
 		return buttonContactInstructorTemp;
 	}
 }

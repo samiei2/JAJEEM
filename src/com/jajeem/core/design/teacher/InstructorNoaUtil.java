@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.teacher;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -95,6 +95,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
+import com.jajeem.core.design.ui.CustomTeacherFrame;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
@@ -106,7 +107,6 @@ import com.jajeem.share.service.VNCCaptureService;
 import com.jajeem.survey.design.alt.Survey_Main;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomPowerPanel;
-import com.jajeem.util.CustomTeacherFrame;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.LnkParser;
 import com.jajeem.util.Session;
@@ -444,8 +444,11 @@ public class InstructorNoaUtil {
 					break;
 				case "model":
 					button.addActionListener(new ActionListener() {
+						@SuppressWarnings("null")
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
+							jrdesktop.Config conf;
+							VNCCaptureService vnc = Session.getModelingWindow();
 							Component card = null;
 							for (Component comp : InstructorNoa
 									.getCenterPanel().getComponents()) {
@@ -493,7 +496,7 @@ public class InstructorNoaUtil {
 														.initialize("audio");
 											}
 
-											jrdesktop.Config conf = null;
+											conf = null;
 											conf = new jrdesktop.Config(
 													false,
 													"",
@@ -502,9 +505,10 @@ public class InstructorNoaUtil {
 															.getParam("vncPort")),
 													"admin", "admin", false,
 													false);
-
-											VNCCaptureService vnc = new VNCCaptureService();
+											vnc = null;
+											vnc = new VNCCaptureService();
 											vnc.startClient(conf);
+											Session.setModelingWindowHandle(vnc);
 											button.setText(i18n
 													.getParam("Stop"));
 
@@ -520,6 +524,11 @@ public class InstructorNoaUtil {
 													.send(sm);
 											InstructorNoa.getReceiverOnly()
 													.close();
+											try{
+												vnc.stopClient();
+											}catch(Exception e){
+												e.printStackTrace();
+											}
 											button.setText(i18n
 													.getParam("Modeling"));
 											InstructorNoa.setModeling(false);
@@ -2615,7 +2624,18 @@ public class InstructorNoaUtil {
 			if (!listOfStudents.contains(hostIp)) {
 				DefaultTableModel model = (DefaultTableModel) InstructorNoa
 						.getStudentListTable().getModel();
-				model.addRow(new Object[] { hostIp, hostName });
+				boolean found = false;
+				for (int i = 0; i < model.getRowCount(); i++) {
+					String ip = model.getValueAt(i, 0).toString();
+					if(ip.equals(hostIp)){
+						model.removeRow(i);
+						model.addRow(new Object[]{hostIp,hostName});
+						found = true;
+						break;
+					}
+				}
+				if(!found)
+					model.addRow(new Object[] { hostIp, hostName });
 
 				desktopPane.add(internalFrame, BorderLayout.CENTER);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()

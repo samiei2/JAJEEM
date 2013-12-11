@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.teacher;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -579,7 +579,7 @@ class LoginRoundedPasswordBox extends JPasswordField{
         addFocusListener(new FocusAdapter(){
         	@Override
         	public void focusGained(FocusEvent e) {
-        		setEchoChar('●');
+        		setEchoChar('\u2022');
         		if(getText().equals(watermarkText))
         			setText("");
         		super.focusGained(e);

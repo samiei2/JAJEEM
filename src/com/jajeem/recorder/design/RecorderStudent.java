@@ -25,11 +25,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
+import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.jajeem.core.design.Student;
+import com.alee.laf.optionpane.WebOptionPane;
+import com.jajeem.core.design.student.Student;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
@@ -60,6 +64,11 @@ public class RecorderStudent extends CustomRecorderDialog {
 
 	public RecorderStudent(ArrayList<String> selections, boolean isGroup,
 			boolean isInstructor) {
+		try {
+			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+		} catch (Exception e2) {
+			WebOptionPane.showMessageDialog(null, "Look and feel could not be initialized!\nPlease Contact administrator!","Internal Error",WebOptionPane.ERROR_MESSAGE);
+		}
 		frame = this;
 		setAlwaysOnTop(true);
 		setModal(false);
@@ -73,14 +82,8 @@ public class RecorderStudent extends CustomRecorderDialog {
 				stopIcon.getIconWidth() - 15, stopIcon.getIconHeight() - 15,
 				Image.SCALE_SMOOTH));
 
-		ImageIcon playIcon = new ImageIcon(
-				Recorder.class.getResource("/icons/noa_en/recorderplay.png"));
-		new ImageIcon(playIcon.getImage().getScaledInstance(
-				playIcon.getIconWidth() - 15, playIcon.getIconHeight() - 15,
-				Image.SCALE_SMOOTH));
-
 		ImageIcon recordIcon = new ImageIcon(
-				Recorder.class.getResource("/icons/noa_en/recorderplay.png"));
+				Recorder.class.getResource("/icons/noa_en/recorderrecord.png"));
 		recordIconScaled = new ImageIcon(recordIcon.getImage()
 				.getScaledInstance(recordIcon.getIconWidth() - 15,
 						recordIcon.getIconHeight() - 15, Image.SCALE_SMOOTH));
@@ -94,7 +97,6 @@ public class RecorderStudent extends CustomRecorderDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (wbtnRecord.getText().equals("Record Voice Only")) {
-					// wbtnPlay.setEnabled(false);
 					audioInputStream = capt.audioInputStream;
 					capt.start();
 					isRecordingVoice = true;
@@ -102,18 +104,13 @@ public class RecorderStudent extends CustomRecorderDialog {
 					wbtnRecord.setIcon(stopIconScaled);
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
-					// wbtnPlay.setEnabled(false);
-					// progressBarFrame.setVisible(true);
 				} else {
-					// wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
 					wbtnRecord.setIcon(recordIconScaled);
 					capt.stop();
 					isRecordingVoice = false;
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
-					// wbtnPlay.setEnabled(true);
-					// progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
 
@@ -242,7 +239,6 @@ public class RecorderStudent extends CustomRecorderDialog {
 					wbtnRecordBoth.setIcon(stopIconScaled);
 					wbtnRecordDesktopOnly.setEnabled(false);
 					wbtnRecord.setEnabled(false);
-					// progressBarFrame.setVisible(true);
 				} else {
 					CaptureScreenToFile.StopCapture();
 					isRecordingBoth = false;
@@ -250,7 +246,6 @@ public class RecorderStudent extends CustomRecorderDialog {
 					wbtnRecordBoth.setIcon(recordIconScaled);
 					wbtnRecordDesktopOnly.setEnabled(true);
 					wbtnRecord.setEnabled(true);
-					// progressBarFrame.setVisible(false);
 				}
 			}
 		});
@@ -311,7 +306,6 @@ public class RecorderStudent extends CustomRecorderDialog {
 			wbtnRecord.setIcon(stopIconScaled);
 			wbtnRecordBoth.setEnabled(false);
 			wbtnRecordDesktopOnly.setEnabled(false);
-			// wbtnPlay.setEnabled(false);
 		} else if (isRecordingDesktop) {
 			wbtnRecordDesktopOnly.setText("Stop");
 			wbtnRecordDesktopOnly.setIcon(stopIconScaled);

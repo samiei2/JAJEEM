@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.room.model.Course;
+import com.jajeem.share.service.VNCCaptureService;
 
 public class Session {
 
@@ -23,6 +24,7 @@ public class Session {
 	private static ArrayList<String> recordingList = new ArrayList<>();
 	private static HashMap<String, String> loggedInStudents = new HashMap();
 	private static Course course;
+	private static VNCCaptureService modelingWindowHndl;
 
 	public static void setInstructor(Instructor instructor) {
 		Session.instructor = instructor;
@@ -128,5 +130,13 @@ public class Session {
 	public static void setLoggedInStudents(
 			HashMap<String, String> loggedInStudents) {
 		Session.loggedInStudents = loggedInStudents;
+	}
+
+	public static void setModelingWindowHandle(VNCCaptureService vnc) {
+		modelingWindowHndl = vnc;
+	}
+
+	public static VNCCaptureService getModelingWindow() {
+		return modelingWindowHndl;
 	}
 }

@@ -33,16 +33,18 @@ import javax.swing.SwingConstants;
 import com.alee.extended.filechooser.WebDirectoryChooser;
 import com.alee.laf.StyleConstants;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.command.model.StartStudentRecordCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.InstructorNoaUtil;
+import com.jajeem.core.design.teacher.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoaUtil;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
+import com.sun.media.rtsp.protocol.MessageType;
 
 public class Recorder extends CustomRecorderDialog {
 
@@ -109,7 +111,6 @@ public class Recorder extends CustomRecorderDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (wbtnRecord.getText().equals("Record Voice Only")) {
-					// wbtnPlay.setEnabled(false);
 					audioInputStream = capt.audioInputStream;
 					capt.start();
 					isRecordingVoice = true;
@@ -117,18 +118,13 @@ public class Recorder extends CustomRecorderDialog {
 					wbtnRecord.setIcon(stopIconScaled);
 					wbtnRecordBoth.setEnabled(false);
 					wbtnRecordDesktopOnly.setEnabled(false);
-					// wbtnPlay.setEnabled(false);
-					// progressBarFrame.setVisible(true);
 				} else {
-					// wbtnPlay.setEnabled(true);
 					wbtnRecord.setText("Record Voice Only");
 					wbtnRecord.setIcon(recordIconScaled);
 					capt.stop();
 					isRecordingVoice = false;
 					wbtnRecordBoth.setEnabled(true);
 					wbtnRecordDesktopOnly.setEnabled(true);
-					// wbtnPlay.setEnabled(true);
-					// progressBarFrame.setVisible(false);
 					try {
 						Thread.sleep(500);
 
@@ -185,6 +181,7 @@ public class Recorder extends CustomRecorderDialog {
 									AudioFileFormat.Type.WAVE, file);
 						} catch (Exception ex) {
 							JajeemExcetionHandler.logError(ex, Recorder.class);
+							WebOptionPane.showMessageDialog(null, "Internal Error!\nRecording may be corrupted!\nRestarting the application might fix the problem.","Internal Error",WebOptionPane.ERROR_MESSAGE);
 						}
 						file.flush();
 						file.close();
@@ -517,26 +514,5 @@ public class Recorder extends CustomRecorderDialog {
 
 		} catch (Exception e) {
 		}
-	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					// UIManager.setLookAndFeel(WebLookAndFeel.class
-					// .getCanonicalName());
-
-					new Config();
-					new i18n();
-
-					Recorder frame = new Recorder(new ArrayList<String>(),
-							false, true);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 }

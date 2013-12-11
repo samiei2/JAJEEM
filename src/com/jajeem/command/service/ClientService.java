@@ -118,7 +118,7 @@ import com.jajeem.command.model.TeacherLogoutCommand;
 import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
-import com.jajeem.core.design.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.Config;
 

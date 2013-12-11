@@ -47,12 +47,6 @@ public class Capture implements Runnable {
 
 	public void stop() {
 		thread = null;
-		// try {
-		// if(Config.getParam("server").equals("1"))
-		// overlayframe.setVisible(false);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
 	}
 
 	private void shutDown(String message) {

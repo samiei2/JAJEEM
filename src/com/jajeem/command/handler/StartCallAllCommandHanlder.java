@@ -7,8 +7,8 @@ import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartCallAllCommand;
-import com.jajeem.core.design.Student;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.Student;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.util.ClientSession;
 
 public class StartCallAllCommandHanlder implements ICommandHandler {

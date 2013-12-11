@@ -4,8 +4,8 @@ import javax.swing.JInternalFrame;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StudentLogoutCommand;
-import com.jajeem.core.design.InstructorNoa;
-import com.jajeem.core.design.InstructorNoaUtil;
+import com.jajeem.core.design.teacher.InstructorNoa;
+import com.jajeem.core.design.teacher.InstructorNoaUtil;
 import com.jajeem.util.Session;
 
 public class SetStudentLogoutCommandHanlder implements ICommandHandler {

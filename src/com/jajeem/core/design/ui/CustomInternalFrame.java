@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Image;

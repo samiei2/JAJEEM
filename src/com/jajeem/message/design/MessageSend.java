@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
@@ -14,6 +15,7 @@ import javax.swing.WindowConstants;
 import com.alee.extended.panel.GroupPanel;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
+import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebDialog;
 import com.alee.laf.scroll.WebScrollPane;
@@ -22,7 +24,7 @@ import com.alee.managers.hotkey.Hotkey;
 import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
-import com.jajeem.core.design.StudentLogin;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.util.Config;
 
@@ -128,7 +130,10 @@ public class MessageSend extends JDialog {
 								Integer.parseInt(Config.getParam("serverPort")),
 								messageField.getText());
 
-						StudentLogin.getServerService().send(messageCommand);
+						if(StudentLogin.getServerService()!=null)
+							StudentLogin.getServerService().send(messageCommand);
+						else
+							WebOptionPane.showMessageDialog(null, "You are not logged in!\nPlease login first!","Error",JOptionPane.ERROR_MESSAGE);
 					} catch (Exception e1) {
 						JajeemExcetionHandler.logError(e1);
 						e1.printStackTrace();

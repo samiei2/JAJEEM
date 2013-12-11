@@ -1,4 +1,4 @@
-package com.jajeem.core.design;
+package com.jajeem.core.design.student;
 
 import java.awt.Color;
 import java.awt.Font;
