@@ -25,13 +25,14 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.rootpane.WebFrame;
 import com.jajeem.util.FileUtil;
 
-public class DatabaseManager extends JDialog {
+public class DatabaseManager extends BaseAccountFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private CustomAccountButton okButton;
 
 	/**
 	 * @wbp.nonvisual location=89,299
@@ -58,10 +59,10 @@ public class DatabaseManager extends JDialog {
 	public DatabaseManager(final WebFrame mainFrame) {
 		WebLookAndFeel.install();
 		setTitle("Database Backup/Restore");
-		setBounds(100, 100, 450, 148);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(100, 100, 548, 263);
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getMainContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		WebLabel wblblBackupDatabase = new WebLabel();
 		wblblBackupDatabase.setText("Backup Database : ");
@@ -194,10 +195,10 @@ public class DatabaseManager extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				okButton.setUndecorated(true);
 				okButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -205,9 +206,24 @@ public class DatabaseManager extends JDialog {
 					}
 				});
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
+			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addGap(439)
+						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
+			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
 }

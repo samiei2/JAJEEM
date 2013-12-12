@@ -14,15 +14,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -41,7 +43,6 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
-import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
@@ -56,16 +57,11 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
-public class AccountPanel extends WebFrame {
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-	/**
-	 * 
-	 */
-
-	private static final long serialVersionUID = 1L;
+public class AccountPanel extends BaseAccountFrame {
 
 	private static AccountPanel frame;
-	private WebPanel contentPane;
 	Instructor instructorModel;
 	Course courseModel;
 
@@ -83,7 +79,6 @@ public class AccountPanel extends WebFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
 					new Config();
@@ -95,7 +90,6 @@ public class AccountPanel extends WebFrame {
 					co.setId(1);
 					frame = new AccountPanel(ins, co);
 					frame.setVisible(true);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -105,42 +99,59 @@ public class AccountPanel extends WebFrame {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	public AccountPanel(Instructor ins, Course co) throws Exception {
-
 		instructorModel = ins;
 		courseModel = co;
-
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle(i18n.getParam("My account" + " - "
 				+ instructorModel.getFullName()));
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(200, 50, 800, 600);
-		contentPane = new WebPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		GroupLayout groupLayout = new GroupLayout(getMainContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+		);
+		
 		loadData();
-
-		WebTabbedPane tabbedPane = new WebTabbedPane(SwingConstants.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
+		WebTabbedPane webTabbedPane = new WebTabbedPane();
+		
 		WebPanel courseTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Courses"), null, courseTab, null);
+		webTabbedPane.addTab(i18n.getParam("Courses"), null, courseTab, null);
 		courseTab.setLayout(new BorderLayout(0, 0));
 		courseTab.add(initCourse());
 
 		WebPanel studentTab = new WebPanel();
-		tabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
+		webTabbedPane.addTab(i18n.getParam("Students"), null, studentTab, null);
 		studentTab.setLayout(new BorderLayout(0, 0));
 		studentTab.add(initStudent());
-
-		setVisible(true);
-
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webTabbedPane, GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webTabbedPane, GroupLayout.PREFERRED_SIZE, 300, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		panel.setLayout(gl_panel);
+		getMainContentPane().setLayout(groupLayout);
 	}
-
+	
 	private void loadData() throws SQLException {
 
 		InstructorService instructorService = new InstructorService();
@@ -169,7 +180,7 @@ public class AccountPanel extends WebFrame {
 		}
 
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	private WebPanel initCourse() throws Exception {
 
@@ -655,5 +666,4 @@ public class AccountPanel extends WebFrame {
 			EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel) {
 		this.studentSelectionModel = studentSelectionModel;
 	}
-
 }

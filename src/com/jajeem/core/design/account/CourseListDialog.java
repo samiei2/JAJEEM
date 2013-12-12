@@ -47,14 +47,12 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
-public class CourseListDialog extends JDialog {
+public class CourseListDialog extends BaseAccountFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private final JPanel contentPanel = new JPanel();
 
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
@@ -73,14 +71,12 @@ public class CourseListDialog extends JDialog {
 		getCourseList().addAll(courseArray);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(400, 100, 610, 500);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setBounds(400, 100, 610, 611);
+		getMainContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			buttonPane.setOpaque(false);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JPanel panel = new JPanel();
@@ -108,7 +104,7 @@ public class CourseListDialog extends JDialog {
 		}
 
 		loadData();
-		getContentPane().add(initCourse());
+		getMainContentPane().add(initCourse());
 
 		setVisible(true);
 	}
@@ -121,6 +117,7 @@ public class CourseListDialog extends JDialog {
 	private WebPanel initCourse() throws Exception {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
 		panel.setLayout(new BorderLayout(0, 0));
 
@@ -145,6 +142,7 @@ public class CourseListDialog extends JDialog {
 		bottomPanel.add(paginationPanel);
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));

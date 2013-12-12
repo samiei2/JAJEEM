@@ -39,8 +39,11 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.StudentService;
 import com.jajeem.util.StripedTableCellRenderer;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.SwingConstants;
 
-public class StudentDialog extends JDialog {
+public class StudentDialog extends BaseAccountFrame {
 
 	/**
 	 * 
@@ -60,23 +63,41 @@ public class StudentDialog extends JDialog {
 	public StudentDialog(final StudentList scDialog) throws SQLException {
 		setTitle("Add students");
 		setVisible(true);
-		setBounds(400, 100, 610, 500);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(400, 100, 610, 587);
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getMainContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JPanel panel = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setAlignment(FlowLayout.LEADING);
+				panel.setOpaque(false);
 				buttonPane.add(panel);
 				{
-					WebButton addButton = new WebButton("Add");
-					panel.add(addButton);
+					CustomAccountButton addButton = new CustomAccountButton("/icons/noa_en/accountadd.png");
+					addButton.setMargin(new Insets(0, 10, 0, 0));
+					addButton.setHorizontalAlignment(SwingConstants.LEFT);
+					addButton.setText("Add");
+					addButton.setUndecorated(true);
+					GroupLayout gl_panel = new GroupLayout(panel);
+					gl_panel.setHorizontalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addGap(5)
+								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(190, Short.MAX_VALUE))
+					);
+					gl_panel.setVerticalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+					panel.setLayout(gl_panel);
 					addButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -97,12 +118,27 @@ public class StudentDialog extends JDialog {
 			}
 			{
 				JPanel panel = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setAlignment(FlowLayout.TRAILING);
+				panel.setOpaque(false);
 				buttonPane.add(panel);
 
-				WebButton okButton = new WebButton("Ok");
-				panel.add(okButton);
+				CustomAccountButton okButton = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				okButton.setUndecorated(true);
+				GroupLayout gl_panel = new GroupLayout(panel);
+				gl_panel.setHorizontalGroup(
+					gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addContainerGap(231, Short.MAX_VALUE)
+							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+				);
+				gl_panel.setVerticalGroup(
+					gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+				panel.setLayout(gl_panel);
 				okButton.addActionListener(new ActionListener() {
 
 					@Override
@@ -114,7 +150,7 @@ public class StudentDialog extends JDialog {
 		}
 
 		loadData();
-		getContentPane().add(initStudent());
+		getMainContentPane().add(initStudent());
 	}
 
 	private void loadData() throws SQLException {
@@ -128,6 +164,7 @@ public class StudentDialog extends JDialog {
 	private WebPanel initStudent() {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
 		panel.setLayout(new BorderLayout(0, 0));
 
@@ -138,6 +175,7 @@ public class StudentDialog extends JDialog {
 		panel.add(jScrollPane1);
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));

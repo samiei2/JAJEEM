@@ -221,6 +221,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		panelCard1.setLayout(gl_panelCard1_2);
 		
 		panel_2 = new JPanel();
+		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.BLACK);
 		panel_2.setLayout(new CardLayout());
 		
@@ -229,7 +230,8 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		panel_2.add(panelCard3, "Essay");
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.RED);
+		panel_3.setOpaque(false);
+		panel_3.setBackground(Color.LIGHT_GRAY);
 		GroupLayout gl_panelQuestionDetails = new GroupLayout(panelQuestionDetails);
 		gl_panelQuestionDetails.setHorizontalGroup(
 			gl_panelQuestionDetails.createParallelGroup(Alignment.LEADING)

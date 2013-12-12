@@ -358,7 +358,6 @@ public class Student {
 		frame.setSize(new Dimension(300,500));
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
-//		GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 		Rectangle rect = ge.getMaximumWindowBounds();
 		int x = (int) rect.getMaxX() - frame.getWidth();
 		int y = (int) ((rect.getMaxY() - frame.getHeight()));

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -20,16 +19,19 @@ import ca.odell.glazedlists.EventList;
 
 import com.alee.extended.date.WebDateField;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.combobox.WebComboBox;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.i18n;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class AddNewCourseDialog extends JDialog {
+public class AddNewCourseDialog extends BaseAccountFrame {
 
 	/**
 	 * 
@@ -37,7 +39,7 @@ public class AddNewCourseDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final WebPanel contentPanel = new WebPanel();
 	private WebTextField courseNameTF;
-	private WebComboBox classTypeTF;
+	private JajeemComboBox classTypeTF;
 	private WebLabel courseNameLabel;
 	private WebLabel instructorNameLabel;
 	private WebLabel ClassTypeLabel;
@@ -46,38 +48,40 @@ public class AddNewCourseDialog extends JDialog {
 	private WebDateField startDateTF;
 	private WebLabel sessionLabel;
 	private WebTextField sessionTF;
-	private WebComboBox instructorNameCombo;
+	private JajeemComboBox instructorNameCombo;
 	private WebLabel dayLabel1;
-	private WebComboBox dayCombo1;
+	private JajeemComboBox dayCombo1;
 	private WebLabel startTimeLabel1;
 	private WebLabel endTimeLabel1;
-	private WebComboBox endTimeTF1;
+	private JajeemComboBox endTimeTF1;
 	private WebLabel dayLabel2;
-	private WebComboBox dayCombo2;
+	private JajeemComboBox dayCombo2;
 	private WebLabel startTimeLabel2;
-	private WebComboBox startTimeTF2;
+	private JajeemComboBox startTimeTF2;
 	private WebLabel endTimeLabel2;
-	private WebComboBox endTimeTF2;
+	private JajeemComboBox endTimeTF2;
 	private WebLabel dayLabel3;
-	private WebComboBox dayCombo3;
+	private JajeemComboBox dayCombo3;
 	private WebLabel startTimeLabel3;
-	private WebComboBox startTimeTF3;
+	private JajeemComboBox startTimeTF3;
 	private WebLabel endTimeLabel3;
-	private WebComboBox endTimeTF3;
+	private JajeemComboBox endTimeTF3;
 	private WebLabel dayLabel4;
-	private WebComboBox dayCombo4;
+	private JajeemComboBox dayCombo4;
 	private WebLabel startTimeLabel4;
-	private WebComboBox startTimeTF4;
+	private JajeemComboBox startTimeTF4;
 	private WebLabel endTimeLabel4;
-	private WebComboBox endTimeTF4;
+	private JajeemComboBox endTimeTF4;
 	private WebLabel dayLabel5;
-	private WebComboBox dayCombo5;
+	private JajeemComboBox dayCombo5;
 	private WebLabel startTimeLabel5;
-	private WebComboBox startTimeTF5;
+	private JajeemComboBox startTimeTF5;
 	private WebLabel endTimeLabel5;
-	private WebComboBox endTimeTF5;
-	private WebComboBox levelCombo;
-	private WebComboBox startTimeTF1;
+	private JajeemComboBox endTimeTF5;
+	private JajeemComboBox levelCombo;
+	private JajeemComboBox startTimeTF1;
+	private CustomAccountButton okButton_1;
+	private CustomAccountButton cancelButton_1;
 
 	/**
 	 * Create the dialog. New Course Mode
@@ -86,15 +90,17 @@ public class AddNewCourseDialog extends JDialog {
 	 * @throws Exception
 	 * @wbp.parser.constructor
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AddNewCourseDialog(final EventList<Course> courseList,
 			final EventList<Instructor> instructorList) throws Exception {
 		setTitle(i18n.getParam("Add new course"));
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(400, 200, 610, 278);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(400, 200, 946, 389);
+		getMainContentPane().setLayout(new BorderLayout());
+		contentPanel.setOpaque(false);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.NORTH);
+		getMainContentPane().add(contentPanel, BorderLayout.NORTH);
 		contentPanel.setLayout(new GridLayout(0, 6, 2, 2));
 		{
 			courseNameTF = new WebTextField();
@@ -114,7 +120,7 @@ public class AddNewCourseDialog extends JDialog {
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
-			classTypeTF = new WebComboBox();
+			classTypeTF = new JajeemComboBox();
 			classTypeTF.setModel(new DefaultComboBoxModel(new String[] {
 					"Termic", "Intensive", "Super-Intensive", "Thursday",
 					"Friday" }));
@@ -122,7 +128,7 @@ public class AddNewCourseDialog extends JDialog {
 		contentPanel.add(classTypeTF);
 		contentPanel.add(levelLabel);
 		{
-			levelCombo = new WebComboBox();
+			levelCombo = new JajeemComboBox();
 			levelCombo.setModel(new DefaultComboBoxModel(new String[] { "A",
 					"B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L" }));
 			contentPanel.add(levelCombo);
@@ -133,7 +139,7 @@ public class AddNewCourseDialog extends JDialog {
 		}
 		contentPanel.add(instructorNameLabel);
 		{
-			instructorNameCombo = new WebComboBox();
+			instructorNameCombo = new JajeemComboBox();
 			ArrayList<String> insList = new ArrayList<String>();
 			for (Instructor ins : instructorList) {
 				insList.add(ins.getUsername());
@@ -168,7 +174,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel1);
 		}
 		{
-			dayCombo1 = new WebComboBox();
+			dayCombo1 = new JajeemComboBox();
 			dayCombo1.setModel(new DefaultComboBoxModel(new String[] { "Su",
 					"Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo1);
@@ -178,7 +184,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel1);
 		}
 		{
-			startTimeTF1 = new WebComboBox();
+			startTimeTF1 = new JajeemComboBox();
 			startTimeTF1.setModel(new DefaultComboBoxModel(new String[] { "7",
 					"8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
 					"18", "19", "20", "21", "22" }));
@@ -189,7 +195,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel1);
 		}
 		{
-			endTimeTF1 = new WebComboBox();
+			endTimeTF1 = new JajeemComboBox();
 			endTimeTF1.setModel(new DefaultComboBoxModel(new String[] { "7",
 					"8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
 					"18", "19", "20", "21", "22" }));
@@ -197,11 +203,11 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeTF1);
 		}
 		{
-			dayLabel2 = new WebLabel("Day");
+			dayLabel2 = new WebLabel(i18n.getParam("Day"));
 			contentPanel.add(dayLabel2);
 		}
 		{
-			dayCombo2 = new WebComboBox();
+			dayCombo2 = new JajeemComboBox();
 			dayCombo2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo2);
@@ -211,7 +217,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel2);
 		}
 		{
-			startTimeTF2 = new WebComboBox();
+			startTimeTF2 = new JajeemComboBox();
 			startTimeTF2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -222,7 +228,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel2);
 		}
 		{
-			endTimeTF2 = new WebComboBox();
+			endTimeTF2 = new JajeemComboBox();
 			endTimeTF2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -233,7 +239,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel3);
 		}
 		{
-			dayCombo3 = new WebComboBox();
+			dayCombo3 = new JajeemComboBox();
 			dayCombo3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo3);
@@ -243,7 +249,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel3);
 		}
 		{
-			startTimeTF3 = new WebComboBox();
+			startTimeTF3 = new JajeemComboBox();
 			startTimeTF3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -254,7 +260,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel3);
 		}
 		{
-			endTimeTF3 = new WebComboBox();
+			endTimeTF3 = new JajeemComboBox();
 			endTimeTF3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -265,7 +271,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel4);
 		}
 		{
-			dayCombo4 = new WebComboBox();
+			dayCombo4 = new JajeemComboBox();
 			dayCombo4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo4);
@@ -275,7 +281,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel4);
 		}
 		{
-			startTimeTF4 = new WebComboBox();
+			startTimeTF4 = new JajeemComboBox();
 			startTimeTF4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -286,7 +292,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel4);
 		}
 		{
-			endTimeTF4 = new WebComboBox();
+			endTimeTF4 = new JajeemComboBox();
 			endTimeTF4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -297,7 +303,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel5);
 		}
 		{
-			dayCombo5 = new WebComboBox();
+			dayCombo5 = new JajeemComboBox();
 			dayCombo5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo5);
@@ -307,7 +313,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel5);
 		}
 		{
-			startTimeTF5 = new WebComboBox();
+			startTimeTF5 = new JajeemComboBox();
 			startTimeTF5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -318,7 +324,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel5);
 		}
 		{
-			endTimeTF5 = new WebComboBox();
+			endTimeTF5 = new JajeemComboBox();
 			endTimeTF5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -326,13 +332,14 @@ public class AddNewCourseDialog extends JDialog {
 		}
 		{
 			WebPanel buttonPane = new WebPanel();
+			buttonPane.setOpaque(false);
 			buttonPane.setMargin(new Insets(3, 0, 0, 0));
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton(i18n.getParam("OK"));
-				okButton.setActionCommand("OK");
-				okButton.addActionListener(new ActionListener() {
+				okButton_1 = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				okButton_1.setUndecorated(true);
+				okButton_1.setActionCommand("OK");
+				okButton_1.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -479,21 +486,40 @@ public class AddNewCourseDialog extends JDialog {
 						}
 					}
 				});
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				getRootPane().setDefaultButton(okButton_1);
 			}
 			{
-				WebButton cancelButton = new WebButton(i18n.getParam("Cancel"));
-				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
+				cancelButton_1 = new CustomAccountButton("/icons/noa_en/accountcancelbutton.png");
+				cancelButton_1.setUndecorated(true);
+				cancelButton_1.setActionCommand("Cancel");
+				cancelButton_1.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
 					}
 				});
-				buttonPane.add(cancelButton);
 			}
+			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap(266, Short.MAX_VALUE)
+						.addComponent(okButton_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cancelButton_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(266, Short.MAX_VALUE))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(okButton_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addComponent(cancelButton_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
+			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
 
@@ -508,6 +534,7 @@ public class AddNewCourseDialog extends JDialog {
 	 * @throws Exception
 	 * 
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AddNewCourseDialog(final EventList<Course> courseList,
 			final Course course, final EventList<Course> selectedCourse,
 			EventList<Instructor> instructorList) throws Exception {
@@ -515,9 +542,9 @@ public class AddNewCourseDialog extends JDialog {
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 200, 610, 278);
-		getContentPane().setLayout(new BorderLayout());
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.NORTH);
+		getMainContentPane().add(contentPanel, BorderLayout.NORTH);
 		contentPanel.setLayout(new GridLayout(0, 6, 2, 2));
 		{
 			courseNameTF = new WebTextField();
@@ -537,12 +564,12 @@ public class AddNewCourseDialog extends JDialog {
 			levelLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		{
-			classTypeTF = new WebComboBox();
+			classTypeTF = new JajeemComboBox();
 		}
 		contentPanel.add(classTypeTF);
 		contentPanel.add(levelLabel);
 		{
-			levelCombo = new WebComboBox();
+			levelCombo = new JajeemComboBox();
 			levelCombo.setModel(new DefaultComboBoxModel(new String[] { "A",
 					"B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L" }));
 			contentPanel.add(levelCombo);
@@ -553,7 +580,7 @@ public class AddNewCourseDialog extends JDialog {
 		}
 		contentPanel.add(instructorNameLabel);
 		{
-			instructorNameCombo = new WebComboBox();
+			instructorNameCombo = new JajeemComboBox();
 			ArrayList<String> insList = new ArrayList<String>();
 			for (Instructor ins : instructorList) {
 				insList.add(ins.getUsername());
@@ -588,7 +615,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel1);
 		}
 		{
-			dayCombo1 = new WebComboBox();
+			dayCombo1 = new JajeemComboBox();
 			dayCombo1.setModel(new DefaultComboBoxModel(new String[] { "Su",
 					"Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo1);
@@ -598,7 +625,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel1);
 		}
 		{
-			startTimeTF1 = new WebComboBox();
+			startTimeTF1 = new JajeemComboBox();
 			startTimeTF1.setModel(new DefaultComboBoxModel(new String[] { "7",
 					"8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
 					"18", "19", "20", "21", "22" }));
@@ -609,7 +636,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel1);
 		}
 		{
-			endTimeTF1 = new WebComboBox();
+			endTimeTF1 = new JajeemComboBox();
 			endTimeTF1.setModel(new DefaultComboBoxModel(new String[] { "7",
 					"8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
 					"18", "19", "20", "21", "22" }));
@@ -621,7 +648,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel2);
 		}
 		{
-			dayCombo2 = new WebComboBox();
+			dayCombo2 = new JajeemComboBox();
 			dayCombo2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo2);
@@ -631,7 +658,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel2);
 		}
 		{
-			startTimeTF2 = new WebComboBox();
+			startTimeTF2 = new JajeemComboBox();
 			startTimeTF2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -642,7 +669,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel2);
 		}
 		{
-			endTimeTF2 = new WebComboBox();
+			endTimeTF2 = new JajeemComboBox();
 			endTimeTF2.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -653,7 +680,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel3);
 		}
 		{
-			dayCombo3 = new WebComboBox();
+			dayCombo3 = new JajeemComboBox();
 			dayCombo3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo3);
@@ -663,7 +690,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel3);
 		}
 		{
-			startTimeTF3 = new WebComboBox();
+			startTimeTF3 = new JajeemComboBox();
 			startTimeTF3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -674,7 +701,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel3);
 		}
 		{
-			endTimeTF3 = new WebComboBox();
+			endTimeTF3 = new JajeemComboBox();
 			endTimeTF3.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -685,7 +712,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel4);
 		}
 		{
-			dayCombo4 = new WebComboBox();
+			dayCombo4 = new JajeemComboBox();
 			dayCombo4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo4);
@@ -695,7 +722,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel4);
 		}
 		{
-			startTimeTF4 = new WebComboBox();
+			startTimeTF4 = new JajeemComboBox();
 			startTimeTF4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -706,7 +733,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel4);
 		}
 		{
-			endTimeTF4 = new WebComboBox();
+			endTimeTF4 = new JajeemComboBox();
 			endTimeTF4.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -717,7 +744,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(dayLabel5);
 		}
 		{
-			dayCombo5 = new WebComboBox();
+			dayCombo5 = new JajeemComboBox();
 			dayCombo5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" }));
 			contentPanel.add(dayCombo5);
@@ -727,7 +754,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(startTimeLabel5);
 		}
 		{
-			startTimeTF5 = new WebComboBox();
+			startTimeTF5 = new JajeemComboBox();
 			startTimeTF5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -738,7 +765,7 @@ public class AddNewCourseDialog extends JDialog {
 			contentPanel.add(endTimeLabel5);
 		}
 		{
-			endTimeTF5 = new WebComboBox();
+			endTimeTF5 = new JajeemComboBox();
 			endTimeTF5.setModel(new DefaultComboBoxModel(new String[] { "",
 					"7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
 					"17", "18", "19", "20", "21", "22" }));
@@ -748,7 +775,7 @@ public class AddNewCourseDialog extends JDialog {
 			WebPanel buttonPane = new WebPanel();
 			buttonPane.setMargin(new Insets(3, 0, 0, 0));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				WebButton okButton = new WebButton(i18n.getParam("OK"));
 				okButton.setActionCommand("OK");
@@ -890,6 +917,7 @@ public class AddNewCourseDialog extends JDialog {
 		endTimeTF3.setSelectedItem(String.valueOf(course.getEndTime3()));
 		endTimeTF4.setSelectedItem(String.valueOf(course.getEndTime4()));
 		endTimeTF5.setSelectedItem(String.valueOf(course.getEndTime5()));
+		
+		pack();
 	}
-
 }

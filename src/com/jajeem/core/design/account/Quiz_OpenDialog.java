@@ -29,7 +29,7 @@ import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 
 @SuppressWarnings("serial")
-public class Quiz_OpenDialog extends JDialog {
+public class Quiz_OpenDialog extends BaseAccountFrame {
 	private WebTable wbTblQuestion;
 	private WebTable wbTblQuiz;
 	private ArrayList<Quiz> quizList = new ArrayList<>();
@@ -105,52 +105,45 @@ public class Quiz_OpenDialog extends JDialog {
 		});
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setBounds(100, 0, 653, 479);
+		setBounds(100, 0, 686, 516);
 		setLocationByPlatform(true);
 
 		WebPanel webPanel = new WebPanel();
-		getContentPane().add(webPanel, BorderLayout.CENTER);
+		webPanel.setOpaque(false);
+		getMainContentPane().add(webPanel, BorderLayout.CENTER);
 
-		WebButton wbtnOk = new WebButton();
+		CustomAccountButton wbtnOk = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+		wbtnOk.setUndecorated(true);
 		wbtnOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		wbtnOk.setText("Ok");
 
 		WebPanel webPanel_1 = new WebPanel();
+		webPanel_1.setOpaque(false);
 		webPanel_1
 				.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
-		gl_webPanel.setHorizontalGroup(gl_webPanel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_webPanel
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								gl_webPanel
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(webPanel_1,
-												GroupLayout.DEFAULT_SIZE, 617,
-												Short.MAX_VALUE)
-										.addComponent(wbtnOk,
-												Alignment.TRAILING,
-												GroupLayout.PREFERRED_SIZE, 83,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap()));
-		gl_webPanel.setVerticalGroup(gl_webPanel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_webPanel
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE,
-								387, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(wbtnOk, GroupLayout.PREFERRED_SIZE, 24,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(13, Short.MAX_VALUE)));
+		gl_webPanel.setHorizontalGroup(
+			gl_webPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_webPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(wbtnOk, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webPanel_1, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_webPanel.setVerticalGroup(
+			gl_webPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_webPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(webPanel_1, GroupLayout.PREFERRED_SIZE, 387, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wbtnOk, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(13, Short.MAX_VALUE))
+		);
 
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
 

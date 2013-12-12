@@ -19,8 +19,10 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.util.i18n;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
-public class AddNewInstructorDialog extends JDialog {
+public class AddNewInstructorDialog extends BaseAccountFrame {
 
 	/**
 	 * 
@@ -31,6 +33,7 @@ public class AddNewInstructorDialog extends JDialog {
 	private WebTextField firstNameTF;
 	private WebTextField passwordTF;
 	private WebTextField usernameTF;
+	private CustomAccountButton okButton;
 
 	/**
 	 * Create the dialog.
@@ -41,10 +44,10 @@ public class AddNewInstructorDialog extends JDialog {
 			throws Exception {
 		setTitle(i18n.getParam("Add new instructor"));
 		setVisible(true);
-		setBounds(400, 200, 392, 210);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(400, 200, 457, 260);
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.NORTH);
+		getMainContentPane().add(contentPanel, BorderLayout.NORTH);
 		contentPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		{
 			WebLabel firstnameLabel = new WebLabel(i18n.getParam("First name"));
@@ -84,12 +87,11 @@ public class AddNewInstructorDialog extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton(i18n.getParam("OK"));
+				okButton = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				okButton.setUndecorated(true);
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 				okButton.addActionListener(new ActionListener() {
 
@@ -117,9 +119,29 @@ public class AddNewInstructorDialog extends JDialog {
 
 			}
 			{
-				WebButton cancelButton = new WebButton(i18n.getParam("Cancel"));
+				CustomAccountButton cancelButton = new CustomAccountButton("/icons/noa_en/accountcancelbutton.png");
+				cancelButton.setUndecorated(true);
 				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+				gl_buttonPane.setHorizontalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPane.createSequentialGroup()
+							.addGap(155)
+							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addGap(151))
+				);
+				gl_buttonPane.setVerticalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPane.createSequentialGroup()
+							.addGap(5)
+							.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap())
+				);
+				buttonPane.setLayout(gl_buttonPane);
 				cancelButton.addActionListener(new ActionListener() {
 
 					@Override

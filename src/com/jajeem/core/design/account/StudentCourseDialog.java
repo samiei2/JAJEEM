@@ -51,8 +51,10 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
-public class StudentCourseDialog extends JDialog {
+public class StudentCourseDialog extends BaseAccountFrame {
 
 	/**
 	 * 
@@ -81,14 +83,14 @@ public class StudentCourseDialog extends JDialog {
 		this.student = student;
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(400, 100, 610, 500);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(400, 100, 631, 673);
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getMainContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JPanel panel = new JPanel();
@@ -98,13 +100,26 @@ public class StudentCourseDialog extends JDialog {
 			}
 			{
 				JPanel panel = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setAlignment(FlowLayout.TRAILING);
 				buttonPane.add(panel);
 				{
-					WebButton okButton = new WebButton(
-							i18n.getParam("Export to pdf"));
-					panel.add(okButton);
+					CustomAccountButton okButton = new CustomAccountButton("/icons/noa_en/accountpdf.png");
+					okButton.setUndecorated(true);
+					GroupLayout gl_panel = new GroupLayout(panel);
+					gl_panel.setHorizontalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addGap(230)
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+					gl_panel.setVerticalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+					panel.setLayout(gl_panel);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -121,8 +136,8 @@ public class StudentCourseDialog extends JDialog {
 			}
 		}
 
-		loadData();
-		getContentPane().add(initCourse());
+//		loadData();
+		getMainContentPane().add(initCourse());
 	}
 
 	private void loadData() throws SQLException {

@@ -64,7 +64,7 @@ import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
-public class StudentsAndQuizListDialog extends JDialog {
+public class StudentsAndQuizListDialog extends BaseAccountFrame {
 
 	/**
 	 * 
@@ -96,10 +96,10 @@ public class StudentsAndQuizListDialog extends JDialog {
 		new Config();
 		new i18n();
 
-		setBounds(100, 100, 710, 622);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(100, 100, 727, 688);
+		getMainContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getMainContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		WebPanel webPanel = new WebPanel();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -121,13 +121,28 @@ public class StudentsAndQuizListDialog extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				WebButton okButton = new WebButton("OK");
+				CustomAccountButton okButton = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				okButton.setUndecorated(true);
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+				gl_buttonPane.setHorizontalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPane.createSequentialGroup()
+							.addGap(626)
+							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+				gl_buttonPane.setVerticalGroup(
+					gl_buttonPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_buttonPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+				buttonPane.setLayout(gl_buttonPane);
 				okButton.addActionListener(new ActionListener() {
 
 					@Override
@@ -250,7 +265,7 @@ class StudentList extends WebPanel {
 			}
 		}
 
-		loadData();
+//		loadData();
 		add(initStudent());
 	}
 

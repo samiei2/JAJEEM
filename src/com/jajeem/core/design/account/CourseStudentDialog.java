@@ -48,15 +48,17 @@ import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
-public class CourseStudentDialog extends JDialog {
+public class CourseStudentDialog extends BaseAccountFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private final JPanel contentPanel = new JPanel();
+//	private final JPanel contentPanel = new JPanel();
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
@@ -74,17 +76,19 @@ public class CourseStudentDialog extends JDialog {
 		this.course = course;
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(400, 100, 610, 500);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		setBounds(400, 100, 625, 717);
+		getMainContentPane().setLayout(new BorderLayout());
+//		contentPanel.setLayout(new FlowLayout());
+//		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			buttonPane.setOpaque(false);
+			getMainContentPane().add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JPanel panel = new JPanel();
+				panel.setOpaque(false);
 				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 				flowLayout.setAlignment(FlowLayout.LEADING);
 				buttonPane.add(panel);
@@ -115,7 +119,7 @@ public class CourseStudentDialog extends JDialog {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							int resp = JOptionPane.showConfirmDialog(
-									contentPanel,
+									null,
 									"Do you want to Delete selected item(s)?",
 									"Confirm", JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE);
@@ -144,13 +148,27 @@ public class CourseStudentDialog extends JDialog {
 			}
 			{
 				JPanel panel = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setAlignment(FlowLayout.TRAILING);
+				panel.setOpaque(false);
 				buttonPane.add(panel);
 				{
-					WebButton okButton = new WebButton(
-							i18n.getParam("Export to pdf"));
-					panel.add(okButton);
+					CustomAccountButton okButton = new CustomAccountButton("/icons/noa_en/accountpdf.png");
+					okButton.setUndecorated(true);
+					GroupLayout gl_panel = new GroupLayout(panel);
+					gl_panel.setHorizontalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+								.addContainerGap(227, Short.MAX_VALUE)
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+					);
+					gl_panel.setVerticalGroup(
+						gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(11, Short.MAX_VALUE))
+					);
+					panel.setLayout(gl_panel);
 					okButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -169,7 +187,7 @@ public class CourseStudentDialog extends JDialog {
 		}
 
 		loadData();
-		getContentPane().add(initStudent());
+		getMainContentPane().add(initStudent());
 	}
 
 	private void loadData() throws SQLException {
@@ -193,6 +211,7 @@ public class CourseStudentDialog extends JDialog {
 	private WebPanel initStudent() {
 
 		final WebPanel panel = new WebPanel();
+		panel.setOpaque(false);
 		panel.setMargin(new Insets(5, 5, 5, 5));
 		panel.setLayout(new BorderLayout(0, 0));
 
@@ -203,6 +222,7 @@ public class CourseStudentDialog extends JDialog {
 		panel.add(jScrollPane1);
 
 		WebPanel topPanel = new WebPanel();
+		topPanel.setOpaque(false);
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
 		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));

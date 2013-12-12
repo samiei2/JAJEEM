@@ -1,6 +1,7 @@
 package com.jajeem.core.design.account;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -70,7 +71,7 @@ public class CustomAccountButton extends WebButton {
 		// if(isRollOver)
 		// g2.drawImage(rollover, 3, 0,getWidth(),getHeight(), this);
 		// else
-		g2.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+		g2.drawImage(background.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, getWidth(), getHeight(), this);
 		// }
 		// }
 		g2.dispose();

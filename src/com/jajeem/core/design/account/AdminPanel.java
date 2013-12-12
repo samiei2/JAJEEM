@@ -8,10 +8,12 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -91,7 +93,7 @@ public class AdminPanel extends CustomAccountFrame {
 	public AdminPanel() throws Exception {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		// loadData();
+		loadData();
 
 		final CustomAccountCheckBox chckbxNewCheckBox = new CustomAccountCheckBox();
 		chckbxNewCheckBox.setSelected(true);
@@ -118,11 +120,9 @@ public class AdminPanel extends CustomAccountFrame {
 						.addComponent(chckbxNewCheckBox,
 								GroupLayout.PREFERRED_SIZE, 75,
 								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(checkBox, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
+								75,
 								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(checkBox_1, GroupLayout.PREFERRED_SIZE,
 								74, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(GroupLayout.DEFAULT_SIZE,
@@ -310,13 +310,50 @@ public class AdminPanel extends CustomAccountFrame {
 			}
 		});
 
-		// setVisible(true);
+		GraphicsEnvironment ge = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+		Rectangle rect = ge.getMaximumWindowBounds();
+		int x = (int) rect.getMaxX() / 2 - getWidth() / 2;
+		int y = (int) ((rect.getMaxY() / 2 - getHeight() / 2));
+		setLocation(x, y);
+		setVisible(true);
 	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private void loadData() throws SQLException {
+
+		InstructorService instructorService = new InstructorService();
+		ArrayList<com.jajeem.core.model.Instructor> instructorList = instructorService
+				.list();
+		getInstructorList().addAll(instructorList);
+
+		StudentService studentService = new StudentService();
+		ArrayList<com.jajeem.core.model.Student> studentList = studentService
+				.list();
+		getStudentList().addAll(studentList);
+
+		RoomService rs = new RoomService();
+		ArrayList<Course> courseList = rs.getCourseDAO().list();
+
+		for (Course course : courseList) {
+			Instructor ins = instructorService
+					.getById(course.getInstructorId());
+
+			if (ins != null) {
+				course.setInstructor(instructorService.getById(
+						course.getInstructorId()).getUsername());
+				getCourseList().add(course);
+			} else {
+				course.setInstructor("");
+				getCourseList().add(course);
+			}
+		}
+
+	}
 
 	@SuppressWarnings({ "unused" })
 	private WebPanel initCourse() throws Exception {
