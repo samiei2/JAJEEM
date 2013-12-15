@@ -82,10 +82,10 @@ public class AVTransmit2 {
 	 */
 	public AVTransmit2(String localPortBase, String remoteHost,
 			String remotePortBase) throws Exception {
-		this.localPortBase = (localPortBase == null) ? -1 : Integer.valueOf(
-				localPortBase).intValue();
+		this.setLocalPortBase((localPortBase == null) ? -1 : Integer.valueOf(
+				localPortBase).intValue());
 		this.setRemoteAddr(InetAddress.getByName(remoteHost));
-		this.remotePortBase = Integer.valueOf(remotePortBase).intValue();
+		this.setRemotePortBase(Integer.valueOf(remotePortBase).intValue());
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class AVTransmit2 {
 		 */
 		MediaType[] mediaTypes = MediaType.values();
 		MediaService mediaService = LibJitsi.getMediaService();
-		int localPort = localPortBase;
-		int remotePort = remotePortBase;
+		int localPort = getLocalPortBase();
+		int remotePort = getRemotePortBase();
 
 		mediaStreams = new MediaStream[mediaTypes.length];
 		for (MediaType mediaType : mediaTypes) {
@@ -175,7 +175,7 @@ public class AVTransmit2 {
 			// connector
 			StreamConnector connector;
 
-			if (localPortBase == -1) {
+			if (getLocalPortBase() == -1) {
 				connector = new DefaultStreamConnector();
 			} else {
 				int localRTPPort = localPort++;
@@ -273,5 +273,21 @@ public class AVTransmit2 {
 
 	public void setTransmitting(boolean transmitting) {
 		this.transmitting = transmitting;
+	}
+
+	public int getRemotePortBase() {
+		return remotePortBase;
+	}
+
+	public void setRemotePortBase(int remotePortBase) {
+		this.remotePortBase = remotePortBase;
+	}
+
+	public int getLocalPortBase() {
+		return localPortBase;
+	}
+
+	public void setLocalPortBase(int localPortBase) {
+		this.localPortBase = localPortBase;
 	}
 }

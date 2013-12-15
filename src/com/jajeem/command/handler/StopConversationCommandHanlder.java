@@ -31,6 +31,8 @@ public class StopConversationCommandHanlder implements ICommandHandler {
 		if(StudentLogin.getServerService()!=null){
 			if(Student.getTransmitter().isTransmitting()){
 				Student.getTransmitter().stop();
+				Student.getTransmitter().setLocalPortBase(10000);
+				Student.getTransmitter().setRemotePortBase(5000);
 				StudentLogin.getServerService().send(intercomCommand);
 				if (ClientSession.getStudentIntercomPanel() != null) {
 					ClientSession.getStudentIntercomPanel().dispose();

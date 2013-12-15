@@ -1,23 +1,10 @@
 package com.jajeem.core.design.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JOptionPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import com.jajeem.util.CustomPanel;
-
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.GridBagLayout;
+import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
-import java.awt.Image;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -25,12 +12,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import com.jajeem.util.CustomPanel;
 
 public class BaseStudentFrame extends JFrame {
 
