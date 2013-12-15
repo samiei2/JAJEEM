@@ -28,13 +28,8 @@ public class StartConversationCommandHanlder implements ICommandHandler {
 			LibJitsi.start();
 			
 			StudentLogin.getServerService().send(intercomCommand);
-//			Student.getTransmitter().setRemoteAddr(InetAddress.getByName(ipTo));
-//			Student.getTransmitter().setLocalPortBase(5000);
-//			Student.getTransmitter().setRemotePortBase(10000);
-			AVTransmit2 transmitter = new AVTransmit2("5000", "", "10000");
-			transmitter.setRemoteAddr(InetAddress.getByName(ipTo));
-			transmitter.start("audio");
-			
+			Student.getConversationtransmitter().setRemoteAddr(InetAddress.getByName(ipTo));
+			Student.getConversationtransmitter().start("audio");
 			
 			TransparentIntercomInProgressFrame frame = new TransparentIntercomInProgressFrame();
 			if (ClientSession.getStudentIntercomPanel() != null) {

@@ -84,6 +84,7 @@ public class Student {
 	private static AVReceiveOnly receiverOnly;
 	private static AVSendOnly sendOnly;
 	private static AVTransmit2 transmitter;
+	private static AVTransmit2 conversationtransmitter;
 
 	private static VNCCaptureService vncViewer;
 
@@ -122,6 +123,7 @@ public class Student {
 
 			setTransmitter(new AVTransmit2("10000", "", "5000"));
 			setReceiverOnly(new AVReceiveOnly("10010", "", "5010"));
+			setConversationtransmitter(new AVTransmit2("5000", "", "10000"));
 
 		} catch (Throwable e) {
 		}
@@ -595,5 +597,14 @@ public class Student {
 
 	public static CustomStudentButton getButtonContactInstructor() {
 		return buttonContactInstructorTemp;
+	}
+
+	public static AVTransmit2 getConversationtransmitter() {
+		return conversationtransmitter;
+	}
+
+	public static void setConversationtransmitter(
+			AVTransmit2 conversationtransmitter) {
+		Student.conversationtransmitter = conversationtransmitter;
 	}
 }

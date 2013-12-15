@@ -65,6 +65,26 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 
 						InstructorNoa.studentList.put(cmd.getFrom(), student);
 						serverService.send(grantCommand);
+						JInternalFrame[] frames = InstructorNoa.getDesktopPane()
+								.getAllFrames();
+						for (JInternalFrame frame : frames) {
+							if (cmd.getFrom().compareTo(
+									(String) frame.getClientProperty("ip")) == 0) {
+								try {
+									frame.dispose();
+								} catch (Exception e) {
+								}
+								try {
+									InstructorNoaUtil.createFrame(
+											InstructorNoa.getDesktopPane(),
+											((AuthenticateCommand) cmd).getFrom(),
+											((AuthenticateCommand) cmd).getUsername());
+								} catch (Exception e) {
+								}
+
+								break;
+							}
+						}
 					}
 				}
 				else{
@@ -89,32 +109,33 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 
 					InstructorNoa.studentList.put(cmd.getFrom(), student);
 					serverService.send(grantCommand);
+					JInternalFrame[] frames = InstructorNoa.getDesktopPane()
+							.getAllFrames();
+					for (JInternalFrame frame : frames) {
+						if (cmd.getFrom().compareTo(
+								(String) frame.getClientProperty("ip")) == 0) {
+							try {
+								frame.dispose();
+							} catch (Exception e) {
+							}
+							try {
+								InstructorNoaUtil.createFrame(
+										InstructorNoa.getDesktopPane(),
+										((AuthenticateCommand) cmd).getFrom(),
+										((AuthenticateCommand) cmd).getUsername());
+							} catch (Exception e) {
+							}
+
+							break;
+						}
+					}
 				}
 			}
 		}
 
 		if (grant) {
 
-			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
-					.getAllFrames();
-			for (JInternalFrame frame : frames) {
-				if (cmd.getFrom().compareTo(
-						(String) frame.getClientProperty("ip")) == 0) {
-					try {
-						frame.dispose();
-					} catch (Exception e) {
-					}
-					try {
-						InstructorNoaUtil.createFrame(
-								InstructorNoa.getDesktopPane(),
-								((AuthenticateCommand) cmd).getFrom(),
-								((AuthenticateCommand) cmd).getUsername());
-					} catch (Exception e) {
-					}
-
-					break;
-				}
-			}
+			
 		}
 	}
 

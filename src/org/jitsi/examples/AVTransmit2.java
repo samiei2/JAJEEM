@@ -220,7 +220,7 @@ public class AVTransmit2 {
 		for (MediaStream mediaStream : mediaStreams) {
 			if (mediaStream != null) {
 				if (type.equals("both")) {
-					mediaStream.start();
+ 					mediaStream.start();
 				} else if (type.equals("audio")
 						&& mediaStream.getName().equals("audio")) {
 					mediaStream.start();
