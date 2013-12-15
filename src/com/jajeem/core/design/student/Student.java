@@ -196,7 +196,7 @@ public class Student {
 		try {
 			buttonContactInstructor.setText(i18n.getParam("Chat"));
 			TooltipManager.setTooltip(buttonContactInstructor, imgToolTip,
-					i18n.getParam("tooltipChatInstructor"), TooltipWay.down);
+					i18n.getParam("Chat with Instructor"), TooltipWay.down);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -212,7 +212,7 @@ public class Student {
 		try {
 			buttonFileManager.setText(i18n.getParam("File Manager"));
 			TooltipManager.setTooltip(buttonFileManager, imgToolTip,
-					i18n.getParam("File Manager to send or receive files"),
+					i18n.getParam("Use File Manager to send or receive files"),
 					TooltipWay.down);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -259,7 +259,7 @@ public class Student {
 		buttonAccountManager.setText(i18n.getParam("Account"));
 		try {
 			TooltipManager.setTooltip(buttonAccountManager, imgToolTip,
-					i18n.getParam("Record voice or desktop"), TooltipWay.down);
+					i18n.getParam("Account Manager"), TooltipWay.down);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -57,6 +57,13 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 								((AuthenticateCommand) cmd).getFrom(),
 								((AuthenticateCommand) cmd).getUsername());
 						grantCommand.setGranted(grant);
+
+						Student student = new Student();
+						student = studentService.get(((AuthenticateCommand) cmd)
+								.getUsername());
+						grantCommand.setStudent(student);
+
+						InstructorNoa.studentList.put(cmd.getFrom(), student);
 						serverService.send(grantCommand);
 					}
 				}
@@ -74,19 +81,19 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 							((AuthenticateCommand) cmd).getFrom(),
 							((AuthenticateCommand) cmd).getUsername());
 					grantCommand.setGranted(grant);
+
+					Student student = new Student();
+					student = studentService.get(((AuthenticateCommand) cmd)
+							.getUsername());
+					grantCommand.setStudent(student);
+
+					InstructorNoa.studentList.put(cmd.getFrom(), student);
 					serverService.send(grantCommand);
 				}
 			}
 		}
 
 		if (grant) {
-
-			Student student = new Student();
-			student = studentService.get(((AuthenticateCommand) cmd)
-					.getUsername());
-			grantCommand.setStudent(student);
-
-			InstructorNoa.studentList.put(cmd.getFrom(), student);
 
 			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
 					.getAllFrames();

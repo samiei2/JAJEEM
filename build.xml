@@ -82,149 +82,18 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="AdminPanel">
-        <java classname="com.jajeem.core.design.account.AdminPanel" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="AdminPanel2">
-        <java classname="com.jajeem.core.design.account.AdminPanel2" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="BaseSurveyFrame">
-        <java classname="com.jajeem.survey.design.alt.BaseSurveyFrame" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CaptureScreenToFile">
-        <java classname="com.jajeem.recorder.design.CaptureScreenToFile" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="ClientFileManagerMain">
-        <java classname="com.jajeem.filemanager.client.ClientFileManagerMain" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="ClientFileManagerMain2">
-        <java classname="com.jajeem.filemanager.client.ClientFileManagerMain" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CustomFrame">
-        <java classname="com.jajeem.util.CustomFrame" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CustomLoginFrame">
-        <java classname="com.jajeem.util.CustomLoginFrame" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CustomRecorderDialog">
-        <java classname="com.jajeem.recorder.design.CustomRecorderDialog" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CustomStudentFrame">
-        <java classname="com.jajeem.util.CustomStudentFrame" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="CustomTeacherFrame">
-        <java classname="com.jajeem.util.CustomTeacherFrame" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="FileManagerMain">
-        <java classname="com.jajeem.filemanager.design.FileManagerMain" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
     <target name="InstructorLogin">
-        <java classname="com.jajeem.core.design.InstructorLogin" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-			<sysproperty key="java.library.path" value="lib/native/windows-64"/>
-        </java>
-    </target>
-    <target name="InstructorLogin2">
-        <java classname="com.jajeem.core.design.InstructorLogin" failonerror="true" fork="yes">
+        <java classname="com.jajeem.core.design.teacher.InstructorLogin" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
     <target name="InstructorNoa">
-        <java classname="com.jajeem.core.design.InstructorNoa" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="LoadingDialog2">
-        <java classname="com.jajeem.core.design.LoadingDialog2" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="LoadingDialog3">
-        <java classname="com.jajeem.core.design.LoadingDialog3" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="QuizMain">
-        <java classname="com.jajeem.quiz.design.alt.Quiz_Main" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Quiz_Main">
-        <java classname="com.jajeem.quiz.design.alt.Quiz_Main" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Quiz_QuestionDesignPanel">
-        <java classname="com.jajeem.quiz.design.alt.Quiz_QuestionDesignPanel" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Quiz_Window">
-        <java classname="com.jajeem.quiz.design.client.alt.Quiz_Window" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Recorder">
-        <java classname="com.jajeem.recorder.design.Recorder" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="RecorderStudent">
-        <java classname="com.jajeem.recorder.design.RecorderStudent" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Student">
-        <java classname="com.jajeem.core.design.Student" failonerror="true" fork="yes">
+        <java classname="com.jajeem.core.design.teacher.InstructorNoa" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
     <target name="StudentLogin">
-        <java classname="com.jajeem.core.design.StudentLogin" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="Survey_Main">
-        <java classname="com.jajeem.survey.design.alt.Survey_Main" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="test">
-        <java classname="com.jajeem.util.test" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="TestFrame">
-        <java classname="com.jajeem.survey.design.alt.Survey_Main" failonerror="true" fork="yes">
-            <classpath refid="Jajeem.classpath"/>
-        </java>
-    </target>
-    <target name="testtt">
-        <java classname="com.jajeem.util.testtt" failonerror="true" fork="yes">
+        <java classname="com.jajeem.core.design.student.StudentLogin" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
