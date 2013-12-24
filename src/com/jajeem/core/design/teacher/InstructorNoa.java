@@ -82,6 +82,7 @@ import com.alee.laf.table.WebTable;
 import com.alee.laf.text.WebTextField;
 import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
+import com.alee.utils.swing.Timer;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
@@ -151,6 +152,41 @@ public class InstructorNoa {
 	private JLabel lblMin2;
 	private JLabel lblLogo;
 	private JLabel lblLogoText;
+	
+	ImageIcon _0Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/0.png"));
+
+	ImageIcon _1Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/1.png"));
+
+	ImageIcon _2Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/2.png"));
+
+	ImageIcon _3Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/3.png"));
+
+	ImageIcon _4Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/4.png"));
+
+	ImageIcon _5Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/5.png"));
+
+	ImageIcon _6Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/6.png"));
+
+	ImageIcon _7Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/7.png"));
+
+	ImageIcon _8Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/8.png"));
+
+	ImageIcon _9Icon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/9.png"));
+	ImageIcon _ddIcon = new ImageIcon(
+			InstructorNoa.class.getResource("/icons/noa_en/clockdd.png"));
+	ImageIcon _ddIconScaled = new ImageIcon(_ddIcon.getImage()
+			.getScaledInstance(10, 25, Image.SCALE_SMOOTH));
+
 
 	/**
 	 * Launch the application.
@@ -230,6 +266,14 @@ public class InstructorNoa {
 				try {
 					logo = ImageIO.read(getClass().getResource("/icons/noa_en/logoteacher.png"));
 					logoText = ImageIO.read(getClass().getResource("/icons/noa_en/classmatelogo.png"));
+					lblHour1.setIcon(new ImageIcon(_0Icon.getImage().getScaledInstance(lblHour1.getWidth(),
+							lblHour1.getHeight(), Image.SCALE_SMOOTH)));
+					lblHour2.setIcon(new ImageIcon(_0Icon.getImage().getScaledInstance(lblHour2.getWidth(),
+							lblHour2.getHeight(), Image.SCALE_SMOOTH)));
+					lblMin1.setIcon(new ImageIcon(_0Icon.getImage().getScaledInstance(lblMin1.getWidth(),
+							lblMin1.getHeight(), Image.SCALE_SMOOTH)));
+					lblMin2.setIcon(new ImageIcon(_0Icon.getImage().getScaledInstance(lblMin2.getWidth(),
+							lblMin2.getHeight(), Image.SCALE_SMOOTH)));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -1404,28 +1448,6 @@ public class InstructorNoa {
 		viewModeButton.setUndecorated(true);
 		viewModeButton.setOpaque(false);
 
-		CustomTopButton languageButton = new CustomTopButton();
-		languageButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		languageButton.setIcon(new ImageIcon(InstructorNoa.class
-				.getResource("/icons/noa_en/lang.png")));
-		languageButton.putClientProperty("key", "language");
-		languageButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		languageButton.setForeground(Color.DARK_GRAY);
-		languageButton.setText(i18n.getParam("Language"));
-		languageButton.setUndecorated(true);
-		languageButton.setOpaque(false);
-
-		WebButtonPopup langPopupButton = new WebButtonPopup(languageButton,
-				PopupWay.downCenter);
-
-		GroupPanel langPopupContent = new GroupPanel(5, false, langList);
-		langPopupContent.setMargin(15);
-		langPopupButton.setContent(langPopupContent);
-
 		CustomPanel panelClock = new CustomPanel("/icons/noa_en/clockPanel.png");
 		panelClock.setOpaque(false);
 		GroupLayout gl_topPanel = new GroupLayout(topButtonPanel);
@@ -1437,9 +1459,7 @@ public class InstructorNoa {
 						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_topPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-						.addComponent(languageButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+					.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(panelClock, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -1449,11 +1469,9 @@ public class InstructorNoa {
 				.addGroup(gl_topPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_topPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelClock, GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+						.addComponent(panelClock, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
 						.addGroup(gl_topPanel.createSequentialGroup()
-							.addGroup(gl_topPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(viewModeButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(languageButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(viewModeButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_topPanel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(volumeButton, 33, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -1489,40 +1507,6 @@ public class InstructorNoa {
 		new ImageIcon(_dIcon.getImage().getScaledInstance(15, 15,
 				Image.SCALE_SMOOTH));
 
-		ImageIcon _0Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/0.png"));
-
-		ImageIcon _1Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/1.png"));
-
-		ImageIcon _2Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/2.png"));
-
-		ImageIcon _3Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/3.png"));
-
-		ImageIcon _4Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/4.png"));
-
-		ImageIcon _5Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/5.png"));
-
-		ImageIcon _6Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/6.png"));
-
-		ImageIcon _7Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/7.png"));
-
-		ImageIcon _8Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/8.png"));
-
-		ImageIcon _9Icon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/9.png"));
-		ImageIcon _ddIcon = new ImageIcon(
-				InstructorNoa.class.getResource("/icons/noa_en/clockdd.png"));
-		ImageIcon _ddIconScaled = new ImageIcon(_ddIcon.getImage()
-				.getScaledInstance(10, 25, Image.SCALE_SMOOTH));
-
 		JLabel lblDate = new JLabel("00/00/0000");
 		lblDate.setText(dateFormat.format(cal.getTime()).split(" ")[0]);
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1530,38 +1514,34 @@ public class InstructorNoa {
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setOpaque(false);
+		
+		final JLabel lblSystemTime = new JLabel("");
+		lblSystemTime.setForeground(Color.WHITE);
+		lblSystemTime.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1
-				.setHorizontalGroup(gl_panel_1
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_1
-										.createSequentialGroup()
-										.addGroup(
-												gl_panel_1
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_panel_1
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				lblDate))
-														.addComponent(
-																panel_2,
-																GroupLayout.PREFERRED_SIZE,
-																169,
-																Short.MAX_VALUE))
-										.addContainerGap()));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 38,
-								Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblDate).addGap(6)));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblDate)
+							.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+							.addComponent(lblSystemTime, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDate)
+						.addComponent(lblSystemTime, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
 
 		lblHour1 = new JLabel();
 		lblHour1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1608,7 +1588,7 @@ public class InstructorNoa {
 				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblMin2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+						.addComponent(lblMin2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
 						.addComponent(lblMin1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
 						.addComponent(label, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
 						.addComponent(lblHour2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
@@ -1629,6 +1609,68 @@ public class InstructorNoa {
 		clockIcons.put("8", _8Icon);
 		clockIcons.put("9", _9Icon);
 
+		Timer timer = new Timer(60000, new ActionListener() {
+			long currentTime = 0;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentTime += 60000;
+				final String Minute = String.format("%02d",currentTime / 60000);
+				final String Hour = String.format("%02d",currentTime % 60000);
+				
+				try {
+					EventQueue.invokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							try {
+								lblHour1.setIcon(new ImageIcon(
+										clockIcons
+												.get(String.valueOf(Hour
+														.charAt(0)))
+												.getImage()
+												.getScaledInstance(
+														lblHour1.getWidth(),
+														lblHour1.getHeight(),
+														Image.SCALE_SMOOTH)));
+								lblHour2.setIcon(new ImageIcon(
+										clockIcons
+												.get(String.valueOf(Hour
+														.charAt(1)))
+												.getImage()
+												.getScaledInstance(
+														lblHour2.getWidth(),
+														lblHour2.getHeight(),
+														Image.SCALE_SMOOTH)));
+								lblMin1.setIcon(new ImageIcon(clockIcons
+										.get(String.valueOf(Minute
+												.charAt(0)))
+										.getImage()
+										.getScaledInstance(
+												lblMin1.getWidth(),
+												lblMin1.getHeight(),
+												Image.SCALE_SMOOTH)));
+								lblMin2.setIcon(new ImageIcon(clockIcons
+										.get(String.valueOf(Minute
+												.charAt(1)))
+										.getImage()
+										.getScaledInstance(
+												lblMin2.getWidth(),
+												lblMin2.getHeight(),
+												Image.SCALE_SMOOTH)));
+								lblHour1.repaint();
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		timer.setInitialDelay(60000);
+		timer.start();
+		
 		Thread _clockAndTime = new Thread(new Runnable() {
 
 			@Override
@@ -1636,67 +1678,14 @@ public class InstructorNoa {
 				while (true) {
 					Calendar cal = Calendar.getInstance();
 					String CurrentTime = dateFormat.format(cal.getTime());
-					String time = CurrentTime.split(" ")[1];
-					final String Hour = time.split(":")[0];
-					final String Minute = time.split(":")[1];
-					if (lblHour1.getText() == String.valueOf(Hour.charAt(0))
-							&& lblHour2.getText() == String.valueOf(Hour
-									.charAt(1))
-							&& lblMin1.getText() == String.valueOf(Minute
-									.charAt(0))
-							&& lblMin2.getText() == String.valueOf(Minute
-									.charAt(0))) {
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						continue;
-					}
+					final String time = CurrentTime.split(" ")[1];
+					
 					try {
 						EventQueue.invokeLater(new Runnable() {
 
 							@Override
 							public void run() {
-								try {
-									lblHour1.setIcon(new ImageIcon(
-											clockIcons
-													.get(String.valueOf(Hour
-															.charAt(0)))
-													.getImage()
-													.getScaledInstance(
-															lblHour1.getWidth(),
-															lblHour1.getHeight(),
-															Image.SCALE_SMOOTH)));
-									lblHour2.setIcon(new ImageIcon(
-											clockIcons
-													.get(String.valueOf(Hour
-															.charAt(1)))
-													.getImage()
-													.getScaledInstance(
-															lblHour2.getWidth(),
-															lblHour2.getHeight(),
-															Image.SCALE_SMOOTH)));
-									lblMin1.setIcon(new ImageIcon(clockIcons
-											.get(String.valueOf(Minute
-													.charAt(0)))
-											.getImage()
-											.getScaledInstance(
-													lblMin1.getWidth(),
-													lblMin1.getHeight(),
-													Image.SCALE_SMOOTH)));
-									lblMin2.setIcon(new ImageIcon(clockIcons
-											.get(String.valueOf(Minute
-													.charAt(1)))
-											.getImage()
-											.getScaledInstance(
-													lblMin2.getWidth(),
-													lblMin2.getHeight(),
-													Image.SCALE_SMOOTH)));
-									lblHour1.repaint();
-								} catch (Exception ex) {
-									ex.printStackTrace();
-								}
+								lblSystemTime.setText(time);
 							}
 						});
 					} catch (Exception e) {

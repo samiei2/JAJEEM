@@ -109,35 +109,35 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 													.getTitle());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField()
+									.getWebTextField_01()
 									.setText(
 											parentPanel.getParentPanel()
 													.getCurrentQuestion()
 													.getAnswer1());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField_1()
+									.getWebTextField_02()
 									.setText(
 											parentPanel.getParentPanel()
 													.getCurrentQuestion()
 													.getAnswer2());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField_2()
+									.getWebTextField_03()
 									.setText(
 											parentPanel.getParentPanel()
 													.getCurrentQuestion()
 													.getAnswer3());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField_3()
+									.getWebTextField_04()
 									.setText(
 											parentPanel.getParentPanel()
 													.getCurrentQuestion()
 													.getAnswer4());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField_4()
+									.getWebTextField_05()
 									.setText(
 											parentPanel.getParentPanel()
 													.getCurrentQuestion()
@@ -145,7 +145,7 @@ public class Quiz_QuestionListPanel extends Quiz_AbstractViews {
 							// parentPanel.getQuestionDesignPanel().getWebTextField_5().setText(parentPanel.getParentPanel().getCurrentQuestion().getUrl());
 							parentPanel
 									.getWebQuestionDesignPanel()
-									.getWebTextField()
+									.getWebTextField_06()
 									.setText(
 											String.valueOf(parentPanel
 													.getParentPanel()

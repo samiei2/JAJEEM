@@ -1118,51 +1118,51 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		this.checkBox_4 = webCheckBox_4;
 	}
 
-	public JTextField getWebTextField() {
+	public JTextField getWebTextField_06() {
 		return textField;
 	}
 
-	public void setWebTextField(JTextField webTextField) {
+	public void setWebTextField_06(JTextField webTextField) {
 		this.textField = webTextField;
 	}
 
-	public JTextField getWebTextField_1() {
+	public JTextField getWebTextField_01() {
 		return textField_1;
 	}
 
-	public void setWebTextField_1(JTextField webTextField_1) {
+	public void setWebTextField_01(JTextField webTextField_1) {
 		this.textField_1 = webTextField_1;
 	}
 
-	public JTextField getWebTextField_2() {
+	public JTextField getWebTextField_02() {
 		return textField_2;
 	}
 
-	public void setWebTextField_2(JTextField webTextField_2) {
+	public void setWebTextField_02(JTextField webTextField_2) {
 		this.textField_2 = webTextField_2;
 	}
 
-	public JTextField getWebTextField_3() {
+	public JTextField getWebTextField_03() {
 		return textField_3;
 	}
 
-	public void setWebTextField_3(JTextField webTextField_3) {
+	public void setWebTextField_03(JTextField webTextField_3) {
 		this.textField_3 = webTextField_3;
 	}
 
-	public JTextField getWebTextField_4() {
+	public JTextField getWebTextField_04() {
 		return textField_4;
 	}
 
-	public void setWebTextField_4(JTextField webTextField_4) {
+	public void setWebTextField_04(JTextField webTextField_4) {
 		this.textField_4 = webTextField_4;
 	}
 	
-	public JTextField getWebTextField_5() {
+	public JTextField getWebTextField_05() {
 		return textField_5;
 	}
 
-	public void setWebTextField_5(JTextField webTextField_5) {
+	public void setWebTextField_05(JTextField webTextField_5) {
 		this.textField_5 = webTextField_5;
 	}
 

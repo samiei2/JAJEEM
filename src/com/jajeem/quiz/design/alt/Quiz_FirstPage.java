@@ -130,7 +130,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addComponent(lblDirection)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addComponent(lblPoints)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -138,8 +138,8 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 							.addGap(18)
 							.addComponent(chckbxAuto)
 							.addGap(54)
-							.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
+							.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
@@ -157,7 +157,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 						.addComponent(chckbxAuto)
 						.addComponent(lblTime)
 						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(31, Short.MAX_VALUE))
+					.addContainerGap(10, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
 		
@@ -259,24 +259,24 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 					parentPanel.getCurrentQuestion().setTitle(
 							webQuestionDesignPanel.getWebTextArea().getText());
 					parentPanel.getCurrentQuestion().setAnswer1(
-							webQuestionDesignPanel.getWebTextField().getText());
+							webQuestionDesignPanel.getWebTextField_01().getText());
 					parentPanel.getCurrentQuestion().setAnswer2(
-							webQuestionDesignPanel.getWebTextField_1()
+							webQuestionDesignPanel.getWebTextField_02()
 									.getText());
 					parentPanel.getCurrentQuestion().setAnswer3(
-							webQuestionDesignPanel.getWebTextField_2()
+							webQuestionDesignPanel.getWebTextField_03()
 									.getText());
 					parentPanel.getCurrentQuestion().setAnswer4(
-							webQuestionDesignPanel.getWebTextField_3()
+							webQuestionDesignPanel.getWebTextField_04()
 									.getText());
 					parentPanel.getCurrentQuestion().setAnswer5(
-							webQuestionDesignPanel.getWebTextField_4()
+							webQuestionDesignPanel.getWebTextField_05()
 									.getText());
 					// parentPanel.getCurrentQuestion().setUrl(getQuestionDesignPanel().getWebTextField_5().getText());
 					try {
 						parentPanel.getCurrentQuestion().setPoint(
 								Integer.parseInt(webQuestionDesignPanel
-										.getWebTextField().getText()));
+										.getWebTextField_06().getText()));
 					} catch (Exception ex) {
 						JajeemExcetionHandler.logError(ex);
 					}
@@ -377,11 +377,11 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 				webQuestionDesignPanel.setEnabled(true);
 				webQuestionDesignPanel.getWebScrollPane().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField_1().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField_2().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField_3().setEnabled(true);
-				webQuestionDesignPanel.getWebTextField_4().setEnabled(true);
+				webQuestionDesignPanel.getWebTextField_01().setEnabled(true);
+				webQuestionDesignPanel.getWebTextField_02().setEnabled(true);
+				webQuestionDesignPanel.getWebTextField_03().setEnabled(true);
+				webQuestionDesignPanel.getWebTextField_04().setEnabled(true);
+				webQuestionDesignPanel.getWebTextField_05().setEnabled(true);
 				// webQuestionDesignPanel.getWebTextField_6().setEnabled(true);
 				webQuestionDesignPanel.getWebRadioButton().setEnabled(true);
 				webQuestionDesignPanel.getWebRadioButton_1().setEnabled(true);
@@ -470,16 +470,16 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 				if (webQuestionListPanel.getWebTable().getRowCount() == 0) {
 					webQuestionDesignPanel.getWebScrollPane().setEnabled(false);
-					webQuestionDesignPanel.getWebTextField().setEnabled(false);
-					webQuestionDesignPanel.getWebTextField_1()
+					webQuestionDesignPanel.getWebTextField_01().setEnabled(false);
+					webQuestionDesignPanel.getWebTextField_02()
 							.setEnabled(false);
-					webQuestionDesignPanel.getWebTextField_2()
+					webQuestionDesignPanel.getWebTextField_03()
 							.setEnabled(false);
-					webQuestionDesignPanel.getWebTextField_3()
+					webQuestionDesignPanel.getWebTextField_04()
 							.setEnabled(false);
-					webQuestionDesignPanel.getWebTextField_4()
+					webQuestionDesignPanel.getWebTextField_05()
 							.setEnabled(false);
-					webQuestionDesignPanel.getWebTextField()
+					webQuestionDesignPanel.getWebTextField_06()
 							.setEnabled(false);
 					webQuestionDesignPanel.getWebRadioButton()
 							.setEnabled(false);
@@ -571,7 +571,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				webQuestionDesignPanel.getWebTextField().setEnabled(
+				webQuestionDesignPanel.getWebTextField_06().setEnabled(
 						!wbchckbxAuto.isSelected());
 				if (wbchckbxAuto.isSelected()
 						&& parentPanel.getCurrentRun().getQuiz()
@@ -606,7 +606,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 										.getRowCount() - 1, 2);
 					}
 					webQuestionDesignPanel
-							.getWebTextField()
+							.getWebTextField_06()
 							.setText(
 									String.valueOf(((DefaultTableModel) webQuestionListPanel
 											.getWebTable().getModel())
@@ -682,7 +682,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								webQuestionListPanel.getWebTable()
 										.getRowCount() - 1, 2);
 			}
-			webQuestionDesignPanel.getWebTextField().setText(
+			webQuestionDesignPanel.getWebTextField_06().setText(
 					String.valueOf(webQuestionListPanel
 							.getWebTable()
 							.getModel()
