@@ -81,13 +81,12 @@ public class CustomButton extends WebButton {
 		Graphics g2 = g.create();
 		if (background != null) {
 			if (isPressed) {
-				g2.drawImage(selected, 3, 0, getWidth(), getHeight(), this);
+				g2.drawImage(selected, 5, 0, getWidth() - 8, getHeight(), this);
 			} else {
 				if (isRollOver) {
-					g2.drawImage(rollover, 3, 0, getWidth(), getHeight(), this);
+					g2.drawImage(rollover, 5, 0, getWidth() - 8, getHeight(), this);
 				} else {
-					g2.drawImage(background, 3, 0, getWidth(), getHeight(),
-							this);
+					g2.drawImage(background, 5, 0, getWidth() - 8, getHeight(), this);
 				}
 			}
 		}

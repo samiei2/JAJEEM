@@ -1200,16 +1200,16 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		cl.show(panel_2, item);
 		if (item.equals("Essay")) {
 			textField_1.setVisible(false);
-			textField_1.setVisible(false);
-			textField_1.setVisible(false);
-			textField_1.setVisible(false);
-			textField_1.setVisible(false);
+			textField_2.setVisible(false);
+			textField_3.setVisible(false);
+			textField_4.setVisible(false);
+			textField_5.setVisible(false);
 		} else {
 			textField_1.setVisible(true);
-			textField_1.setVisible(true);
-			textField_1.setVisible(true);
-			textField_1.setVisible(true);
-			textField_1.setVisible(true);
+			textField_2.setVisible(true);
+			textField_3.setVisible(true);
+			textField_4.setVisible(true);
+			textField_5.setVisible(true);
 		}
 		radioButton.setSelected(false);
 		radioButton_1.setSelected(false);

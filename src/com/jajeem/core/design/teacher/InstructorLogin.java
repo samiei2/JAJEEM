@@ -37,7 +37,7 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonModel;
-import javax.swing.DefaultListModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -52,8 +52,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import javax.swing.text.JTextComponent;
 
 import com.alee.laf.WebLookAndFeel;
@@ -68,7 +66,6 @@ import com.jajeem.util.Config;
 import com.jajeem.util.CustomButton;
 import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
-import javax.swing.DefaultComboBoxModel;
 
 public class InstructorLogin extends JFrame {
 	/**
@@ -83,10 +80,12 @@ public class InstructorLogin extends JFrame {
 	protected JPasswordField passwordTF;
 	protected static Window frame;
 	RoomService roomService = new RoomService();
+	@SuppressWarnings("rawtypes")
 	private JComboBox courseCombo;
 	protected ArrayList<Course> courseList;
 	private CustomLoginButton webButtonLogin;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
 		frame = this;
 		setResizable(false);
@@ -214,8 +213,7 @@ public class InstructorLogin extends JFrame {
 		textField.setColumns(10);
 		usernameTF = textField;
 		textField.addKeyListener(new KeyAdapter() {
-        	@SuppressWarnings("static-access")
-			@Override
+        	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == KeyEvent.VK_ENTER)
         			PerformLogin();
@@ -229,8 +227,7 @@ public class InstructorLogin extends JFrame {
 		passwordField.setForeground(new Color(63,63,63,255));
 		passwordTF = passwordField;
 		passwordTF.addKeyListener(new KeyAdapter() {
-        	@SuppressWarnings("static-access")
-			@Override
+        	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == KeyEvent.VK_ENTER)
         			PerformLogin();
@@ -314,19 +311,39 @@ public class InstructorLogin extends JFrame {
 		panel_2.setLayout(gl_panel_2);
 		
 		JLabel lblNewLabel = new JLabel("");
+		
+		JLabel lblWelcomeTo = new JLabel("Welcome To");
+		lblWelcomeTo.setFont(new Font("Calibri", Font.BOLD, 26));
+		lblWelcomeTo.setForeground(Color.DARK_GRAY);
+		
+		JLabel lblClassmate = new JLabel("ClassMate");
+		lblClassmate.setForeground(Color.DARK_GRAY);
+		lblClassmate.setFont(new Font("Calibri", Font.BOLD, 40));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(159)
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(185, Short.MAX_VALUE))
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(86)
+							.addComponent(lblClassmate)))
+					.addContainerGap(98, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(2)
+							.addComponent(lblClassmate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)))
 		);
 		ImageIcon logo = new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/New/logo.png"));
 		ImageIcon logoScaled = new ImageIcon(logo.getImage()
@@ -404,6 +421,7 @@ public class InstructorLogin extends JFrame {
 //		panel.add(new RoundedPanel());
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void PerformLogin() {
 		if (usernameTF.getText() != null
 				&& !usernameTF.getText().equals("")
@@ -548,8 +566,6 @@ class LoginRoundedPanel extends JPanel {
 		int width = getWidth();
 		int height = getHeight();
 		int shadowGap = this.shadowGap;
-		Color shadowColorA = new Color(shadowColor.getRed(),
-				shadowColor.getGreen(), shadowColor.getBlue(), shadowAlpha);
 		Graphics2D graphics = (Graphics2D) g;
 
 		// Sets antialiasing if HQ.
@@ -574,6 +590,10 @@ class LoginRoundedPanel extends JPanel {
 
 class LoginRoundedTextBox extends JTextField{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Shape shape;
 	private String watermarkText;
     public LoginRoundedTextBox() {
@@ -627,6 +647,10 @@ class LoginRoundedTextBox extends JTextField{
 
 class LoginRoundedPasswordBox extends JPasswordField{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Shape shape;
 	private String watermarkText;
 	private String realText;
@@ -636,7 +660,8 @@ class LoginRoundedPasswordBox extends JPasswordField{
         setMargin(new Insets(0, 10, 0, 0));
         setEchoChar((char) 0);
         addFocusListener(new FocusAdapter(){
-        	@Override
+        	@SuppressWarnings("deprecation")
+			@Override
         	public void focusGained(FocusEvent e) {
         		setEchoChar('\u2022');
         		if(getText().equals(watermarkText))
@@ -644,7 +669,8 @@ class LoginRoundedPasswordBox extends JPasswordField{
         		super.focusGained(e);
         	}
         	
-        	@Override
+        	@SuppressWarnings("deprecation")
+			@Override
         	public void focusLost(FocusEvent arg0) {
         		if(getText().equals("")){
         			setText(watermarkText);

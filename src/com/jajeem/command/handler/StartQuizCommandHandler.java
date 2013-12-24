@@ -12,5 +12,6 @@ public class StartQuizCommandHandler implements ICommandHandler {
 		Quiz_Window quiz = new Quiz_Window(command.getRun());
 		quiz.setServer(command.getServer());
 		quiz.setReceivePort(command.getReceivePort());
+		quiz.setVisible(true);
 	}
 }

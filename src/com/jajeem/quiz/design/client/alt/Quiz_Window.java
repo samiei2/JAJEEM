@@ -238,27 +238,29 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		
 		wbtnNext = new CustomQuizButton("/icons/noa_en/quiznextbutton.png");
 		wbtnNext.setUndecorated(true);
-		wbtnNext.setText("");
+//		wbtnNext.setText("");
 		
 		wbtnPrev = new CustomQuizButton("/icons/noa_en/quizbackbutton.png");
 		wbtnPrev.setUndecorated(true);
-		wbtnPrev.setText("");
+//		wbtnPrev.setText("");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
-				.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+				.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap(99, Short.MAX_VALUE)
+					.addContainerGap(215, Short.MAX_VALUE)
 					.addComponent(wbtnPrev, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
-				.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 282, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(20)
@@ -511,7 +513,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		getMainContentPane().setLayout(groupLayout_1);
 		pack();
 		
-//		initEvents(run);
+		initEvents(run);
 	}
 	
 	private void initEvents(Run run) {
@@ -1073,9 +1075,9 @@ public class Quiz_Window extends BaseQuizClientFrame {
 								wbtnPrev.setVisible(true);
 							}
 							if (webList_1.getSelectedIndex() == model.getSize() - 1) {
-								wbtnNext.setText("Submit");
+//								wbtnNext.setText("Submit");
 							} else {
-								wbtnNext.setText("Next");
+//								wbtnNext.setText("Next");
 							}
 						}
 					}

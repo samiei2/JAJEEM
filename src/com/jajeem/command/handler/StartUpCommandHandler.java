@@ -42,9 +42,14 @@ public class StartUpCommandHandler implements ICommandHandler {
 		} else if (Integer.parseInt(Config.getParam("server")) == 1
 				&& cmd.getPort() == Integer.parseInt(Config
 						.getParam("serverPort"))) {
-			InstructorNoaUtil.createFrame(InstructorNoa.getDesktopPane(),
-					((StartUpCommand) cmd).getSender(),
-					((StartUpCommand) cmd).getSenderName());
+			if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {
+				if (InstructorNoa.getDesktopPane() != null) {
+					InstructorNoaUtil.createFrame(
+							InstructorNoa.getDesktopPane(),
+							((StartUpCommand) cmd).getSender(),
+							((StartUpCommand) cmd).getSenderName());
+				}
+			}
 		}
 	}
 }
