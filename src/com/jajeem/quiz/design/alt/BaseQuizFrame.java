@@ -75,7 +75,7 @@ public class BaseQuizFrame extends WebFrame {
 				Alignment.LEADING,
 				gl_panel.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 52,
+						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 72,
 								GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE,

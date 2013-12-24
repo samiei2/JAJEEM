@@ -83,36 +83,57 @@ public class Quiz_Main extends BaseQuizFrame {
 		mainFrame = this;
 
 		CustomQuizButton webButtonAdd = new CustomQuizButton(
-				"/icons/noa_en/quizadd.png");
-		webButtonAdd.setVerticalAlignment(SwingConstants.BOTTOM);
+				"/icons/noa_en/emptybutton.png");
+		webButtonAdd.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonAdd.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonAdd.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizaddicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		webButtonAdd.setText("New");
 		webButtonAdd.setUndecorated(true);
 		wbtnNew  = webButtonAdd;
 
 		CustomQuizButton webButtonOpen = new CustomQuizButton(
-				"/icons/noa_en/quizopen.png");
+				"/icons/noa_en/emptybutton.png");
+		webButtonOpen.setText("Open");
+		webButtonOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonOpen.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonOpen.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizopenicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		webButtonOpen.setUndecorated(true);
 		wbtnOpen = webButtonOpen;
 
 		CustomQuizButton webButtonSave = new CustomQuizButton(
-				"/icons/noa_en/quizsave.png");
+				"/icons/noa_en/emptybutton.png");
+		webButtonSave.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonSave.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonSave.setText("Save");
+		webButtonSave.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizsaveicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		webButtonSave.setUndecorated(true);
 		wbtnSave = webButtonSave;
 
 		CustomQuizButton webButtonStart = new CustomQuizButton(
 				"/icons/noa_en/emptybutton.png");
+		webButtonStart.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonStart.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonStart.setText("Start");
 		webButtonStart.setUndecorated(true);
 		wbtnStart = webButtonStart;
 		wbtnStart.putClientProperty("action", "Start");
 		wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 
 		CustomQuizButton webButtonContent = new CustomQuizButton(
-				"/icons/noa_en/quizcontent.png");
+				"/icons/noa_en/emptybutton.png");
+		webButtonContent.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonContent.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonContent.setText("Content");
+		webButtonContent.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizcontenticon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		webButtonContent.setEnabled(false);
 		webButtonContent.setUndecorated(true);
 		wbtnContent = webButtonContent;
 		
-		CustomQuizButton webButtonSaveResults = new CustomQuizButton("/icons/noa_en/quizsave.png");
+		CustomQuizButton webButtonSaveResults = new CustomQuizButton("/icons/noa_en/emptybutton.png");
+		webButtonSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		webButtonSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
+		webButtonSaveResults.setText("Save Results");
+		webButtonSaveResults.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizsaveicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		webButtonSaveResults.setVisible(false);
 		webButtonSaveResults.setUndecorated(true);
 		wbtnSaveResults = webButtonSaveResults;
@@ -123,31 +144,35 @@ public class Quiz_Main extends BaseQuizFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
-					.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
+					.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addComponent(webButtonContent, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonStart, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(webButtonSaveResults, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonSave, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonOpen, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+						.addComponent(webButtonAdd, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getTopPane().setLayout(groupLayout);
 
@@ -318,7 +343,7 @@ public class Quiz_Main extends BaseQuizFrame {
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
 					wbtnSaveResults.setVisible(false);
-//					wbtnStart.setText("Start");
+					wbtnStart.setText("Start");
 //					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
 //							.getResource("/icons/noa_en/startx16.png")));
 					wbtnStart.putClientProperty("action", "Start");
@@ -361,7 +386,7 @@ public class Quiz_Main extends BaseQuizFrame {
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
 				wbtnSaveResults.setVisible(false);
-//				wbtnStart.setText("Start");
+				wbtnStart.setText("Start");
 //				wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
 //						.getResource("/icons/noa_en/startx16.png")));
 				wbtnStart.putClientProperty("action", "Start");
@@ -468,6 +493,7 @@ public class Quiz_Main extends BaseQuizFrame {
 					wbtnSaveResults.setVisible(true);
 					wbtnContent.setEnabled(true);
 					wbtnStart.putClientProperty("action", "Stop");
+					wbtnStart.setText("Stop");
 					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Quiz_Main.class.getResource("/icons/noa_en/quizstopicon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 					CardLayout cl = (CardLayout) (webPanelCards.getLayout());
 					cl.show(webPanelCards, "secondPage");
@@ -484,7 +510,7 @@ public class Quiz_Main extends BaseQuizFrame {
 									.setText("");
 						}
 					}
-//					wbtnStart.setText("Start");
+					wbtnStart.setText("Start");
 //					wbtnStart.setIcon(new ImageIcon(Quiz_Main.class
 //							.getResource("/icons/noa_en/startx16.png")));
 					wbtnStart.putClientProperty("action", "Start");
