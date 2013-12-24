@@ -22,8 +22,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -46,7 +44,6 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -1038,7 +1035,9 @@ public class InstructorNoa {
 		conversationButton.setUndecorated(true);
 		bottomButtonPanel.add(conversationButton);
 
-		rightButtonPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		GridLayout rightButtonPanelGrid = new GridLayout(0, 1, 0, 0);
+		rightButtonPanelGrid.setVgap(7);
+		rightButtonPanel.setLayout(rightButtonPanelGrid);
 
 		ImageIcon monitorIcon = new ImageIcon(
 				InstructorNoa.class.getResource("/icons/noa_en/monitor.png"));
@@ -1347,57 +1346,28 @@ public class InstructorNoa {
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		GroupLayout groupLayout = new GroupLayout(frame.getMainContentPane());
-		groupLayout
-				.setHorizontalGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								groupLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												groupLayout
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																bottomButtonPanel,
-																Alignment.TRAILING,
-																956, 956,
-																Short.MAX_VALUE)
-														.addGroup(
-																Alignment.TRAILING,
-																groupLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				centerPanel,
-																				759,
-																				759,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				rightButtonPanel,
-																				187,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								groupLayout
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(rightButtonPanel,
-												GroupLayout.PREFERRED_SIZE,
-												297, Short.MAX_VALUE)
-										.addComponent(centerPanel,
-												GroupLayout.DEFAULT_SIZE, 307,
-												Short.MAX_VALUE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomButtonPanel,
-								GroupLayout.PREFERRED_SIZE, 47,
-								GroupLayout.PREFERRED_SIZE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(bottomButtonPanel, Alignment.LEADING, 759, 1232, Short.MAX_VALUE)
+						.addComponent(centerPanel, Alignment.LEADING, 759, 1232, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(rightButtonPanel, 287, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))))
+		);
 
 		frame.getMainContentPane().setLayout(groupLayout);
 
@@ -1717,8 +1687,8 @@ public class InstructorNoa {
 								GroupLayout.PREFERRED_SIZE).addContainerGap()));
 		gl_panel_3.setVerticalGroup(gl_panel_3.createParallelGroup(
 				Alignment.LEADING)
-				.addComponent(logoPanel,GroupLayout.PREFERRED_SIZE,100,Short.MAX_VALUE)
-				.addComponent(topButtonPanel,GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE));
+				.addComponent(logoPanel,GroupLayout.PREFERRED_SIZE,150,Short.MAX_VALUE)
+				.addComponent(topButtonPanel,GroupLayout.PREFERRED_SIZE, 150, Short.MAX_VALUE));
 		
 		lblLogo = new JLabel("");
 		
