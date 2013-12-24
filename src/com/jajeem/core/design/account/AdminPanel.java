@@ -681,6 +681,7 @@ public class AdminPanel extends CustomAccountFrame {
 		courseSelectionModel = new EventSelectionModel<Course>(filterList);
 		courseTable.setSelectionModel(courseSelectionModel);
 		courseTable.setModel(model);
+		courseTable.setSelectionBackground(Color.CYAN);
 		TableComparatorChooser<Course> tableSorter = TableComparatorChooser
 				.install(courseTable, sortedCourse,
 						AbstractTableComparatorChooser.SINGLE_COLUMN);
@@ -1011,6 +1012,7 @@ public class AdminPanel extends CustomAccountFrame {
 				filterList);
 		instructorTable.setSelectionModel(instructorSelectionModel);
 		instructorTable.setModel(model);
+		instructorTable.setSelectionBackground(Color.CYAN);
 		TableComparatorChooser<Instructor> tableSorter = TableComparatorChooser
 				.install(instructorTable, sortedInstructor,
 						AbstractTableComparatorChooser.SINGLE_COLUMN);
@@ -1259,6 +1261,7 @@ public class AdminPanel extends CustomAccountFrame {
 		studentSelectionModel = new EventSelectionModel<Student>(filterList);
 		studentTable.setSelectionModel(studentSelectionModel);
 		studentTable.setModel(model);
+		studentTable.setSelectionBackground(Color.CYAN);
 		TableComparatorChooser<Student> tableSorter = TableComparatorChooser
 				.install(studentTable, sortedStudent,
 						AbstractTableComparatorChooser.SINGLE_COLUMN);

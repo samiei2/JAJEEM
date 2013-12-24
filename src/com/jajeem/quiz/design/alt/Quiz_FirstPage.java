@@ -238,7 +238,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 
 
-//		initEvents();
+		initEvents();
 	}
 
 	private void initEvents() {

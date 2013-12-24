@@ -357,6 +357,7 @@ public class AccountPanel extends BaseAccountFrame {
 		courseSelectionModel = new EventSelectionModel<Course>(filterList);
 		courseTable.setSelectionModel(courseSelectionModel);
 		courseTable.setModel(model);
+		courseTable.setBackground(Color.CYAN);
 		TableComparatorChooser.install(courseTable, sortedCourse,
 				AbstractTableComparatorChooser.SINGLE_COLUMN);
 
@@ -439,6 +440,7 @@ public class AccountPanel extends BaseAccountFrame {
 		studentSelectionModel = new EventSelectionModel<Student>(filterList);
 		studentTable.setSelectionModel(studentSelectionModel);
 		studentTable.setModel(model);
+		studentTable.setBackground(Color.CYAN);
 		TableComparatorChooser.install(studentTable, sortedStudent,
 				AbstractTableComparatorChooser.SINGLE_COLUMN);
 

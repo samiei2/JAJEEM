@@ -15,8 +15,12 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -33,6 +37,7 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonModel;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -47,6 +52,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.text.JTextComponent;
 
 import com.alee.laf.WebLookAndFeel;
@@ -56,10 +63,12 @@ import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
+import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomButton;
 import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
+import javax.swing.DefaultComboBoxModel;
 
 public class InstructorLogin extends JFrame {
 	/**
@@ -68,6 +77,7 @@ public class InstructorLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private LoginRoundedTextBox textField;
 	private LoginRoundedPasswordBox passwordField;
+	private JajeemComboBox comboBox_lang;
 	int posX = 0, posY = 0;
 	protected JTextComponent usernameTF;
 	protected JPasswordField passwordTF;
@@ -84,7 +94,6 @@ public class InstructorLogin extends JFrame {
 		setBackground(new Color(0, 255, 0, 0));
 		getContentPane().setBackground(new Color(0, 0, 0, 0));
 		setIconImage(new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/logo.png")).getImage());
-		
 		
 		new Config();
 		new i18n();
@@ -247,16 +256,46 @@ public class InstructorLogin extends JFrame {
 		webButtonLogin.setIcon(lockIconScaled);
 		webButtonLogin.setText("Log In");
 		webButtonLogin.setUndecorated(true);
+		
+		comboBox_lang = new JajeemComboBox();
+		comboBox_lang.setModel(new DefaultComboBoxModel(new String[] {"English", "Farsi"}));
+		comboBox_lang.setForeground(Color.DARK_GRAY);
+		comboBox_lang.setFont(new Font("Tahoma", Font.BOLD, 12));
+		comboBox_lang.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				int index = comboBox_lang.getSelectedIndex();
+				try {
+					if (index == 0) {
+						if (!Config.getParam("lang").equals("en")) {
+							Config.setParam("lang", "en");
+						}
+					} else if (index == 1) {
+						Config.setParam("lang", "fa");
+					}
+				} catch (Exception ex) {
+					JajeemExcetionHandler.logError(ex);
+					ex.printStackTrace();
+				}
+			}
+		});
+		
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(webButtonLogin, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(webButtonLogin, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addGap(158)
+							.addComponent(comboBox_lang, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
@@ -268,7 +307,9 @@ public class InstructorLogin extends JFrame {
 						.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(41, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(comboBox_lang, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
 		
@@ -336,11 +377,29 @@ public class InstructorLogin extends JFrame {
 			}
 		});
 		
-		setSize(495, 174);
+		setSize(495, 204);
 //		pack();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
 				- getSize().height / 2);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				super.componentShown(e);
+				try {
+					if (!Config.getParam("lang").equals("en")){
+						comboBox_lang.setSelectedIndex(0);
+					}
+					else if (!Config.getParam("lang").equals("fa")){
+						comboBox_lang.setSelectedIndex(1);
+					}
+				} catch (Exception e2) {
+					JajeemExcetionHandler.logError(e2);
+					e2.printStackTrace();
+				}
+			}
+		});
 //		pack();
 //		panel.add(new RoundedPanel());
 	}

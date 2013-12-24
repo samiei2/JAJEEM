@@ -50,6 +50,7 @@ import com.jajeem.quiz.service.QuizService;
 import com.jajeem.quiz.service.ResultService;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
+import javax.swing.SwingConstants;
 
 public class Quiz_Main extends BaseQuizFrame {
 	/**
@@ -83,6 +84,8 @@ public class Quiz_Main extends BaseQuizFrame {
 
 		CustomQuizButton webButtonAdd = new CustomQuizButton(
 				"/icons/noa_en/quizadd.png");
+		webButtonAdd.setVerticalAlignment(SwingConstants.BOTTOM);
+		webButtonAdd.setText("New");
 		webButtonAdd.setUndecorated(true);
 		wbtnNew  = webButtonAdd;
 
