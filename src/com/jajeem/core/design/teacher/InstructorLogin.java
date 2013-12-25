@@ -64,10 +64,15 @@ import com.jajeem.room.service.RoomService;
 import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomButton;
+import com.jajeem.util.CustomLoginFrame;
+import com.jajeem.util.CustomPasswordField;
+import com.jajeem.util.CustomTextField;
 import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
+import com.jajeem.ui.textbox.JajeemPasswordTextField;
+import com.jajeem.ui.textbox.JajeemTextField;
 
-public class InstructorLogin extends JFrame {
+public class InstructorLogin {
 	/**
 	 * 
 	 */
@@ -87,36 +92,50 @@ public class InstructorLogin extends JFrame {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
-		frame = this;
-		setResizable(false);
-		setUndecorated(true);
-		setBackground(new Color(0, 255, 0, 0));
-		getContentPane().setBackground(new Color(0, 0, 0, 0));
-		setIconImage(new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/logo.png")).getImage());
-		
 		new Config();
-		new i18n();
+//		new i18n();
 		
-		LoginRoundedPanel mainPanel = new LoginRoundedPanel();
+		final CustomLoginFrame mainPanel = new CustomLoginFrame();
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setOpaque(false);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setOpaque(false);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setOpaque(false);
+		GroupLayout groupLayout = new GroupLayout(mainPanel.getMainContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 433, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(9)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(12, Short.MAX_VALUE))
+		);
 		
 		JLabel label = new JLabel("Courses : ");
 		label.setForeground(new Color(63, 63, 63));
 		label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		JComboBox comboBox = new JComboBox();
+		JajeemComboBox comboBox = new JajeemComboBox();
 		courseCombo = comboBox;
 		
-		CustomLoginButton customLoginButton = new CustomLoginButton();
-		customLoginButton.addActionListener(new ActionListener() {
+		CustomLoginButton customLoginButton_1 = new CustomLoginButton();
+		customLoginButton_1.setUndecorated(true);
+		customLoginButton_1.setText("Select");
+		customLoginButton_1.setIconTextGap(13);
+		customLoginButton_1.setForeground(new Color(63, 63, 63));
+		customLoginButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		customLoginButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (usernameTF.getText() != null
 						&& !usernameTF.getText().equals("")
@@ -171,103 +190,21 @@ public class InstructorLogin extends JFrame {
 				}
 			}
 		});
-		customLoginButton.setUndecorated(true);
-		customLoginButton.setText("Select");
-		customLoginButton.setIconTextGap(13);
-		customLoginButton.setForeground(new Color(63, 63, 63));
-		customLoginButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGap(64)
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGap(165)
-							.addComponent(customLoginButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(160, Short.MAX_VALUE))
-		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGap(2)
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(customLoginButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-					.addGap(5))
-		);
-		panel_3.setLayout(gl_panel_3);
 		
-		textField = new LoginRoundedTextBox();
-		textField.setForeground(new Color(63,63,63,255));
-		textField.setFont(new Font("Tahoma", Font.BOLD, 15));
-		textField.setWaterMarkText("Username");
-		textField.setColumns(10);
-		usernameTF = textField;
-		textField.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyPressed(KeyEvent e) {
-        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        			PerformLogin();
-        		super.keyPressed(e);
-        	}
-		});
+		JajeemComboBox jajeemComboBox = new JajeemComboBox();
+		jajeemComboBox.setModel(new DefaultComboBoxModel(new String[] {"English", "Farsi"}));
+		comboBox_lang = jajeemComboBox;
+		jajeemComboBox.setForeground(Color.DARK_GRAY);
+		jajeemComboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		passwordField = new LoginRoundedPasswordBox();
-		passwordField.setFont(new Font("Tahoma", Font.BOLD, 15));
-		passwordField.setWaterMarkText("Password");
-		passwordField.setForeground(new Color(63,63,63,255));
-		passwordTF = passwordField;
-		passwordTF.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyPressed(KeyEvent e) {
-        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        			PerformLogin();
-        		super.keyPressed(e);
-        	}
-		});
-		
-		
-		webButtonLogin = new CustomLoginButton();
-		webButtonLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PerformLogin();
-			}
-		});
-		webButtonLogin.setMargin(new Insets(0, 0, 0, 15));
-		webButtonLogin.setIconTextGap(13);
-		webButtonLogin.setFont(new Font("Tahoma", Font.BOLD, 13));
-		webButtonLogin.setForeground(new Color(63,63,63,255));
-		ImageIcon lockIcon = new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/teacherloginbuttonicon.png"));
-		ImageIcon lockIconScaled = new ImageIcon(lockIcon.getImage()
-				.getScaledInstance(14,
-						18, Image.SCALE_SMOOTH));
-		webButtonLogin.setIcon(lockIconScaled);
-		webButtonLogin.setText("Log In");
-		webButtonLogin.setUndecorated(true);
-		
-		comboBox_lang = new JajeemComboBox();
-		comboBox_lang.setModel(new DefaultComboBoxModel(new String[] {"English", "Farsi"}));
-		comboBox_lang.setForeground(Color.DARK_GRAY);
-		comboBox_lang.setFont(new Font("Tahoma", Font.BOLD, 12));
-		comboBox_lang.addItemListener(new ItemListener() {
+		jajeemComboBox.addActionListener(new ActionListener() {
 			
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				int index = comboBox_lang.getSelectedIndex();
 				try {
 					if (index == 0) {
-						if (!Config.getParam("lang").equals("en")) {
-							Config.setParam("lang", "en");
-						}
+						Config.setParam("lang", "en");
 					} else if (index == 1) {
 						Config.setParam("lang", "fa");
 					}
@@ -277,106 +214,129 @@ public class InstructorLogin extends JFrame {
 				}
 			}
 		});
-		
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(webButtonLogin, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(158)
-							.addComponent(comboBox_lang, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(14, Short.MAX_VALUE))
-		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(webButtonLogin, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(comboBox_lang, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		panel_2.setLayout(gl_panel_2);
-		
-		JLabel lblNewLabel = new JLabel("");
-		
-		JLabel lblWelcomeTo = new JLabel("Welcome To");
-		lblWelcomeTo.setFont(new Font("Calibri", Font.BOLD, 26));
-		lblWelcomeTo.setForeground(Color.DARK_GRAY);
-		
-		JLabel lblClassmate = new JLabel("ClassMate");
-		lblClassmate.setForeground(Color.DARK_GRAY);
-		lblClassmate.setFont(new Font("Calibri", Font.BOLD, 40));
+
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(86)
-							.addComponent(lblClassmate)))
-					.addContainerGap(98, Short.MAX_VALUE))
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+							.addGap(156)
+							.addComponent(customLoginButton_1, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
+							.addGap(51)
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(jajeemComboBox, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(comboBox, Alignment.TRAILING, 0, 148, Short.MAX_VALUE))))
+					.addContainerGap(151, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 							.addGap(2)
-							.addComponent(lblClassmate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jajeemComboBox, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(customLoginButton_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		ImageIcon logo = new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/New/logo.png"));
-		ImageIcon logoScaled = new ImageIcon(logo.getImage()
-				.getScaledInstance(120,
-						91, Image.SCALE_SMOOTH));
-		lblNewLabel.setIcon(logoScaled);
 		panel_1.setLayout(gl_panel_1);
-		getContentPane().add(mainPanel);
-		GroupLayout gl_mainPanel = new GroupLayout(mainPanel);
-		gl_mainPanel.setHorizontalGroup(
-			gl_mainPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_mainPanel.createSequentialGroup()
-					.addGap(15)
-					.addGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(25))
+		
+		JLabel lblNewLabel = new JLabel("Username : ");
+		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblNewLabel.setForeground(Color.DARK_GRAY);
+		
+		JLabel lblPassword = new JLabel("Password : ");
+		lblPassword.setFont(new Font("Calibri", Font.BOLD, 18));
+		lblPassword.setForeground(Color.DARK_GRAY);
+		
+		CustomTextField jajeemTextField = new CustomTextField("/icons/noa_en/new/logintextbox.png");
+		usernameTF = jajeemTextField;
+		jajeemTextField.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyPressed(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        			PerformLogin();
+        		super.keyPressed(e);
+        	}
+		});
+		
+		CustomPasswordField jajeemTextField_1 = new CustomPasswordField("/icons/noa_en/new/logintextbox.png");
+		passwordTF = jajeemTextField_1;
+		jajeemTextField_1.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyPressed(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        			PerformLogin();
+        		super.keyPressed(e);
+        	}
+		});
+		
+		CustomLoginButton customLoginButton = new CustomLoginButton();
+		customLoginButton.setUndecorated(true);
+		customLoginButton.setText("Log In");
+		customLoginButton.setMargin(new Insets(0, 0, 0, 15));
+		customLoginButton.setIconTextGap(13);
+		customLoginButton.setForeground(new Color(63, 63, 63));
+		customLoginButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		webButtonLogin = customLoginButton;
+		ImageIcon lockIcon = new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/teacherloginbuttonicon.png"));
+		ImageIcon lockIconScaled = new ImageIcon(lockIcon.getImage()
+				.getScaledInstance(14,
+						18, Image.SCALE_SMOOTH));
+		customLoginButton.setIcon(lockIconScaled);
+		customLoginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PerformLogin();
+			}
+		});
+		
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jajeemTextField, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblPassword)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jajeemTextField_1, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
+					.addGap(9))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(155)
+					.addComponent(customLoginButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(168, Short.MAX_VALUE))
 		);
-		gl_mainPanel.setVerticalGroup(
-			gl_mainPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_mainPanel.createSequentialGroup()
-					.addGap(5)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(5)
-					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(30, Short.MAX_VALUE))
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE, false)
+						.addComponent(lblNewLabel)
+						.addComponent(jajeemTextField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblPassword)
+						.addComponent(jajeemTextField_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(customLoginButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		mainPanel.setLayout(gl_mainPanel);
-//		setLocationRelativeTo(this);
-		this.addMouseListener(new MouseAdapter() {
+		panel.setLayout(gl_panel);
+		mainPanel.getMainContentPane().setLayout(groupLayout);
+		
+		mainPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				posX = e.getX();
@@ -384,31 +344,38 @@ public class InstructorLogin extends JFrame {
 			}
 		});
 
-		this.addMouseMotionListener(new MouseAdapter() {
+		mainPanel.addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent evt) {
 				// sets frame position when mouse dragged
-				setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
+				mainPanel.setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen()
 						- posY);
 
 			}
 		});
 		
-		setSize(495, 204);
-//		pack();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
-				- getSize().height / 2);
 		
-		addComponentListener(new ComponentAdapter() {
+		frame = mainPanel;
+		mainPanel.setResizable(false);
+		mainPanel.setUndecorated(true);
+		mainPanel.setBackground(new Color(0, 255, 0, 0));
+		mainPanel.getContentPane().setBackground(new Color(0, 0, 0, 0));
+		mainPanel.setIconImage(new ImageIcon(InstructorLogin.class.getResource("/icons/noa_en/logo.png")).getImage());
+		mainPanel.setSize(500, 277);
+		mainPanel.setLocation(dim.width / 2 - mainPanel.getSize().width / 2, dim.height / 2
+				- mainPanel.getSize().height / 2);
+//		mainPanel.pack();
+		
+		mainPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				super.componentShown(e);
 				try {
-					if (!Config.getParam("lang").equals("en")){
+					if (Config.getParam("lang").equals("en")){
 						comboBox_lang.setSelectedIndex(0);
 					}
-					else if (!Config.getParam("lang").equals("fa")){
+					else if (Config.getParam("lang").equals("fa")){
 						comboBox_lang.setSelectedIndex(1);
 					}
 				} catch (Exception e2) {
@@ -417,10 +384,8 @@ public class InstructorLogin extends JFrame {
 				}
 			}
 		});
-//		pack();
-//		panel.add(new RoundedPanel());
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	protected void PerformLogin() {
 		if (usernameTF.getText() != null
@@ -446,7 +411,7 @@ public class InstructorLogin extends JFrame {
 				com.jajeem.util.Session.setInstructor(instructor);
 				InstructorNoa.setInstructorModel(instructor);
 
-				frame.setSize(505, 273);
+				frame.setSize(505, 383);
 
 				try {
 					courseList = roomService
@@ -476,7 +441,7 @@ public class InstructorLogin extends JFrame {
 					e.printStackTrace();
 				}
 
-				frame.pack();
+//				frame.pack();
 
 			} else {
 				usernameTF.setBackground(Color.decode("#FAD9D9"));
@@ -512,7 +477,7 @@ public class InstructorLogin extends JFrame {
 					});
 					loading.start();
 					new StartUp();
-					frame = new InstructorLogin();
+					frame = new InstructorLogin().frame;
 //					frame.pack();
 
 					Timer timer = new Timer();
@@ -530,269 +495,5 @@ public class InstructorLogin extends JFrame {
 				}
 			}
 		});
-	}
-}
-
-class LoginRoundedPanel extends JPanel {
-	public LoginRoundedPanel() {
-		setOpaque(false);
-	}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/** Stroke size. it is recommended to set it to 1 for better view */
-	protected int strokeSize = 6;
-	/** Color of shadow */
-	protected Color shadowColor = Color.black;
-	/** Sets if it drops shadow */
-	protected boolean shady = false;
-	/** Sets if it has an High Quality view */
-	protected boolean highQuality = true;
-	/** Double values for Horizontal and Vertical radius of corner arcs */
-	protected Dimension arcs = new Dimension(30, 30);
-	/** Distance between shadow border and opaque panel border */
-	protected int shadowGap = 5;
-	/** The offset of shadow. */
-	protected int shadowOffset = 4;
-	/** The transparency value of shadow. ( 0 - 255) */
-	protected int shadowAlpha = 90;
-
-	// FOLLOWING CODES GOES HERE
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		int width = getWidth();
-		int height = getHeight();
-		int shadowGap = this.shadowGap;
-		Graphics2D graphics = (Graphics2D) g;
-
-		// Sets antialiasing if HQ.
-		if (highQuality) {
-			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
-		}
-
-		// Draws the rounded opaque panel with borders.
-		graphics.setColor(getBackground());
-		graphics.fillRoundRect(0, 0, width - shadowGap, height - shadowGap,
-				arcs.width, arcs.height);
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.setStroke(new BasicStroke(strokeSize));
-		graphics.drawRoundRect(2, 2, width - shadowGap, height - shadowGap,
-				arcs.width, arcs.height);
-
-		// Sets strokes to default, is better.
-		graphics.setStroke(new BasicStroke());
-	}
-}
-
-class LoginRoundedTextBox extends JTextField{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Shape shape;
-	private String watermarkText;
-    public LoginRoundedTextBox() {
-        super();
-        setOpaque(false); // As suggested by @AVD in comment.
-        setMargin(new Insets(0, 10, 0, 0));
-        addFocusListener(new FocusAdapter(){
-        	@Override
-        	public void focusGained(FocusEvent e) {
-        		if(getText().equals(watermarkText))
-        			setText("");
-        		super.focusGained(e);
-        	}
-        	
-        	@Override
-        	public void focusLost(FocusEvent arg0) {
-        		if(getText().equals(""))
-        			setText(watermarkText);
-        		super.focusLost(arg0);
-        	}
-        });
-    }
-    public void setWaterMarkText(String string) {
-    	watermarkText = string;
-		setText(string);
-	}
-    
-    protected void paintComponent(Graphics g) {
-//    	Graphics2D g2 = (Graphics2D)g;
-//    	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-//				RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setColor(getBackground());
-//        g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-        super.paintComponent(g);
-    }
-    protected void paintBorder(Graphics g) {
-    	Graphics2D g2 = (Graphics2D)g;
-    	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-				RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getForeground());
-        g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-    }
-    public boolean contains(int x, int y) {
-         if (shape == null || !shape.getBounds().equals(getBounds())) {
-             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-         }
-         return shape.contains(x, y);
-    }
-}
-
-class LoginRoundedPasswordBox extends JPasswordField{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Shape shape;
-	private String watermarkText;
-	private String realText;
-    public LoginRoundedPasswordBox() {
-        super();
-        setOpaque(false); // As suggested by @AVD in comment.
-        setMargin(new Insets(0, 10, 0, 0));
-        setEchoChar((char) 0);
-        addFocusListener(new FocusAdapter(){
-        	@SuppressWarnings("deprecation")
-			@Override
-        	public void focusGained(FocusEvent e) {
-        		setEchoChar('\u2022');
-        		if(getText().equals(watermarkText))
-        			setText("");
-        		super.focusGained(e);
-        	}
-        	
-        	@SuppressWarnings("deprecation")
-			@Override
-        	public void focusLost(FocusEvent arg0) {
-        		if(getText().equals("")){
-        			setText(watermarkText);
-        			setEchoChar((char) 0);
-        		}
-        		super.focusLost(arg0); 
-        	}
-        });       
-    }
-    public void setWaterMarkText(String string) {
-    	watermarkText = string;
-		setText(string);
-	}
-    
-    protected void paintComponent(Graphics g) {
-//    	Graphics2D g2 = (Graphics2D)g;
-//    	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-//				RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setColor(getBackground());
-//        g2.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-        super.paintComponent(g);
-    }
-    protected void paintBorder(Graphics g) {
-    	Graphics2D g2 = (Graphics2D)g;
-    	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-				RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getForeground());
-        g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-    }
-    public boolean contains(int x, int y) {
-         if (shape == null || !shape.getBounds().equals(getBounds())) {
-             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
-         }
-         return shape.contains(x, y);
-    }
-	public String getRealText() {
-		return realText;
-	}
-	public void setRealText(String realText) {
-		this.realText = realText;
-	}
-}
-
-class CustomLoginButton extends WebButton {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	BufferedImage background;
-	BufferedImage rollover;
-	BufferedImage selected;
-	protected boolean isRollOver;
-	protected boolean isPressed;
-
-	public CustomLoginButton() {
-		init();
-	}
-
-	public CustomLoginButton(ImageIcon img) {
-		super(img);
-		init();
-	}
-
-	public CustomLoginButton(String label, ImageIcon img) {
-		super(label, img);
-		init();
-	}
-
-	public CustomLoginButton(String label) {
-		super(label);
-		init();
-	}
-
-	public void init() {
-		try {
-			URL inp = CustomButton.class
-					.getResource("/icons/noa_en/teacherloginbutton.png");
-			background = ImageIO.read(inp);
-			inp = CustomButton.class
-					.getResource("/icons/noa_en/teacherloginbutton.png");
-			rollover = ImageIO.read(inp);
-			inp = CustomButton.class
-					.getResource("/icons/noa_en/teacherloginbutton.png");
-			selected = ImageIO.read(inp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		getModel().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				ButtonModel model = (ButtonModel) e.getSource();
-				if (model.isRollover()) {
-					isRollOver = true;
-				} else {
-					isRollOver = false;
-				}
-				if (model.isPressed()) {
-					isPressed = true;
-				} else {
-					isPressed = false;
-				}
-			}
-		});
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		Graphics g2 = g.create();
-		if (background != null) {
-			if (isPressed) {
-				g2.drawImage(selected, 0, 0, getWidth(), getHeight(), this);
-			} else {
-				if (isRollOver) {
-					g2.drawImage(rollover, 0, 0, getWidth(), getHeight(), this);
-				} else {
-					g2.drawImage(background, 0, 0, getWidth(), getHeight(),
-							this);
-				}
-			}
-		}
-		g2.dispose();
-		super.paintComponent(g);
 	}
 }

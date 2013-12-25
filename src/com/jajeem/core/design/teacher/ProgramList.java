@@ -58,6 +58,7 @@ public class ProgramList extends com.alee.laf.rootpane.WebDialog {
 	 */
 	public ProgramList(final DefaultListModel model) {
 		addWindowListener(new WindowAdapter() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				try {

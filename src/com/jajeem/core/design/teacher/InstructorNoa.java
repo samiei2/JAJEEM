@@ -132,8 +132,6 @@ public class InstructorNoa {
 	static WebButton intercomButton = new WebButton();
 	private static CustomJList groupList = new CustomJList();
 	private static boolean modeling = false;
-	private static DefaultListModel langListModel = new DefaultListModel();
-	private static WebList langList = new WebList(langListModel);
 
 	ArrayList<Run> reportRunList = new ArrayList<>();
 	ArrayList<com.jajeem.core.model.Student> reportStudentList = new ArrayList<>();
@@ -279,50 +277,6 @@ public class InstructorNoa {
 				ImageIcon scaledLogoText = new ImageIcon(logoText.getScaledInstance(lblLogoText.getWidth(), lblLogoText.getHeight(), Image.SCALE_SMOOTH));
 				lblLogoText.setIcon(scaledLogoText);
 				super.componentShown(e);
-			}
-		});
-
-		langListModel.addElement("English");
-		langListModel.addElement("�?ارسی");
-		langList.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent evt) {
-				JList list = (JList) evt.getSource();
-				if (evt.getClickCount() == 2) {
-					int index = list.locationToIndex(evt.getPoint());
-					try {
-						if (index == 0) {
-							if (!Config.getParam("lang").equals("en")) {
-								Config.setParam("lang", "en");
-								try {
-									ProcessBuilder processBuilder = new ProcessBuilder(
-											"run.exe");
-									processBuilder.start();
-								} catch (IOException e) {
-									JajeemExcetionHandler.logError(e);
-									e.printStackTrace();
-								}
-
-								System.exit(0);
-							}
-						} else if (index == 1) {
-							Config.setParam("lang", "fa");
-							try {
-								ProcessBuilder processBuilder = new ProcessBuilder(
-										"run.exe");
-								processBuilder.start();
-							} catch (IOException e) {
-								JajeemExcetionHandler.logError(e);
-								e.printStackTrace();
-							}
-
-							System.exit(0);
-						}
-					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
-						e.printStackTrace();
-					}
-				}
 			}
 		});
 

@@ -65,76 +65,39 @@ public class CustomLoginFrame extends JFrame {
 		lblWelcomeTo.setForeground(SystemColor.controlDkShadow);
 		lblWelcomeTo.setFont(new Font("Tahoma", Font.BOLD, 19));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(25)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(contentPanel,
-														425, 425,
-														Short.MAX_VALUE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblNewLabel,
-																		78,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGap(145)
-																								.addComponent(
-																										customLogoLabel_2,
-																										138,
-																										GroupLayout.PREFERRED_SIZE,
-																										GroupLayout.PREFERRED_SIZE))
-																				.addGroup(
-																						gl_panel.createSequentialGroup()
-																								.addGap(50)
-																								.addComponent(
-																										lblWelcomeTo,
-																										GroupLayout.PREFERRED_SIZE,
-																										130,
-																										GroupLayout.PREFERRED_SIZE)))
-																.addPreferredGap(
-																		ComponentPlacement.RELATED,
-																		64,
-																		Short.MAX_VALUE)))
-								.addGap(21)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGap(23)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.TRAILING)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addComponent(
-																		lblWelcomeTo)
-																.addPreferredGap(
-																		ComponentPlacement.RELATED)
-																.addComponent(
-																		customLogoLabel_2,
-																		30,
-																		GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(11))
-												.addComponent(
-														lblNewLabel,
-														78,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(contentPanel, 131, 146,
-										Short.MAX_VALUE).addGap(21)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(25)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(contentPanel, 425, 425, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblNewLabel, 78, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(50)
+									.addComponent(lblWelcomeTo, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 167, Short.MAX_VALUE))
+								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(customLogoLabel_2, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+									.addGap(34)))))
+					.addGap(21))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(23)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblWelcomeTo)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(customLogoLabel_2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel, 78, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(contentPanel, 131, 146, Short.MAX_VALUE)
+					.addGap(21))
+		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 		// pack();

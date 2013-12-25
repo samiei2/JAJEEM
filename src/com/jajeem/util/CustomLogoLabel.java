@@ -2,6 +2,7 @@ package com.jajeem.util;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class CustomLogoLabel extends WebLabel {
 		// org.eclipse.swt.graphics.Image background =
 		// ImageResizer.resize(this.background, (float) 0.5);
 		if (background != null) {
-			g2.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+			g2.drawImage(background.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, getWidth(), getHeight(), this);
 		}
 		g2.dispose();
 		super.paintComponent(g);

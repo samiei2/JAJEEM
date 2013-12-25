@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,7 +41,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 import jrdesktop.viewer.ScreenPlayer;
@@ -96,7 +91,6 @@ import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
-import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExcetionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
@@ -444,7 +438,6 @@ public class InstructorNoaUtil {
 					break;
 				case "model":
 					button.addActionListener(new ActionListener() {
-						@SuppressWarnings("null")
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							jrdesktop.Config conf;

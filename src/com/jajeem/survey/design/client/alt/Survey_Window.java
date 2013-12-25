@@ -223,11 +223,9 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		
 		wbtnNext = new CustomSurveyButton("/icons/noa_en/quiznextbutton.png");
 		wbtnNext.setUndecorated(true);
-		wbtnNext.setText("");
 		
 		wbtnPrevious = new CustomSurveyButton("/icons/noa_en/quizbackbutton.png");
 		wbtnPrevious.setUndecorated(true);
-		wbtnPrevious.setText("");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
@@ -784,9 +782,9 @@ public class Survey_Window extends BaseSurveyClientFrame {
 								wbtnPrevious.setVisible(true);
 							}
 							if (webList.getSelectedIndex() == model.getSize() - 1) {
-								wbtnNext.setText("Submit");
+//								wbtnNext.setText("Submit");
 							} else {
-								wbtnNext.setText("Next");
+//								wbtnNext.setText("Next");
 							}
 						}
 					}
