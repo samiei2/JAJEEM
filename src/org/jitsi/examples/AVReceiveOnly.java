@@ -249,6 +249,7 @@ public class AVReceiveOnly {
 
 						if (frame == null) {
 							frame = new JDialog();
+							frame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 							// frame.setLayout(new BorderLayout(0, 0));
 							frame.getContentPane().add(cmp);
 							frame.setSize(400, 400);

@@ -38,6 +38,7 @@ import org.jitsi.examples.AVTransmit2;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.managers.tooltip.TooltipManager;
 import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
 import com.jajeem.core.design.ui.BaseStudentFrame;
 import com.jajeem.core.design.ui.CustomStudentButton;
@@ -446,19 +447,27 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Chat instructorChat = ClientSession.getInstructorChatWindow();;
-					if(instructorChat == null){
-						instructorChat = new Chat(StudentLogin.getServerIp(),
+					Chat currentChat = null;
+					for (Chat chat : Student.getChatList()) {
+						if (chat.getGroupId() == -1) {
+							currentChat = chat;
+							break;
+						}
+					}
+
+					if(currentChat == null){
+						currentChat = new Chat(StudentLogin.getServerIp(),
 								Integer.parseInt(Config
-										.getParam("port")),
+										.getParam("serverPort")),
 								false, -1,
 								"Instructor");
-						instructorChat.setVisible(true);
-						ClientSession.setInstructorChatWindow(instructorChat);
+						currentChat.setVisible(true);
+						Student.getChatList().add(currentChat);
+//						ClientSession.setInstructorChatWindow(currentChat);
 					}
 					else{
-						instructorChat.setVisible(true);
-						instructorChat.toFront();
+						currentChat.setVisible(true);
+						currentChat.toFront();
 					}
 //					MessageSend.main(new String[] { StudentLogin.getServerIp(),
 //							Config.getParam("serverPort") });

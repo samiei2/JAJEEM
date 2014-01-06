@@ -14,6 +14,7 @@ import java.net.MulticastSocket;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -41,7 +42,7 @@ import com.jajeem.exception.VideoConnectionException;
  * @author Lyubomir Marinov
  */
 public class AVSendOnly {
-	JFrame frame = null;
+	JDialog frame = null;
 
 	private boolean transmitting = false;
 	/**
@@ -262,7 +263,8 @@ public class AVSendOnly {
 						try {
 							if (cmp != null) {
 								if (frame == null) {
-									frame = new JFrame();
+									frame = new JDialog();
+									frame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 									frame.setLayout(new BorderLayout(0, 0));
 									frame.add(cmp);
 									frame.setSize(400, 400);

@@ -2,6 +2,7 @@ package com.jajeem.survey.design.client.alt;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -266,8 +267,8 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
-					.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, 170, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		
@@ -464,7 +465,7 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		webScrollPane_1.setViewportView(webTextArea);
 		panel_2.setLayout(gl_panel_2);
 		
-		WebList webList = new WebList();
+		webList = new WebList();
 		model = new DefaultListModel();
 		webList = new WebList(model);
 		webScrollPane.setViewportView(webList);
@@ -472,6 +473,8 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		getMainContentPane().setLayout(groupLayout_1);
 		
 		initEvents(run);
+		pack();
+		setVisible(true);
 	}
 	
 	private void initEvents(Run run) {
@@ -790,7 +793,6 @@ public class Survey_Window extends BaseSurveyClientFrame {
 					}
 				});
 
-		radioButton = new WebRadioButton();
 		radioButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -808,7 +810,6 @@ public class Survey_Window extends BaseSurveyClientFrame {
 			}
 		});
 
-		radioButton_1 = new WebRadioButton();
 		radioButton_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -826,7 +827,6 @@ public class Survey_Window extends BaseSurveyClientFrame {
 			}
 		});
 
-		radioButton_2 = new WebRadioButton();
 		radioButton_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -844,7 +844,6 @@ public class Survey_Window extends BaseSurveyClientFrame {
 			}
 		});
 
-		radioButton_3 = new WebRadioButton();
 		radioButton_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -862,7 +861,6 @@ public class Survey_Window extends BaseSurveyClientFrame {
 			}
 		});
 
-		radioButton_4 = new WebRadioButton();
 		radioButton_4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -347,7 +347,7 @@ public class Survey_Main {
 					wbtnOpen.setEnabled(true);
 					wbtnSave.setEnabled(true);
 					wbtnSaveResults.setVisible(false);
-//					wbtnStart.setText("Start");
+					wbtnStart.setText("Start");
 //					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
 //							.getResource("/icons/noa_en/startx16.png")));
 //					wbtnStart.setEnabled(true);
@@ -390,7 +390,7 @@ public class Survey_Main {
 				wbtnOpen.setEnabled(true);
 				wbtnSave.setEnabled(true);
 				wbtnSaveResults.setVisible(false);
-//				wbtnStart.setText("Start");
+				wbtnStart.setText("Start");
 //				wbtnStart.setIcon(new ImageIcon(Survey_Main.class
 //						.getResource("/icons/noa_en/startx16.png")));
 				wbtnStart.putClientProperty("action","Start");
@@ -480,7 +480,7 @@ public class Survey_Main {
 					wbtnSave.setEnabled(false);
 					wbtnOpen.setEnabled(false);
 					wbtnSaveResults.setVisible(true);
-//					wbtnStart.setText("Stop");
+					wbtnStart.setText("Stop");
 					wbtnStart.putClientProperty("action","Stop");
 					wbtnContent.setEnabled(true);
 //					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
@@ -500,7 +500,7 @@ public class Survey_Main {
 							secondPage.getPanel_bottom_21().getTimer().stop();
 						}
 					}
-//					wbtnStart.setText("Start");
+					wbtnStart.setText("Start");
 //					wbtnStart.setIcon(new ImageIcon(Survey_Main.class
 //							.getResource("/icons/noa_en/startx16.png")));
 					wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));

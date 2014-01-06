@@ -147,11 +147,13 @@ public class WindowResizeAdapter extends MouseAdapter implements SwingConstants 
 		int y = this.componentTemp.getLocationOnScreen().y;
 		int w = this.componentTemp.getWidth();
 		int h = this.componentTemp.getHeight();
-		if ((x + w - 50 < e.getXOnScreen() && e.getXOnScreen() <= x + w)
-				&& (y + h - 50 < e.getYOnScreen() && e.getYOnScreen() <= y + h)) {
+		if ((x + w - 10 < e.getXOnScreen() && e.getXOnScreen() <= x + w)
+				&& (y + h - 10 < e.getYOnScreen() && e.getYOnScreen() <= y + h)) {
 			componentTemp.setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+//			System.out.println("Resize");
 		} else {
 			componentTemp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//			System.out.println("Default");
 		}
 	}
 }

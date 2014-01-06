@@ -67,9 +67,7 @@ public class ClientFileServer {
 							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH.mm");
 							String datetime = format.format(now);
 							
-							String name1 = nameStr.substring(0,nameStr.lastIndexOf("."));
-							String suffix = nameStr.substring(nameStr.lastIndexOf(".") + 1, nameStr.length());
-							String filname = name1 + " (" + datetime + ")" + "." + suffix;
+							String filname = "(" + datetime + ")" + nameStr;
 							File output = new File(inbox, filname);
 							FileOutputStream fos = new FileOutputStream(output);
 

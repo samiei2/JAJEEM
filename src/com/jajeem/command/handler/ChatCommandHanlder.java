@@ -5,9 +5,11 @@ import java.net.InetAddress;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.student.Student;
+import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
+import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 
 public class ChatCommandHanlder implements ICommandHandler {
@@ -29,7 +31,16 @@ public class ChatCommandHanlder implements ICommandHandler {
 					break;
 				}
 			}
-
+//
+//			if(ClientSession.getInstructorChatWindow()!=null && cmd.getFrom().equals(StudentLogin.getServerIp())){
+//				currentChat = ClientSession.getInstructorChatWindow();
+//				currentChat.addLine(((ChatCommand) cmd).getMessage());
+//				Student.getChatList().add(currentChat);
+//				currentChat.scrollDown();
+//				currentChat.setVisible(true);
+//				ClientSession.getInstructorChatWindow().toFront();
+//			}
+			
 			if (currentChat == null) {
 				currentChat = new Chat(String.valueOf(((ChatCommand) cmd)
 						.getGroupId()), Integer.parseInt(Config
