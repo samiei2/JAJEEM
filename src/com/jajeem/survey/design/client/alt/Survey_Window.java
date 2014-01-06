@@ -39,7 +39,7 @@ import com.jajeem.events.SurveyEventListener;
 import com.jajeem.events.SurveyFinished;
 import com.jajeem.events.SurveyResponse;
 import com.jajeem.events.SurveyStop;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.survey.design.alt.CustomSurveyButton;
 import com.jajeem.survey.model.Question;
@@ -625,10 +625,10 @@ public class Survey_Window extends BaseSurveyClientFrame {
 											ServerService service = new ServerService();
 											service.send(cmd);
 										} catch (NumberFormatException e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										}
 									}
@@ -1015,10 +1015,10 @@ public class Survey_Window extends BaseSurveyClientFrame {
 									ServerService service = new ServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								}
 							}
@@ -1039,7 +1039,7 @@ public class Survey_Window extends BaseSurveyClientFrame {
 							ServerService service = new ServerService();
 							service.send(cmd);
 						} catch (Exception ex) {
-							JajeemExcetionHandler.logError(ex,
+							JajeemExceptionHandler.logError(ex,
 									Quiz_Window.class);
 						}
 					}

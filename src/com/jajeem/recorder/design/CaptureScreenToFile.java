@@ -45,7 +45,7 @@ import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.model.SendRecordingErrorCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.student.StudentLogin;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
@@ -640,7 +640,7 @@ public class CaptureScreenToFile {
 						SendSuccessCommand(server);
 					} catch (Exception e) {
 						SendErrorCommand(server);
-						JajeemExcetionHandler.logError(e,
+						JajeemExceptionHandler.logError(e,
 								SendFileCollectCommandHandler.class);
 						System.out.println(file.getAbsolutePath() + " Failed");
 					}
@@ -649,7 +649,7 @@ public class CaptureScreenToFile {
 			fileSender.start();
 		} catch (Exception e) {
 			SendErrorCommand(server);
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			System.out.println(file.getAbsolutePath() + " Failed");
 		}
 	}

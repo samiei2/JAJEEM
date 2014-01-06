@@ -24,7 +24,7 @@ import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.scroll.WebScrollPane;
 import com.alee.laf.table.WebTable;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 
@@ -43,7 +43,7 @@ public class Quiz_OpenDialog extends BaseAccountFrame {
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -98,7 +98,7 @@ public class Quiz_OpenDialog extends BaseAccountFrame {
 								.setSelectionInterval(0, 0);
 					}
 				} catch (SQLException e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}

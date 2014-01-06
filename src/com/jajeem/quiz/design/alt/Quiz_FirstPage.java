@@ -26,7 +26,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.text.WebTextField;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.util.CustomButton;
@@ -278,7 +278,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								Integer.parseInt(webQuestionDesignPanel
 										.getWebTextField_06().getText()));
 					} catch (Exception ex) {
-						JajeemExcetionHandler.logError(ex);
+						JajeemExceptionHandler.logError(ex);
 					}
 					try {
 						if (webQuestionDesignPanel.getWebComboBox()
@@ -330,7 +330,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 
 						}
 					} catch (Exception ex) {
-						JajeemExcetionHandler.logError(ex);
+						JajeemExceptionHandler.logError(ex);
 					}
 				}// end if
 
@@ -532,7 +532,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 												Integer.parseInt(wbtxtfldPoints
 														.getText()));
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								// JOptionPane.showMessageDialog(null,
 								// e.getMessage());
 							}
@@ -554,7 +554,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 												Integer.parseInt(wbtxtfldPoints
 														.getText()));
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								JOptionPane.showMessageDialog(null,
 										e.getMessage());
 							}
@@ -629,7 +629,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								.setTime(
 										Integer.parseInt(wbtxtfldTime.getText()));
 					} catch (Exception ex) {
-						JajeemExcetionHandler.logError(ex);
+						JajeemExceptionHandler.logError(ex);
 						// JOptionPane.showMessageDialog(null, ex.getMessage());
 					}
 				}
@@ -646,7 +646,7 @@ public class Quiz_FirstPage extends Quiz_AbstractViews {
 								.setTime(
 										Integer.parseInt(wbtxtfldTime.getText()));
 					} catch (Exception ex) {
-						JajeemExcetionHandler.logError(ex);
+						JajeemExceptionHandler.logError(ex);
 						JOptionPane.showMessageDialog(null, "Invalid value!");
 					}
 				}

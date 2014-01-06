@@ -26,7 +26,7 @@ import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.ui.checkbox.JajeemCheckBox;
 import com.jajeem.util.i18n;
@@ -306,7 +306,7 @@ public class FileSendTab extends JPanel {
 										ips = new ArrayList<>(group
 												.getStudentIps());
 									} catch (Exception e) {
-										JajeemExcetionHandler.logError(e);
+										JajeemExceptionHandler.logError(e);
 									}
 								}
 							}
@@ -417,7 +417,7 @@ public class FileSendTab extends JPanel {
 						progwin.dispose();
 						// confirmationDialog.dispose();
 						System.out.println(e.getMessage());
-						JajeemExcetionHandler.logError(e, FileSendTab.class);
+						JajeemExceptionHandler.logError(e, FileSendTab.class);
 						new FileTransferEvent().fireFailure(null,
 								FileSendTab.class);
 
@@ -435,7 +435,7 @@ public class FileSendTab extends JPanel {
 			// System.out.println(fileSender.isAlive()+":"+command);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileSendTab.class);
 			e.printStackTrace();
 		}

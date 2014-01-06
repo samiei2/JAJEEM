@@ -91,7 +91,7 @@ import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
@@ -168,7 +168,7 @@ public class InstructorNoaUtil {
 													.getParam("vncPort")),
 											"admin", "admin", false, false);
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								}
 								VNCCaptureService vnc = new VNCCaptureService();
@@ -252,7 +252,7 @@ public class InstructorNoaUtil {
 															.setIntercomText(i18n
 																	.getParam("Intercom"));
 												} catch (Exception e) {
-													JajeemExcetionHandler
+													JajeemExceptionHandler
 															.logError(e);
 													e.printStackTrace();
 												}
@@ -287,7 +287,7 @@ public class InstructorNoaUtil {
 													.getParam("Stop"));
 										}
 									} catch (Exception e) {
-										JajeemExcetionHandler.logError(e);
+										JajeemExceptionHandler.logError(e);
 										e.printStackTrace();
 									}
 								}
@@ -409,7 +409,7 @@ public class InstructorNoaUtil {
 										}
 									}
 								} catch (Exception e1) {
-									JajeemExcetionHandler.logError(e1);
+									JajeemExceptionHandler.logError(e1);
 									e1.printStackTrace();
 								}
 							}
@@ -527,7 +527,7 @@ public class InstructorNoaUtil {
 											InstructorNoa.setModeling(false);
 										}
 									} catch (Exception e) {
-										JajeemExcetionHandler.logError(e);
+										JajeemExceptionHandler.logError(e);
 										e.printStackTrace();
 									}
 
@@ -563,7 +563,7 @@ public class InstructorNoaUtil {
 								// WebLookAndFeel
 								// .setDecorateDialogs(decorateFrames);
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 							}
 						}
 					});
@@ -592,7 +592,7 @@ public class InstructorNoaUtil {
 												.getParam("port")));
 								serv.send(cmd);
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -629,7 +629,7 @@ public class InstructorNoaUtil {
 													group.getStudentIps()));
 											main.setVisible(true);
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 										}
 									}
 								}
@@ -717,7 +717,7 @@ public class InstructorNoaUtil {
 											}
 
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 										}
 									}
 								}
@@ -765,12 +765,12 @@ public class InstructorNoaUtil {
 												System.out.println(line);
 											}
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 										}
 									}
 								}).start();
 							} catch (IOException ex) {
-								JajeemExcetionHandler.logError(ex);
+								JajeemExceptionHandler.logError(ex);
 								ex.printStackTrace();
 							}
 						}
@@ -800,7 +800,7 @@ public class InstructorNoaUtil {
 									WebOptionPane.showMessageDialog(null, "You have not logged in as an autheticated user,this might cause database or program corruptions!");									
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -847,7 +847,7 @@ public class InstructorNoaUtil {
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
-												JajeemExcetionHandler
+												JajeemExceptionHandler
 														.logError(e);
 												e.printStackTrace();
 											}
@@ -868,7 +868,7 @@ public class InstructorNoaUtil {
 												InstructorNoa.getChatList()
 														.add(currentChat);
 											} catch (Exception e) {
-												JajeemExcetionHandler
+												JajeemExceptionHandler
 														.logError(e);
 												e.printStackTrace();
 											}
@@ -917,7 +917,7 @@ public class InstructorNoaUtil {
 																.getChatList()
 																.add(currentChat);
 													} catch (Exception e) {
-														JajeemExcetionHandler
+														JajeemExceptionHandler
 																.logError(e);
 														e.printStackTrace();
 													}
@@ -938,14 +938,14 @@ public class InstructorNoaUtil {
 																.getChatList()
 																.add(currentChat);
 													} catch (Exception e) {
-														JajeemExcetionHandler
+														JajeemExceptionHandler
 																.logError(e);
 														e.printStackTrace();
 													}
 												}
 											}
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										}
 									}
@@ -1035,7 +1035,7 @@ public class InstructorNoaUtil {
 											}
 
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 										}
 									}
 								}
@@ -1103,14 +1103,14 @@ public class InstructorNoaUtil {
 																.println(line);
 													}
 												} catch (Exception e) {
-													JajeemExcetionHandler
+													JajeemExceptionHandler
 															.logError(e);
 													e.printStackTrace();
 												}
 											}
 										}).start();
 									} catch (IOException e) {
-										JajeemExcetionHandler.logError(e);
+										JajeemExceptionHandler.logError(e);
 										e.printStackTrace();
 									}
 
@@ -1406,7 +1406,7 @@ public class InstructorNoaUtil {
 											InstructorNoa.getServerService()
 													.send(ic);
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										}
 									} else if (((JComponent) card)
@@ -1445,7 +1445,7 @@ public class InstructorNoaUtil {
 																.send(ic);
 													}
 												} catch (Exception e) {
-													JajeemExcetionHandler
+													JajeemExceptionHandler
 															.logError(e);
 													e.printStackTrace();
 												}
@@ -1477,7 +1477,7 @@ public class InstructorNoaUtil {
 											InstructorNoa.getServerService()
 													.send(ic);
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										}
 									} else if (((JComponent) card)
@@ -1516,7 +1516,7 @@ public class InstructorNoaUtil {
 																.send(ic);
 													}
 												} catch (Exception e) {
-													JajeemExcetionHandler
+													JajeemExceptionHandler
 															.logError(e);
 													e.printStackTrace();
 												}
@@ -1880,7 +1880,7 @@ public class InstructorNoaUtil {
 									model.remove(programsList.getSelectedIndex());
 									programsList.repaint();
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								}
 							}
@@ -2734,7 +2734,7 @@ public class InstructorNoaUtil {
 									false, -1, selectedStudent);
 							InstructorNoa.getChatList().add(currentChat);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -2747,7 +2747,7 @@ public class InstructorNoaUtil {
 											.getSelectedFrame().getTitle());
 							InstructorNoa.getChatList().add(currentChat);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -2767,7 +2767,7 @@ public class InstructorNoaUtil {
 						Integer.parseInt(Config.getParam("vncPort")), "admin",
 						"admin", false, false);
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 			VNCCaptureService vnc = new VNCCaptureService();
@@ -2825,7 +2825,7 @@ public class InstructorNoaUtil {
 								InstructorNoa.setIntercomText(i18n
 										.getParam("Intercom"));
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						} else {
@@ -2850,7 +2850,7 @@ public class InstructorNoaUtil {
 						InstructorNoa.setIntercomText(i18n.getParam("Stop"));
 					}
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}

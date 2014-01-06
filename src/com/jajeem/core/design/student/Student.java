@@ -1,46 +1,14 @@
 package com.jajeem.core.design.student;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GraphicsDevice;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.alee.laf.optionpane.WebOptionPane;
-import com.alee.managers.tooltip.TooltipManager;
-import com.alee.managers.tooltip.TooltipWay;
-import com.jajeem.command.model.RequestCourseListCommand;
-import com.jajeem.core.design.ui.BaseStudentFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.jajeem.core.design.ui.CustomMainButton;
-import com.jajeem.core.design.ui.CustomStudentButton;
-import com.jajeem.exception.JajeemExcetionHandler;
-import com.jajeem.filemanager.client.ClientFileManagerMain;
-
-import javax.swing.ImageIcon;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
-import javax.swing.Timer;
-
-import java.awt.Font;
-import javax.swing.SwingConstants;
-
-import org.jitsi.examples.AVReceiveOnly;
-import org.jitsi.examples.AVSendOnly;
-import org.jitsi.examples.AVTransmit2;
-import org.jitsi.impl.neomedia.codec.audio.silk.InitEncoderFLP;
-
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -53,18 +21,39 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
+import org.jitsi.examples.AVReceiveOnly;
+import org.jitsi.examples.AVSendOnly;
+import org.jitsi.examples.AVTransmit2;
+
+import com.alee.laf.optionpane.WebOptionPane;
+import com.alee.managers.tooltip.TooltipManager;
+import com.alee.managers.tooltip.TooltipWay;
+import com.jajeem.command.model.RequestCourseListCommand;
+import com.jajeem.core.design.ui.BaseStudentFrame;
+import com.jajeem.core.design.ui.CustomStudentButton;
+import com.jajeem.exception.JajeemExceptionHandler;
+import com.jajeem.filemanager.client.ClientFileManagerMain;
 import com.jajeem.message.design.Chat;
 import com.jajeem.message.design.MessageSend;
 import com.jajeem.recorder.design.RecorderStudent;
 import com.jajeem.share.service.VNCCaptureService;
+import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
-import com.jajeem.util.CustomButton;
 import com.jajeem.util.CustomCloseButton;
 import com.jajeem.util.i18n;
 
 public class Student {
-
-	private JPanel contentPane;
+	
 	private JLabel lblNewLabel_1;
 	private CustomCloseButton buttonMin;
 	private CustomCloseButton buttonClose;
@@ -410,7 +399,7 @@ public class Student {
 					ClientFileManagerMain main = new ClientFileManagerMain();
 					main.setVisible(true);
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -441,12 +430,12 @@ public class Student {
 									System.out.println(line);
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 							}
 						}
 					}).start();
 				} catch (IOException ex) {
-					JajeemExcetionHandler.logError(ex);
+					JajeemExceptionHandler.logError(ex);
 					ex.printStackTrace();
 				}
 			}
@@ -457,10 +446,24 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					MessageSend.main(new String[] { StudentLogin.getServerIp(),
-							Config.getParam("serverPort") });
+					Chat instructorChat = ClientSession.getInstructorChatWindow();;
+					if(instructorChat == null){
+						instructorChat = new Chat(StudentLogin.getServerIp(),
+								Integer.parseInt(Config
+										.getParam("port")),
+								false, -1,
+								"Instructor");
+						instructorChat.setVisible(true);
+						ClientSession.setInstructorChatWindow(instructorChat);
+					}
+					else{
+						instructorChat.setVisible(true);
+						instructorChat.toFront();
+					}
+//					MessageSend.main(new String[] { StudentLogin.getServerIp(),
+//							Config.getParam("serverPort") });
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -499,7 +502,7 @@ public class Student {
 					else
 						WebOptionPane.showMessageDialog(null, "You are not logged in!\nPlease log in first!", "Error", WebOptionPane.ERROR_MESSAGE);
 				} catch (Exception e1) {
-					JajeemExcetionHandler.logError(e1);
+					JajeemExceptionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}

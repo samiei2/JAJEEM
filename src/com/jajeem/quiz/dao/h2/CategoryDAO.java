@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.dao.ICategoryDAO;
 import com.jajeem.quiz.model.Category;
 import com.jajeem.util.BaseDAO;
@@ -49,7 +49,7 @@ public class CategoryDAO implements ICategoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			category.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -58,21 +58,21 @@ public class CategoryDAO implements ICategoryDAO {
 					category.setId(-1);
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -102,28 +102,28 @@ public class CategoryDAO implements ICategoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			category.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -148,7 +148,7 @@ public class CategoryDAO implements ICategoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			category.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -157,21 +157,21 @@ public class CategoryDAO implements ICategoryDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -194,7 +194,7 @@ public class CategoryDAO implements ICategoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			category.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -203,21 +203,21 @@ public class CategoryDAO implements ICategoryDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -248,28 +248,28 @@ public class CategoryDAO implements ICategoryDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 

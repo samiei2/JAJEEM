@@ -283,7 +283,7 @@ public class AVReceiveOnly {
 			}
 
 			mediaStreams = null;
-//			frame.setVisible(false);
+			frame.setVisible(false);
 			frame = null;
 		}
 	}

@@ -3,6 +3,7 @@ package com.jajeem.util;
 import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 
 import com.jajeem.core.model.Student;
+import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.design.client.alt.Quiz_Window;
 import com.jajeem.recorder.design.CaptureScreenToFile;
 import com.jajeem.survey.design.client.alt.Survey_Window;
@@ -17,6 +18,7 @@ public class ClientSession {
 	private static String recordingServerAddress;
 	private static TransparentIntercomInProgressFrame studentIntercomPanel;
 	private static Student currentStudent;
+	private static Chat currentInstructorChat;
 
 	// private static WhiteboardClient whiteboardWindowHndl;
 
@@ -75,6 +77,14 @@ public class ClientSession {
 
 	public static void setCurrentStudent(Student currentStudent) {
 		ClientSession.currentStudent = currentStudent;
+	}
+
+	public static Chat getInstructorChatWindow() {
+		return currentInstructorChat;
+	}
+	
+	public static void setInstructorChatWindow(Chat chat) {
+		currentInstructorChat = chat;
 	}
 
 }

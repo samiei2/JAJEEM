@@ -39,7 +39,7 @@ import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.design.teacher.InstructorNoaUtil;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.Session;
@@ -180,7 +180,7 @@ public class Recorder extends CustomRecorderDialog {
 							AudioSystem.write(capt.audioInputStream,
 									AudioFileFormat.Type.WAVE, file);
 						} catch (Exception ex) {
-							JajeemExcetionHandler.logError(ex, Recorder.class);
+							JajeemExceptionHandler.logError(ex, Recorder.class);
 							WebOptionPane.showMessageDialog(null, "Internal Error!\nRecording may be corrupted!\nRestarting the application might fix the problem.","Internal Error",WebOptionPane.ERROR_MESSAGE);
 						}
 						file.flush();
@@ -423,7 +423,7 @@ public class Recorder extends CustomRecorderDialog {
 						frame.dispose();
 						InstructorNoaUtil.getRecorder_Button().setEnabled(true);
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
+						JajeemExceptionHandler.logError(e);
 					}
 				}
 			}

@@ -61,7 +61,7 @@ public class CustomTeacherFrame extends JFrame {
 				.getMaximumWindowBounds();
 		setSize(winSize.width, winSize.height);
 		 WindowResizeAdapter.install(this, SwingConstants.SOUTH_EAST);
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		 setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);

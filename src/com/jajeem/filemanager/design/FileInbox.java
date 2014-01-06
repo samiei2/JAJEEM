@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -23,7 +25,7 @@ import com.alee.laf.table.WebTable;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
@@ -187,7 +189,7 @@ public class FileInbox extends JPanel {
 							fileSendRequestList.get(webTable.getSelectedRow()),
 							InstructorServer.class);
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 				}
 			}
 		});

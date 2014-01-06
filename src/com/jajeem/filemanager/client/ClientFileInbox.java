@@ -21,7 +21,7 @@ import com.jajeem.core.design.account.CustomAccountButton;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.CustomFileButton;
 import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
@@ -135,7 +135,7 @@ public class ClientFileInbox extends WebPanel {
 					// new
 					// File(fileList.get(webTable.getSelectedRow())).getAbsolutePath()});
 				} catch (IOException e1) {
-					JajeemExcetionHandler.logError(e1, ClientFileInbox.class);
+					JajeemExceptionHandler.logError(e1, ClientFileInbox.class);
 					e1.printStackTrace();
 				}
 			}

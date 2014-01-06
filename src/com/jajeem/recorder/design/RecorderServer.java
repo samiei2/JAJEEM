@@ -13,7 +13,7 @@ import com.alee.laf.StyleConstants;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.client.ClientProgressWindow;
 import com.jajeem.filemanager.design.FileInbox;
 import com.jajeem.util.FileUtil;
@@ -144,7 +144,7 @@ public class RecorderServer {
 						} catch (Exception e) {
 							progwin.dispose();
 							// confirmationDialog.dispose();
-							JajeemExcetionHandler.logError(e,
+							JajeemExceptionHandler.logError(e,
 									RecorderServer.class);
 							new FileTransferEvent().fireFailure(null,
 									FileInbox.class);
@@ -155,7 +155,7 @@ public class RecorderServer {
 			}
 		} catch (Exception e) {
 
-			JajeemExcetionHandler.logError(e, RecorderServer.class);
+			JajeemExceptionHandler.logError(e, RecorderServer.class);
 			JOptionPane
 					.showMessageDialog(
 							null,

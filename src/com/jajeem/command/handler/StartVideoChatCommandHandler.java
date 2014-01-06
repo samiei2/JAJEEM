@@ -6,7 +6,7 @@ import org.jitsi.service.libjitsi.LibJitsi;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.student.Student;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 
 public class StartVideoChatCommandHandler implements ICommandHandler {
 
@@ -27,7 +27,7 @@ public class StartVideoChatCommandHandler implements ICommandHandler {
 			// Student.setIntercomButtonStop();
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 

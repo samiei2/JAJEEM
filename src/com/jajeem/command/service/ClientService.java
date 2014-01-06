@@ -119,7 +119,7 @@ import com.jajeem.command.model.VolumeCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.core.design.teacher.InstructorNoa;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 
 public class ClientService implements IConnectorSevice, Runnable {
@@ -207,7 +207,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					JOptionPane
 							.showMessageDialog(null,
 									"An error occured in sending speech file to users!");
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 				}
 			}
 		});
@@ -230,7 +230,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -246,7 +246,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				process(d);
 
 			} catch (IOException ex) {
-				JajeemExcetionHandler.logError(ex);
+				JajeemExceptionHandler.logError(ex);
 				ex.printStackTrace();
 			}
 		}
@@ -984,12 +984,12 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 
 			} catch (Exception ex) {
-				JajeemExcetionHandler.logError(ex);
+				JajeemExceptionHandler.logError(ex);
 				System.err.println("Unknown message: " + ex.toString());
 			}
 
 		} catch (IOException ex) {
-			JajeemExcetionHandler.logError(ex);
+			JajeemExceptionHandler.logError(ex);
 			ex.printStackTrace();
 		}
 
@@ -1080,7 +1080,7 @@ class MyThread implements Runnable {
 			serv.send(cmd);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}

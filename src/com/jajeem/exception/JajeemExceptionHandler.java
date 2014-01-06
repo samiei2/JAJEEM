@@ -4,16 +4,16 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 @SuppressWarnings("serial")
-public class JajeemExcetionHandler extends Exception {
+public class JajeemExceptionHandler extends Exception {
 	private static Logger logger = Logger
-			.getLogger(JajeemExcetionHandler.class);
+			.getLogger(JajeemExceptionHandler.class);
 
 	static {
-		PropertyConfigurator.configure(JajeemExcetionHandler.class
+		PropertyConfigurator.configure(JajeemExceptionHandler.class
 				.getResource("/com/jajeem/conf/log4j.conf"));
 	}
 
-	public JajeemExcetionHandler(Exception e) {
+	public JajeemExceptionHandler(Exception e) {
 		ExceptionHandler(e);
 	}
 

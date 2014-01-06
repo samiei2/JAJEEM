@@ -15,7 +15,7 @@ import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 
 public class ServerService extends TimerTask implements IConnectorSevice {
@@ -86,7 +86,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 		try {
 			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
-			JajeemExcetionHandler.logError(e1);
+			JajeemExceptionHandler.logError(e1);
 			e1.printStackTrace();
 		}
 		b = constructMessage(cmd);
@@ -100,14 +100,14 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 			logger.info("Sending: Message type: " + cmd.getClass() + ", from: "
 					+ cmd.getTo());
 		} catch (IOException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			System.err.println(e);
 			try {
 				System.out.println("Message Size: " + b.length);
 				System.out.println("SendBufferSize: "
 						+ socket.getSendBufferSize());
 			} catch (SocketException se) {
-				JajeemExcetionHandler.logError(se);
+				JajeemExceptionHandler.logError(se);
 				System.err.println(se);
 			}
 		}
@@ -145,7 +145,7 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 
 		} catch (IOException ex) {
 			System.out.println("Error while sending an announce message");
-			JajeemExcetionHandler.logError(ex);
+			JajeemExceptionHandler.logError(ex);
 			return null;
 		}
 	}

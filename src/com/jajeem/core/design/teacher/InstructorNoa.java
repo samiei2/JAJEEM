@@ -87,7 +87,7 @@ import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
 import com.jajeem.core.model.Instructor;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
@@ -140,7 +140,7 @@ public class InstructorNoa {
 
 	static WebPanel rightButtonPanel;
 
-	Font font = new Font("Arial", Font.BOLD, 20);
+	Font font = new Font("Arial", Font.BOLD, 18);
 	private JLabel lblHour1;
 	private JLabel lblHour2;
 	private JLabel lblMin1;
@@ -195,7 +195,7 @@ public class InstructorNoa {
 					new InstructorNoa();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -229,7 +229,7 @@ public class InstructorNoa {
 
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -535,7 +535,7 @@ public class InstructorNoa {
 							powerCommand.setType("turnOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -560,7 +560,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -607,7 +607,7 @@ public class InstructorNoa {
 							powerCommand.setType("logOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -632,7 +632,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -678,7 +678,7 @@ public class InstructorNoa {
 							powerCommand.setType("logOff");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -703,7 +703,7 @@ public class InstructorNoa {
 									serverService.send(powerCommand);
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -814,7 +814,7 @@ public class InstructorNoa {
 							return;
 						}
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
+						JajeemExceptionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else {
@@ -839,7 +839,7 @@ public class InstructorNoa {
 									return;
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -870,7 +870,7 @@ public class InstructorNoa {
 									}
 
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								}
 							}
@@ -908,7 +908,7 @@ public class InstructorNoa {
 											.getParam("port")));
 							serverService.send(ic);
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
@@ -933,7 +933,7 @@ public class InstructorNoa {
 									serverService.send(ic);
 								}
 							} catch (Exception e) {
-								JajeemExcetionHandler.logError(e);
+								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
 							}
 						}
@@ -990,7 +990,7 @@ public class InstructorNoa {
 		bottomButtonPanel.add(conversationButton);
 
 		GridLayout rightButtonPanelGrid = new GridLayout(0, 1, 0, 0);
-		rightButtonPanelGrid.setVgap(7);
+		rightButtonPanelGrid.setVgap(3);
 		rightButtonPanel.setLayout(rightButtonPanelGrid);
 
 		ImageIcon monitorIcon = new ImageIcon(
@@ -1305,8 +1305,8 @@ public class InstructorNoa {
 				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(bottomButtonPanel, Alignment.LEADING, 759, 1232, Short.MAX_VALUE)
-						.addComponent(centerPanel, Alignment.LEADING, 759, 1232, Short.MAX_VALUE))
+						.addComponent(bottomButtonPanel, Alignment.LEADING, 509, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(centerPanel, Alignment.LEADING, 509, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(rightButtonPanel, 287, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -1316,11 +1316,11 @@ public class InstructorNoa {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(rightButtonPanel, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+						.addComponent(rightButtonPanel, 200, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+							.addComponent(centerPanel, 200, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(bottomButtonPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(bottomButtonPanel, 47, 47, GroupLayout.PREFERRED_SIZE))))
 		);
 
 		frame.getMainContentPane().setLayout(groupLayout);
@@ -1380,12 +1380,12 @@ public class InstructorNoa {
 				.addGroup(gl_topPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_topPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(viewModeButton, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
-						.addComponent(volumeButton, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE))
+						.addComponent(viewModeButton, 61, 170, GroupLayout.PREFERRED_SIZE)
+						.addComponent(volumeButton, 61,170, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(callAllButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-					.addComponent(panelClock, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+					.addComponent(callAllButton, 61, 125, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+					.addComponent(panelClock, 77, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_topPanel.setVerticalGroup(
@@ -1393,7 +1393,7 @@ public class InstructorNoa {
 				.addGroup(gl_topPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_topPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panelClock, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+						.addComponent(panelClock, 80, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 						.addGroup(gl_topPanel.createSequentialGroup()
 							.addComponent(viewModeButton, 35, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -1446,21 +1446,21 @@ public class InstructorNoa {
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_2, Alignment.LEADING, 80, 166, Short.MAX_VALUE)
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblDate)
-							.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-							.addComponent(lblSystemTime, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+							.addComponent(lblSystemTime, 30, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDate)
 						.addComponent(lblSystemTime, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
@@ -1512,11 +1512,11 @@ public class InstructorNoa {
 				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblMin2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(lblMin1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(label, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(lblHour2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(lblHour1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+						.addComponent(lblMin2, Alignment.LEADING, 26, GroupLayout.PREFERRED_SIZE, 96)
+						.addComponent(lblMin1, Alignment.LEADING, 26, GroupLayout.PREFERRED_SIZE, 96)
+						.addComponent(label, Alignment.LEADING, 26, GroupLayout.PREFERRED_SIZE, 96)
+						.addComponent(lblHour2, Alignment.LEADING, 26, GroupLayout.PREFERRED_SIZE, 96)
+						.addComponent(lblHour1, Alignment.LEADING, 26, GroupLayout.PREFERRED_SIZE, 96))
 					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -1634,15 +1634,15 @@ public class InstructorNoa {
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(logoPanel, GroupLayout.PREFERRED_SIZE, 952, Short.MAX_VALUE)
+					.addComponent(logoPanel, 392, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 571, GroupLayout.PREFERRED_SIZE)
+					.addComponent(topButtonPanel, 496, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addComponent(logoPanel, GroupLayout.PREFERRED_SIZE, 159, Short.MAX_VALUE)
-				.addComponent(topButtonPanel, GroupLayout.PREFERRED_SIZE, 159, Short.MAX_VALUE)
+				.addComponent(logoPanel, 133, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+				.addComponent(topButtonPanel, 133, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
 		);
 		
 		lblLogo = new JLabel("");
@@ -1650,13 +1650,13 @@ public class InstructorNoa {
 		lblLogoText = new JLabel("");
 		GroupLayout gl_logoPanel = new GroupLayout(logoPanel);
 		gl_logoPanel.setHorizontalGroup(
-			gl_logoPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_logoPanel.createSequentialGroup()
+			gl_logoPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_logoPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+					.addComponent(lblLogo, 93, 120, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblLogoText, 166, 433, Short.MAX_VALUE)
-					.addGap(378))
+					.addComponent(lblLogoText, 271, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(10, Short.MAX_VALUE))
 		);
 		gl_logoPanel.setVerticalGroup(
 			gl_logoPanel.createParallelGroup(Alignment.TRAILING)
@@ -1664,9 +1664,9 @@ public class InstructorNoa {
 					.addContainerGap()
 					.addGroup(gl_logoPanel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_logoPanel.createSequentialGroup()
-							.addGap(46)
-							.addComponent(lblLogoText, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
-						.addComponent(lblLogo, GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+							.addComponent(lblLogoText, 77, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblLogo, 72, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		logoPanel.setLayout(gl_logoPanel);
@@ -1692,7 +1692,7 @@ public class InstructorNoa {
 						try {
 							popup.add(new WebMenuItem(i18n.getParam("Empty")));
 						} catch (Exception e1) {
-							JajeemExcetionHandler.logError(e1);
+							JajeemExceptionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 						return;
@@ -1751,7 +1751,7 @@ public class InstructorNoa {
 				// getDesktopPane().getSelectedFrame().updateUI();
 
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 		}

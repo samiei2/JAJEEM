@@ -13,7 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileManagerBase;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -106,7 +106,7 @@ public class ClientFileManagerMain extends FileManagerBase {
 		try {
 			UIManager.setLookAndFeel(lookAndFeelClassName);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 		}
 	}
 }

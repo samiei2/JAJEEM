@@ -60,7 +60,7 @@ import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentService;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
@@ -394,7 +394,7 @@ public class AdminPanel extends CustomAccountFrame {
 				try {
 					new AddNewCourseDialog(courseList, getInstructorList());
 				} catch (Exception e1) {
-					JajeemExcetionHandler.logError(e1);
+					JajeemExceptionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -430,7 +430,7 @@ public class AdminPanel extends CustomAccountFrame {
 										rs.getCourseDAO().delete(course);
 									}
 								} catch (SQLException e1) {
-									JajeemExcetionHandler.logError(e1);
+									JajeemExceptionHandler.logError(e1);
 									e1.printStackTrace();
 								}
 							}
@@ -440,7 +440,7 @@ public class AdminPanel extends CustomAccountFrame {
 						}
 					}
 				} catch (Exception e2) {
-					JajeemExcetionHandler.logError(e2);
+					JajeemExceptionHandler.logError(e2);
 					e2.printStackTrace();
 				}
 			}
@@ -458,7 +458,7 @@ public class AdminPanel extends CustomAccountFrame {
 								courseSelectionModel.getSelected(),
 								getInstructorList());
 					} catch (Exception e1) {
-						JajeemExcetionHandler.logError(e1);
+						JajeemExceptionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 				}
@@ -551,7 +551,7 @@ public class AdminPanel extends CustomAccountFrame {
 							new StudentsAndQuizListDialog(course, true, course
 									.getId(), "course");
 						} catch (Exception e1) {
-							JajeemExcetionHandler.logError(e1);
+							JajeemExceptionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -576,7 +576,7 @@ public class AdminPanel extends CustomAccountFrame {
 						try {
 							new InstructorCourseDialog(course);
 						} catch (SQLException e1) {
-							JajeemExcetionHandler.logError(e1);
+							JajeemExceptionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -742,7 +742,7 @@ public class AdminPanel extends CustomAccountFrame {
 								new StudentsAndQuizListDialog(course, true,
 										course.getId(), "course");
 							} catch (Exception e1) {
-								JajeemExcetionHandler.logError(e1);
+								JajeemExceptionHandler.logError(e1);
 								e1.printStackTrace();
 							}
 						}
@@ -790,7 +790,7 @@ public class AdminPanel extends CustomAccountFrame {
 				try {
 					new AddNewInstructorDialog(getInstructorList());
 				} catch (Exception e1) {
-					JajeemExcetionHandler.logError(e1);
+					JajeemExceptionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -828,7 +828,7 @@ public class AdminPanel extends CustomAccountFrame {
 									insService.delete(instructor);
 								}
 							} catch (SQLException e1) {
-								JajeemExcetionHandler.logError(e1);
+								JajeemExceptionHandler.logError(e1);
 								e1.printStackTrace();
 							}
 						}
@@ -1083,7 +1083,7 @@ public class AdminPanel extends CustomAccountFrame {
 				try {
 					new AddNewStudentDialog(getStudentList());
 				} catch (Exception e1) {
-					JajeemExcetionHandler.logError(e1);
+					JajeemExceptionHandler.logError(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -1114,7 +1114,7 @@ public class AdminPanel extends CustomAccountFrame {
 							try {
 								stuService.delete(student);
 							} catch (SQLException e1) {
-								JajeemExcetionHandler.logError(e1);
+								JajeemExceptionHandler.logError(e1);
 								e1.printStackTrace();
 							}
 						}
@@ -1194,7 +1194,7 @@ public class AdminPanel extends CustomAccountFrame {
 						try {
 							new StudentCourseDialog(student);
 						} catch (Exception e1) {
-							JajeemExcetionHandler.logError(e1);
+							JajeemExceptionHandler.logError(e1);
 							e1.printStackTrace();
 						}
 					}
@@ -1326,7 +1326,7 @@ public class AdminPanel extends CustomAccountFrame {
 					return i18n.getParam("Weekly Time");
 				}
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -1421,7 +1421,7 @@ public class AdminPanel extends CustomAccountFrame {
 					return i18n.getParam("Password");
 				}
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -1476,7 +1476,7 @@ public class AdminPanel extends CustomAccountFrame {
 			try {
 				insService.update(baseObject);
 			} catch (SQLException e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 
@@ -1508,7 +1508,7 @@ public class AdminPanel extends CustomAccountFrame {
 					return i18n.getParam("Password");
 				}
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 			throw new IllegalStateException();
@@ -1555,7 +1555,7 @@ public class AdminPanel extends CustomAccountFrame {
 			try {
 				stuService.update(baseObject);
 			} catch (SQLException e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 			}
 
@@ -1620,7 +1620,7 @@ public class AdminPanel extends CustomAccountFrame {
 					frame.setVisible(true);
 
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}

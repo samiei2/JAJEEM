@@ -22,7 +22,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.rootpane.WebFrame;
 import com.alee.laf.text.WebTextField;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import javax.swing.SwingConstants;
@@ -271,7 +271,7 @@ public class Survey_FirstPage extends Survey_AbstractViews {
 
 						}
 					} catch (Exception ex) {
-						JajeemExcetionHandler.logError(ex);
+						JajeemExceptionHandler.logError(ex);
 					}
 				}// end if
 

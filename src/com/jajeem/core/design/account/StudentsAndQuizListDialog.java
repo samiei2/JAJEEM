@@ -54,7 +54,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.model.StudentCourse;
 import com.jajeem.core.service.StudentCourseService;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.service.QuizService;
 import com.jajeem.room.model.Course;
@@ -563,7 +563,7 @@ class QuizList extends WebPanel {
 				wbTblQuiz.getSelectionModel().setSelectionInterval(0, 0);
 			}
 		} catch (SQLException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}

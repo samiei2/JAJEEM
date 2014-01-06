@@ -34,7 +34,7 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.jajeem.core.design.student.Student;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
 
@@ -166,7 +166,7 @@ public class RecorderStudent extends CustomRecorderDialog {
 							AudioSystem.write(capt.audioInputStream,
 									AudioFileFormat.Type.WAVE, file);
 						} catch (Exception ex) {
-							JajeemExcetionHandler.logError(ex, Recorder.class);
+							JajeemExceptionHandler.logError(ex, Recorder.class);
 						}
 						file.flush();
 						file.close();

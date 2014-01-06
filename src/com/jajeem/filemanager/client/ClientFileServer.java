@@ -7,12 +7,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.FileUtil;
 
 public class ClientFileServer {
@@ -60,7 +62,15 @@ public class ClientFileServer {
 							if (!inbox.exists()) {
 								inbox.mkdirs();
 							}
-							File output = new File(inbox, nameStr);
+							
+							Date now = new Date();
+							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH.mm");
+							String datetime = format.format(now);
+							
+							String name1 = nameStr.substring(0,nameStr.lastIndexOf("."));
+							String suffix = nameStr.substring(nameStr.lastIndexOf(".") + 1, nameStr.length());
+							String filname = name1 + " (" + datetime + ")" + "." + suffix;
+							File output = new File(inbox, filname);
 							FileOutputStream fos = new FileOutputStream(output);
 
 							int x = 0;
@@ -101,7 +111,7 @@ public class ClientFileServer {
 							}
 						} catch (Exception e) {
 							progwin.dispose();
-							JajeemExcetionHandler.logError(e,
+							JajeemExceptionHandler.logError(e,
 									ClientFileServer.class);
 							new FileTransferEvent().fireFailure(null,
 									ClientFileInbox.class);
@@ -112,7 +122,7 @@ public class ClientFileServer {
 			}
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e, ClientFileServer.class);
+			JajeemExceptionHandler.logError(e, ClientFileServer.class);
 		}
 	}
 

@@ -11,7 +11,7 @@ import java.util.Collection;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.FileUtil;
 
 public class SendFileCollectCommandHandler implements ICommandHandler {
@@ -53,7 +53,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 				}
 			}
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -131,7 +131,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 
 						System.out.println(file.getAbsolutePath() + " Sent");
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e,
+						JajeemExceptionHandler.logError(e,
 								SendFileCollectCommandHandler.class);
 						System.out.println(file.getAbsolutePath() + " Failed");
 					}
@@ -139,7 +139,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 			});
 			fileSender.start();
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			System.out.println(file.getAbsolutePath() + " Failed");
 		}
 	}

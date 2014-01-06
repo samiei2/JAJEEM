@@ -7,7 +7,7 @@ import org.jitsi.util.swing.TransparentIntercomInProgressFrame;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.student.Student;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.ClientSession;
 
 public class StartIntercomCommandHandler implements ICommandHandler {
@@ -34,7 +34,7 @@ public class StartIntercomCommandHandler implements ICommandHandler {
 			ClientSession.setStudentIntercomInProgress(frame);
 			frame.setVisible(true);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 

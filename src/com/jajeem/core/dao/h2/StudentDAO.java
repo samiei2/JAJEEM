@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.jajeem.core.dao.IStudentDAO;
 import com.jajeem.core.model.Student;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.BaseDAO;
 
 public class StudentDAO implements IStudentDAO {
@@ -65,28 +65,28 @@ public class StudentDAO implements IStudentDAO {
 			logger.error("authenticate: throwed an exception: "
 					+ e.getMessage());
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 		return false;
@@ -124,7 +124,7 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			student.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -133,21 +133,21 @@ public class StudentDAO implements IStudentDAO {
 					student.setId(-1);
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -180,28 +180,28 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			student.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -235,28 +235,28 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			student.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -286,7 +286,7 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			student.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -295,21 +295,21 @@ public class StudentDAO implements IStudentDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -332,7 +332,7 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			student.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -341,21 +341,21 @@ public class StudentDAO implements IStudentDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -391,28 +391,28 @@ public class StudentDAO implements IStudentDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 

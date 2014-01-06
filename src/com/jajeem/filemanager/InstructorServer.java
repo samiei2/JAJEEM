@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -13,7 +15,7 @@ import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileCollect;
 import com.jajeem.filemanager.design.FileInbox;
 import com.jajeem.util.FileUtil;
@@ -98,7 +100,15 @@ public class InstructorServer {
 										.getHostAddress());
 							}
 							file.mkdir();
-							File output = new File(file, nameStr);
+							
+							Date now = new Date();
+							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH.mm");
+							String datetime = format.format(now);
+							
+							String name1 = nameStr.substring(0,nameStr.lastIndexOf("."));
+							String suffix = nameStr.substring(nameStr.lastIndexOf(".") + 1, nameStr.length());
+							String filname = name1 + " (" + datetime + ")" + "." + suffix;
+							File output = new File(file, filname);
 							FileOutputStream fos = new FileOutputStream(output);
 
 							int x = 0;
@@ -130,7 +140,7 @@ public class InstructorServer {
 						} catch (Exception e) {
 							progwin.dispose();
 							// confirmationDialog.dispose();
-							JajeemExcetionHandler.logError(e,
+							JajeemExceptionHandler.logError(e,
 									InstructorServer.class);
 							new FileTransferEvent().fireFailure(null,
 									FileInbox.class);
@@ -156,7 +166,7 @@ public class InstructorServer {
 				try {
 					evt.getClientSocket().close();
 				} catch (IOException e) {
-					JajeemExcetionHandler.logError(e, InstructorServer.class);
+					JajeemExceptionHandler.logError(e, InstructorServer.class);
 					e.printStackTrace();
 				}
 			}
@@ -198,7 +208,7 @@ public class InstructorServer {
 				Session.getFileRequestList().add(obj);
 			}
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e, InstructorServer.class);
+			JajeemExceptionHandler.logError(e, InstructorServer.class);
 			JOptionPane
 					.showMessageDialog(
 							null,
@@ -219,7 +229,7 @@ public class InstructorServer {
 						FileCollect.class);
 			}
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e, InstructorServer.class);
+			JajeemExceptionHandler.logError(e, InstructorServer.class);
 			JOptionPane
 					.showMessageDialog(
 							null,

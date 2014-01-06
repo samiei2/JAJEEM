@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.dao.ICourseDAO;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.BaseDAO;
@@ -69,7 +69,7 @@ public class CourseDAO implements ICourseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			course.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -78,21 +78,21 @@ public class CourseDAO implements ICourseDAO {
 					course.setId(-1);
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -141,28 +141,28 @@ public class CourseDAO implements ICourseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			course.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -209,7 +209,7 @@ public class CourseDAO implements ICourseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			course.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -218,21 +218,21 @@ public class CourseDAO implements ICourseDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -255,7 +255,7 @@ public class CourseDAO implements ICourseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			course.setId(-1);
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs == 1) {
@@ -264,21 +264,21 @@ public class CourseDAO implements ICourseDAO {
 					return false;
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -329,28 +329,28 @@ public class CourseDAO implements ICourseDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 
@@ -401,28 +401,28 @@ public class CourseDAO implements ICourseDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			new JajeemExcetionHandler(e);
+			new JajeemExceptionHandler(e);
 		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (ps != null) {
 					ps.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 			try {
 				if (con != null) {
 					con.close();
 				}
 			} catch (Exception e) {
-				new JajeemExcetionHandler(e);
+				new JajeemExceptionHandler(e);
 			}
 		}
 

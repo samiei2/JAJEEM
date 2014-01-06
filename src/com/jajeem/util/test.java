@@ -15,6 +15,10 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.metal.MetalIconFactory;
 
+import org.omg.CORBA.Environment;
+
+import com.jajeem.licensing.LicenseManager;
+
 public class test {
 
 	private static Image getImage() throws HeadlessException {
@@ -59,36 +63,8 @@ public class test {
 	}
 
 	public static void main(String[] args) throws Exception {
-
-		TrayIcon icon = new TrayIcon(getImage(),
-
-		"This is a Java Tray Icon", createPopupMenu());
-
-		icon.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				JOptionPane.showMessageDialog(null,
-
-				"Bring Java to the Desktop app");
-
-			}
-
-		});
-
-		SystemTray.getSystemTray().add(icon);
-
-		while (true) {
-
-			Thread.sleep(10000);
-
-			icon.displayMessage("Warning", "Click me! =)",
-
-			TrayIcon.MessageType.WARNING);
-
-		}
-
+		boolean result = new LicenseManager().Authenticate(true);
+		System.out.println(result);
 	}
 
 }

@@ -48,7 +48,7 @@ import com.jajeem.events.QuizEventListener;
 import com.jajeem.events.QuizFinished;
 import com.jajeem.events.QuizResponse;
 import com.jajeem.events.QuizStop;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -644,10 +644,10 @@ public class Quiz_Window extends BaseQuizClientFrame {
 											.getServerService();
 									service.send(cmd);
 								} catch (NumberFormatException e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 									e.printStackTrace();
 								}
 							}
@@ -676,7 +676,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 							ServerService service = new ServerService();
 							service.send(cmd);
 						} catch (Exception ex) {
-							JajeemExcetionHandler.logError(ex,
+							JajeemExceptionHandler.logError(ex,
 									Quiz_Window.class);
 						}
 					}
@@ -912,10 +912,10 @@ public class Quiz_Window extends BaseQuizClientFrame {
 													.getServerService();
 											service.send(cmd);
 										} catch (NumberFormatException e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										} catch (Exception e) {
-											JajeemExcetionHandler.logError(e);
+											JajeemExceptionHandler.logError(e);
 											e.printStackTrace();
 										}
 									}

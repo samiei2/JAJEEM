@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.alee.laf.table.WebTable;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.survey.service.SurveyService;
 import com.jajeem.util.WindowResizeAdapter;
@@ -217,7 +217,7 @@ public class Survey_OpenDialog extends BaseSurveyOpenFrame {
 								0);
 					}
 				} catch (SQLException e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -234,6 +234,8 @@ public class Survey_OpenDialog extends BaseSurveyOpenFrame {
 		wbtnOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(parentFrame == null)
+					System.out.println(true);
 				parentFrame.setCurrentSurvey(surveyList.get(wbTblSurvey
 						.getSelectedRow()));
 				parentFrame.loadCurrentSurvey();

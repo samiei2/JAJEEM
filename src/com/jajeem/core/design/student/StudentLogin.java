@@ -32,7 +32,7 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.client.ClientFileServer;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomLoginFrame;
@@ -78,7 +78,7 @@ public class StudentLogin extends CustomLoginFrame {
 			new StudentLogin();
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}

@@ -42,7 +42,7 @@ import com.jajeem.command.model.StartQuizCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.model.Instructor;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Question;
 import com.jajeem.quiz.model.Quiz;
 import com.jajeem.quiz.model.Run;
@@ -230,10 +230,10 @@ public class Quiz_Main extends BaseQuizFrame {
 								Integer.parseInt(Config.getParam("quizport"))
 										+ gIndex + 1);
 					} catch (NumberFormatException e2) {
-						JajeemExcetionHandler.logError(e2);
+						JajeemExceptionHandler.logError(e2);
 						e2.printStackTrace();
 					} catch (Exception e2) {
-						JajeemExcetionHandler.logError(e2);
+						JajeemExceptionHandler.logError(e2);
 						e2.printStackTrace();
 					}
 					clientService2.start();
@@ -247,10 +247,10 @@ public class Quiz_Main extends BaseQuizFrame {
 						Config.getParam("broadcastingIp"),
 						Integer.parseInt(Config.getParam("quizport")));
 			} catch (NumberFormatException e2) {
-				JajeemExcetionHandler.logError(e2);
+				JajeemExceptionHandler.logError(e2);
 				e2.printStackTrace();
 			} catch (Exception e2) {
-				JajeemExcetionHandler.logError(e2);
+				JajeemExceptionHandler.logError(e2);
 				e2.printStackTrace();
 			}
 			clientService2.start();
@@ -330,7 +330,7 @@ public class Quiz_Main extends BaseQuizFrame {
 						try {
 							StopQuizCommand();
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					} else {
@@ -373,7 +373,7 @@ public class Quiz_Main extends BaseQuizFrame {
 					try {
 						StopQuizCommand();
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
+						JajeemExceptionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else {
@@ -414,7 +414,7 @@ public class Quiz_Main extends BaseQuizFrame {
 						// newQuizRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
-						JajeemExcetionHandler.logError(e1);
+						JajeemExceptionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 				} else if (i == 1) {
@@ -592,7 +592,7 @@ public class Quiz_Main extends BaseQuizFrame {
 			}
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -649,7 +649,7 @@ public class Quiz_Main extends BaseQuizFrame {
 				service.send(cmd);
 			}
 		} catch (Exception ex) {
-			JajeemExcetionHandler.logError(ex);
+			JajeemExceptionHandler.logError(ex);
 			ex.printStackTrace();
 		}
 	}

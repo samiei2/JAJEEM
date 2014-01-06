@@ -23,7 +23,7 @@ import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.InstructorServer;
 import com.jajeem.util.Audio;
 import com.jajeem.util.Config;
@@ -134,7 +134,7 @@ public class FileCollect extends JPanel {
 					try {
 						file.delete();
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e, FileCollect.class);
+						JajeemExceptionHandler.logError(e, FileCollect.class);
 						WebOptionPane.showMessageDialog(
 								null,
 								file.getAbsolutePath()

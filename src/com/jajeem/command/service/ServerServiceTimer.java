@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.jajeem.command.model.Command;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 
 public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
@@ -80,7 +80,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		try {
 			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
-			JajeemExcetionHandler.logError(e1);
+			JajeemExceptionHandler.logError(e1);
 			e1.printStackTrace();
 		}
 		b = constructMessage(cmd);
@@ -91,14 +91,14 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			System.err.println(e);
 			try {
 				System.out.println("Message Size: " + b.length);
 				System.out.println("SendBufferSize: "
 						+ socket.getSendBufferSize());
 			} catch (SocketException se) {
-				JajeemExcetionHandler.logError(se);
+				JajeemExceptionHandler.logError(se);
 				System.err.println(se);
 			}
 		}
@@ -117,7 +117,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		try {
 			group = InetAddress.getByName(cmd.getTo());
 		} catch (UnknownHostException e1) {
-			JajeemExcetionHandler.logError(e1);
+			JajeemExceptionHandler.logError(e1);
 			e1.printStackTrace();
 		}
 
@@ -127,14 +127,14 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			System.err.println(e);
 			try {
 				System.out.println("Message Size: " + b.length);
 				System.out.println("SendBufferSize: "
 						+ socket.getSendBufferSize());
 			} catch (SocketException se) {
-				JajeemExcetionHandler.logError(se);
+				JajeemExceptionHandler.logError(se);
 				System.err.println(se);
 			}
 		}
@@ -159,7 +159,7 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 			return b.toByteArray();
 
 		} catch (IOException ex) {
-			JajeemExcetionHandler.logError(ex);
+			JajeemExceptionHandler.logError(ex);
 			System.out.println("Error while sending an announce message");
 			return null;
 		}

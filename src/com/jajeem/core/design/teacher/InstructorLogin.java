@@ -58,7 +58,7 @@ import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.ui.combobox.JajeemComboBox;
@@ -147,7 +147,7 @@ public class InstructorLogin {
 						grant = instructorService.authenticate(
 								usernameTF.getText(), passwordTF.getPassword());
 					} catch (Exception e1) {
-						JajeemExcetionHandler.logError(e1);
+						JajeemExceptionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 
@@ -209,7 +209,7 @@ public class InstructorLogin {
 						Config.setParam("lang", "fa");
 					}
 				} catch (Exception ex) {
-					JajeemExcetionHandler.logError(ex);
+					JajeemExceptionHandler.logError(ex);
 					ex.printStackTrace();
 				}
 			}
@@ -379,7 +379,7 @@ public class InstructorLogin {
 						comboBox_lang.setSelectedIndex(1);
 					}
 				} catch (Exception e2) {
-					JajeemExcetionHandler.logError(e2);
+					JajeemExceptionHandler.logError(e2);
 					e2.printStackTrace();
 				}
 			}
@@ -400,7 +400,7 @@ public class InstructorLogin {
 						usernameTF.getText(), passwordTF.getPassword());
 				webButtonLogin.setEnabled(true);
 			} catch (Exception e) {
-				JajeemExcetionHandler.logError(e);
+				JajeemExceptionHandler.logError(e);
 				e.printStackTrace();
 				webButtonLogin.setEnabled(true);
 			}
@@ -437,7 +437,7 @@ public class InstructorLogin {
 					}
 
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 
@@ -490,7 +490,7 @@ public class InstructorLogin {
 					}, 5000);
 
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}

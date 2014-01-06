@@ -35,7 +35,7 @@ import com.alee.laf.text.WebTextArea;
 import com.jajeem.command.model.ChatCommand;
 import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.design.teacher.InstructorNoa;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 
@@ -67,7 +67,7 @@ public class Chat extends WebFrame {
 					Chat frame = new Chat("", 0, false, -1, "");
 					frame.setVisible(true);
 				} catch (Exception e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 			}
@@ -110,7 +110,7 @@ public class Chat extends WebFrame {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 		boolean decorateFrames = WebLookAndFeel.isDecorateFrames();
@@ -278,7 +278,7 @@ public class Chat extends WebFrame {
 					}
 					bw.close();
 				} catch (IOException e) {
-					JajeemExcetionHandler.logError(e);
+					JajeemExceptionHandler.logError(e);
 					e.printStackTrace();
 				}
 

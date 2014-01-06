@@ -25,7 +25,7 @@ import com.alee.laf.text.WebTextField;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.model.Student;
 import com.jajeem.events.SurveyResponse;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Survey;
 import com.jajeem.ui.combobox.JajeemComboBox;
@@ -668,10 +668,10 @@ public class Survey_SecondPage_Question_View extends Survey_AbstractViews {
 							.getParam("port")));
 			serv.send(cmd);
 		} catch (NumberFormatException e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 

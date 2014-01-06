@@ -27,7 +27,7 @@ import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.CustomFileButton;
 
 public class ClientFileSendTab extends WebPanel {
@@ -333,7 +333,7 @@ public class ClientFileSendTab extends WebPanel {
 					} catch (Exception e) {
 						progwin.dispose();
 						// confirmationDialog.dispose();
-						JajeemExcetionHandler.logError(e,
+						JajeemExceptionHandler.logError(e,
 								ClientFileSendTab.class);
 						new FileTransferEvent().fireFailure(null,
 								ClientFileSendTab.class);
@@ -350,7 +350,7 @@ public class ClientFileSendTab extends WebPanel {
 			// fileSender.interrupt();
 			// System.out.println(fileSender.isAlive()+":"+command);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, ClientFileSendTab.class);
 			e.printStackTrace();
 		}

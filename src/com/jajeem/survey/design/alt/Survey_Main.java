@@ -52,7 +52,7 @@ import com.jajeem.command.service.ClientService;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.model.Instructor;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.survey.model.Question;
 import com.jajeem.survey.model.Run;
@@ -108,33 +108,51 @@ public class Survey_Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setBackground(new Color(0,0,0,0));
+		mainFrame = this;
 		WindowResizeAdapter.install(frame, SwingConstants.SOUTH_EAST);
 		
-		wbtnNew = new CustomSurveyButton("/icons/noa_en/quizadd.png");
+		wbtnNew = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnNew.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnNew.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnNew.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizaddicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		wbtnNew.setUndecorated(true);
-		wbtnNew.setText("");
+		wbtnNew.setText("New");
 		
-		wbtnOpen = new CustomSurveyButton("/icons/noa_en/quizopen.png");
+		wbtnOpen = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnOpen.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnOpen.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnOpen.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizopenicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		wbtnOpen.setUndecorated(true);
-		wbtnOpen.setText("");
+		wbtnOpen.setText("Open");
 		
-		wbtnSave = new CustomSurveyButton("/icons/noa_en/quizsave.png");
+		wbtnSave = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnSave.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSave.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnSave.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizsaveicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		wbtnSave.setUndecorated(true);
-		wbtnSave.setText("");
+		wbtnSave.setText("Save");
 		
-		wbtnSaveResults = new CustomSurveyButton("/icons/noa_en/quizsave.png");
+		wbtnSaveResults = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnSaveResults.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnSaveResults.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnSaveResults.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizsaveicon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		wbtnSaveResults.setUndecorated(true);
-		wbtnSaveResults.setText("");
+		wbtnSaveResults.setText("Save Results");
 		
 		wbtnStart = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnStart.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnStart.setVerticalTextPosition(SwingConstants.BOTTOM);
 		wbtnStart.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizstarticon.png")).getImage().getScaledInstance(20, 17, Image.SCALE_SMOOTH)));
 		wbtnStart.putClientProperty("action","Start");
 		wbtnStart.setUndecorated(true);
-		wbtnStart.setText("");
+		wbtnStart.setText("Start");
 		
-		wbtnContent = new CustomSurveyButton("/icons/noa_en/quizcontent.png");
+		wbtnContent = new CustomSurveyButton("/icons/noa_en/emptybutton.png");
+		wbtnContent.setHorizontalTextPosition(SwingConstants.CENTER);
+		wbtnContent.setVerticalTextPosition(SwingConstants.BOTTOM);
+		wbtnContent.setIcon(new ImageIcon(new ImageIcon(Survey_Main.class.getResource("/icons/noa_en/quizcontenticon.png")).getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH)));
 		wbtnContent.setUndecorated(true);
-		wbtnContent.setText("");
+		wbtnContent.setText("Content");
 		GroupLayout groupLayout = new GroupLayout(frame.getTopPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -146,9 +164,9 @@ public class Survey_Main {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
-					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+					.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 552, Short.MAX_VALUE)
+					.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -158,13 +176,13 @@ public class Survey_Main {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE))
-					.addContainerGap())
+						.addComponent(wbtnSaveResults, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnContent, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnStart, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnSave, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnOpen, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(wbtnNew, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+					.addGap(13))
 		);
 		frame.getTopPane().setLayout(groupLayout);
 		
@@ -217,10 +235,10 @@ public class Survey_Main {
 								Integer.parseInt(Config.getParam("surveyport"))
 										+ gIndex + 1);
 					} catch (NumberFormatException e2) {
-						JajeemExcetionHandler.logError(e2);
+						JajeemExceptionHandler.logError(e2);
 						e2.printStackTrace();
 					} catch (Exception e2) {
-						JajeemExcetionHandler.logError(e2);
+						JajeemExceptionHandler.logError(e2);
 						e2.printStackTrace();
 					}
 					clientService2.start();
@@ -234,10 +252,10 @@ public class Survey_Main {
 						Config.getParam("broadcastingIp"),
 						Integer.parseInt(Config.getParam("surveyport")));
 			} catch (NumberFormatException e2) {
-				JajeemExcetionHandler.logError(e2);
+				JajeemExceptionHandler.logError(e2);
 				e2.printStackTrace();
 			} catch (Exception e2) {
-				JajeemExcetionHandler.logError(e2);
+				JajeemExceptionHandler.logError(e2);
 				e2.printStackTrace();
 			}
 			clientService2.start();
@@ -316,7 +334,7 @@ public class Survey_Main {
 						try {
 							StopSurveyCommand();
 						} catch (Exception e) {
-							JajeemExcetionHandler.logError(e);
+							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					} else {
@@ -359,7 +377,7 @@ public class Survey_Main {
 					try {
 						StopSurveyCommand();
 					} catch (Exception e) {
-						JajeemExcetionHandler.logError(e);
+						JajeemExceptionHandler.logError(e);
 						e.printStackTrace();
 					}
 				} else {
@@ -400,7 +418,7 @@ public class Survey_Main {
 						// newSurveyRun();
 						eventsEnabled = true;
 					} catch (SQLException e1) {
-						JajeemExcetionHandler.logError(e1);
+						JajeemExceptionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 				} else if (i == 1) {
@@ -563,7 +581,7 @@ public class Survey_Main {
 			}
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 	}
@@ -618,7 +636,7 @@ public class Survey_Main {
 				service.send(cmd);
 			}
 		} catch (Exception ex) {
-			JajeemExcetionHandler.logError(ex);
+			JajeemExceptionHandler.logError(ex);
 			ex.printStackTrace();
 		}
 	}

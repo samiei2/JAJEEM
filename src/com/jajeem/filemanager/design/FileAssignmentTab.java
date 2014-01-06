@@ -32,7 +32,7 @@ import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
@@ -411,7 +411,7 @@ public class FileAssignmentTab extends JPanel {
 								try {
 									ips = new ArrayList<>(group.getStudentIps());
 								} catch (Exception e) {
-									JajeemExcetionHandler.logError(e);
+									JajeemExceptionHandler.logError(e);
 								}
 							}
 						}
@@ -516,7 +516,7 @@ public class FileAssignmentTab extends JPanel {
 					} catch (Exception e) {
 						progwin.dispose();
 						// confirmationDialog.dispose();
-						JajeemExcetionHandler.logError(e,
+						JajeemExceptionHandler.logError(e,
 								FileAssignmentTab.class);
 						new FileTransferEvent().fireFailure(null,
 								FileAssignmentTab.class);
@@ -526,7 +526,7 @@ public class FileAssignmentTab extends JPanel {
 			fileSender.start();
 			progwin.setVisible(true);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
 			e.printStackTrace();
 		}

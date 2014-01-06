@@ -25,7 +25,7 @@ import com.alee.managers.hotkey.HotkeyManager;
 import com.alee.utils.SwingUtils;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.core.design.student.StudentLogin;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 
 public class MessageSend extends JDialog {
@@ -63,7 +63,7 @@ public class MessageSend extends JDialog {
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			// TODO Auto-generated catch block
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 
@@ -135,7 +135,7 @@ public class MessageSend extends JDialog {
 						else
 							WebOptionPane.showMessageDialog(null, "You are not logged in!\nPlease login first!","Error",JOptionPane.ERROR_MESSAGE);
 					} catch (Exception e1) {
-						JajeemExcetionHandler.logError(e1);
+						JajeemExceptionHandler.logError(e1);
 						e1.printStackTrace();
 					}
 					setVisible(false);

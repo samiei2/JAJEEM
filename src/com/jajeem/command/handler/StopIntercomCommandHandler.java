@@ -3,7 +3,7 @@ package com.jajeem.command.handler;
 import com.jajeem.command.model.Command;
 import com.jajeem.core.design.student.Student;
 import com.jajeem.core.design.teacher.InstructorNoa;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 
@@ -24,7 +24,7 @@ public class StopIntercomCommandHandler implements ICommandHandler {
 			}
 
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 			e.printStackTrace();
 		}
 

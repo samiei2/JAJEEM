@@ -17,7 +17,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
 
@@ -124,7 +124,7 @@ public class FileManagerMain extends FileManagerBase{
 		try {
 			UIManager.setLookAndFeel(lookAndFeelClassName);
 		} catch (Exception e) {
-			JajeemExcetionHandler.logError(e);
+			JajeemExceptionHandler.logError(e);
 		}
 	}
 

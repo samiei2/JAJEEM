@@ -25,7 +25,7 @@ import javax.swing.text.JTextComponent;
 import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.radiobutton.WebRadioButton;
-import com.jajeem.exception.JajeemExcetionHandler;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.CustomPanel;
 
@@ -652,7 +652,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 															.getWebTable()
 															.getSelectedRow(),
 													2);
-									JajeemExcetionHandler.logError(ex);
+									JajeemExceptionHandler.logError(ex);
 								}
 								if (!parentPanel.getWbchckbxAuto().isSelected()) {
 									int total = 0;
@@ -674,7 +674,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
 										parentPanel.getWbtxtfldPoints()
 												.setText(String.valueOf(0));
-										JajeemExcetionHandler.logError(e2);
+										JajeemExceptionHandler.logError(e2);
 									}
 								}
 							}
@@ -719,7 +719,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 															.getWebTable()
 															.getSelectedRow(),
 													2);
-									JajeemExcetionHandler.logError(ex);
+									JajeemExceptionHandler.logError(ex);
 								}
 								if (!parentPanel.getWbchckbxAuto().isSelected()) {
 									int total = 0;
@@ -741,7 +741,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 										// parentPanel.getParentPanel().getCurrentQuestion().getPoint();
 										parentPanel.getWbtxtfldPoints()
 												.setText(String.valueOf(0));
-										JajeemExcetionHandler.logError(e2);
+										JajeemExceptionHandler.logError(e2);
 									}
 								}
 							}
