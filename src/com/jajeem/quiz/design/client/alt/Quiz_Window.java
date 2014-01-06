@@ -143,8 +143,10 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		);
 		
 		JLabel lblNumberOfQuestions = new JLabel("Number of Questions : ");
+		lblNumberOfQuestions.setVisible(false);
 		
 		lblAnswered = new JLabel("Answered");
+		lblAnswered.setVisible(false);
 		
 		JLabel lblDirections = new JLabel("Directions : ");
 		
@@ -161,6 +163,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		JLabel lblTime = new JLabel("Remaining Time");
 		
 		lblNumOfQuestion = new JLabel("?");
+		lblNumOfQuestion.setVisible(false);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
