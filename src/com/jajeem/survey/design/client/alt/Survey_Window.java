@@ -130,17 +130,23 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		);
 		
 		JLabel lblNumberOfQuestions = new JLabel("Number of Questions");
+		lblNumberOfQuestions.setVisible(false);
 		
 		JLabel lblAnswererd = new JLabel("Answered");
+		lblAnswererd.setVisible(false);
 		
 		JLabel lblDirections = new JLabel("Directions");
 		
 		txtDirection = new WebTextField();
+		txtDirection.setEditable(false);
+		txtDirection.setEnabled(false);
 		txtDirection.setColumns(10);
 		
 		JLabel lblRemainingTime = new JLabel("Remaining Time");
 		
 		txtTime = new WebTextField();
+		txtTime.setEditable(false);
+		txtTime.setEnabled(false);
 		txtTime.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -190,7 +196,7 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		);
 		groupLayout_1.setVerticalGroup(
 			groupLayout_1.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
 		);
 		
 		WebScrollPane webScrollPane = new WebScrollPane((Component) null);
@@ -267,8 +273,8 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
-					.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, 170, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		
@@ -286,18 +292,28 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		radioButton_4 = new WebRadioButton("");
 		
 		textField = new WebTextField();
+		textField.setEnabled(false);
+		textField.setEditable(false);
 		textField.setColumns(10);
 		
 		textField_1 = new WebTextField();
+		textField_1.setEnabled(false);
+		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		
 		textField_2 = new WebTextField();
+		textField_2.setEnabled(false);
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		
 		textField_3 = new WebTextField();
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		
 		textField_4 = new WebTextField();
+		textField_4.setEnabled(false);
+		textField_4.setEditable(false);
 		textField_4.setColumns(10);
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
 		gl_panel_6.setHorizontalGroup(
@@ -368,18 +384,28 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		webCheckBox_4 = new WebCheckBox();
 		
 		textField_5 = new WebTextField();
+		textField_5.setEnabled(false);
+		textField_5.setEditable(false);
 		textField_5.setColumns(10);
 		
 		textField_6 = new WebTextField();
+		textField_6.setEnabled(false);
+		textField_6.setEditable(false);
 		textField_6.setColumns(10);
 		
 		textField_7 = new WebTextField();
+		textField_7.setEnabled(false);
+		textField_7.setEditable(false);
 		textField_7.setColumns(10);
 		
 		textField_8 = new WebTextField();
+		textField_8.setEnabled(false);
+		textField_8.setEditable(false);
 		textField_8.setColumns(10);
 		
 		textField_9 = new WebTextField();
+		textField_9.setEnabled(false);
+		textField_9.setEditable(false);
 		textField_9.setColumns(10);
 		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
 		gl_panel_7.setHorizontalGroup(
@@ -457,11 +483,15 @@ public class Survey_Window extends BaseSurveyClientFrame {
 		);
 		
 		webTextArea_1 = new WebTextArea();
+		webTextArea_1.setEnabled(false);
+		webTextArea_1.setEditable(false);
 		webScrollPane_2.setViewportView(webTextArea_1);
 		panel_8.setLayout(gl_panel_8);
 		panel_3.setLayout(gl_panel_3);
 		
 		webTextArea = new WebTextArea();
+		webTextArea.setEnabled(false);
+		webTextArea.setEditable(false);
 		webScrollPane_1.setViewportView(webTextArea);
 		panel_2.setLayout(gl_panel_2);
 		

@@ -2628,7 +2628,7 @@ public class InstructorNoaUtil {
 					}
 				}
 				if(!found)
-					model.addRow(new Object[] { hostIp, hostName });
+					model.addRow(new Object[] { hostIp, hostName, "Not Logged In" });
 
 				desktopPane.add(internalFrame, BorderLayout.CENTER);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()

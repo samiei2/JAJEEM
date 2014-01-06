@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.JInternalFrame;
+import javax.swing.table.DefaultTableModel;
 
 import com.jajeem.command.model.AuthenticateCommand;
 import com.jajeem.command.model.Command;
@@ -85,6 +86,14 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 								break;
 							}
 						}
+						
+						DefaultTableModel model = (DefaultTableModel) InstructorNoa
+								.getStudentListTable().getModel();
+						for (int i = 0; i < model.getRowCount(); i++) {
+							if(model.getValueAt(i, 0).toString().equals(cmd.getFrom())){
+								model.setValueAt(student.getFullName(), i, 2);
+							}
+						}
 					}
 				}
 				else{
@@ -127,6 +136,14 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 							}
 
 							break;
+						}
+					}
+					
+					DefaultTableModel model = (DefaultTableModel) InstructorNoa
+							.getStudentListTable().getModel();
+					for (int i = 0; i < model.getRowCount(); i++) {
+						if(model.getValueAt(i, 0).toString().equals(cmd.getFrom())){
+							model.setValueAt(student.getFullName(), i, 2);
 						}
 					}
 				}

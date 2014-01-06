@@ -292,6 +292,7 @@ public class InstructorNoa {
 		final DefaultTableModel model = new DefaultTableModel();
 
 		model.addColumn(i18n.getParam("PC IP"));
+		model.addColumn(i18n.getParam("Student Id"));
 		model.addColumn(i18n.getParam("Student name"));
 
 		WebTable table = new WebTable(model);

@@ -1,5 +1,6 @@
 package com.jajeem.recorder.design;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -141,6 +142,7 @@ public class RecorderServer {
 							in.close();
 							client.close();
 							progwin.dispose();
+							Desktop.getDesktop().open(output);
 						} catch (Exception e) {
 							progwin.dispose();
 							// confirmationDialog.dispose();

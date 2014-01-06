@@ -221,12 +221,12 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		);
 		groupLayout_1.setVerticalGroup(
 			groupLayout_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout_1.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout_1.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-					.addContainerGap())
+					.addGroup(groupLayout_1.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addContainerGap(10, Short.MAX_VALUE))
 		);
 		
 		JPanel panel_3 = new JPanel();
@@ -245,29 +245,29 @@ public class Quiz_Window extends BaseQuizClientFrame {
 //		wbtnPrev.setText("");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
 				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 282, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
 					.addContainerGap(215, Short.MAX_VALUE)
 					.addComponent(wbtnPrev, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(10)
-					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 282, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelCards, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(20)
+					.addComponent(panelCards, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
 						.addComponent(wbtnNext, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 						.addComponent(wbtnPrev, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addGap(10))
 		);
 		
 		WebPanel webPanel = new WebPanel();
@@ -285,18 +285,28 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		radioButton_4 = new JRadioButton("");
 		
 		textFieldAnswer1Card1 = new JTextField();
+		textFieldAnswer1Card1.setEnabled(false);
+		textFieldAnswer1Card1.setEditable(false);
 		textFieldAnswer1Card1.setColumns(10);
 		
 		textFieldAnswer2Card1 = new JTextField();
+		textFieldAnswer2Card1.setEnabled(false);
+		textFieldAnswer2Card1.setEditable(false);
 		textFieldAnswer2Card1.setColumns(10);
 		
 		textFieldAnswer3Card1 = new JTextField();
+		textFieldAnswer3Card1.setEnabled(false);
+		textFieldAnswer3Card1.setEditable(false);
 		textFieldAnswer3Card1.setColumns(10);
 		
 		textFieldAnswer4Card1 = new JTextField();
+		textFieldAnswer4Card1.setEnabled(false);
+		textFieldAnswer4Card1.setEditable(false);
 		textFieldAnswer4Card1.setColumns(10);
 		
 		textFieldAnswer5Card1 = new JTextField();
+		textFieldAnswer5Card1.setEnabled(false);
+		textFieldAnswer5Card1.setEditable(false);
 		textFieldAnswer5Card1.setColumns(10);
 		GroupLayout gl_webPanel = new GroupLayout(webPanel);
 		gl_webPanel.setHorizontalGroup(
@@ -345,7 +355,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 					.addGroup(gl_webPanel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(radioButton_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textFieldAnswer5Card1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(211, Short.MAX_VALUE))
+					.addContainerGap(10, Short.MAX_VALUE))
 		);
 		webPanel.setLayout(gl_webPanel);
 		
@@ -364,18 +374,28 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		checkBox_4 = new JCheckBox("");
 		
 		textFieldAnswer1Card2 = new JTextField();
+		textFieldAnswer1Card2.setEnabled(false);
+		textFieldAnswer1Card2.setEditable(false);
 		textFieldAnswer1Card2.setColumns(10);
 		
 		textFieldAnswer2Card2 = new JTextField();
+		textFieldAnswer2Card2.setEnabled(false);
+		textFieldAnswer2Card2.setEditable(false);
 		textFieldAnswer2Card2.setColumns(10);
 		
 		textFieldAnswer3Card2 = new JTextField();
+		textFieldAnswer3Card2.setEnabled(false);
+		textFieldAnswer3Card2.setEditable(false);
 		textFieldAnswer3Card2.setColumns(10);
 		
 		textFieldAnswer4Card2 = new JTextField();
+		textFieldAnswer4Card2.setEnabled(false);
+		textFieldAnswer4Card2.setEditable(false);
 		textFieldAnswer4Card2.setColumns(10);
 		
 		textFieldAnswer5Card2 = new JTextField();
+		textFieldAnswer5Card2.setEnabled(false);
+		textFieldAnswer5Card2.setEditable(false);
 		textFieldAnswer5Card2.setColumns(10);
 		GroupLayout gl_webPanel_1 = new GroupLayout(webPanel_1);
 		gl_webPanel_1.setHorizontalGroup(
@@ -428,7 +448,7 @@ public class Quiz_Window extends BaseQuizClientFrame {
 					.addGroup(gl_webPanel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(checkBox_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textFieldAnswer5Card2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(210, Short.MAX_VALUE))
+					.addContainerGap(10, Short.MAX_VALUE))
 		);
 		webPanel_1.setLayout(gl_webPanel_1);
 		
@@ -442,18 +462,20 @@ public class Quiz_Window extends BaseQuizClientFrame {
 			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_2.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_webPanel_2.setVerticalGroup(
 			gl_webPanel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_webPanel_2.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-					.addGap(331))
+					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		
 		webTextAreaEssayAnswer = new WebTextArea();
+		webTextAreaEssayAnswer.setEnabled(false);
+		webTextAreaEssayAnswer.setEditable(false);
 		scrollPane_2.setViewportView(webTextAreaEssayAnswer);
 		webPanel_2.setLayout(gl_webPanel_2);
 		
