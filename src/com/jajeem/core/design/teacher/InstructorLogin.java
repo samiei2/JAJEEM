@@ -1,61 +1,41 @@
 package com.jajeem.core.design.teacher;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.imageio.ImageIO;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.text.JTextComponent;
 
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.button.WebButton;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExceptionHandler;
@@ -63,22 +43,16 @@ import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.Config;
-import com.jajeem.util.CustomButton;
 import com.jajeem.util.CustomLoginFrame;
 import com.jajeem.util.CustomPasswordField;
 import com.jajeem.util.CustomTextField;
 import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
-import com.jajeem.ui.textbox.JajeemPasswordTextField;
-import com.jajeem.ui.textbox.JajeemTextField;
 
 public class InstructorLogin {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private LoginRoundedTextBox textField;
-	private LoginRoundedPasswordBox passwordField;
 	private JajeemComboBox comboBox_lang;
 	int posX = 0, posY = 0;
 	protected JTextComponent usernameTF;
