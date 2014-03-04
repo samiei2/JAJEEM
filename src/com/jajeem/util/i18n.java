@@ -54,8 +54,9 @@ public class i18n {
 			throw new Exception("lang file is not loaded before!");
 		}
 
-		String p = props.getProperty(key.trim().replaceAll("\\s", "")
-				.toLowerCase());
+		String temp = key.trim().replaceAll("\\s", "")
+				.toLowerCase();
+		String p = props.getProperty(temp);
 
 		if (p == null) {
 			p = key;

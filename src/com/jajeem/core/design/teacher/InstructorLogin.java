@@ -35,10 +35,14 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
+import org.omg.CORBA.Environment;
+
 import com.alee.laf.WebLookAndFeel;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExceptionHandler;
+import com.jajeem.licensing.JNI4NETLicense;
+import com.jajeem.licensing.LicenseManager;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.ui.combobox.JajeemComboBox;
@@ -66,6 +70,7 @@ public class InstructorLogin {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
+		
 		new Config();
 //		new i18n();
 		
@@ -429,7 +434,20 @@ public class InstructorLogin {
 			@Override
 			public void run() {
 				try {
-
+					try {
+						int result = JNI4NETLicense.Validate(false);
+						if(result == 13 || result == 12)
+							;
+						else{
+							JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
+							System.exit(-1);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
+						System.exit(-1);
+					}
+					
+					
 					UIManager.setLookAndFeel(WebLookAndFeel.class
 							.getCanonicalName());
 

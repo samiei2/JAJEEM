@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.table.WebTable;
+import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
@@ -165,13 +166,28 @@ public class FileInbox extends JPanel {
 			for (int i = 0; i < Session.getFileRequestList().size(); i++) {
 				fileSendRequestList.add((FileTransferObject) Session
 						.getFileRequestList().get(i));
-				model.addRow(new Object[] {
-						webTable.getRowCount() == 0 ? 1 : webTable
-								.getRowCount() + 1,
-						i18n.getParam("Cannot show file name until accept"),
-						((FileTransferObject) Session.getFileRequestList().get(
-								i)).getClientSocket().getInetAddress()
-								.getHostAddress(), i18n.getParam("Pending") });
+				
+				String studentName = InstructorNoa.getStudentNameByIP(((FileTransferObject) Session.getFileRequestList().get(
+						i)).getClientSocket().getInetAddress()
+						.getHostAddress());
+		
+				if(studentName != null && studentName != ""){
+					model.addRow(new Object[] {
+							webTable.getRowCount() == 0 ? 1 : webTable
+									.getRowCount() + 1,
+							i18n.getParam("Cannot show file name until accept"),studentName
+							, i18n.getParam("Pending") });
+				}
+				else{
+					model.addRow(new Object[] {
+							webTable.getRowCount() == 0 ? 1 : webTable
+									.getRowCount() + 1,
+							i18n.getParam("Cannot show file name until accept"),
+							((FileTransferObject) Session.getFileRequestList().get(
+									i)).getClientSocket().getInetAddress()
+									.getHostAddress(), i18n.getParam("Pending") });
+				}
+				
 				wbtnAccept.setEnabled(true);
 				wbtnReject.setEnabled(true);
 				wbtnDismissAll.setEnabled(true);
@@ -331,12 +347,24 @@ public class FileInbox extends JPanel {
 					fileSendRequestList.add(evt);
 					DefaultTableModel model = (DefaultTableModel) webTable
 							.getModel();
-					model.addRow(new Object[] {
-							webTable.getRowCount() == 0 ? 1 : webTable
-									.getRowCount() + 1,
-							i18n.getParam("Cannot show file name until accept"),
-							evt.getClientSocket().getInetAddress()
-									.getHostAddress(), i18n.getParam("Pending") });
+					String studentName = InstructorNoa.getStudentNameByIP(evt.getClientSocket().getInetAddress()
+									.getHostAddress());
+					
+					if(studentName != null && studentName != ""){
+						model.addRow(new Object[] {
+								webTable.getRowCount() == 0 ? 1 : webTable
+										.getRowCount() + 1,
+								i18n.getParam("Cannot show file name until accept"),
+								studentName, i18n.getParam("Pending") });
+					}
+					else{
+						model.addRow(new Object[] {
+								webTable.getRowCount() == 0 ? 1 : webTable
+										.getRowCount() + 1,
+								i18n.getParam("Cannot show file name until accept"),
+								evt.getClientSocket().getInetAddress()
+										.getHostAddress(), i18n.getParam("Pending") });
+					}
 					wbtnAccept.setEnabled(true);
 					wbtnReject.setEnabled(true);
 					wbtnDismissAll.setEnabled(true);

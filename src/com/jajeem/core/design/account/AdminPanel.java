@@ -462,6 +462,11 @@ public class AdminPanel extends CustomAccountFrame {
 						e1.printStackTrace();
 					}
 				}
+				else{
+					JOptionPane.showMessageDialog(frame,
+							"Please select one course.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 
@@ -555,6 +560,11 @@ public class AdminPanel extends CustomAccountFrame {
 							e1.printStackTrace();
 						}
 					}
+				}
+				else{
+					JOptionPane.showMessageDialog(frame,
+							"Please select one course.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -848,13 +858,18 @@ public class AdminPanel extends CustomAccountFrame {
 				if (!instructorSelectionModel.isSelectionEmpty()) {
 					if (instructorSelectionModel.getSelected().size() > 1) {
 						JOptionPane.showMessageDialog(frame,
-								"Please select one instructor.", "Message",
+								"Please select an instructor.", "Message",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						Instructor instructor = instructorSelectionModel
 								.getSelected().get(0);
 						new Quiz_OpenDialog(instructor.getId(), "instructor");
 					}
+				}
+				else{
+					JOptionPane.showMessageDialog(frame,
+							"Please select and instructor.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -1134,50 +1149,28 @@ public class AdminPanel extends CustomAccountFrame {
 		courseButton.setText(i18n.getParam("Courses"));
 		courseButton.setUndecorated(true);
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_buttonPanel
-						.createSequentialGroup()
-						.addGap(4)
-						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(courseButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE).addGap(81)));
-		gl_buttonPanel
-				.setVerticalGroup(gl_buttonPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_buttonPanel
-										.createSequentialGroup()
-										.addGap(10)
-										.addGroup(
-												gl_buttonPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																addButton,
-																GroupLayout.PREFERRED_SIZE,
-																34,
-																GroupLayout.PREFERRED_SIZE)
-														.addGroup(
-																gl_buttonPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				deleteButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				34,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				courseButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				34,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(4)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(courseButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addGap(142))
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addComponent(courseButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 		buttonPanel.setLayout(gl_buttonPanel);
 		courseButton.addActionListener(new ActionListener() {
 
@@ -1199,9 +1192,13 @@ public class AdminPanel extends CustomAccountFrame {
 						}
 					}
 				}
+				else{
+					JOptionPane.showMessageDialog(frame,
+							"Please select one student.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
-
 		JPanel paginationPanel = new JPanel();
 		paginationPanel.setOpaque(false);
 		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();

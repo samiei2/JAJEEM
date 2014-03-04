@@ -265,7 +265,7 @@ class StudentList extends WebPanel {
 			}
 		}
 
-//		loadData();
+		loadData();
 		add(initStudent());
 	}
 

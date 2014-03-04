@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.jajeem.core.dao.IStudentCourseDAO;
+import com.jajeem.core.model.Instructor;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.model.StudentCourse;
+import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExceptionHandler;
+import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.BaseDAO;
 
@@ -455,5 +458,65 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 		}
 
 		return allCourses;
+	}
+
+	public ArrayList<Run> getStudentQuizesById(int id, int courseId) throws SQLException {
+		ArrayList<Run> allQuizes = new ArrayList<>();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		InstructorDAO instructordao = new InstructorDAO();
+		
+
+		Connection con = BaseDAO.getConnection();
+
+		ps = con.prepareStatement("SELECT * FROM QUIZRUN WHERE STUDENTID=? AND COURSEID=?");
+		ps.setInt(1, id);
+		ps.setInt(2, courseId);
+
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Run quizRun = new Run();
+
+				int insId = rs.getInt("instructorId");
+				quizRun.setInstructorId(insId);
+				Instructor instructor = instructordao.getById(courseId);
+				quizRun.setInstructor(instructor);
+				quizRun.setInstructorId(insId);
+				quizRun.setStart(rs.getLong("start"));
+				quizRun.setEnd(rs.getLong("end"));
+				quizRun.setStart(rs.getLong("score"));
+
+				allQuizes.add(quizRun);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new JajeemExceptionHandler(e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				new JajeemExceptionHandler(e);
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception e) {
+				new JajeemExceptionHandler(e);
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception e) {
+				new JajeemExceptionHandler(e);
+			}
+		}
+
+		return allQuizes;
 	}
 }

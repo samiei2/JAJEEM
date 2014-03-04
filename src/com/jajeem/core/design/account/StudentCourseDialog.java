@@ -14,8 +14,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
-import javax.swing.JDialog;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,11 +41,11 @@ import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
-import com.alee.laf.button.WebButton;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
 import com.jajeem.core.model.Student;
 import com.jajeem.core.service.StudentCourseService;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
@@ -51,8 +53,6 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 public class StudentCourseDialog extends BaseAccountFrame {
 
@@ -94,9 +94,58 @@ public class StudentCourseDialog extends BaseAccountFrame {
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
 				JPanel panel = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-				flowLayout.setAlignment(FlowLayout.LEADING);
 				buttonPane.add(panel);
+				
+				CustomAccountButton quizButton = new CustomAccountButton("/icons/noa_en/accountcourse.png");
+				quizButton.addActionListener(new ActionListener() {
+					@SuppressWarnings("deprecation")
+					public void actionPerformed(ActionEvent arg0) {
+						if (!courseSelectionModel.isSelectionEmpty()) {
+							if (courseSelectionModel.getSelected().size() > 1) {
+								JOptionPane.showMessageDialog(null,
+										"Please select one student.", "Message",
+										JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								Course course = courseSelectionModel.getSelected()
+										.get(0);
+								try {
+									new StudentQuizDialog(student,course);
+								} catch (Exception e1) {
+									JajeemExceptionHandler.logError(e1);
+									e1.printStackTrace();
+								}
+							}
+						}
+						else{
+							JOptionPane.showMessageDialog(null,
+									"Please select one student.", "Message",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				});
+				
+				quizButton.setUndecorated(true);
+				quizButton.setText(i18n.getParam("Quizes"));
+				quizButton.setMargin(new Insets(0, 5, 0, 0));
+				quizButton.setHorizontalTextPosition(SwingConstants.LEFT);
+				quizButton.setHorizontalAlignment(SwingConstants.LEFT);
+				
+				GroupLayout gl_panel = new GroupLayout(panel);
+				gl_panel.setHorizontalGroup(
+					gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(181, Short.MAX_VALUE))
+				);
+				gl_panel.setVerticalGroup(
+					gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addContainerGap(24, Short.MAX_VALUE)
+							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+				);
+				panel.setLayout(gl_panel);
 			}
 			{
 				JPanel panel = new JPanel();
@@ -136,7 +185,7 @@ public class StudentCourseDialog extends BaseAccountFrame {
 			}
 		}
 
-//		loadData();
+		loadData();
 		getMainContentPane().add(initCourse());
 	}
 

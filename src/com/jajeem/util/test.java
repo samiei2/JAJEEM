@@ -63,7 +63,8 @@ public class test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		boolean result = new LicenseManager().Authenticate(true);
+		LicenseManager mgr = new LicenseManager();
+		int result = mgr.Authenticate(true);
 		System.out.println(result);
 	}
 

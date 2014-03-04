@@ -284,8 +284,10 @@ public class AVReceiveOnly {
 			}
 
 			mediaStreams = null;
-			frame.setVisible(false);
-			frame = null;
+			if(frame!=null){
+				frame.setVisible(false);
+				frame = null;
+			}
 		}
 	}
 

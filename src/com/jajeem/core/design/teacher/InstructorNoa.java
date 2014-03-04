@@ -92,6 +92,7 @@ import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
+import com.jajeem.util.COptionPane;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
@@ -191,7 +192,6 @@ public class InstructorNoa {
 			@Override
 			public void run() {
 				try {
-
 					new InstructorNoa();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -291,9 +291,9 @@ public class InstructorNoa {
 
 		final DefaultTableModel model = new DefaultTableModel();
 
-		model.addColumn(i18n.getParam("PC IP"));
-		model.addColumn(i18n.getParam("User Name"));
-		model.addColumn(i18n.getParam("Student Name"));
+		model.addColumn(i18n.getParam("PCIP"));
+		model.addColumn(i18n.getParam("UserName"));
+		model.addColumn(i18n.getParam("StudentName"));
 
 		WebTable table = new WebTable(model);
 		table.setOpaque(false);
@@ -339,10 +339,10 @@ public class InstructorNoa {
 		});
 
 		getGroupList().setModel(new AbstractListModel() {
-			String[] values = new String[] { i18n.getParam("Group A"),
-					i18n.getParam("Group B"), i18n.getParam("Group C"), i18n.getParam("Group D"), i18n.getParam("Group E"), i18n.getParam("Group F"),
-					i18n.getParam("Group G"), i18n.getParam("Group H"), i18n.getParam("Group I"), i18n.getParam("Group J"), i18n.getParam("Group K"),
-					i18n.getParam("Group L"), i18n.getParam("Group M"), i18n.getParam("Group N"), i18n.getParam("Group O") };
+			String[] values = new String[] { i18n.getParam("GroupA"),
+					i18n.getParam("GroupB"), i18n.getParam("GroupC"), i18n.getParam("GroupD"), i18n.getParam("GroupE"), i18n.getParam("GroupF"),
+					i18n.getParam("GroupG"), i18n.getParam("GroupH"), i18n.getParam("GroupI"), i18n.getParam("GroupJ"), i18n.getParam("GroupK"),
+					i18n.getParam("GroupL"), i18n.getParam("GroupM"), i18n.getParam("GroupN"), i18n.getParam("GroupO") };
 
 			@Override
 			public int getSize() {
@@ -478,7 +478,7 @@ public class InstructorNoa {
 		whiteBoardButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setForeground(Color.LIGHT_GRAY);
-		whiteBoardButton.setText(i18n.getParam("White board"));
+		whiteBoardButton.setText(i18n.getParam("Whiteboard"));
 		whiteBoardButton.setBottomBgColor(new Color(225, 234, 244));
 		whiteBoardButton.setTopBgColor(new Color(116, 166, 219));
 		whiteBoardButton.setUndecorated(true);
@@ -486,21 +486,21 @@ public class InstructorNoa {
 
 		CustomBottomButton powerButton = new CustomBottomButton();
 		powerButton.setIconTextGap(30);
-		powerButton.putClientProperty("key", "pcController");
+		powerButton.putClientProperty("key", "PcController");
 		powerButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		powerButton.setDrawShade(false);
 		powerButton.setRound(10);
 		powerButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setForeground(Color.LIGHT_GRAY);
-		powerButton.setText(i18n.getParam("PC Controller"));
+		powerButton.setText(i18n.getParam("PCController"));
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
 		powerButton.setUndecorated(true);
 		bottomButtonPanel.add(powerButton);
 
 		CustomPowerButton powerOffButton = new CustomPowerButton(
-				i18n.getParam("Power Off"), new ImageIcon(
+				i18n.getParam("PowerOff"), new ImageIcon(
 						InstructorNoa.class
 								.getResource("/icons/noa_en/poweroff.png")));
 		powerOffButton.putClientProperty("key", "powerOff");
@@ -572,7 +572,7 @@ public class InstructorNoa {
 		});
 
 		CustomPowerButton logOffButton = new CustomPowerButton(
-				i18n.getParam("Log Off"), new ImageIcon(
+				i18n.getParam("LogOff"), new ImageIcon(
 						InstructorNoa.class
 								.getResource("/icons/noa_en/logoff.png")));
 		logOffButton.putClientProperty("key", "logOff");
@@ -750,7 +750,7 @@ public class InstructorNoa {
 				PopupWay.upCenter);
 
 		WebButton internetSendWebsiteButton = new WebButton(
-				i18n.getParam("Send Website"));
+				i18n.getParam("SendWebsite"));
 		internetSendWebsiteButton.putClientProperty("key", "internetWebsite");
 		internetSendWebsiteButton.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -758,7 +758,7 @@ public class InstructorNoa {
 		WebsiteTextField.setHorizontalAlignment(SwingConstants.CENTER);
 
 		WebButton internetBlockButton = new WebButton(
-				i18n.getParam("Block Internet"));
+				i18n.getParam("BlockInternet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
 
@@ -784,7 +784,7 @@ public class InstructorNoa {
 		internetButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setForeground(Color.LIGHT_GRAY);
-		internetButton.setText(i18n.getParam("Internet Controller"));
+		internetButton.setText(i18n.getParam("InternetController"));
 		internetButton.setBottomBgColor(new Color(225, 234, 244));
 		internetButton.setTopBgColor(new Color(116, 166, 219));
 		internetButton.setUndecorated(true);
@@ -954,7 +954,7 @@ public class InstructorNoa {
 		programButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programButton.setForeground(Color.LIGHT_GRAY);
-		programButton.setText(i18n.getParam("Allow & Restrict Program"));
+		programButton.setText(i18n.getParam("Allow&RestrictProgram"));
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
@@ -969,7 +969,7 @@ public class InstructorNoa {
 		programStartButton.setTopSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setForeground(Color.LIGHT_GRAY);
-		programStartButton.setText(i18n.getParam("Program Starter"));
+		programStartButton.setText(i18n.getParam("ProgramStarter"));
 		programStartButton.setBottomBgColor(new Color(225, 234, 244));
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
 		programStartButton.setUndecorated(true);
@@ -1039,7 +1039,7 @@ public class InstructorNoa {
 		videoChatButton.putClientProperty("key", "videoChat");
 		videoChatButton.setFont(font);
 		videoChatButton.setForeground(Color.WHITE);
-		videoChatButton.setText(i18n.getParam("Video Chat"));
+		videoChatButton.setText(i18n.getParam("VideoChat"));
 		videoChatButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(videoChatButton);
 
@@ -1103,7 +1103,7 @@ public class InstructorNoa {
 		speechButton.putClientProperty("key", "speech");
 		speechButton.setFont(font);
 		speechButton.setForeground(Color.WHITE);
-		speechButton.setText(i18n.getParam("Speech Recognition"));
+		speechButton.setText(i18n.getParam("SpeechRecognition"));
 		speechButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(speechButton);
 
@@ -1120,7 +1120,7 @@ public class InstructorNoa {
 		fileButton.putClientProperty("key", "file");
 		fileButton.setFont(font);
 		fileButton.setForeground(Color.WHITE);
-		fileButton.setText(i18n.getParam("File Sharing"));
+		fileButton.setText(i18n.getParam("FileSharing"));
 		fileButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(fileButton);
 
@@ -1153,7 +1153,7 @@ public class InstructorNoa {
 		videoButton.putClientProperty("key", "movieplayer");
 		videoButton.setFont(font);
 		videoButton.setForeground(Color.WHITE);
-		videoButton.setText(i18n.getParam("Movie Player"));
+		videoButton.setText(i18n.getParam("MoviePlayer"));
 		videoButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(videoButton);
 
@@ -1186,7 +1186,7 @@ public class InstructorNoa {
 		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
 				"SummaryofStudents" };
 		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				i18n.getParam("Answer rate"), i18n.getParam("Student result"), i18n.getParam("Summary of students") });
+				i18n.getParam("AnswerRate"), i18n.getParam("StudentResult"), i18n.getParam("Summaryofstudents") });
 
 		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
 		reportGoButton.addActionListener(new ActionListener() {
@@ -1269,7 +1269,7 @@ public class InstructorNoa {
 		accountButton.putClientProperty("key", "account");
 		accountButton.setFont(font);
 		accountButton.setForeground(Color.WHITE);
-		accountButton.setText(i18n.getParam("My account"));
+		accountButton.setText(i18n.getParam("Myaccount"));
 		accountButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(accountButton);
 
@@ -1349,7 +1349,7 @@ public class InstructorNoa {
 		volumeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		volumeButton.setForeground(Color.DARK_GRAY);
 		volumeButton.putClientProperty("key", "volume");
-		volumeButton.setText(i18n.getParam("Volume Control"));
+		volumeButton.setText(i18n.getParam("VolumeControl"));
 		volumeButton.setUndecorated(true);
 		volumeButton.setOpaque(false);
 
@@ -1359,7 +1359,7 @@ public class InstructorNoa {
 		callAllButton.putClientProperty("key", "callAll");
 		callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		callAllButton.setForeground(Color.DARK_GRAY);
-		callAllButton.setText(i18n.getParam("Call All"));
+		callAllButton.setText(i18n.getParam("CallAll"));
 		callAllButton.setOpaque(false);
 		callAllButton.setUndecorated(true);
 
@@ -1369,7 +1369,7 @@ public class InstructorNoa {
 		viewModeButton.putClientProperty("key", "viewMode");
 		viewModeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		viewModeButton.setForeground(Color.DARK_GRAY);
-		viewModeButton.setText(i18n.getParam("View Mode"));
+		viewModeButton.setText(i18n.getParam("ViewMode"));
 		viewModeButton.setUndecorated(true);
 		viewModeButton.setOpaque(false);
 
@@ -1424,7 +1424,7 @@ public class InstructorNoa {
 								Short.MAX_VALUE)));
 
 		final DateFormat dateFormat = new SimpleDateFormat(
-				"yyyy/MM/dd HH:mm:ss");
+				"dd/MM/yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 
 		ImageIcon _dIcon = new ImageIcon(
