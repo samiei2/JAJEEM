@@ -43,12 +43,12 @@ public class Server extends Thread {
 
 	private static Hashtable<Integer, ViewerOptions> viewers = new Hashtable<Integer, ViewerOptions>();
 
-	private int index = -1;
-	private Recorder recorder;
+	private static int index = -1;
+	private static Recorder recorder;
 
 	private static HttpServer httpServer;
-	private RMIClient client;
-	private boolean connected = false;
+	private static RMIClient client;
+	private static boolean connected = false;
 
 	public static void Start() {
 		running = false;

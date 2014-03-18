@@ -7,7 +7,7 @@ import jrdesktop.viewer.Viewer;
 
 public class VNCCaptureService implements ICaptureService {
 
-	private Viewer viewer;
+	private static Viewer viewer;
 
 	@Override
 	public void startServer() {

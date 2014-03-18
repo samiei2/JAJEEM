@@ -25,9 +25,9 @@ import jrdesktop.viewer.ViewerOptions;
 
 public class robot extends Thread {
 
-	private Robot rt;
-	private Server server;
-	public boolean running = false;
+	private static Robot rt;
+	private static Server server;
+	public static boolean running = false;
 	Rectangle defaultScreenRect = new Rectangle(Toolkit.getDefaultToolkit()
 			.getScreenSize());
 
