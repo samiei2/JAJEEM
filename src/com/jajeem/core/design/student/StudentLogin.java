@@ -244,7 +244,7 @@ public class StudentLogin extends CustomLoginFrame {
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
-		setAlwaysOnTop(true);
+		setAlwaysOnTop(false);
 
 		HotkeyManager.registerHotkey(this, wbtnLogin, Hotkey.ENTER);
 

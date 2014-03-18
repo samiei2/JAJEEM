@@ -434,52 +434,73 @@ public class InstructorLogin {
 			@Override
 			public void run() {
 				try {
-					try {
-						int result = JNI4NETLicense.Validate(false);
-						if(result == 13 || result == 12)
-							;
-						else{
-							JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
-							System.exit(-1);
-						}
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
-						System.exit(-1);
-					}
-					
-					
 					UIManager.setLookAndFeel(WebLookAndFeel.class
 							.getCanonicalName());
 
+					final Object synchLock = new Object();
 					Thread loading = new Thread(new Runnable() {
 
 						@Override
 						public void run() {
 							final LoadingDialog2 load = new LoadingDialog2();
 							load.setVisible(true);
+							
 							Timer timer = new Timer();
 							timer.schedule(new TimerTask() {
 
 								@Override
 								public void run() {
+									synchronized (synchLock) {
+										try {
+											synchLock.wait(0);
+										} catch (InterruptedException e) {
+											e.printStackTrace();
+										}
+									}
 									load.setVisible(false);
 								}
 							}, 6000);
 						}
 					});
 					loading.start();
-					new StartUp();
-					frame = new InstructorLogin().frame;
-//					frame.pack();
-
-					Timer timer = new Timer();
-					timer.schedule(new TimerTask() {
-
+					
+					Thread _t = new Thread(new Runnable() {
+						
 						@Override
 						public void run() {
-							frame.setVisible(true);
+							
+							try {
+								int result = JNI4NETLicense.Validate(false);
+								if(result == 13 || result == 12)
+									;
+								else{
+									JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
+									System.exit(-1);
+								}
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
+								System.exit(-1);
+							}
+							
+							new StartUp();
+							frame = new InstructorLogin().frame;
+//							frame.pack();
+
+							Timer timer = new Timer();
+							timer.schedule(new TimerTask() {
+
+								@Override
+								public void run() {
+									synchronized (synchLock) {
+										synchLock.notify();
+									}
+									frame.setVisible(true);
+								}
+							}, 5000);
 						}
-					}, 5000);
+					});
+					_t.start();
+					
 
 				} catch (Exception e) {
 					JajeemExceptionHandler.logError(e);

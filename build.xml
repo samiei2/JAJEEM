@@ -45,12 +45,14 @@
         <pathelement location="lib/swt.jar"/>
         <pathelement location="lib/WebLookAndFeel.jar"/>
         <pathelement location="lib/weblaf-1.25.jar"/>
+        <pathelement location="lib/jni/jni4net.j-0.8.6.0.jar"/>
+        <pathelement location="lib/jni/LicenseJNI.j4n.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
-                <exclude name="**/*.launch"/>
+				<exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -84,7 +86,9 @@
     </target>
     <target name="InstructorLogin">
         <java classname="com.jajeem.core.design.teacher.InstructorLogin" failonerror="true" fork="yes">
+            <jvmarg line="-Djava.rmi.server.useCodebaseOnly=false"/>
             <classpath refid="Jajeem.classpath"/>
+			<sysproperty value="${java.library.path};lib/native/windows-64;lib/jni" key="java.library.path"/>
         </java>
     </target>
     <target name="InstructorNoa">

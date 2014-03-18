@@ -11,7 +11,9 @@ namespace LicenseJNI
             try
             {
                 var helper = new LicenseHelper();
-                helper.Required();
+                helper.Deactivate();
+                helper.ReShowRegistrationForm();
+                helper.Required(true);
                 if (helper.IsTrial)
                     return 12;
                 else if (helper.IsActivated)
@@ -27,7 +29,8 @@ namespace LicenseJNI
 
         public static void Main(string[] args)
         {
-            new License().Validate(false);
+            new License().Validate(true);
+            Console.ReadKey();
         }
     }
 }

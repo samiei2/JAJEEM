@@ -115,7 +115,7 @@ public class DatabaseManager extends BaseAccountFrame {
 								"jajeem.db.trace.db.backup"), new File(
 								"db/jajeem.db.trace.db"));
 						JOptionPane.showMessageDialog(null,
-								"Restore Successful!");
+								"Restore Successful!\nPlease restart application for the changes to take effect.");
 					} catch (IOException e1) {
 						JOptionPane.showConfirmDialog(null, e1.getMessage());
 						e1.printStackTrace();

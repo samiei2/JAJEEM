@@ -72,6 +72,7 @@ public class RMIClient {
 			 * "/jrdesktop");
 			 */
 
+			//TODO exception fatal
 			index = rmiServer.startViewer(InetAdrUtility.getLocalHost(),
 					clientConfig.username,
 					PasswordUtility.encodeString(clientConfig.password),
@@ -79,13 +80,13 @@ public class RMIClient {
 
 			switch (index) {
 			case -1:
-				JOptionPane.showMessageDialog(null, "Authentication failed !!",
-						"Error !!", JOptionPane.ERROR_MESSAGE);
+//				JOptionPane.showMessageDialog(null, "Authentication failed !!",
+//						"Error !!", JOptionPane.ERROR_MESSAGE);
 				return -1;
 			case -2:
-				JOptionPane.showMessageDialog(null,
-						"Reverse connection failed !!", "Error !!",
-						JOptionPane.ERROR_MESSAGE);
+//				JOptionPane.showMessageDialog(null,
+//						"Reverse connection failed !!", "Error !!",
+//						JOptionPane.ERROR_MESSAGE);
 				return -1;
 			}
 
@@ -94,8 +95,8 @@ public class RMIClient {
 			return index;
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error !!",
-					JOptionPane.ERROR_MESSAGE);
+//			JOptionPane.showMessageDialog(null, e.getMessage(), "Error !!",
+//					JOptionPane.ERROR_MESSAGE);
 			return -1;
 		}
 	}

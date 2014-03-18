@@ -30,14 +30,14 @@ public class RMIServer {
 
 	public static boolean Start(Config config) {
 		// TODO : remove next line!
-		serverConfig.multihomed_enabled = true;
+//		serverConfig.multihomed_enabled = true;
 		serverConfig = config;
 		return Start();
 	}
 
 	public static boolean Start() {
 		// TODO : remove next line!
-		serverConfig.multihomed_enabled = true;
+//		serverConfig.multihomed_enabled = true;
 		if (serverConfig.ssl_enabled) {
 			FileUtility.extractFile(Settings.keyStore);
 			FileUtility.extractFile(Settings.trustStore);
@@ -108,8 +108,8 @@ public class RMIServer {
 		} catch (Exception e) {
 			Stop();
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error !!",
-					JOptionPane.ERROR_MESSAGE);
+//			JOptionPane.showMessageDialog(null, e.getMessage(), "Error !!",
+//					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 

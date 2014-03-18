@@ -122,9 +122,9 @@ public class Settings {
 					if (now) {
 						System.out.println("Systray not supported !!");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Systray not supported !!", "Info",
-								JOptionPane.ERROR_MESSAGE);
+//						JOptionPane.showMessageDialog(null,
+//								"Systray not supported !!", "Info",
+//								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
 					if (systrayDisabled) {

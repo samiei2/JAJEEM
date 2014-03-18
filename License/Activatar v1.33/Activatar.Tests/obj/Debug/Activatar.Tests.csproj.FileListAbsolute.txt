@@ -1,0 +1,10 @@
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.Tests.dll.config
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.Tests.dll
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.Tests.pdb
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.dll
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.Server.dll
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.Server.pdb
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\bin\Debug\Activatar.pdb
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\obj\Debug\Activatar.Tests.csprojResolveAssemblyReference.cache
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\obj\Debug\Activatar.Tests.dll
+F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.Tests\obj\Debug\Activatar.Tests.pdb
