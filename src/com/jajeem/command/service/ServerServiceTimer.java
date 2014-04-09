@@ -60,6 +60,19 @@ public class ServerServiceTimer extends TimerTask implements IConnectorSevice {
 
 	@Override
 	public void start() {
+		try {
+			System.out.println("ServerServiceTimer listening Info");
+			System.out.println("ServerServiceTimer listening on local address: "
+					+ socket.getLocalAddress());
+			System.out.println("ServerServiceTimer listening on local socket address: "
+					+ socket.getLocalSocketAddress());
+			System.out.println("ServerServiceTimer listening on interface: "
+					+ socket.getInterface());
+			System.out.println("ServerServiceTimer listening on port: "
+					+ socket.getLocalPort());
+		} catch (Exception e) {
+
+		}
 		timer.schedule(this, 0, getInterval());
 		System.out.println("Server started, sending packets each "
 				+ getInterval() + "seconds.");

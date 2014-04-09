@@ -1,10 +1,14 @@
 package jrdesktop.rmi.client;
 
+import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import javax.swing.JOptionPane;
+
+import com.jajeem.command.model.RestartStudentProgramCommand;
+import com.jajeem.command.service.ServerService;
 
 import jrdesktop.Config;
 import jrdesktop.Settings;
@@ -73,11 +77,26 @@ public class RMIClient {
 			 */
 
 			//TODO exception fatal
-			index = rmiServer.startViewer(InetAdrUtility.getLocalHost(),
-					clientConfig.username,
-					PasswordUtility.encodeString(clientConfig.password),
-					clientConfig.reverseConnection);
-
+			try{
+				index = rmiServer.startViewer(InetAdrUtility.getLocalHost(),
+						clientConfig.username,
+						PasswordUtility.encodeString(clientConfig.password),
+						clientConfig.reverseConnection);
+			}
+			catch(Exception e){
+				try{
+					ServerService service = new ServerService();
+					RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
+							InetAddress.getLocalHost().getHostAddress(), clientConfig.server_address,
+										Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+					service.send(restartCmd);
+				}
+				catch(Exception ex){
+					
+				}
+				e.printStackTrace();
+				return -1;
+			}
 			switch (index) {
 			case -1:
 //				JOptionPane.showMessageDialog(null, "Authentication failed !!",

@@ -68,6 +68,28 @@ public class ServerService extends TimerTask implements IConnectorSevice {
 
 	@Override
 	public void start() {
+		System.out
+		.println("Server Info : ");
+		System.out
+		.println("Server port: " + socket.getLocalPort());
+		System.out
+		.println("Server local address: " + socket.getLocalAddress());
+		System.out
+		.println("Server socket address: " + socket.getLocalSocketAddress());
+		try {
+			System.out
+			.println("Server interface: " + socket.getInterface());
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out
+			.println("Server channel local address: " + socket.getChannel().getLocalAddress());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out
+		.println("Server inet address: " + socket.getInetAddress());
 		timer.schedule(this, 0, interval);
 	}
 

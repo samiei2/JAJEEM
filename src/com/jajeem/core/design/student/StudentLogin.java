@@ -70,7 +70,8 @@ public class StudentLogin extends CustomLoginFrame {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
-
+			
+			Thread.sleep(3000);
 			new Config();
 			new i18n();
 

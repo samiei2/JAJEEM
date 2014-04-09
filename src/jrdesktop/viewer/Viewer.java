@@ -84,25 +84,27 @@ public class Viewer extends Thread {
 	}
 
 	public void Stop() {
-		if (getRecorder().screenPlayer.thumb) {
-			JInternalFrame[] frames = InstructorNoa.getDesktopPane()
-					.getAllFrames();
-			for (JInternalFrame frame : frames) {
-				if (client.clientConfig.server_address.equals(frame
-						.getClientProperty("ip"))) {
-					frame.putClientProperty("live", false);
-					try {
-						// Session.getLoggedInStudents().remove(frame.getClientProperty("ip").toString());
-					} catch (Exception e) {
+		if (getRecorder() != null) {
+			if (getRecorder().screenPlayer.thumb) {
+				JInternalFrame[] frames = InstructorNoa.getDesktopPane()
+						.getAllFrames();
+				for (JInternalFrame frame : frames) {
+					if (client.clientConfig.server_address.equals(frame
+							.getClientProperty("ip"))) {
+						frame.putClientProperty("live", false);
+						try {
+							// Session.getLoggedInStudents().remove(frame.getClientProperty("ip").toString());
+						} catch (Exception e) {
+						}
+						try {
+							frame.setFrameIcon(new ImageIcon(
+									ImageIO.read(Viewer.class
+											.getResourceAsStream("/icons/noa/disconnect.png"))));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
 					}
-					try {
-						frame.setFrameIcon(new ImageIcon(
-								ImageIO.read(Viewer.class
-										.getResourceAsStream("/icons/noa/disconnect.png"))));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
 				}
 			}
 		}

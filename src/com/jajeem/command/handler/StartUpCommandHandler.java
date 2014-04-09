@@ -14,7 +14,10 @@ public class StartUpCommandHandler implements ICommandHandler {
 
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-
+		StartUp(cmd);
+	}
+	
+	public synchronized void StartUp(Command cmd) throws NumberFormatException, Exception{
 		new Config();
 
 		int port = Integer.parseInt(Config.getParam("serverPort"));

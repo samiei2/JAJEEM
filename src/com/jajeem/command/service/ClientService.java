@@ -25,6 +25,7 @@ import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
 import com.jajeem.command.handler.RequestCourseListCommandHandler;
+import com.jajeem.command.handler.RestartStudentProgramCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
@@ -81,6 +82,7 @@ import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.MessageCommand;
 import com.jajeem.command.model.PowerCommand;
 import com.jajeem.command.model.RequestCourseListCommand;
+import com.jajeem.command.model.RestartStudentProgramCommand;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
@@ -141,17 +143,32 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 		this.port = port;
 		this.group = InetAddress.getByName(group);
+		
 
 		/* setup the multicast control channel */
 		socket = new MulticastSocket(port);
-		System.out
-				.println("Client listening on port: " + socket.getLocalPort());
-
+		
 		// socket.connect(this.group,port);
 		socket.joinGroup(this.group);
 
 		thread = new Thread(this);
 		pool = new ThreadPoolService();
+		
+		try {
+			System.out.println("Client listening Info");
+			System.out.println("Client listening on local address: "
+					+ socket.getLocalAddress());
+			System.out.println("Client listening on local socket address: "
+					+ socket.getLocalSocketAddress());
+			System.out.println("Client listening on interface: "
+					+ socket.getInterface());
+			System.out.println("Client listening on port: "
+					+ socket.getLocalPort());
+			System.out.println("Client listening on port: "
+					+ socket.getLocalPort());
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Override
@@ -981,7 +998,22 @@ public class ClientService implements IConnectorSevice, Runnable {
 							}
 						}
 					});
+				} else if (cmd instanceof RestartStudentProgramCommand) {
+					pool.InsertThread(new Runnable() {
+
+						@Override
+						public void run() {
+							RestartStudentProgramCommandHandler restartConversationCommand = new RestartStudentProgramCommandHandler();
+							try {
+								restartConversationCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
 				}
+				
 
 			} catch (Exception ex) {
 				JajeemExceptionHandler.logError(ex);

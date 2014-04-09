@@ -10,6 +10,8 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -17,6 +19,7 @@ import javax.swing.plaf.metal.MetalIconFactory;
 
 import org.omg.CORBA.Environment;
 
+import com.jajeem.command.handler.RestartStudentProgramCommandHandler;
 import com.jajeem.licensing.LicenseManager;
 
 public class test {
@@ -63,9 +66,10 @@ public class test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		LicenseManager mgr = new LicenseManager();
-		int result = mgr.Authenticate(true);
-		System.out.println(result);
+		
+//		LicenseManager mgr = new LicenseManager();
+//		int result = mgr.Authenticate(true);
+//		System.out.println(result);
 	}
 
 }
