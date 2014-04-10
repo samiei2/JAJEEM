@@ -71,7 +71,7 @@ public class StudentLogin extends CustomLoginFrame {
 		try {
 			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 			
-			Thread.sleep(3000);
+			Thread.sleep(10000);
 			new Config();
 			new i18n();
 

@@ -2223,7 +2223,12 @@ public class InstructorNoaUtil {
 		internalFrame.pack();
 		internalFrame.setResizable(false);
 
-		vnc.StartThumbs(internalFrame);
+		try{
+			vnc.StartThumbs(internalFrame);
+		}
+		catch(Exception e){
+			System.out.println("");
+		}
 
 		internalFrame.setVisible(true);
 		internalFrame.addMouseListener(new MouseListener() {

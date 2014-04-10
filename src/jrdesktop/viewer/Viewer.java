@@ -28,6 +28,8 @@ import jrdesktop.utilities.ClipbrdUtility;
 import jrdesktop.utilities.screenCaptureCompressor.ScreenCapture;
 import jrdesktop.viewer.FileMng.FileTransGUI;
 
+import com.jajeem.command.model.RestartStudentProgramCommand;
+import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.teacher.InstructorNoa;
 
 /**
@@ -73,7 +75,21 @@ public class Viewer extends Thread {
 	}
 
 	public void StartThumbs(JInternalFrame panel) {
-		connect();
+		try{
+			connect();
+		}
+		catch(Exception e){
+//			try{
+//				ServerService service = new ServerService();
+//				RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
+//						InetAddress.getLocalHost().getHostAddress(), client.clientConfig.server_address,
+//									Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+//				service.send(restartCmd);
+//			}
+//			catch(Exception ex){
+//				
+//			}
+		}
 		if (connected) {
 			setRecorder(new Recorder(this, client.clientConfig, true));
 			getRecorder().screenPlayer.thumb = true;
@@ -115,7 +131,12 @@ public class Viewer extends Thread {
 	public int connect() {
 		connected = false;
 
-		index = client.connect();
+		try{
+			index = client.connect();
+		}
+		catch(Exception e){
+			System.out.println("");
+		}
 		if (index == -1) {
 			return -1;
 		}

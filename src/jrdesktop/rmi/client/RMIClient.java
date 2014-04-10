@@ -84,16 +84,11 @@ public class RMIClient {
 						clientConfig.reverseConnection);
 			}
 			catch(Exception e){
-				try{
-					ServerService service = new ServerService();
-					RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
-							InetAddress.getLocalHost().getHostAddress(), clientConfig.server_address,
-										Integer.parseInt(com.jajeem.util.Config.getParam("port")));
-					service.send(restartCmd);
-				}
-				catch(Exception ex){
-					
-				}
+				ServerService service = new ServerService();
+				RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
+				InetAddress.getLocalHost().getHostAddress(), clientConfig.server_address,
+						Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+				service.send(restartCmd);
 				e.printStackTrace();
 				return -1;
 			}
