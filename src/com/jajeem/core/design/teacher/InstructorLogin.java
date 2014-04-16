@@ -469,18 +469,18 @@ public class InstructorLogin {
 						@Override
 						public void run() {
 							
-//							try {
-//								int result = JNI4NETLicense.Validate(false);
-//								if(result == 13 || result == 12)
-//									;
-//								else{
-//									JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
-//									System.exit(-1);
-//								}
-//							} catch (Exception e) {
-//								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
-//								System.exit(-1);
-//							}
+							try {
+								int result = JNI4NETLicense.Validate(false);
+								if(result == 13 || result == 12)
+									;
+								else{
+									JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
+									System.exit(-1);
+								}
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
+								System.exit(-1);
+							}
 							
 							new StartUp();
 							frame = new InstructorLogin().frame;

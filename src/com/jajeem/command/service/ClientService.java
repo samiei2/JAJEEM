@@ -123,6 +123,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
+import com.jajeem.util.MemoryDiag;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -285,8 +286,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				final Command cmd = (Command) o;
 
-				System.out.println("Receiving ----> Command: " + cmd.getClass()
-						+ " from: " + cmd.getFrom());
+//				System.out.println("Receiving ----> Command: " + cmd.getClass()
+//						+ " from: " + cmd.getFrom());
 
 				// logger.info("Receiving: Message type: " + cmd.getClass()
 				// + ", from: " + cmd.getTo());
@@ -295,8 +296,10 @@ public class ClientService implements IConnectorSevice, Runnable {
 					pool.InsertThread(new Runnable() {
 						@Override
 						public void run() {
+							long ts = System.nanoTime();
 							StartCaptureCommandHandler startCaptureHandler = new StartCaptureCommandHandler();
 							startCaptureHandler.run(cmd);
+							System.out.println(System.nanoTime()-ts);
 						}
 					});
 				} else if (cmd instanceof StopCaptureCommand) {
@@ -324,7 +327,11 @@ public class ClientService implements IConnectorSevice, Runnable {
 						public void run() {
 							StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
 							try {
+								new MemoryDiag();
+								long ts = System.nanoTime();
 								startUpHandler.run(cmd);
+								System.out.println("Startup : " + (System.nanoTime()-ts));
+								new MemoryDiag();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

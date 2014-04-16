@@ -92,6 +92,7 @@ public class Server extends Thread {
 	}
 
 	public static byte[] getScreenCapture(int index) {
+		long st=System.nanoTime();
 		if (!viewers.containsKey(index)) {
 			return new byte[0];
 		}
@@ -100,6 +101,7 @@ public class Server extends Thread {
 			viewers.get(index).connectionInfos
 					.incReceivedData(screenCapture.length);
 		}
+		System.out.println(" robot screan captured:"+ (System.nanoTime()-st));
 		return screenCapture;
 	}
 

@@ -14,7 +14,7 @@ public class StartUp {
 	public StartUp() {
 		// conn = new H2Connection();
 		// BaseDAO.setH2Connection(conn);
-		// initDatabase.initialize();
+//		 initDatabase.initialize();
 		if (!new File("util").exists()) {
 			JOptionPane
 					.showMessageDialog(null,

@@ -18,13 +18,13 @@ public class StartUpCommandHandler implements ICommandHandler {
 	static Object lock = new Object();
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
-		synchronized(lock){
-			if(listOfProcessings.contains(cmd.getFrom()))
-				return;
-			listOfProcessings.add(cmd.getFrom());
+//		synchronized(lock){
+//			if(listOfProcessings.contains(cmd.getFrom()))
+//				return;
+//			listOfProcessings.add(cmd.getFrom());
 			StartUp(cmd);
-			listOfProcessings.remove(cmd.getFrom());
-		}
+//			listOfProcessings.remove(cmd.getFrom());
+//		}
 	}
 	
 	public void StartUp(Command cmd) throws NumberFormatException, Exception{
@@ -80,6 +80,7 @@ public class StartUpCommandHandler implements ICommandHandler {
 								InetAddress.getLocalHost().getHostAddress(), cmd.getFrom(),
 											Integer.parseInt(com.jajeem.util.Config.getParam("port")));
 						service.send(restartCmd);
+						
 					}
 					catch(Exception ex){
 						
