@@ -12,6 +12,8 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
@@ -131,7 +133,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 	protected InetAddress group;
 	protected int port;
 	protected Thread thread;
-	private ThreadPoolService pool;
+	private ExecutorService pool;
 
 	private boolean stopped;
 
@@ -139,8 +141,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 	public ClientService(String group, int port) throws NumberFormatException,
 			Exception {
-
 		stopped = false;
+		pool = Executors.newFixedThreadPool(10);
 
 		this.port = port;
 		this.group = InetAddress.getByName(group);
@@ -153,7 +155,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 		socket.joinGroup(this.group);
 
 		thread = new Thread(this);
-		pool = new ThreadPoolService();
 		
 		try {
 			System.out.println("Client listening Info");
@@ -293,7 +294,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				// + ", from: " + cmd.getTo());
 
 				if (cmd instanceof StartCaptureCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 						@Override
 						public void run() {
 							long ts = System.nanoTime();
@@ -303,7 +304,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StopCaptureCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -312,7 +313,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StartViewerCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -321,7 +322,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StartUpCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -330,7 +331,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 								new MemoryDiag();
 								long ts = System.nanoTime();
 								startUpHandler.run(cmd);
-								System.out.println("Startup : " + (System.nanoTime()-ts));
+								System.out.println("Startup : " + (System.nanoTime()-ts)/1000000000 + "seconds");
 								new MemoryDiag();
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -338,7 +339,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StartQuizCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -351,7 +352,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StopQuizCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -364,7 +365,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof SendQuizResponseCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -377,7 +378,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StartSurveyCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -390,7 +391,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StopSurveyCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -403,7 +404,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof SendSurveyResponseCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -416,7 +417,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof WhiteBlackAppCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -430,7 +431,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof InternetCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -444,7 +445,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof VolumeCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -459,7 +460,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof LockCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -474,7 +475,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof PowerCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -489,7 +490,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof VolumeCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -504,7 +505,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof WebsiteCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -519,7 +520,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartWhiteBoardCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -534,7 +535,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopWhiteBoardCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -549,7 +550,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof AuthenticateCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -564,7 +565,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof GrantCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -579,7 +580,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof MessageCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -594,7 +595,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof ChatCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -609,7 +610,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartMoviePlayerCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -624,7 +625,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartIntercomCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -634,7 +635,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopIntercomCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -644,7 +645,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartApplicationCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -659,7 +660,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof SendFileCollectCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -674,7 +675,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof SendFileAssignmentCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -689,7 +690,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartModelCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -704,7 +705,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof IntercomRequestCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -719,7 +720,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartStudentRecordCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -734,7 +735,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopStudentRecordCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -749,7 +750,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopModelCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -764,7 +765,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof SendRecordingErrorCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -779,7 +780,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof SendRecordingSuccessCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -794,7 +795,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartCallAllCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -809,7 +810,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopCallAllCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -824,7 +825,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartSpeechCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -839,7 +840,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof SendSpeechFileCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -854,7 +855,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof FinishedQuizCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -869,7 +870,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof FinishedSurveyCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -884,7 +885,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StartVideoChatCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -894,7 +895,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StopVideoChatCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -904,7 +905,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof RequestCourseListCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -919,7 +920,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof GetCourseListCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -934,7 +935,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof DuplicateLoginCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -949,7 +950,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof TeacherLogoutCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -964,7 +965,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 					});
 
 				} else if (cmd instanceof StudentLogoutCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -978,7 +979,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StartConversationCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -992,7 +993,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof StopConversationCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {
@@ -1006,7 +1007,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						}
 					});
 				} else if (cmd instanceof RestartStudentProgramCommand) {
-					pool.InsertThread(new Runnable() {
+					pool.execute(new Runnable() {
 
 						@Override
 						public void run() {

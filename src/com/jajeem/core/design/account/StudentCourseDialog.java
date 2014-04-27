@@ -187,6 +187,7 @@ public class StudentCourseDialog extends BaseAccountFrame {
 
 		loadData();
 		getMainContentPane().add(initCourse());
+		pack();
 	}
 
 	private void loadData() throws SQLException {

@@ -43,7 +43,7 @@ public class ViewerOptions {
 
 	public boolean screenCompression = true;
 
-	public int refreshRate = 250;
+	public int refreshRate = 950;
 
 	public int getRefreshRate() {
 		return refreshRate;

@@ -67,6 +67,7 @@ public class InstructorLogin {
 	private JComboBox courseCombo;
 	protected ArrayList<Course> courseList;
 	private CustomLoginButton webButtonLogin;
+	private CustomLoginButton webButtonSelect;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
@@ -108,13 +109,13 @@ public class InstructorLogin {
 		JajeemComboBox comboBox = new JajeemComboBox();
 		courseCombo = comboBox;
 		
-		CustomLoginButton customLoginButton_1 = new CustomLoginButton();
-		customLoginButton_1.setUndecorated(true);
-		customLoginButton_1.setText("Select");
-		customLoginButton_1.setIconTextGap(13);
-		customLoginButton_1.setForeground(new Color(63, 63, 63));
-		customLoginButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		customLoginButton_1.addActionListener(new ActionListener() {
+		webButtonSelect = new CustomLoginButton();
+		webButtonSelect.setUndecorated(true);
+		webButtonSelect.setText("Select");
+		webButtonSelect.setIconTextGap(13);
+		webButtonSelect.setForeground(new Color(63, 63, 63));
+		webButtonSelect.setFont(new Font("Tahoma", Font.BOLD, 13));
+		webButtonSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (usernameTF.getText() != null
 						&& !usernameTF.getText().equals("")
@@ -201,7 +202,7 @@ public class InstructorLogin {
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
 							.addGap(156)
-							.addComponent(customLoginButton_1, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+							.addComponent(webButtonSelect, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
 						.addGroup(Alignment.LEADING, gl_panel_1.createSequentialGroup()
 							.addGap(51)
 							.addComponent(label, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
@@ -223,7 +224,7 @@ public class InstructorLogin {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(jajeemComboBox, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(customLoginButton_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addComponent(webButtonSelect, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
@@ -389,6 +390,7 @@ public class InstructorLogin {
 						.get(usernameTF.getText());
 				com.jajeem.util.Session.setInstructor(instructor);
 				InstructorNoa.setInstructorModel(instructor);
+				webButtonSelect.setEnabled(true);
 
 				frame.setSize(505, 383);
 
@@ -413,6 +415,7 @@ public class InstructorLogin {
 					if (courseList.size() == 0) {
 						courseCombo.addItem(i18n
 								.getParam("No courses available"));
+						webButtonSelect.setEnabled(false);
 					}
 
 				} catch (Exception e) {
