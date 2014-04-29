@@ -473,6 +473,7 @@ public class InstructorLogin {
 						public void run() {
 							
 							try {
+								LicenseManager.getInstance().Validate("jajeem.lic");
 								int result = JNI4NETLicense.Validate(false);
 								if(result == 13 || result == 12)
 									;
