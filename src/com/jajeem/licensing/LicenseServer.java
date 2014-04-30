@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -24,7 +21,6 @@ import com.jajeem.licensing.exception.InvalidLicenseException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 import com.jajeem.licensing.exception.UninitializedLicensingContextException;
 import com.jajeem.licensing.util.JsonConvert;
-import com.jajeem.util.initDatabase;
 
 public class LicenseServer {
 

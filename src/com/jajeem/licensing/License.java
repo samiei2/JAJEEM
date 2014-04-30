@@ -8,10 +8,12 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
+
+import org.jitsi.impl.neomedia.pulseaudio.PA.stream_request_cb_t;
 
 import com.jajeem.licensing.exception.InvalidLicenseException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
@@ -47,11 +49,17 @@ public class License {
 				this.getLicenseInfo().put("serialnumber", SerialNumber.generateSerialNumber());
 				this.getLicenseInfo().put("hardwarekey",HardwareKey.getHardwareKeyString());
 				this.getLicenseInfo().put("startdate", new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())));
+				this.getLicenseInfo().put("installdate", new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())));
+				this.getLicenseInfo().put("lastrundate", new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())));
+				this.getLicenseInfo().put("startmilis", Long.toString(System.currentTimeMillis()));
+				this.getLicenseInfo().put("installmilis", Long.toString(System.currentTimeMillis()));
 				
 				Calendar c = Calendar.getInstance();
 				c.setTime(new Date(System.currentTimeMillis()));
 				c.add(Calendar.DATE, 30); // Default: Trial to 30 days
 				this.getLicenseInfo().put("expiredate", new SimpleDateFormat("dd-MM-yyyy").format(c.getTime()));
+				this.getLicenseInfo().put("timeleft", "30");
+				
 
 				this.initialized = true;
 				JsonConvert convert = new JsonConvert();
@@ -99,8 +107,73 @@ public class License {
 		}
 	}
 
-	private void ValidateOffline(License decLic) {
+	private void ValidateOffline(License decLic) throws InvalidLicenseException, InvalidActivationKey {
+		if(!HardwareKey.getHardwareKeyString().equals(decLic.getLicenseInfo().get("hardwarekey")))
+			throw new InvalidLicenseException();
+		
+		ValidateDates();
+		
+		String timeLeft = ValidateTimeLeft();
+		getLicenseInfo().put("timeleft", timeLeft);
+		
+		ValidateActivationKey();
+		
+		if (IsValid) {
+			
+		}
+	}
 
+	private void ValidateActivationKey() throws InvalidActivationKey, InvalidLicenseException {
+		try {
+			getLicenseInfo().get("activationcode");
+		} catch (Exception e) {
+		}
+		String activationCode = getLicenseInfo().get("activationcode");
+		if (activationCode == null
+				|| activationCode == "")
+			throw new InvalidLicenseException();
+		else {
+			ActivationCode code = new ActivationCode(activationCode,
+					getLicenseInfo());
+			code.validate();
+		}
+	}
+
+	private void ValidateDates() throws InvalidLicenseException {
+		Date expireDate = Date.valueOf(getLicenseInfo().get("expiredate"));
+		Date startDate = Date.valueOf(getLicenseInfo().get("startdate"));
+		Date systemDate = new Date(System.currentTimeMillis());
+		Date installDate = Date.valueOf(getLicenseInfo().get("installdate"));
+		Date lastrunDate = Date.valueOf(getLicenseInfo().get("lastrundate"));
+		
+		if(systemDate.before(installDate) || systemDate.before(lastrunDate) || systemDate.after(expireDate))
+			throw new InvalidLicenseException();
+		if(startDate.after(lastrunDate))
+			throw new InvalidLicenseException();
+		if(expireDate.before(startDate) || expireDate.before(installDate) || expireDate.before(lastrunDate))
+			throw new InvalidLicenseException();
+	}
+
+	private String ValidateTimeLeft() throws InvalidLicenseException {
+		Date expireDate = Date.valueOf(getLicenseInfo().get("expiredate"));
+		Date startDate = Date.valueOf(getLicenseInfo().get("startdate"));
+		Date lastrunDate = Date.valueOf(getLicenseInfo().get("lastrundate"));
+		int remaining = expireDate.compareTo(startDate);
+		int rem1 = lastrunDate.compareTo(startDate);
+		int rem2 = expireDate.compareTo(lastrunDate);
+		
+		if((rem1+rem2) != expireDate.compareTo(startDate))
+			throw new InvalidLicenseException();
+		if(rem2 != remaining)
+			throw new InvalidLicenseException();
+		
+		if (remaining > 0) {
+			return String.valueOf(remaining);
+		}
+		else{
+			throw new InvalidLicenseException();
+		}
+		
 	}
 
 	private void decryptLicFile() throws InvalidLicenseException {
