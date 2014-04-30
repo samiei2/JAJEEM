@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class LicenseManager {
 	static LicenseManager manager;
-	License lic;
+	LicenseValidationContext lic;
 	static{
 		
 	}
@@ -17,9 +17,10 @@ public class LicenseManager {
 	}
 
 	public void Validate(String licPath) {
-		lic = new License(licPath);
+		lic = new LicenseValidationContext();
+		
 		try {
-			lic.validate();
+			lic.validate(licPath);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);

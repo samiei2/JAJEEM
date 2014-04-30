@@ -7,19 +7,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jajeem.licensing.exception.InvalidLicenseException;
+import com.jajeem.licensing.exception.LicenseServerErrorException;
+import com.jajeem.licensing.exception.UninitializedLicensingContextException;
+import com.jajeem.licensing.util.JsonConvert;
 import com.jajeem.util.initDatabase;
 
 public class LicenseServer {
 
 	private boolean Available;
+	private LicenseValidationContext context;
 
 	/**
 	 * @param args
@@ -179,7 +189,17 @@ public class LicenseServer {
 	}
 
 	public boolean isAvailable() {
+		checkAvailability();
 		return Available;
+	}
+
+	private void checkAvailability() {
+		try {
+			InetAddress addr = InetAddress.getByName("8.8.8.8");
+			addr.isReachable(3000);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setAvailable(boolean isAvailable) {
@@ -188,74 +208,96 @@ public class LicenseServer {
 
 	public void ValidateOnline(License decLic)
 			throws LicenseServerErrorException, IOException,
-			InvalidLicenseException, InvalidActivationKey {
-		LicenseModel jsonModel = new LicenseModel();
-		jsonModel.setName(decLic.getLicenseInfo().get("name"));
-		jsonModel.setHardwareKey(decLic.getLicenseInfo().get("hardwarekey"));
-		jsonModel.setSerialNumber(decLic.getLicenseInfo().get("serialnumber"));
-		jsonModel.setStartDate(decLic.getLicenseInfo().get("startdate"));
-		jsonModel.setActivationCode(decLic.getLicenseInfo().get(
-				"activationcode"));
-
+			InvalidLicenseException, InvalidActivationKey, UninitializedLicensingContextException {
+		
+		if(context == null)
+			throw new UninitializedLicensingContextException();
+		
 		JsonConvert converter = new JsonConvert();
 		String jsonQuery = null;
 		try {
-			jsonQuery = converter.ConvertToJson(jsonModel);
+			jsonQuery = converter.ConvertToJson(decLic.getLicenseInfo());
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 
 		String jsonResponse = hanldeServerRequest(ServerList.getDefault(),
 				jsonQuery);
-		LicenseModel respondedLicense = converter.ConvertFromJson(jsonResponse,
-				LicenseModel.class);
+		HashMap<String, String> respondedLicense = converter.ConvertFromJson(jsonResponse,
+				HashMap.class);
 		ValidateLicense(respondedLicense);
 	}
 
-	private void ValidateLicense(LicenseModel respondedLicense)
-			throws InvalidLicenseException, InvalidActivationKey {
+	private void ValidateLicense(HashMap<String, String> respondedLicense)
+			throws InvalidLicenseException, InvalidActivationKey, LicenseServerErrorException {
 		if (respondedLicense == null)
-			throw new InvalidLicenseException();
+			throw new LicenseServerErrorException(0);
 
-		if (!respondedLicense.isValid())
+		if (!respondedLicense.get("valid").equals("0"))
 			throw new InvalidLicenseException();
 
 		CheckSerialNumber(respondedLicense);
 		CheckHardWareKey(respondedLicense);
 		CheckStartDate(respondedLicense);
-		CheckActivationCode(respondedLicense);
-		CheckTrialValidity(respondedLicense);
-	}
-
-	private void CheckStartDate(LicenseModel respondedLicense) {
 		
+		if(isActivationCodeValid(respondedLicense)){
+			
+		}
+		else{
+			CheckTrialValidity(respondedLicense);
+		}
 	}
 
-	private void CheckHardWareKey(LicenseModel respondedLicense) {
+	private void CheckStartDate(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
+		if(!context.getLicense().getLicenseInfo().get("startdate").equals(Date.valueOf(respondedLicense.get("startdate"))))
+			throw new InvalidLicenseException();
+	}
+
+	private void CheckHardWareKey(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
+		if(!context.getLicense().getLicenseInfo().get("hardwarekey").equals(respondedLicense.get("hardwarekey")))
+			throw new InvalidLicenseException();
+	}
+
+	private void CheckSerialNumber(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
+		if(!context.getLicense().getLicenseInfo().get("serialnumber").equals(respondedLicense.get("serialnumber")))
+			throw new InvalidLicenseException();
+	}
+
+	private void CheckTrialValidity(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
+		if(!respondedLicense.get("valid").equals("0"))
+			throw new InvalidLicenseException();
+		if(!context.getLicense().isIsValid())
+			throw new InvalidLicenseException();
 		
-	}
-
-	private void CheckSerialNumber(LicenseModel respondedLicense) {
+		Date startTime = Date.valueOf(respondedLicense.get("startdate"));
+		Date endTime = Date.valueOf(respondedLicense.get("expiredate"));
+		Date systemTime = new Date(System.currentTimeMillis());
 		
-	}
-
-	private void CheckTrialValidity(LicenseModel respondedLicense) {
-		if (respondedLicense.get) {
+		if (startTime != null) {
 			
 		} else {
-
+			
 		}
 	}
 
-	private void CheckActivationCode(LicenseModel respondedLicense)
-			throws InvalidActivationKey {
-		if (respondedLicense.getActivationCode() == null
-				|| respondedLicense.getActivationCode() == "")
+	private boolean isActivationCodeValid(HashMap<String, String> respondedLicense) {
+		if (respondedLicense.get("activationcode") == null
+				|| respondedLicense.get("activationcode") == "")
 			;
 		else {
-			ActivationCode code = new ActivationCode(respondedLicense.getActivationCode(),
+			ActivationCode code = new ActivationCode(respondedLicense.get("activationcode"),
 					respondedLicense);
-			code.validate();
+			try {
+				code.validate();
+				return true;
+			} catch (InvalidActivationKey e) {
+				return false;
+			}
 		}
+		return false;
+	}
+
+	public void setLicensingContext(LicenseValidationContext context) {
+		this.context = context;
 	}
 }
