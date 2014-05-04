@@ -12,6 +12,11 @@ import com.jajeem.licensing.exception.UninitializedLicensingContextException;
 public class LicenseValidationContext {
 
 	private License lic;
+	private LicenseManager manager;
+
+	public LicenseValidationContext(LicenseManager licenseManager) {
+		setManager(licenseManager);
+	}
 
 	public License getLicense() {
 		return lic;
@@ -27,5 +32,13 @@ public class LicenseValidationContext {
 		}
 		lic.initLicense();
 		lic.validate();
+	}
+
+	public LicenseManager getManager() {
+		return manager;
+	}
+
+	public void setManager(LicenseManager manager) {
+		this.manager = manager;
 	}
 }

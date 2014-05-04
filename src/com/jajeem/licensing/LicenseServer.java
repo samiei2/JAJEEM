@@ -45,10 +45,11 @@ public class LicenseServer {
 
 	private void checkAvailability() {
 		try {
-			InetAddress addr = InetAddress.getByName("http://www.qugram.com/");
+			InetAddress addr = InetAddress.getByName(new URL("http://www.qugram.com/").getHost());
 			addr.isReachable(3000);
 			// TODO Instead of above must actual licensing server address and
 			// available value should be set two
+			Available = true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -231,6 +232,7 @@ public class LicenseServer {
 
 		LicenseValidator validator = new LicenseValidator();
 		validator.Validate(lic);
+		context.getLicense().setValid(true);
 	}
 
 	public void ValidateOnline(License decLic)
@@ -251,7 +253,7 @@ public class LicenseServer {
 			e.printStackTrace();
 		}
 
-		String jsonResponse = hanldeServerRequest(ServerList.getDefault(),
+		String jsonResponse = hanldeServerRequest(ServerList.getDefault() + "validate",
 				jsonQuery);
 		HashMap<String, String> respondedLicense = converter.ConvertFromJson(
 				jsonResponse, HashMap.class);

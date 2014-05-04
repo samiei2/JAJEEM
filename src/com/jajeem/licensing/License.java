@@ -32,6 +32,7 @@ public class License {
 	private HashMap<String, String> licenseInfo;
 	private LicenseValidationContext context;
 	private boolean initialized = false;
+	private boolean isActivated = false;
 
 	public License() {
 
@@ -49,7 +50,7 @@ public class License {
 			UninitializedLicensingContextException, ParseException,
 			GeneralSecurityException {
 		LicenseServer server = new LicenseServer();
-		if (server.isAvailable()) {
+		if (server.isAvailable() && LicenseManager.getInstance().isOnlineValidationEnabled()) {
 			server.setLicensingContext(this.getContext());
 			server.ValidateOnline(decLic);
 		} else {
@@ -144,6 +145,7 @@ public class License {
 						.format(c.getTime()));
 		this.getLicenseInfo().put(LicenseConstants.TIME_LEFT,
 				LicenseConstants.TRIAL_TIME);
+		this.getLicenseInfo().put(LicenseConstants.Version, LicenseConstants.AppVersionNo);
 		return fos;
 	}
 
@@ -203,7 +205,7 @@ public class License {
 		this.filePath = filePath;
 	}
 
-	public void setIsValid(boolean isValid) {
+	public void setValid(boolean isValid) {
 		IsValid = isValid;
 	}
 
@@ -228,5 +230,16 @@ public class License {
 			ParseException, GeneralSecurityException, IOException {
 		LicenseValidator validator = new LicenseValidator();
 		validator.Validate(decLic);
+		if(getLicenseInfo().containsKey(LicenseConstants.ACTIVATION_CODE))
+			setActivated(true);
+		IsValid = true;
+	}
+
+	boolean isActivated() {
+		return isActivated;
+	}
+
+	void setActivated(boolean isActivated) {
+		this.isActivated = isActivated;
 	}
 }
