@@ -193,6 +193,7 @@ public class LicenseServer {
 		try {
 			InetAddress addr = InetAddress.getByName("8.8.8.8");
 			addr.isReachable(3000);
+			//TODO Instead of above must actual licensing server address and available value should be set two
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

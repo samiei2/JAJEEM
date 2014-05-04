@@ -4,6 +4,12 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import com.jajeem.licensing.util.WindowsRegistry;
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.WinReg;
+
+import sun.awt.Win32ColorModel24;
+
 
 public class LicenseManager {
 	static LicenseManager manager;
@@ -31,5 +37,9 @@ public class LicenseManager {
 		if(manager == null)
 			manager = new LicenseManager();
 		return manager;
+	}
+	
+	public static void main(String[] args) {
+		LicenseManager.getInstance().Validate("jajeem.lic");
 	}
 }
