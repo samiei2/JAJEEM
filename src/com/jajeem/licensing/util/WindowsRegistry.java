@@ -58,4 +58,8 @@ public class WindowsRegistry {
 			String licenseRegKey) {
 		return Advapi32Util.registryGetStringValue(hkeyClassesRoot, key, licenseRegKey);
 	}
+
+	public void setRootKey(String key, String licenseRegKey, String encode) {
+		Advapi32Util.registrySetStringValue(WinReg.HKEY_CLASSES_ROOT, key, licenseRegKey, encode);
+	}
 }
