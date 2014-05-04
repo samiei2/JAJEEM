@@ -11,7 +11,8 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.sql.Date;
+import java.security.GeneralSecurityException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +24,6 @@ import com.jajeem.licensing.exception.UninitializedLicensingContextException;
 import com.jajeem.licensing.util.JsonConvert;
 
 public class LicenseServer {
-
-	private boolean Available;
-	private LicenseValidationContext context;
 
 	/**
 	 * @param args
@@ -41,11 +39,78 @@ public class LicenseServer {
 						+ "\"startDate\" : \"2014-02-08\"} "));
 	}
 
+	private boolean Available;
+
+	private LicenseValidationContext context;
+
+	private void checkAvailability() {
+		try {
+			InetAddress addr = InetAddress.getByName("http://www.qugram.com/");
+			addr.isReachable(3000);
+			// TODO Instead of above must actual licensing server address and
+			// available value should be set two
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String excutePost(String targetURL, String urlParameters) {
+		URL url;
+		HttpURLConnection connection = null;
+		try {
+			// Create connection
+			url = new URL(targetURL);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
+
+			connection.setRequestProperty("Content-Length",
+					"" + Integer.toString(urlParameters.getBytes().length));
+			connection.setRequestProperty("Content-Language", "en-US");
+
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+
+			// Send request
+			DataOutputStream wr = new DataOutputStream(
+					connection.getOutputStream());
+			wr.writeBytes(urlParameters);
+			wr.flush();
+			wr.close();
+
+			// Get Response
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			String line;
+			StringBuffer response = new StringBuffer();
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			return response.toString();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return null;
+
+		} finally {
+
+			if (connection != null) {
+				connection.disconnect();
+			}
+		}
+	}
+
 	public String hanldeServerRequest(String server, String content)
 			throws LicenseServerErrorException {
 
-		if (content == null || content == "")
+		if (content == null || content == "") {
 			throw new LicenseServerErrorException(-1);
+		}
 
 		URL url = null;
 		try {
@@ -118,8 +183,9 @@ public class LicenseServer {
 		String response = "";
 		try {
 			int responseCode = urlConn.getResponseCode();
-			if (responseCode != 200)
+			if (responseCode != 200) {
 				throw new LicenseServerErrorException(responseCode);
+			}
 
 			input = new DataInputStream(urlConn.getInputStream());
 			while ((str = input.read()) != -1) {
@@ -133,83 +199,50 @@ public class LicenseServer {
 		return response;
 	}
 
-	public String excutePost(String targetURL, String urlParameters) {
-		URL url;
-		HttpURLConnection connection = null;
-		try {
-			// Create connection
-			url = new URL(targetURL);
-			connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
-
-			connection.setRequestProperty("Content-Length",
-					"" + Integer.toString(urlParameters.getBytes().length));
-			connection.setRequestProperty("Content-Language", "en-US");
-
-			connection.setUseCaches(false);
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-
-			// Send request
-			DataOutputStream wr = new DataOutputStream(
-					connection.getOutputStream());
-			wr.writeBytes(urlParameters);
-			wr.flush();
-			wr.close();
-
-			// Get Response
-			InputStream is = connection.getInputStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-			String line;
-			StringBuffer response = new StringBuffer();
-			while ((line = rd.readLine()) != null) {
-				response.append(line);
-				response.append('\r');
-			}
-			rd.close();
-			return response.toString();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			return null;
-
-		} finally {
-
-			if (connection != null) {
-				connection.disconnect();
-			}
-		}
-	}
-
 	public boolean isAvailable() {
 		checkAvailability();
 		return Available;
-	}
-
-	private void checkAvailability() {
-		try {
-			InetAddress addr = InetAddress.getByName("8.8.8.8");
-			addr.isReachable(3000);
-			//TODO Instead of above must actual licensing server address and available value should be set two
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void setAvailable(boolean isAvailable) {
 		Available = isAvailable;
 	}
 
+	public void setLicensingContext(LicenseValidationContext context) {
+		this.context = context;
+	}
+
+	private void ValidateLicense(HashMap<String, String> respondedLicense)
+			throws InvalidLicenseException, InvalidActivationKey,
+			LicenseServerErrorException, GeneralSecurityException, IOException,
+			ParseException {
+		if (respondedLicense == null) {
+			throw new LicenseServerErrorException(0);
+		}
+
+		if (!respondedLicense.get("valid").equals("0")) {
+			throw new InvalidLicenseException();
+		}
+
+		License lic = new License();
+		lic.setFilePath(context.getLicense().getFilePath());
+		lic.setLicenseInfo(respondedLicense);
+		lic.setContext(context);
+
+		LicenseValidator validator = new LicenseValidator();
+		validator.Validate(lic);
+	}
+
 	public void ValidateOnline(License decLic)
 			throws LicenseServerErrorException, IOException,
-			InvalidLicenseException, InvalidActivationKey, UninitializedLicensingContextException {
-		
-		if(context == null)
+			InvalidLicenseException, InvalidActivationKey,
+			UninitializedLicensingContextException, GeneralSecurityException,
+			ParseException {
+
+		if (context == null) {
 			throw new UninitializedLicensingContextException();
-		
+		}
+
 		JsonConvert converter = new JsonConvert();
 		String jsonQuery = null;
 		try {
@@ -220,81 +253,8 @@ public class LicenseServer {
 
 		String jsonResponse = hanldeServerRequest(ServerList.getDefault(),
 				jsonQuery);
-		HashMap<String, String> respondedLicense = converter.ConvertFromJson(jsonResponse,
-				HashMap.class);
+		HashMap<String, String> respondedLicense = converter.ConvertFromJson(
+				jsonResponse, HashMap.class);
 		ValidateLicense(respondedLicense);
-	}
-
-	private void ValidateLicense(HashMap<String, String> respondedLicense)
-			throws InvalidLicenseException, InvalidActivationKey, LicenseServerErrorException {
-		if (respondedLicense == null)
-			throw new LicenseServerErrorException(0);
-
-		if (!respondedLicense.get("valid").equals("0"))
-			throw new InvalidLicenseException();
-
-		CheckSerialNumber(respondedLicense);
-		CheckHardWareKey(respondedLicense);
-		CheckStartDate(respondedLicense);
-		
-		if(isActivationCodeValid(respondedLicense)){
-			
-		}
-		else{
-			CheckTrialValidity(respondedLicense);
-		}
-	}
-
-	private void CheckStartDate(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
-		if(!context.getLicense().getLicenseInfo().get("startdate").equals(Date.valueOf(respondedLicense.get("startdate"))))
-			throw new InvalidLicenseException();
-	}
-
-	private void CheckHardWareKey(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
-		if(!context.getLicense().getLicenseInfo().get("hardwarekey").equals(respondedLicense.get("hardwarekey")))
-			throw new InvalidLicenseException();
-	}
-
-	private void CheckSerialNumber(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
-		if(!context.getLicense().getLicenseInfo().get("serialnumber").equals(respondedLicense.get("serialnumber")))
-			throw new InvalidLicenseException();
-	}
-
-	private void CheckTrialValidity(HashMap<String, String> respondedLicense) throws InvalidLicenseException {
-		if(!respondedLicense.get("valid").equals("0"))
-			throw new InvalidLicenseException();
-		if(!context.getLicense().isIsValid())
-			throw new InvalidLicenseException();
-		
-		Date startTime = Date.valueOf(respondedLicense.get("startdate"));
-		Date endTime = Date.valueOf(respondedLicense.get("expiredate"));
-		Date systemTime = new Date(System.currentTimeMillis());
-		
-		if (startTime != null) {
-			
-		} else {
-			
-		}
-	}
-
-	private boolean isActivationCodeValid(HashMap<String, String> respondedLicense) {
-		if (respondedLicense.get("activationcode") == null
-				|| respondedLicense.get("activationcode") == "")
-			;
-		else {
-			ActivationCode code = new ActivationCode(respondedLicense.get("activationcode"),
-					respondedLicense);
-			try {
-				code.validate();
-				return true;
-			} catch (InvalidActivationKey e) {
-				return false;
-			}
-		}
-		return false;
-	}
-
-	public void setLicensingContext(LicenseValidationContext context) {
-		this.context = context;
 	}
 }

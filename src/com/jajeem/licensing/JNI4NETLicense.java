@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import licensejni.License;
-
 import net.sf.jni4net.Bridge;
 
 public class JNI4NETLicense {
-	public static int Validate(boolean silent) throws IOException{
+	public static int Validate(boolean silent) throws IOException {
 		Bridge.setVerbose(true);
 		Bridge.init();
 		File assembly = new File("lib/jni/LicenseJNI.j4n.dll");

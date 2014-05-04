@@ -3,11 +3,10 @@ package com.jajeem.licensing;
 import java.util.ArrayList;
 
 public class ServerList {
-	
+
 	private static ArrayList<String> serverIps = new ArrayList<>();
-	
-	static
-	{
+
+	static {
 		serverIps.add("http://www.qugram.com/api/");
 	}
 

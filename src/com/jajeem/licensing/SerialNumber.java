@@ -2,11 +2,7 @@ package com.jajeem.licensing;
 
 import java.util.UUID;
 
-
 public class SerialNumber {
-	
-	private SerialNumber() {
-	}
 
 	public static String generateSerialNumber() {
 		String uuid = UUID.randomUUID().toString().substring(0, 5);
@@ -18,5 +14,8 @@ public class SerialNumber {
 		String serialnumber = uuid1 + "-" + uuid2 + "-" + uuid3 + "-" + uuid4
 				+ "-" + uuid;
 		return serialnumber;
+	}
+
+	private SerialNumber() {
 	}
 }
