@@ -1,13 +1,17 @@
 package com.jajeem.licensing;
 
-import javax.swing.JTextField;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import com.jajeem.licensing.exception.LicenseServerErrorException;
+
 
 
 public class LicenseManager {
 	static LicenseManager manager;
 	LicenseFrame frame;
 	private boolean isOnlineValidationEnabled = false;
-	LicenseValidationContext lic;
+	LicenseValidationContext licContext;
 	static {
 
 	}
@@ -29,9 +33,9 @@ public class LicenseManager {
 	}
 
 	public void Validate(String licPath) {
-		lic = new LicenseValidationContext(this);
+		licContext = new LicenseValidationContext(this);
 		try {
-			lic.validate(licPath);
+			licContext = licContext.validate(licPath);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -41,14 +45,16 @@ public class LicenseManager {
 	}
 
 	private void openFrameIfNeeded() {
-		if(lic.getLicense().isActivated())
+		if(licContext.getLicense().isActivated())
 			return;
-		frame.setSerial(lic.getLicense().getLicenseInfo().get(LicenseConstants.SERIAL_NUMBER));
-		frame.setHardwareKey(lic.getLicense().getLicenseInfo().get(LicenseConstants.HARDWARE_KEY));
-		frame.setActivationKey(lic.getLicense().getLicenseInfo().get(LicenseConstants.ACTIVATION_CODE));
-		frame.setLicensorName(lic.getLicense().getLicenseInfo().get(LicenseConstants.NAME));
-		frame.setCompany(lic.getLicense().getLicenseInfo().get(LicenseConstants.COMPANY));
-		frame.setPhone(lic.getLicense().getLicenseInfo().get(LicenseConstants.PHONE));
+		frame.setSerial(licContext.getLicense().getLicenseInfo().get(LicenseConstants.SERIAL_NUMBER));
+		frame.setHardwareKey(licContext.getLicense().getLicenseInfo().get(LicenseConstants.HARDWARE_KEY));
+		frame.setActivationKey(licContext.getLicense().getLicenseInfo().get(LicenseConstants.ACTIVATION_CODE));
+		frame.setLicensorName(licContext.getLicense().getLicenseInfo().get(LicenseConstants.NAME));
+		frame.setCompany(licContext.getLicense().getLicenseInfo().get(LicenseConstants.COMPANY));
+		frame.setPhone(licContext.getLicense().getLicenseInfo().get(LicenseConstants.PHONE));
+		frame.setTimeLeft(licContext.getLicense().getLicenseInfo().get(LicenseConstants.TIME_LEFT));
+		frame.setVersion(licContext.getLicense().getLicenseInfo().get(LicenseConstants.Version));
 		
 		frame.setVisible(true);
 	}
@@ -61,15 +67,13 @@ public class LicenseManager {
 		this.isOnlineValidationEnabled = isOnlineValidationEnabled;
 	}
 
-	public void ActivateOnline(JTextField textField_Name,
-			JTextField textField_Company, JTextField textField_Phone) {
-		// TODO Auto-generated method stub
-		
+	public void ActivateOnline(String Name,
+			String Company, String Phone) throws GeneralSecurityException, IOException, LicenseServerErrorException {
+		licContext.getLicense().activateOnline(Name, Company, Phone);
 	}
 
-	public void ActivateOffline(JTextField textField_Name,
-			JTextField textField_Company, JTextField textField_Phone) {
-		// TODO Auto-generated method stub
+	public void ActivateOffline(String Name,
+			String Company, String Phone) {
 		
 	}
 }

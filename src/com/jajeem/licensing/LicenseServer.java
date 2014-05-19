@@ -31,7 +31,7 @@ public class LicenseServer {
 	 */
 	public static void main(String[] args) throws LicenseServerErrorException {
 
-		System.out.println(new LicenseServer().hanldeServerRequest(
+		System.out.println(new LicenseServer().handleServerRequest(
 				"http://www.qugram.com/api/validate",
 				" {\"hardwareKey\" : \"jhgfh786vfee87\","
 						+ "\"serialNumber\" : \"jhwwgj7vfvf76\","
@@ -54,59 +54,8 @@ public class LicenseServer {
 			e.printStackTrace();
 		}
 	}
-
-	public String excutePost(String targetURL, String urlParameters) {
-		URL url;
-		HttpURLConnection connection = null;
-		try {
-			// Create connection
-			url = new URL(targetURL);
-			connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
-
-			connection.setRequestProperty("Content-Length",
-					"" + Integer.toString(urlParameters.getBytes().length));
-			connection.setRequestProperty("Content-Language", "en-US");
-
-			connection.setUseCaches(false);
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-
-			// Send request
-			DataOutputStream wr = new DataOutputStream(
-					connection.getOutputStream());
-			wr.writeBytes(urlParameters);
-			wr.flush();
-			wr.close();
-
-			// Get Response
-			InputStream is = connection.getInputStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-			String line;
-			StringBuffer response = new StringBuffer();
-			while ((line = rd.readLine()) != null) {
-				response.append(line);
-				response.append('\r');
-			}
-			rd.close();
-			return response.toString();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			return null;
-
-		} finally {
-
-			if (connection != null) {
-				connection.disconnect();
-			}
-		}
-	}
-
-	public String hanldeServerRequest(String server, String content)
+	
+	public String handleServerRequest(String server, String content)
 			throws LicenseServerErrorException {
 
 		if (content == null || content == "") {
@@ -231,11 +180,11 @@ public class LicenseServer {
 		lic.setContext(context);
 
 		LicenseValidator validator = new LicenseValidator();
-		validator.Validate(lic);
+		validator.validate(lic);
 		context.getLicense().setValid(true);
 	}
 
-	public void ValidateOnline(License decLic)
+	public void validateOnline(License decLic)
 			throws LicenseServerErrorException, IOException,
 			InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException, GeneralSecurityException,
@@ -253,10 +202,16 @@ public class LicenseServer {
 			e.printStackTrace();
 		}
 
-		String jsonResponse = hanldeServerRequest(ServerList.getDefault() + "validate",
+		String jsonResponse = handleServerRequest(ServerList.getDefault() + "validate",
 				jsonQuery);
 		HashMap<String, String> respondedLicense = converter.ConvertFromJson(
 				jsonResponse, HashMap.class);
 		ValidateLicense(respondedLicense);
+	}
+
+	public void activateOnline(License license) throws JsonProcessingException, LicenseServerErrorException {
+		JsonConvert converter = new JsonConvert();
+		String json = converter.ConvertToJson(license.getLicenseInfo());
+		handleServerRequest(ServerList.getDefault() + "activate", json);
 	}
 }

@@ -1539,8 +1539,13 @@ public class InstructorNoa {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				currentTime += 60000;
-				final String Minute = String.format("%02d",currentTime / 60000);
-				final String Hour = String.format("%02d",currentTime % 60000);
+				long minutes = currentTime / 60000;
+				long minute = minutes % 60 ;
+				long hour = (minutes - minute) / 60;
+				
+				
+				final String Minute = String.format("%02d",minute);
+				final String Hour = String.format("%02d",hour);
 				
 				try {
 					EventQueue.invokeLater(new Runnable() {

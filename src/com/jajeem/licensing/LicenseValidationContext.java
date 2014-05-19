@@ -22,7 +22,7 @@ public class LicenseValidationContext {
 		return lic;
 	}
 
-	public void validate(String licPath) throws LicenseServerErrorException,
+	public LicenseValidationContext validate(String licPath) throws LicenseServerErrorException,
 			IOException, InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException,
 			UninitializedLicenseException, ParseException,
@@ -30,8 +30,9 @@ public class LicenseValidationContext {
 		if (lic == null) {
 			lic = new License(this, licPath);
 		}
-		lic.initLicense();
-		lic.validate();
+		lic = lic.initLicense();
+		lic = lic.validate();
+		return this;
 	}
 
 	public LicenseManager getManager() {

@@ -24,26 +24,10 @@ public class LicenseValidator {
 	}
 
 	private void saveLicenseInfo() throws GeneralSecurityException, IOException {
-		FileOutputStream fos = new FileOutputStream(decLic.getFilePath());
-		JsonConvert convert = new JsonConvert();
-		String json = convert.ConvertToJson(decLic.getLicenseInfo());
-		saveToRegistryEntry(json);
-		fos.write(LicenseEncryptionFunctions.encrypt(json));
-		fos.flush();
-		fos.close();
+		decLic.saveLicenseInfo();
 	}
 
-	private void saveToRegistryEntry(String json)
-			throws GeneralSecurityException {
-		WindowsRegistry registry = new WindowsRegistry();
-		String key = LicenseConstants.CLSID
-				+ LicenseEncryptionFunctions.getSecureHashKey()
-				+ LicenseConstants.IN_PROC_SERVER32;
-		registry.setRootKey(key, LicenseConstants.LICENSE_REG_KEY,
-				Base64.encode((LicenseEncryptionFunctions.encrypt(json))));
-	}
-
-	public void Validate(License decLic) throws InvalidLicenseException,
+	public License validate(License decLic) throws InvalidLicenseException,
 			GeneralSecurityException, IOException, ParseException,
 			InvalidActivationKey {
 		this.decLic = decLic;
@@ -59,6 +43,7 @@ public class LicenseValidator {
 
 		validateActivationKey();
 		saveLicenseInfo();
+		return decLic;
 	}
 
 	private void validateActivationKey() throws InvalidActivationKey,
@@ -76,6 +61,7 @@ public class LicenseValidator {
 			ActivationCode code = new ActivationCode(activationCode,
 					decLic.getLicenseInfo());
 			code.validate();
+			decLic.setActivated(true);
 		}
 	}
 
@@ -180,14 +166,16 @@ public class LicenseValidator {
 		Date lastrunDate = new SimpleDateFormat(
 				LicenseConstants.LICENSE_TIME_FORMAT).parse(decLic
 				.getLicenseInfo().get(LicenseConstants.LAST_RUN_DATE));
-		long remaining = getDateDiff(startDate, expireDate, TimeUnit.DAYS);
-		long rem1 = getDateDiff(startDate, lastrunDate, TimeUnit.DAYS);
-		long rem2 = getDateDiff(lastrunDate, expireDate, TimeUnit.DAYS);
+		Date systemTime = new Date(System.currentTimeMillis());
+		long remaining = getDateDiff(systemTime, expireDate, TimeUnit.DAYS);
+		long usedTime = getDateDiff(startDate, systemTime, TimeUnit.DAYS);
+		long remainedTime = getDateDiff(systemTime, expireDate, TimeUnit.DAYS);
 
-		if ((rem1 + rem2) != getDateDiff(startDate, expireDate, TimeUnit.DAYS)) {
+		if ((usedTime + remainedTime + 1) != getDateDiff(startDate, expireDate, TimeUnit.DAYS)) {
 			throw new InvalidLicenseException();
 		}
-		if (rem2 != remaining) {
+		
+		if (remainedTime != remaining) {
 			throw new InvalidLicenseException();
 		}
 
@@ -196,6 +184,5 @@ public class LicenseValidator {
 		} else {
 			throw new InvalidLicenseException();
 		}
-
 	}
 }

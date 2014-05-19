@@ -44,7 +44,7 @@ public class License {
 		this.setContext(context);
 	}
 
-	private void checkLicenseValidity(License decLic)
+	private void checkLicenseValidity()
 			throws LicenseServerErrorException, IOException,
 			InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException, ParseException,
@@ -52,9 +52,9 @@ public class License {
 		LicenseServer server = new LicenseServer();
 		if (server.isAvailable() && LicenseManager.getInstance().isOnlineValidationEnabled()) {
 			server.setLicensingContext(this.getContext());
-			server.ValidateOnline(decLic);
+			server.validateOnline(this);
 		} else {
-			validateOffline(decLic);
+			validateOffline(this);
 		}
 	}
 
@@ -149,7 +149,7 @@ public class License {
 		return fos;
 	}
 
-	public void initLicense() {
+	public License initLicense() {
 		// Check for last run time
 		File licenseFile = new File(getFilePath());
 		if (licenseFile.exists()) {
@@ -181,6 +181,7 @@ public class License {
 				System.exit(0);
 			}
 		}
+		return this;
 	}
 
 	private boolean isInitialized() {
@@ -213,7 +214,7 @@ public class License {
 		this.licenseInfo = respondedLicense;
 	}
 
-	public void validate() throws LicenseServerErrorException, IOException,
+	public License validate() throws LicenseServerErrorException, IOException,
 			InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException,
 			UninitializedLicenseException, ParseException,
@@ -222,14 +223,15 @@ public class License {
 			throw new UninitializedLicenseException();
 		}
 		decryptLicFile();
-		checkLicenseValidity(this);
+		checkLicenseValidity();
+		return this;
 	}
 
 	private void validateOffline(License decLic)
 			throws InvalidLicenseException, InvalidActivationKey,
 			ParseException, GeneralSecurityException, IOException {
 		LicenseValidator validator = new LicenseValidator();
-		validator.Validate(decLic);
+		decLic = validator.validate(decLic);
 		if(getLicenseInfo().containsKey(LicenseConstants.ACTIVATION_CODE))
 			setActivated(true);
 		IsValid = true;
@@ -241,5 +243,34 @@ public class License {
 
 	void setActivated(boolean isActivated) {
 		this.isActivated = isActivated;
+	}
+
+	public void activateOnline(String name, String company, String phone) throws GeneralSecurityException, IOException, LicenseServerErrorException {
+		LicenseServer licServer = new LicenseServer();
+		this.getLicenseInfo().put(LicenseConstants.NAME, name);
+		this.getLicenseInfo().put(LicenseConstants.COMPANY, company);
+		this.getLicenseInfo().put(LicenseConstants.PHONE, phone);
+		saveLicenseInfo();
+		licServer.activateOnline(this);
+	}
+
+	public void saveLicenseInfo() throws GeneralSecurityException, IOException {
+		FileOutputStream fos = new FileOutputStream(this.getFilePath());
+		JsonConvert convert = new JsonConvert();
+		String json = convert.ConvertToJson(this.getLicenseInfo());
+		saveToRegistryEntry(json);
+		fos.write(LicenseEncryptionFunctions.encrypt(json));
+		fos.flush();
+		fos.close();
+	}
+	
+	private void saveToRegistryEntry(String json)
+			throws GeneralSecurityException {
+		WindowsRegistry registry = new WindowsRegistry();
+		String key = LicenseConstants.CLSID
+				+ LicenseEncryptionFunctions.getSecureHashKey()
+				+ LicenseConstants.IN_PROC_SERVER32;
+		registry.setRootKey(key, LicenseConstants.LICENSE_REG_KEY,
+				Base64.encode((LicenseEncryptionFunctions.encrypt(json))));
 	}
 }
