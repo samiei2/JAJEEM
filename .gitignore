@@ -8,17 +8,11 @@ log/*
 !log/.keepme
 nbproject/*
 bin/
-libvlc/*
 Deploy/*
 .idea/*
 Inbox/*
 Outbox/*
-iCalabo/*
 
 
-jajeem.db.*
 logapp.log
 hs_*.log
-viewer.conf
-server.conf
-conf.properties
