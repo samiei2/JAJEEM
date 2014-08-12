@@ -21,10 +21,16 @@ public class LicenseConstants {
 	public static final String LICENSE_REG_KEY = "ThreadingModel";
 	public static final String IN_PROC_SERVER32 = "}\\InProcServer32";
 	public static final String CLSID = "CLSID\\TEST\\{";
-	public static final String Version = "version";
-	public static final String AppVersionNo = "1.0.0";
+	public static final String VERSION = "version";
+	public static final String APPVERSIONNO = "1.0.0";
 	public static final String NAME = "name";
 	public static final String COMPANY = "company";
 	public static final String PHONE = "phone";
 	public static final String INFO = "info";
+	public static final String USERS = "users";
+	public static final String NUMUSERS = "5";
+	public static final String STATUS = "status";
+	public static final String TRIAL = "0";//0 = trial ,1 = trial-expired,2 = active,3 = active-expire,4 = deactive
+	public static final String VALIDATIONSERVER = ServerList.getDefault() + "validate/validation";
+	public static final String ACTIVATIONSERVER = ServerList.getDefault() + "validate/activation";
 }

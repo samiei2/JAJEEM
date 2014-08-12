@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -56,12 +57,13 @@ public class LicenseFrame extends JFrame {
 	private JTextField textField_phone;
 	private JLabel lblTimeleft;
 	private JLabel lblVersion;
+	private JButton btnContinueTrial;
 
 	public LicenseFrame() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				LicenseFrame.class.getResource("/icons/noa_en/key.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 636, 378);
+		setBounds(100, 100, 636, 392);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -84,11 +86,11 @@ public class LicenseFrame extends JFrame {
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -123,7 +125,7 @@ public class LicenseFrame extends JFrame {
 							.addContainerGap()
 							.addComponent(label_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
 						.addComponent(lblNewLabel))
 					.addContainerGap())
 		);
@@ -158,49 +160,46 @@ public class LicenseFrame extends JFrame {
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addComponent(lblTimeLeft)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
 							.addComponent(lblTimeleft)
-							.addPreferredGap(ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
 							.addComponent(lblVersion_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblVersion))
 						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(label_2, GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-								.addComponent(label_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+								.addComponent(label_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+								.addComponent(label, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+								.addComponent(label_3))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField_phone, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_company, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(textField_name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+								.addComponent(textField_phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+								.addComponent(textField_company, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.TRAILING)
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label))
-							.addGap(9)
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField_company, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_2))
-							.addGap(26))
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblTimeLeft)
-								.addComponent(lblVersion)
-								.addComponent(lblVersion_1)
-								.addComponent(lblTimeleft))
-							.addPreferredGap(ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-								.addComponent(label_3)
-								.addComponent(textField_phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addGap(14))
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTimeLeft)
+						.addComponent(lblVersion)
+						.addComponent(lblVersion_1)
+						.addComponent(lblTimeleft))
+					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label))
+					.addGap(6)
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_company, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_2))
+					.addGap(9)
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField_phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_3))
+					.addContainerGap())
 		);
 		panel_3.setLayout(gl_panel_3);
 		panel_1.setLayout(gl_panel_1);
@@ -222,7 +221,7 @@ public class LicenseFrame extends JFrame {
 		textField_Hardware.setEditable(false);
 		textField_Hardware.setColumns(10);
 		
-		JButton btnActivateOnline = new JButton("Activate Online");
+		JButton btnActivateOnline = new JButton("Order Now");
 		btnActivateOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -236,6 +235,7 @@ public class LicenseFrame extends JFrame {
 					e1.printStackTrace();
 					return;
 				} catch (LicenseServerErrorException e1) {
+					System.out.println("Error code: " + e1.getErrorCode());
 					JOptionPane.showMessageDialog(null, "Server was not found!\nThere was a problem with your connection.Try again later!");
 					e1.printStackTrace();
 					return;
@@ -247,12 +247,18 @@ public class LicenseFrame extends JFrame {
 		JButton btnActivateOffline = new JButton("Activate Offline");
 		btnActivateOffline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LicenseManager.getInstance().ActivateOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
-				JOptionPane.showMessageDialog(null, "Product Activated!\nEnjoy the program!");
+				try {
+					LicenseManager.getInstance().ActivateOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText(),textField_Activation.getText());
+					JOptionPane.showMessageDialog(null, "Product Activated!\nEnjoy the program!");
+					setVisible(false);
+				} catch (InvalidActivationKey | GeneralSecurityException
+						| IOException | ParseException e1) {
+					JOptionPane.showOptionDialog(null, e1.getMessage(), "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+				}
 			}
 		});
 		
-		JButton btnContinueTrial = new JButton("Continue Trial");
+		btnContinueTrial = new JButton("Continue Trial");
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -341,5 +347,9 @@ public class LicenseFrame extends JFrame {
 
 	public void setVersion(String string) {
 		lblVersion.setText(string);
+	}
+
+	public void setContinueTrialEnabled(boolean b) {
+		btnContinueTrial.setEnabled(b);
 	}
 }

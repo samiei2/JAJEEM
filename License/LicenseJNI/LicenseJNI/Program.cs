@@ -11,18 +11,21 @@ namespace LicenseJNI
             try
             {
                 var helper = new LicenseHelper();
-                helper.Deactivate();
-                helper.ReShowRegistrationForm();
+                //helper.Deactivate();
+                //helper.ReShowRegistrationForm();
                 helper.Required(true);
                 if (helper.IsTrial)
                     return 12;
                 else if (helper.IsActivated)
                     return 13;
+                else if (helper.IsActivation)
+                    return 14;
                 else
                     return 10;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                global::System.Windows.Forms.MessageBox.Show(e.Message);
                 return -1;
             }
         }

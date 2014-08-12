@@ -11,6 +11,8 @@ import com.jajeem.core.design.student.Student;
 import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.design.teacher.InstructorNoaUtil;
+import com.jajeem.licensing.LicenseConstants;
+import com.jajeem.licensing.LicenseManager;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {
@@ -58,6 +60,11 @@ public class StartUpCommandHandler implements ICommandHandler {
 					&& cmd.getPort() == Integer.parseInt(Config
 							.getParam("serverPort"))) {
 				try{
+					
+					if (InstructorNoa.getDesktopPane().getAllFrames().length > Integer.parseInt(LicenseManager
+							.getInstance().getLicContext().getLicense()
+							.getLicenseInfo().get("users")))
+						return;
 					if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {
 						if (InstructorNoa.getDesktopPane() != null) {
 							InstructorNoaUtil.createFrame(

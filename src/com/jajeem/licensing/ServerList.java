@@ -7,7 +7,7 @@ public class ServerList {
 	private static ArrayList<String> serverIps = new ArrayList<>();
 
 	static {
-		serverIps.add("http://www.qugram.com/api/");
+		serverIps.add(LicenseSettings.serverAddress);
 	}
 
 	public static String getDefault() {

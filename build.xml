@@ -3,17 +3,26 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="Jajeem">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Jajeem">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
     <path id="Jajeem.classpath">
         <pathelement location="bin"/>
+        <pathelement location="lib/bccontrib-1.0-SNAPSHOT.jar"/>
         <pathelement location="lib/bcprov-jdk15on-148.jar"/>
+        <pathelement location="lib/commons-dbcp-1.4.jar"/>
+        <pathelement location="lib/commons-lang3-3.1.jar"/>
+        <pathelement location="lib/commons-pool-1.5.6.jar"/>
         <pathelement location="lib/dnsjava.jar"/>
+        <pathelement location="lib/felix.jar"/>
         <pathelement location="lib/fmj.jar"/>
+        <pathelement location="lib/glazedlists_java15-1.9.0.jar"/>
+        <pathelement location="lib/h2-1.3.171.jar"/>
+        <pathelement location="lib/hsqldb.jar"/>
+        <pathelement location="lib/ice4j.jar"/>
+        <pathelement location="lib/jain-sdp.jar"/>
         <pathelement location="lib/jasperreports-5.2.0.jar"/>
         <pathelement location="lib/javaQuery 1.0.jar"/>
         <pathelement location="lib/jcommon-1.0.15.jar"/>
@@ -21,38 +30,31 @@
         <pathelement location="lib/jmf.jar"/>
         <pathelement location="lib/jna-3.5.2.jar"/>
         <pathelement location="lib/json-simple-1.1.1.jar"/>
+        <pathelement location="lib/jspeex.jar"/>
         <pathelement location="lib/junit-4.11.jar"/>
+        <pathelement location="lib/log4j-1.2.7.jar"/>
         <pathelement location="lib/platform-3.5.2.jar"/>
+        <pathelement location="lib/sdes4j-1.1.1.jar"/>
         <pathelement location="lib/slf4j-api-1.7.5.jar"/>
         <pathelement location="lib/slf4j-simple-1.7.5.jar"/>
+        <pathelement location="lib/smack-3.3.0.jar"/>
+        <pathelement location="lib/swt.jar"/>
         <pathelement location="lib/xuggle-xuggler-5.4.zip"/>
         <pathelement location="lib/zrtp4j-light.jar"/>
-        <pathelement location="lib/smack-3.3.0.jar"/>
-        <pathelement location="lib/sdes4j-1.1.1.jar"/>
-        <pathelement location="lib/log4j-1.2.7.jar"/>
-        <pathelement location="lib/jspeex.jar"/>
-        <pathelement location="lib/ice4j.jar"/>
-        <pathelement location="lib/felix.jar"/>
-        <pathelement location="lib/glazedlists_java15-1.9.0.jar"/>
-        <pathelement location="lib/hsqldb.jar"/>
-        <pathelement location="lib/commons-pool-1.5.6.jar"/>
-        <pathelement location="lib/commons-lang3-3.1.jar"/>
-        <pathelement location="lib/commons-dbcp-1.4.jar"/>
-        <pathelement location="lib/jain-sdp.jar"/>
-        <pathelement location="lib/bccontrib-1.0-SNAPSHOT.jar"/>
-        <pathelement location="lib/h2-1.3.171.jar"/>
-        <pathelement location="miglayout15-swing.jar"/>
-        <pathelement location="lib/swt.jar"/>
-        <pathelement location="lib/WebLookAndFeel.jar"/>
-        <pathelement location="lib/weblaf-1.25.jar"/>
         <pathelement location="lib/jni/jni4net.j-0.8.6.0.jar"/>
         <pathelement location="lib/jni/LicenseJNI.j4n.jar"/>
+        <pathelement location="lib/WebLookAndFeel.jar"/>
+        <pathelement location="lib/weblaf-1.25.jar"/>
+        <pathelement location="lib/jackson-core-2.2.3.jar"/>
+        <pathelement location="lib/jackson-annotations-2.2.3.jar"/>
+        <pathelement location="lib/jackson-databind-2.2.3.jar"/>
+        <pathelement location="lib/commons-io-2.4.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
-				<exclude name="**/*.launch"/>
+                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -84,11 +86,21 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="Encryption">
+        <java classname="com.jajeem.licensing.util.Encryption" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
     <target name="InstructorLogin">
+        <java classname="com.jajeem.core.design.teacher.InstructorLogin" failonerror="true" fork="yes">
+            <jvmarg line="-Djava.rmi.server.useCodebaseOnly=false&#13;&#10;-server"/>
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="InstructorLogin2">
         <java classname="com.jajeem.core.design.teacher.InstructorLogin" failonerror="true" fork="yes">
             <jvmarg line="-Djava.rmi.server.useCodebaseOnly=false"/>
             <classpath refid="Jajeem.classpath"/>
-			<sysproperty value="${java.library.path};lib/native/windows-64;lib/jni" key="java.library.path"/>
         </java>
     </target>
     <target name="InstructorNoa">
@@ -96,8 +108,78 @@
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>
+    <target name="JNI4NETLicense">
+        <java classname="com.jajeem.licensing.JNI4NETLicense" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="License">
+        <java classname="com.jajeem.licensing.License" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="LicenseFrame">
+        <java classname="com.jajeem.licensing.LicenseFrame" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="LicenseManager">
+        <java classname="com.jajeem.licensing.LicenseManager" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="LicenseServer">
+        <java classname="com.jajeem.licensing.LicenseServer" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Quiz_Main">
+        <java classname="com.jajeem.quiz.design.alt.Quiz_Main" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Quiz_Window">
+        <java classname="com.jajeem.quiz.design.client.alt.Quiz_Window" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="RSAEncryption">
+        <java classname="com.jajeem.licensing.util.RSAEncryption" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
     <target name="StudentLogin">
         <java classname="com.jajeem.core.design.student.StudentLogin" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Survey_Main">
+        <java classname="com.jajeem.survey.design.alt.Survey_Main" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Survey_OpenDialog">
+        <java classname="com.jajeem.survey.design.alt.Survey_OpenDialog" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Survey_Window">
+        <java classname="com.jajeem.survey.design.client.alt.Survey_Window" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="test (1)">
+        <java classname="com.jajeem.util.test" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="test (2)">
+        <java classname="com.jajeem.licensing.test" failonerror="true" fork="yes">
+            <classpath refid="Jajeem.classpath"/>
+        </java>
+    </target>
+    <target name="Translator">
+        <java classname="com.jajeem.util.Translator" failonerror="true" fork="yes">
             <classpath refid="Jajeem.classpath"/>
         </java>
     </target>

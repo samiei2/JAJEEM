@@ -1,7 +1,0 @@
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\Release\LicenseJNI.dll.config
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\Release\LicenseJNI.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\Release\LicenseJNI.pdb
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\Release\DeployLX.Licensing.v4.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x86\Release\LicenseJNI.csprojResolveAssemblyReference.cache
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x86\Release\LicenseJNI.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x86\Release\LicenseJNI.pdb

@@ -56,6 +56,16 @@ internal class LicenseHelper : IDisposable
 		}
 	}
 
+    public bool IsActivation
+    {
+        get
+        {
+            if (!Check(false))
+                return false;
+            return _license.IsActivation;
+        }
+    }
+
 	/// <summary>
 	/// Gets a value that indicates if the current license has an Activation limit.
 	/// </summary>
@@ -108,16 +118,15 @@ internal class LicenseHelper : IDisposable
 		try
 		{
 			var info = new LicenseValidationRequestInfo();
-			info.DontShowForms = silent;
+			info.DontShowForms = !silent;
 
 #if DEBUG
 			// See http://xheo.com/knowledge-base/deploylx/licensing/enabling-developer-mode
-			info.DeveloperMode = true;
+			info.DeveloperMode = false;
 
 			// See http://xheo.com/knowledge-base/deploylx/licensing/how-to-testing-license-time-or-subscription-limits
-			// info.TestDate = DateTime.UtcNow.AddDays( 30 );
+			 info.TestDate = DateTime.UtcNow.AddDays( 30 );
 #endif
-
 			var license = SecureLicenseManager.Validate( this, null, info );
 
 			if( _license != null && license != _license )

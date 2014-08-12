@@ -1,5 +1,6 @@
 package com.jajeem.licensing;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class ActivationCode {
@@ -17,14 +18,18 @@ public class ActivationCode {
 
 	}
 
-	private String MakeActivationKey() {
-		return licenseInfo.get("hardwarekey") + licenseInfo.get("serialnumber");
+	private String MakeActivationKey() throws NoSuchAlgorithmException {
+		return getMd5(licenseInfo.get("hardwarekey") + licenseInfo.get("serialnumber"));
 	}
 
-	public void validate() throws InvalidActivationKey {
-		String localActivationKey = MakeActivationKey();
-		if (localActivationKey != activationCode) {
-			throw new InvalidActivationKey();
+	private String getMd5(String string) throws NoSuchAlgorithmException {
+		return LicenseEncryptionFunctions.getMd5(string);
+	}
+
+	public void validate() throws InvalidActivationKey, NoSuchAlgorithmException {
+		String localActivationKey = MakeActivationKey().toUpperCase();
+		if (!localActivationKey.equals(activationCode.toUpperCase())) {
+			throw new InvalidActivationKey("Invalid activation code.");
 		}
 	}
 }

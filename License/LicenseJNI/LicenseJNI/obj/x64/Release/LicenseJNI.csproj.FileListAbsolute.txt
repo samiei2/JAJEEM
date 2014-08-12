@@ -1,6 +1,0 @@
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Release\LicenseJNI.dll.config
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Release\LicenseJNI.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Release\LicenseJNI.pdb
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Release\DeployLX.Licensing.v4.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Release\LicenseJNI.dll
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Release\LicenseJNI.pdb

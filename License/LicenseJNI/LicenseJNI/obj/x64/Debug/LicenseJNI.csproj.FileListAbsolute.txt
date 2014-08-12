@@ -1,8 +1,8 @@
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\LicenseJNI.exe.config
+F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\clm.lic
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\LicenseJNI.exe
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\LicenseJNI.pdb
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\DeployLX.Licensing.v4.dll
+F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Debug\LicenseJNI.csprojResolveAssemblyReference.cache
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Debug\LicenseJNI.exe
 F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Debug\LicenseJNI.pdb
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\obj\x64\Debug\LicenseJNI.csprojResolveAssemblyReference.cache
-F:\Kar\Jajeem\jajeem\License\LicenseJNI\LicenseJNI\bin\x64\Debug\clm.lic

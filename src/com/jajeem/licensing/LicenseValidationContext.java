@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 import java.text.ParseException;
 
 import com.jajeem.licensing.exception.InvalidLicenseException;
+import com.jajeem.licensing.exception.InvalidLicenseTimeException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 import com.jajeem.licensing.exception.UninitializedLicenseException;
 import com.jajeem.licensing.exception.UninitializedLicensingContextException;
@@ -26,7 +27,7 @@ public class LicenseValidationContext {
 			IOException, InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException,
 			UninitializedLicenseException, ParseException,
-			GeneralSecurityException {
+			GeneralSecurityException, InvalidLicenseTimeException {
 		if (lic == null) {
 			lic = new License(this, licPath);
 		}

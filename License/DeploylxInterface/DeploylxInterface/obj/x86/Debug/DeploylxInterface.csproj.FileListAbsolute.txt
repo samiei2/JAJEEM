@@ -1,9 +1,0 @@
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\obj\x86\Debug\DeploylxInterface.csprojResolveAssemblyReference.cache
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\DeploylxInterface.exe.config
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\Keys\iCalabo.lsk
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\DeploylxInterface.exe
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\DeploylxInterface.pdb
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\DeployLX.Licensing.Management.v4.dll
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\bin\Debug\DeployLX.Licensing.v4.dll
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\obj\x86\Debug\DeploylxInterface.exe
-F:\Kar\Jajeem\jajeem\License\DeploylxInterface\DeploylxInterface\obj\x86\Debug\DeploylxInterface.pdb

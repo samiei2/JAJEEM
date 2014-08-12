@@ -1,9 +1,0 @@
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.WebService.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.WebService.pdb
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.Server.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.Server.pdb
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\bin\Activatar.pdb
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\obj\Debug\Activatar.WebService.csprojResolveAssemblyReference.cache
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\obj\Debug\Activatar.WebService.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar.WebService\obj\Debug\Activatar.WebService.pdb

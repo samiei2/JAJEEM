@@ -46,7 +46,7 @@ public class LoadingDialog2 extends JDialog {
 		setUndecorated(true);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setAlwaysOnTop(true);
+		setAlwaysOnTop(false);
 		System.setProperty("sun.java2d.noddraw", "true");
 		AWTUtilities.setWindowOpaque(this, false);
 		Toolkit.getDefaultToolkit().getScreenSize();

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
@@ -286,6 +287,8 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 
 				final Command cmd = (Command) o;
+				
+				InetAddress address = InetAddress.getByName(cmd.getFrom());
 
 //				System.out.println("Receiving ----> Command: " + cmd.getClass()
 //						+ " from: " + cmd.getFrom());
@@ -328,11 +331,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 						public void run() {
 							StartUpCommandHandler startUpHandler = new StartUpCommandHandler();
 							try {
-								new MemoryDiag();
-								long ts = System.nanoTime();
 								startUpHandler.run(cmd);
-								System.out.println("Startup : " + (System.nanoTime()-ts)/1000000000 + "seconds");
-								new MemoryDiag();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

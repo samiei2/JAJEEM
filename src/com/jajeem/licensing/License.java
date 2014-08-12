@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 
 import com.alee.utils.encryption.Base64;
 import com.jajeem.licensing.exception.InvalidLicenseException;
+import com.jajeem.licensing.exception.InvalidLicenseTimeException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 import com.jajeem.licensing.exception.UninitializedLicenseException;
 import com.jajeem.licensing.exception.UninitializedLicensingContextException;
@@ -27,7 +28,6 @@ import com.sun.jna.platform.win32.WinReg;
 
 public class License {
 
-	private boolean IsValid = false;
 	private String filePath;
 	private HashMap<String, String> licenseInfo;
 	private LicenseValidationContext context;
@@ -48,14 +48,20 @@ public class License {
 			throws LicenseServerErrorException, IOException,
 			InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException, ParseException,
-			GeneralSecurityException {
+			GeneralSecurityException, InvalidLicenseTimeException {
 		LicenseServer server = new LicenseServer();
-		if (server.isAvailable() && LicenseManager.getInstance().isOnlineValidationEnabled()) {
-			server.setLicensingContext(this.getContext());
-			server.validateOnline(this);
-		} else {
-			validateOffline(this);
+		try{
+			if (server.isAvailable() && LicenseManager.getInstance().isOnlineValidationEnabled()) {
+				server.setLicensingContext(this.getContext());
+				server.validateOnline(this);
+			} 
 		}
+		catch(LicenseServerErrorException e)
+		{
+			validateOffline(this);
+			throw e;
+		}
+		validateOffline(this);
 	}
 
 	private void createRegisteryKey(String json)
@@ -132,7 +138,9 @@ public class License {
 				Long.toString(System.currentTimeMillis()));
 		this.getLicenseInfo().put(LicenseConstants.INSTALL_MILIS,
 				Long.toString(System.currentTimeMillis()));
-
+		this.getLicenseInfo().put(LicenseConstants.USERS, LicenseConstants.NUMUSERS);
+		this.getLicenseInfo().put(LicenseConstants.STATUS, LicenseConstants.TRIAL);
+		
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date(System.currentTimeMillis()));
 		c.add(Calendar.DATE, Integer.parseInt(LicenseConstants.TRIAL_TIME)); // Default:
@@ -145,7 +153,7 @@ public class License {
 						.format(c.getTime()));
 		this.getLicenseInfo().put(LicenseConstants.TIME_LEFT,
 				LicenseConstants.TRIAL_TIME);
-		this.getLicenseInfo().put(LicenseConstants.Version, LicenseConstants.AppVersionNo);
+		this.getLicenseInfo().put(LicenseConstants.VERSION, LicenseConstants.APPVERSIONNO);
 		return fos;
 	}
 
@@ -161,7 +169,7 @@ public class License {
 						LicenseConstants.CLSID
 								+ LicenseEncryptionFunctions.getSecureHashKey()
 								+ LicenseConstants.IN_PROC_SERVER32)) {
-					throw new InvalidLicenseException();
+					throw new InvalidLicenseException("License tampering detected!");
 				}
 				FileOutputStream fos = initiateLicenseFile(licenseFile);
 
@@ -188,10 +196,6 @@ public class License {
 		return initialized;
 	}
 
-	public boolean isIsValid() {
-		return IsValid;
-	}
-
 	private void loadLicenseFromString(String licStr) throws IOException {
 		JsonConvert converter = new JsonConvert();
 		HashMap map2 = converter.ConvertFromJson(licStr, HashMap.class);
@@ -206,10 +210,6 @@ public class License {
 		this.filePath = filePath;
 	}
 
-	public void setValid(boolean isValid) {
-		IsValid = isValid;
-	}
-
 	public void setLicenseInfo(HashMap<String, String> respondedLicense) {
 		this.licenseInfo = respondedLicense;
 	}
@@ -218,9 +218,9 @@ public class License {
 			InvalidLicenseException, InvalidActivationKey,
 			UninitializedLicensingContextException,
 			UninitializedLicenseException, ParseException,
-			GeneralSecurityException {
+			GeneralSecurityException, InvalidLicenseTimeException {
 		if (!this.isInitialized()) {
-			throw new UninitializedLicenseException();
+			throw new UninitializedLicenseException("Uninitialized license exception!");
 		}
 		decryptLicFile();
 		checkLicenseValidity();
@@ -229,12 +229,11 @@ public class License {
 
 	private void validateOffline(License decLic)
 			throws InvalidLicenseException, InvalidActivationKey,
-			ParseException, GeneralSecurityException, IOException {
+			ParseException, GeneralSecurityException, IOException, InvalidLicenseTimeException {
 		LicenseValidator validator = new LicenseValidator();
 		decLic = validator.validate(decLic);
 		if(getLicenseInfo().containsKey(LicenseConstants.ACTIVATION_CODE))
 			setActivated(true);
-		IsValid = true;
 	}
 
 	boolean isActivated() {
@@ -254,14 +253,19 @@ public class License {
 		licServer.activateOnline(this);
 	}
 
-	public void saveLicenseInfo() throws GeneralSecurityException, IOException {
-		FileOutputStream fos = new FileOutputStream(this.getFilePath());
-		JsonConvert convert = new JsonConvert();
-		String json = convert.ConvertToJson(this.getLicenseInfo());
-		saveToRegistryEntry(json);
-		fos.write(LicenseEncryptionFunctions.encrypt(json));
-		fos.flush();
-		fos.close();
+	public void saveLicenseInfo() {
+		try{
+			FileOutputStream fos = new FileOutputStream(this.getFilePath());
+			JsonConvert convert = new JsonConvert();
+			String json = convert.ConvertToJson(this.getLicenseInfo());
+			saveToRegistryEntry(json);
+			fos.write(LicenseEncryptionFunctions.encrypt(json));
+			fos.flush();
+			fos.close();
+		}
+		catch(Exception e){
+			JOptionPane.showOptionDialog(null, e.getMessage(), "License Exception", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+		}
 	}
 	
 	private void saveToRegistryEntry(String json)

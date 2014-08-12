@@ -1,4 +1,0 @@
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar\bin\Debug\Activatar.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar\bin\Debug\Activatar.pdb
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar\obj\Debug\Activatar.dll
-F:\Kar\Jajeem\jajeem\License\Activatar v1.33\Activatar\obj\Debug\Activatar.pdb
