@@ -23,6 +23,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.DateFormat;
@@ -44,6 +45,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -83,6 +85,7 @@ import com.alee.utils.swing.Timer;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
+import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
@@ -124,6 +127,7 @@ public class InstructorNoa {
 	private static AVSendOnly sendOnly;
 	@SuppressWarnings("unused")
 	private static boolean transmitting;
+	private static boolean isSelectAllPcControllerSelected;
 	private static String transmittingType;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
@@ -520,13 +524,11 @@ public class InstructorNoa {
 					}
 				}
 
-				if (((JComponent) card).getClientProperty("viewMode").equals(
-						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
+				if(isSelectAllPcControllerSelected){
+					JInternalFrame[] allframe = getDesktopPane().getAllFrames();
+					for (int i = 0; i < allframe.length; i++) {
 						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
-
+						selectedStudent = (String) allframe[i].getClientProperty("ip");
 						try {
 							powerCommand = new PowerCommand(InetAddress
 									.getLocalHost().getHostAddress(), "",
@@ -540,29 +542,52 @@ public class InstructorNoa {
 							e.printStackTrace();
 						}
 					}
-				} else if (((JComponent) card).getClientProperty("viewMode")
-						.equals("groupView")) {
-					if (!groupList.isSelectionEmpty()) {
-						int groupIndex = groupList.getSelectedIndex();
-
-						Group group = groups.get(groupIndex);
-						if (group.getStudentIps().isEmpty()) {
-							return;
-						} else {
+				}
+				else{
+					if (((JComponent) card).getClientProperty("viewMode").equals(
+							"thumbView")) {
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
+	
 							try {
 								powerCommand = new PowerCommand(InetAddress
 										.getLocalHost().getHostAddress(), "",
-										Integer.parseInt(Config
-												.getParam("port")), "");
-								powerCommand.setType("logOff");
-
-								for (String studentIp : group.getStudentIps()) {
-									powerCommand.setTo(studentIp);
-									serverService.send(powerCommand);
-								}
+										Integer.parseInt(Config.getParam("port")),
+										"");
+								powerCommand.setTo(selectedStudent);
+								powerCommand.setType("turnOff");
+								serverService.send(powerCommand);
 							} catch (Exception e) {
 								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
+							}
+						}
+					} else if (((JComponent) card).getClientProperty("viewMode")
+							.equals("groupView")) {
+						if (!groupList.isSelectionEmpty()) {
+							int groupIndex = groupList.getSelectedIndex();
+	
+							Group group = groups.get(groupIndex);
+							if (group.getStudentIps().isEmpty()) {
+								return;
+							} else {
+								try {
+									powerCommand = new PowerCommand(InetAddress
+											.getLocalHost().getHostAddress(), "",
+											Integer.parseInt(Config
+													.getParam("port")), "");
+									powerCommand.setType("turnOff");
+	
+									for (String studentIp : group.getStudentIps()) {
+										powerCommand.setTo(studentIp);
+										serverService.send(powerCommand);
+									}
+								} catch (Exception e) {
+									JajeemExceptionHandler.logError(e);
+									e.printStackTrace();
+								}
 							}
 						}
 					}
@@ -592,12 +617,11 @@ public class InstructorNoa {
 					}
 				}
 
-				if (((JComponent) card).getClientProperty("viewMode").equals(
-						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
+				JInternalFrame[] allframe = getDesktopPane().getAllFrames();
+				if(isSelectAllPcControllerSelected){
+					for (int i = 0; i < allframe.length; i++) {
 						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
+						selectedStudent = (String) allframe[i].getClientProperty("ip");
 
 						try {
 							powerCommand = new PowerCommand(InetAddress
@@ -612,29 +636,52 @@ public class InstructorNoa {
 							e.printStackTrace();
 						}
 					}
-				} else if (((JComponent) card).getClientProperty("viewMode")
-						.equals("groupView")) {
-					if (!groupList.isSelectionEmpty()) {
-						int groupIndex = groupList.getSelectedIndex();
-
-						Group group = groups.get(groupIndex);
-						if (group.getStudentIps().isEmpty()) {
-							return;
-						} else {
+				}
+				else{
+					if (((JComponent) card).getClientProperty("viewMode").equals(
+							"thumbView")) {
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
+	
 							try {
 								powerCommand = new PowerCommand(InetAddress
 										.getLocalHost().getHostAddress(), "",
-										Integer.parseInt(Config
-												.getParam("port")), "");
+										Integer.parseInt(Config.getParam("port")),
+										"");
+								powerCommand.setTo(selectedStudent);
 								powerCommand.setType("logOff");
-
-								for (String studentIp : group.getStudentIps()) {
-									powerCommand.setTo(studentIp);
-									serverService.send(powerCommand);
-								}
+								serverService.send(powerCommand);
 							} catch (Exception e) {
 								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
+							}
+						}
+					} else if (((JComponent) card).getClientProperty("viewMode")
+							.equals("groupView")) {
+						if (!groupList.isSelectionEmpty()) {
+							int groupIndex = groupList.getSelectedIndex();
+	
+							Group group = groups.get(groupIndex);
+							if (group.getStudentIps().isEmpty()) {
+								return;
+							} else {
+								try {
+									powerCommand = new PowerCommand(InetAddress
+											.getLocalHost().getHostAddress(), "",
+											Integer.parseInt(Config
+													.getParam("port")), "");
+									powerCommand.setType("logOff");
+	
+									for (String studentIp : group.getStudentIps()) {
+										powerCommand.setTo(studentIp);
+										serverService.send(powerCommand);
+									}
+								} catch (Exception e) {
+									JajeemExceptionHandler.logError(e);
+									e.printStackTrace();
+								}
 							}
 						}
 					}
@@ -663,12 +710,11 @@ public class InstructorNoa {
 					}
 				}
 
-				if (((JComponent) card).getClientProperty("viewMode").equals(
-						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
+				JInternalFrame[] allframe = getDesktopPane().getAllFrames();
+				if(isSelectAllPcControllerSelected){
+					for (int i = 0; i < allframe.length; i++) {
 						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
+						selectedStudent = (String) allframe[i].getClientProperty("ip");
 
 						try {
 							powerCommand = new PowerCommand(InetAddress
@@ -676,36 +722,59 @@ public class InstructorNoa {
 									Integer.parseInt(Config.getParam("port")),
 									"");
 							powerCommand.setTo(selectedStudent);
-							powerCommand.setType("logOff");
+							powerCommand.setType("restart");
 							serverService.send(powerCommand);
 						} catch (Exception e) {
 							JajeemExceptionHandler.logError(e);
 							e.printStackTrace();
 						}
 					}
-				} else if (((JComponent) card).getClientProperty("viewMode")
-						.equals("groupView")) {
-					if (!groupList.isSelectionEmpty()) {
-						int groupIndex = groupList.getSelectedIndex();
-
-						Group group = groups.get(groupIndex);
-						if (group.getStudentIps().isEmpty()) {
-							return;
-						} else {
+				}
+				else{
+					if (((JComponent) card).getClientProperty("viewMode").equals(
+							"thumbView")) {
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
+	
 							try {
 								powerCommand = new PowerCommand(InetAddress
 										.getLocalHost().getHostAddress(), "",
-										Integer.parseInt(Config
-												.getParam("port")), "");
+										Integer.parseInt(Config.getParam("port")),
+										"");
+								powerCommand.setTo(selectedStudent);
 								powerCommand.setType("restart");
-
-								for (String studentIp : group.getStudentIps()) {
-									powerCommand.setTo(studentIp);
-									serverService.send(powerCommand);
-								}
+								serverService.send(powerCommand);
 							} catch (Exception e) {
 								JajeemExceptionHandler.logError(e);
 								e.printStackTrace();
+							}
+						}
+					} else if (((JComponent) card).getClientProperty("viewMode")
+							.equals("groupView")) {
+						if (!groupList.isSelectionEmpty()) {
+							int groupIndex = groupList.getSelectedIndex();
+	
+							Group group = groups.get(groupIndex);
+							if (group.getStudentIps().isEmpty()) {
+								return;
+							} else {
+								try {
+									powerCommand = new PowerCommand(InetAddress
+											.getLocalHost().getHostAddress(), "",
+											Integer.parseInt(Config
+													.getParam("port")), "");
+									powerCommand.setType("restart");
+	
+									for (String studentIp : group.getStudentIps()) {
+										powerCommand.setTo(studentIp);
+										serverService.send(powerCommand);
+									}
+								} catch (Exception e) {
+									JajeemExceptionHandler.logError(e);
+									e.printStackTrace();
+								}
 							}
 						}
 					}
@@ -731,15 +800,37 @@ public class InstructorNoa {
 			}
 		});
 
+		final WebCheckBox pcControlerSelectAllCheckBox = new WebCheckBox();
+		pcControlerSelectAllCheckBox.setHorizontalAlignment(SwingConstants.LEADING);
+		pcControlerSelectAllCheckBox.setHorizontalTextPosition(SwingConstants.TRAILING);
+		pcControlerSelectAllCheckBox.setText("Select All");
+		pcControlerSelectAllCheckBox.setMargin(new Insets(10, 0, 0, 0));
+		pcControlerSelectAllCheckBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				isSelectAllPcControllerSelected = pcControlerSelectAllCheckBox.isSelected();
+				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+				for (int i = 0; i < allframes.length; i++) {
+					JInternalFrame frame = allframes[i];
+					try {
+						frame.setSelected(true);
+						frame.putClientProperty("isselected", true);
+					} catch (PropertyVetoException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 		WebButtonPopup pcControllerPopupButton = new WebButtonPopup(
 				powerButton, PopupWay.upCenter);
 
 		GroupPanel pcControllerPopupContent = new GroupPanel(3, false,
-				powerOffButton, logOffButton, restartButton, lockButton);
+				powerOffButton, logOffButton, restartButton, lockButton, pcControlerSelectAllCheckBox);
 		pcControllerPopupContent.setMargin(10);
 
 		CustomPowerPanel panel = new CustomPowerPanel();
-		panel.setPreferredSize(new Dimension(160, 210));
+		panel.setPreferredSize(new Dimension(160, 230));
 		panel.add(pcControllerPopupContent);
 		pcControllerPopupButton.setMargin(5);
 		pcControllerPopupButton.setContent(panel);
@@ -1715,50 +1806,69 @@ public class InstructorNoa {
 
 	public static void LockAction() {
 		LockCommand lockCommand;
-		if (getDesktopPane().getSelectedFrame() != null) {
-			String selectedStudent = "";
-			selectedStudent = (String) getDesktopPane().getSelectedFrame()
-					.getClientProperty("ip");
-			try {
-				lockCommand = new LockCommand(InetAddress.getLocalHost()
-						.getHostAddress(), selectedStudent,
-						Integer.parseInt(Config.getParam("port")));
-				serverService.send(lockCommand);
-				if (!(boolean) getDesktopPane().getSelectedFrame()
-						.getClientProperty("lock")) {
-					getDesktopPane().getSelectedFrame().putClientProperty(
-							"lock", true);
-					getDesktopPane()
-							.getSelectedFrame()
-							.setFrameIcon(
-									new ImageIcon(
-											ImageIO.read(InstructorNoa.class
-													.getResourceAsStream("/icons/noa/lock.png"))));
+		JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+		if (isSelectAllPcControllerSelected){
+			for (int i = 0; i < allframes.length; i++) {
+				String selectedStudent = "";
+				selectedStudent = (String) allframes[i].getClientProperty("ip");
+				sendLockCommandTo(selectedStudent);
+			}
+		}
+		else{
+			if (getDesktopPane().getSelectedFrame() != null) {
+				String selectedStudent = "";
+				selectedStudent = (String) getDesktopPane().getSelectedFrame()
+						.getClientProperty("ip");
+				sendLockCommandTo(selectedStudent);
+			}
+		}
+	}
 
-				} else {
-					getDesktopPane().getSelectedFrame().putClientProperty(
-							"lock", false);
-					if (getDesktopPane().getSelectedFrame().isSelected()) {
-						getDesktopPane()
-								.getSelectedFrame()
-								.setFrameIcon(
-										new ImageIcon(
-												ImageIO.read(InstructorNoa.class
-														.getResourceAsStream("/icons/menubar/check.png"))));
-					} else {
-						getDesktopPane()
-								.getSelectedFrame()
-								.setFrameIcon(
-										new ImageIcon(
-												ImageIO.read(InstructorNoa.class
-														.getResourceAsStream("/icons/menubar/student.png"))));
-					}
-				}
-				// getDesktopPane().getSelectedFrame().updateUI();
+	private static void sendLockCommandTo(String selectedStudent) {
+		LockCommand lockCommand;
+		try {
+			lockCommand = new LockCommand(InetAddress.getLocalHost()
+					.getHostAddress(), selectedStudent,
+					Integer.parseInt(Config.getParam("port")));
+			serverService.send(lockCommand);
+			setLockIcon();
+			// getDesktopPane().getSelectedFrame().updateUI();
 
-			} catch (Exception e) {
-				JajeemExceptionHandler.logError(e);
-				e.printStackTrace();
+		} catch (Exception e) {
+			JajeemExceptionHandler.logError(e);
+			e.printStackTrace();
+		}
+	}
+
+	private static void setLockIcon() throws IOException {
+		if (!(boolean) getDesktopPane().getSelectedFrame()
+				.getClientProperty("lock")) {
+			getDesktopPane().getSelectedFrame().putClientProperty(
+					"lock", true);
+			getDesktopPane()
+					.getSelectedFrame()
+					.setFrameIcon(
+							new ImageIcon(
+									ImageIO.read(InstructorNoa.class
+											.getResourceAsStream("/icons/noa/lock.png"))));
+
+		} else {
+			getDesktopPane().getSelectedFrame().putClientProperty(
+					"lock", false);
+			if (getDesktopPane().getSelectedFrame().isSelected()) {
+				getDesktopPane()
+						.getSelectedFrame()
+						.setFrameIcon(
+								new ImageIcon(
+										ImageIO.read(InstructorNoa.class
+												.getResourceAsStream("/icons/menubar/check.png"))));
+			} else {
+				getDesktopPane()
+						.getSelectedFrame()
+						.setFrameIcon(
+								new ImageIcon(
+										ImageIO.read(InstructorNoa.class
+												.getResourceAsStream("/icons/menubar/student.png"))));
 			}
 		}
 	}
