@@ -61,10 +61,10 @@ public class StartUpCommandHandler implements ICommandHandler {
 							.getParam("serverPort"))) {
 				try{
 					
-					if (InstructorNoa.getDesktopPane().getAllFrames().length > Integer.parseInt(LicenseManager
-							.getInstance().getLicContext().getLicense()
-							.getLicenseInfo().get("users")))
-						return;
+//					if (InstructorNoa.getDesktopPane().getAllFrames().length > Integer.parseInt(LicenseManager
+//							.getInstance().getLicContext().getLicense()
+//							.getLicenseInfo().get("users")))
+//						return;
 					if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {
 						if (InstructorNoa.getDesktopPane() != null) {
 							InstructorNoaUtil.createFrame(
