@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class FirewallRuleList {
 	private static HashMap<String, String> rules = new HashMap<>();
 	
-	{
+	static {
 		rules.put("1", "netsh advfirewall set allprofiles state on");
 		rules.put("2", "netsh advfirewall set allprofiles firewallpolicy allowinbound,allowoutbound");
 		rules.put("3", "netsh advfirewall set allprofiles firewallpolicy blockinbound,allowoutbound");
