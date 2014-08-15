@@ -462,7 +462,7 @@ public class InstructorLogin {
 									}
 									load.setVisible(false);
 								}
-							}, 6000);
+							}, 0);
 						}
 					});
 					loading.start();
@@ -501,7 +501,7 @@ public class InstructorLogin {
 									}
 									frame.setVisible(true);
 								}
-							}, 5000);
+							}, 5500);
 						}
 					});
 					_t.start();
