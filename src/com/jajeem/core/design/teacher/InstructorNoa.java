@@ -24,12 +24,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +49,6 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -85,8 +88,8 @@ import com.alee.utils.swing.Timer;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
-import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.WebsiteCommand;
+import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
 import com.jajeem.core.model.Instructor;
@@ -95,7 +98,6 @@ import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
-import com.jajeem.util.COptionPane;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
@@ -106,8 +108,11 @@ import com.jajeem.util.CustomPanel;
 import com.jajeem.util.CustomPowerButton;
 import com.jajeem.util.CustomPowerPanel;
 import com.jajeem.util.CustomTopButton;
+import com.jajeem.util.FileUtil;
 import com.jajeem.util.JasperReport;
+import com.jajeem.util.LnkParser;
 import com.jajeem.util.Query;
+import com.jajeem.util.WinRegistry;
 import com.jajeem.util.i18n;
 
 public class InstructorNoa {
@@ -1035,7 +1040,7 @@ public class InstructorNoa {
 
 		});
 
-		CustomBottomButton programButton = new CustomBottomButton();
+		final CustomBottomButton programButton = new CustomBottomButton();
 
 		programButton.setIconTextGap(30);
 		programButton.putClientProperty("key", "program");
@@ -1049,6 +1054,284 @@ public class InstructorNoa {
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
+		programButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				final List<String> fileListModel = new ArrayList<String>();
+				try {
+					String pathToStartMenu = WinRegistry
+							.readString(
+									WinRegistry.HKEY_LOCAL_MACHINE,
+									"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
+									"Common Start Menu")
+							+ "\\Programs";
+
+					FileUtil fileUtil = new FileUtil();
+					final File[] tempfileList = fileUtil
+							.finder(pathToStartMenu);
+					final ArrayList<File> listOfAllLinks = new ArrayList<>();
+					final ArrayList<File> lnkList = new ArrayList<>();
+					final ArrayList<File> exeList = new ArrayList<>();
+					for (int i = 0; i < tempfileList.length; i++) {
+						if (tempfileList[i].isDirectory()) {
+							listOfAllLinks
+									.addAll(getPath(getDirectoryContent(tempfileList[i])));
+						} else {
+							listOfAllLinks.add(tempfileList[i]);
+						}
+					}
+
+					Collections.sort(listOfAllLinks);
+
+					for (int i = 0; i < listOfAllLinks.size(); i++) {
+						if (listOfAllLinks.get(i).getName().indexOf(".") != -1) {
+							String ext = listOfAllLinks
+									.get(i)
+									.getName()
+									.substring(
+											listOfAllLinks.get(i).getName()
+													.indexOf("."));
+//							String path = listOfAllLinks.get(i).getParent();
+//							String fileName = listOfAllLinks.get(i)
+//									.getName();
+							if (ext.equals(".lnk")) {
+								try {
+									LnkParser parser = new LnkParser(
+											listOfAllLinks.get(i));
+									if (parser.getRealFilename().contains(
+											".exe")) {
+										lnkList.add(listOfAllLinks.get(i));
+										exeList.add(new File(parser
+												.getRealFilename()));
+									}
+								} catch (Exception e) {
+
+								}
+							}
+							// System.out.println(new
+							// LnkParser(fileList[i]).getRealFilename());
+						}
+					}
+
+					final DefaultTableModel model = (new DefaultTableModel(
+							new Object[][] {}, new String[] { "Name",
+									"status" }) {
+						private static final long serialVersionUID = 1L;
+						Class[] columnTypes = new Class[] { String.class,
+								Boolean.class };
+
+						@Override
+						public Class getColumnClass(int columnIndex) {
+							return columnTypes[columnIndex];
+						}
+					});
+
+					for (int i = 0; i < lnkList.size(); i++) {
+						File file = lnkList.get(i);
+						if (file.getName().indexOf(".") != -1) {
+							String extension = file.getName().substring(
+									file.getName().indexOf("."));
+							if (extension.equals(".lnk")) {
+								fileListModel.add(exeList.get(i).getName());
+								model.addRow(new Object[] {
+										file.getParentFile().getName()
+												+ "\\"
+												+ file.getName()
+														.substring(
+																0,
+																file.getName()
+																		.length() - 4),
+										false });
+							}
+						}
+					}
+
+					final WebTable programsList = new WebTable();
+
+					programsList.setTableHeader(null);
+					programsList.setModel(model);
+					programsList.getColumnModel().getColumn(0)
+							.setResizable(false);
+					programsList.getColumnModel().getColumn(1)
+							.setResizable(false);
+					programsList.getColumnModel().getColumn(1)
+							.setPreferredWidth(30);
+					programsList.getColumnModel().getColumn(1)
+							.setMaxWidth(30);
+
+					WebButtonPopup programPopupButton = new WebButtonPopup(
+							(WebButton) programButton, PopupWay.upCenter);
+
+					CustomPowerPanel panel = new CustomPowerPanel();
+					GroupPanel programPopupContent = new GroupPanel(5,
+							false, new WebScrollPane(programsList));
+					programPopupContent.setMargin(5);
+					programPopupContent.setOpaque(false);
+					programsList.setOpaque(false);
+
+					panel.add(programPopupContent);
+					programPopupButton.setMargin(5);
+					programPopupButton.setContent(panel);
+
+					programsList.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent evt) {
+							boolean value = (boolean) programsList
+									.getValueAt(
+											programsList.getSelectedRow(),
+											1);
+
+							if (value == true) {
+								Component card = null;
+								for (Component comp : InstructorNoa
+										.getCenterPanel().getComponents()) {
+									if (comp.isVisible() == true) {
+										card = comp;
+									}
+								}
+
+								if (((JComponent) card).getClientProperty(
+										"viewMode").equals("thumbView")) {
+									try {
+										WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(),
+												Config.getParam("broadcastingIp"),
+												Integer.parseInt(Config
+														.getParam("port")),
+												(fileListModel.get(programsList
+														.getSelectedRow())),
+												true);
+										InstructorNoa.getServerService()
+												.send(ic);
+									} catch (Exception e) {
+										JajeemExceptionHandler.logError(e);
+										e.printStackTrace();
+									}
+								} else if (((JComponent) card)
+										.getClientProperty("viewMode")
+										.equals("groupView")) {
+									if (!InstructorNoa.getGroupList()
+											.isSelectionEmpty()) {
+										int groupIndex = InstructorNoa
+												.getGroupList()
+												.getSelectedIndex();
+
+										Group group = InstructorNoa
+												.getGroups()
+												.get(groupIndex);
+										if (group.getStudentIps().isEmpty()) {
+											return;
+										} else {
+
+											try {
+												WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+														InetAddress
+																.getLocalHost()
+																.getHostAddress(),
+														"",
+														Integer.parseInt(Config
+																.getParam("port")),
+														(fileListModel
+																.get(programsList
+																		.getSelectedRow())),
+														true);
+												for (String studentIp : group
+														.getStudentIps()) {
+													ic.setTo(studentIp);
+													InstructorNoa
+															.getServerService()
+															.send(ic);
+												}
+											} catch (Exception e) {
+												JajeemExceptionHandler
+														.logError(e);
+												e.printStackTrace();
+											}
+
+										}
+									}
+								}
+							} else {
+								Component card = null;
+								for (Component comp : InstructorNoa
+										.getCenterPanel().getComponents()) {
+									if (comp.isVisible() == true) {
+										card = comp;
+									}
+								}
+
+								if (((JComponent) card).getClientProperty(
+										"viewMode").equals("thumbView")) {
+									try {
+										WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+												InetAddress.getLocalHost()
+														.getHostAddress(),
+												Config.getParam("broadcastingIp"),
+												Integer.parseInt(Config
+														.getParam("port")),
+												(fileListModel.get(programsList
+														.getSelectedRow())),
+												false);
+										InstructorNoa.getServerService()
+												.send(ic);
+									} catch (Exception e) {
+										JajeemExceptionHandler.logError(e);
+										e.printStackTrace();
+									}
+								} else if (((JComponent) card)
+										.getClientProperty("viewMode")
+										.equals("groupView")) {
+									if (!InstructorNoa.getGroupList()
+											.isSelectionEmpty()) {
+										int groupIndex = InstructorNoa
+												.getGroupList()
+												.getSelectedIndex();
+
+										Group group = InstructorNoa
+												.getGroups()
+												.get(groupIndex);
+										if (group.getStudentIps().isEmpty()) {
+											return;
+										} else {
+
+											try {
+												WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+														InetAddress
+																.getLocalHost()
+																.getHostAddress(),
+														"",
+														Integer.parseInt(Config
+																.getParam("port")),
+														(fileListModel
+																.get(programsList
+																		.getSelectedRow())),
+														false);
+												for (String studentIp : group
+														.getStudentIps()) {
+													ic.setTo(studentIp);
+													InstructorNoa
+															.getServerService()
+															.send(ic);
+												}
+											} catch (Exception e) {
+												JajeemExceptionHandler
+														.logError(e);
+												e.printStackTrace();
+											}
+
+										}
+									}
+								}
+							}
+						}
+					});
+				} catch (Exception e) {
+
+				}
+			}
+		});
 		bottomButtonPanel.add(programButton);
 
 		CustomBottomButton programStartButton = new CustomBottomButton();
@@ -1805,7 +2088,6 @@ public class InstructorNoa {
 	}
 
 	public static void LockAction() {
-		LockCommand lockCommand;
 		JInternalFrame[] allframes = getDesktopPane().getAllFrames();
 		if (isSelectAllPcControllerSelected){
 			for (int i = 0; i < allframes.length; i++) {
@@ -2079,6 +2361,25 @@ public class InstructorNoa {
 
 	public static void setConversationIps(ArrayList<String> conversationIps) {
 		InstructorNoa.conversationIps = conversationIps;
+	}
+
+	protected ArrayList<File> getDirectoryContent(File file) {
+		ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
+		for (int i = 0; i < files.size(); i++) {
+			if (files.get(i).isDirectory()) {
+				files.addAll(getDirectoryContent(files.get(i)));
+			}
+		}
+		return files;
+	}
+
+	protected Collection<? extends File> getPath(
+			ArrayList<File> directoryContent) {
+		ArrayList<File> list = new ArrayList<>();
+		for (int i = 0; i < directoryContent.size(); i++) {
+			list.add(directoryContent.get(i));
+		}
+		return list;
 	}
 }
 

@@ -24,6 +24,7 @@ import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
 import com.jajeem.command.handler.FinishedSurveyCommandHandler;
 import com.jajeem.command.handler.GetCourseListCommandHandler;
+import com.jajeem.command.handler.GetProgramListCommandHandler;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
@@ -78,6 +79,7 @@ import com.jajeem.command.model.DuplicateLoginCommand;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.FinishedSurveyCommand;
 import com.jajeem.command.model.GetCourseListCommand;
+import com.jajeem.command.model.GetProgramListCommand;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
@@ -1013,6 +1015,20 @@ public class ClientService implements IConnectorSevice, Runnable {
 							RestartStudentProgramCommandHandler restartConversationCommand = new RestartStudentProgramCommandHandler();
 							try {
 								restartConversationCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
+				} else if (cmd instanceof GetProgramListCommand) {
+					pool.execute(new Runnable() {
+
+						@Override
+						public void run() {
+							GetProgramListCommandHandler getProgramListCommand = new GetProgramListCommandHandler();
+							try {
+								getProgramListCommand.run(cmd);
 							} catch (Exception e) {
 
 								e.printStackTrace();
