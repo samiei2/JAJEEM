@@ -27,7 +27,9 @@ public class SetInternetCommandHandler implements ICommandHandler {
 //			Runtime.getRuntime()
 //					.exec("kill `ps -ef | grep -i safari | grep -v grep | awk '{print $2}'`");
 //		}
-		
-		FirewallManager.BlockInternet();
+		if(FirewallManager.isBlocked())
+			FirewallManager.UnblockInternet();
+		else
+			FirewallManager.BlockInternet();
 	}
 }

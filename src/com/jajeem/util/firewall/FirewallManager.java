@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.jajeem.util.cmd.CmdPromt;
 
 public class FirewallManager {
+	private static boolean isBlocked;
+	
 	private static void applyRule(String rule){
 		CmdPromt cmd = new CmdPromt();
 		try {
@@ -41,26 +43,38 @@ public class FirewallManager {
 		}
 	}
 	
-	private static void getRuleList(){
+	private static String getRuleList(){
 		String rule = FirewallRuleList.getRuleList();
 		CmdPromt cmd = new CmdPromt();
 		try {
 			String result = cmd.getCommandResults(rule);
-			result = result;
+			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return "";
 	}
 	
-	private static boolean containsRule(){
-		return false;
+	private static boolean containsRule(String rule){
+		String result = getRuleList();
+		if (result.contains(rule)) {
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	public static boolean isBlocked(){
-		return false;
+		isBlocked = containsRule("BlockInternetTCP");
+		return isBlocked;
 	}
 	
 	public static void main(String[] s){
-		FirewallManager.getRuleList();
+		//FirewallManager.getRuleList();
+		System.out.println(isBlocked());
+		FirewallManager.BlockInternet();
+		System.out.println(isBlocked());
+		FirewallManager.UnblockInternet();
+		System.out.println(isBlocked());
 	}
 }
