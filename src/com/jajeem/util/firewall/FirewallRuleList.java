@@ -13,6 +13,7 @@ public class FirewallRuleList {
 		rules.put("5", "netsh advfirewall firewall add rule name=\"BlockInternetUDP\" protocol=UDP dir=out remoteport=1-1024 action=block");
 		rules.put("6", "netsh advfirewall firewall delete rule name=\"BlockInternetTCP\"");
 		rules.put("7", "netsh advfirewall firewall delete rule name=\"BlockInternetUDP\"");
+		rules.put("8", "netsh advfirewall firewall show rule name=all");
 	}
 
 	public static String[] getStartupList() {
@@ -29,5 +30,9 @@ public class FirewallRuleList {
 	
 	public static String[] getUnblockInternetList(){
 		return new String[] { rules.get("6"), rules.get("7")};
+	}
+	
+	public static String getRuleList(){
+		return rules.get("8");
 	}
 }

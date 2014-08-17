@@ -13,12 +13,7 @@ import com.jajeem.util.Threading.ThreadManager;
 
 public class CmdPromt {
 	public void runCommand(String command) throws IOException{
-		ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",
-				command);
-		builder.redirectErrorStream(true);
-		Process p = builder.start();
-		final BufferedReader r = new BufferedReader(new InputStreamReader(
-				p.getInputStream()));
+		final BufferedReader r = buildCommandProcess(command);
 		ThreadManager.getInstance().run(new Runnable() {
 			
 			@Override
@@ -41,5 +36,29 @@ public class CmdPromt {
 			}
 			System.out.println(line);
 		}
+	}
+
+	public String getCommandResults(String rule) throws IOException {
+		final BufferedReader r = buildCommandProcess(rule);
+		String results = "";
+		String line;
+		while (true) {
+			line = r.readLine();
+			if (line == null) {
+				break;
+			}
+			results += line;
+		}
+		return results;
+	}
+
+	private BufferedReader buildCommandProcess(String rule) throws IOException {
+		ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",
+				rule);
+		builder.redirectErrorStream(true);
+		Process p = builder.start();
+		final BufferedReader r = new BufferedReader(new InputStreamReader(
+				p.getInputStream()));
+		return r;
 	}
 }

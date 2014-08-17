@@ -40,4 +40,27 @@ public class FirewallManager {
 			applyRule(rules[i]);
 		}
 	}
+	
+	private static void getRuleList(){
+		String rule = FirewallRuleList.getRuleList();
+		CmdPromt cmd = new CmdPromt();
+		try {
+			String result = cmd.getCommandResults(rule);
+			result = result;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static boolean containsRule(){
+		return false;
+	}
+	
+	public static boolean isBlocked(){
+		return false;
+	}
+	
+	public static void main(String[] s){
+		FirewallManager.getRuleList();
+	}
 }
