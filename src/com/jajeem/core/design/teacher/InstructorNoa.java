@@ -24,12 +24,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +49,6 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -85,8 +88,8 @@ import com.alee.utils.swing.Timer;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
-import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.WebsiteCommand;
+import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
 import com.jajeem.core.model.Instructor;
@@ -95,7 +98,6 @@ import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
-import com.jajeem.util.COptionPane;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
@@ -106,8 +108,11 @@ import com.jajeem.util.CustomPanel;
 import com.jajeem.util.CustomPowerButton;
 import com.jajeem.util.CustomPowerPanel;
 import com.jajeem.util.CustomTopButton;
+import com.jajeem.util.FileUtil;
 import com.jajeem.util.JasperReport;
+import com.jajeem.util.LnkParser;
 import com.jajeem.util.Query;
+import com.jajeem.util.WinRegistry;
 import com.jajeem.util.i18n;
 
 public class InstructorNoa {
@@ -1035,7 +1040,7 @@ public class InstructorNoa {
 
 		});
 
-		CustomBottomButton programButton = new CustomBottomButton();
+		final CustomBottomButton programButton = new CustomBottomButton();
 
 		programButton.setIconTextGap(30);
 		programButton.putClientProperty("key", "program");
@@ -1049,6 +1054,7 @@ public class InstructorNoa {
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
+
 		bottomButtonPanel.add(programButton);
 
 		CustomBottomButton programStartButton = new CustomBottomButton();
@@ -1805,7 +1811,6 @@ public class InstructorNoa {
 	}
 
 	public static void LockAction() {
-		LockCommand lockCommand;
 		JInternalFrame[] allframes = getDesktopPane().getAllFrames();
 		if (isSelectAllPcControllerSelected){
 			for (int i = 0; i < allframes.length; i++) {
@@ -2080,6 +2085,8 @@ public class InstructorNoa {
 	public static void setConversationIps(ArrayList<String> conversationIps) {
 		InstructorNoa.conversationIps = conversationIps;
 	}
+
+	
 }
 
 class GradientPanel extends WebPanel {
