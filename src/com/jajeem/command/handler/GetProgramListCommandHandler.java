@@ -1,12 +1,17 @@
 package com.jajeem.command.handler;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
 import com.jajeem.command.model.Command;
+import com.jajeem.command.model.SendProgramListCommand;
+import com.jajeem.core.design.student.StudentLogin;
+import com.jajeem.exception.JajeemExceptionHandler;
+import com.jajeem.util.Config;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.LnkParser;
 import com.jajeem.util.WinRegistry;
@@ -64,6 +69,19 @@ public class GetProgramListCommandHandler implements ICommandHandler {
 					}
 				}
 			}
+			
+			SendProgramListCommand sendProgramsCmd;
+			try {
+				sendProgramsCmd = new SendProgramListCommand(InetAddress
+						.getLocalHost().getHostAddress(), StudentLogin
+						.getServerIp(), Integer.parseInt(Config
+						.getParam("serverPort")),lnkList,exeList);
+				if(StudentLogin.getServerService()!=null)
+					StudentLogin.getServerService().send(sendProgramsCmd);
+			} catch (Exception e1) {
+				JajeemExceptionHandler.logError(e1);
+				e1.printStackTrace();
+			} 
 		}
 		catch(Exception e){
 			
