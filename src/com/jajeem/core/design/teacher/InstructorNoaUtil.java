@@ -2726,6 +2726,7 @@ class ProgramRestrictListInitializer implements ActionListener{
 	static Object lock = new Object(); 
 	
 	public ProgramRestrictListInitializer(WebButton btn){
+		this.button = btn;
 		programPopupButton = new WebButtonPopup(
 				(WebButton) button,
 				PopupWay.upCenter);
