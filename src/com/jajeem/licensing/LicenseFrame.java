@@ -152,6 +152,8 @@ public class LicenseFrame extends JFrame {
 		JLabel lblVersion_1 = new JLabel("Version : ");
 		
 		lblTimeleft = new JLabel(" ");
+		
+		JLabel lblDays = new JLabel("days");
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -162,20 +164,22 @@ public class LicenseFrame extends JFrame {
 							.addComponent(lblTimeLeft)
 							.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
 							.addComponent(lblTimeleft)
-							.addPreferredGap(ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(lblDays)
+							.addPreferredGap(ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
 							.addComponent(lblVersion_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblVersion))
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(label_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-								.addComponent(label, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+								.addComponent(label_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+								.addComponent(label, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
 								.addComponent(label_3))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField_name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-								.addComponent(textField_phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-								.addComponent(textField_company, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))))
+								.addComponent(textField_name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+								.addComponent(textField_phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+								.addComponent(textField_company, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
@@ -186,8 +190,9 @@ public class LicenseFrame extends JFrame {
 						.addComponent(lblTimeLeft)
 						.addComponent(lblVersion)
 						.addComponent(lblVersion_1)
-						.addComponent(lblTimeleft))
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+						.addComponent(lblTimeleft)
+						.addComponent(lblDays))
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label))
