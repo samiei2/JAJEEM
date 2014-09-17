@@ -423,10 +423,10 @@ public class FileAssignmentTab extends JPanel {
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
 							try {
+								
 								WebOptionPane.showMessageDialog(null,
 										i18n.getParam("No student is selected!"));
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							ips = null;
