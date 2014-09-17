@@ -35,14 +35,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
-import org.omg.CORBA.Environment;
-
 import com.alee.laf.WebLookAndFeel;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExceptionHandler;
-import com.jajeem.licensing.JNI4NETLicense;
-import com.jajeem.licensing.LicenseManager;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.ui.combobox.JajeemComboBox;
