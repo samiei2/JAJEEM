@@ -25,6 +25,7 @@ public class LicenseManager {
 	LicenseFrame frame;
 	private boolean isOnlineValidationEnabled = true;
 	private LicenseValidationContext licContext;
+	private String localLicPath;
 
 	public static LicenseManager getInstance() {
 		if (manager == null) {
@@ -55,6 +56,7 @@ public class LicenseManager {
 	}
 
 	public void Validate(String licPath) {
+		localLicPath = licPath;
 		licContext = new LicenseValidationContext(this);
 		try {
 			licContext = licContext.validate(licPath);
@@ -202,5 +204,17 @@ public class LicenseManager {
 
 	public void setLicContext(LicenseValidationContext licContext) {
 		this.licContext = licContext;
+	}
+
+	public void revalidate() {
+		if(!localLicPath.isEmpty())
+			Validate(localLicPath);
+	}
+
+	public void saveInfoOffline(String Name, String Company, String Phone) {
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.NAME, Name);
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.COMPANY, Company);
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.PHONE, Phone);
+		licContext.getLicense().saveLicenseInfo();
 	}
 }

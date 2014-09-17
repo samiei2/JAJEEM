@@ -230,6 +230,9 @@ public class LicenseFrame extends JFrame {
 		btnActivateOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+					}
 					LicenseManager.getInstance().ActivateOnline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
 				} catch (GeneralSecurityException e1) {
 					JOptionPane.showMessageDialog(null, "Security exception occured.License was not saved!");
@@ -253,6 +256,9 @@ public class LicenseFrame extends JFrame {
 		btnActivateOffline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+					}
 					LicenseManager.getInstance().ActivateOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText(),textField_Activation.getText());
 					JOptionPane.showMessageDialog(null, "Product Activated!\nEnjoy the program!");
 					setVisible(false);
@@ -266,6 +272,11 @@ public class LicenseFrame extends JFrame {
 		btnContinueTrial = new JButton("Continue Trial");
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+//				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+//					JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+//				}
+//				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
+				
 				dispose();
 			}
 		});
