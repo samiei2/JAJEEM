@@ -423,13 +423,17 @@ public class FileAssignmentTab extends JPanel {
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
 							try {
+								FileAssignmentTabStudentList studentListForm = new FileAssignmentTabStudentList();
+								studentListForm.setVisible(true);
+								ips = new ArrayList<>();
+								ips.addAll(studentListForm.getListofIps());
+//								WebOptionPane.showMessageDialog(null,
+//										i18n.getParam("No student is selected!"));
 								
-								WebOptionPane.showMessageDialog(null,
-										i18n.getParam("No student is selected!"));
 							} catch (Exception e) {
 								e.printStackTrace();
+								ips= null;
 							}
-							ips = null;
 						}
 					}
 
@@ -444,7 +448,7 @@ public class FileAssignmentTab extends JPanel {
 						return;
 					}
 					try {
-
+						progwin.setVisible(true);
 						for (int i = 0; i < ips.size(); i++) { // send for all
 																// selected
 																// clients
@@ -524,7 +528,6 @@ public class FileAssignmentTab extends JPanel {
 				}
 			});
 			fileSender.start();
-			progwin.setVisible(true);
 		} catch (Exception e) {
 			JajeemExceptionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);
