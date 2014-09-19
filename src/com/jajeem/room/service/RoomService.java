@@ -104,5 +104,4 @@ public class RoomService implements IRoomService {
 	public void setCourseDAO(CourseDAO courseDAO) {
 		this.courseDAO = courseDAO;
 	}
-
 }

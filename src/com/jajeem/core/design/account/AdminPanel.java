@@ -69,6 +69,7 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+
 import javax.swing.ImageIcon;
 
 @SuppressWarnings("deprecation")
@@ -780,11 +781,9 @@ public class AdminPanel extends CustomAccountFrame {
 
 		WebPanel bottomPanel = new WebPanel();
 		bottomPanel.setOpaque(false);
-		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
-		bottomPanel.add(buttonPanel);
 
 		CustomAccountButton addButton = new CustomAccountButton(
 				"/icons/noa_en/accountadd.png");
@@ -875,69 +874,53 @@ public class AdminPanel extends CustomAccountFrame {
 		});
 
 		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
+		
+		WebButton wbtnCourses = new WebButton((String) null);
+		wbtnCourses.setText("Courses");
+		wbtnCourses.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				InstructorCourseList courseListForm;
+				try {
+					courseListForm = new InstructorCourseList(instructorSelectionModel.getSelected().get(0));
+					courseListForm.setVisible(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
-		gl_buttonPanel.setHorizontalGroup(gl_buttonPanel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_buttonPanel
-						.createSequentialGroup()
-						.addGap(5)
-						.addComponent(addButton, GroupLayout.PREFERRED_SIZE,
-								90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE,
-								76, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 27,
-								Short.MAX_VALUE)
-						.addComponent(quizButton, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(databaseManager,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE).addContainerGap()));
-		gl_buttonPanel
-				.setVerticalGroup(gl_buttonPanel
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_buttonPanel
-										.createSequentialGroup()
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGroup(
-												gl_buttonPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_buttonPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				databaseManager,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				quizButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				29,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_buttonPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				addButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				34,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				deleteButton,
-																				GroupLayout.PREFERRED_SIZE,
-																				32,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+		gl_buttonPanel.setHorizontalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addGap(5)
+					.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+					.addComponent(wbtnCourses, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_buttonPanel.setVerticalGroup(
+			gl_buttonPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_buttonPanel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_buttonPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(wbtnCourses, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(databaseManager, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_buttonPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 		buttonPanel.setLayout(gl_buttonPanel);
 		databaseManager.addActionListener(new ActionListener() {
 
@@ -956,7 +939,6 @@ public class AdminPanel extends CustomAccountFrame {
 
 		JPanel paginationPanel = new JPanel();
 		paginationPanel.setOpaque(false);
-		bottomPanel.add(paginationPanel);
 
 		WebButton nextButton = new WebButton(i18n.getParam("Export to pdf"));
 		nextButton.setForeground(Color.DARK_GRAY);
@@ -1056,6 +1038,24 @@ public class AdminPanel extends CustomAccountFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE))
 		);
+		GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
+		gl_bottomPanel.setHorizontalGroup(
+			gl_bottomPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_bottomPanel.createSequentialGroup()
+					.addComponent(buttonPanel, GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(paginationPanel, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+					.addGap(0))
+		);
+		gl_bottomPanel.setVerticalGroup(
+			gl_bottomPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_bottomPanel.createSequentialGroup()
+					.addGroup(gl_bottomPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(paginationPanel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		bottomPanel.setLayout(gl_bottomPanel);
 		panel.setLayout(gl_panel);
 		instructorTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 

@@ -7,17 +7,15 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,22 +41,16 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.text.WebTextField;
-import com.jajeem.core.model.Student;
-import com.jajeem.core.service.StudentCourseService;
-import com.jajeem.exception.JajeemExceptionHandler;
+import com.jajeem.core.model.Instructor;
+import com.jajeem.core.service.InstructorCourseService;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
-import com.jajeem.util.JasperReport;
 import com.jajeem.util.MultiLineCellRenderer;
-import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
 
-public class StudentCourseDialog extends BaseAccountFrame {
+public class InstructorCourseList extends BaseAccountFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private final JPanel contentPanel = new JPanel();
@@ -66,21 +58,21 @@ public class StudentCourseDialog extends BaseAccountFrame {
 	private EventList<Course> courseList = new BasicEventList<Course>();
 	private EventSelectionModel<Course> courseSelectionModel;
 
-	private Student student;
-	private StudentCourseService studentCourseService = new StudentCourseService();
+	private Instructor instructor;
+	private InstructorCourseService instructorCourseService = new InstructorCourseService();
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @throws Exception
 	 */
-	public StudentCourseDialog(final Student student) throws Exception {
+	public InstructorCourseList(final Instructor instructor) throws Exception {
 		setTitle("Courses");
 
 		new Config();
 		new i18n();
 
-		this.student = student;
+		this.instructor = instructor;
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(400, 100, 631, 673);
@@ -96,91 +88,45 @@ public class StudentCourseDialog extends BaseAccountFrame {
 				JPanel panel = new JPanel();
 				buttonPane.add(panel);
 				
-				CustomAccountButton quizButton = new CustomAccountButton("/icons/noa_en/accountcourse.png");
-				quizButton.addActionListener(new ActionListener() {
-					@SuppressWarnings("deprecation")
-					public void actionPerformed(ActionEvent arg0) {
-						if (!courseSelectionModel.isSelectionEmpty()) {
-							if (courseSelectionModel.getSelected().size() > 1) {
-								JOptionPane.showMessageDialog(null,
-										"Please select one student.", "Message",
-										JOptionPane.INFORMATION_MESSAGE);
-							} else {
-								Course course = courseSelectionModel.getSelected()
-										.get(0);
-								try {
-									new StudentQuizDialog(student,course);
-								} catch (Exception e1) {
-									JajeemExceptionHandler.logError(e1);
-									e1.printStackTrace();
-								}
-							}
-						}
-						else{
-							JOptionPane.showMessageDialog(null,
-									"Please select one student.", "Message",
-									JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				});
-				
-				quizButton.setUndecorated(true);
-				quizButton.setText(i18n.getParam("Quizes"));
-				quizButton.setMargin(new Insets(0, 5, 0, 0));
-				quizButton.setHorizontalTextPosition(SwingConstants.LEFT);
-				quizButton.setHorizontalAlignment(SwingConstants.LEFT);
-				
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(
 					gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(181, Short.MAX_VALUE))
+						.addGap(0, 295, Short.MAX_VALUE)
 				);
 				gl_panel.setVerticalGroup(
-					gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addContainerGap(24, Short.MAX_VALUE)
-							.addComponent(quizButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
+					gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGap(0, 69, Short.MAX_VALUE)
 				);
 				panel.setLayout(gl_panel);
 			}
 			{
 				JPanel panel = new JPanel();
 				buttonPane.add(panel);
+				
+				CustomAccountButton cstmcntbtnOk = new CustomAccountButton("/icons/noa_en/accountokbutton.png");
+				cstmcntbtnOk.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
+				cstmcntbtnOk.setUndecorated(true);
 				{
-					CustomAccountButton okButton = new CustomAccountButton("/icons/noa_en/accountpdf.png");
-					okButton.setUndecorated(true);
 					GroupLayout gl_panel = new GroupLayout(panel);
 					gl_panel.setHorizontalGroup(
 						gl_panel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addGap(230)
-								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+								.addContainerGap(237, Short.MAX_VALUE)
+								.addComponent(cstmcntbtnOk, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
 					);
 					gl_panel.setVerticalGroup(
 						gl_panel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+								.addContainerGap(18, Short.MAX_VALUE)
+								.addComponent(cstmcntbtnOk, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
 					);
 					panel.setLayout(gl_panel);
-					okButton.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent arg0) {
-							String timeStamp = new SimpleDateFormat(
-									"yyyy-MM-dd_HH-mm").format(Calendar
-									.getInstance().getTime());
-							JasperReport.generate("CoursesByStudent",
-									student.getFullName() + "_" + timeStamp,
-									Query.courseByStudent(student.getId()));
-						}
-					});
 				}
 			}
 		}
@@ -191,8 +137,8 @@ public class StudentCourseDialog extends BaseAccountFrame {
 	}
 
 	private void loadData() throws SQLException {
-		ArrayList<Course> courseList = studentCourseService
-				.getStudentCoursesById(student.getId());
+		ArrayList<Course> courseList = instructorCourseService
+				.getInstructorCoursesById(instructor.getId());
 		getCourseList().addAll(courseList);
 	}
 
