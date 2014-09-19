@@ -320,10 +320,10 @@ public class FileSendTab extends JPanel {
 										.getClientProperty("ip")));
 							} else {
 								try {
-									WebOptionPane.showMessageDialog(null,
-											i18n.getParam("No student is selected!"));
-									progwin.setVisible(false);
-									return;
+									FileAssignmentTabStudentList studentListForm = new FileAssignmentTabStudentList();
+									studentListForm.setVisible(true);
+									ips = new ArrayList<>();
+									ips.addAll(studentListForm.getListofIps());
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -346,6 +346,7 @@ public class FileSendTab extends JPanel {
 					}
 					System.out.println("Ips Count : " + ips.size());
 					try {
+						progwin.setVisible(true);
 						for (int i = 0; i < ips.size(); i++) { // send for all
 																// selected
 																// clients
@@ -425,7 +426,7 @@ public class FileSendTab extends JPanel {
 				}
 			});
 			fileSender.start();
-			progwin.setVisible(true);
+//			progwin.setVisible(true);
 			// confirmationDialog.setVisible(true);
 			// System.out.println(dialog.getValue().toString());
 			// int command = dialog.getValue() instanceof String &&
