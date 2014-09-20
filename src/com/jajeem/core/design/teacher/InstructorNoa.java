@@ -47,6 +47,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -128,6 +129,7 @@ public class InstructorNoa {
 	@SuppressWarnings("unused")
 	private static boolean transmitting;
 	private static boolean isSelectAllPcControllerSelected;
+	private static boolean isSelectAllinternetBlockSelected;
 	private static String transmittingType;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
@@ -852,13 +854,37 @@ public class InstructorNoa {
 				i18n.getParam("BlockInternet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
+		
+		final WebCheckBox internetBlockSelectAllCheckBox = new WebCheckBox();
+		internetBlockSelectAllCheckBox.setHorizontalAlignment(SwingConstants.LEADING);
+		internetBlockSelectAllCheckBox.setHorizontalTextPosition(SwingConstants.TRAILING);
+		internetBlockSelectAllCheckBox.setText("Select All");
+		internetBlockSelectAllCheckBox.setMargin(new Insets(10, 0, 0, 0));
+		internetBlockSelectAllCheckBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				isSelectAllinternetBlockSelected = internetBlockSelectAllCheckBox.isSelected();
+				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+				for (int i = 0; i < allframes.length; i++) {
+					JInternalFrame frame = allframes[i];
+					try {
+						frame.setSelected(true);
+						frame.putClientProperty("isselected", true);
+					} catch (PropertyVetoException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		JSeparator seperator = new JSeparator();
 
 		final WebCheckBox sendToAllWebCheckBox = new WebCheckBox();
 		sendToAllWebCheckBox.setText("Send to All");
 
 		CustomPowerPanel internetContentPanel = new CustomPowerPanel();
 		GroupPanel InternetPopupContent = new GroupPanel(5, false,
-				internetBlockButton, WebsiteTextField,
+				internetBlockButton,internetBlockSelectAllCheckBox,seperator, WebsiteTextField,
 				internetSendWebsiteButton, sendToAllWebCheckBox);
 		InternetPopupContent.setMargin(15);
 
@@ -988,20 +1014,39 @@ public class InstructorNoa {
 
 				if (((JComponent) card).getClientProperty("viewMode").equals(
 						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
-						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
+					if(isSelectAllinternetBlockSelected){
+						for (int i = 0; i < getDesktopPane().getAllFrames().length; i++) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getAllFrames()[i].getClientProperty("ip");
+							try {
+								InternetCommand ic = new InternetCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										selectedStudent, Integer.parseInt(Config
+												.getParam("port")));
+								serverService.send(ic);
+							} catch (Exception e) {
+								JajeemExceptionHandler.logError(e);
+								e.printStackTrace();
+							}
+						}
+					}
+					else{
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
 
-						try {
-							InternetCommand ic = new InternetCommand(
-									InetAddress.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")));
-							serverService.send(ic);
-						} catch (Exception e) {
-							JajeemExceptionHandler.logError(e);
-							e.printStackTrace();
+							try {
+								InternetCommand ic = new InternetCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										selectedStudent, Integer.parseInt(Config
+												.getParam("port")));
+								serverService.send(ic);
+							} catch (Exception e) {
+								JajeemExceptionHandler.logError(e);
+								e.printStackTrace();
+							}
 						}
 					}
 				} else if (((JComponent) card).getClientProperty("viewMode")
