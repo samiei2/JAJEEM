@@ -272,10 +272,10 @@ public class LicenseFrame extends JFrame {
 		btnContinueTrial = new JButton("Continue Trial");
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
-//					JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
-//				}
-//				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
+				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+				}
+				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
 				
 				dispose();
 			}

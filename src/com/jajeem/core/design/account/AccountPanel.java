@@ -150,6 +150,7 @@ public class AccountPanel extends BaseAccountFrame {
 		);
 		panel.setLayout(gl_panel);
 		getMainContentPane().setLayout(groupLayout);
+		pack();
 	}
 	
 	private void loadData() throws SQLException {

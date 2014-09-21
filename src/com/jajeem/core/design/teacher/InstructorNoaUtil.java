@@ -793,7 +793,8 @@ public class InstructorNoaUtil {
 	
 										new AccountPanel(InstructorNoa
 												.getInstructorModel(),
-												InstructorNoa.getCourseModel());
+												InstructorNoa.getCourseModel()).setVisible(true);
+										
 									}
 								}
 								else{

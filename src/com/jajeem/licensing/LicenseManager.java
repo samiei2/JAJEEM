@@ -1,5 +1,6 @@
 package com.jajeem.licensing;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import com.jajeem.licensing.exception.InvalidLicenseTimeException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 import com.jajeem.licensing.util.JsonConvert;
+import com.sun.jna.platform.win32.Win32Exception;
 
 
 
@@ -75,6 +77,14 @@ public class LicenseManager {
 			licContext.getLicense().saveLicenseInfo();
 			System.out.println("Error code: " + e.getErrorCode());
 //			JOptionPane.showOptionDialog(null, "Server license error.", "License Exception", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+		}
+		catch(Win32Exception e){
+			System.out.println("Error code: " + e.getLocalizedMessage());
+			JOptionPane.showOptionDialog(null, "Admin permissions are required for using this application.Please contact support for more info.\nProgram will exit now!", "License Exception", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+			File licFile = new File(licPath);
+			if(licFile.exists())
+				licFile.delete();
+			System.exit(0);
 		}
 		catch (Exception e) {
 			licContext.getLicense().saveLicenseInfo();
