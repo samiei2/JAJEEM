@@ -327,8 +327,9 @@ public class FileSendTab extends JPanel {
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									progwin.setVisible(false);
+									ips = null;
 								}
-								ips = null;
 							}
 						}
 					}
@@ -346,7 +347,6 @@ public class FileSendTab extends JPanel {
 					}
 					System.out.println("Ips Count : " + ips.size());
 					try {
-						progwin.setVisible(true);
 						for (int i = 0; i < ips.size(); i++) { // send for all
 																// selected
 																// clients
@@ -426,7 +426,7 @@ public class FileSendTab extends JPanel {
 				}
 			});
 			fileSender.start();
-//			progwin.setVisible(true);
+			progwin.setVisible(true);
 			// confirmationDialog.setVisible(true);
 			// System.out.println(dialog.getValue().toString());
 			// int command = dialog.getValue() instanceof String &&

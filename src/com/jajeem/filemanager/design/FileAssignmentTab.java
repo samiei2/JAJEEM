@@ -451,7 +451,6 @@ public class FileAssignmentTab extends JPanel {
 						return;
 					}
 					try {
-						progwin.setVisible(true);
 						for (int i = 0; i < ips.size(); i++) { // send for all
 																// selected
 																// clients
@@ -531,6 +530,7 @@ public class FileAssignmentTab extends JPanel {
 				}
 			});
 			fileSender.start();
+			progwin.setVisible(true);
 		} catch (Exception e) {
 			JajeemExceptionHandler.logError(e);
 			new FileTransferEvent().fireFailure(null, FileAssignmentTab.class);

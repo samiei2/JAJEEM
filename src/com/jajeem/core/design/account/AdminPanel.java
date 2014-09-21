@@ -90,7 +90,7 @@ public class AdminPanel extends CustomAccountFrame {
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-
+//
 	public AdminPanel() throws Exception {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

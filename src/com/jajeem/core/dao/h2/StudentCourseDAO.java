@@ -470,9 +470,9 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QUIZRUN WHERE STUDENTID=? AND COURSEID=?");
-		ps.setInt(1, id);
-		ps.setInt(2, courseId);
+		ps = con.prepareStatement("SELECT * FROM QUIZRUN");
+//		ps.setInt(1, id);
+//		ps.setInt(2, courseId);
 
 		try {
 			rs = ps.executeQuery();

@@ -55,6 +55,7 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class StudentQuizDialog extends BaseAccountFrame {
 
@@ -109,21 +110,17 @@ public class StudentQuizDialog extends BaseAccountFrame {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable courseTable = new JTable();
 
 		jScrollPane1.setViewportView(courseTable);
-		panel.add(jScrollPane1);
 
 		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
 		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
 
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JLabel filterLabel = new JLabel(i18n.getParam("Quiz Results") + ": ");
@@ -173,6 +170,57 @@ public class StudentQuizDialog extends BaseAccountFrame {
 
 		StripedTableCellRenderer.installInTable(courseTable, Color.lightGray,
 				Color.white, null, null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(topPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+						.addComponent(jScrollPane1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+		);
+		
+		CustomAccountButton cstmcntbtnDelete = new CustomAccountButton("/icons/noa_en/accountcourse.png");
+		cstmcntbtnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		cstmcntbtnDelete.setUndecorated(true);
+		cstmcntbtnDelete.setText("Delete");
+		cstmcntbtnDelete.setMargin(new Insets(0, 5, 0, 0));
+		cstmcntbtnDelete.setHorizontalTextPosition(SwingConstants.LEFT);
+		cstmcntbtnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cstmcntbtnDelete, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(479, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cstmcntbtnDelete, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_1.setLayout(gl_panel_1);
+		panel.setLayout(gl_panel);
 
 		return panel;
 	}
