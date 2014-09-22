@@ -97,6 +97,7 @@ public class StudentQuizDialog extends BaseAccountFrame {
 
 		loadData();
 		getMainContentPane().add(initCourse());
+		pack();
 	}
 
 	private void loadData() throws SQLException {
@@ -235,6 +236,7 @@ public class StudentQuizDialog extends BaseAccountFrame {
 
 	public class CourseTableFormat implements TableFormat<Run>,
 			WritableTableFormat<Run> {
+		int localCounter = 0;
 
 		@Override
 		public int getColumnCount() {
@@ -266,18 +268,18 @@ public class StudentQuizDialog extends BaseAccountFrame {
 		public Object getColumnValue(Run course, int column) {
 
 			if (column == 0) {
-				return course.getId();
+				return ++localCounter;
 			}
 			if (column == 1) {
 				return course.getInstructor().getFullName();
 			} else if (column == 2) {
 				Date date = new Date(course.getStart());
-				DateFormat formatter = new SimpleDateFormat("YYYY/MM/DD HH:mm");
+				DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 				String dateFormatted = formatter.format(date);
 				return dateFormatted;
 			} else if (column == 3) {
 				Date date = new Date(course.getEnd());
-				DateFormat formatter = new SimpleDateFormat("YYYY/MM/DD HH:mm");
+				DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 				String dateFormatted = formatter.format(date);
 				return dateFormatted;
 			} else if (column == 4) {

@@ -470,9 +470,9 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QUIZRUN");
-//		ps.setInt(1, id);
-//		ps.setInt(2, courseId);
+		ps = con.prepareStatement("SELECT * FROM QUIZRUN WHERE QUIZRUN.studentid=? AND QUIZRUN.sessionid=?");
+		ps.setInt(1, id);
+		ps.setInt(2, courseId);
 
 		try {
 			rs = ps.executeQuery();
@@ -481,12 +481,12 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 
 				int insId = rs.getInt("instructorId");
 				quizRun.setInstructorId(insId);
-				Instructor instructor = instructordao.getById(courseId);
+				Instructor instructor = instructordao.getById(insId);
 				quizRun.setInstructor(instructor);
 				quizRun.setInstructorId(insId);
 				quizRun.setStart(rs.getLong("start"));
 				quizRun.setEnd(rs.getLong("end"));
-				quizRun.setStart(rs.getLong("score"));
+				quizRun.setScore(rs.getInt("score"));
 
 				allQuizes.add(quizRun);
 			}

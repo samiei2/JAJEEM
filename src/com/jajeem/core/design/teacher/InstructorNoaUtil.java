@@ -627,7 +627,7 @@ public class InstructorNoaUtil {
 											FileManagerMain main = new FileManagerMain();
 											main.setReceivingIps(new ArrayList<>(
 													group.getStudentIps()));
-											main.setVisible(true);
+//											main.setVisible(true);
 										} catch (Exception e) {
 											JajeemExceptionHandler.logError(e);
 										}
@@ -639,7 +639,7 @@ public class InstructorNoaUtil {
 									FileManagerMain main = new FileManagerMain();
 									main.setReceivingIps(new ArrayList<String>(
 											Arrays.asList(ip)));
-									main.setVisible(true);
+//									main.setVisible(true);
 								} else {
 									FileManagerMain main = new FileManagerMain();
 									ArrayList<String> ips = new ArrayList<>();
@@ -653,7 +653,7 @@ public class InstructorNoaUtil {
 										ips.add(sip);
 									}
 									main.setReceivingIps(ips);
-									main.setVisible(true);
+//									main.setVisible(true);
 								}
 							}
 						}

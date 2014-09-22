@@ -32,7 +32,7 @@ public class RunDAO implements IRunDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("INSERT INTO QuizRun (instructorId, quizId, studentid,score, start, end, iid, courseId) "
+		ps = con.prepareStatement("Insert into QuizRun(instructorid,quizid,studentid,score,start,end,iid,sessionid) "
 				+ " VALUES (?,  ?, ? ,? ,? ,? ,?,?);");
 		ps.setInt(1, run.getInstructorId());
 		ps.setObject(2, run.getQuizId());

@@ -16,6 +16,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import net.sf.jasperreports.components.barcode4j.Interleaved2Of5Component;
+
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
@@ -32,7 +34,20 @@ public class FileManagerMain extends FileManagerBase{
 	private WebTabbedPane webTabbedPane;
 	private ArrayList<String> receivingIps;
 	
+	static FileManagerMain internalaccessor = new FileManagerMain();
+	
 	public FileManagerMain() {
+		if(internalaccessor != null){
+			if(internalaccessor.isVisible()){
+				internalaccessor.toFront();
+				return;
+			}
+			else{
+				internalaccessor.setVisible(true);
+				return;
+			}
+		}
+		
 		setLookAndFeel();
 		setBackground(new Color(0,0,0,0));
 		try {
@@ -90,6 +105,8 @@ public class FileManagerMain extends FileManagerBase{
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
 				- getSize().height / 2);
 		initEvents();
+		internalaccessor = this;
+		setVisible(true);
 	}
 	
 	public void initEvents() {
@@ -104,7 +121,7 @@ public class FileManagerMain extends FileManagerBase{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				setVisible(false);
 			}
 		});
 	}

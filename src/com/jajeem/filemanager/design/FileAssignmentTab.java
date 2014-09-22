@@ -45,7 +45,7 @@ public class FileAssignmentTab extends JPanel {
 	private FileAssignmentTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
-	private FileManagerMain parentFrame;
+	private FileManagerMain parentFrame; 
 
 	/**
 	 * Create the panel.
@@ -196,6 +196,8 @@ public class FileAssignmentTab extends JPanel {
 		wbtnSend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(webTable.getSelectedRow()==-1)
+					return;
 				String fileName = fileNames.get(webTable.getSelectedRow());
 				File file = new File(fileName);
 				try {

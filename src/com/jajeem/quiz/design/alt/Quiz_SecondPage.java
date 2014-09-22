@@ -192,17 +192,30 @@ public class Quiz_SecondPage extends Quiz_AbstractViews {
 
 			@Override
 			public void quizFinished(QuizFinished e) {
-				Run temp = e.getQuizRun();
+				Run tempRun = e.getQuizRun();
+				Quiz currentQuiz = parentPanel.getCurrentRun().getQuiz();
 				int score = 0;
-				for (int i = 0; i < temp.getQuiz().getQuestionList().size(); i++) {
-					if (temp.getQuiz().getQuestionList().get(i)
-							.isResponseValid()) {
-						score += temp.getQuiz().getQuestionList().get(i)
-								.getPoint();
+				for (int i = 0; i < tempRun.getQuiz().getQuestionList().size(); i++) {
+					Question question = tempRun.getQuiz().getQuestionList()
+							.get(i);
+					if (question.getType() == 0 || question.getType() == 1) {
+						if ((question.getCorrectAnswer()[0] == question
+								.getStudentAnswer()[0])
+								&& (question.getCorrectAnswer()[1] == question
+										.getStudentAnswer()[1])
+								&& (question.getCorrectAnswer()[2] == question
+										.getStudentAnswer()[2])
+								&& (question.getCorrectAnswer()[3] == question
+										.getStudentAnswer()[3])
+								&& (question.getCorrectAnswer()[4] == question
+										.getStudentAnswer()[4])) {
+							score += tempRun.getQuiz().getQuestionList().get(i)
+									.getPoint();
+						}
 					}
 				}
-				temp.setScore(score);
-				runResults.add(temp);
+				tempRun.setScore(score);
+				runResults.add(tempRun);
 			}
 
 			@Override
