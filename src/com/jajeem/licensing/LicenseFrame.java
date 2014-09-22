@@ -293,7 +293,7 @@ public class LicenseFrame extends JFrame {
 					return;
 				}
 				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
-				
+				LicenseManager.getInstance().revalidate();
 				setVisible(false);
 			}
 		});
