@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import com.jajeem.core.design.teacher.InstructorLogin;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 
 public class LicenseFrame extends JFrame {
@@ -60,9 +63,20 @@ public class LicenseFrame extends JFrame {
 	private JButton btnContinueTrial;
 
 	public LicenseFrame() {
+		addComponentListener(new ComponentAdapter() {
+			public void componentHidden(ComponentEvent e) {
+				synchronized (InstructorLogin.getLicensesynclock()) {
+					InstructorLogin.getLicensesynclock().notify();
+				}
+			}
+
+			public void componentShown(ComponentEvent e) {
+				/* code run when component shown */
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				LicenseFrame.class.getResource("/icons/noa_en/key.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 636, 392);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -232,6 +246,7 @@ public class LicenseFrame extends JFrame {
 				try {
 					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
 						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 					LicenseManager.getInstance().ActivateOnline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
 				} catch (GeneralSecurityException e1) {
@@ -258,6 +273,7 @@ public class LicenseFrame extends JFrame {
 				try {
 					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
 						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 					LicenseManager.getInstance().ActivateOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText(),textField_Activation.getText());
 					JOptionPane.showMessageDialog(null, "Product Activated!\nEnjoy the program!");
@@ -274,10 +290,11 @@ public class LicenseFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
 				
-				dispose();
+				setVisible(false);
 			}
 		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);

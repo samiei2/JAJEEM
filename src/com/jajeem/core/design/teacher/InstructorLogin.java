@@ -65,6 +65,8 @@ public class InstructorLogin {
 	protected ArrayList<Course> courseList;
 	private CustomLoginButton webButtonLogin;
 	private CustomLoginButton webButtonSelect;
+	
+	private final static Object licenseSyncLock = new Object();
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
@@ -438,7 +440,7 @@ public class InstructorLogin {
 							.getCanonicalName());
 
 					final Object synchLock = new Object();
-					final Object licenseLock = new Object();
+					
 					Thread loading = new Thread(new Runnable() {
 
 						@Override
@@ -471,7 +473,7 @@ public class InstructorLogin {
 						public void run() {
 							
 							try {
-//								LicenseManager.getInstance().Validate("jajeem.lic");
+								LicenseManager.getInstance().Validate("jajeem.lic");
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
 								System.exit(-1);
@@ -480,18 +482,19 @@ public class InstructorLogin {
 							new StartUp();
 							frame = new InstructorLogin().frame;
 //							frame.pack();
-
-							Timer timer = new Timer();
-							timer.schedule(new TimerTask() {
-
-								@Override
-								public void run() {
-									synchronized (synchLock) {
-										synchLock.notify();
-									}
-									frame.setVisible(true);
+							
+							synchronized (synchLock) {
+								synchLock.notify();
+							}
+							
+							synchronized (licenseSyncLock) {
+								try {
+									licenseSyncLock.wait(0);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
 								}
-							}, 5500);
+							}
+							frame.setVisible(true);
 						}
 					});
 					_t.start();
@@ -503,5 +506,9 @@ public class InstructorLogin {
 				}
 			}
 		});
+	}
+
+	public static Object getLicensesynclock() {
+		return licenseSyncLock;
 	}
 }
