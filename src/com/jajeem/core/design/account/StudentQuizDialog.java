@@ -48,6 +48,7 @@ import com.jajeem.core.model.Student;
 import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.quiz.model.Run;
+import com.jajeem.quiz.service.RunService;
 import com.jajeem.room.model.Course;
 import com.jajeem.util.Config;
 import com.jajeem.util.JasperReport;
@@ -55,6 +56,7 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class StudentQuizDialog extends BaseAccountFrame {
@@ -197,6 +199,28 @@ public class StudentQuizDialog extends BaseAccountFrame {
 		CustomAccountButton cstmcntbtnDelete = new CustomAccountButton("/icons/noa_en/accountcourse.png");
 		cstmcntbtnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				RunService runService = new RunService();
+				if (!courseSelectionModel.isSelectionEmpty()) {
+					if (courseSelectionModel.getSelected().size() > 1) {
+						JOptionPane.showMessageDialog(null,
+								"Please select one quiz.", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Run currentRun = courseSelectionModel.getSelected()
+								.get(0);
+						try {
+							runService.delete(currentRun);
+							getCourseList().remove(courseSelectionModel.getSelected().get(0));
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(null,
+							"Please select one quiz.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 				
 			}
 		});
@@ -268,7 +292,7 @@ public class StudentQuizDialog extends BaseAccountFrame {
 		public Object getColumnValue(Run course, int column) {
 
 			if (column == 0) {
-				return ++localCounter;
+				return course.getId();
 			}
 			if (column == 1) {
 				return course.getInstructor().getFullName();

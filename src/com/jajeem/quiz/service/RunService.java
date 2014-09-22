@@ -21,6 +21,14 @@ public class RunService {
 		}
 		return null;
 	}
+	
+	public boolean delete(Run run) throws SQLException {
+		runDAO = new RunDAO();// TODO remove this line
+		if (runDAO != null) {
+			return runDAO.delete(run);
+		}
+		return false;
+	}
 
 	public ArrayList<Quiz> list() throws SQLException {
 		quizDAO = new QuizDAO();// TODO remove this line

@@ -191,6 +191,7 @@ public class RunDAO implements IRunDAO {
 
 		PreparedStatement ps = null;
 		int rs = 0;
+		boolean result = false;
 
 		Connection con = BaseDAO.getConnection();
 
@@ -199,6 +200,7 @@ public class RunDAO implements IRunDAO {
 
 		try {
 			rs = ps.executeUpdate();
+			result = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			run.setId(null);
@@ -220,7 +222,7 @@ public class RunDAO implements IRunDAO {
 			}
 		}
 
-		return false;
+		return result;
 	}
 
 	@Override

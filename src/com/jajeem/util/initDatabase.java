@@ -348,11 +348,11 @@ public class initDatabase {
 				 * "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
 				 * + "values(4,2,2,0,3);";
 				 */ 
-				  query =
-				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
-				 +
-				 "values(1,1,1,1,1,1,20,"+System.currentTimeMillis()+","+System
-				 .currentTimeMillis()+");"; 
+//				  query =
+//				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+//				 +
+//				 "values(1,1,1,1,1,1,20,"+System.currentTimeMillis()+","+System
+//				 .currentTimeMillis()+");"; 
 				 /* "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
 				 * +
 				 * "values(2,2,2,1,1,2,20,"+System.currentTimeMillis()+","+System

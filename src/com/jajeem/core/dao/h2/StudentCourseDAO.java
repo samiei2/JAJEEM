@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -479,6 +480,7 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 			while (rs.next()) {
 				Run quizRun = new Run();
 
+				quizRun.setId((UUID) rs.getObject("iid"));
 				int insId = rs.getInt("instructorId");
 				quizRun.setInstructorId(insId);
 				Instructor instructor = instructordao.getById(insId);
