@@ -815,14 +815,28 @@ public class InstructorNoa {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				isSelectAllPcControllerSelected = pcControlerSelectAllCheckBox.isSelected();
-				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
-				for (int i = 0; i < allframes.length; i++) {
-					JInternalFrame frame = allframes[i];
-					try {
-						frame.setSelected(true);
-						frame.putClientProperty("isselected", true);
-					} catch (PropertyVetoException e) {
-						e.printStackTrace();
+				if(pcControlerSelectAllCheckBox.isSelected()){
+					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+					for (int i = 0; i < allframes.length; i++) {
+						JInternalFrame frame = allframes[i];
+						try {
+							frame.setSelected(false);
+							frame.putClientProperty("isselected", false);
+						} catch (PropertyVetoException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
+					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+					for (int i = 0; i < allframes.length; i++) {
+						JInternalFrame frame = allframes[i];
+						try {
+							frame.setSelected(true);
+							frame.putClientProperty("isselected", true);
+						} catch (PropertyVetoException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -868,14 +882,28 @@ public class InstructorNoa {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				isSelectAllinternetBlockSelected = internetBlockSelectAllCheckBox.isSelected();
-				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
-				for (int i = 0; i < allframes.length; i++) {
-					JInternalFrame frame = allframes[i];
-					try {
-						frame.setSelected(true);
-						frame.putClientProperty("isselected", true);
-					} catch (PropertyVetoException e) {
-						e.printStackTrace();
+				if(internetBlockSelectAllCheckBox.isSelected()){
+					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+					for (int i = 0; i < allframes.length; i++) {
+						JInternalFrame frame = allframes[i];
+						try {
+							frame.setSelected(false);
+							frame.putClientProperty("isselected", false);
+						} catch (PropertyVetoException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
+					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+					for (int i = 0; i < allframes.length; i++) {
+						JInternalFrame frame = allframes[i];
+						try {
+							frame.setSelected(true);
+							frame.putClientProperty("isselected", true);
+						} catch (PropertyVetoException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
