@@ -201,6 +201,9 @@ public class LicenseManager {
 			licContext.getLicense().getLicenseInfo().put(LicenseConstants.TIME_LEFT,oldTimeLeft);
 			throw e;
 		}
+		catch(Exception e){
+			throw e;
+		}
 	}
 	
 	public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
