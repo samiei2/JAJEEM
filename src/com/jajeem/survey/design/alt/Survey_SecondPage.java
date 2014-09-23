@@ -56,7 +56,7 @@ public class Survey_SecondPage extends Survey_AbstractViews {
 
 		webComboBox = new JajeemComboBox();
 		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"Question", "Student" }));
+				"Question" }));
 
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(

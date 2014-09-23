@@ -58,7 +58,7 @@ public class Survey_QuestionDesignPanel extends Survey_AbstractViews {
 
 		webComboBox = new JajeemComboBox();
 		webComboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"Single Choice", "Multiple Choice", "Essay" }));
+				"Single Choice", "Multiple Choice" }));
 
 		setWebScrollPane(new WebScrollPane((Component) null));
 		getWebScrollPane().setEnabled(false);
