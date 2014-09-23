@@ -60,12 +60,16 @@ public class StartModelCommandHanlder implements ICommandHandler {
 				vnc.getViewer().getRecorder().setViewOnly(true);
 				vnc.getViewer().getRecorder().viewerGUI
 						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				vnc.getViewer().getRecorder().viewerGUI
+				.setUndecorated(true);
 				Student.setVncViewer(vnc);
 			} else {
 				Student.getVncViewer().getViewer().getRecorder()
 						.setViewOnly(true);
 				Student.getVncViewer().getViewer().getRecorder().viewerGUI
 						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				Student.getVncViewer().getViewer().getRecorder().viewerGUI
+				.setUndecorated(true);
 				Student.getVncViewer().startClient(conf);
 			}
 		}
