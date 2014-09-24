@@ -236,7 +236,7 @@ public class License {
 			setActivated(true);
 	}
 
-	boolean isActivated() {
+	public boolean isActivated() {
 		return isActivated;
 	}
 

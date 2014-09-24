@@ -489,7 +489,8 @@ public class InstructorLogin {
 							
 							synchronized (licenseSyncLock) {
 								try {
-									licenseSyncLock.wait(0);
+									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
+										licenseSyncLock.wait(0);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}

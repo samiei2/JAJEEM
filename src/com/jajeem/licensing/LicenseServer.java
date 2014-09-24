@@ -98,7 +98,7 @@ public class LicenseServer {
 		      String encodedAuthorization = enc.encode( userpassword.getBytes() );
 //		      urlConn.setRequestProperty("Authorization", "Basic "+
 //		            encodedAuthorization);
-		      urlConn.setConnectTimeout(100000);
+		      urlConn.setConnectTimeout(10000);
 		} catch (ProtocolException ex) {
 			Logger.getLogger(LicenseServer.class.getName()).log(Level.SEVERE,
 					null, ex);
