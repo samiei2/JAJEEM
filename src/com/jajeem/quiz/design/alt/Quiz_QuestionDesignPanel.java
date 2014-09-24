@@ -307,7 +307,9 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		JLabel lblType = new JLabel("Type : ");
 		
 		webComboBoxQuestionType = new JajeemComboBox();
-		webComboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Single Choice", "Multiple Choice", "Essay"}));
+		webComboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Single Choice", "Multiple Choice"
+//				, "Essay"
+				}));
 		
 		JLabel label = new JLabel("Question ");
 		

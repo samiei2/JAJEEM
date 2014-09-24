@@ -6,7 +6,7 @@ public class LicenseConstants {
 	public static final String LICENSE_SECRET_KEY = "LicenseSecretKey";
 	public static final String ACTIVATION_CODE = "activationcode";
 	public static final String LICENSE_TIME_FORMAT = "yyyy-MM-dd";
-	public static final String TRIAL_TIME = "30";
+	public static final String TRIAL_TIME = "0";
 	public static final String TIME_LEFT = "timeleft";
 	public static final String EXPIRE_DATE = "expiredate";
 	public static final String INSTALL_MILIS = "installmilis";
@@ -28,7 +28,7 @@ public class LicenseConstants {
 	public static final String PHONE = "phone";
 	public static final String INFO = "info";
 	public static final String USERS = "users";
-	public static final String NUMUSERS = "5";
+	public static final String NUMUSERS = "2";
 	public static final String STATUS = "status";
 	public static final String TRIAL = "0";//0 = trial ,1 = trial-expired,2 = active,3 = active-expire,4 = deactive
 	public static final String VALIDATIONSERVER = ServerList.getDefault() + "validate/validation";

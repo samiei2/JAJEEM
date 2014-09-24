@@ -76,7 +76,7 @@ public class LicenseFrame extends JFrame {
 		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				LicenseFrame.class.getResource("/icons/noa_en/key.png")));
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 636, 392);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -145,6 +145,7 @@ public class LicenseFrame extends JFrame {
 		);
 		
 		JLabel lblTimeLeft = new JLabel("Time Left : ");
+		lblTimeLeft.setVisible(false);
 		
 		textField_name = new JTextField();
 		textField_name.setColumns(10);
@@ -166,8 +167,10 @@ public class LicenseFrame extends JFrame {
 		JLabel lblVersion_1 = new JLabel("Version : ");
 		
 		lblTimeleft = new JLabel(" ");
+		lblTimeleft.setVisible(false);
 		
 		JLabel lblDays = new JLabel("days");
+		lblDays.setVisible(false);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -286,6 +289,7 @@ public class LicenseFrame extends JFrame {
 		});
 		
 		btnContinueTrial = new JButton("Continue Trial");
+		btnContinueTrial.setVisible(false);
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
