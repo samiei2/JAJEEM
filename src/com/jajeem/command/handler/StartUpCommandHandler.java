@@ -16,9 +16,8 @@ import com.jajeem.licensing.LicenseManager;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {
-	static ArrayList<String> listOfProcessings = new ArrayList<>();
+	static ArrayList<String> listOfIPs = new ArrayList<>();
 	static Object licenseLock = new Object();
-	private static int i;
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 //		synchronized(lock){
@@ -60,15 +59,19 @@ public class StartUpCommandHandler implements ICommandHandler {
 			} else if (Integer.parseInt(Config.getParam("server")) == 1
 					&& cmd.getPort() == Integer.parseInt(Config
 							.getParam("serverPort"))) {
-				try{
-					synchronized (licenseLock) {
-						if (i > Integer.parseInt(LicenseManager
+				
+				synchronized (licenseLock) {
+					if (!listOfIPs.contains(cmd.getFrom())) {
+						if (listOfIPs.size() > Integer.parseInt(LicenseManager
 								.getInstance().getLicContext().getLicense()
 								.getLicenseInfo().get("users")))
 							return;
-						i++;
+						else
+							listOfIPs.add(cmd.getFrom());
 					}
-					
+				}
+				
+				try{
 					if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {
 						if (InstructorNoa.getDesktopPane() != null) {
 							InstructorNoaUtil.createFrame(

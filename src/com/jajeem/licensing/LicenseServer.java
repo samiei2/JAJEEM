@@ -49,7 +49,8 @@ public class LicenseServer {
 
 	private void checkAvailability() {
 		try {
-			InetAddress addr = InetAddress.getByName(new URL(ServerList.getDefault()).getHost());
+			URL serverUrl = new URL(ServerList.getDefault());
+			InetAddress addr = InetAddress.getByName(serverUrl.getHost());
 			addr.isReachable(10000);
 			// TODO Instead of above must actual licensing server address and
 			// available value should be set two
@@ -272,7 +273,9 @@ public class LicenseServer {
 
 		String jsonResponse = handleServerRequest(LicenseConstants.VALIDATIONSERVER,
 				jsonQuery);
+		System.out.println("Query : "+jsonQuery);
 		jsonResponse = jsonResponse.replace("{\"response\":", "");
+		System.out.println("Query : "+jsonResponse);
 		jsonResponse = jsonResponse.substring(0, jsonResponse.lastIndexOf("}"));
 		HashMap<String, String> respondedLicense = converter.ConvertFromJson(
 				jsonResponse, HashMap.class);
