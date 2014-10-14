@@ -7,8 +7,12 @@ import java.rmi.registry.Registry;
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.logging.impl.Log4JLogger;
+
 import com.jajeem.command.model.RestartStudentProgramCommand;
 import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Threading.ThreadManager;
+import com.sun.media.Log;
 
 import jrdesktop.Config;
 import jrdesktop.Settings;
@@ -84,11 +88,24 @@ public class RMIClient {
 						clientConfig.reverseConnection);
 			}
 			catch(Exception e){
-				ServerService service = new ServerService();
-				RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
-				InetAddress.getLocalHost().getHostAddress(), clientConfig.server_address,
-						Integer.parseInt(com.jajeem.util.Config.getParam("port")));
-				service.send(restartCmd);
+				ThreadManager.getInstance("RMICLIENT").run(new Runnable() {
+					
+					@Override
+					public void run() {
+						try{
+							ServerService service = new ServerService();
+							RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
+							InetAddress.getLocalHost().getHostAddress(), clientConfig.server_address,
+									Integer.parseInt(com.jajeem.util.Config.getParam("port")));
+							service.send(restartCmd);
+							System.out.println("Sent restart command to "+clientConfig.server_address);
+						}
+						catch(Exception e){
+							e.printStackTrace();
+						}
+					}
+				});
+				
 				e.printStackTrace();
 				return -1;
 			}

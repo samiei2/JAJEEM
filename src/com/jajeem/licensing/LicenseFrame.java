@@ -289,7 +289,6 @@ public class LicenseFrame extends JFrame {
 		});
 		
 		btnContinueTrial = new JButton("Continue Trial");
-		btnContinueTrial.setVisible(false);
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){

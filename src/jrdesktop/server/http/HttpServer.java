@@ -34,7 +34,7 @@ public class HttpServer extends Thread {
 
 			// Create a ServerSocket to listen on that port.
 			ss = new ServerSocket(RMIServer.serverConfig.http_port);
-
+			
 			// Now enter an infinite loop, waiting for connections and handling
 			// them.
 			while (connected) {

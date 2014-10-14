@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,9 +48,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -110,6 +114,8 @@ import com.jajeem.util.CustomTopButton;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
 import com.jajeem.util.i18n;
+
+import java.awt.ComponentOrientation;
 
 public class InstructorNoa {
 
@@ -394,6 +400,7 @@ public class InstructorNoa {
 
 		// create the scrollable desktop instance and add it to the JFrame
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
+		scrollableDesktop.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setDesktopPaneScroll(scrollableDesktop);
 
 		/// @Armin codes Clean Up actions and move to proper place
@@ -408,6 +415,16 @@ public class InstructorNoa {
 
 		scrollableDesktop.getDesktopMediator().getDesktopScrollpane()
 				.getDesktopPane().setComponentPopupMenu(popup);
+		scrollableDesktop.setAutoscrolls(true);
+		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setAutoTile(true);
+		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane().setBackground(Color.BLACK);
+		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getVerticalScrollBar().setBackground(Color.GREEN);
+		getDesktopPaneScroll().setDesktopMediator(null);
+		scrollableDesktop.setBackground(Color.RED);
+		
+		
 		// getGroupList().setComponentPopupMenu(popup);
 		getStudentListTable().setComponentPopupMenu(popup);
 

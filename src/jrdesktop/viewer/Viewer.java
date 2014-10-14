@@ -74,22 +74,10 @@ public class Viewer extends Thread {
 		}
 	}
 
-	public void StartThumbs(JInternalFrame panel) {
-		try{
-			connect();
-		}
-		catch(Exception e){
-//			try{
-//				ServerService service = new ServerService();
-//				RestartStudentProgramCommand restartCmd = new RestartStudentProgramCommand(
-//						InetAddress.getLocalHost().getHostAddress(), client.clientConfig.server_address,
-//									Integer.parseInt(com.jajeem.util.Config.getParam("port")));
-//				service.send(restartCmd);
-//			}
-//			catch(Exception ex){
-//				
-//			}
-		}
+	public Viewer StartThumbs(JInternalFrame panel) {
+		
+		connect();
+		
 		if (connected) {
 			setRecorder(new Recorder(this, client.clientConfig, true));
 			getRecorder().screenPlayer.thumb = true;
@@ -97,6 +85,7 @@ public class Viewer extends Thread {
 		} else {
 			Stop();
 		}
+		return this;
 	}
 
 	public void Stop() {

@@ -2225,10 +2225,12 @@ public class InstructorNoaUtil {
 		internalFrame.setResizable(false);
 
 		try{
-			vnc.StartThumbs(internalFrame);
+			Viewer viewer = vnc.StartThumbs(internalFrame);
+			if(!viewer.isConnected())
+				return null;
 		}
 		catch(Exception e){
-			System.out.println("");
+			System.out.println("Could not connect to user");
 		}
 
 		internalFrame.setVisible(true);
@@ -2639,6 +2641,9 @@ public class InstructorNoaUtil {
 				desktopPane.add(internalFrame, BorderLayout.CENTER);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 						.tileInternalFrames();
+				InstructorNoa.getDesktopPaneScroll().getDesktopMediator().resizeDesktop();
+				InstructorNoa.getDesktopPaneScroll().getDesktopMediator().revalidateViewport();
+				InstructorNoa.getDesktopPaneScroll().revalidate();
 			}
 		}
 

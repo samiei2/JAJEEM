@@ -59,8 +59,13 @@ public class RMIServer {
 						new SslRMIClientSocketFactory(),
 						new SslRMIServerSocketFactory(null, null, true));
 			} else {
-				registry = LocateRegistry
-						.createRegistry(serverConfig.server_port);
+				try{
+					registry = LocateRegistry
+							.createRegistry(serverConfig.server_port);
+				}
+				catch(Exception e){
+					registry = LocateRegistry.getRegistry(serverConfig.server_port);
+				}
 			}
 
 			if (serverConfig.ssl_enabled && serverConfig.multihomed_enabled) {
