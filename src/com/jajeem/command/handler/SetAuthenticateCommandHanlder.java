@@ -80,7 +80,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 									InstructorNoaUtil.createFrame(
 											InstructorNoa.getDesktopPane(),
 											((AuthenticateCommand) cmd).getFrom(),
-											((AuthenticateCommand) cmd).getUsername());
+											((AuthenticateCommand) cmd).getUsername(),null);
 								} catch (Exception e) {
 								}
 
@@ -132,7 +132,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 								InstructorNoaUtil.createFrame(
 										InstructorNoa.getDesktopPane(),
 										((AuthenticateCommand) cmd).getFrom(),
-										((AuthenticateCommand) cmd).getUsername());
+										((AuthenticateCommand) cmd).getUsername(),null);
 							} catch (Exception e) {
 							}
 

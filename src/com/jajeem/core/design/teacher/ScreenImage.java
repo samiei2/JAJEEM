@@ -16,12 +16,12 @@ public class ScreenImage extends JLabel{
 	private static BufferedImage dummyImage = null;
 	
 	static{
-		URL inp = ScreenImage.class.getResource("/icons/noa_en/dummyscreen.png");
-		try {
-			dummyImage = ImageIO.read(inp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		URL inp = ScreenImage.class.getResource("/icons/noa_en/dummyscreen.png");
+//		try {
+//			dummyImage = ImageIO.read(inp);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public ScreenImage(BufferedImage screenImage2) {

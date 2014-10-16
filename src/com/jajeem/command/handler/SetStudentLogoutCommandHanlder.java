@@ -28,7 +28,7 @@ public class SetStudentLogoutCommandHanlder implements ICommandHandler {
 					InstructorNoaUtil.createFrame(
 							InstructorNoa.getDesktopPane(),
 							((StudentLogoutCommand) cmd).getFrom(),
-							((StudentLogoutCommand) cmd).getSenderName());
+							((StudentLogoutCommand) cmd).getSenderName(),null);
 				} catch (Exception e) {
 				}
 
