@@ -1,6 +1,5 @@
 package com.jajeem.core.design.teacher;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -2636,7 +2635,7 @@ public class InstructorNoaUtil {
 				if(!found)
 					model.addRow(new Object[] { hostIp, hostName, "Not Logged In" });
 
-				desktopPane.add(internalFrame, BorderLayout.CENTER);
+				InstructorNoa.getDesktopPaneScroll().add(internalFrame);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 						.tileInternalFrames();
 			}

@@ -124,7 +124,7 @@ public class DesktopScrollPane extends JScrollPane {
 	 *            the position
 	 */
 	public void add(DesktopListener dListener, JInternalFrame f, int x, int y) {
-		// f.addComponentListener(dListener);
+		f.addComponentListener(dListener);
 		initAndAddFrame(f, x, y);
 	}
 
