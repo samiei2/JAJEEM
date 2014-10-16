@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumnModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -50,14 +50,13 @@ import com.jajeem.core.model.Student;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentCourseService;
 import com.jajeem.core.service.StudentService;
+import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AccountPanel extends BaseAccountFrame {
 
@@ -150,6 +149,7 @@ public class AccountPanel extends BaseAccountFrame {
 		);
 		panel.setLayout(gl_panel);
 		getMainContentPane().setLayout(groupLayout);
+		pack();
 	}
 	
 	private void loadData() throws SQLException {
@@ -382,31 +382,14 @@ public class AccountPanel extends BaseAccountFrame {
 
 		final WebPanel panel = new WebPanel();
 		panel.setMargin(new Insets(5, 5, 5, 5));
-		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 		JTable studentTable = new JTable();
 
 		jScrollPane1.setViewportView(studentTable);
-		panel.add(jScrollPane1);
-
-		WebPanel bottomPanel = new WebPanel();
-		panel.add(bottomPanel, BorderLayout.SOUTH);
-		bottomPanel.setLayout(new GridLayout(1, 2, 0, 0));
-
-		JPanel buttonPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) buttonPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEADING);
-		bottomPanel.add(buttonPanel);
-
-		JPanel paginationPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) paginationPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.TRAILING);
-		bottomPanel.add(paginationPanel);
 
 		WebPanel topPanel = new WebPanel();
 		topPanel.setMargin(new Insets(7, 2, 7, 2));
-		panel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JLabel filterLabel = new JLabel(i18n.getParam("Search") + ": ");
@@ -446,6 +429,76 @@ public class AccountPanel extends BaseAccountFrame {
 
 		StripedTableCellRenderer.installInTable(studentTable, Color.lightGray,
 				Color.white, null, null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(topPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+		);
+		
+		CustomAccountButton cstmcntbtnQuizes = new CustomAccountButton("/icons/noa_en/accountcourse.png");
+		cstmcntbtnQuizes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!studentSelectionModel.isSelectionEmpty()) {
+					if (studentSelectionModel.getSelected().size() > 1) {
+						JOptionPane.showMessageDialog(frame,
+								"Please select one student.", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						Student student = studentSelectionModel.getSelected()
+								.get(0);
+						try {
+							new StudentCourseDialog(student);
+						} catch (Exception e1) {
+							JajeemExceptionHandler.logError(e1);
+							e1.printStackTrace();
+						}
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(frame,
+							"Please select one student.", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		cstmcntbtnQuizes.setUndecorated(true);
+		cstmcntbtnQuizes.setText("Courses");
+		cstmcntbtnQuizes.setMargin(new Insets(0, 5, 0, 0));
+		cstmcntbtnQuizes.setHorizontalTextPosition(SwingConstants.LEFT);
+		cstmcntbtnQuizes.setHorizontalAlignment(SwingConstants.LEFT);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cstmcntbtnQuizes, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(461, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(cstmcntbtnQuizes, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_1.setLayout(gl_panel_1);
+		panel.setLayout(gl_panel);
 		studentTable.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		return panel;

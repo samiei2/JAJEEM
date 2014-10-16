@@ -55,6 +55,7 @@ public class LicenseValidator {
 		}
 		try{
 			validateRegisteryEntry();
+			
 			validateDates();
 	
 			validateTimeLeft();
@@ -219,7 +220,7 @@ public class LicenseValidator {
 		if (remaining > 0) {
 			return String.valueOf(remaining);
 		} else {
-			throw new InvalidLicenseTimeException("Invalid remaining time value.");
+			throw new InvalidLicenseTimeException("License Expired.");
 		}
 	}
 }

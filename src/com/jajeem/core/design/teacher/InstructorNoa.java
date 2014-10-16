@@ -50,6 +50,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -133,6 +134,7 @@ public class InstructorNoa {
 	@SuppressWarnings("unused")
 	private static boolean transmitting;
 	private static boolean isSelectAllPcControllerSelected;
+	private static boolean isSelectAllinternetBlockSelected;
 	private static String transmittingType;
 
 	private static List<Chat> chatList = new ArrayList<Chat>();
@@ -150,7 +152,8 @@ public class InstructorNoa {
 
 	static WebPanel rightButtonPanel;
 
-	Font font = new Font("Arial", Font.BOLD, 18);
+	Font fontRightPanel = new Font("Arial", Font.BOLD, 18);
+	Font fontOtherPanels = new Font("Times New Roman", Font.BOLD, 12);
 	private JLabel lblHour1;
 	private JLabel lblHour2;
 	private JLabel lblMin1;
@@ -473,6 +476,7 @@ public class InstructorNoa {
 		surveyButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		surveyButton.setForeground(Color.LIGHT_GRAY);
 		surveyButton.setText(i18n.getParam("Survey"));
+		surveyButton.setFont(fontOtherPanels);
 		surveyButton.setBottomBgColor(new Color(225, 234, 244));
 		surveyButton.setTopBgColor(new Color(116, 166, 219));
 		surveyButton.setUndecorated(true);
@@ -488,6 +492,7 @@ public class InstructorNoa {
 		whiteBoardButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		whiteBoardButton.setForeground(Color.LIGHT_GRAY);
 		whiteBoardButton.setText(i18n.getParam("Whiteboard"));
+		whiteBoardButton.setFont(fontOtherPanels);
 		whiteBoardButton.setBottomBgColor(new Color(225, 234, 244));
 		whiteBoardButton.setTopBgColor(new Color(116, 166, 219));
 		whiteBoardButton.setUndecorated(true);
@@ -503,6 +508,7 @@ public class InstructorNoa {
 		powerButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		powerButton.setForeground(Color.LIGHT_GRAY);
 		powerButton.setText(i18n.getParam("PCController"));
+		powerButton.setFont(fontOtherPanels);
 		powerButton.setBottomBgColor(new Color(225, 234, 244));
 		powerButton.setTopBgColor(new Color(116, 166, 219));
 		powerButton.setUndecorated(true);
@@ -814,16 +820,46 @@ public class InstructorNoa {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				isSelectAllPcControllerSelected = pcControlerSelectAllCheckBox.isSelected();
-				JInternalFrame[] allframes = getDesktopPane().getAllFrames();
-				for (int i = 0; i < allframes.length; i++) {
-					JInternalFrame frame = allframes[i];
-					try {
-						frame.setSelected(true);
-						frame.putClientProperty("isselected", true);
-					} catch (PropertyVetoException e) {
-						e.printStackTrace();
-					}
-				}
+//				if(pcControlerSelectAllCheckBox.isSelected()){
+//					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+//					for (int i = 0; i < allframes.length; i++) {
+//						JInternalFrame frame = allframes[i];
+//						try {
+//							frame.setSelected(true);
+//							frame.putClientProperty("isselected", true);
+//							try {
+//								frame.setFrameIcon(new ImageIcon(
+//										ImageIO.read(InstructorNoaUtil.class
+//												.getResourceAsStream("/icons/menubar/check.png"))));
+//								getDesktopPane().getDesktopManager().activateFrame(frame);
+//								
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//						} catch (PropertyVetoException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//				else{
+//					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+//					for (int i = 0; i < allframes.length; i++) {
+//						JInternalFrame frame = allframes[i];
+//						try {
+//							frame.setSelected(false);
+//							frame.putClientProperty("isselected", false);
+//							try {
+//								frame.setFrameIcon(new ImageIcon(
+//										ImageIO.read(InstructorNoaUtil.class
+//												.getResourceAsStream("/icons/menubar/student.png"))));
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//						} catch (PropertyVetoException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
 			}
 		});
 		
@@ -857,13 +893,51 @@ public class InstructorNoa {
 				i18n.getParam("BlockInternet"));
 		internetBlockButton.setHorizontalAlignment(SwingConstants.CENTER);
 		internetBlockButton.putClientProperty("key", "internetStop");
+		
+		final WebCheckBox internetBlockSelectAllCheckBox = new WebCheckBox();
+		internetBlockSelectAllCheckBox.setHorizontalAlignment(SwingConstants.LEADING);
+		internetBlockSelectAllCheckBox.setHorizontalTextPosition(SwingConstants.TRAILING);
+		internetBlockSelectAllCheckBox.setText("Select All");
+		internetBlockSelectAllCheckBox.setMargin(new Insets(10, 0, 0, 0));
+		internetBlockSelectAllCheckBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				isSelectAllinternetBlockSelected = internetBlockSelectAllCheckBox.isSelected();
+//				if(internetBlockSelectAllCheckBox.isSelected()){
+//					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+//					for (int i = 0; i < allframes.length; i++) {
+//						JInternalFrame frame = allframes[i];
+//						try {
+//							frame.setSelected(false);
+//							frame.putClientProperty("isselected", false);
+//						} catch (PropertyVetoException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//				else{
+//					JInternalFrame[] allframes = getDesktopPane().getAllFrames();
+//					for (int i = 0; i < allframes.length; i++) {
+//						JInternalFrame frame = allframes[i];
+//						try {
+//							frame.setSelected(true);
+//							frame.putClientProperty("isselected", true);
+//						} catch (PropertyVetoException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+			}
+		});
+		
+		JSeparator seperator = new JSeparator();
 
 		final WebCheckBox sendToAllWebCheckBox = new WebCheckBox();
 		sendToAllWebCheckBox.setText("Send to All");
 
 		CustomPowerPanel internetContentPanel = new CustomPowerPanel();
 		GroupPanel InternetPopupContent = new GroupPanel(5, false,
-				internetBlockButton, WebsiteTextField,
+				internetBlockButton,internetBlockSelectAllCheckBox,seperator, WebsiteTextField,
 				internetSendWebsiteButton, sendToAllWebCheckBox);
 		InternetPopupContent.setMargin(15);
 
@@ -881,6 +955,7 @@ public class InstructorNoa {
 		internetButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		internetButton.setForeground(Color.LIGHT_GRAY);
 		internetButton.setText(i18n.getParam("InternetController"));
+		internetButton.setFont(fontOtherPanels);
 		internetButton.setBottomBgColor(new Color(225, 234, 244));
 		internetButton.setTopBgColor(new Color(116, 166, 219));
 		internetButton.setUndecorated(true);
@@ -901,12 +976,18 @@ public class InstructorNoa {
 				if (sendToAllWebCheckBox.isSelected()) {
 					try {
 						if (!WebsiteTextField.getText().equals("")) {
-							WebsiteCommand wc = new WebsiteCommand(InetAddress
-									.getLocalHost().getHostAddress(), Config
-									.getParam("broadcastingIp"), Integer
-									.parseInt(Config.getParam("port")),
-									WebsiteTextField.getText());
-							serverService.send(wc);
+							JInternalFrame[] allFrames = getDesktopPane().getAllFrames();
+							for (int i = 0; i < allFrames.length; i++) {
+								String selectedStudent = "";
+								selectedStudent = (String) allFrames[i].getClientProperty("ip");
+								
+								WebsiteCommand wc = new WebsiteCommand(InetAddress
+										.getLocalHost().getHostAddress(), selectedStudent, Integer
+										.parseInt(Config.getParam("port")),
+										WebsiteTextField.getText());
+								serverService.send(wc);
+							}
+							
 						} else {
 							return;
 						}
@@ -993,20 +1074,39 @@ public class InstructorNoa {
 
 				if (((JComponent) card).getClientProperty("viewMode").equals(
 						"thumbView")) {
-					if (getDesktopPane().getSelectedFrame() != null) {
-						String selectedStudent = "";
-						selectedStudent = (String) getDesktopPane()
-								.getSelectedFrame().getClientProperty("ip");
+					if(isSelectAllinternetBlockSelected){
+						for (int i = 0; i < getDesktopPane().getAllFrames().length; i++) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getAllFrames()[i].getClientProperty("ip");
+							try {
+								InternetCommand ic = new InternetCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										selectedStudent, Integer.parseInt(Config
+												.getParam("port")));
+								serverService.send(ic);
+							} catch (Exception e) {
+								JajeemExceptionHandler.logError(e);
+								e.printStackTrace();
+							}
+						}
+					}
+					else{
+						if (getDesktopPane().getSelectedFrame() != null) {
+							String selectedStudent = "";
+							selectedStudent = (String) getDesktopPane()
+									.getSelectedFrame().getClientProperty("ip");
 
-						try {
-							InternetCommand ic = new InternetCommand(
-									InetAddress.getLocalHost().getHostAddress(),
-									selectedStudent, Integer.parseInt(Config
-											.getParam("port")));
-							serverService.send(ic);
-						} catch (Exception e) {
-							JajeemExceptionHandler.logError(e);
-							e.printStackTrace();
+							try {
+								InternetCommand ic = new InternetCommand(
+										InetAddress.getLocalHost().getHostAddress(),
+										selectedStudent, Integer.parseInt(Config
+												.getParam("port")));
+								serverService.send(ic);
+							} catch (Exception e) {
+								JajeemExceptionHandler.logError(e);
+								e.printStackTrace();
+							}
 						}
 					}
 				} else if (((JComponent) card).getClientProperty("viewMode")
@@ -1051,6 +1151,7 @@ public class InstructorNoa {
 		programButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programButton.setForeground(Color.LIGHT_GRAY);
 		programButton.setText(i18n.getParam("Allow&RestrictProgram"));
+		programButton.setFont(fontOtherPanels);
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
@@ -1067,6 +1168,7 @@ public class InstructorNoa {
 		programStartButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		programStartButton.setForeground(Color.LIGHT_GRAY);
 		programStartButton.setText(i18n.getParam("ProgramStarter"));
+		programStartButton.setFont(fontOtherPanels);
 		programStartButton.setBottomBgColor(new Color(225, 234, 244));
 		programStartButton.setTopBgColor(new Color(116, 166, 219));
 		programStartButton.setUndecorated(true);
@@ -1082,6 +1184,7 @@ public class InstructorNoa {
 		conversationButton.setBottomSelectedBgColor(new Color(75, 113, 158));
 		conversationButton.setForeground(Color.LIGHT_GRAY);
 		conversationButton.setText(i18n.getParam("Conversations"));
+		conversationButton.setFont(fontOtherPanels);
 		conversationButton.setBottomBgColor(new Color(225, 234, 244));
 		conversationButton.setTopBgColor(new Color(116, 166, 219));
 		conversationButton.setUndecorated(true);
@@ -1101,7 +1204,7 @@ public class InstructorNoa {
 		monitorButton.setHorizontalAlignment(SwingConstants.LEADING);
 		monitorButton.setIconTextGap(20);
 		monitorButton.putClientProperty("key", "monitor");
-		monitorButton.setFont(font);
+		monitorButton.setFont(fontRightPanel);
 		monitorButton.setForeground(Color.WHITE);
 		monitorButton.setText(i18n.getParam("Monitoring"));
 		monitorButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1118,7 +1221,7 @@ public class InstructorNoa {
 		intercomButton.setHorizontalAlignment(SwingConstants.LEADING);
 		intercomButton.setIconTextGap(20);
 		intercomButton.putClientProperty("key", "intercom");
-		intercomButton.setFont(font);
+		intercomButton.setFont(fontRightPanel);
 		intercomButton.setForeground(Color.WHITE);
 		intercomButton.setText(i18n.getParam("Intercom"));
 		intercomButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1134,7 +1237,7 @@ public class InstructorNoa {
 		videoChatButton.setHorizontalAlignment(SwingConstants.LEADING);
 		videoChatButton.setIconTextGap(20);
 		videoChatButton.putClientProperty("key", "videoChat");
-		videoChatButton.setFont(font);
+		videoChatButton.setFont(fontRightPanel);
 		videoChatButton.setForeground(Color.WHITE);
 		videoChatButton.setText(i18n.getParam("VideoChat"));
 		videoChatButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1150,7 +1253,7 @@ public class InstructorNoa {
 		groupButton.setHorizontalAlignment(SwingConstants.LEADING);
 		groupButton.setIconTextGap(20);
 		groupButton.putClientProperty("key", "group");
-		groupButton.setFont(font);
+		groupButton.setFont(fontRightPanel);
 		groupButton.setForeground(Color.WHITE);
 		groupButton.setText(i18n.getParam("Groups"));
 		groupButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1166,7 +1269,7 @@ public class InstructorNoa {
 		modelButton.setHorizontalAlignment(SwingConstants.LEADING);
 		modelButton.setIconTextGap(20);
 		modelButton.putClientProperty("key", "model");
-		modelButton.setFont(font);
+		modelButton.setFont(fontRightPanel);
 		modelButton.setForeground(Color.WHITE);
 		modelButton.setText(i18n.getParam("Modeling"));
 		modelButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1182,7 +1285,7 @@ public class InstructorNoa {
 		recordButton.setHorizontalAlignment(SwingConstants.LEADING);
 		recordButton.setIconTextGap(20);
 		recordButton.putClientProperty("key", "record");
-		recordButton.setFont(font);
+		recordButton.setFont(fontRightPanel);
 		recordButton.setForeground(Color.WHITE);
 		recordButton.setText(i18n.getParam("Recording"));
 		recordButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1198,7 +1301,7 @@ public class InstructorNoa {
 		speechButton.setHorizontalAlignment(SwingConstants.LEADING);
 		speechButton.setIconTextGap(10);
 		speechButton.putClientProperty("key", "speech");
-		speechButton.setFont(font);
+		speechButton.setFont(fontRightPanel);
 		speechButton.setForeground(Color.WHITE);
 		speechButton.setText(i18n.getParam("SpeechRecognition"));
 		speechButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1215,7 +1318,7 @@ public class InstructorNoa {
 		fileButton.setHorizontalAlignment(SwingConstants.LEADING);
 		fileButton.setIconTextGap(20);
 		fileButton.putClientProperty("key", "file");
-		fileButton.setFont(font);
+		fileButton.setFont(fontRightPanel);
 		fileButton.setForeground(Color.WHITE);
 		fileButton.setText(i18n.getParam("FileSharing"));
 		fileButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1231,7 +1334,7 @@ public class InstructorNoa {
 		quizButton.setHorizontalAlignment(SwingConstants.LEADING);
 		quizButton.setIconTextGap(20);
 		quizButton.putClientProperty("key", "quiz");
-		quizButton.setFont(font);
+		quizButton.setFont(fontRightPanel);
 		quizButton.setForeground(Color.WHITE);
 		quizButton.setText(i18n.getParam("Exam"));
 		quizButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1248,7 +1351,7 @@ public class InstructorNoa {
 		videoButton.setHorizontalAlignment(SwingConstants.LEADING);
 		videoButton.setIconTextGap(20);
 		videoButton.putClientProperty("key", "movieplayer");
-		videoButton.setFont(font);
+		videoButton.setFont(fontRightPanel);
 		videoButton.setForeground(Color.WHITE);
 		videoButton.setText(i18n.getParam("MoviePlayer"));
 		videoButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1364,7 +1467,7 @@ public class InstructorNoa {
 		accountButton.setHorizontalAlignment(SwingConstants.LEADING);
 		accountButton.setIconTextGap(20);
 		accountButton.putClientProperty("key", "account");
-		accountButton.setFont(font);
+		accountButton.setFont(fontRightPanel);
 		accountButton.setForeground(Color.WHITE);
 		accountButton.setText(i18n.getParam("Myaccount"));
 		accountButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1380,7 +1483,7 @@ public class InstructorNoa {
 		chatButton.setHorizontalAlignment(SwingConstants.LEADING);
 		chatButton.setIconTextGap(20);
 		chatButton.putClientProperty("key", "chat");
-		chatButton.setFont(font);
+		chatButton.setFont(fontRightPanel);
 		chatButton.setForeground(Color.WHITE);
 		chatButton.setText(i18n.getParam("Chat"));
 		chatButton.setMargin(new Insets(5, 10, 0, 0));
@@ -1447,6 +1550,7 @@ public class InstructorNoa {
 		volumeButton.setForeground(Color.DARK_GRAY);
 		volumeButton.putClientProperty("key", "volume");
 		volumeButton.setText(i18n.getParam("VolumeControl"));
+		volumeButton.setFont(fontOtherPanels);
 		volumeButton.setUndecorated(true);
 		volumeButton.setOpaque(false);
 
@@ -1457,6 +1561,7 @@ public class InstructorNoa {
 		callAllButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		callAllButton.setForeground(Color.DARK_GRAY);
 		callAllButton.setText(i18n.getParam("CallAll"));
+		callAllButton.setFont(fontOtherPanels);
 		callAllButton.setOpaque(false);
 		callAllButton.setUndecorated(true);
 
@@ -1467,6 +1572,7 @@ public class InstructorNoa {
 		viewModeButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		viewModeButton.setForeground(Color.DARK_GRAY);
 		viewModeButton.setText(i18n.getParam("ViewMode"));
+		viewModeButton.setFont(fontOtherPanels);
 		viewModeButton.setUndecorated(true);
 		viewModeButton.setOpaque(false);
 

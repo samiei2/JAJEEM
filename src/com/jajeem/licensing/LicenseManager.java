@@ -1,22 +1,21 @@
+
 package com.jajeem.licensing;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
+import com.jajeem.core.design.teacher.InstructorLogin;
 import com.jajeem.licensing.exception.InvalidLicenseTimeException;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
-import com.jajeem.licensing.util.JsonConvert;
+import com.sun.jna.platform.win32.Win32Exception;
 
 
 
@@ -25,6 +24,7 @@ public class LicenseManager {
 	LicenseFrame frame;
 	private boolean isOnlineValidationEnabled = true;
 	private LicenseValidationContext licContext;
+	private String localLicPath;
 
 	public static LicenseManager getInstance() {
 		if (manager == null) {
@@ -55,6 +55,7 @@ public class LicenseManager {
 	}
 
 	public void Validate(String licPath) {
+		localLicPath = licPath;
 		licContext = new LicenseValidationContext(this);
 		try {
 			licContext = licContext.validate(licPath);
@@ -73,6 +74,14 @@ public class LicenseManager {
 			licContext.getLicense().saveLicenseInfo();
 			System.out.println("Error code: " + e.getErrorCode());
 //			JOptionPane.showOptionDialog(null, "Server license error.", "License Exception", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+		}
+		catch(Win32Exception e){
+			System.out.println("Error code: " + e.getLocalizedMessage());
+			JOptionPane.showOptionDialog(null, "Admin permissions are required for using this application.Please contact support for more info.\nProgram will exit now!", "License Exception", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+			File licFile = new File(licPath);
+			if(licFile.exists())
+				licFile.delete();
+			System.exit(0);
 		}
 		catch (Exception e) {
 			licContext.getLicense().saveLicenseInfo();
@@ -99,8 +108,12 @@ public class LicenseManager {
 	}
 
 	private void openFrameIfNeeded() {
-		if(licContext.getLicense().isActivated())
+		if(licContext.getLicense().isActivated()){
+			synchronized (InstructorLogin.getLicensesynclock()) {
+				InstructorLogin.getLicensesynclock().notify();
+			}
 			return;
+		}
 		frame.setSerial(licContext.getLicense().getLicenseInfo().get(LicenseConstants.SERIAL_NUMBER));
 		frame.setHardwareKey(licContext.getLicense().getLicenseInfo().get(LicenseConstants.HARDWARE_KEY));
 		frame.setActivationKey(licContext.getLicense().getLicenseInfo().get(LicenseConstants.ACTIVATION_CODE));
@@ -189,6 +202,9 @@ public class LicenseManager {
 			licContext.getLicense().getLicenseInfo().put(LicenseConstants.TIME_LEFT,oldTimeLeft);
 			throw e;
 		}
+		catch(Exception e){
+			throw e;
+		}
 	}
 	
 	public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
@@ -202,5 +218,17 @@ public class LicenseManager {
 
 	public void setLicContext(LicenseValidationContext licContext) {
 		this.licContext = licContext;
+	}
+
+	public void revalidate() {
+		if(!localLicPath.isEmpty())
+			Validate(localLicPath);
+	}
+
+	public void saveInfoOffline(String Name, String Company, String Phone) {
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.NAME, Name);
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.COMPANY, Company);
+		licContext.getLicense().getLicenseInfo().put(LicenseConstants.PHONE, Phone);
+		licContext.getLicense().saveLicenseInfo();
 	}
 }

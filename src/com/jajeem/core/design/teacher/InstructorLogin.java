@@ -35,13 +35,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
-import org.omg.CORBA.Environment;
-
 import com.alee.laf.WebLookAndFeel;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.core.service.InstructorService;
 import com.jajeem.exception.JajeemExceptionHandler;
-import com.jajeem.licensing.JNI4NETLicense;
 import com.jajeem.licensing.LicenseManager;
 import com.jajeem.room.model.Course;
 import com.jajeem.room.service.RoomService;
@@ -68,6 +65,8 @@ public class InstructorLogin {
 	protected ArrayList<Course> courseList;
 	private CustomLoginButton webButtonLogin;
 	private CustomLoginButton webButtonSelect;
+	
+	private final static Object licenseSyncLock = new Object();
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public InstructorLogin() {
@@ -441,6 +440,7 @@ public class InstructorLogin {
 							.getCanonicalName());
 
 					final Object synchLock = new Object();
+					
 					Thread loading = new Thread(new Runnable() {
 
 						@Override
@@ -473,15 +473,7 @@ public class InstructorLogin {
 						public void run() {
 							
 							try {
-//								LicenseManager.getInstance().Validate("jajeem.lic");
-//								int result = 13;
-//								JNI4NETLicense.Validate(false);
-//								if(result == 13 || result == 12 || result == 14)
-//									;
-//								else{
-//									JOptionPane.showMessageDialog(null, "Invalid License.\nSystem will exit now!");
-//									System.exit(-1);
-//								}
+								LicenseManager.getInstance().Validate("jajeem.lic");
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
 								System.exit(-1);
@@ -490,18 +482,20 @@ public class InstructorLogin {
 							new StartUp();
 							frame = new InstructorLogin().frame;
 //							frame.pack();
-
-							Timer timer = new Timer();
-							timer.schedule(new TimerTask() {
-
-								@Override
-								public void run() {
-									synchronized (synchLock) {
-										synchLock.notify();
-									}
-									frame.setVisible(true);
+							
+							synchronized (synchLock) {
+								synchLock.notify();
+							}
+							
+							synchronized (licenseSyncLock) {
+								try {
+									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
+										licenseSyncLock.wait(0);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
 								}
-							}, 5500);
+							}
+							frame.setVisible(true);
 						}
 					});
 					_t.start();
@@ -513,5 +507,9 @@ public class InstructorLogin {
 				}
 			}
 		});
+	}
+
+	public static Object getLicensesynclock() {
+		return licenseSyncLock;
 	}
 }

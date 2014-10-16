@@ -477,8 +477,6 @@ public class Quiz_Window extends BaseQuizClientFrame {
 		);
 		
 		webTextAreaEssayAnswer = new WebTextArea();
-		webTextAreaEssayAnswer.setEnabled(false);
-		webTextAreaEssayAnswer.setEditable(false);
 		scrollPane_2.setViewportView(webTextAreaEssayAnswer);
 		webPanel_2.setLayout(gl_webPanel_2);
 		

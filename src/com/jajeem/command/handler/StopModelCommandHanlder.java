@@ -9,8 +9,8 @@ public class StopModelCommandHanlder implements ICommandHandler {
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		if (Student.getVncViewer() == null) {
 
-			Student.getSendOnly().stop();
-			return;
+			if(Student.getSendOnly() != null)
+				Student.getSendOnly().stop();
 		} else {
 			Student.getVncViewer().stopClient();
 			Student.getVncViewer().getViewer().getRecorder().viewerGUI

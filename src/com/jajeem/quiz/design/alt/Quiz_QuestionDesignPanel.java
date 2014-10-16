@@ -28,6 +28,7 @@ import com.alee.laf.radiobutton.WebRadioButton;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.ui.combobox.JajeemComboBox;
 import com.jajeem.util.CustomPanel;
+import java.awt.Font;
 
 public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 	/**
@@ -306,7 +307,9 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		JLabel lblType = new JLabel("Type : ");
 		
 		webComboBoxQuestionType = new JajeemComboBox();
-		webComboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Single Choice", "Multiple Choice", "Essay"}));
+		webComboBoxQuestionType.setModel(new DefaultComboBoxModel(new String[] {"Single Choice", "Multiple Choice"
+//				, "Essay"
+				}));
 		
 		JLabel label = new JLabel("Question ");
 		
@@ -361,6 +364,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		);
 		
 		textPaneQuestionContent = new JTextArea();
+		textPaneQuestionContent.setFont(new Font("Arial", Font.PLAIN, 16));
 		scrollPane.setViewportView(textPaneQuestionContent);
 		panel.setLayout(gl_panel);
 		contentPanel.setLayout(groupLayout);

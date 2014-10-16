@@ -13,6 +13,6 @@ public class SendProgramListCommandHandler implements ICommandHandler {
 		
 		if (progCmd.getExeList() == null || progCmd.getLnkList() == null)
 			return;
-		InstructorNoaUtil.loadProgramRestrictList(progCmd.getLnkList(),progCmd.getExeList());
+//		InstructorNoaUtil.loadProgramRestrictList(progCmd.getLnkList(),progCmd.getExeList());
 	}
 }

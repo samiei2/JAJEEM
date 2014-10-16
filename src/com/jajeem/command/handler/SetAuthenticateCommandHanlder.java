@@ -40,6 +40,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 				((AuthenticateCommand) cmd).getUsername(),
 				((AuthenticateCommand) cmd).getPassword());
 
+
 		synchronized (authenticateLock) {
 			HashMap<String, String> map = Session.getLoggedInStudents();
 			HashMap<String, String> reversemap = new HashMap<>();

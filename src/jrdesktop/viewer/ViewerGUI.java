@@ -8,6 +8,8 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.jajeem.util.Config;
+
 import jrdesktop.Commons;
 import jrdesktop.HostProperties;
 import jrdesktop.main;
@@ -467,7 +469,17 @@ public class ViewerGUI extends javax.swing.JFrame {
 		jBtnClose.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jBtnCloseActionPerformed(evt);
+				try {
+					if (Integer.parseInt(Config.getParam("server")) == 1) {
+						jBtnCloseActionPerformed(evt);
+					}
+					else
+						return;
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		jToolBar1.add(jBtnClose);
@@ -580,7 +592,17 @@ public class ViewerGUI extends javax.swing.JFrame {
 
 	private void formWindowClosing(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowClosing
 		if (evt.getID() == WindowEvent.WINDOW_CLOSING) {
-			jBtnCloseActionPerformed(null);
+			try {
+				if (Integer.parseInt(Config.getParam("server")) == 1) {
+					jBtnCloseActionPerformed(null);
+				}
+				else
+					return;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			};
 		} else {
 			super.processWindowEvent(evt);
 		}

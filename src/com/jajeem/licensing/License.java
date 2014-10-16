@@ -172,6 +172,7 @@ public class License {
 					throw new InvalidLicenseException("License tampering detected!");
 				}
 				FileOutputStream fos = initiateLicenseFile(licenseFile);
+				printLicenseInfo();
 
 				this.initialized = true;
 				JsonConvert convert = new JsonConvert();
@@ -191,7 +192,20 @@ public class License {
 		}
 		return this;
 	}
-
+	
+	private void printLicenseInfo() {
+		System.out.println(LicenseConstants.HARDWARE_KEY + " : " + getLicenseInfo().get(LicenseConstants.HARDWARE_KEY));
+		System.out.println(LicenseConstants.SERIAL_NUMBER + " : " + getLicenseInfo().get(LicenseConstants.SERIAL_NUMBER));
+		System.out.println(LicenseConstants.START_DATE + " : " + getLicenseInfo().get(LicenseConstants.START_DATE));
+		System.out.println(LicenseConstants.EXPIRE_DATE + " : " + getLicenseInfo().get(LicenseConstants.EXPIRE_DATE));
+		System.out.println(LicenseConstants.STATUS + " : " + getLicenseInfo().get(LicenseConstants.STATUS));
+		System.out.println(LicenseConstants.ACTIVATION_CODE + " : " + getLicenseInfo().get(LicenseConstants.ACTIVATION_CODE));
+		System.out.println(LicenseConstants.USERS + " : " + getLicenseInfo().get(LicenseConstants.USERS));
+		System.out.println(LicenseConstants.VERSION + " : " + getLicenseInfo().get(LicenseConstants.VERSION));
+		System.out.println(LicenseConstants.TIME_LEFT + " : " + getLicenseInfo().get(LicenseConstants.TIME_LEFT));
+		System.out.println("=======================================================================================");
+	}
+	
 	private boolean isInitialized() {
 		return initialized;
 	}
@@ -236,7 +250,7 @@ public class License {
 			setActivated(true);
 	}
 
-	boolean isActivated() {
+	public boolean isActivated() {
 		return isActivated;
 	}
 

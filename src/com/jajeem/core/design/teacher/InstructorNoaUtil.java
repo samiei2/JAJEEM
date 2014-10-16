@@ -25,13 +25,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -71,7 +68,6 @@ import com.alee.managers.popup.PopupWay;
 import com.alee.managers.popup.WebButtonPopup;
 import com.alee.managers.popup.WebPopup;
 import com.alee.managers.tooltip.TooltipManager;
-import com.jajeem.command.model.GetProgramListCommand;
 import com.jajeem.command.model.StartApplicationCommand;
 import com.jajeem.command.model.StartCallAllCommand;
 import com.jajeem.command.model.StartConversationCommand;
@@ -115,7 +111,7 @@ public class InstructorNoaUtil {
 
 	private static ServerServiceTimer serverServiceTimer;
 	final static WebPopup popup = new WebPopup();
-//	final static List<String> fileListModel = new ArrayList<String>();
+	final static List<String> fileListModel = new ArrayList<String>();
 
 	static Quiz_Main quiz = null;
 	static Recorder recorder_frame = null;
@@ -126,7 +122,6 @@ public class InstructorNoaUtil {
 	private static JInternalFrame previousFrame;
 	private Thread _videoChat;
 	private static Object lock = new Object();
-	static WebButton programRestricButton;
 
 	/*
 	 * ***************** Right Panel Events **************************
@@ -134,7 +129,6 @@ public class InstructorNoaUtil {
 	Component intl;
 	private static JButton recorder_window;
 	protected static boolean callAllActive = false;
-	public static Object loadLock;
 
 	public void addEventsRightPanel(final WebPanel rightButtonPanel) {
 
@@ -633,7 +627,7 @@ public class InstructorNoaUtil {
 											FileManagerMain main = new FileManagerMain();
 											main.setReceivingIps(new ArrayList<>(
 													group.getStudentIps()));
-											main.setVisible(true);
+//											main.setVisible(true);
 										} catch (Exception e) {
 											JajeemExceptionHandler.logError(e);
 										}
@@ -645,7 +639,7 @@ public class InstructorNoaUtil {
 									FileManagerMain main = new FileManagerMain();
 									main.setReceivingIps(new ArrayList<String>(
 											Arrays.asList(ip)));
-									main.setVisible(true);
+//									main.setVisible(true);
 								} else {
 									FileManagerMain main = new FileManagerMain();
 									ArrayList<String> ips = new ArrayList<>();
@@ -659,7 +653,7 @@ public class InstructorNoaUtil {
 										ips.add(sip);
 									}
 									main.setReceivingIps(ips);
-									main.setVisible(true);
+//									main.setVisible(true);
 								}
 							}
 						}
@@ -799,7 +793,8 @@ public class InstructorNoaUtil {
 	
 										new AccountPanel(InstructorNoa
 												.getInstructorModel(),
-												InstructorNoa.getCourseModel());
+												InstructorNoa.getCourseModel()).setVisible(true);
+										
 									}
 								}
 								else{
@@ -1260,9 +1255,282 @@ public class InstructorNoaUtil {
 					break;
 
 				case "program":
-					ProgramRestrictListInitializer init = new ProgramRestrictListInitializer((WebButton)button);
-					button.addActionListener(init);
-					programRestricButton = (WebButton)button;
+					try {
+						String pathToStartMenu = WinRegistry
+								.readString(
+										WinRegistry.HKEY_LOCAL_MACHINE,
+										"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
+										"Common Start Menu")
+								+ "\\Programs";
+
+						FileUtil fileUtil = new FileUtil();
+						final File[] tempfileList = fileUtil
+								.finder(pathToStartMenu);
+						final File[] fileList;
+						final ArrayList<File> listOfAllLinks = new ArrayList<>();
+						final ArrayList<File> lnkList = new ArrayList<>();
+						final ArrayList<File> exeList = new ArrayList<>();
+						for (int i = 0; i < tempfileList.length; i++) {
+							if (tempfileList[i].isDirectory()) {
+								listOfAllLinks
+										.addAll(getPath(getDirectoryContent(tempfileList[i])));
+							} else {
+								listOfAllLinks.add(tempfileList[i]);
+							}
+						}
+
+						Collections.sort(listOfAllLinks);
+
+						for (int i = 0; i < listOfAllLinks.size(); i++) {
+							if (listOfAllLinks.get(i).getName().indexOf(".") != -1) {
+								String ext = listOfAllLinks
+										.get(i)
+										.getName()
+										.substring(
+												listOfAllLinks.get(i).getName()
+														.indexOf("."));
+								String path = listOfAllLinks.get(i).getParent();
+								String fileName = listOfAllLinks.get(i)
+										.getName();
+								if (ext.equals(".lnk")) {
+									try {
+										LnkParser parser = new LnkParser(
+												listOfAllLinks.get(i));
+										if (parser.getRealFilename().contains(
+												".exe")) {
+											lnkList.add(listOfAllLinks.get(i));
+											exeList.add(new File(parser
+													.getRealFilename()));
+										}
+									} catch (Exception e) {
+
+									}
+								}
+								// System.out.println(new
+								// LnkParser(fileList[i]).getRealFilename());
+							}
+						}
+
+						final DefaultTableModel model = (new DefaultTableModel(
+								new Object[][] {}, new String[] { "Name",
+										"status" }) {
+							private static final long serialVersionUID = 1L;
+							@SuppressWarnings("rawtypes")
+							Class[] columnTypes = new Class[] { String.class,
+									Boolean.class };
+
+							@Override
+							@SuppressWarnings({ "unchecked", "rawtypes" })
+							public Class getColumnClass(int columnIndex) {
+								return columnTypes[columnIndex];
+							}
+						});
+
+						for (int i = 0; i < lnkList.size(); i++) {
+							File file = lnkList.get(i);
+							if (file.getName().indexOf(".") != -1) {
+								String extension = file.getName().substring(
+										file.getName().indexOf("."));
+								if (extension.equals(".lnk")) {
+									fileListModel.add(exeList.get(i).getName());
+									model.addRow(new Object[] {
+											file.getParentFile().getName()
+													+ "\\"
+													+ file.getName()
+															.substring(
+																	0,
+																	file.getName()
+																			.length() - 4),
+											false });
+								}
+							}
+						}
+
+						final WebTable programsList = new WebTable();
+
+						programsList.setTableHeader(null);
+						programsList.setModel(model);
+						programsList.getColumnModel().getColumn(0)
+								.setResizable(false);
+						programsList.getColumnModel().getColumn(1)
+								.setResizable(false);
+						programsList.getColumnModel().getColumn(1)
+								.setPreferredWidth(30);
+						programsList.getColumnModel().getColumn(1)
+								.setMaxWidth(30);
+
+						WebButtonPopup programPopupButton = new WebButtonPopup(
+								(WebButton) button, PopupWay.upCenter);
+
+						final int sizeOfProgramModel = model.getRowCount();
+
+						CustomPowerPanel panel = new CustomPowerPanel();
+						GroupPanel programPopupContent = new GroupPanel(5,
+								false, new WebScrollPane(programsList));
+						programPopupContent.setMargin(5);
+						programPopupContent.setOpaque(false);
+						programsList.setOpaque(false);
+
+						panel.add(programPopupContent);
+						programPopupButton.setMargin(5);
+						programPopupButton.setContent(panel);
+
+						programsList.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent evt) {
+								boolean value = (boolean) programsList
+										.getValueAt(
+												programsList.getSelectedRow(),
+												1);
+
+								if (value == true) {
+									Component card = null;
+									for (Component comp : InstructorNoa
+											.getCenterPanel().getComponents()) {
+										if (comp.isVisible() == true) {
+											card = comp;
+										}
+									}
+
+									if (((JComponent) card).getClientProperty(
+											"viewMode").equals("thumbView")) {
+										try {
+											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config
+															.getParam("port")),
+													(fileListModel.get(programsList
+															.getSelectedRow())),
+													true);
+											InstructorNoa.getServerService()
+													.send(ic);
+										} catch (Exception e) {
+											JajeemExceptionHandler.logError(e);
+											e.printStackTrace();
+										}
+									} else if (((JComponent) card)
+											.getClientProperty("viewMode")
+											.equals("groupView")) {
+										if (!InstructorNoa.getGroupList()
+												.isSelectionEmpty()) {
+											int groupIndex = InstructorNoa
+													.getGroupList()
+													.getSelectedIndex();
+
+											Group group = InstructorNoa
+													.getGroups()
+													.get(groupIndex);
+											if (group.getStudentIps().isEmpty()) {
+												return;
+											} else {
+
+												try {
+													WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+															InetAddress
+																	.getLocalHost()
+																	.getHostAddress(),
+															"",
+															Integer.parseInt(Config
+																	.getParam("port")),
+															(fileListModel
+																	.get(programsList
+																			.getSelectedRow())),
+															true);
+													for (String studentIp : group
+															.getStudentIps()) {
+														ic.setTo(studentIp);
+														InstructorNoa
+																.getServerService()
+																.send(ic);
+													}
+												} catch (Exception e) {
+													JajeemExceptionHandler
+															.logError(e);
+													e.printStackTrace();
+												}
+
+											}
+										}
+									}
+								} else {
+									Component card = null;
+									for (Component comp : InstructorNoa
+											.getCenterPanel().getComponents()) {
+										if (comp.isVisible() == true) {
+											card = comp;
+										}
+									}
+
+									if (((JComponent) card).getClientProperty(
+											"viewMode").equals("thumbView")) {
+										try {
+											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+													InetAddress.getLocalHost()
+															.getHostAddress(),
+													Config.getParam("broadcastingIp"),
+													Integer.parseInt(Config
+															.getParam("port")),
+													(fileListModel.get(programsList
+															.getSelectedRow())),
+													false);
+											InstructorNoa.getServerService()
+													.send(ic);
+										} catch (Exception e) {
+											JajeemExceptionHandler.logError(e);
+											e.printStackTrace();
+										}
+									} else if (((JComponent) card)
+											.getClientProperty("viewMode")
+											.equals("groupView")) {
+										if (!InstructorNoa.getGroupList()
+												.isSelectionEmpty()) {
+											int groupIndex = InstructorNoa
+													.getGroupList()
+													.getSelectedIndex();
+
+											Group group = InstructorNoa
+													.getGroups()
+													.get(groupIndex);
+											if (group.getStudentIps().isEmpty()) {
+												return;
+											} else {
+
+												try {
+													WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
+															InetAddress
+																	.getLocalHost()
+																	.getHostAddress(),
+															"",
+															Integer.parseInt(Config
+																	.getParam("port")),
+															(fileListModel
+																	.get(programsList
+																			.getSelectedRow())),
+															false);
+													for (String studentIp : group
+															.getStudentIps()) {
+														ic.setTo(studentIp);
+														InstructorNoa
+																.getServerService()
+																.send(ic);
+													}
+												} catch (Exception e) {
+													JajeemExceptionHandler
+															.logError(e);
+													e.printStackTrace();
+												}
+
+											}
+										}
+									}
+								}
+							}
+						});
+					} catch (Exception e) {
+
+					}
 					break;
 				case "programStart":
 					try {
@@ -1631,9 +1899,29 @@ public class InstructorNoaUtil {
 			}
 		}
 	}
+
 	/*
 	 * ***************** Bottom Panel Events **************************
 	 */
+
+	protected ArrayList<File> getDirectoryContent(File file) {
+		ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
+		for (int i = 0; i < files.size(); i++) {
+			if (files.get(i).isDirectory()) {
+				files.addAll(getDirectoryContent(files.get(i)));
+			}
+		}
+		return files;
+	}
+
+	protected Collection<? extends File> getPath(
+			ArrayList<File> directoryContent) {
+		ArrayList<File> list = new ArrayList<>();
+		for (int i = 0; i < directoryContent.size(); i++) {
+			list.add(directoryContent.get(i));
+		}
+		return list;
+	}
 
 	public void addEventsTopPanel(final WebPanel bottomButtonPanel) {
 		String key = "";
@@ -2688,537 +2976,5 @@ public class InstructorNoaUtil {
 
 	public static JButton getRecorder_Button() {
 		return recorder_window;
-	}
-	
-	protected static ArrayList<File> getDirectoryContent(File file) {
-		ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
-		for (int i = 0; i < files.size(); i++) {
-			if (files.get(i).isDirectory()) {
-				files.addAll(getDirectoryContent(files.get(i)));
-			}
-		}
-		return files;
-	}
-
-	protected static Collection<? extends File> getPath(
-			ArrayList<File> directoryContent) {
-		ArrayList<File> list = new ArrayList<>();
-		for (int i = 0; i < directoryContent.size(); i++) {
-			list.add(directoryContent.get(i));
-		}
-		return list;
-	}
-
-	
-	public static void loadProgramRestrictList(ArrayList<File> lnkList,
-			ArrayList<File> exeList) {
-		ProgramRestrictListInitializer.loadProgramList(lnkList,exeList);
-	}
-}
-
-class ProgramRestrictListInitializer implements ActionListener{
-	
-	static WebButton button;
-	static WebButtonPopup programPopupButton;
-	static JPanel cardsPanel = new JPanel();
-	private static ArrayList<File> lnkList;
-	private static ArrayList<File> exeList;
-	static Object lock = new Object(); 
-	
-	public ProgramRestrictListInitializer(WebButton btn){
-		this.button = btn;
-		programPopupButton = new WebButtonPopup(
-				(WebButton) button,
-				PopupWay.upCenter);
-		programPopupButton.setMargin(5);
-		cardsPanel.setLayout(new CardLayout());
-		WebPanel loadingPanel = getLoadingJPanel();
-		cardsPanel.removeAll();
-		cardsPanel.add(loadingPanel,"Loading");
-		programPopupButton.setContent(cardsPanel);
-	}
-	
-	public static void loadProgramList(ArrayList<File> lnkLst,
-			ArrayList<File> exeLst) {
-		lnkList = lnkLst;
-		exeList = exeLst;
-		synchronized (lock) {
-			lock.notifyAll();
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-
-		WebPanel loadingPanel = getLoadingJPanel();
-		cardsPanel.removeAll();
-		cardsPanel.add(loadingPanel,"Loading");
-		CardLayout cl = (CardLayout)(cardsPanel.getLayout());
-	    cl.show(cardsPanel, "Loading");
-		
-		Component card = null;
-		for (Component comp : InstructorNoa.getCenterPanel()
-				.getComponents()) {
-			if (comp.isVisible() == true) {
-				card = comp;
-			}
-		}
-		if (((JComponent) card).getClientProperty("viewMode").equals(
-				"thumbView")) {
-			if (InstructorNoa.getDesktopPane().getSelectedFrame() != null) {
-				String selectedStudent = "";
-				selectedStudent = (String) InstructorNoa.getDesktopPane()
-						.getSelectedFrame().getClientProperty("ip");
-				try {
-					GetProgramListCommand proglistCommand = new GetProgramListCommand(InetAddress
-							.getLocalHost().getHostAddress(), "",
-							Integer.parseInt(Config.getParam("port")));
-					proglistCommand.setTo(selectedStudent);
-					InstructorNoa.getServerService().send(proglistCommand);
-					
-					synchronized (lock) {
-						lock.wait();
-					}
-					
-					final List<String> fileListModel = new ArrayList<String>();
-					final DefaultTableModel model = getDefaultTableModel(fileListModel,
-							lnkList, exeList);
-					final WebTable programsList = new WebTable();
-
-					programsList.setTableHeader(null);
-					programsList.setModel(model);
-					programsList.getColumnModel().getColumn(0)
-							.setResizable(false);
-					programsList.getColumnModel().getColumn(1)
-							.setResizable(false);
-					programsList.getColumnModel().getColumn(1)
-							.setPreferredWidth(30);
-					programsList.getColumnModel().getColumn(1)
-							.setMaxWidth(30);
-
-					CustomPowerPanel panel = new CustomPowerPanel();
-					GroupPanel programPopupContent = new GroupPanel(
-							5, false, new WebScrollPane(
-									programsList));
-					programPopupContent.setMargin(5);
-					programPopupContent.setOpaque(false);
-					programsList.setOpaque(false);
-
-					panel.add(programPopupContent);
-					cardsPanel.removeAll();
-					cardsPanel.add(panel,"content");
-				    cl.show(cardsPanel, "content");
-//				    programPopupButton.showPopup(button);
-				    
-					setProgramListClickEvent(fileListModel,
-							programsList);
-					
-				} catch (Exception e) {
-				}
-			}
-			else{
-				final List<String> fileListModel = new ArrayList<String>();
-				try {
-					final DefaultTableModel model = getLocalProgList(fileListModel);
-
-					final WebTable programsList = new WebTable();
-
-					programsList.setTableHeader(null);
-					programsList.setModel(model);
-					programsList.getColumnModel().getColumn(0)
-							.setResizable(false);
-					programsList.getColumnModel().getColumn(1)
-							.setResizable(false);
-					programsList.getColumnModel().getColumn(1)
-							.setPreferredWidth(30);
-					programsList.getColumnModel().getColumn(1)
-							.setMaxWidth(30);
-
-					CustomPowerPanel panel = new CustomPowerPanel();
-					GroupPanel programPopupContent = new GroupPanel(
-							5, false, new WebScrollPane(
-									programsList));
-					programPopupContent.setMargin(5);
-					programPopupContent.setOpaque(false);
-					programsList.setOpaque(false);
-
-					panel.add(programPopupContent);
-					cardsPanel.removeAll();
-					cardsPanel.add(panel,"content");
-					cl.show(cardsPanel, "content");
-
-					setProgramListClickEvent(fileListModel,
-							programsList);
-				} catch (Exception e) {
-
-				}
-			}
-		}
-		else{
-			final List<String> fileListModel = new ArrayList<String>();
-			try {
-				final DefaultTableModel model = getLocalProgList(fileListModel);
-
-				final WebTable programsList = new WebTable();
-
-				programsList.setTableHeader(null);
-				programsList.setModel(model);
-				programsList.getColumnModel().getColumn(0)
-						.setResizable(false);
-				programsList.getColumnModel().getColumn(1)
-						.setResizable(false);
-				programsList.getColumnModel().getColumn(1)
-						.setPreferredWidth(30);
-				programsList.getColumnModel().getColumn(1)
-						.setMaxWidth(30);
-
-				CustomPowerPanel panel = new CustomPowerPanel();
-				GroupPanel programPopupContent = new GroupPanel(
-						5, false, new WebScrollPane(
-								programsList));
-				programPopupContent.setMargin(5);
-				programPopupContent.setOpaque(false);
-				programsList.setOpaque(false);
-
-				panel.add(programPopupContent);
-				cardsPanel.removeAll();
-				cardsPanel.add(panel,"content");
-			    cl.show(cardsPanel, "content");
-//				programPopupButton.removeAll();
-//				programPopupButton.setContent(panel);
-//				programPopupButton.doLayout();
-//				programPopupButton.update(programPopupButton.getGraphics());
-//				programPopupButton.validate();
-//				programPopupButton.repaint();
-
-				setProgramListClickEvent(fileListModel,
-						programsList);
-			} catch (Exception e) {
-
-			}
-		}
-	}
-
-	private WebPanel getLoadingJPanel() {
-		CustomPowerPanel panel1 = new CustomPowerPanel();
-		
-		JLabel lblNewLabel = new JLabel("Loading Content,Wait!");
-		GroupLayout gl_panel = new GroupLayout(panel1);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(85)
-					.addComponent(lblNewLabel)
-					.addContainerGap(100, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(114)
-					.addComponent(lblNewLabel)
-					.addContainerGap(124, Short.MAX_VALUE))
-		);
-		panel1.setLayout(gl_panel);
-		return panel1;
-	}
-
-	private static void setProgramListClickEvent(
-			final List<String> fileListModel,
-			final WebTable programsList) {
-		programsList
-				.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(
-							MouseEvent evt) {
-						boolean value = (boolean) programsList.getValueAt(
-								programsList
-										.getSelectedRow(),
-								1);
-
-						if (value == true) {
-							Component card = null;
-							for (Component comp : InstructorNoa
-									.getCenterPanel()
-									.getComponents()) {
-								if (comp.isVisible() == true) {
-									card = comp;
-								}
-							}
-
-							if (((JComponent) card)
-									.getClientProperty(
-											"viewMode")
-									.equals("thumbView")) {
-								try {
-									WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-											InetAddress
-													.getLocalHost()
-													.getHostAddress(),
-											Config.getParam("broadcastingIp"),
-											Integer.parseInt(Config
-													.getParam("port")),
-											(fileListModel
-													.get(programsList
-															.getSelectedRow())),
-											true);
-									InstructorNoa
-											.getServerService()
-											.send(ic);
-								} catch (Exception e) {
-									JajeemExceptionHandler
-											.logError(e);
-									e.printStackTrace();
-								}
-							} else if (((JComponent) card)
-									.getClientProperty(
-											"viewMode")
-									.equals("groupView")) {
-								if (!InstructorNoa
-										.getGroupList()
-										.isSelectionEmpty()) {
-									int groupIndex = InstructorNoa
-											.getGroupList()
-											.getSelectedIndex();
-
-									Group group = InstructorNoa
-											.getGroups()
-											.get(groupIndex);
-									if (group
-											.getStudentIps()
-											.isEmpty()) {
-										return;
-									} else {
-
-										try {
-											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-													InetAddress
-															.getLocalHost()
-															.getHostAddress(),
-													"",
-													Integer.parseInt(Config
-															.getParam("port")),
-													(fileListModel
-															.get(programsList
-																	.getSelectedRow())),
-													true);
-											for (String studentIp : group
-													.getStudentIps()) {
-												ic.setTo(studentIp);
-												InstructorNoa
-														.getServerService()
-														.send(ic);
-											}
-										} catch (Exception e) {
-											JajeemExceptionHandler
-													.logError(e);
-											e.printStackTrace();
-										}
-
-									}
-								}
-							}
-						} else {
-							Component card = null;
-							for (Component comp : InstructorNoa
-									.getCenterPanel()
-									.getComponents()) {
-								if (comp.isVisible() == true) {
-									card = comp;
-								}
-							}
-
-							if (((JComponent) card)
-									.getClientProperty(
-											"viewMode")
-									.equals("thumbView")) {
-								try {
-									WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-											InetAddress
-													.getLocalHost()
-													.getHostAddress(),
-											Config.getParam("broadcastingIp"),
-											Integer.parseInt(Config
-													.getParam("port")),
-											(fileListModel
-													.get(programsList
-															.getSelectedRow())),
-											false);
-									InstructorNoa
-											.getServerService()
-											.send(ic);
-								} catch (Exception e) {
-									JajeemExceptionHandler
-											.logError(e);
-									e.printStackTrace();
-								}
-							} else if (((JComponent) card)
-									.getClientProperty(
-											"viewMode")
-									.equals("groupView")) {
-								if (!InstructorNoa
-										.getGroupList()
-										.isSelectionEmpty()) {
-									int groupIndex = InstructorNoa
-											.getGroupList()
-											.getSelectedIndex();
-
-									Group group = InstructorNoa
-											.getGroups()
-											.get(groupIndex);
-									if (group
-											.getStudentIps()
-											.isEmpty()) {
-										return;
-									} else {
-
-										try {
-											WhiteBlackAppCommand ic = new WhiteBlackAppCommand(
-													InetAddress
-															.getLocalHost()
-															.getHostAddress(),
-													"",
-													Integer.parseInt(Config
-															.getParam("port")),
-													(fileListModel
-															.get(programsList
-																	.getSelectedRow())),
-													false);
-											for (String studentIp : group
-													.getStudentIps()) {
-												ic.setTo(studentIp);
-												InstructorNoa
-														.getServerService()
-														.send(ic);
-											}
-										} catch (Exception e) {
-											JajeemExceptionHandler
-													.logError(e);
-											e.printStackTrace();
-										}
-
-									}
-								}
-							}
-						}
-					}
-				});
-	}
-
-	private DefaultTableModel getLocalProgList(
-			final List<String> fileListModel)
-			throws IllegalAccessException,
-			InvocationTargetException {
-		String pathToStartMenu = WinRegistry
-				.readString(
-						WinRegistry.HKEY_LOCAL_MACHINE,
-						"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\",
-						"Common Start Menu")
-				+ "\\Programs";
-
-		FileUtil fileUtil = new FileUtil();
-		final File[] tempfileList = fileUtil
-				.finder(pathToStartMenu);
-		final ArrayList<File> listOfAllLinks = new ArrayList<>();
-		final ArrayList<File> lnkList = new ArrayList<>();
-		final ArrayList<File> exeList = new ArrayList<>();
-		for (int i = 0; i < tempfileList.length; i++) {
-			if (tempfileList[i].isDirectory()) {
-				listOfAllLinks
-						.addAll(InstructorNoaUtil.getPath(InstructorNoaUtil.getDirectoryContent(tempfileList[i])));
-			} else {
-				listOfAllLinks.add(tempfileList[i]);
-			}
-		}
-
-		Collections.sort(listOfAllLinks);
-
-		for (int i = 0; i < listOfAllLinks.size(); i++) {
-			if (listOfAllLinks.get(i).getName()
-					.indexOf(".") != -1) {
-				String ext = listOfAllLinks
-						.get(i)
-						.getName()
-						.substring(
-								listOfAllLinks
-										.get(i)
-										.getName()
-										.indexOf(
-												"."));
-				// String path =
-				// listOfAllLinks.get(i).getParent();
-				// String fileName =
-				// listOfAllLinks.get(i)
-				// .getName();
-				if (ext.equals(".lnk")) {
-					try {
-						LnkParser parser = new LnkParser(
-								listOfAllLinks
-										.get(i));
-						if (parser
-								.getRealFilename()
-								.contains(".exe")) {
-							lnkList.add(listOfAllLinks
-									.get(i));
-							exeList.add(new File(
-									parser.getRealFilename()));
-						}
-					} catch (Exception e) {
-
-					}
-				}
-				// System.out.println(new
-				// LnkParser(fileList[i]).getRealFilename());
-			}
-		}
-
-		final DefaultTableModel model = getDefaultTableModel(fileListModel,
-				lnkList, exeList);
-		return model;
-	}
-
-	private static DefaultTableModel getDefaultTableModel(
-			final List<String> fileListModel, final ArrayList<File> lnkList,
-			final ArrayList<File> exeList) {
-		final DefaultTableModel model = (new DefaultTableModel(
-				new Object[][] {}, new String[] {
-						"Name", "status" }) {
-			private static final long serialVersionUID = 1L;
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-					String.class, Boolean.class };
-
-			@Override
-			public Class<?> getColumnClass(
-					int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-
-		for (int i = 0; i < lnkList.size(); i++) {
-			File file = lnkList.get(i);
-			if (file.getName().indexOf(".") != -1) {
-				String extension = file
-						.getName()
-						.substring(
-								file.getName()
-										.indexOf(
-												"."));
-				if (extension.equals(".lnk")) {
-					fileListModel.add(exeList
-							.get(i).getName());
-					model.addRow(new Object[] {
-							file.getParentFile()
-									.getName()
-									+ "\\"
-									+ file.getName()
-											.substring(
-													0,
-													file.getName()
-															.length() - 4),
-							false });
-				}
-			}
-		}
-		return model;
 	}
 }

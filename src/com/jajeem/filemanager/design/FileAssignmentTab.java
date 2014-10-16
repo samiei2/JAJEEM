@@ -45,7 +45,7 @@ public class FileAssignmentTab extends JPanel {
 	private FileAssignmentTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
-	private FileManagerMain parentFrame;
+	private FileManagerMain parentFrame; 
 
 	/**
 	 * Create the panel.
@@ -196,6 +196,8 @@ public class FileAssignmentTab extends JPanel {
 		wbtnSend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(webTable.getSelectedRow()==-1)
+					return;
 				String fileName = fileNames.get(webTable.getSelectedRow());
 				File file = new File(fileName);
 				try {
@@ -423,13 +425,18 @@ public class FileAssignmentTab extends JPanel {
 									.getSelectedFrame().getClientProperty("ip")));
 						} else {
 							try {
-								WebOptionPane.showMessageDialog(null,
-										i18n.getParam("No student is selected!"));
+
+								FileAssignmentTabStudentList studentListForm = new FileAssignmentTabStudentList();
+								studentListForm.setVisible(true);
+								ips = new ArrayList<>();
+								ips.addAll(studentListForm.getListofIps());
+//								WebOptionPane.showMessageDialog(null,
+//										i18n.getParam("No student is selected!"));
+								
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
+								ips= null;
 							}
-							ips = null;
 						}
 					}
 
@@ -437,6 +444,8 @@ public class FileAssignmentTab extends JPanel {
 						try {
 							WebOptionPane.showMessageDialog(null,
 									i18n.getParam("No student is selected!"));
+
+							progwin.setVisible(false);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -444,7 +453,6 @@ public class FileAssignmentTab extends JPanel {
 						return;
 					}
 					try {
-
 						for (int i = 0; i < ips.size(); i++) { // send for all
 																// selected
 																// clients

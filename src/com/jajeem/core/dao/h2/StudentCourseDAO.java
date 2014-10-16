@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -470,7 +471,7 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 
 		Connection con = BaseDAO.getConnection();
 
-		ps = con.prepareStatement("SELECT * FROM QUIZRUN WHERE STUDENTID=? AND COURSEID=?");
+		ps = con.prepareStatement("SELECT * FROM QUIZRUN WHERE QUIZRUN.studentid=? AND QUIZRUN.sessionid=?");
 		ps.setInt(1, id);
 		ps.setInt(2, courseId);
 
@@ -479,14 +480,15 @@ public class StudentCourseDAO implements IStudentCourseDAO {
 			while (rs.next()) {
 				Run quizRun = new Run();
 
+				quizRun.setId((UUID) rs.getObject("iid"));
 				int insId = rs.getInt("instructorId");
 				quizRun.setInstructorId(insId);
-				Instructor instructor = instructordao.getById(courseId);
+				Instructor instructor = instructordao.getById(insId);
 				quizRun.setInstructor(instructor);
 				quizRun.setInstructorId(insId);
 				quizRun.setStart(rs.getLong("start"));
 				quizRun.setEnd(rs.getLong("end"));
-				quizRun.setStart(rs.getLong("score"));
+				quizRun.setScore(rs.getInt("score"));
 
 				allQuizes.add(quizRun);
 			}

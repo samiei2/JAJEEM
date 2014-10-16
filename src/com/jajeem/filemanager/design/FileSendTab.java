@@ -320,15 +320,16 @@ public class FileSendTab extends JPanel {
 										.getClientProperty("ip")));
 							} else {
 								try {
-									WebOptionPane.showMessageDialog(null,
-											i18n.getParam("No student is selected!"));
-									progwin.setVisible(false);
-									return;
+									FileAssignmentTabStudentList studentListForm = new FileAssignmentTabStudentList();
+									studentListForm.setVisible(true);
+									ips = new ArrayList<>();
+									ips.addAll(studentListForm.getListofIps());
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									progwin.setVisible(false);
+									ips = null;
 								}
-								ips = null;
 							}
 						}
 					}

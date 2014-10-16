@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import com.jajeem.core.design.teacher.InstructorLogin;
 import com.jajeem.licensing.exception.LicenseServerErrorException;
 
 public class LicenseFrame extends JFrame {
@@ -60,6 +63,17 @@ public class LicenseFrame extends JFrame {
 	private JButton btnContinueTrial;
 
 	public LicenseFrame() {
+		addComponentListener(new ComponentAdapter() {
+			public void componentHidden(ComponentEvent e) {
+				synchronized (InstructorLogin.getLicensesynclock()) {
+					InstructorLogin.getLicensesynclock().notify();
+				}
+			}
+
+			public void componentShown(ComponentEvent e) {
+				/* code run when component shown */
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				LicenseFrame.class.getResource("/icons/noa_en/key.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,6 +145,7 @@ public class LicenseFrame extends JFrame {
 		);
 		
 		JLabel lblTimeLeft = new JLabel("Time Left : ");
+		lblTimeLeft.setVisible(false);
 		
 		textField_name = new JTextField();
 		textField_name.setColumns(10);
@@ -152,6 +167,10 @@ public class LicenseFrame extends JFrame {
 		JLabel lblVersion_1 = new JLabel("Version : ");
 		
 		lblTimeleft = new JLabel(" ");
+		lblTimeleft.setVisible(false);
+		
+		JLabel lblDays = new JLabel("days");
+		lblDays.setVisible(false);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
@@ -162,20 +181,22 @@ public class LicenseFrame extends JFrame {
 							.addComponent(lblTimeLeft)
 							.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
 							.addComponent(lblTimeleft)
-							.addPreferredGap(ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(lblDays)
+							.addPreferredGap(ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
 							.addComponent(lblVersion_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblVersion))
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(label_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-								.addComponent(label, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+								.addComponent(label_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+								.addComponent(label, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
 								.addComponent(label_3))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField_name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-								.addComponent(textField_phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-								.addComponent(textField_company, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))))
+								.addComponent(textField_name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+								.addComponent(textField_phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+								.addComponent(textField_company, GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_panel_3.setVerticalGroup(
@@ -186,8 +207,9 @@ public class LicenseFrame extends JFrame {
 						.addComponent(lblTimeLeft)
 						.addComponent(lblVersion)
 						.addComponent(lblVersion_1)
-						.addComponent(lblTimeleft))
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+						.addComponent(lblTimeleft)
+						.addComponent(lblDays))
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label))
@@ -225,6 +247,10 @@ public class LicenseFrame extends JFrame {
 		btnActivateOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					LicenseManager.getInstance().ActivateOnline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
 				} catch (GeneralSecurityException e1) {
 					JOptionPane.showMessageDialog(null, "Security exception occured.License was not saved!");
@@ -248,6 +274,10 @@ public class LicenseFrame extends JFrame {
 		btnActivateOffline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					LicenseManager.getInstance().ActivateOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText(),textField_Activation.getText());
 					JOptionPane.showMessageDialog(null, "Product Activated!\nEnjoy the program!");
 					setVisible(false);
@@ -259,9 +289,16 @@ public class LicenseFrame extends JFrame {
 		});
 		
 		btnContinueTrial = new JButton("Continue Trial");
+		btnContinueTrial.setVisible(false);
 		btnContinueTrial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				if(textField_name.getText().isEmpty() || textField_phone.getText().isEmpty() || textField_company.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Please fill all the fields first.", "Incomplete Info", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				LicenseManager.getInstance().saveInfoOffline(textField_name.getText(),textField_company.getText(),textField_phone.getText());
+				LicenseManager.getInstance().revalidate();
+				setVisible(false);
 			}
 		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
