@@ -1,5 +1,7 @@
 package com.jajeem.command.model;
 
+import com.jajeem.core.design.teacher.ScreenImageContainer;
+
 public class StartUpCommand extends Command {
 
 	/**
@@ -9,6 +11,7 @@ public class StartUpCommand extends Command {
 
 	private String sender;
 	private String senderName;
+	private ScreenImageContainer screenImage;
 
 	public StartUpCommand(String from, String to, int port, String sender,
 			String senderName) {
@@ -32,5 +35,13 @@ public class StartUpCommand extends Command {
 
 	public void setSenderName(String senderName) {
 		this.senderName = senderName;
+	}
+
+	public ScreenImageContainer getScreenImage() {
+		return screenImage;
+	}
+
+	public void setScreenImage(ScreenImageContainer screenImage) {
+		this.screenImage = screenImage;
 	}
 }
