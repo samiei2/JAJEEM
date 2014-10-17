@@ -17,9 +17,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.design.teacher.InstructorNoaUtil;
 import com.jajeem.core.model.Student;
-import com.jajeem.core.service.InstructorService;
 import com.jajeem.core.service.StudentService;
-import com.jajeem.room.service.RoomService;
 import com.jajeem.util.Config;
 import com.jajeem.util.Session;
 
@@ -82,7 +80,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 									InstructorNoaUtil.createFrame(
 											InstructorNoa.getDesktopPane(),
 											((AuthenticateCommand) cmd).getFrom(),
-											((AuthenticateCommand) cmd).getUsername());
+											((AuthenticateCommand) cmd).getUsername(),null);
 								} catch (Exception e) {
 								}
 
@@ -134,7 +132,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 								InstructorNoaUtil.createFrame(
 										InstructorNoa.getDesktopPane(),
 										((AuthenticateCommand) cmd).getFrom(),
-										((AuthenticateCommand) cmd).getUsername());
+										((AuthenticateCommand) cmd).getUsername(),null);
 							} catch (Exception e) {
 							}
 

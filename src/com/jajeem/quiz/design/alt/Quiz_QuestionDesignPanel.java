@@ -364,7 +364,7 @@ public class Quiz_QuestionDesignPanel extends Quiz_AbstractViews{
 		);
 		
 		textPaneQuestionContent = new JTextArea();
-		textPaneQuestionContent.setFont(new Font("Calibri", Font.PLAIN, 16));
+		textPaneQuestionContent.setFont(new Font("Arial", Font.PLAIN, 16));
 		scrollPane.setViewportView(textPaneQuestionContent);
 		panel.setLayout(gl_panel);
 		contentPanel.setLayout(groupLayout);

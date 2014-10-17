@@ -1,6 +1,5 @@
 package com.jajeem.core.design.teacher;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,17 +34,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
-
-import jrdesktop.viewer.ScreenPlayer;
-import jrdesktop.viewer.Viewer;
 
 import org.jitsi.examples.AVReceiveOnly;
 import org.jscroll.widgets.RootDesktopPane;
@@ -90,7 +85,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
-import com.jajeem.core.design.ui.CustomTeacherFrame;
+import com.jajeem.core.design.ui.CustomTeacherFrame2;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
@@ -971,7 +966,7 @@ public class InstructorNoaUtil {
 
 	@SuppressWarnings("unused")
 	public void addEventsBottomPanel(final WebPanel bottomButtonPanel,
-			final CustomTeacherFrame mainFrame) throws Exception {
+			final CustomTeacherFrame2 mainFrame) throws Exception {
 		String key = "";
 
 		for (Component c : bottomButtonPanel.getComponents()) {
@@ -2152,7 +2147,7 @@ public class InstructorNoaUtil {
 	@SuppressWarnings("unused")
 	public static WebInternalFrame createFrame(
 			final RootDesktopPane desktopPane, final String hostIp,
-			final String hostName) throws NumberFormatException, Exception {
+			final String hostName, BufferedImage screenImage) throws NumberFormatException, Exception {
 		String frameName = hostName;
 		final WebInternalFrame internalFrame = new WebInternalFrame(frameName,
 				false, false, false, false);
@@ -2168,14 +2163,23 @@ public class InstructorNoaUtil {
 
 		for (JInternalFrame frame : frames) {
 			if (hostIp.equals(frame.getClientProperty("ip"))) {
-				if (!((Viewer) frame.getClientProperty("vnc")).isConnected()) {
-					jrdesktop.Config con = new jrdesktop.Config(false, "",
-							hostIp,
-							Integer.parseInt(Config.getParam("vncPort")),
-							"admin", "admin", false, false);
-					final Viewer vnc = new Viewer(con);
-					vnc.StartThumbs(frame);
-					frame.putClientProperty("vnc", vnc);
+//				if (!((Viewer) frame.getClientProperty("vnc")).isConnected()) {
+//					jrdesktop.Config con = new jrdesktop.Config(false, "",
+//							hostIp,
+//							Integer.parseInt(Config.getParam("vncPort")),
+//							"admin", "admin", false, false);
+//					final Viewer vnc = new Viewer(con);
+//					vnc.StartThumbs(frame);
+//					frame.putClientProperty("vnc", vnc);
+					
+				((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+						.getComponent(0)).getComponent(1)).getComponent(0)).removeAll();
+				
+				((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+						.getComponent(0)).getComponent(1)).getComponent(0)).add(new ScreenImage(screenImage));
+				internalFrame.revalidate();
+				internalFrame.updateUI();
+				
 					frame.putClientProperty("live", true);
 					if (frame.isSelected()) {
 						frame.setFrameIcon(new ImageIcon(
@@ -2189,8 +2193,8 @@ public class InstructorNoaUtil {
 					// frame.updateUI();
 
 					return null;
-				}
-				break;
+//				}
+//				break;
 			}
 		}
 
@@ -2200,12 +2204,20 @@ public class InstructorNoaUtil {
 			}
 		}
 
-		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
-				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
-				false, false);
-		final Viewer vnc = new Viewer(con);
+//		jrdesktop.Config con = new jrdesktop.Config(false, "", hostIp,
+//				Integer.parseInt(Config.getParam("vncPort")), "admin", "admin",
+//				false, false);
+//		final Viewer vnc = new Viewer(con);
 
-		internalFrame.putClientProperty("vnc", vnc);
+//		internalFrame.putClientProperty("vnc", vnc);
+
+		((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+				.getComponent(0)).getComponent(1)).getComponent(0)).removeAll();
+		((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+				.getComponent(0)).getComponent(1)).getComponent(0)).add(new ScreenImage(screenImage));
+		internalFrame.revalidate();
+		internalFrame.updateUI();
+		
 		internalFrame.putClientProperty("ip", hostIp);
 		internalFrame.putClientProperty("lock", false);
 		internalFrame.putClientProperty("username", hostName);
@@ -2224,14 +2236,14 @@ public class InstructorNoaUtil {
 		internalFrame.pack();
 		internalFrame.setResizable(false);
 
-		try{
-			Viewer viewer = vnc.StartThumbs(internalFrame);
-			if(!viewer.isConnected())
-				return null;
-		}
-		catch(Exception e){
-			System.out.println("Could not connect to user");
-		}
+//		try{
+//			Viewer viewer = vnc.StartThumbs(internalFrame);
+//			if(!viewer.isConnected())
+//				return null;
+//		}
+//		catch(Exception e){
+//			System.out.println("Could not connect to user");
+//		}
 
 		internalFrame.setVisible(true);
 		internalFrame.addMouseListener(new MouseListener() {
@@ -2325,9 +2337,9 @@ public class InstructorNoaUtil {
 
 		((JComponent) internalFrame.getComponent(1))
 				.setComponentPopupMenu(popup);
-		((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-				.getComponent(0)).getComponent(1)).getComponent(0))
-				.getComponent(0)).setComponentPopupMenu(popup);
+//		((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+//				.getComponent(0)).getComponent(1)).getComponent(0))
+//				.getComponent(0)).setComponentPopupMenu(popup);
 
 		((JComponent) internalFrame.getComponent(1))
 				.addMouseListener(new MouseAdapter() {
@@ -2337,15 +2349,15 @@ public class InstructorNoaUtil {
 					}
 				});
 
-		((ScreenPlayer) ((JViewport) ((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-				.getComponent(0)).getComponent(1)).getComponent(0))
-				.getComponent(0)).getComponent(0)).getComponent(0))
-				.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						internalFrameMouseClicked(e);
-					}
-				});
+//		((ScreenPlayer) ((JViewport) ((JScrollPane) ((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+//				.getComponent(0)).getComponent(1)).getComponent(0))
+//				.getComponent(0)).getComponent(0)).getComponent(0))
+//				.addMouseListener(new MouseAdapter() {
+//					@Override
+//					public void mouseClicked(MouseEvent e) {
+//						internalFrameMouseClicked(e);
+//					}
+//				});
 
 		TooltipManager.setTooltip((internalFrame.getComponent(1)), i18n.getParam("No Group"));
 		JPopupMenu.setDefaultLightWeightPopupEnabled(true);
@@ -2638,7 +2650,7 @@ public class InstructorNoaUtil {
 				if(!found)
 					model.addRow(new Object[] { hostIp, hostName, "Not Logged In" });
 
-				desktopPane.add(internalFrame, BorderLayout.CENTER);
+				InstructorNoa.getDesktopPaneScroll().add(internalFrame);
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator()
 						.tileInternalFrames();
 				InstructorNoa.getDesktopPaneScroll().getDesktopMediator().resizeDesktop();

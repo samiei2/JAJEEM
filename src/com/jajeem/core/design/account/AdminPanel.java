@@ -69,7 +69,6 @@ import com.jajeem.util.MultiLineCellRenderer;
 import com.jajeem.util.Query;
 import com.jajeem.util.StripedTableCellRenderer;
 import com.jajeem.util.i18n;
-
 import javax.swing.ImageIcon;
 
 @SuppressWarnings("deprecation")
@@ -90,7 +89,7 @@ public class AdminPanel extends CustomAccountFrame {
 
 	private EventList<com.jajeem.core.model.Student> studentList = new BasicEventList<com.jajeem.core.model.Student>();
 	private EventSelectionModel<com.jajeem.core.model.Student> studentSelectionModel;
-//
+
 	public AdminPanel() throws Exception {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -875,7 +874,7 @@ public class AdminPanel extends CustomAccountFrame {
 		});
 
 		WebButton databaseManager = new WebButton(i18n.getParam("Database"));
-		
+
 		WebButton wbtnCourses = new WebButton((String) null);
 		wbtnCourses.setText("Courses");
 		wbtnCourses.addActionListener(new ActionListener() {
@@ -922,7 +921,7 @@ public class AdminPanel extends CustomAccountFrame {
 							.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
-
+		
 		buttonPanel.setLayout(gl_buttonPanel);
 		databaseManager.addActionListener(new ActionListener() {
 

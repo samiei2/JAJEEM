@@ -18,6 +18,7 @@ public class OpenWebsiteCommandHandler implements ICommandHandler {
 
 				// this doesn't support showing urls in the form of
 				// "page.html#nameLink"
+
 				Process p = rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
 				System.out.println(url + " is oppened");
 

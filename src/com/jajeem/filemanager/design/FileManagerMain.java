@@ -10,18 +10,11 @@ import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import net.sf.jasperreports.components.barcode4j.Interleaved2Of5Component;
-
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.jajeem.exception.JajeemExceptionHandler;
-import com.jajeem.util.Config;
-import com.jajeem.util.i18n;
 
 public class FileManagerMain extends FileManagerBase{
 	private FileSendTab fileSendTab;

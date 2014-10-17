@@ -24,7 +24,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.DateFormat;
@@ -46,7 +45,6 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -90,17 +88,16 @@ import com.alee.utils.swing.Timer;
 import com.jajeem.command.model.InternetCommand;
 import com.jajeem.command.model.LockCommand;
 import com.jajeem.command.model.PowerCommand;
-import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.command.model.WebsiteCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.core.design.ui.CustomTeacherFrame;
+import com.jajeem.core.design.ui.CustomTeacherFrame2;
 import com.jajeem.core.model.Instructor;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
 import com.jajeem.quiz.model.Run;
 import com.jajeem.room.model.Course;
-import com.jajeem.util.COptionPane;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomBottomButton;
 import com.jajeem.util.CustomButton;
@@ -119,7 +116,7 @@ import java.awt.ComponentOrientation;
 
 public class InstructorNoa {
 
-	private static CustomTeacherFrame frame;
+	private static CustomTeacherFrame2 frame;
 	public static Map<String, com.jajeem.core.model.Student> studentList;
 	private static ArrayList<String> conversationPairs;
 	private static ArrayList<String> conversationIps;
@@ -223,7 +220,7 @@ public class InstructorNoa {
 	public InstructorNoa() throws Exception {
 
 		try {
-			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+//			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 
 			new Config();
 			new i18n();
@@ -261,7 +258,7 @@ public class InstructorNoa {
 		conversationIps = new ArrayList<String>();
 		conversationPairs = new ArrayList<String>();
 
-		frame = new CustomTeacherFrame();
+		frame = new CustomTeacherFrame2();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				InstructorNoa.class.getResource("/icons/noa/teacher.png")));
 		frame.setTitle(i18n.getParam("Classmate"));
@@ -402,6 +399,7 @@ public class InstructorNoa {
 		JScrollDesktopPane scrollableDesktop = new JScrollDesktopPane();
 		scrollableDesktop.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setDesktopPaneScroll(scrollableDesktop);
+		scrollableDesktop.setAutoscrolls(true);
 
 		/// @Armin codes Clean Up actions and move to proper place
 		WebPopupMenu popup = new WebPopupMenu();
@@ -1152,7 +1150,7 @@ public class InstructorNoa {
 
 		});
 
-		CustomBottomButton programButton = new CustomBottomButton();
+		final CustomBottomButton programButton = new CustomBottomButton();
 
 		programButton.setIconTextGap(30);
 		programButton.putClientProperty("key", "program");
@@ -1167,6 +1165,7 @@ public class InstructorNoa {
 		programButton.setBottomBgColor(new Color(225, 234, 244));
 		programButton.setTopBgColor(new Color(116, 166, 219));
 		programButton.setUndecorated(true);
+
 		bottomButtonPanel.add(programButton);
 
 		CustomBottomButton programStartButton = new CustomBottomButton();
@@ -1368,106 +1367,6 @@ public class InstructorNoa {
 		videoButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(videoButton);
 
-		// /////////////////// Report Combo
-
-		final GroupPanel reportPopupContent = new GroupPanel(5, false);
-		reportPopupContent.setMargin(15);
-
-		final WebComboBox reportStudentComboBox = new WebComboBox();
-		reportStudentComboBox.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-
-			}
-		});
-
-		final WebComboBox listOfStudentsComboBox = new WebComboBox();
-
-		final WebComboBox reportQuizComboBox = new WebComboBox();
-		reportQuizComboBox.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-
-			}
-		});
-
-		// be careful with this list index, we work with index
-		final String[] jasperFileNames = { "AnswerRate", "StudentResult",
-				"SummaryofStudents" };
-		final WebComboBox reportComboBox = new WebComboBox(new String[] {
-				i18n.getParam("AnswerRate"), i18n.getParam("StudentResult"), i18n.getParam("Summaryofstudents") });
-
-		final WebButton reportGoButton = new WebButton(i18n.getParam("Go"));
-		reportGoButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm")
-						.format(Calendar.getInstance().getTime());
-				if (reportComboBox.getSelectedIndex() == 0) {
-					JasperReport.generate(jasperFileNames[0],
-							(jasperFileNames[0].toString() + "_" + timeStamp),
-							Query.answerRate(reportRunList.get(
-									reportQuizComboBox.getSelectedIndex())
-									.getId()));
-				} else if (reportComboBox.getSelectedIndex() == 1) {
-					JasperReport.generate(jasperFileNames[1],
-							(jasperFileNames[1] + "_" + timeStamp), Query
-									.studentResult(reportRunList.get(
-											reportQuizComboBox
-													.getSelectedIndex())
-											.getId()));
-				} else if (reportComboBox.getSelectedIndex() == 2) {
-					JasperReport.generate(jasperFileNames[2],
-							(jasperFileNames[2].toString() + "_" + timeStamp),
-							Query.summaryOfStudents(reportRunList.get(
-									reportQuizComboBox.getSelectedIndex())
-									.getId()));
-
-				} else if (reportComboBox.getSelectedIndex() == 4) {
-
-				} else if (reportComboBox.getSelectedIndex() == 5) {
-
-				}
-
-			}
-		});
-
-		reportComboBox.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if (reportComboBox.getSelectedIndex() == 0) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(true);
-				} else if (reportComboBox.getSelectedIndex() == 1) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(false);
-				} else if (reportComboBox.getSelectedIndex() == 2) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(true);
-				} else if (reportComboBox.getSelectedIndex() == 3) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(true);
-				} else if (reportComboBox.getSelectedIndex() == 4) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(true);
-				} else if (reportComboBox.getSelectedIndex() == 5) {
-					listOfStudentsComboBox.setVisible(false);
-					reportQuizComboBox.setVisible(false);
-				}
-			}
-		});
-
-		reportPopupContent.add(reportComboBox);
-		reportPopupContent.add(reportGoButton);
-		reportPopupContent.add(reportQuizComboBox);
-		reportPopupContent.add(listOfStudentsComboBox);
-		listOfStudentsComboBox.setVisible(false);
-		reportQuizComboBox.setVisible(true);
-
 		ImageIcon accountIcon = new ImageIcon(
 				InstructorNoa.class.getResource("/icons/noa_en/account.png"));
 		ImageIcon accountIconScaled = new ImageIcon(accountIcon.getImage()
@@ -1499,17 +1398,6 @@ public class InstructorNoa {
 		chatButton.setText(i18n.getParam("Chat"));
 		chatButton.setMargin(new Insets(5, 10, 0, 0));
 		rightButtonPanel.add(chatButton);
-
-		WebLabel bottomLogoLabel = new WebLabel("LOGO");
-		bottomLogoLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		bottomLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		bottomLogoLabel.setForeground(new Color(255, 127, 80));
-
-		WebLabel copyRightLabel = new WebLabel();
-		copyRightLabel.setForeground(Color.WHITE);
-		copyRightLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		copyRightLabel.setText(i18n.getParam("Copy Right \u00A9 2013"));
-		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		GroupLayout groupLayout = new GroupLayout(frame.getMainContentPane());
 		groupLayout.setHorizontalGroup(
@@ -1928,7 +1816,6 @@ public class InstructorNoa {
 	}
 
 	public static void LockAction() {
-		LockCommand lockCommand;
 		JInternalFrame[] allframes = getDesktopPane().getAllFrames();
 		if (isSelectAllPcControllerSelected){
 			for (int i = 0; i < allframes.length; i++) {
@@ -2203,6 +2090,8 @@ public class InstructorNoa {
 	public static void setConversationIps(ArrayList<String> conversationIps) {
 		InstructorNoa.conversationIps = conversationIps;
 	}
+
+	
 }
 
 class GradientPanel extends WebPanel {

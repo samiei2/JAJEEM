@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
@@ -24,6 +23,7 @@ import com.jajeem.command.handler.ChatCommandHanlder;
 import com.jajeem.command.handler.FinishedQuizCommandHandler;
 import com.jajeem.command.handler.FinishedSurveyCommandHandler;
 import com.jajeem.command.handler.GetCourseListCommandHandler;
+import com.jajeem.command.handler.GetProgramListCommandHandler;
 import com.jajeem.command.handler.IntercomRequestCommandHanlder;
 import com.jajeem.command.handler.MessageCommandHanlder;
 import com.jajeem.command.handler.OpenWebsiteCommandHandler;
@@ -31,6 +31,7 @@ import com.jajeem.command.handler.RequestCourseListCommandHandler;
 import com.jajeem.command.handler.RestartStudentProgramCommandHandler;
 import com.jajeem.command.handler.SendFileAssignmentCommandHandler;
 import com.jajeem.command.handler.SendFileCollectCommandHandler;
+import com.jajeem.command.handler.SendProgramListCommandHandler;
 import com.jajeem.command.handler.SendQuizResponseCommandHandler;
 import com.jajeem.command.handler.SendRecordingErrorCommandHandler;
 import com.jajeem.command.handler.SendRecordingSuccessCommandHandler;
@@ -78,6 +79,7 @@ import com.jajeem.command.model.DuplicateLoginCommand;
 import com.jajeem.command.model.FinishedQuizCommand;
 import com.jajeem.command.model.FinishedSurveyCommand;
 import com.jajeem.command.model.GetCourseListCommand;
+import com.jajeem.command.model.GetProgramListCommand;
 import com.jajeem.command.model.GrantCommand;
 import com.jajeem.command.model.IntercomRequestCommand;
 import com.jajeem.command.model.InternetCommand;
@@ -88,6 +90,7 @@ import com.jajeem.command.model.RequestCourseListCommand;
 import com.jajeem.command.model.RestartStudentProgramCommand;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.command.model.SendFileCollectCommand;
+import com.jajeem.command.model.SendProgramListCommand;
 import com.jajeem.command.model.SendQuizResponseCommand;
 import com.jajeem.command.model.SendRecordingErrorCommand;
 import com.jajeem.command.model.SendRecordingSuccessCommand;
@@ -126,7 +129,6 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
-import com.jajeem.util.MemoryDiag;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -154,6 +156,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 		
 		// socket.connect(this.group,port);
 		socket.joinGroup(this.group);
+		socket.setReceiveBufferSize(100000);
 
 		thread = new Thread(this);
 		
@@ -288,7 +291,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 
 				final Command cmd = (Command) o;
 				
-				InetAddress address = InetAddress.getByName(cmd.getFrom());
+//				InetAddress address = InetAddress.getByName(cmd.getFrom());
 
 //				System.out.println("Receiving ----> Command: " + cmd.getClass()
 //						+ " from: " + cmd.getFrom());
@@ -1019,9 +1022,36 @@ public class ClientService implements IConnectorSevice, Runnable {
 							}
 						}
 					});
+				} else if (cmd instanceof GetProgramListCommand) {
+					pool.execute(new Runnable() {
+
+						@Override
+						public void run() {
+							GetProgramListCommandHandler getProgramListCommand = new GetProgramListCommandHandler();
+							try {
+								getProgramListCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
+				} else if (cmd instanceof SendProgramListCommand) {
+					pool.execute(new Runnable() {
+
+						@Override
+						public void run() {
+							SendProgramListCommandHandler sendProgramListCommand = new SendProgramListCommandHandler();
+							try {
+								sendProgramListCommand.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
 				}
 				
-
 			} catch (Exception ex) {
 				JajeemExceptionHandler.logError(ex);
 				System.err.println("Unknown message: " + ex.toString());

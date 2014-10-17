@@ -347,6 +347,15 @@ public class initDatabase {
 				 * + "values(3,2,2,0,2);"; query +=
 				 * "Insert into session(id,Instructorid,Roomid,Attendantid,Courseid) "
 				 * + "values(4,2,2,0,3);";
+<<<<<<< HEAD
+				 * 
+				 * query +=
+				 * "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+				 * +
+				 * "values(1,1,1,1,1,1,20,"+System.currentTimeMillis()+","+System
+				 * .currentTimeMillis()+");"; query +=
+				 * "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+=======
 				 */ 
 //				  query =
 //				 "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
@@ -354,6 +363,7 @@ public class initDatabase {
 //				 "values(1,1,1,1,1,1,20,"+System.currentTimeMillis()+","+System
 //				 .currentTimeMillis()+");"; 
 				 /* "Insert into QuizRun(id,iid,quizid,instructorid,studentid,sessionid,score,start,end) "
+>>>>>>> 3b895b9ca67ada266fda52906ccf2dfa57aef0c7
 				 * +
 				 * "values(2,2,2,1,1,2,20,"+System.currentTimeMillis()+","+System
 				 * .currentTimeMillis()+");"; query +=

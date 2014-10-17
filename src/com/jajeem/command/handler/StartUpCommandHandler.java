@@ -1,5 +1,11 @@
 package com.jajeem.command.handler;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
@@ -11,8 +17,7 @@ import com.jajeem.core.design.student.Student;
 import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.design.teacher.InstructorNoaUtil;
-import com.jajeem.licensing.LicenseConstants;
-import com.jajeem.licensing.LicenseManager;
+import com.jajeem.core.design.teacher.ScreenImageContainer;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {
@@ -39,12 +44,22 @@ public class StartUpCommandHandler implements ICommandHandler {
 			if (Integer.parseInt(Config.getParam("server")) != 1) {
 				StartCaptureCommandHandler startCaptureCommandHandler = new StartCaptureCommandHandler();
 				startCaptureCommandHandler.run(cmd);
+				
+//////////////////Simple image capture and return//////////////////////////////////
+				Robot robot = new Robot();
+				BufferedImage screenShot = toBufferedImage(robot
+						.createScreenCapture(new Rectangle(Toolkit
+								.getDefaultToolkit().getScreenSize()))
+								.getScaledInstance(120, 120, Image.SCALE_SMOOTH));
+///////////////////////////////////////////////////////////////////////////////////
+				
 				StartUpCommand cmdToSend = new StartUpCommand(InetAddress
 						.getLocalHost().getHostAddress(),
 						((StartUpCommand) cmd).getSender(), port, InetAddress
 								.getLocalHost().getHostAddress(),
 						System.getProperty("user.name"));
 				cmdToSend.setSender(InetAddress.getLocalHost().getHostAddress());
+				cmdToSend.setScreenImage(new ScreenImageContainer(screenShot));
 				cmdToSend.setPort(port);
 				StudentLogin.getServerService().send(cmdToSend);
 				StudentLogin.setServerIp(((StartUpCommand) cmd).getSender());
@@ -77,7 +92,8 @@ public class StartUpCommandHandler implements ICommandHandler {
 							InstructorNoaUtil.createFrame(
 									InstructorNoa.getDesktopPane(),
 									((StartUpCommand) cmd).getSender(),
-									((StartUpCommand) cmd).getSenderName());
+									((StartUpCommand) cmd).getSenderName(),
+									((StartUpCommand) cmd).getScreenImage().getImage());
 						}
 					}
 				}
@@ -105,5 +121,24 @@ public class StartUpCommandHandler implements ICommandHandler {
 		catch(Exception e){
 			
 		}
+	}
+	
+	public static BufferedImage toBufferedImage(Image img)
+	{
+	    if (img instanceof BufferedImage)
+	    {
+	        return (BufferedImage) img;
+	    }
+
+	    // Create a buffered image with transparency
+	    BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+	    // Draw the image on to the buffered image
+	    Graphics2D bGr = bimage.createGraphics();
+	    bGr.drawImage(img, 0, 0, null);
+	    bGr.dispose();
+
+	    // Return the buffered image
+	    return bimage;
 	}
 }
