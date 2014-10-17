@@ -89,7 +89,7 @@ import com.jajeem.command.service.ServerService;
 import com.jajeem.command.service.ServerServiceTimer;
 import com.jajeem.core.design.account.AccountPanel;
 import com.jajeem.core.design.account.AdminPanel;
-import com.jajeem.core.design.ui.CustomTeacherFrame;
+import com.jajeem.core.design.ui.CustomTeacherFrame2;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
@@ -970,7 +970,7 @@ public class InstructorNoaUtil {
 
 	@SuppressWarnings("unused")
 	public void addEventsBottomPanel(final WebPanel bottomButtonPanel,
-			final CustomTeacherFrame mainFrame) throws Exception {
+			final CustomTeacherFrame2 mainFrame) throws Exception {
 		String key = "";
 
 		for (Component c : bottomButtonPanel.getComponents()) {
