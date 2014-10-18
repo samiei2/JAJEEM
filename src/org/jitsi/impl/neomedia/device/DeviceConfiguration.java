@@ -34,6 +34,8 @@ import org.jitsi.util.Logger;
 import org.jitsi.util.OSUtils;
 import org.jitsi.util.event.PropertyChangeNotifier;
 
+import com.jajeem.util.Config;
+
 /**
  * This class aims to provide a simple configuration interface for JMF. It
  * retrieves stored configuration when started or listens to ConfigurationEvent
@@ -441,10 +443,27 @@ public class DeviceConfiguration extends PropertyChangeNotifier implements
 					}
 				}
 
-				if (audioSystem == null) {
-					audioSystem = availableAudioSystems[1];
+				int index = -1;
+				try {
+					index = Integer.parseInt(Config.getParam("audio"));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				audioSystem = availableAudioSystems[1];
+				
+				if(index == -1)
+					index = 1;
+				
+				System.out.println("Available Audio Systems\n");
+				for (int i = 0; i < availableAudioSystems.length; i++) {
+					System.out.println(i+":"+availableAudioSystems[i]);
+				}
+				
+				if (audioSystem == null) {
+					audioSystem = availableAudioSystems[index];
+				}
+				audioSystem = availableAudioSystems[index];
 
 				setAudioSystem(audioSystem, false);
 			}

@@ -350,4 +350,8 @@ public class StudentLogin extends CustomLoginFrame {
 	public static void setLoginDialog(CustomLoginFrame loginDialog) {
 		StudentLogin.loginDialog = loginDialog;
 	}
+
+	public static boolean isLoginDialogVisible() {
+		return loginDialog.isVisible();
+	}
 }
