@@ -436,8 +436,8 @@ public class InstructorLogin {
 			@Override
 			public void run() {
 				try {
-					UIManager.setLookAndFeel(WebLookAndFeel.class
-							.getCanonicalName());
+//					UIManager.setLookAndFeel(WebLookAndFeel.class
+//							.getCanonicalName());
 
 					final Object synchLock = new Object();
 					
