@@ -9,6 +9,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
+import com.jajeem.command.model.StartUpCommand;
 import com.jajeem.core.design.account.CustomAccountButton;
 
 public class ScreenImage extends JLabel{
@@ -30,6 +31,10 @@ public class ScreenImage extends JLabel{
 	
 	@Override
 	protected void paintComponent(Graphics g) {
+		if(screenImage!=null)
+			System.out.println(screenImage);
+		else
+			System.out.println("Null");
 		Graphics g2d = g.create();
 		if(screenImage!=null)
 			g2d.drawImage(screenImage, 0, 0, 120, 120, this);

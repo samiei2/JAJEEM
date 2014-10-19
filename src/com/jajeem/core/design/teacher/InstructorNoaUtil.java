@@ -1,5 +1,6 @@
 package com.jajeem.core.design.teacher;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -2172,13 +2174,15 @@ public class InstructorNoaUtil {
 //					vnc.StartThumbs(frame);
 //					frame.putClientProperty("vnc", vnc);
 					
-				((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-						.getComponent(0)).getComponent(1)).getComponent(0)).removeAll();
+//				((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
+//						.getComponent(0)).getComponent(1)).getComponent(0)).removeAll();
 				
-				((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-						.getComponent(0)).getComponent(1)).getComponent(0)).add(new ScreenImage(screenImage));
-				internalFrame.revalidate();
-				internalFrame.updateUI();
+				frame.getContentPane().removeAll();
+				JLabel lbl = new JLabel();
+				lbl.setIcon(new ImageIcon(screenImage));
+				frame.add(lbl);
+				frame.revalidate();
+				frame.repaint();
 				
 					frame.putClientProperty("live", true);
 					if (frame.isSelected()) {
@@ -2211,12 +2215,12 @@ public class InstructorNoaUtil {
 
 //		internalFrame.putClientProperty("vnc", vnc);
 
-		((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-				.getComponent(0)).getComponent(1)).getComponent(0)).removeAll();
-		((JPanel) ((JLayeredPane) ((JRootPane) internalFrame
-				.getComponent(0)).getComponent(1)).getComponent(0)).add(new ScreenImage(screenImage));
+		internalFrame.getContentPane().removeAll();
+		JLabel lbl = new JLabel();
+		lbl.setIcon(new ImageIcon(screenImage));
+		internalFrame.add(lbl);
 		internalFrame.revalidate();
-		internalFrame.updateUI();
+		internalFrame.repaint();
 		
 		internalFrame.putClientProperty("ip", hostIp);
 		internalFrame.putClientProperty("lock", false);
