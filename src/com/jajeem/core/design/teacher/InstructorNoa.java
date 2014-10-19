@@ -459,6 +459,8 @@ public class InstructorNoa {
 				new Component[] { getDesktopPaneScroll(), centerListPanel,
 						centerGroupPanel }));
 
+		UIManager.setLookAndFeel(WebLookAndFeel.class
+		.getCanonicalName());
 		CustomBottomButton surveyButton = new CustomBottomButton();
 		surveyButton.setIconTextGap(30);
 		surveyButton.putClientProperty("key", "survey");
