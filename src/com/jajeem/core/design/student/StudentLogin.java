@@ -41,6 +41,7 @@ import com.jajeem.util.CustomTextField;
 import com.jajeem.util.KeyHook;
 import com.jajeem.util.MouseHook;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class StudentLogin extends CustomLoginFrame {
 
@@ -259,13 +260,13 @@ public class StudentLogin extends CustomLoginFrame {
 	private void initilization() throws Exception {
 		LibJitsi.start();
 
-		new Thread(new Runnable() {
+		ThreadManager.getInstance().run(new Runnable() {
 
 			@Override
 			public void run() {
 				new ClientFileServer().Startup();
 			}
-		}).start();
+		});
 
 		if (!new File("util").exists()) {
 			JOptionPane

@@ -52,6 +52,7 @@ import com.jajeem.util.ClientSession;
 import com.jajeem.util.Config;
 import com.jajeem.util.CustomCloseButton;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class Student {
 	
@@ -418,7 +419,7 @@ public class Student {
 							"java -jar videoplayer.jar \"\" true", null,
 							new File("util/"));
 					// Then retrieve the process output
-					new Thread(new Runnable() {
+					ThreadManager.getInstance().runTemp(new Runnable() {
 
 						@Override
 						public void run() {
@@ -434,7 +435,7 @@ public class Student {
 								JajeemExceptionHandler.logError(e);
 							}
 						}
-					}).start();
+					});
 				} catch (IOException ex) {
 					JajeemExceptionHandler.logError(ex);
 					ex.printStackTrace();

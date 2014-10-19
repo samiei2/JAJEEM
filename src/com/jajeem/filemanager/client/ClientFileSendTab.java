@@ -29,6 +29,8 @@ import com.jajeem.events.FileTransferEventListener;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.CustomFileButton;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 
 public class ClientFileSendTab extends WebPanel {
 	/**
@@ -41,7 +43,6 @@ public class ClientFileSendTab extends WebPanel {
 	private WebButton wbtnClear;
 	private ClientFileSendTab currentPanel;
 	private ArrayList<String> fileNames = new ArrayList<>();
-	private Thread threadRunner = new Thread();
 	private FileTransferEvent fileTransferEvent = new FileTransferEvent();
 	private int currentIndex;
 
@@ -259,7 +260,7 @@ public class ClientFileSendTab extends WebPanel {
 			// final JDialog confirmationDialog = dialog.createDialog(this,
 			// "File Transfer");
 			final ClientSendFileProgressWindow progwin = new ClientSendFileProgressWindow();
-			Thread fileSender = new Thread(new Runnable() {
+			ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).run(new Runnable() {
 
 				@Override
 				public void run() {
@@ -340,7 +341,6 @@ public class ClientFileSendTab extends WebPanel {
 					}
 				}
 			});
-			fileSender.start();
 			// confirmationDialog.setVisible(true);
 			progwin.setVisible(true);
 			// System.out.println(dialog.getValue().toString());

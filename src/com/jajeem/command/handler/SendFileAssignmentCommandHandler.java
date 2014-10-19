@@ -6,6 +6,7 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileAssignmentCommand;
 import com.jajeem.core.design.student.Student;
 import com.jajeem.filemanager.client.AssignmentTimer;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class SendFileAssignmentCommandHandler implements ICommandHandler {
 
@@ -14,7 +15,7 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 		SendFileAssignmentCommand command = (SendFileAssignmentCommand) cmd;
 		final String file = command.getFile();
 		final String time = command.getTime();
-		new Thread(new Runnable() {
+		ThreadManager.getInstance().runTemp(new Runnable() {
 
 			@Override
 			public void run() {
@@ -22,8 +23,8 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 						+ " in your inbox in " + time
 						+ " minutes and then put it in your outbox.");
 			}
-		}).start();
-		new Thread(new Runnable() {
+		});
+		ThreadManager.getInstance().runTemp(new Runnable() {
 
 			@Override
 			public void run() {
@@ -33,7 +34,7 @@ public class SendFileAssignmentCommandHandler implements ICommandHandler {
 				timer.setVisible(true);
 
 			}
-		}).start();
+		});
 
 	}
 }

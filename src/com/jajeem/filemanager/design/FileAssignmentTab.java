@@ -36,6 +36,8 @@ import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.util.Config;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 
 public class FileAssignmentTab extends JPanel {
 	private WebTable webTable;
@@ -237,7 +239,7 @@ public class FileAssignmentTab extends JPanel {
 							.toString().split(" ")[0];
 					SendFileAssignmentCMD(new File(file).getName(), time);
 					final int currentrow = webTable.getSelectedRow();
-					new Thread(new Runnable() {
+					ThreadManager.getInstance().runTemp(new Runnable() {
 						private Timer timer; // Updates the count every second
 						private long remaining; // How many milliseconds remain
 												// in the countdown.
@@ -305,7 +307,7 @@ public class FileAssignmentTab extends JPanel {
 								timer.start();
 							}
 						}
-					}).start();
+					});
 				} catch (Exception e) {
 
 				}

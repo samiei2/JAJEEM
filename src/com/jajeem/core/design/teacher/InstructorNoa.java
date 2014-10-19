@@ -107,6 +107,7 @@ import com.jajeem.util.CustomTopButton;
 import com.jajeem.util.JasperReport;
 import com.jajeem.util.Query;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class InstructorNoa {
 
@@ -1686,7 +1687,7 @@ public class InstructorNoa {
 		timer.setInitialDelay(60000);
 		timer.start();
 		
-		Thread _clockAndTime = new Thread(new Runnable() {
+		ThreadManager.getInstance().run(new Runnable() {
 
 			@Override
 			public void run() {
@@ -1714,7 +1715,6 @@ public class InstructorNoa {
 				}
 			}
 		});
-		_clockAndTime.start();
 
 		panel_1.setLayout(gl_panel_1);
 		panelClock.setLayout(gl_panelClock);

@@ -20,6 +20,8 @@ import com.jajeem.filemanager.design.FileCollect;
 import com.jajeem.filemanager.design.FileInbox;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 
 public class InstructorServer {
 
@@ -67,7 +69,7 @@ public class InstructorServer {
 				// final JDialog confirmationDialog =
 				// dialog.createDialog("File Transfer");
 				final InstructorProgressWindow progwin = new InstructorProgressWindow();
-				new Thread(new Runnable() {
+				ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).run(new Runnable() {
 					@Override
 					public void run() {
 						try {
@@ -144,7 +146,7 @@ public class InstructorServer {
 									FileInbox.class);
 						}
 					}
-				}).start();
+				});
 				// confirmationDialog.setVisible(true);
 				progwin.setVisible(true);
 			}

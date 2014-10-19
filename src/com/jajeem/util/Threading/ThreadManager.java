@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 
 public class ThreadManager {
 	private ExecutorService pool;
+	private static ExecutorService tempRunPools = Executors.newCachedThreadPool();
+	private ExecutorService singleRun = Executors.newSingleThreadExecutor();
 	private static HashMap<String, ThreadManager> privatePools = new HashMap<>();
 	
 	private ThreadManager() {
@@ -38,5 +40,13 @@ public class ThreadManager {
 	
 	public void run(Runnable command){
 		pool.execute(command);
+	}
+	
+	public void runTemp(Runnable command){
+		tempRunPools.execute(command);
+	}
+	
+	public void runSingle(Runnable command){
+		singleRun.execute(command);
 	}
 }

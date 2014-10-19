@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartWhiteBoardCommand;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class StartWhiteBoardCommandHandler implements ICommandHandler {
 
@@ -17,7 +18,7 @@ public class StartWhiteBoardCommandHandler implements ICommandHandler {
 		// StudentWhiteboard(command.getFrom());
 		// whiteboard.Join(command.getSessionID());
 
-		new Thread(new Runnable() {
+		ThreadManager.getInstance().runTemp(new Runnable() {
 
 			@Override
 			public void run() {
@@ -61,7 +62,7 @@ public class StartWhiteBoardCommandHandler implements ICommandHandler {
 					e.printStackTrace();
 				}
 			}
-		}).start();
+		});
 	}
 
 }

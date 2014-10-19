@@ -24,6 +24,8 @@ import javax.swing.SwingConstants;
 import com.alee.utils.swing.AncestorAdapter;
 import com.alee.utils.swing.Timer;
 import com.jajeem.util.CustomPanel;
+import com.jajeem.util.Threading.ThreadManager;
+
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 import java.awt.event.ContainerAdapter;
@@ -307,7 +309,7 @@ public class ClockTimerPanel extends JPanel{
 		timer.setInitialDelay(60000);
 		timer.start();
 		
-		Thread _clockAndTime = new Thread(new Runnable() {
+		ThreadManager.getInstance("ClockTimerPanel").runSingle(new Runnable() {
 
 			@Override
 			public void run() {
@@ -335,7 +337,6 @@ public class ClockTimerPanel extends JPanel{
 				}
 			}
 		});
-		_clockAndTime.start();
 	}
 
 }

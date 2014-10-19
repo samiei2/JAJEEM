@@ -16,6 +16,8 @@ import com.jajeem.events.FileTransferEvent;
 import com.jajeem.events.FileTransferObject;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.FileUtil;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 
 public class ClientFileServer {
 	public void Startup() {
@@ -39,7 +41,7 @@ public class ClientFileServer {
 			while (true) {
 				final Socket client = ss.accept();
 				final ClientProgressWindow progwin = new ClientProgressWindow();
-				new Thread(new Runnable() {
+				ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).runSingle(new Runnable() {
 					@Override
 					public void run() {
 						try {
@@ -115,7 +117,7 @@ public class ClientFileServer {
 									ClientFileInbox.class);
 						}
 					}
-				}).start();
+				});
 				progwin.setVisible(true);
 			}
 

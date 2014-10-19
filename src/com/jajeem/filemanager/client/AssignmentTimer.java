@@ -15,6 +15,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import com.alee.laf.label.WebLabel;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class AssignmentTimer extends JDialog {
 
@@ -133,13 +134,13 @@ public class AssignmentTimer extends JDialog {
 					// Stop updating now.
 					timer.stop();
 					MainFrame.dispose();
-					new Thread(new Runnable() {
+					ThreadManager.getInstance().runTemp(new Runnable() {
 
 						@Override
 						public void run() {
 							JOptionPane.showMessageDialog(null, "Times Up!");
 						}
-					}).start();
+					});
 				}
 			}
 		};

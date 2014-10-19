@@ -129,6 +129,7 @@ import com.jajeem.command.model.WhiteBlackAppCommand;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.Config;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class ClientService implements IConnectorSevice, Runnable {
 
@@ -214,7 +215,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 	}
 
 	private void SendSpeechFile(final String message) {
-		Thread t = new Thread(new Runnable() {
+		ThreadManager.getInstance().runTemp(new Runnable() {
 
 			@Override
 			public void run() {
@@ -234,7 +235,6 @@ public class ClientService implements IConnectorSevice, Runnable {
 				}
 			}
 		});
-		t.start();
 	}
 
 	protected void SendFileToAll(final File file, String fileName) {
@@ -245,7 +245,7 @@ public class ClientService implements IConnectorSevice, Runnable {
 				for (int i = 0; i < ips.size(); i++) { // send for all selected
 														// clients
 					Runnable r = new MyThread(file, ips.get(i), fileName);
-					new Thread(r).start();
+					ThreadManager.getInstance().runSingle(r);
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

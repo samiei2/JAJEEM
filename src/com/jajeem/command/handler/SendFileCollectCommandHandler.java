@@ -13,6 +13,7 @@ import com.jajeem.command.model.Command;
 import com.jajeem.command.model.SendFileCollectCommand;
 import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.util.FileUtil;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class SendFileCollectCommandHandler implements ICommandHandler {
 
@@ -79,7 +80,7 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 
 	protected void SendFileCollect(final File file, final String server) {
 		try {
-			Thread fileSender = new Thread(new Runnable() {
+			ThreadManager.getInstance().runSingle(new Runnable() {
 
 				@SuppressWarnings("resource")
 				@Override
@@ -137,7 +138,6 @@ public class SendFileCollectCommandHandler implements ICommandHandler {
 					}
 				}
 			});
-			fileSender.start();
 		} catch (Exception e) {
 			JajeemExceptionHandler.logError(e);
 			System.out.println(file.getAbsolutePath() + " Failed");

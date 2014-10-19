@@ -101,6 +101,7 @@ import com.jajeem.util.LnkParser;
 import com.jajeem.util.Session;
 import com.jajeem.util.WinRegistry;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class InstructorNoaUtil {
 
@@ -115,7 +116,6 @@ public class InstructorNoaUtil {
 	static Survey_Main[] groupsSurveyWindows = new Survey_Main[15];
 	public static ArrayList<String> recordingsList = new ArrayList<>();
 	private static JInternalFrame previousFrame;
-	private Thread _videoChat;
 	private static Object lock = new Object();
 
 	/*
@@ -343,7 +343,7 @@ public class InstructorNoaUtil {
 												.setRemoteAddr(
 														InetAddress
 																.getByName(selectedStudent));
-										_videoChat = new Thread(new Runnable() {
+										ThreadManager.getInstance().run(new Runnable() {
 
 											@Override
 											public void run() {
@@ -370,7 +370,6 @@ public class InstructorNoaUtil {
 												}
 											}
 										});
-										_videoChat.start();
 									} else {
 										if (InstructorNoa.getSendOnly()
 												.getRemoteAddr()
@@ -747,7 +746,7 @@ public class InstructorNoaUtil {
 										"java -jar videoplayer.jar", null,
 										new File("util/"));
 								// Then retrieve the process output
-								new Thread(new Runnable() {
+								ThreadManager.getInstance().runTemp(new Runnable() {
 
 									@Override
 									public void run() {
@@ -763,7 +762,7 @@ public class InstructorNoaUtil {
 											JajeemExceptionHandler.logError(e);
 										}
 									}
-								}).start();
+								});
 							} catch (IOException ex) {
 								JajeemExceptionHandler.logError(ex);
 								ex.printStackTrace();
@@ -1084,7 +1083,7 @@ public class InstructorNoaUtil {
 														+ " "
 														+ WhiteboardPort, null,
 														new File("util/"));
-										new Thread(new Runnable() {
+										ThreadManager.getInstance().runTemp(new Runnable() {
 
 											@Override
 											public void run() {
@@ -1104,7 +1103,7 @@ public class InstructorNoaUtil {
 													e.printStackTrace();
 												}
 											}
-										}).start();
+										});
 									} catch (IOException e) {
 										JajeemExceptionHandler.logError(e);
 										e.printStackTrace();

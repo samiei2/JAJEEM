@@ -49,6 +49,7 @@ import com.jajeem.util.CustomPasswordField;
 import com.jajeem.util.CustomTextField;
 import com.jajeem.util.StartUp;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
 
 public class InstructorLogin {
 	/**
@@ -441,7 +442,7 @@ public class InstructorLogin {
 
 					final Object synchLock = new Object();
 					
-					Thread loading = new Thread(new Runnable() {
+					ThreadManager.getInstance().runTemp(new Runnable() {
 
 						@Override
 						public void run() {
@@ -465,9 +466,8 @@ public class InstructorLogin {
 							}, 0);
 						}
 					});
-					loading.start();
 					
-					Thread _t = new Thread(new Runnable() {
+					ThreadManager.getInstance().runTemp(new Runnable() {
 						
 						@Override
 						public void run() {
@@ -498,7 +498,6 @@ public class InstructorLogin {
 							frame.setVisible(true);
 						}
 					});
-					_t.start();
 					
 
 				} catch (Exception e) {
