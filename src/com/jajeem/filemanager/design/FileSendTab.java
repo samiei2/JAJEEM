@@ -30,6 +30,8 @@ import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.ui.checkbox.JajeemCheckBox;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 import com.alee.laf.checkbox.WebCheckBox;
 import com.alee.laf.optionpane.WebOptionPane;
 import com.alee.laf.table.WebTable;
@@ -274,7 +276,7 @@ public class FileSendTab extends JPanel {
 	protected void SendFile(final File file) {
 		try {
 			final FileSendProgressWindow progwin = new FileSendProgressWindow();
-			Thread fileSender = new Thread(new Runnable() {
+			ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).runSingle(new Runnable() {
 
 				@Override
 				public void run() {
@@ -425,7 +427,6 @@ public class FileSendTab extends JPanel {
 					}
 				}
 			});
-			fileSender.start();
 			progwin.setVisible(true);
 			// confirmationDialog.setVisible(true);
 			// System.out.println(dialog.getValue().toString());

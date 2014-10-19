@@ -32,6 +32,8 @@ import com.jajeem.util.Audio;
 import com.jajeem.util.FileUtil;
 import com.jajeem.util.Session;
 import com.jajeem.util.i18n;
+import com.jajeem.util.Threading.ThreadManager;
+import com.jajeem.util.Threading.ThreadPoolConstants;
 
 public class FileInbox extends JPanel {
 	private CustomFileButton wbtnRefresh;
@@ -132,7 +134,7 @@ public class FileInbox extends JPanel {
 		setLayout(groupLayout);
 		initEvents();
 		
-		Thread _populateInbox = new Thread(new Runnable() {
+		ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).runTemp(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -142,7 +144,6 @@ public class FileInbox extends JPanel {
 				}
 			}
 		});
-		_populateInbox.start();
 	}
 
 	private void PopulateInbox() throws Exception {

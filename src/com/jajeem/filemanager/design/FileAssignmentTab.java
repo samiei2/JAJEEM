@@ -388,7 +388,7 @@ public class FileAssignmentTab extends JPanel {
 	protected void SendFile(final File file) {
 		try {
 			final FileAssignmentProgressWindow progwin = new FileAssignmentProgressWindow();
-			Thread fileSender = new Thread(new Runnable() {
+			ThreadManager.getInstance(ThreadPoolConstants.FILEPOOL).runSingle(new Runnable() {
 
 				@Override
 				public void run() {
@@ -533,7 +533,6 @@ public class FileAssignmentTab extends JPanel {
 					}
 				}
 			});
-			fileSender.start();
 			progwin.setVisible(true);
 		} catch (Exception e) {
 			JajeemExceptionHandler.logError(e);
