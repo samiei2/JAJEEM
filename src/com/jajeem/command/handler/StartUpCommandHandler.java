@@ -18,6 +18,7 @@ import com.jajeem.core.design.student.StudentLogin;
 import com.jajeem.core.design.teacher.InstructorNoa;
 import com.jajeem.core.design.teacher.InstructorNoaUtil;
 import com.jajeem.core.design.teacher.ScreenImageContainer;
+import com.jajeem.licensing.LicenseManager;
 import com.jajeem.util.Config;
 
 public class StartUpCommandHandler implements ICommandHandler {
@@ -65,7 +66,8 @@ public class StartUpCommandHandler implements ICommandHandler {
 				StudentLogin.setServerIp(((StartUpCommand) cmd).getSender());
 	
 				if (!Student.getFrmJajeemProject().isVisible()) {
-					StudentLogin.getLoginDialog().setVisible(true);
+					if(!StudentLogin.isLoginDialogVisible())
+						StudentLogin.getLoginDialog().setVisible(true);
 				} else {
 					StudentLogin.getLoginDialog().setVisible(false);
 				}
@@ -75,16 +77,16 @@ public class StartUpCommandHandler implements ICommandHandler {
 					&& cmd.getPort() == Integer.parseInt(Config
 							.getParam("serverPort"))) {
 				
-//				synchronized (licenseLock) {
-//					if (!listOfIPs.contains(cmd.getFrom())) {
-//						if (listOfIPs.size() > Integer.parseInt(LicenseManager
-//								.getInstance().getLicContext().getLicense()
-//								.getLicenseInfo().get("users")))
-//							return;
-//						else
-//							listOfIPs.add(cmd.getFrom());
-//					}
-//				}
+				synchronized (licenseLock) {
+					if (!listOfIPs.contains(cmd.getFrom())) {
+						if (listOfIPs.size() > Integer.parseInt(LicenseManager
+								.getInstance().getLicContext().getLicense()
+								.getLicenseInfo().get("users")))
+							return;
+						else
+							listOfIPs.add(cmd.getFrom());
+					}
+				}
 				
 				try{
 					if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {

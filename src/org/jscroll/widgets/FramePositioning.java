@@ -218,6 +218,8 @@ public class FramePositioning implements DesktopConstants {
 				}
 
 				for (curRow = 0; curRow < numRows; curRow++) {
+					if(i>=frames.length)
+						break;
 					while (frames[i].isIcon()) { // find the next visible frame
 						i++;
 					}

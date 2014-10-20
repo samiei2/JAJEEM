@@ -629,6 +629,18 @@ public class PortAudioSystem extends AudioSystem {
 
 		setCaptureDevices(captureDevices);
 		setPlaybackDevices(playbackDevices);
+		
+		System.out.println("\n\n\nSystem Devices List detected by (PortAudioSystem) :\n");
+		System.out.println("Recorders\n");
+		for (int i = 0; i < captureDevices.size(); i++) {
+			System.out.println("dev"+i + " : " + captureDevices.get(i).getName());
+			System.out.println();
+		}
+		System.out.println("Playback\n");
+		for (int i = 0; i < playbackDevices.size(); i++) {
+			System.out.println("dev"+i + " : " + playbackDevices.get(i).getName());
+			System.out.println();
+		}
 
 		if (devicesChangedCallback == null) {
 			devicesChangedCallback = new Runnable() {
