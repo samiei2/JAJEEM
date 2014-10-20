@@ -1,6 +1,5 @@
 package com.jajeem.core.design.teacher;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,11 +30,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -44,6 +40,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 
 import org.jitsi.examples.AVReceiveOnly;
+import org.jscroll.widgets.JScrollInternalFrame;
 import org.jscroll.widgets.RootDesktopPane;
 
 import com.alee.extended.panel.GroupPanel;
@@ -2179,7 +2176,8 @@ public class InstructorNoaUtil {
 				
 				frame.getContentPane().removeAll();
 				JLabel lbl = new JLabel();
-				lbl.setIcon(new ImageIcon(screenImage));
+				if(screenImage!=null)
+					lbl.setIcon(new ImageIcon(screenImage));
 				frame.add(lbl);
 				frame.revalidate();
 				frame.repaint();
@@ -2217,7 +2215,8 @@ public class InstructorNoaUtil {
 
 		internalFrame.getContentPane().removeAll();
 		JLabel lbl = new JLabel();
-		lbl.setIcon(new ImageIcon(screenImage));
+		if(screenImage!=null)
+			lbl.setIcon(new ImageIcon(screenImage));
 		internalFrame.add(lbl);
 		internalFrame.revalidate();
 		internalFrame.repaint();

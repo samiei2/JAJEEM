@@ -72,9 +72,12 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 						for (JInternalFrame frame : frames) {
 							if (cmd.getFrom().compareTo(
 									(String) frame.getClientProperty("ip")) == 0) {
+								
 								try {
-									frame.dispose();
+//									frame.dispose();
+									InstructorNoa.getDesktopPaneScroll().remove(frame);
 								} catch (Exception e) {
+									e.printStackTrace();
 								}
 								try {
 									InstructorNoaUtil.createFrame(
@@ -82,6 +85,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 											((AuthenticateCommand) cmd).getFrom(),
 											((AuthenticateCommand) cmd).getUsername(),null);
 								} catch (Exception e) {
+									e.printStackTrace();
 								}
 
 								break;
@@ -127,6 +131,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 							try {
 								frame.dispose();
 							} catch (Exception e) {
+								e.printStackTrace();
 							}
 							try {
 								InstructorNoaUtil.createFrame(
@@ -134,6 +139,7 @@ public class SetAuthenticateCommandHanlder implements ICommandHandler {
 										((AuthenticateCommand) cmd).getFrom(),
 										((AuthenticateCommand) cmd).getUsername(),null);
 							} catch (Exception e) {
+								e.printStackTrace();
 							}
 
 							break;
