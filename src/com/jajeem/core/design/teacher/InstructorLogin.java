@@ -472,29 +472,29 @@ public class InstructorLogin {
 						@Override
 						public void run() {
 							
-//							try {
-//								LicenseManager.getInstance().Validate("jajeem.lic");
-//							} catch (Exception e) {
-//								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
-//								System.exit(-1);
-//							}
+							try {
+								LicenseManager.getInstance().Validate("jajeem.lic");
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
+								System.exit(-1);
+							}
 							
 							new StartUp();
 							frame = new InstructorLogin().frame;
 //							frame.pack();
 							
-//							synchronized (synchLock) {
-//								synchLock.notify();
-//							}
-//							
-//							synchronized (licenseSyncLock) {
-//								try {
-//									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
-//										licenseSyncLock.wait(0);
-//								} catch (InterruptedException e) {
-//									e.printStackTrace();
-//								}
-//							}
+							synchronized (synchLock) {
+								synchLock.notify();
+							}
+							
+							synchronized (licenseSyncLock) {
+								try {
+									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
+										licenseSyncLock.wait(0);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
 							frame.setVisible(true);
 						}
 					});

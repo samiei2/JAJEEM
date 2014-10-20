@@ -414,13 +414,13 @@ public class InstructorNoa {
 		scrollableDesktop.getDesktopMediator().getDesktopScrollpane()
 				.getDesktopPane().setComponentPopupMenu(popup);
 		scrollableDesktop.setAutoscrolls(true);
-		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setAutoTile(true);
-		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane().setBackground(Color.BLACK);
-		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getVerticalScrollBar().setBackground(Color.GREEN);
-		getDesktopPaneScroll().setDesktopMediator(null);
-		scrollableDesktop.setBackground(Color.RED);
+//		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setAutoTile(true);
+//		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+//		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getDesktopPane().setBackground(Color.BLACK);
+//		getDesktopPaneScroll().getDesktopMediator().getDesktopScrollpane().getVerticalScrollBar().setBackground(Color.GREEN);
+//		getDesktopPaneScroll().setDesktopMediator(null);
+//		scrollableDesktop.setBackground(Color.RED);
 		
 		
 		// getGroupList().setComponentPopupMenu(popup);
