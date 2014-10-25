@@ -7,8 +7,6 @@ import java.rmi.registry.Registry;
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.impl.Log4JLogger;
-
 import com.jajeem.command.model.RestartStudentProgramCommand;
 import com.jajeem.command.service.ServerService;
 import com.jajeem.util.Threading.ThreadManager;

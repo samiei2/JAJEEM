@@ -77,16 +77,16 @@ public class StartUpCommandHandler implements ICommandHandler {
 					&& cmd.getPort() == Integer.parseInt(Config
 							.getParam("serverPort"))) {
 				
-//				synchronized (licenseLock) {
-//					if (!listOfIPs.contains(cmd.getFrom())) {
-//						if (listOfIPs.size() > Integer.parseInt(LicenseManager
-//								.getInstance().getLicContext().getLicense()
-//								.getLicenseInfo().get("users")))
-//							return;
-//						else
-//							listOfIPs.add(cmd.getFrom());
-//					}
-//				}
+				synchronized (licenseLock) {
+					if (!listOfIPs.contains(cmd.getFrom())) {
+						if (listOfIPs.size() > Integer.parseInt(LicenseManager
+								.getInstance().getLicContext().getLicense()
+								.getLicenseInfo().get("users")))
+							return;
+						else
+							listOfIPs.add(cmd.getFrom());
+					}
+				}
 				
 				try{
 					if (InstructorNoa.getDesktopPaneScroll().getDesktopMediator() != null) {
