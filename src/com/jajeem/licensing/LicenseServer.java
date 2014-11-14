@@ -122,6 +122,9 @@ public class LicenseServer {
 					null, ex);
 		}
 
+		if(output == null)
+			throw new LicenseServerErrorException("No out connection could be establish.\nCauses are slow internet connection or lack of internet access!");
+		
 		// Specify the content type if needed.
 		// urlConn.setRequestProperty("Content-Type",
 		// "application/x-www-form-urlencoded");

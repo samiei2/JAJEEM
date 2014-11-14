@@ -145,7 +145,6 @@ public class LicenseFrame extends JFrame {
 		);
 		
 		JLabel lblTimeLeft = new JLabel("Time Left : ");
-		lblTimeLeft.setVisible(false);
 		
 		textField_name = new JTextField();
 		textField_name.setColumns(10);
@@ -167,10 +166,8 @@ public class LicenseFrame extends JFrame {
 		JLabel lblVersion_1 = new JLabel("Version : ");
 		
 		lblTimeleft = new JLabel(" ");
-		lblTimeleft.setVisible(false);
 		
 		JLabel lblDays = new JLabel("days");
-		lblDays.setVisible(false);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
