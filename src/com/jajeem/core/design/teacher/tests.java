@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,59 +26,13 @@ public class tests extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					final tests frame = new tests();
-					frame.setVisible(true);
-					
-					final String[] pathes = new String[]{
-							"D:\\wall\\1024x crap\\iranload.co (249).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (270).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (285).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (295).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (154).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (382).jpg",
-							"D:\\wall\\1024x crap\\iranload.co (385).jpg",
-							};
-					UIManager.setLookAndFeel(WebLookAndFeel.class
-					.getCanonicalName());
-					final JInternalFrame inf = new JInternalFrame();
-					inf.setSize(120, 120);
-					JLabel lbl = new JLabel();
-					lbl.setIcon(new ImageIcon(pathes[0]));
-					inf.setVisible(true);
-					inf.add(lbl);
-					frame.scrollDesktopPane.add(inf);
-					
-					Thread t = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							for (int i = 0; i < pathes.length; i++) {
-								inf.getContentPane().removeAll();
-								JLabel lbl = new JLabel();
-								lbl.setIcon(new ImageIcon(pathes[i]));
-								inf.add(lbl);
-								inf.revalidate();
-								inf.repaint();
-								
-								try {
-									Thread.sleep(3000);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					});
-					t.start();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String[] args) throws IOException {
+		System.out.println(new File("vlc-win64",
+				"vlc.exe").exists());
+		Runtime.getRuntime().exec(
+				Paths.get(".").toAbsolutePath().normalize().toString()+"/vlc-win64/vlc.exe");
 	}
 
 	/**

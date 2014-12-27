@@ -198,10 +198,13 @@ public class InstructorServer {
 				obj.setRequestNumber(requestNumber++);
 				new FileTransferEvent().fireFileSendRequest(obj,
 						FileInbox.class);
+				String StudentName = InstructorNoa
+						.getStudentNameByIP(client.getInetAddress()
+								.getHostAddress());
 				JOptionPane
 						.showMessageDialog(
 								null,
-								client.getInetAddress().getHostAddress()
+								StudentName
 										+ " has sent you a file,you can check it in your File Manager Inbox!");
 				Session.getFileRequestList().add(obj);
 			}

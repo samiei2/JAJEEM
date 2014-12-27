@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -737,36 +738,26 @@ public class InstructorNoaUtil {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							// Run a java app in a separate system process
-							try {
-								final Process proc;
-								System.out.println(new File("util/",
-										"videoplayer.jar").exists());
-								proc = Runtime.getRuntime().exec(
-										"java -jar videoplayer.jar", null,
-										new File("util/"));
-								// Then retrieve the process output
-								new Thread(new Runnable() {
-
-									@Override
-									public void run() {
-										try {
-											BufferedReader in = new BufferedReader(
-													new InputStreamReader(proc
-															.getInputStream()));
-											String line = null;
-											while ((line = in.readLine()) != null) {
-												System.out.println(line);
-											}
-										} catch (Exception e) {
-											JajeemExceptionHandler.logError(e);
-										}
+							new Thread(new Runnable() {
+								
+								@Override
+								public void run() {
+									button.setEnabled(false);
+									final Process proc;
+									System.out.println(new File("util/vlcwin",
+											"vlc.exe").exists());
+									try {
+										proc = Runtime.getRuntime().exec(
+												Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe");
+										proc.waitFor();
+										button.setEnabled(true);
+									} catch (IOException e) {
+										e.printStackTrace();
+									} catch (InterruptedException e) {
+										e.printStackTrace();
 									}
-								}).start();
-							} catch (IOException ex) {
-								JajeemExceptionHandler.logError(ex);
-								ex.printStackTrace();
-							}
+								}
+							}).start();
 						}
 					});
 					break;
