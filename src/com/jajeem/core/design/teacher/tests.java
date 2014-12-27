@@ -29,10 +29,15 @@ public class tests extends JFrame {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		System.out.println(new File("vlc-win64",
-				"vlc.exe").exists());
-		Runtime.getRuntime().exec(
-				Paths.get(".").toAbsolutePath().normalize().toString()+"/vlc-win64/vlc.exe");
+		System.out.println(new String[]{
+				Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe",
+				"http://192.168.168.111"
+		});
+		Runtime.getRuntime().exec(new String[]{
+				Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe",
+				"http://192.168.168.111"});
+		ProcessBuilder pb = new ProcessBuilder(Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe","http://192.168.168.111:8080/");
+		pb.start();
 	}
 
 	/**

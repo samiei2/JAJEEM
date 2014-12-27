@@ -90,6 +90,7 @@ import com.jajeem.exception.JajeemExceptionHandler;
 import com.jajeem.filemanager.design.FileManagerMain;
 import com.jajeem.groupwork.model.Group;
 import com.jajeem.message.design.Chat;
+import com.jajeem.movieplayer.MrlWizard;
 import com.jajeem.quiz.design.alt.Quiz_Main;
 import com.jajeem.recorder.design.Recorder;
 import com.jajeem.share.service.VNCCaptureService;
@@ -749,8 +750,11 @@ public class InstructorNoaUtil {
 									try {
 										proc = Runtime.getRuntime().exec(
 												Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe");
+										MrlWizard wizard = new MrlWizard();
+										wizard.setVisible(true);
 										proc.waitFor();
 										button.setEnabled(true);
+										wizard.setVisible(false);
 									} catch (IOException e) {
 										e.printStackTrace();
 									} catch (InterruptedException e) {

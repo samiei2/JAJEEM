@@ -75,7 +75,7 @@ public class InstructorLogin {
 //		new i18n();
 		
 		final CustomLoginFrame mainPanel = new CustomLoginFrame();
-		
+		mainPanel.setIconImage(Toolkit.getDefaultToolkit().getImage(InstructorLogin.class.getResource("/icons/noa_en/New/logo.png")));
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		
@@ -473,7 +473,7 @@ public class InstructorLogin {
 						public void run() {
 							
 							try {
-								LicenseManager.getInstance().Validate("jajeem.lic");
+//								LicenseManager.getInstance().Validate("jajeem.lic");
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, e.getMessage() + "\nYou may need to kill process (java.exe or javaw.exe) through task manager.");
 								System.exit(-1);
@@ -487,14 +487,14 @@ public class InstructorLogin {
 								synchLock.notify();
 							}
 							
-							synchronized (licenseSyncLock) {
-								try {
-									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
-										licenseSyncLock.wait(0);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-							}
+//							synchronized (licenseSyncLock) {
+//								try {
+//									if(!LicenseManager.getInstance().getLicContext().getLicense().isActivated())
+//										licenseSyncLock.wait(0);
+//								} catch (InterruptedException e) {
+//									e.printStackTrace();
+//								}
+//							}
 							frame.setVisible(true);
 						}
 					});

@@ -9,6 +9,7 @@ public class StartMoviePlayerCommand extends Command {
 	private String streamServer;
 	private String streamPort;
 	private String streamAddress;
+	private String mrl;
 	private boolean isClient;
 
 	public StartMoviePlayerCommand(String from, String to, int port) {
@@ -46,6 +47,14 @@ public class StartMoviePlayerCommand extends Command {
 
 	public boolean isClient() {
 		return isClient;
+	}
+
+	public String getMrl() {
+		return mrl;
+	}
+
+	public void setMrl(String mrl) {
+		this.mrl = mrl;
 	}
 
 }
