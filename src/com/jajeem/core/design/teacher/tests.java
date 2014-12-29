@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import org.jscroll.JScrollDesktopPane;
 
 import com.alee.laf.WebLookAndFeel;
+import java.awt.Toolkit;
 
 public class tests extends JFrame {
 
@@ -29,15 +30,16 @@ public class tests extends JFrame {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		System.out.println(new String[]{
-				Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe",
-				"http://192.168.168.111"
-		});
-		Runtime.getRuntime().exec(new String[]{
-				Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe",
-				"http://192.168.168.111"});
-		ProcessBuilder pb = new ProcessBuilder(Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe","http://192.168.168.111:8080/");
-		pb.start();
+//		System.out.println(new String[]{
+//				Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe",
+//				"http://192.168.168.111"
+//		});
+		String path=System.getProperty("user.dir");
+		System.out.println(System.getProperty("user.dir"));
+		Process proc = Runtime.getRuntime().exec(path+"/util/vlcwin/vlc.exe");
+//		ProcessBuilder pb = new ProcessBuilder(Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe","http://192.168.168.111:8080/");
+//		pb.start();
+		
 	}
 
 	/**
@@ -47,6 +49,7 @@ public class tests extends JFrame {
 	JPanel panel;
 	private JScrollDesktopPane scrollDesktopPane;
 	public tests() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(tests.class.getResource("/icons/noa_en/logo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

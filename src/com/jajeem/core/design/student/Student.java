@@ -411,31 +411,34 @@ public class Student {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					final Process proc;
-					System.out.println(new File("util/", "videoplayer.jar")
-							.exists());
-					proc = Runtime.getRuntime().exec(
-							"java -jar videoplayer.jar \"\" true", null,
-							new File("util/"));
+					String path=System.getProperty("user.dir");
+					System.out.println(System.getProperty("user.dir"));
+					Process proc = Runtime.getRuntime().exec(path+"/util/vlcwin/vlc.exe");
+//					final Process proc;
+//					System.out.println(new File("util/", "videoplayer.jar")
+//							.exists());
+//					proc = Runtime.getRuntime().exec(
+//							"java -jar videoplayer.jar \"\" true", null,
+//							new File("util/"));
 					// Then retrieve the process output
-					new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-							try {
-								BufferedReader in = new BufferedReader(
-										new InputStreamReader(proc
-												.getInputStream()));
-								String line = null;
-								while ((line = in.readLine()) != null) {
-									System.out.println(line);
-								}
-							} catch (Exception e) {
-								JajeemExceptionHandler.logError(e);
-							}
-						}
-					}).start();
-				} catch (IOException ex) {
+//					new Thread(new Runnable() {
+//
+//						@Override
+//						public void run() {
+//							try {
+//								BufferedReader in = new BufferedReader(
+//										new InputStreamReader(proc
+//												.getInputStream()));
+//								String line = null;
+//								while ((line = in.readLine()) != null) {
+//									System.out.println(line);
+//								}
+//							} catch (Exception e) {
+//								JajeemExceptionHandler.logError(e);
+//							}
+//						}
+//					}).start();
+				} catch (Exception ex) {
 					JajeemExceptionHandler.logError(ex);
 					ex.printStackTrace();
 				}
