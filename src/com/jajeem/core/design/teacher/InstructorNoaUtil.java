@@ -748,8 +748,10 @@ public class InstructorNoaUtil {
 									System.out.println(new File("util/vlcwin",
 											"vlc.exe").exists());
 									try {
-										proc = Runtime.getRuntime().exec(
-												Paths.get(".").toAbsolutePath().normalize().toString()+"/util/vlcwin/vlc.exe");
+										String path=System.getProperty("user.dir");
+										System.out.println(System.getProperty("user.dir"));
+										ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe");
+										proc = builder.start();
 										MrlWizard wizard = new MrlWizard();
 										wizard.setVisible(true);
 										proc.waitFor();

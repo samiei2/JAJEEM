@@ -413,7 +413,8 @@ public class Student {
 				try {
 					String path=System.getProperty("user.dir");
 					System.out.println(System.getProperty("user.dir"));
-					Process proc = Runtime.getRuntime().exec(path+"/util/vlcwin/vlc.exe");
+					ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe");
+					builder.start();
 //					final Process proc;
 //					System.out.println(new File("util/", "videoplayer.jar")
 //							.exists());
