@@ -22,7 +22,7 @@ public class StartMoviePlayerCommandHandler implements ICommandHandler {
 			System.out.println("Mrl: "+command.getMrl());
 			String path=System.getProperty("user.dir");
 			System.out.println(System.getProperty("user.dir"));
-			ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe");
+			ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe","-vvv",command.getMrl());
 			proc = builder.start();
 		} catch (IOException e) {
 			e.printStackTrace();
