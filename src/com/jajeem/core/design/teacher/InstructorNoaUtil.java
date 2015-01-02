@@ -759,8 +759,10 @@ public class InstructorNoaUtil {
 										wizard.setVisible(false);
 									} catch (IOException e) {
 										e.printStackTrace();
+										button.setEnabled(true);
 									} catch (InterruptedException e) {
 										e.printStackTrace();
+										button.setEnabled(true);
 									}
 								}
 							}).start();

@@ -1,42 +1,32 @@
 package com.jajeem.movieplayer;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.alee.laf.text.WebTextField;
-import com.alee.laf.label.WebLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Window.Type;
-import com.alee.laf.combobox.WebComboBox;
-import javax.swing.DefaultComboBoxModel;
-import com.alee.laf.button.WebButton;
 import java.awt.Dimension;
-import com.alee.laf.checkbox.WebCheckBox;
-import com.jajeem.command.model.StartMoviePlayerCommand;
-import com.jajeem.command.service.ServerService;
-import com.jajeem.util.Config;
-
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+
+import com.jajeem.command.model.StartMoviePlayerCommand;
+import com.jajeem.command.model.StopMoviePlayerCommand;
+import com.jajeem.command.service.ServerService;
+import com.jajeem.util.Config;
 
 public class MrlWizard extends JFrame {
 
@@ -96,21 +86,37 @@ public class MrlWizard extends JFrame {
 		textField_2.setText("/");
 		textField_2.setColumns(10);
 		
-		JButton btnStartStreamingFor = new JButton("Start streaming ...");
+		final JButton btnStartStreamingFor = new JButton("Start streaming ...");
+		btnStartStreamingFor.putClientProperty("Status", "Start");
 		btnStartStreamingFor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setAlwaysOnTop(false);
-				int choice = JOptionPane.showConfirmDialog(null, "Are you sure the streaming link is correct?",
-		                   "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-				if(choice==JOptionPane.OK_OPTION){
-					sendStreamingCommand();
-					frame.dispose();
+				if(btnStartStreamingFor.getClientProperty("Status").equals("Start")){
+					int choice = JOptionPane.showConfirmDialog(null, "Are you sure the streaming link is correct?",
+			                   "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+					if(choice==JOptionPane.OK_OPTION){
+						sendStreamingCommand();
+						btnStartStreamingFor.putClientProperty("Status", "Stop");
+						btnStartStreamingFor.setText("Stop streaming ...");
+					}
+					else{
+						frame.setAlwaysOnTop(true);
+						return;
+					}
 				}
 				else{
-					frame.setAlwaysOnTop(true);
-					return;
+					int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to stop?",
+			                   "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+					if(choice==JOptionPane.OK_OPTION){
+						sendStopStreamingCommand();
+						btnStartStreamingFor.putClientProperty("Status", "Start");
+						btnStartStreamingFor.setText("Start streaming ...");
+					}
+					else{
+						frame.setAlwaysOnTop(true);
+						return;
+					}
 				}
-					
 			}
 		});
 		
@@ -231,5 +237,17 @@ public class MrlWizard extends JFrame {
 			service.send(cmd);
 		} catch (Exception e) {
 		}
+	}
+	
+	private void sendStopStreamingCommand() {
+		StopMoviePlayerCommand cmd;
+		try {
+			cmd = new StopMoviePlayerCommand(InetAddress
+					.getLocalHost().getHostAddress(), Config.getParam("broadcastingIp"), Integer.parseInt(Config.getParam("port")));
+			ServerService service = new ServerService();
+			service.send(cmd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 }

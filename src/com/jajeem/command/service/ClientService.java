@@ -67,6 +67,7 @@ import com.jajeem.command.handler.StopCaptureCommandHandler;
 import com.jajeem.command.handler.StopConversationCommandHanlder;
 import com.jajeem.command.handler.StopIntercomCommandHandler;
 import com.jajeem.command.handler.StopModelCommandHanlder;
+import com.jajeem.command.handler.StopMoviePlayerCommandHandler;
 import com.jajeem.command.handler.StopQuizCommandHanlder;
 import com.jajeem.command.handler.StopRecorderCommandHandler;
 import com.jajeem.command.handler.StopSurveyCommandHanlder;
@@ -116,6 +117,7 @@ import com.jajeem.command.model.StopCaptureCommand;
 import com.jajeem.command.model.StopConversationCommand;
 import com.jajeem.command.model.StopIntercomCommand;
 import com.jajeem.command.model.StopModelCommand;
+import com.jajeem.command.model.StopMoviePlayerCommand;
 import com.jajeem.command.model.StopQuizCommand;
 import com.jajeem.command.model.StopStudentRecordCommand;
 import com.jajeem.command.model.StopSurveyCommand;
@@ -617,6 +619,21 @@ public class ClientService implements IConnectorSevice, Runnable {
 						@Override
 						public void run() {
 							StartMoviePlayerCommandHandler videoCommandHandler = new StartMoviePlayerCommandHandler();
+							try {
+								videoCommandHandler.run(cmd);
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+						}
+					});
+
+				} else if (cmd instanceof StopMoviePlayerCommand) {
+					pool.execute(new Runnable() {
+
+						@Override
+						public void run() {
+							StopMoviePlayerCommandHandler videoCommandHandler = new StopMoviePlayerCommandHandler();
 							try {
 								videoCommandHandler.run(cmd);
 							} catch (Exception e) {

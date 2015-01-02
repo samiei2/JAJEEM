@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import com.jajeem.command.model.Command;
 import com.jajeem.command.model.StartMoviePlayerCommand;
+import com.jajeem.command.model.StopMoviePlayerCommand;
 
 public class StartMoviePlayerCommandHandler implements ICommandHandler {
 
@@ -24,6 +25,7 @@ public class StartMoviePlayerCommandHandler implements ICommandHandler {
 			System.out.println(System.getProperty("user.dir"));
 			ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe","-vvv",command.getMrl());
 			proc = builder.start();
+			StopMoviePlayerCommand.setProcess(proc);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
