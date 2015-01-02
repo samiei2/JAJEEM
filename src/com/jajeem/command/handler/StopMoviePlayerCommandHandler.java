@@ -9,10 +9,7 @@ public class StopMoviePlayerCommandHandler implements ICommandHandler {
 	@Override
 	public void run(Command cmd) throws NumberFormatException, Exception {
 		StopMoviePlayerCommand command = (StopMoviePlayerCommand) cmd;
-		Process proc = StopMoviePlayerCommand.getProcess();
-		if(proc != null){
-			proc.destroy();
-			StopMoviePlayerCommand.setProcess(null);
-		}
+		ProcessBuilder builder = new ProcessBuilder("taskkill", "/IM", "vlc.exe" );
+		builder.start();
 	}
 }

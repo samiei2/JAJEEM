@@ -25,7 +25,6 @@ public class StartMoviePlayerCommandHandler implements ICommandHandler {
 			System.out.println(System.getProperty("user.dir"));
 			ProcessBuilder builder = new ProcessBuilder(path+"/util/vlcwin/vlc.exe","-vvv",command.getMrl());
 			proc = builder.start();
-			StopMoviePlayerCommand.setProcess(proc);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
